@@ -1,0 +1,55 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+
+# Local Claude/editor settings
+.claude/settings.local.json
+.vscode/
+.idea/
+
+# Trained models and checkpoints
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.safetensors
+checkpoints/*
+!checkpoints/.gitkeep
+
+# Training datasets and generated logs
+*.npz
+*.npy
+*.jsonl
+*.log
+logdir/
+auto_research_results/
+research_1M/
+research_results/
+research_quick_test/
+
+# Generated experiment outputs and media
+experiments/
+*.gif
+*.mp4
+*.avi
+*.mov
+*.webm
+*.pdf
+
+# Temporary/output files
+outputs/
+runs/
+tmp/
+*.tmp
+*.bak
+
+# Old nested working directory
+vascular_marl_local/

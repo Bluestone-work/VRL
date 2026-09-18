@@ -1,0 +1,78 @@
+{
+  "results": [
+    {
+      "obs_mode": "legacy",
+      "seed": 100,
+      "episodes": 1566,
+      "contact_miss": 0.34227330779054915,
+      "success": 0.19029374201787994,
+      "removal": 0.39180154955706836,
+      "return": 28.650548259355663,
+      "seconds": 83.52513217926025
+    },
+    {
+      "obs_mode": "legacy",
+      "seed": 101,
+      "episodes": 1578,
+      "contact_miss": 0.24334600760456274,
+      "success": 0.17237008871989862,
+      "removal": 0.4314929913205339,
+      "return": 29.524343795819426,
+      "seconds": 83.6017701625824
+    },
+    {
+      "obs_mode": "legacy",
+      "seed": 102,
+      "episodes": 1545,
+      "contact_miss": 0.4760672703751617,
+      "success": 0.13195342820181113,
+      "removal": 0.2969503682612756,
+      "return": 23.751475354318625,
+      "seconds": 83.04939293861389
+    },
+    {
+      "obs_mode": "geometric",
+      "seed": 100,
+      "episodes": 2580,
+      "contact_miss": 0.004651162790697674,
+      "success": 0.9023255813953488,
+      "removal": 0.9584056069222532,
+      "return": 93.36202676642773,
+      "seconds": 103.94002938270569
+    },
+    {
+      "obs_mode": "geometric",
+      "seed": 101,
+      "episodes": 2485,
+      "contact_miss": 0.0008045052292839903,
+      "success": 0.9018503620273531,
+      "removal": 0.9665775604048565,
+      "return": 96.64099293673893,
+      "seconds": 107.94445395469666
+    },
+    {
+      "obs_mode": "geometric",
+      "seed": 102,
+      "episodes": 2923,
+      "contact_miss": 0.0006839945280437756,
+      "success": 0.9637482900136799,
+      "removal": 0.9888840100018336,
+      "return": 97.78090582951067,
+      "seconds": 104.2368323802948
+    }
+  ],
+  "summary": {
+    "legacy": {
+      "contact_miss": 0.35389552859009116,
+      "success": 0.16487241964652988,
+      "removal": 0.37341496971295923,
+      "return": 27.308789136497907
+    },
+    "geometric": {
+      "contact_miss": 0.0020465541826751466,
+      "success": 0.9226414111454607,
+      "removal": 0.9712890591096478,
+      "return": 95.92797517755912
+    }
+  }
+}
