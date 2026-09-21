@@ -46,6 +46,25 @@ def local_to_world(action, env):
     ).astype(np.float32)
 
 
+def direct_local_action(action, env):
+    """Execute a policy action directly in the Frenet local frame.
+
+    This is deliberately a separate path from the hand-authored guidance
+    controllers below.  The only processing is the existing generic bounded
+    action normalization followed by the geometric Frenet-to-world transform;
+    no flow, route, target, or residual command is read here.
+    """
+    action = np.asarray(action, dtype=np.float32)
+    if not np.isfinite(action).all():
+        raise FloatingPointError("direct local policy action is non-finite")
+    bounded = np.clip(action, -1.0, 1.0)
+    bounded /= np.maximum(np.linalg.norm(bounded, axis=-1, keepdims=True), 1.0)
+    executed = local_to_world(bounded, env)
+    if not np.isfinite(executed).all():
+        raise FloatingPointError("direct local world action is non-finite")
+    return executed
+
+
 def flow_guidance(nodes, max_speed=0.018, contact_radius=0.035, speed=0.65):
     nodes = np.asarray(nodes, dtype=np.float32)
     if nodes.shape[-1] not in (36, 42):
@@ -135,15 +154,21 @@ def policy_action(action, obs, env, mode="world", residual_scale=0.2,
                   guidance_speed=0.65):
     if mode not in CONTROL_MODES:
         raise ValueError(f"unknown control mode: {mode}")
-    if not np.isfinite(residual_scale) or residual_scale < 0:
-        raise ValueError("residual scale must be finite and nonnegative")
-    if not np.isfinite(guidance_speed) or not 0 < guidance_speed <= 1:
-        raise ValueError("guidance speed must be in (0, 1]")
+    if mode != "local":
+        if not np.isfinite(residual_scale) or residual_scale < 0:
+            raise ValueError("residual scale must be finite and nonnegative")
+    if mode in ("guided", "flow_guided", "flow_spread"):
+        if not np.isfinite(guidance_speed) or not 0 < guidance_speed <= 1:
+            raise ValueError("guidance speed must be in (0, 1]")
     action = np.asarray(action, dtype=np.float32)
     if mode == "world":
         return action
     if obs["nodes"].shape[-1] not in (36, 42):
         raise ValueError("local control requires geometric observations")
+    if mode == "local":
+        # Keep this branch free of all controller calls.  In particular,
+        # residual_scale is intentionally irrelevant for direct RL semantics.
+        return direct_local_action(action, env)
     if mode in ("guided", "flow_guided", "flow_spread"):
         if mode == "guided":
             guidance = route_guidance(obs["nodes"], speed=guidance_speed)

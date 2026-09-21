@@ -1,0 +1,114 @@
+{
+  "baseline": {
+    "experiment_id": "EXP_0004",
+    "arm": "geodesic_v",
+    "split": "prospective_validation"
+  },
+  "direct_local": {
+    "experiment_id": "EXP_0005_DIRECT_LOCAL",
+    "split": "prospective_validation"
+  },
+  "statistics_unit": "training_seed",
+  "sealed_test_accessed": false,
+  "rows": [
+    {
+      "metric": "success",
+      "baseline_mean": 0.7666666666666666,
+      "baseline_sample_sd": 0.01797579627445416,
+      "direct_local_mean": 0.7142857142857143,
+      "direct_local_sample_sd": 0.0911938952485979,
+      "absolute_difference": -0.052380952380952306,
+      "relative_difference": -0.06832298136645953
+    },
+    {
+      "metric": "removal_rate",
+      "baseline_mean": 0.9457665796424911,
+      "baseline_sample_sd": 0.003796344046120608,
+      "direct_local_mean": 0.878584187168773,
+      "direct_local_sample_sd": 0.03885078578958677,
+      "absolute_difference": -0.06718239247371816,
+      "relative_difference": -0.0710348556608056
+    },
+    {
+      "metric": "steps",
+      "baseline_mean": 144.88333333333335,
+      "baseline_sample_sd": 7.925071084897621,
+      "direct_local_mean": 155.4142857142857,
+      "direct_local_sample_sd": 21.08554369849696,
+      "absolute_difference": 10.530952380952357,
+      "relative_difference": 0.07268574057944799
+    },
+    {
+      "metric": "completion_steps",
+      "baseline_mean": 97.75703766638348,
+      "baseline_sample_sd": 5.8711249543341335,
+      "direct_local_mean": 97.7978676274841,
+      "direct_local_sample_sd": 6.803460358134325,
+      "absolute_difference": 0.04082996110061288,
+      "relative_difference": 0.00041766774111909707
+    },
+    {
+      "metric": "first_contact_steps",
+      "baseline_mean": 7.969047619047618,
+      "baseline_sample_sd": 0.34295633485773036,
+      "direct_local_mean": 5.645238095238096,
+      "direct_local_sample_sd": 0.6982607157866497,
+      "absolute_difference": -2.3238095238095227,
+      "relative_difference": -0.29160442187033153
+    },
+    {
+      "metric": "wall_contact_rate",
+      "baseline_mean": 0.3439628036802526,
+      "baseline_sample_sd": 0.022855028604388535,
+      "direct_local_mean": 0.6126708963984763,
+      "direct_local_sample_sd": 0.03412628615695465,
+      "absolute_difference": 0.26870809271822366,
+      "relative_difference": 0.781212648121145
+    },
+    {
+      "metric": "collision_rate",
+      "baseline_mean": 0.0768891004646317,
+      "baseline_sample_sd": 0.006230014809956081,
+      "direct_local_mean": 0.12400265277807437,
+      "direct_local_sample_sd": 0.03392490289822206,
+      "absolute_difference": 0.04711355231344268,
+      "relative_difference": 0.612746826646964
+    },
+    {
+      "metric": "mean_action_magnitude",
+      "baseline_mean": 0.9656441387676057,
+      "baseline_sample_sd": 0.03265864247654812,
+      "direct_local_mean": 0.9188160350634939,
+      "direct_local_sample_sd": 0.07319101937595653,
+      "absolute_difference": -0.046828103704111834,
+      "relative_difference": -0.04849416241875166
+    },
+    {
+      "metric": "mean_flow_speed",
+      "baseline_mean": 0.013809945605074364,
+      "baseline_sample_sd": 0.0005167781251641353,
+      "direct_local_mean": 0.01096558861456634,
+      "direct_local_sample_sd": 9.928160282108091e-05,
+      "absolute_difference": -0.002844356990508024,
+      "relative_difference": -0.20596438768469047
+    },
+    {
+      "metric": "blood_flow_exposure",
+      "baseline_mean": 2.157267307241758,
+      "baseline_sample_sd": 0.06164373336486154,
+      "direct_local_mean": 1.8440110250243118,
+      "direct_local_sample_sd": 0.24286804080290314,
+      "absolute_difference": -0.31325628221744606,
+      "relative_difference": -0.1452097666181062
+    },
+    {
+      "metric": "mean_simultaneously_contacted_clots",
+      "baseline_mean": 0.6554132729175746,
+      "baseline_sample_sd": 0.054502458969339355,
+      "direct_local_mean": 0.667972015908771,
+      "direct_local_sample_sd": 0.043816947390341296,
+      "absolute_difference": 0.012558742991196414,
+      "relative_difference": 0.019161563413708612
+    }
+  ]
+}

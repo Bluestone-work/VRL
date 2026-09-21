@@ -367,6 +367,11 @@ class MAPPOAdvanced(MAPPO):
             "control_mode": control_mode,
             "residual_scale": residual_scale,
             "guidance_speed": guidance_speed,
+            "action_semantics": (
+                "direct_local_frenet" if control_mode == "local"
+                else "world_frame" if control_mode == "world"
+                else "controller_residual"
+            ),
         }
         self.buffer = ContextRolloutBuffer()
         self.world_model = None
@@ -516,7 +521,9 @@ class MAPPOAdvanced(MAPPO):
             if stored_meta.get(key, default) != self.meta[key]:
                 raise ValueError(f"checkpoint {key} mismatch; rebuild using checkpoint metadata")
         for key, default in (("control_mode", "world"), ("residual_scale", 0.2),
-                             ("guidance_speed", 0.65)):
+                             ("guidance_speed", 0.65), ("action_semantics", None)):
+            if key == "action_semantics" and stored_meta.get(key) is None:
+                continue
             if stored_meta.get(key, default) != self.meta[key]:
                 raise ValueError(f"checkpoint {key} differs from requested control configuration")
         self.actor.load_state_dict(checkpoint["actor"])
@@ -531,6 +538,9 @@ class MAPPOAdvanced(MAPPO):
     def env_action(self, actions, obs, env):
         from marl.geometric_control import policy_action
 
+        if (self.meta["control_mode"] == "local"
+                and self.meta.get("action_semantics") != "direct_local_frenet"):
+            raise RuntimeError("local control must use direct_local_frenet action semantics")
         return policy_action(
             actions, obs, env, mode=self.meta["control_mode"],
             residual_scale=self.meta["residual_scale"],

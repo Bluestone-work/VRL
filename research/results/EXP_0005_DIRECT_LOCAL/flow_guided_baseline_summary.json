@@ -1,0 +1,515 @@
+{
+  "experiment_id": "EXP_0005_DIRECT_LOCAL",
+  "split": "prospective_validation",
+  "sealed_test_accessed": false,
+  "episodes": 420,
+  "aggregate_by_training_seed": {
+    "success": {
+      "mean": 0.7666666666666666,
+      "sample_sd": 0.01797579627445416
+    },
+    "removal_rate": {
+      "mean": 0.9457665796424911,
+      "sample_sd": 0.003796344046120608
+    },
+    "steps": {
+      "mean": 144.88333333333335,
+      "sample_sd": 7.925071084897621
+    },
+    "completion_steps": {
+      "mean": 97.75703766638348,
+      "sample_sd": 5.8711249543341335
+    },
+    "first_contact_steps": {
+      "mean": 7.969047619047618,
+      "sample_sd": 0.34295633485773036
+    },
+    "wall_contact_rate": {
+      "mean": 0.3439628036802526,
+      "sample_sd": 0.022855028604388535
+    },
+    "collision_rate": {
+      "mean": 0.0768891004646317,
+      "sample_sd": 0.006230014809956081
+    },
+    "mean_action_magnitude": {
+      "mean": 0.9656441387676057,
+      "sample_sd": 0.03265864247654812
+    },
+    "mean_flow_speed": {
+      "mean": 0.013809945605074364,
+      "sample_sd": 0.0005167781251641353
+    },
+    "blood_flow_exposure": {
+      "mean": 2.157267307241758,
+      "sample_sd": 0.06164373336486154
+    },
+    "mean_simultaneously_contacted_clots": {
+      "mean": 0.6554132729175746,
+      "sample_sd": 0.054502458969339355
+    }
+  },
+  "per_seed": [
+    {
+      "training_seed": 42,
+      "success": {
+        "mean": 0.7642857142857142,
+        "sample_sd": 0.42596845706361314,
+        "n": 140
+      },
+      "removal_rate": {
+        "mean": 0.9414935181575447,
+        "sample_sd": 0.14609115881903634,
+        "n": 140
+      },
+      "steps": {
+        "mean": 143.78571428571428,
+        "sample_sd": 91.99818466415799,
+        "n": 140
+      },
+      "completion_steps": {
+        "mean": 95.60747663551402,
+        "sample_sd": 34.03543021044832,
+        "n": 107
+      },
+      "first_contact_steps": {
+        "mean": 8.307142857142857,
+        "sample_sd": 8.32513437018306,
+        "n": 140
+      },
+      "wall_contact_rate": {
+        "mean": 0.34202662359133784,
+        "sample_sd": 0.29352327577451504,
+        "n": 140
+      },
+      "collision_rate": {
+        "mean": 0.08240430887268999,
+        "sample_sd": 0.15644114819756796,
+        "n": 140
+      },
+      "mean_action_magnitude": {
+        "mean": 0.9600609804902758,
+        "sample_sd": 0.12667056232702661,
+        "n": 140
+      },
+      "mean_flow_speed": {
+        "mean": 0.013621869580154973,
+        "sample_sd": 0.004587678638464002,
+        "n": 140
+      },
+      "blood_flow_exposure": {
+        "mean": 2.1192582732864786,
+        "sample_sd": 1.9280805107476469,
+        "n": 140
+      },
+      "mean_simultaneously_contacted_clots": {
+        "mean": 0.6364472339129296,
+        "sample_sd": 0.3010459074317262,
+        "n": 140
+      },
+      "failure_labels": {
+        "navigation_failure": 0,
+        "contact_acquisition_failure": 0,
+        "contact_maintenance_failure": 17,
+        "completion_tail_failure": 11,
+        "wall_dominated_failure": 33,
+        "robot_crowding_failure": 24,
+        "timeout": 0
+      }
+    },
+    {
+      "training_seed": 43,
+      "success": {
+        "mean": 0.7857142857142857,
+        "sample_sd": 0.4117992506258758,
+        "n": 140
+      },
+      "removal_rate": {
+        "mean": 0.9470557985911622,
+        "sample_sd": 0.14209004225376087,
+        "n": 140
+      },
+      "steps": {
+        "mean": 137.56428571428572,
+        "sample_sd": 89.28454317834225,
+        "n": 140
+      },
+      "completion_steps": {
+        "mean": 93.26363636363637,
+        "sample_sd": 30.384290144299534,
+        "n": 110
+      },
+      "first_contact_steps": {
+        "mean": 7.621428571428571,
+        "sample_sd": 7.757537858622075,
+        "n": 140
+      },
+      "wall_contact_rate": {
+        "mean": 0.3221374574435152,
+        "sample_sd": 0.2843101900746149,
+        "n": 140
+      },
+      "collision_rate": {
+        "mean": 0.07813148897235019,
+        "sample_sd": 0.15475597578031922,
+        "n": 140
+      },
+      "mean_action_magnitude": {
+        "mean": 1.0007344514131546,
+        "sample_sd": 0.1419216895381173,
+        "n": 140
+      },
+      "mean_flow_speed": {
+        "mean": 0.014394422387704253,
+        "sample_sd": 0.004839276300271818,
+        "n": 140
+      },
+      "blood_flow_exposure": {
+        "mean": 2.1241523953420773,
+        "sample_sd": 1.9461835652886947,
+        "n": 140
+      },
+      "mean_simultaneously_contacted_clots": {
+        "mean": 0.7168648892554883,
+        "sample_sd": 0.3571632430660194,
+        "n": 140
+      },
+      "failure_labels": {
+        "navigation_failure": 0,
+        "contact_acquisition_failure": 0,
+        "contact_maintenance_failure": 16,
+        "completion_tail_failure": 12,
+        "wall_dominated_failure": 27,
+        "robot_crowding_failure": 21,
+        "timeout": 0
+      }
+    },
+    {
+      "training_seed": 44,
+      "success": {
+        "mean": 0.75,
+        "sample_sd": 0.4345675101331315,
+        "n": 140
+      },
+      "removal_rate": {
+        "mean": 0.9487504221787664,
+        "sample_sd": 0.13570401445190708,
+        "n": 140
+      },
+      "steps": {
+        "mean": 153.3,
+        "sample_sd": 92.05383942301367,
+        "n": 140
+      },
+      "completion_steps": {
+        "mean": 104.4,
+        "sample_sd": 40.852125450778615,
+        "n": 105
+      },
+      "first_contact_steps": {
+        "mean": 7.978571428571429,
+        "sample_sd": 7.769584544083874,
+        "n": 140
+      },
+      "wall_contact_rate": {
+        "mean": 0.3677243300059047,
+        "sample_sd": 0.2921296686784864,
+        "n": 140
+      },
+      "collision_rate": {
+        "mean": 0.07013150354885488,
+        "sample_sd": 0.13254146909045753,
+        "n": 140
+      },
+      "mean_action_magnitude": {
+        "mean": 0.9361369843993869,
+        "sample_sd": 0.13057665391701254,
+        "n": 140
+      },
+      "mean_flow_speed": {
+        "mean": 0.013413544847363873,
+        "sample_sd": 0.004717506189096082,
+        "n": 140
+      },
+      "blood_flow_exposure": {
+        "mean": 2.2283912530967167,
+        "sample_sd": 1.936791901662759,
+        "n": 140
+      },
+      "mean_simultaneously_contacted_clots": {
+        "mean": 0.6129276955843056,
+        "sample_sd": 0.25173900719779135,
+        "n": 140
+      },
+      "failure_labels": {
+        "navigation_failure": 0,
+        "contact_acquisition_failure": 1,
+        "contact_maintenance_failure": 13,
+        "completion_tail_failure": 14,
+        "wall_dominated_failure": 35,
+        "robot_crowding_failure": 22,
+        "timeout": 0
+      }
+    }
+  ],
+  "per_scenario": [
+    {
+      "scenario": "basilar_vertebral",
+      "episodes": 30,
+      "success": 0.9666666666666667,
+      "removal_rate": 0.9954836704829674,
+      "steps": 106.2,
+      "wall_contact_rate": 0.1984809749667621,
+      "collision_rate": 0.014496998004718797,
+      "mean_action_magnitude": 1.0311587154865265,
+      "mean_flow_speed": 0.01669295042132338,
+      "blood_flow_exposure": 1.724845004081726,
+      "mean_simultaneously_contacted_clots": 0.7602035096371563
+    },
+    {
+      "scenario": "carotid_bifurcation",
+      "episodes": 30,
+      "success": 0.5,
+      "removal_rate": 0.8704719430652172,
+      "steps": 196.1,
+      "wall_contact_rate": 0.4855440059360426,
+      "collision_rate": 0.06481219218853301,
+      "mean_action_magnitude": 0.9828965663909912,
+      "mean_flow_speed": 0.013808912287155787,
+      "blood_flow_exposure": 2.7672284066677095,
+      "mean_simultaneously_contacted_clots": 0.6300467713859561
+    },
+    {
+      "scenario": "cerebral_venous_sinus",
+      "episodes": 30,
+      "success": 1.0,
+      "removal_rate": 1.0,
+      "steps": 114.43333333333334,
+      "wall_contact_rate": 0.0674396018575052,
+      "collision_rate": 0.011606656210464158,
+      "mean_action_magnitude": 1.00051206946373,
+      "mean_flow_speed": 0.012708556838333607,
+      "blood_flow_exposure": 1.4420413613319396,
+      "mean_simultaneously_contacted_clots": 0.5671202096171476
+    },
+    {
+      "scenario": "coronary_lm_bifurcation",
+      "episodes": 30,
+      "success": 0.6,
+      "removal_rate": 0.8392229258191541,
+      "steps": 175.13333333333333,
+      "wall_contact_rate": 0.417017337717356,
+      "collision_rate": 0.0341616195511728,
+      "mean_action_magnitude": 0.977589366833369,
+      "mean_flow_speed": 0.011968432211627562,
+      "blood_flow_exposure": 2.0397593855857847,
+      "mean_simultaneously_contacted_clots": 0.6232082364242932
+    },
+    {
+      "scenario": "coronary_rca",
+      "episodes": 30,
+      "success": 0.2,
+      "removal_rate": 0.8516257299854542,
+      "steps": 257.2,
+      "wall_contact_rate": 0.7579248076498434,
+      "collision_rate": 0.3235292362323952,
+      "mean_action_magnitude": 0.8006251762310664,
+      "mean_flow_speed": 0.020808226925631366,
+      "blood_flow_exposure": 5.42118441661199,
+      "mean_simultaneously_contacted_clots": 0.3743805119174561
+    },
+    {
+      "scenario": "femoropopliteal_pad",
+      "episodes": 30,
+      "success": 0.2,
+      "removal_rate": 0.9282595880252926,
+      "steps": 255.0,
+      "wall_contact_rate": 0.7944581597943621,
+      "collision_rate": 0.3129881770969961,
+      "mean_action_magnitude": 0.8197076926628749,
+      "mean_flow_speed": 0.02023493635157744,
+      "blood_flow_exposure": 5.3759754538536075,
+      "mean_simultaneously_contacted_clots": 0.4324961236699405
+    },
+    {
+      "scenario": "ica_siphon",
+      "episodes": 30,
+      "success": 0.9333333333333333,
+      "removal_rate": 0.9984485221688558,
+      "steps": 106.83333333333333,
+      "wall_contact_rate": 0.32713733084223656,
+      "collision_rate": 0.02233152359674404,
+      "mean_action_magnitude": 1.0286172449588775,
+      "mean_flow_speed": 0.018050105435152848,
+      "blood_flow_exposure": 1.901717448234558,
+      "mean_simultaneously_contacted_clots": 0.7284950673162779
+    },
+    {
+      "scenario": "ica_terminus_t",
+      "episodes": 30,
+      "success": 1.0,
+      "removal_rate": 1.0,
+      "steps": 82.03333333333333,
+      "wall_contact_rate": 0.15434827947207777,
+      "collision_rate": 0.016621997834073525,
+      "mean_action_magnitude": 1.0039459506670634,
+      "mean_flow_speed": 0.012658572352180878,
+      "blood_flow_exposure": 1.0087985138098399,
+      "mean_simultaneously_contacted_clots": 0.9019362101127356
+    },
+    {
+      "scenario": "iliac_may_thurner",
+      "episodes": 30,
+      "success": 1.0,
+      "removal_rate": 1.0,
+      "steps": 95.73333333333333,
+      "wall_contact_rate": 0.0639522424122656,
+      "collision_rate": 0.01733441067443192,
+      "mean_action_magnitude": 0.9919493595759074,
+      "mean_flow_speed": 0.008006317323694627,
+      "blood_flow_exposure": 0.7780424147844315,
+      "mean_simultaneously_contacted_clots": 0.6179991418443348
+    },
+    {
+      "scenario": "mca_m1_lvo",
+      "episodes": 30,
+      "success": 0.6666666666666666,
+      "removal_rate": 0.9101481546332314,
+      "steps": 171.2,
+      "wall_contact_rate": 0.5516551850876326,
+      "collision_rate": 0.05721226929254692,
+      "mean_action_magnitude": 0.9820058127244313,
+      "mean_flow_speed": 0.013619451814641555,
+      "blood_flow_exposure": 2.3576406677563986,
+      "mean_simultaneously_contacted_clots": 0.7738421865006312
+    },
+    {
+      "scenario": "popliteal_calf_dvt",
+      "episodes": 30,
+      "success": 0.9,
+      "removal_rate": 0.9446514448884311,
+      "steps": 135.5,
+      "wall_contact_rate": 0.3080330955150078,
+      "collision_rate": 0.019164822630346426,
+      "mean_action_magnitude": 0.9697818875312805,
+      "mean_flow_speed": 0.010736227252831061,
+      "blood_flow_exposure": 1.4839442332585653,
+      "mean_simultaneously_contacted_clots": 0.5817631794774033
+    },
+    {
+      "scenario": "pulmonary_saddle",
+      "episodes": 30,
+      "success": 1.0,
+      "removal_rate": 1.0,
+      "steps": 108.7,
+      "wall_contact_rate": 0.0007260478226309084,
+      "collision_rate": 0.05529600964824055,
+      "mean_action_magnitude": 0.867965837319692,
+      "mean_flow_speed": 0.005410354770720005,
+      "blood_flow_exposure": 0.5889521251122157,
+      "mean_simultaneously_contacted_clots": 0.5229705753339846
+    },
+    {
+      "scenario": "renal_artery",
+      "episodes": 30,
+      "success": 1.0,
+      "removal_rate": 1.0,
+      "steps": 90.7,
+      "wall_contact_rate": 0.22242161815185288,
+      "collision_rate": 0.012531704314516771,
+      "mean_action_magnitude": 1.0990872383117676,
+      "mean_flow_speed": 0.01314058710510532,
+      "blood_flow_exposure": 1.1524144053459167,
+      "mean_simultaneously_contacted_clots": 0.9076153754425176
+    },
+    {
+      "scenario": "sma_embolism",
+      "episodes": 30,
+      "success": 0.7666666666666667,
+      "removal_rate": 0.9024201359262712,
+      "steps": 133.6,
+      "wall_contact_rate": 0.4663405642979608,
+      "collision_rate": 0.11435978922966338,
+      "mean_action_magnitude": 0.9631750245889028,
+      "mean_flow_speed": 0.015495607381065686,
+      "blood_flow_exposure": 2.1591984649499256,
+      "mean_simultaneously_contacted_clots": 0.7537087221662081
+    }
+  ],
+  "hard_scenarios": [
+    {
+      "scenario": "carotid_bifurcation",
+      "episodes": 30,
+      "success": 0.5,
+      "removal_rate": 0.8704719430652172,
+      "steps": 196.1,
+      "wall_contact_rate": 0.4855440059360426,
+      "collision_rate": 0.06481219218853301,
+      "mean_action_magnitude": 0.9828965663909912,
+      "mean_flow_speed": 0.013808912287155787,
+      "blood_flow_exposure": 2.7672284066677095,
+      "mean_simultaneously_contacted_clots": 0.6300467713859561
+    },
+    {
+      "scenario": "coronary_rca",
+      "episodes": 30,
+      "success": 0.2,
+      "removal_rate": 0.8516257299854542,
+      "steps": 257.2,
+      "wall_contact_rate": 0.7579248076498434,
+      "collision_rate": 0.3235292362323952,
+      "mean_action_magnitude": 0.8006251762310664,
+      "mean_flow_speed": 0.020808226925631366,
+      "blood_flow_exposure": 5.42118441661199,
+      "mean_simultaneously_contacted_clots": 0.3743805119174561
+    },
+    {
+      "scenario": "femoropopliteal_pad",
+      "episodes": 30,
+      "success": 0.2,
+      "removal_rate": 0.9282595880252926,
+      "steps": 255.0,
+      "wall_contact_rate": 0.7944581597943621,
+      "collision_rate": 0.3129881770969961,
+      "mean_action_magnitude": 0.8197076926628749,
+      "mean_flow_speed": 0.02023493635157744,
+      "blood_flow_exposure": 5.3759754538536075,
+      "mean_simultaneously_contacted_clots": 0.4324961236699405
+    }
+  ],
+  "flow_bins": {
+    "thresholds": [
+      0.008032040670514107,
+      0.01888268068432808
+    ],
+    "summary": {
+      "low": {
+        "flow_magnitude": 0.002969846973645144,
+        "u_parallel": -0.14757279042633986,
+        "u_normal": -0.10970834476284828,
+        "u_binormal": 0.22996301031293342,
+        "policy_action_flow_dot": -0.014704304877597276
+      },
+      "medium": {
+        "flow_magnitude": 0.012812838829463817,
+        "u_parallel": -0.21780780776027225,
+        "u_normal": -0.1355044405702763,
+        "u_binormal": 0.05215757414631226,
+        "policy_action_flow_dot": -0.21780780815070194
+      },
+      "high": {
+        "flow_magnitude": 0.028886234226429854,
+        "u_parallel": -0.13549711477456203,
+        "u_normal": -0.026615813820025848,
+        "u_binormal": 0.08046431434370227,
+        "policy_action_flow_dot": -0.13549711520736515
+      }
+    }
+  },
+  "reference_baseline": {
+    "experiment_id": "EXP_0004",
+    "arm": "geodesic_v",
+    "reported_prospective_success": 0.7667,
+    "note": "Reference only; EXP_0004 result is not recomputed or redefined here."
+  }
+}

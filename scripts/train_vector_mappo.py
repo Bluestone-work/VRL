@@ -480,6 +480,7 @@ def main():
                         obs=nodes,
                         next_obs=transition_next_obs["nodes"],
                         action=actions,
+                        policy_action=actions,
                         executed_action=executed_actions,
                         rewards=agent_rewards,
                         team_reward=info["team_reward"].astype(np.float32),
