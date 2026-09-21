@@ -29,7 +29,7 @@ TRAIN_ARCHITECTURES = ("gat", "edge_bias_gat", "mlp")
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--architecture", choices=TRAIN_ARCHITECTURES, default="gat")
-    parser.add_argument("--control-mode", choices=("world", "local", "guided", "flow_guided"), default="world")
+    parser.add_argument("--control-mode", choices=("world", "local", "guided", "flow_guided", "flow_spread"), default="world")
     parser.add_argument("--residual-scale", type=float, default=0.2)
     parser.add_argument("--guidance-speed", type=float, default=0.65)
     parser.add_argument("--n-envs", type=int, default=64)
@@ -45,10 +45,16 @@ def parse_args():
     parser.add_argument("--scenario-pool", default="anatomical")
     parser.add_argument("--tree-resample-interval", type=int, default=900)
     parser.add_argument("--robot-radius", type=float, default=0.0011)
-    parser.add_argument("--obs-mode", choices=("geometric", "legacy"),
+    parser.add_argument("--obs-mode", choices=("geometric", "geometric_v2", "legacy"),
                         default="geometric")
-    parser.add_argument("--reward-mode", choices=("milestone", "baseline"),
-                        default="milestone")
+    parser.add_argument("--reward-mode", choices=("milestone", "baseline"), default="milestone")
+    parser.add_argument("--contact-mode", choices=("geodesic", "euclidean"), default="geodesic")
+    parser.add_argument("--critic-value-mode", choices=("v", "q"), default="v")
+    parser.add_argument("--dropout", type=float, default=0.0)
+    parser.add_argument("--coverage-bonus", type=float, default=0.2)
+    parser.add_argument("--step-cost", type=float, default=0.0)
+    parser.add_argument("--approach-scale", type=float, default=0.1)
+    parser.add_argument("--reward-double-count", choices=("on", "off"), default="on")
     parser.add_argument("--hidden-dim", type=int, default=128)
     parser.add_argument("--num-layers", type=int, default=2)
     parser.add_argument("--num-heads", type=int, default=4)
@@ -56,6 +62,13 @@ def parse_args():
     parser.add_argument("--lr-critic", type=float, default=1e-3)
     parser.add_argument("--gamma", type=float, default=0.99)
     parser.add_argument("--gae-lambda", type=float, default=0.95)
+    parser.add_argument("--clip-epsilon", type=float, default=0.2)
+    parser.add_argument("--entropy-coef", type=float, default=0.01)
+    parser.add_argument("--value-clip", type=float, default=10.0)
+    parser.add_argument("--value-loss-coef", type=float, default=0.5)
+    parser.add_argument("--max-grad-norm", type=float, default=0.5)
+    parser.add_argument("--log-std-init", type=float, default=0.0)
+    parser.add_argument("--no-control-margin", action="store_true")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--log-dir", default="experiments/anatomical_vector")
@@ -119,51 +132,78 @@ def build_context(env, obs):
 
 
 def evaluate_territories(agent, args, episodes_per_territory):
-    per_territory = {}
-    for scenario_index, scenario in enumerate(resolve_pool(args.scenario_pool)):
-        env = Vascular3DMARLEnv(
-            scenario=scenario,
-            scenario_pool=[scenario],
-            randomize_scenario=False,
-            num_robots=args.robots,
-            num_clots=args.clots,
-            horizon=args.horizon,
-            robot_radius=args.robot_radius,
-            obs_mode=args.obs_mode,
-            reward_mode=args.reward_mode,
-            seed=args.eval_seed + scenario_index * 10000,
-        )
-        records = {"success": [], "removal_rate": [], "return": [], "wall_hits": []}
-        for episode in range(episodes_per_territory):
-            obs, _ = env.reset(seed=args.eval_seed + scenario_index * 10000 + episode)
-            total_return = 0.0
-            while True:
-                ctx = build_context(env, obs)
-                state = obs["clot_state"].reshape(-1)
-                action, _, _ = agent.act(
-                    obs["nodes"], ctx, state, deterministic=True
-                )
-                obs, reward, terminated, truncated, info = env.step(
-                    agent.env_action(action, obs, env)
-                )
-                total_return += reward
-                if terminated or truncated:
-                    break
-            records["success"].append(float(info["success"]))
-            records["removal_rate"].append(float(info["removal_rate"]))
-            records["return"].append(total_return)
-            records["wall_hits"].append(float(info["wall_collisions"]))
-        env.close()
-        per_territory[scenario] = {
-            key: float(np.mean(values)) for key, values in records.items()
+    actor_mode, critic_mode = agent.actor.training, agent.critic.training
+    agent.actor.eval()
+    agent.critic.eval()
+    env = None
+    try:
+        per_territory = {}
+        episode_records = []
+        for scenario_index, scenario in enumerate(resolve_pool(args.scenario_pool)):
+            env = Vascular3DMARLEnv(
+                scenario=scenario,
+                scenario_pool=[scenario],
+                randomize_scenario=False,
+                num_robots=args.robots,
+                num_clots=args.clots,
+                horizon=args.horizon,
+                robot_radius=args.robot_radius,
+                obs_mode=args.obs_mode,
+                reward_mode=args.reward_mode,
+                contact_mode=args.contact_mode,
+                coverage_bonus=args.coverage_bonus,
+                step_cost=args.step_cost,
+                approach_scale=args.approach_scale,
+                reward_double_count=args.reward_double_count,
+                control_margin=not args.no_control_margin,
+                seed=args.eval_seed + scenario_index * 10000,
+            )
+            records = {"success": [], "removal_rate": [], "return": [], "wall_hits": [], "wall_hits_total": [], "wall_hits_per_step": []}
+            for episode in range(episodes_per_territory):
+                obs, _ = env.reset(seed=args.eval_seed + scenario_index * 10000 + episode)
+                total_return = 0.0
+                wall_total = 0
+                episode_steps = 0
+                while True:
+                    ctx = build_context(env, obs)
+                    state = obs["clot_state"].reshape(-1)
+                    action, _, _ = agent.act(
+                        obs["nodes"], ctx, state, deterministic=True
+                    )
+                    obs, reward, terminated, truncated, info = env.step(
+                        agent.env_action(action, obs, env)
+                    )
+                    total_return += reward
+                    wall_total += int(info["wall_collisions"])
+                    episode_steps += 1
+                    if terminated or truncated:
+                        break
+                episode_records.append({"scenario": scenario,
+                                        "episode_seed": args.eval_seed + scenario_index * 10000 + episode,
+                                        "success": float(info["success"]),
+                                        "removal_rate": float(info["removal_rate"]),
+                                        "wall_hits_total": wall_total, "steps": episode_steps})
+                records["success"].append(float(info["success"]))
+                records["removal_rate"].append(float(info["removal_rate"]))
+                records["return"].append(total_return)
+                records["wall_hits"].append(float(wall_total))
+                records["wall_hits_total"].append(float(wall_total))
+                records["wall_hits_per_step"].append(wall_total / max(episode_steps, 1))
+            env.close()
+            per_territory[scenario] = {
+                key: float(np.mean(values)) for key, values in records.items()
+            }
+
+        macro = {
+            key: float(np.mean([metrics[key] for metrics in per_territory.values()]))
+            for key in ("success", "removal_rate", "return", "wall_hits", "wall_hits_total", "wall_hits_per_step")
         }
-
-    macro = {
-        key: float(np.mean([metrics[key] for metrics in per_territory.values()]))
-        for key in ("success", "removal_rate", "return", "wall_hits")
-    }
-    return {"macro": macro, "per_territory": per_territory}
-
+        return {"macro": macro, "per_territory": per_territory, "episodes": episode_records, "split": "validation"}
+    finally:
+        if env is not None:
+            env.close()
+        agent.actor.train(actor_mode)
+        agent.critic.train(critic_mode)
 
 def capture_training_state(
     env, writer, transitions, episodes, best_score, episode_returns,
@@ -219,6 +259,12 @@ def main():
         robot_radius=args.robot_radius,
         obs_mode=args.obs_mode,
         reward_mode=args.reward_mode,
+        contact_mode=args.contact_mode,
+        coverage_bonus=args.coverage_bonus,
+        step_cost=args.step_cost,
+        approach_scale=args.approach_scale,
+        reward_double_count=args.reward_double_count,
+        control_margin=not args.no_control_margin,
     )
     if args.curriculum:
         env.set_difficulty(curriculum_difficulty(
@@ -244,7 +290,18 @@ def main():
         gamma=args.gamma,
         gae_lambda=args.gae_lambda,
         device=args.device,
+        critic_value_mode=args.critic_value_mode,
+        dropout=args.dropout,
+        clip_epsilon=args.clip_epsilon,
+        entropy_coef=args.entropy_coef,
+        value_clip=args.value_clip,
+        value_loss_coef=args.value_loss_coef,
+        max_grad_norm=args.max_grad_norm,
+        log_std_init=args.log_std_init,
     )
+    agent.meta.update({key: getattr(args, key) for key in
+                       ("obs_mode", "contact_mode", "reward_double_count", "coverage_bonus",
+                        "step_cost", "approach_scale", "no_control_margin")})
     agent.buffer = ContextRolloutBuffer()
 
     if args.world_model:
@@ -269,6 +326,17 @@ def main():
         shard_size=args.dataset_shard_size,
     )
 
+    if args.resume:
+        original_config = Path(args.resume).resolve().parent / "config.json"
+        if original_config.exists():
+            previous = json.loads(original_config.read_text())
+            legacy_defaults = {"contact_mode": "euclidean", "reward_double_count": "on",
+                               "coverage_bonus": 0.2, "step_cost": 0.0, "approach_scale": 0.1,
+                               "no_control_margin": False}
+            for key in ("obs_mode", "reward_mode", "robots", "clots", "horizon", "n_envs",
+                        "scenario_pool", "robot_radius", *legacy_defaults):
+                if previous.get(key, legacy_defaults.get(key)) != getattr(args, key):
+                    raise ValueError(f"resume configuration mismatch for {key}")
     resume_state = agent.load(args.resume) if args.resume else {}
     transitions = int(resume_state.get("transitions", 0))
     origin_path = run_dir / "run_origin.json"
@@ -323,6 +391,7 @@ def main():
     recent_success = deque(maxlen=500)
     recent_removal = deque(maxlen=500)
     start = time.time()
+    invocation_start_transitions = transitions
     next_eval = ((transitions // args.eval_interval) + 1) * args.eval_interval
     next_save = ((transitions // args.save_interval) + 1) * args.save_interval
 
@@ -449,6 +518,7 @@ def main():
                         "terminated": bool(terminated[index]),
                         "truncated": bool(truncated[index]),
                         "wall_collisions": int(info["wall_collisions"][index]),
+                        "wall_hits_total": int(info["wall_hits_total"][index]),
                         "difficulty": difficulty,
                     }) + "\n")
                     episode_returns[index] = 0.0
@@ -463,7 +533,7 @@ def main():
             record = {
                 "transitions": transitions,
                 "episodes": episodes,
-                "fps": transitions / max(elapsed, 1e-6),
+                "fps": (transitions - invocation_start_transitions) / max(elapsed, 1e-6),
                 "recent_success": float(np.mean(recent_success)) if recent_success else 0.0,
                 "recent_removal": float(np.mean(recent_removal)) if recent_removal else 0.0,
                 "difficulty": difficulty,

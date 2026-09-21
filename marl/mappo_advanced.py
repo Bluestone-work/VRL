@@ -202,19 +202,20 @@ class _CriticAdapter(nn.Module):
 
 
 class GATCriticAdapter(_CriticAdapter):
-    def __init__(self, obs_dim, action_dim, hidden_dim, num_layers, num_heads, state_dim):
+    def __init__(self, obs_dim, action_dim, hidden_dim, num_layers, num_heads, state_dim, critic_value_mode="v", dropout=0.0):
         super().__init__()
-        self.inner = GATCritic(obs_dim, action_dim, hidden_dim, num_layers, num_heads, state_dim)
+        self.inner = GATCritic(obs_dim, action_dim, hidden_dim, num_layers, num_heads, state_dim, use_action_input=critic_value_mode == "q", dropout=dropout)
 
     def forward(self, obs, actions, ctx, state=None):
         return self.inner(obs, actions, ctx.get("adjacency"), state)
 
 
 class TransformerCriticAdapter(_CriticAdapter):
-    def __init__(self, obs_dim, action_dim, hidden_dim, num_layers, num_heads, state_dim):
+    def __init__(self, obs_dim, action_dim, hidden_dim, num_layers, num_heads, state_dim, critic_value_mode="v", dropout=0.0):
         super().__init__()
         self.inner = TransformerCritic(
-            obs_dim, action_dim, hidden_dim, num_heads, num_layers, state_dim
+            obs_dim, action_dim, hidden_dim, num_heads, num_layers, state_dim,
+            use_action_input=critic_value_mode == "q", dropout=dropout,
         )
 
     def forward(self, obs, actions, ctx, state=None):
@@ -230,6 +231,8 @@ def build_actor_critic(
     num_heads: int,
     state_dim: int,
     sparse_k: int = 8,
+    critic_value_mode: str = "v",
+    dropout: float = 0.0,
 ) -> Tuple[nn.Module, nn.Module]:
     """Construct the (actor, critic) pair for one architecture name."""
     if architecture not in ARCHITECTURES:
@@ -260,10 +263,15 @@ def build_actor_critic(
     # -free arm gets its structural counterpart removed.
     if architecture in ("transformer", "sparse_transformer"):
         critic = TransformerCriticAdapter(obs_dim, action_dim, hidden_dim,
-                                          num_layers, num_heads, state_dim)
+                                          num_layers, num_heads, state_dim, critic_value_mode, dropout)
     else:
         critic = GATCriticAdapter(obs_dim, action_dim, hidden_dim,
-                                  num_layers, num_heads, state_dim)
+                                  num_layers, num_heads, state_dim, critic_value_mode, dropout)
+    for module in actor.modules():
+        if isinstance(module, nn.Dropout):
+            module.p = dropout
+        elif isinstance(module, nn.MultiheadAttention):
+            module.dropout = dropout
     return actor, critic
 
 
@@ -291,13 +299,20 @@ class MAPPOAdvanced(MAPPO):
         control_mode: str = "world",
         residual_scale: float = 0.2,
         guidance_speed: float = 0.65,
+        critic_value_mode: str = "v",
+        dropout: float = 0.0,
+        log_std_init: float = 0.0,
         **kwargs,
     ):
         from marl.geometric_control import CONTROL_MODES
 
         if control_mode not in CONTROL_MODES:
             raise ValueError(f"unknown control mode: {control_mode}")
-        if control_mode != "world" and obs_dim != 36:
+        if critic_value_mode not in ("v", "q"):
+            raise ValueError("critic_value_mode must be v or q")
+        if not 0 <= dropout < 1:
+            raise ValueError("dropout must be in [0, 1)")
+        if control_mode != "world" and obs_dim not in (36, 42):
             raise ValueError("local control requires geometric observations")
         if not np.isfinite(residual_scale) or residual_scale < 0:
             raise ValueError("residual scale must be finite and nonnegative")
@@ -321,8 +336,9 @@ class MAPPOAdvanced(MAPPO):
 
         self.actor, self.critic = build_actor_critic(
             architecture, obs_dim, action_dim, hidden_dim,
-            num_layers, num_heads, state_dim, sparse_k,
+            num_layers, num_heads, state_dim, sparse_k, critic_value_mode, dropout,
         )
+        nn.init.constant_(self.actor.policy_head.log_std, log_std_init)
         self.actor = self.actor.to(self.device)
         self.critic = self.critic.to(self.device)
         if control_mode in ("guided", "flow_guided", "flow_spread"):
@@ -337,6 +353,8 @@ class MAPPOAdvanced(MAPPO):
         # six architectures share the file extension and nothing else.
         self.meta = {
             "algo": "mappo_advanced",
+            "critic_value_mode": critic_value_mode,
+            "dropout": dropout,
             "architecture": architecture,
             "n_agents": n_agents,
             "obs_dim": obs_dim,
@@ -494,6 +512,9 @@ class MAPPOAdvanced(MAPPO):
     def load(self, path, load_optimizers: bool = True):
         checkpoint = torch.load(path, map_location=self.device, weights_only=False)
         stored_meta = checkpoint.get("meta", {})
+        for key, default in (("critic_value_mode", "q"), ("dropout", 0.1)):
+            if stored_meta.get(key, default) != self.meta[key]:
+                raise ValueError(f"checkpoint {key} mismatch; rebuild using checkpoint metadata")
         for key, default in (("control_mode", "world"), ("residual_scale", 0.2),
                              ("guidance_speed", 0.65)):
             if stored_meta.get(key, default) != self.meta[key]:
@@ -700,7 +721,15 @@ class MAPPOAdvanced(MAPPO):
         steps_per_batch = max(1, batch_size // N)
 
         metrics = {"actor_loss": 0.0, "critic_loss": 0.0, "entropy": 0.0}
+        metrics.update(approx_kl=0.0, clip_fraction=0.0)
         n_updates = 0
+        # These diagnostics are computed BEFORE the first gradient, once per rollout.
+        with torch.no_grad():
+            lp, _ = self.actor.evaluate_actions(obs, actions, ctx_all)
+            initial_ratio = torch.exp(lp - old_log_probs)
+            initial_ratio_error = (initial_ratio - 1).abs().max().item()
+            var = torch.var(returns, unbiased=False)
+            explained = (1 - torch.var(returns - old_values, unbiased=False) / var).item() if var > 1e-12 else 0.0
 
         for _ in range(n_epochs):
             order = np.random.permutation(samples)
@@ -716,6 +745,10 @@ class MAPPOAdvanced(MAPPO):
                 values_pred = self.critic(obs[idx], actions[idx], ctx_b, state_b).squeeze(-1)
 
                 ratio = torch.exp(log_probs - old_log_probs[idx])
+                with torch.no_grad():
+                    log_ratio = log_probs - old_log_probs[idx]
+                    metrics["approx_kl"] += (ratio - 1 - log_ratio).mean().item()
+                    metrics["clip_fraction"] += ((ratio - 1).abs() > self.clip_epsilon).float().mean().item()
                 adv_b = advantages[idx]
                 surr = torch.min(
                     ratio * adv_b,
@@ -748,6 +781,8 @@ class MAPPOAdvanced(MAPPO):
 
         averaged = {k: v / max(1, n_updates) for k, v in metrics.items()}
         averaged.update(mve_metrics)
+        averaged["pre_update_ratio_max_error"] = initial_ratio_error
+        averaged["explained_variance"] = explained
         return averaged
 
 

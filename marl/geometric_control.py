@@ -9,11 +9,11 @@ CONTROL_MODES = ("world", "local", "guided", "flow_guided", "flow_spread")
 
 def route_guidance(nodes, max_speed=0.018, contact_radius=0.035, speed=0.65):
     nodes = np.asarray(nodes, dtype=np.float32)
-    if nodes.shape[-1] != 36:
+    if nodes.shape[-1] not in (36, 42):
         raise ValueError("geometric control requires 36-dimensional observations")
     waypoint = nodes[..., 6:9] * 0.25
     target_delta = nodes[..., 25:28] * 0.5
-    near_target = nodes[..., 29] * 0.5 < contact_radius
+    near_target = nodes[..., 30] > 0.5
     displacement = np.where(near_target[..., None], target_delta, waypoint)
     distance = np.linalg.norm(displacement, axis=-1, keepdims=True)
     desired = displacement * np.minimum(
@@ -48,7 +48,7 @@ def local_to_world(action, env):
 
 def flow_guidance(nodes, max_speed=0.018, contact_radius=0.035, speed=0.65):
     nodes = np.asarray(nodes, dtype=np.float32)
-    if nodes.shape[-1] != 36:
+    if nodes.shape[-1] not in (36, 42):
         raise ValueError("geometric control requires 36-dimensional observations")
     lumen = nodes[..., 19] * 0.055
     occluded = lumen * nodes[..., 20]
@@ -69,7 +69,7 @@ def flow_guidance(nodes, max_speed=0.018, contact_radius=0.035, speed=0.65):
     outward = np.where(length > 1e-6, outward / np.maximum(length, 1e-6), fallback)
     waypoint = nodes[..., 6:9] * 0.25
     target_delta = nodes[..., 25:28] * 0.5
-    near_target = nodes[..., 29] * 0.5 < contact_radius
+    near_target = nodes[..., 30] > 0.5
     displacement = np.where(near_target[..., None], target_delta, waypoint)
     displacement = displacement + outward * offset[..., None]
     distance = np.linalg.norm(displacement, axis=-1, keepdims=True)
@@ -83,7 +83,7 @@ def flow_guidance(nodes, max_speed=0.018, contact_radius=0.035, speed=0.65):
 
 def _spread_target_directions(nodes, env):
     if not hasattr(env, "clot_masses") or not np.any(env.clot_masses > 0):
-        return nodes[..., 25:28], nodes[..., 29]
+        return nodes[..., 25:28], nodes[..., 29], nodes[..., 30]
     alive = np.flatnonzero(env.clot_masses[:env.active_clots] > 0)
     distances = np.full((env.num_robots, len(alive)), np.inf, np.float32)
     for index, clot in enumerate(alive):
@@ -107,14 +107,20 @@ def _spread_target_directions(nodes, env):
         np.sum(delta * normal, axis=1),
         np.sum(delta * binormal, axis=1),
     ], axis=1)
-    return np.clip(local / 0.5, -1.0, 1.0), np.linalg.norm(delta, axis=1) / 0.5
+    distance = np.linalg.norm(delta, axis=1)
+    contact_radius = getattr(env, "clot_contact_radius", 0.035)
+    touching = distance <= contact_radius
+    if getattr(env, "contact_mode", "euclidean") == "geodesic":
+        touching &= env._contact_geodesic()[np.arange(env.num_robots), alive[assignment]] <= contact_radius
+    return np.clip(local / 0.5, -1.0, 1.0), distance / 0.5, touching
 
 
 def spread_flow_guidance(nodes, env, max_speed=0.018, contact_radius=0.035, speed=0.65):
     nodes = np.asarray(nodes, dtype=np.float32).copy()
-    target_delta, target_distance = _spread_target_directions(nodes, env)
+    target_delta, target_distance, touching = _spread_target_directions(nodes, env)
     nodes[..., 25:28] = target_delta
     nodes[..., 29] = target_distance
+    nodes[..., 30] = touching
     command = flow_guidance(nodes, max_speed=max_speed,
                             contact_radius=contact_radius, speed=speed)
     peer_delta = nodes[..., 32:35]
@@ -136,7 +142,7 @@ def policy_action(action, obs, env, mode="world", residual_scale=0.2,
     action = np.asarray(action, dtype=np.float32)
     if mode == "world":
         return action
-    if obs["nodes"].shape[-1] != 36:
+    if obs["nodes"].shape[-1] not in (36, 42):
         raise ValueError("local control requires geometric observations")
     if mode in ("guided", "flow_guided", "flow_spread"):
         if mode == "guided":

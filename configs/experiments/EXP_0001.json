@@ -1,0 +1,30 @@
+{
+  "experiment_id": "EXP_0001",
+  "date": "2026-09-20",
+  "parent": "legacy_geodesic_v",
+  "python": "/home/wj/miniconda3/envs/v/bin/python",
+  "snapshot_branch": "research/EXP_0001-baseline-reproduction",
+  "snapshot_directory": "/home/wj/桌面/vascular_marl_research_EXP_0001",
+  "seeds": [42, 43, 44],
+  "devices": ["cuda:0", "cuda:1"],
+  "cpu_affinity": [0, 1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+  "environment_variables": {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "PYTHONUNBUFFERED": "1", "PYTHONFAULTHANDLER": "1"},
+  "training": {
+    "architecture": "gat", "control-mode": "flow_guided", "residual-scale": 0.2, "guidance-speed": 0.65,
+    "n-envs": 64, "robots": 5, "clots": 3, "horizon": 300, "timesteps": 1000000,
+    "n-steps": 128, "n-epochs": 5, "batch-size": 2048,
+    "scenario-pool": "anatomical", "tree-resample-interval": 900, "robot-radius": 0.0011,
+    "obs-mode": "geometric", "reward-mode": "milestone", "contact-mode": "geodesic",
+    "critic-value-mode": "v", "dropout": 0.0, "coverage-bonus": 0.2, "step-cost": 0.0,
+    "approach-scale": 0.1, "reward-double-count": "on", "hidden-dim": 128, "num-layers": 2,
+    "num-heads": 4, "lr-actor": 0.0003, "lr-critic": 0.001, "gamma": 0.99, "gae-lambda": 0.95,
+    "clip-epsilon": 0.2, "entropy-coef": 0.01, "value-clip": 10.0, "value-loss-coef": 0.5,
+    "max-grad-norm": 0.5, "log-std-init": 0.0, "no-control-margin": false,
+    "eval-interval": 100000, "eval-episodes": 5, "final-eval-episodes": 20,
+    "eval-seed": 100000, "save-interval": 100000, "no-dataset": true, "curriculum": false
+  },
+  "smoke": {"seed": 4242, "timesteps": 16384, "eval-interval": 8192, "eval-episodes": 1, "final-eval-episodes": 1, "save-interval": 8192},
+  "diagnostic_evaluation": {"split": "development_validation", "seed_base": 900000, "episodes_per_scenario": 20, "checkpoint": "final_policy.pt", "device": "cpu", "record_traces": true},
+  "gate": {"maximum_success_difference_pp": 5.0, "require_all_seeds": true, "require_finite": true, "require_checkpoint_load": true},
+  "retry": {"max_attempts": 2, "only_native_signals": [4, 6, 7, 8, 11], "performance_retries": 0}
+}

@@ -79,8 +79,11 @@ class GaussianActor(nn.Module):
     def get_actions(self, features: torch.Tensor, deterministic: bool = False):
         dist = self._distribution(features)
         raw_action = dist.mean if deterministic else dist.sample()
-        action = torch.tanh(raw_action)
-        log_prob = self._squashed_log_prob(dist, raw_action, action)
+        action = torch.tanh(raw_action).clamp(-1.0 + 1e-6, 1.0 - 1e-6)
+        # Rollouts store the bounded action, not the pre-tanh latent. Use the
+        # same inverse as evaluate_actions so float32 saturation cannot corrupt
+        # PPO's ratio before any parameter update.
+        log_prob = self._squashed_log_prob(dist, self._atanh(action), action)
         return action, log_prob, -log_prob
 
     def evaluate_actions(self, features: torch.Tensor, actions: torch.Tensor):

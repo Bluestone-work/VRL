@@ -53,3 +53,10 @@ tmp/
 
 # Old nested working directory
 vascular_marl_local/
+
+# Research records/configurations are source; raw runs remain local artifacts.
+!/research/experiments/
+!/research/experiments/*.md
+!/configs/experiments/
+!/configs/experiments/*.json
+/research/runs/

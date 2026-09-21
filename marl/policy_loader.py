@@ -95,7 +95,7 @@ def load_policy(
     # in words instead of letting it surface as a matmul shape error.
     stored_dim = meta.get("obs_dim")
     if stored_dim is not None and stored_dim != env_obs_dim:
-        expected = "legacy" if stored_dim == 20 else "geometric"
+        expected = {20: "legacy", 36: "geometric", 42: "geometric_v2"}.get(stored_dim, "unknown")
         raise SystemExit(
             f"checkpoint expects obs_dim={stored_dim} but the env provides "
             f"{env_obs_dim}.\nRe-run with --obs-mode {expected}"
@@ -146,6 +146,8 @@ def load_policy(
         control_mode=meta.get("control_mode", "world"),
         residual_scale=meta.get("residual_scale", 0.2),
         guidance_speed=meta.get("guidance_speed", 0.65),
+        critic_value_mode=meta.get("critic_value_mode", "q"),
+        dropout=meta.get("dropout", 0.1),
         device=device,
     )
     agent.actor.load_state_dict(ckpt["actor"])

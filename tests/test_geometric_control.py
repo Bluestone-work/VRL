@@ -48,6 +48,7 @@ def test_legacy_world_actions_remain_unchanged():
 def test_guidance_cancels_flow_while_holding_contact():
     obs = _observation()
     obs["nodes"][:, 29] = 0.0
+    obs["nodes"][:, 30] = 1.0
     obs["nodes"][:, 21] = 0.2
     obs["nodes"][:, 24] = 0.5
     command = route_guidance(obs["nodes"])

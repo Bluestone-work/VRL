@@ -272,27 +272,30 @@ class TransformerCritic(nn.Module):
         nhead: int = 8,
         num_layers: int = 3,
         state_dim: int = 0,
+        use_action_input: bool = True,
+        dropout: float = 0.0,
     ):
         super().__init__()
         self.state_dim = state_dim
 
         # Observation encoder
         self.obs_encoder = TransformerEncoder(
-            obs_dim, d_model, nhead, num_layers
+            obs_dim, d_model, nhead, num_layers, dropout=dropout
         )
 
         # Action encoder (simple MLP)
+        self.use_action_input = use_action_input
         self.action_encoder = nn.Sequential(
             nn.Linear(action_dim, d_model // 2),
             nn.ReLU(),
-        )
+        ) if use_action_input else None
 
         # State encoder if provided
         if state_dim > 0:
             self.state_encoder = nn.Linear(state_dim, d_model // 2)
 
         # Value head
-        combine_dim = d_model + d_model // 2
+        combine_dim = d_model + (d_model // 2 if use_action_input else 0)
         if state_dim > 0:
             combine_dim += d_model // 2
 
@@ -326,13 +329,14 @@ class TransformerCritic(nn.Module):
         obs_features = self.obs_encoder(obs, positions)
 
         # Encode actions
-        action_features = self.action_encoder(actions)
-
-        # Combine
-        combined = torch.cat([obs_features, action_features], dim=-1)
+        combined = obs_features
+        if self.use_action_input:
+            combined = torch.cat([obs_features, self.action_encoder(actions)], dim=-1)
 
         # Add global state if provided
-        if state is not None and self.state_dim > 0:
+        if self.state_dim > 0:
+            if state is None:
+                state = combined.new_zeros(batch_size, self.state_dim)
             state_features = self.state_encoder(state)
             state_features = state_features.unsqueeze(1).expand(-1, n_agents, -1)
             combined = torch.cat([combined, state_features], dim=-1)

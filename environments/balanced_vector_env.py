@@ -154,7 +154,7 @@ class BalancedVectorVascularEnv:
         info: dict[str, Any] = {}
         for key in (
             "agent_rewards", "team_reward", "success", "removal_rate",
-            "wall_collisions", "clots_engaged", "first_contact_step",
+            "wall_collisions", "wall_hits_total", "clots_engaged", "first_contact_step",
             "contact_miss",
         ):
             info[key] = np.concatenate([np.asarray(item[key]) for item in infos], axis=0)

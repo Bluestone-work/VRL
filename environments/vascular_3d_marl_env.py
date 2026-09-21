@@ -60,6 +60,7 @@ from typing import Any, Sequence
 
 import gymnasium as gym
 import numpy as np
+from environments.contact_geometry import continuous_route_distance, append_flow_features
 from gymnasium import spaces
 
 from environments.vessel_geometry import (
@@ -77,7 +78,7 @@ NODE_FEATURE_DIM_LEGACY = 20
 # roughly half a branch so the agent sees the next junction before reaching it.
 LOOKAHEAD_OFFSETS = (4, 12, 26)
 
-OBS_MODES = ("geometric", "legacy")
+OBS_MODES = ("geometric", "geometric_v2", "legacy")
 
 
 class Vascular3DMARLEnv(gym.Env):
@@ -102,6 +103,12 @@ class Vascular3DMARLEnv(gym.Env):
         robot_radius: float = 0.0045,
         scenario_pool: str | Sequence[str] = "legacy",
         initialization_mode: str = "legacy",
+        contact_mode: str = "geodesic",
+        coverage_bonus: float = 0.2,
+        step_cost: float = 0.0,
+        approach_scale: float = 0.1,
+        reward_double_count: str = "on",
+        control_margin: bool = True,
     ) -> None:
         """
         Args:
@@ -151,6 +158,15 @@ class Vascular3DMARLEnv(gym.Env):
         self.scenario_pool = resolve_pool(scenario_pool)
         self.randomize_clots = bool(randomize_clots)
         self.use_pybullet = bool(use_pybullet) or render_mode in ("rgb_array", "human")
+        if contact_mode not in ("geodesic", "euclidean"):
+            raise ValueError("unknown contact_mode")
+        if obs_mode not in ("legacy", "geometric", "geometric_v2"):
+            raise ValueError("unknown obs_mode")
+        if reward_double_count not in ("on", "off"):
+            raise ValueError("unknown reward_double_count")
+        self.contact_mode = contact_mode
+        self.reward_double_count = reward_double_count
+        self.control_margin = control_margin
         self.obs_mode = obs_mode
         self.reward_mode = reward_mode
         self.curriculum = bool(curriculum)
@@ -207,10 +223,10 @@ class Vascular3DMARLEnv(gym.Env):
 
         self.wall_collision_penalty = 0.1
         self.robot_collision_penalty = 0.1
-        self.step_cost = 0.0
+        self.step_cost = float(step_cost)
         self.progress_scale = 10.0
-        self.approach_scale = 0.1
-        self.coverage_bonus = 0.2
+        self.approach_scale = float(approach_scale)
+        self.coverage_bonus = float(coverage_bonus)
         self.success_bonus = 30.0
         self._milestones = ((0.5, 2.0), (0.75, 3.0), (0.9, 5.0), (0.99, 10.0))
         self.clot_cleared_bonus = 3.0
@@ -231,7 +247,7 @@ class Vascular3DMARLEnv(gym.Env):
         self._milestones_hit: set[float] = set()
 
         self.node_feature_dim = (
-            NODE_FEATURE_DIM_GEOMETRIC
+            42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC
             if obs_mode == "geometric"
             else NODE_FEATURE_DIM_LEGACY
         )
@@ -242,7 +258,8 @@ class Vascular3DMARLEnv(gym.Env):
         self.observation_space = spaces.Dict(
             {
                 "nodes": spaces.Box(
-                    low=-1.0, high=1.0,
+                    low=np.array([-1.0] * 36 + [0.0, -np.inf, -np.inf, 0.0, 0.0, 0.0], np.float32)[None, :].repeat(self.num_robots, 0) if obs_mode == "geometric_v2" else -1.0,
+                    high=np.array([1.0] * 36 + [np.inf, np.inf, 1.0, 1.0, 1.0, 1.0], np.float32)[None, :].repeat(self.num_robots, 0) if obs_mode == "geometric_v2" else 1.0,
                     shape=(self.num_robots, self.node_feature_dim), dtype=np.float32,
                 ),
                 "adjacency": spaces.Box(
@@ -473,6 +490,15 @@ class Vascular3DMARLEnv(gym.Env):
             self._route_cache[clot_index] = self.tree.route_to(station)
         return self._route_cache[clot_index]
 
+    def _contact_geodesic(self):
+        out = np.full((self.num_robots, self.active_clots), np.inf, np.float32)
+        for c in range(self.active_clots):
+            if self.clot_masses[c] > 0:
+                distance, hop = self._route(c)
+                out[:, c] = continuous_route_distance(
+                    self.tree, self.robot_positions, self.robot_stations, distance, hop)
+        return out
+
     def _occluded_radius(self, station: np.ndarray) -> np.ndarray:
         """Local lumen radius including the narrowing caused by live clots.
 
@@ -679,12 +705,16 @@ class Vascular3DMARLEnv(gym.Env):
         remaining_frac = float(self.clot_masses.sum()) / total
         time_progress = self.steps / self.horizon
 
+        touching = (cdist <= self.clot_contact_radius) & has_target
+        if self.contact_mode == "geodesic":
+            touching &= self._contact_geodesic()[np.arange(n), safe_target] <= self.clot_contact_radius
+
         if self.obs_mode == "legacy":
             nodes[:, 0:3] = self.robot_positions * 2.0 - 1.0
             nodes[:, 3:6] = np.clip(self.robot_velocities / self.max_speed, -1.0, 1.0)
             nodes[:, 6:9] = np.clip(delta / 0.5, -1.0, 1.0)
             nodes[:, 9] = np.clip(cdist / 0.5, 0.0, 1.0)
-            nodes[:, 10] = (cdist <= self.clot_contact_radius) & has_target
+            nodes[:, 10] = touching
             nodes[:, 11] = np.where(
                 has_target,
                 self.clot_masses[safe_target]
@@ -772,7 +802,7 @@ class Vascular3DMARLEnv(gym.Env):
             nodes[:, 25:28] = np.clip(to_local(delta) / 0.5, -1.0, 1.0)
             nodes[:, 28] = geo_norm
             nodes[:, 29] = np.clip(cdist / 0.5, 0.0, 1.0)
-            nodes[:, 30] = (cdist <= self.clot_contact_radius) & has_target
+            nodes[:, 30] = touching
             nodes[:, 31] = np.where(
                 has_target,
                 self.clot_masses[safe_target]
@@ -781,6 +811,10 @@ class Vascular3DMARLEnv(gym.Env):
             )
             nodes[:, 32:35] = np.clip(to_local(peer_delta) / self.neighbor_radius, -1.0, 1.0)
             nodes[:, 35] = np.clip(peer_dist / self.neighbor_radius, 0.0, 1.0)
+
+        if self.obs_mode == "geometric_v2":
+            append_flow_features(nodes, flow, look_rel[:, 0], lube, self.max_speed,
+                                 time_progress, remaining_frac, crowding, self.control_margin)
 
         adjacency = (d <= self.neighbor_radius).astype(np.float32)
         np.fill_diagonal(adjacency, 1.0)  # self-loops, as a GAT layer expects
@@ -971,6 +1005,8 @@ class Vascular3DMARLEnv(gym.Env):
                 self.robot_positions[:, None, :] - self.clot_positions[None, :, :], axis=2
             )
             contact = (d <= self.clot_contact_radius) & alive[None, :]
+            if self.contact_mode == "geodesic":
+                contact &= self._contact_geodesic() <= self.clot_contact_radius
             weight = np.exp(-np.square(d / self.clot_contact_radius)) * contact
             # Saturation: the marginal value of piling more robots onto one clot
             # decays, so spreading across clots clears mass faster.
@@ -1036,6 +1072,8 @@ class Vascular3DMARLEnv(gym.Env):
             team += self.success_bonus
             agent_rewards += self.success_bonus / self.num_robots
 
+        if self.reward_double_count == "off":
+            agent_rewards -= self.progress_scale * agent_lysis + self.success_bonus / self.num_robots * success
         reward = float(team + agent_rewards.mean())
 
         if self.use_pybullet:

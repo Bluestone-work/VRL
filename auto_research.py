@@ -1,3 +1,4 @@
+# Deprecated for MAPPO studies; use scripts/auto_research_ladder.py (dry-run default).
 """自动科研系统：基线 → 创新迭代 → 性能追踪
 
 工作流程：

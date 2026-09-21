@@ -67,7 +67,7 @@ def test_observation_matches_space(obs_mode: str) -> None:
     obs, info = env.reset(seed=1)
     assert env.observation_space.contains(obs), "observation left its declared space"
     expected = (
-        NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric" else NODE_FEATURE_DIM_LEGACY
+        42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric" else NODE_FEATURE_DIM_LEGACY
     )
     assert obs["nodes"].shape == (3, expected)
     for _ in range(20):

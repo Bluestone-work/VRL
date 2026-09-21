@@ -153,6 +153,7 @@ class GATActor(nn.Module):
         hidden_dim: int = 128,
         num_gat_layers: int = 2,
         num_heads: int = 4,
+        dropout: float = 0.1,
     ):
         super().__init__()
         self.obs_dim = obs_dim
@@ -164,6 +165,7 @@ class GATActor(nn.Module):
             hidden_dim=hidden_dim,
             num_layers=num_gat_layers,
             num_heads=num_heads,
+            dropout=dropout,
         )
 
         # Action head (per-agent)
@@ -221,6 +223,8 @@ class GATCritic(nn.Module):
         num_gat_layers: int = 2,
         num_heads: int = 4,
         state_dim: int = 0,
+        use_action_input: bool = True,
+        dropout: float = 0.1,
     ):
         super().__init__()
         self.obs_dim = obs_dim
@@ -233,16 +237,17 @@ class GATCritic(nn.Module):
             hidden_dim=hidden_dim,
             num_layers=num_gat_layers,
             num_heads=num_heads,
+            dropout=dropout,
         )
 
-        # Encode actions (simple MLP, not graph-based)
+        # V critics intentionally omit actions; q critics retain the legacy path.
+        self.use_action_input = bool(use_action_input)
         self.action_encoder = nn.Sequential(
-            nn.Linear(action_dim, hidden_dim // 2),
-            nn.ReLU(),
-        )
+            nn.Linear(action_dim, hidden_dim // 2), nn.ReLU(),
+        ) if self.use_action_input else None
 
         # Combine obs features, action features, and global state
-        combine_dim = hidden_dim + hidden_dim // 2
+        combine_dim = hidden_dim + (hidden_dim // 2 if self.use_action_input else 0)
         if state_dim > 0:
             self.state_encoder = nn.Linear(state_dim, hidden_dim // 2)
             combine_dim += hidden_dim // 2
@@ -277,11 +282,12 @@ class GATCritic(nn.Module):
         # Encode observations with GAT
         obs_features = self.obs_encoder(obs_all, adj_matrix)  # [B, N, hidden_dim]
 
-        # Encode actions
-        action_features = self.action_encoder(actions_all)  # [B, N, hidden_dim/2]
-
-        # Combine features
-        combined = torch.cat([obs_features, action_features], dim=-1)  # [B, N, hidden_dim + hidden_dim/2]
+        # Encode actions only for legacy Q critics.
+        if self.use_action_input:
+            action_features = self.action_encoder(actions_all)
+            combined = torch.cat([obs_features, action_features], dim=-1)
+        else:
+            combined = obs_features
 
         # Add global state. The head's input width is fixed at construction, so
         # when state_dim > 0 the slot must be filled on every call -- zero-fill

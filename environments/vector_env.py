@@ -32,6 +32,7 @@ from __future__ import annotations
 from typing import Any, Sequence
 
 import numpy as np
+from environments.contact_geometry import continuous_route_distance, append_flow_features
 
 from environments.vessel_geometry import (
     SCENARIOS,
@@ -57,6 +58,12 @@ class VectorVascularEnv:
         robot_radius: float = 0.0045,
         scenario_pool: str | Sequence[str] = "legacy",
         tree_resample_interval: int = 0,
+        contact_mode: str = "geodesic",
+        coverage_bonus: float = 0.2,
+        step_cost: float = 0.0,
+        approach_scale: float = 0.1,
+        reward_double_count: str = "on",
+        control_margin: bool = True,
     ) -> None:
         from environments.vascular_3d_marl_env import (
             LOOKAHEAD_OFFSETS,
@@ -82,10 +89,19 @@ class VectorVascularEnv:
         # inside one topology, short enough to cycle the pool during a run.
         self.tree_resample_interval = int(tree_resample_interval)
         self._steps_since_tree = 0
+        if contact_mode not in ("geodesic", "euclidean"):
+            raise ValueError("unknown contact_mode")
+        if obs_mode not in ("legacy", "geometric", "geometric_v2"):
+            raise ValueError("unknown obs_mode")
+        if reward_double_count not in ("on", "off"):
+            raise ValueError("unknown reward_double_count")
+        self.contact_mode = contact_mode
+        self.reward_double_count = reward_double_count
+        self.control_margin = control_margin
         self.obs_mode = obs_mode
         self._lookahead_offsets = LOOKAHEAD_OFFSETS
         self.node_feature_dim = (
-            NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric"
+            42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric"
             else NODE_FEATURE_DIM_LEGACY
         )
 
@@ -110,10 +126,10 @@ class VectorVascularEnv:
 
         self.wall_collision_penalty = 0.1
         self.robot_collision_penalty = 0.1
-        self.step_cost = 0.0
+        self.step_cost = float(step_cost)
         self.progress_scale = 10.0
-        self.approach_scale = 0.1
-        self.coverage_bonus = 0.2
+        self.approach_scale = float(approach_scale)
+        self.coverage_bonus = float(coverage_bonus)
         self.success_bonus = 30.0
         self.clot_cleared_bonus = 3.0
         self._milestones = ((0.5, 2.0), (0.75, 3.0), (0.9, 5.0), (0.99, 10.0))
@@ -224,6 +240,7 @@ class VectorVascularEnv:
         self.robot_velocities = np.zeros((n, r, 3), np.float32)
         self.steps = np.zeros((n,), np.int32)
         self.first_contact = np.full((n,), -1, np.int32)
+        self.episode_wall_hits = np.zeros(n, np.int64)
         self._milestone_hit = np.zeros((n, len(self._milestones)), bool)
         self._reset_envs(np.arange(n))
         self._steps_since_tree = 0
@@ -318,6 +335,7 @@ class VectorVascularEnv:
         self.robot_velocities[idx] = 0.0
         self.steps[idx] = 0
         self.first_contact[idx] = -1
+        self.episode_wall_hits[idx] = 0
         self._milestone_hit[idx] = False
 
     # ------------------------------------------------------------- mechanics
@@ -372,6 +390,17 @@ class VectorVascularEnv:
                 offset = self.robot_positions[rr, cc] - tree.points[st]
                 along = np.clip(np.sum(offset * unit, axis=1), -step_len, step_len)
                 out[rr, cc] = dist[st] - np.where(valid, along, 0.0)
+        return out
+
+    def _contact_geodesic(self):
+        out = np.full((self.n_envs, self.num_robots, self._max_clot_slots), np.inf, np.float32)
+        for slot in range(self._max_clot_slots):
+            live = self.clot_alive[:, slot] & (self.clot_masses[:, slot] > 0)
+            for station in np.unique(self.clot_stations[live, slot]):
+                rows = np.flatnonzero(live & (self.clot_stations[:, slot] == station))
+                distance, hop = self._route(int(station))
+                out[rows, :, slot] = continuous_route_distance(
+                    self.tree, self.robot_positions[rows], self.robot_stations[rows], distance, hop)
         return out
 
     def _occluded_radius(self, station: np.ndarray) -> np.ndarray:
@@ -468,6 +497,7 @@ class VectorVascularEnv:
         self.robot_positions = clamped.reshape(e, r, 3)
         self.robot_stations = st.reshape(e, r)
         wall_hits = outside.reshape(e, r).astype(np.float32)
+        self.episode_wall_hits += wall_hits.sum(axis=1).astype(np.int64)
         self.robot_velocities = (self.robot_positions - prev_pos).astype(np.float32)
 
         # Kill outward velocity on wall contact.
@@ -493,6 +523,8 @@ class VectorVascularEnv:
         )                                                   # [E, R, S]
         live = self.clot_alive & (self.clot_masses > 0)
         contact = (dist <= self.clot_contact_radius) & live[:, None, :]
+        if self.contact_mode == "geodesic":
+            contact &= self._contact_geodesic() <= self.clot_contact_radius
         weight = np.exp(-np.square(dist / self.clot_contact_radius)) * contact
         per_clot = weight.sum(axis=1)                       # [E, S]
         damp = np.where(
@@ -556,6 +588,10 @@ class VectorVascularEnv:
         agent_rewards = agent_rewards + (
             self.success_bonus / r * success[:, None]
         )
+        if self.reward_double_count == "off":
+            # Controlled reward allocation ablation: retain team progress and
+            # success, remove their duplicate local contribution to PPO.
+            agent_rewards -= self.progress_scale * agent_lysis + self.success_bonus / r * success[:, None]
         reward = (team + agent_rewards.mean(axis=1)).astype(np.float32)
 
         info: dict[str, Any] = {
@@ -564,6 +600,7 @@ class VectorVascularEnv:
             "success": success,
             "removal_rate": removal_rate.astype(np.float32),
             "wall_collisions": wall_hits.sum(axis=1).astype(np.int32),
+            "wall_hits_total": self.episode_wall_hits.copy(),
             "clots_engaged": engaged.astype(np.int32),
             "first_contact_step": self.first_contact.copy(),
             "contact_miss": self.first_contact < 0,
@@ -625,6 +662,7 @@ class VectorVascularEnv:
             "robot_velocities": self.robot_velocities.copy(),
             "steps": self.steps.copy(),
             "first_contact": self.first_contact.copy(),
+            "episode_wall_hits": self.episode_wall_hits.copy(),
             "milestone_hit": self._milestone_hit.copy(),
             "difficulty": self._difficulty,
             "rng_state": self._rng.bit_generator.state,
@@ -647,6 +685,7 @@ class VectorVascularEnv:
         self._milestone_hit = state["milestone_hit"].copy()
         self._difficulty = float(state["difficulty"])
         self._rng.bit_generator.state = state["rng_state"]
+        self.episode_wall_hits = state.get("episode_wall_hits", np.zeros(self.n_envs, np.int64)).copy()
         self._route_cache = {}
 
     # ------------------------------------------------------------ observation
@@ -692,12 +731,16 @@ class VectorVascularEnv:
             0.0,
         )
 
+        touching = (cdist <= self.clot_contact_radius) & has
+        if self.contact_mode == "geodesic":
+            touching &= self._contact_geodesic()[rows, np.arange(r)[None, :], safe] <= self.clot_contact_radius
+
         if self.obs_mode == "legacy":
             nodes[:, :, 0:3] = self.robot_positions * 2.0 - 1.0
             nodes[:, :, 3:6] = np.clip(self.robot_velocities / self.max_speed, -1, 1)
             nodes[:, :, 6:9] = np.clip(delta / 0.5, -1, 1)
             nodes[:, :, 9] = np.clip(cdist / 0.5, 0, 1)
-            nodes[:, :, 10] = (cdist <= self.clot_contact_radius) & has
+            nodes[:, :, 10] = touching
             nodes[:, :, 11] = mass_frac
             nodes[:, :, 12:15] = np.clip(peer_delta / self.neighbor_radius, -1, 1)
             nodes[:, :, 15] = np.clip(peer_dist / self.neighbor_radius, 0, 1)
@@ -764,10 +807,14 @@ class VectorVascularEnv:
             nodes[:, :, 25:28] = np.clip(to_local(delta) / 0.5, -1, 1)
             nodes[:, :, 28] = geo_norm
             nodes[:, :, 29] = np.clip(cdist / 0.5, 0, 1)
-            nodes[:, :, 30] = (cdist <= self.clot_contact_radius) & has
+            nodes[:, :, 30] = touching
             nodes[:, :, 31] = mass_frac
             nodes[:, :, 32:35] = np.clip(to_local(peer_delta) / self.neighbor_radius, -1, 1)
             nodes[:, :, 35] = np.clip(peer_dist / self.neighbor_radius, 0, 1)
+
+        if self.obs_mode == "geometric_v2":
+            append_flow_features(nodes, flow, look_rel[:, :, 0], lube, self.max_speed,
+                                 tprog, remaining, crowd, self.control_margin)
 
         adjacency = (d <= self.neighbor_radius).astype(np.float32)
         idx = np.arange(r)
