@@ -173,6 +173,8 @@ class VectorVascularEnv:
         self._max_clot_slots = self.num_clots + 1
         self._rng = np.random.default_rng(seed)
         self._difficulty = 1.0
+        # Explicit planner assignments; None = nearest-clot rule (default).
+        self.task_assignments: np.ndarray | None = None
         self.tree = None
         self._geometry_generation = 0
 
@@ -347,6 +349,8 @@ class VectorVascularEnv:
         self.first_contact = np.full((n,), -1, np.int32)
         self.episode_wall_hits = np.zeros(n, np.int64)
         self._milestone_hit = np.zeros((n, len(self._milestones)), bool)
+        # A fresh scene invalidates any planner assignment.
+        self.task_assignments = None
         self._reset_envs(np.arange(n))
         self._steps_since_tree = 0
         return self._observe()
@@ -457,11 +461,36 @@ class VectorVascularEnv:
         self.first_contact[idx] = -1
         self.episode_wall_hits[idx] = 0
         self._milestone_hit[idx] = False
+        if self.task_assignments is not None:
+            # Auto-reset rows get a new scene; their planner assignment is
+            # stale. -1 (idle) rather than re-running a planner mid-step: the
+            # caller re-plans on its own cadence.
+            self.task_assignments[idx] = -1
 
     # ------------------------------------------------------------- mechanics
 
     def _assign(self) -> np.ndarray:
-        """Geodesic-nearest live clot per robot; -1 if the env is cleared."""
+        """Geodesic-nearest live clot per robot; -1 if the env is cleared.
+
+        When `self.task_assignments` is set (by the connectivity allocator or
+        any other planner), the explicit assignment REPLACES the nearest rule,
+        exactly as in the single env: a live-clot check is still applied so a
+        planner cannot keep steering robots at a cleared clot.
+        """
+        if getattr(self, "task_assignments", None) is not None:
+            assigned = np.asarray(self.task_assignments, dtype=np.int32)
+            if assigned.shape != (self.n_envs, self.num_robots):
+                raise ValueError(
+                    "vector task assignments must be [n_envs, num_robots]"
+                )
+            valid = (assigned >= 0) & (assigned < self._max_clot_slots)
+            live = self.clot_alive & (self.clot_masses > 0)
+            check = np.where(
+                valid, live[np.arange(self.n_envs)[:, None],
+                            np.clip(assigned, 0, self._max_clot_slots - 1)], False
+            )
+            return np.where(check, assigned, -1).astype(np.int32)
+
         n, r = self.n_envs, self.num_robots
         best = np.full((n, r), -1, np.int32)
         best_d = np.full((n, r), np.inf, np.float32)
@@ -485,6 +514,23 @@ class VectorVascularEnv:
                     better, slot, best[sub]
                 )
         return best
+
+    def set_task_assignments(self, assignments: np.ndarray) -> None:
+        """Explicit per-env clot assignments; None resets to nearest mode."""
+        if assignments is None:
+            self.task_assignments = None
+            return
+        assigned = np.asarray(assignments, dtype=np.int32)
+        if assigned.shape != (self.n_envs, self.num_robots):
+            raise ValueError(
+                "vector task assignments must be [n_envs, num_robots]"
+            )
+        if np.any(assigned < -1) or np.any(assigned >= self._max_clot_slots):
+            raise ValueError("task assignment contains an invalid clot slot")
+        self.task_assignments = assigned.copy()
+
+    def clear_task_assignments(self) -> None:
+        self.task_assignments = None
 
     def _geodesic(self, target: np.ndarray) -> np.ndarray:
         """Continuous along-vessel distance to each robot's assigned clot."""
