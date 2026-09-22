@@ -42,6 +42,11 @@ from marl.transformer_policy import (
 
 CONTEXT_KEYS = ("adjacency", "positions", "velocities")
 
+# The context dict may also carry "agent_mask" ([n_agents] or [batch, n_agents]
+# bool). It is NOT in CONTEXT_KEYS because it is stored in the rollout buffer as
+# its own array rather than per-key lists; see ContextRolloutBuffer.store.
+MASK_KEY = "agent_mask"
+
 ARCHITECTURES = (
     "gat",                # standard GAT (matches train_gnn_mappo.py)
     "edge_gat",           # 8-D edge features, but also ~3x fewer params and
@@ -88,7 +93,7 @@ class GATActorAdapter(_ActorBase):
         self.encoder = GATEncoder(obs_dim, hidden_dim, num_layers, num_heads)
 
     def encode(self, obs, ctx):
-        return self.encoder(obs, ctx.get("adjacency"))
+        return self.encoder(obs, ctx.get("adjacency"), ctx.get(MASK_KEY))
 
 
 class EdgeGATActor(_ActorBase):
@@ -207,7 +212,7 @@ class GATCriticAdapter(_CriticAdapter):
         self.inner = GATCritic(obs_dim, action_dim, hidden_dim, num_layers, num_heads, state_dim, use_action_input=critic_value_mode == "q", dropout=dropout)
 
     def forward(self, obs, actions, ctx, state=None):
-        return self.inner(obs, actions, ctx.get("adjacency"), state)
+        return self.inner(obs, actions, ctx.get("adjacency"), state, ctx.get(MASK_KEY))
 
 
 class TransformerCriticAdapter(_CriticAdapter):
@@ -302,6 +307,7 @@ class MAPPOAdvanced(MAPPO):
         critic_value_mode: str = "v",
         dropout: float = 0.0,
         log_std_init: float = 0.0,
+        max_agents: int = 0,
         **kwargs,
     ):
         from marl.geometric_control import CONTROL_MODES
@@ -318,6 +324,13 @@ class MAPPOAdvanced(MAPPO):
             raise ValueError("residual scale must be finite and nonnegative")
         if not np.isfinite(guidance_speed) or not 0 < guidance_speed <= 1:
             raise ValueError("guidance speed must be in (0, 1]")
+        # max_agents declares the padding capacity of the interaction models.
+        # 0 disables variable-N machinery entirely (legacy behaviour); a value
+        # >= n_agents enables running the same parameter-shared checkpoint
+        # with fewer real agents than the tensor dimension.
+        max_agents = int(max_agents)
+        if max_agents and max_agents < n_agents:
+            raise ValueError("max_agents must be >= n_agents when nonzero")
         # Build the parent with use_gat=True so it does not construct the
         # MADDPG fallback, then replace both networks and their optimisers.
         super().__init__(
@@ -372,7 +385,12 @@ class MAPPOAdvanced(MAPPO):
                 else "world_frame" if control_mode == "world"
                 else "controller_residual"
             ),
+            "max_agents": max_agents,
         }
+        # A checkpoint built with max_agents=N can be reloaded for inference
+        # at any n_agents <= N (with padding); one built with max_agents=0 is
+        # fixed-N. See load().
+        self.max_agents = max(max_agents, n_agents) if max_agents else 0
         self.buffer = ContextRolloutBuffer()
         self.world_model = None
         self.imagination_horizon = 0
@@ -557,6 +575,20 @@ class MAPPOAdvanced(MAPPO):
                 continue
             t = torch.as_tensor(np.asarray(v), dtype=torch.float32, device=self.device)
             out[k] = t if batched else t.unsqueeze(0)
+        mask = ctx.get(MASK_KEY)
+        if mask is not None:
+            m = torch.as_tensor(np.asarray(mask), dtype=torch.bool, device=self.device)
+            if m.ndim == 1:
+                if batched:
+                    # A single [N] mask against a batched obs means "the same
+                    # active set in every env" -- expand along the batch.
+                    m = m.unsqueeze(0).expand(
+                        int(np.asarray(ctx[CONTEXT_KEYS[0]]).shape[0])
+                        if CONTEXT_KEYS[0] in ctx else m.shape[0]
+                    )
+                else:
+                    m = m.unsqueeze(0)
+            out[MASK_KEY] = m
         return out
 
     @torch.no_grad()
@@ -567,7 +599,13 @@ class MAPPOAdvanced(MAPPO):
         state: Optional[np.ndarray] = None,
         deterministic: bool = False,
     ):
-        """One environment step. Returns (actions, log_probs, values)."""
+        """One environment step. Returns (actions, log_probs, values).
+
+        When the observation carries padding rows (n_agents > the env's real
+        robot count) the caller must pass ctx["agent_mask"] with True for the
+        real agents; padding rows then produce inert actions that the caller
+        discards, and real-agent outputs are identical to the unpadded call.
+        """
         obs_t = torch.as_tensor(obs, dtype=torch.float32, device=self.device).unsqueeze(0)
         ctx_t = self._ctx_to_torch(ctx, batched=False)
         state_t = (
@@ -632,6 +670,14 @@ class MAPPOAdvanced(MAPPO):
             k: torch.as_tensor(data[k], dtype=torch.float32, device=dev)
             for k in CONTEXT_KEYS if k in data
         }
+        # agent_mask: True where the slot was a REAL agent during rollout.
+        # Padding slots are zeroed in every per-agent quantity below so they
+        # contribute nothing to GAE, the actor/critic losses, entropy or the
+        # reported metrics. With no mask (legacy rollouts) everything is real.
+        agent_masks = (
+            torch.as_tensor(data["agent_mask"], dtype=torch.bool, device=dev)
+            if "agent_mask" in data else None
+        )
         states = (
             torch.as_tensor(data["states"], dtype=torch.float32, device=dev)
             if "states" in data else None
@@ -651,6 +697,10 @@ class MAPPOAdvanced(MAPPO):
                     )
                     for k in CONTEXT_KEYS if f"next_{k}" in data
                 }
+                if "next_agent_mask" in data:
+                    next_ctx[MASK_KEY] = torch.as_tensor(
+                        data["next_agent_mask"], dtype=torch.bool, device=dev
+                    )
                 next_states = (
                     torch.as_tensor(
                         data["next_states"], dtype=torch.float32, device=dev
@@ -680,6 +730,12 @@ class MAPPOAdvanced(MAPPO):
                 last_index = -1 if vectorized else slice(-1, None)
                 last_obs = obs[last_index]
                 last_ctx = {k: v[last_index] for k, v in ctx_all.items()}
+                if agent_masks is not None:
+                    last_ctx[MASK_KEY] = (
+                        agent_masks.reshape(-1, *agent_masks.shape[2:])[
+                            -1 if vectorized else slice(-1, None)
+                        ]
+                    )
                 last_state = states[last_index] if states is not None else None
                 last_actions = actions[last_index]
                 last_value = self.critic(
@@ -689,7 +745,18 @@ class MAPPOAdvanced(MAPPO):
                     last_value = last_value.squeeze(0)
                 next_values = np.concatenate([values_np[1:], last_value[None]], axis=0)
 
+        # Padding rows carry zeros, not garbage: rewards/terminals were stored
+        # masked by the caller, and the value/bootstrap terms are zeroed here so
+        # GAE sees a dead branch that contributes exactly zero everywhere.
+        if agent_masks is not None:
+            m_np = agent_masks.cpu().numpy()
+            rewards = rewards * m_np
+            dones = dones * m_np
+            values_np = values_np * m_np
+            next_values = next_values * m_np
         terminals = data.get("terminals", dones)
+        if agent_masks is not None:
+            terminals = terminals * agent_masks.cpu().numpy()
         advantages = np.zeros_like(rewards)
         running = np.zeros_like(rewards[0])
         for step in reversed(range(len(rewards))):
@@ -722,10 +789,24 @@ class MAPPOAdvanced(MAPPO):
                 k: value.reshape(samples, *value.shape[2:])
                 for k, value in ctx_all.items()
             }
+            if agent_masks is not None:
+                agent_masks = agent_masks.reshape(samples, *agent_masks.shape[2:])
             if states is not None:
                 states = states.reshape(samples, *states.shape[2:])
         else:
             samples, n_agents = obs.shape[:2]
+
+        # Flat [samples, N] float mask: 1 where the slot is a real agent. When
+        # agent_counts differ per sample this is genuinely mixed-N in one batch
+        # -- the padding zeros just never reach a loss.
+        mask_f = None
+        if agent_masks is not None:
+            mask_f = agent_masks.reshape(samples, n_agents).to(torch.float32)
+            agent_counts = mask_f.sum(dim=1)                       # [samples]
+        else:
+            agent_counts = torch.full(
+                (samples,), float(n_agents), device=dev
+            )
 
         N = n_agents
         steps_per_batch = max(1, batch_size // N)
@@ -733,11 +814,30 @@ class MAPPOAdvanced(MAPPO):
         metrics = {"actor_loss": 0.0, "critic_loss": 0.0, "entropy": 0.0}
         metrics.update(approx_kl=0.0, clip_fraction=0.0)
         n_updates = 0
+
+        def _padded_real_mean(per_agent: torch.Tensor) -> torch.Tensor:
+            """Mean over real agent-slots only; 0 for an all-padding batch row.
+
+            Dividing by the per-sample agent count (not by N) keeps the loss
+            scale independent of how much padding a minibatch happens to
+            contain, which is what makes mixed-N batches comparable.
+            """
+            if mask_f is None:
+                return per_agent.mean()
+            total = per_agent.sum()
+            count = mask_f.sum().clamp(min=1.0)
+            return total / count
+
         # These diagnostics are computed BEFORE the first gradient, once per rollout.
         with torch.no_grad():
             lp, _ = self.actor.evaluate_actions(obs, actions, ctx_all)
             initial_ratio = torch.exp(lp - old_log_probs)
-            initial_ratio_error = (initial_ratio - 1).abs().max().item()
+            if mask_f is not None:
+                # Padding rows have garbage old_log_probs/entropy; only real
+                # slots enter the diagnostic.
+                initial_ratio = initial_ratio * mask_f
+            initial_ratio_error = (initial_ratio - mask_f).abs().max().item() if mask_f is not None \
+                else (initial_ratio - 1).abs().max().item()
             var = torch.var(returns, unbiased=False)
             explained = (1 - torch.var(returns - old_values, unbiased=False) / var).item() if var > 1e-12 else 0.0
 
@@ -748,6 +848,7 @@ class MAPPOAdvanced(MAPPO):
 
                 ctx_b = {k: v[idx] for k, v in ctx_all.items()}
                 state_b = states[idx] if states is not None else None
+                mask_b = mask_f[idx] if mask_f is not None else None
 
                 log_probs, entropy = self.actor.evaluate_actions(
                     obs[idx], actions[idx], ctx_b
@@ -757,22 +858,43 @@ class MAPPOAdvanced(MAPPO):
                 ratio = torch.exp(log_probs - old_log_probs[idx])
                 with torch.no_grad():
                     log_ratio = log_probs - old_log_probs[idx]
-                    metrics["approx_kl"] += (ratio - 1 - log_ratio).mean().item()
-                    metrics["clip_fraction"] += ((ratio - 1).abs() > self.clip_epsilon).float().mean().item()
+                    if mask_b is not None:
+                        ratio_diag = ratio * mask_b
+                        log_ratio = log_ratio * mask_b
+                        ones = mask_b
+                    else:
+                        ratio_diag, ones = ratio, None
+                    if ones is None:
+                        metrics["approx_kl"] += (ratio_diag - 1 - log_ratio).mean().item()
+                        metrics["clip_fraction"] += ((ratio_diag - 1).abs() > self.clip_epsilon).float().mean().item()
+                    else:
+                        count = max(1.0, float(ones.sum()))
+                        metrics["approx_kl"] += float(((ratio_diag - ones - log_ratio).sum() / count).item())
+                        metrics["clip_fraction"] += float(
+                            (((ratio_diag - ones).abs() > self.clip_epsilon) & ones.bool()).float().sum().item() / count
+                        )
                 adv_b = advantages[idx]
                 surr = torch.min(
                     ratio * adv_b,
                     torch.clamp(ratio, 1 - self.clip_epsilon, 1 + self.clip_epsilon) * adv_b,
                 )
-                actor_loss = -surr.mean() - self.entropy_coef * entropy.mean()
+                if mask_b is not None:
+                    surr = surr * mask_b
+                    entropy_term = entropy * mask_b
+                else:
+                    entropy_term = entropy
+                actor_loss = -_padded_real_mean(surr) - self.entropy_coef * _padded_real_mean(entropy_term)
 
                 # Trust region around the value that generated the rollout.
                 ov = old_values[idx]
                 clipped = ov + torch.clamp(values_pred - ov, -self.value_clip, self.value_clip)
-                critic_loss = self.value_loss_coef * torch.max(
+                per_slot_critic = torch.max(
                     (values_pred - returns[idx]).pow(2),
                     (clipped - returns[idx]).pow(2),
-                ).mean()
+                )
+                if mask_b is not None:
+                    per_slot_critic = per_slot_critic * mask_b
+                critic_loss = self.value_loss_coef * _padded_real_mean(per_slot_critic)
 
                 self.actor_optimizer.zero_grad()
                 actor_loss.backward()
@@ -786,7 +908,10 @@ class MAPPOAdvanced(MAPPO):
 
                 metrics["actor_loss"] += actor_loss.item()
                 metrics["critic_loss"] += critic_loss.item()
-                metrics["entropy"] += entropy.mean().item()
+                metrics["entropy"] += (
+                    _padded_real_mean(entropy_term).item()
+                    if mask_b is not None else entropy.mean().item()
+                )
                 n_updates += 1
 
         averaged = {k: v / max(1, n_updates) for k, v in metrics.items()}
@@ -812,6 +937,7 @@ class ContextRolloutBuffer:
             "next_adjacency": [], "next_positions": [], "next_velocities": [],
             "geometry_features": [], "next_geometry_features": [],
             "scenario_id": [],
+            "agent_mask": [], "next_agent_mask": [],
         }
 
     def store(self, obs, actions, rewards, dones, log_probs, values,
@@ -832,6 +958,13 @@ class ContextRolloutBuffer:
         self._d["geometry_features"].append(geometry_features)
         self._d["next_geometry_features"].append(next_geometry_features)
         self._d["scenario_id"].append(scenario_id)
+        # The mask rides along in the context dict but is stored as its own
+        # boolean array -- `get()` casts everything it materialises to
+        # float32, which would destroy the bool semantics the update reads.
+        self._d["agent_mask"].append(ctx.get(MASK_KEY))
+        self._d["next_agent_mask"].append(
+            None if next_ctx is None else next_ctx.get(MASK_KEY)
+        )
         for k in CONTEXT_KEYS:
             self._d[k].append(ctx.get(k))
             self._d[f"next_{k}"].append(
@@ -843,7 +976,11 @@ class ContextRolloutBuffer:
         for k, v in self._d.items():
             if not v or v[0] is None:
                 continue
-            out[k] = np.asarray(v, dtype=np.float32)
+            if k in ("agent_mask", "next_agent_mask"):
+                # Booleans, not float32: the update logic reads them as masks.
+                out[k] = np.asarray(v, dtype=bool)
+            else:
+                out[k] = np.asarray(v, dtype=np.float32)
         self.clear()
         return out
 

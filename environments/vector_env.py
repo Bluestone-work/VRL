@@ -64,6 +64,7 @@ class VectorVascularEnv:
         approach_scale: float = 0.1,
         reward_double_count: str = "on",
         control_margin: bool = True,
+        active_robots: int | None = None,
     ) -> None:
         from environments.vascular_3d_marl_env import (
             LOOKAHEAD_OFFSETS,
@@ -74,6 +75,25 @@ class VectorVascularEnv:
         self.n_envs = int(n_envs)
         self.scenario = scenario
         self.num_robots = int(num_robots)
+        # Simulation capacity vs. active agents. `num_robots` sets the tensor
+        # dimension (max agents); `active_robots` is how many are actually
+        # simulated per env. Slots >= active_robots are inert: zero state,
+        # zero reward, excluded from collisions/lysis/statistics. This is the
+        # environment-side half of variable-N inference/training; the policy
+        # side masks the same slots out of GAT attention and every loss.
+        if active_robots is None:
+            self.active_robots = self.num_robots
+        else:
+            self.active_robots = int(active_robots)
+        if not 1 <= self.active_robots <= self.num_robots:
+            raise ValueError(
+                f"active_robots={self.active_robots} must be in [1, num_robots={self.num_robots}]"
+            )
+        self.agent_mask = np.zeros((self.n_envs, self.num_robots), dtype=bool)
+        self.agent_mask[:, : self.active_robots] = True
+        # Per-env active robot count, exposed for the trainer's team-share
+        # division. Scalar when uniform (the current construction always is).
+        self.robot_team_size: np.ndarray | int = self.active_robots
         self.num_clots = int(num_clots)
         self.horizon = int(horizon)
         self.randomize_scenario = bool(randomize_scenario)
@@ -319,20 +339,32 @@ class VectorVascularEnv:
             self.clot_positions[idx] = tree.points[stations]
 
         # --- robots: spread along the proximal trunk ---
+        # Only the first `active_robots` slots are placed; the padding slots
+        # keep their zeroed state and never enter pair terms, lysis or stats.
         trunk = tree.stations_of_branch(0)
         span = max(int(0.25 * trunk.size), 2)
-        sel = trunk[np.linspace(0, span - 1, self.num_robots).astype(np.int32)]
-        anchor = tree.points[sel]                               # [R, 3]
-        radial = rng.normal(0.0, 0.25, size=(idx.size, self.num_robots, 3))
+        sel = trunk[np.linspace(0, span - 1, self.active_robots).astype(np.int32)]
+        anchor = tree.points[sel]                               # [A, 3]
+        radial = rng.normal(0.0, 0.25, size=(idx.size, self.active_robots, 3))
         radial = radial.astype(np.float32) * tree.radii[sel][None, :, None]
         pos = anchor[None, :, :] + radial
         flat_hint = np.tile(sel, (idx.size, 1)).reshape(-1)
         clamped, _out, st, _ax = tree.project(
             pos.reshape(-1, 3), self.robot_radius, hint=flat_hint
         )
-        self.robot_positions[idx] = clamped.reshape(idx.size, self.num_robots, 3)
-        self.robot_stations[idx] = st.reshape(idx.size, self.num_robots)
+        self.robot_positions[idx] = 0.0
+        self.robot_stations[idx] = 0
         self.robot_velocities[idx] = 0.0
+        positions_view = self.robot_positions[idx]
+        positions_view[:, : self.active_robots] = clamped.reshape(
+            idx.size, self.active_robots, 3
+        )
+        self.robot_positions[idx] = positions_view
+        stations_view = self.robot_stations[idx]
+        stations_view[:, : self.active_robots] = st.reshape(
+            idx.size, self.active_robots
+        )
+        self.robot_stations[idx] = stations_view
         self.steps[idx] = 0
         self.first_contact[idx] = -1
         self.episode_wall_hits[idx] = 0
@@ -446,11 +478,19 @@ class VectorVascularEnv:
         )
 
     def _pair_terms(self):
-        """Overlap counts and separation impulses, batched."""
+        """Overlap counts and separation impulses, batched.
+
+        Padding slots are excluded from the pair loop entirely: they sit at
+        the origin, which would otherwise register as a pile-up collision
+        against every real robot's distance bookkeeping.
+        """
         delta = self.robot_positions[:, :, None, :] - self.robot_positions[:, None, :, :]
         d = np.linalg.norm(delta, axis=3)
         eye = np.eye(self.num_robots, dtype=bool)[None, :, :]
         d = np.where(eye, np.inf, d)
+        # Distances involving a padding slot (either endpoint) are infinite.
+        pad = ~self.agent_mask
+        d = np.where(pad[:, :, None] | pad[:, None, :], np.inf, d)
         overlap = d < self.collision_distance
         depth = np.where(overlap, self.collision_distance - d, 0.0)
         direction = delta / np.maximum(d, 1e-8)[:, :, :, None]
@@ -463,13 +503,17 @@ class VectorVascularEnv:
         """Advance every env one step.
 
         Returns (obs, reward, terminated, truncated, info) with leading batch dim.
-        `reward` is [n_envs]; `info["agent_rewards"]` is [n_envs, n_robots].
+        `reward` is [n_envs]; `info["agent_rewards"]` is [n_envs, num_robots]
+        with zero rows on padding slots when `active_robots < num_robots`.
         """
         tree = self.tree
         e, r = self.n_envs, self.num_robots
         action = np.clip(
             np.asarray(action, np.float32).reshape(e, r, 3), -1.0, 1.0
         )
+        # Padding slots get a zero command regardless of the policy output:
+        # they stay at the origin with zero velocity and never interact.
+        action = action * self.agent_mask[:, :, None]
 
         prev_pos = self.robot_positions.copy()
         prev_st = self.robot_stations.copy()
@@ -485,18 +529,27 @@ class VectorVascularEnv:
         flow, axis_point, lumen = self._flow_and_axis(prev_pos, prev_st, occluded)
         commanded = commanded * self._lubrication(prev_pos, axis_point, lumen)[:, :, None]
 
-        noise = self._rng.normal(0.0, self.brownian_sigma, prev_pos.shape).astype(
-            np.float32
-        )
+        # Brownian noise is drawn for the ACTIVE slots only. Drawing for the
+        # full padded tensor would consume more RNG values per step than the
+        # unpadded environment and desynchronise every shared downstream draw.
+        noise = np.zeros(prev_pos.shape, np.float32)
+        active_cols = self.agent_mask[0] if self.agent_mask.shape[1] else None
+        noise[:, : self.active_robots] = self._rng.normal(
+            0.0, self.brownian_sigma, (e, self.active_robots, 3)
+        ).astype(np.float32)
         _d, _hits, separation = self._pair_terms()
         proposed = prev_pos + commanded + flow + noise + separation
 
         clamped, outside, st, ax = tree.project(
             proposed.reshape(-1, 3), self.robot_radius, hint=prev_st.reshape(-1)
         )
-        self.robot_positions = clamped.reshape(e, r, 3)
-        self.robot_stations = st.reshape(e, r)
-        wall_hits = outside.reshape(e, r).astype(np.float32)
+        clamped = clamped.reshape(e, r, 3) * self.agent_mask[:, :, None]
+        outside = outside.reshape(e, r) * self.agent_mask
+        st = np.where(self.agent_mask, st.reshape(e, r), prev_st)
+        ax = ax.reshape(e, r, 3) * self.agent_mask[:, :, None]
+        self.robot_positions = clamped
+        self.robot_stations = st
+        wall_hits = outside.astype(np.float32)
         self.episode_wall_hits += wall_hits.sum(axis=1).astype(np.int64)
         self.robot_velocities = (self.robot_positions - prev_pos).astype(np.float32)
 
@@ -525,6 +578,9 @@ class VectorVascularEnv:
         contact = (dist <= self.clot_contact_radius) & live[:, None, :]
         if self.contact_mode == "geodesic":
             contact &= self._contact_geodesic() <= self.clot_contact_radius
+        # Padding slots never lyse: their origin position could sit inside a
+        # contact sphere and silently inflate per-clot contact counts.
+        contact &= self.agent_mask[:, :, None]
         weight = np.exp(-np.square(dist / self.clot_contact_radius)) * contact
         per_clot = weight.sum(axis=1)                       # [E, S]
         damp = np.where(
@@ -585,14 +641,19 @@ class VectorVascularEnv:
         terminated = success
         truncated = (self.steps >= self.horizon) & ~terminated
         team = team + self.success_bonus * success
+        # The success share is divided among the ACTIVE robots only, and
+        # padding rows are zeroed after the fact so agent_rewards stays exactly
+        # zero there. Reward semantics for real agents are unchanged.
         agent_rewards = agent_rewards + (
-            self.success_bonus / r * success[:, None]
+            self.success_bonus / max(self.active_robots, 1) * success[:, None]
         )
         if self.reward_double_count == "off":
             # Controlled reward allocation ablation: retain team progress and
             # success, remove their duplicate local contribution to PPO.
-            agent_rewards -= self.progress_scale * agent_lysis + self.success_bonus / r * success[:, None]
-        reward = (team + agent_rewards.mean(axis=1)).astype(np.float32)
+            agent_rewards -= self.progress_scale * agent_lysis + self.success_bonus / max(self.active_robots, 1) * success[:, None]
+        agent_rewards = agent_rewards * self.agent_mask
+        active = self.agent_mask.sum(axis=1)                    # [n_envs]
+        reward = (team + (agent_rewards.sum(axis=1) / np.maximum(active, 1))).astype(np.float32)
 
         info: dict[str, Any] = {
             "agent_rewards": agent_rewards,
@@ -606,6 +667,10 @@ class VectorVascularEnv:
             "contact_miss": self.first_contact < 0,
             "scenario": self.active_scenario,
             "geometry_id": self.active_geometry_id,
+            # Exposed so the trainer can thread the same mask into the policy
+            # rollout buffer; [n_envs, num_robots] bool.
+            "agent_mask": self.agent_mask.copy(),
+            "active_robots": int(self.active_robots),
         }
 
         done = terminated | truncated
@@ -711,14 +776,30 @@ class VectorVascularEnv:
         clot_pos = self.clot_positions[rows, safe]
         delta = np.where(has[:, :, None], clot_pos - self.robot_positions, 0.0)
         cdist = np.where(has, np.linalg.norm(clot_pos - self.robot_positions, axis=2), 1.0)
+        # Padding slots: no target, no clot direction/distance. The target
+        # assignment above reads station 0 for inert slots, which would fill
+        # the clot features with a phantom target.
+        has &= self.agent_mask
+        delta = delta * self.agent_mask[:, :, None]
+        cdist = np.where(self.agent_mask, cdist, 1.0)
 
         d, _hits, _imp = self._pair_terms()
+        # Padding rows have an all-inf distance row; argmin would still pick
+        # index 0 and read a real robot's position as its "peer". Point them at
+        # themselves instead so peer_delta/peer_dist are zero and crowding is
+        # computed over real neighbours only.
         peer = np.argmin(d, axis=2)
+        pad_rows = ~self.agent_mask
+        if pad_rows.any():
+            own = np.arange(r)[None, :].repeat(e, axis=0)
+            peer = np.where(pad_rows, own, peer)
         peer_delta = np.take_along_axis(
             self.robot_positions, peer[:, :, None], axis=1
         ) - self.robot_positions
+        peer_delta = peer_delta * self.agent_mask[:, :, None]
         peer_dist = np.linalg.norm(peer_delta, axis=2)
-        crowd = (d < self.neighbor_radius).sum(axis=2) / max(r - 1, 1)
+        real_peers = self.agent_mask.sum(axis=1)[:, None] - self.agent_mask.astype(np.float32)
+        crowd = (d < self.neighbor_radius).sum(axis=2) / np.maximum(real_peers, 1.0)
 
         total = np.maximum(self.clot_initial.sum(axis=1), 1e-8)
         remaining = (self.clot_masses.sum(axis=1) / total)[:, None]
@@ -774,7 +855,7 @@ class VectorVascularEnv:
                     look[rr[m], cc[m]] = tree.lookahead(
                         st[rr[m], cc[m]], self._lookahead_offsets, hop
                     )
-            rr, cc = np.nonzero(~has)
+            rr, cc = np.nonzero(~has & self.agent_mask)
             if rr.size:
                 look[rr, cc] = tree.lookahead(
                     st[rr, cc], self._lookahead_offsets, None
@@ -811,6 +892,13 @@ class VectorVascularEnv:
             nodes[:, :, 31] = mass_frac
             nodes[:, :, 32:35] = np.clip(to_local(peer_delta) / self.neighbor_radius, -1, 1)
             nodes[:, :, 35] = np.clip(peer_dist / self.neighbor_radius, 0, 1)
+            # Zero every per-slot feature on padding rows in one place. The
+            # geometry-derived scalars (clearance, lumen, flow, ...) read off
+            # station 0 for inert slots and would otherwise carry phantom
+            # values into the observation even though no gradient flows there.
+            pad = ~self.agent_mask
+            if pad.any():
+                nodes[pad] = 0.0
 
         if self.obs_mode == "geometric_v2":
             append_flow_features(nodes, flow, look_rel[:, :, 0], lube, self.max_speed,
@@ -819,6 +907,11 @@ class VectorVascularEnv:
         adjacency = (d <= self.neighbor_radius).astype(np.float32)
         idx = np.arange(r)
         adjacency[:, idx, idx] = 1.0
+        # Padding slots are fully disconnected, including the self-loop: the
+        # GAT agent_mask already excludes them, and a disconnected adjacency
+        # keeps any legacy consumer (e.g. a checkpoint without mask support)
+        # from seeing phantom neighbours either.
+        adjacency *= self.agent_mask[:, :, None] * self.agent_mask[:, None, :]
 
         clot_state = np.zeros((e, self._max_clot_slots, 6), np.float32)
         clot_state[:, :, 0:3] = self.clot_positions * 2.0 - 1.0
@@ -829,7 +922,15 @@ class VectorVascularEnv:
         )
         clot_state *= self.clot_alive[:, :, None]
 
-        return {"nodes": nodes, "adjacency": adjacency, "clot_state": clot_state}
+        return {
+            "nodes": nodes,
+            "adjacency": adjacency,
+            "clot_state": clot_state,
+            # Present whenever active_robots < num_robots so downstream code
+            # can mask without recomputing; consumers that ignore unknown keys
+            # (the historical ones) are unaffected.
+            "agent_mask": self.agent_mask.copy(),
+        }
 
     def close(self) -> None:
         pass

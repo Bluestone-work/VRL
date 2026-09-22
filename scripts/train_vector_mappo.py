@@ -33,7 +33,15 @@ def parse_args():
     parser.add_argument("--residual-scale", type=float, default=0.2)
     parser.add_argument("--guidance-speed", type=float, default=0.65)
     parser.add_argument("--n-envs", type=int, default=64)
-    parser.add_argument("--robots", type=int, default=5)
+    parser.add_argument("--robots", type=int, default=5,
+                        help="tensor agent dimension (max agents for the policy)")
+    parser.add_argument("--active-robots", type=int, default=None,
+                        help="real agents simulated; <= --robots. Default: all "
+                             "slots real (legacy fixed-N behaviour)")
+    parser.add_argument("--max-agents", type=int, default=0,
+                        help="declared padding capacity recorded in checkpoint "
+                             "meta; 0 = fixed-N (legacy). Must be >= --robots "
+                             "when nonzero")
     parser.add_argument("--clots", type=int, default=3)
     parser.add_argument("--horizon", type=int, default=300)
     parser.add_argument("--timesteps", type=int, default=500000,
@@ -124,11 +132,20 @@ def curriculum_difficulty(transitions, total_transitions, boundaries, difficulti
 
 
 def build_context(env, obs):
-    return {
+    """Context dict for one policy forward pass.
+
+    `agent_mask` is included whenever the observation carries one (padded
+    rollouts); legacy obs without it omit the key and nothing downstream
+    changes.
+    """
+    ctx = {
         "positions": env.robot_positions.copy(),
         "velocities": env.robot_velocities.copy(),
         "adjacency": obs["adjacency"].copy(),
     }
+    if "agent_mask" in obs:
+        ctx["agent_mask"] = obs["agent_mask"].copy()
+    return ctx
 
 
 def evaluate_territories(agent, args, episodes_per_territory):
@@ -265,6 +282,7 @@ def main():
         approach_scale=args.approach_scale,
         reward_double_count=args.reward_double_count,
         control_margin=not args.no_control_margin,
+        active_robots=args.active_robots,
     )
     if args.curriculum:
         env.set_difficulty(curriculum_difficulty(
@@ -282,6 +300,7 @@ def main():
         residual_scale=args.residual_scale,
         guidance_speed=args.guidance_speed,
         state_dim=state_dim,
+        max_agents=args.max_agents,
         hidden_dim=args.hidden_dim,
         num_layers=args.num_layers,
         num_heads=args.num_heads,
@@ -456,21 +475,46 @@ def main():
                 next_geometry = np.where(
                     done[:, None], geometry_features, env.geometry_features
                 )
+                # Per-agent reward for the rollout buffer. The team share is
+                # divided by the number of ACTIVE robots (env.robot_team_size
+                # when the env exposes one, else args.robots), and padding
+                # rows are zeroed so PPO never sees a phantom agent-step.
+                team_size = getattr(env, "robot_team_size", args.robots)
+                if isinstance(team_size, np.ndarray):
+                    team_size = team_size.astype(np.float32)[:, None]
                 agent_rewards = (
                     info["agent_rewards"]
-                    + info["team_reward"][:, None] / args.robots
+                    + info["team_reward"][:, None] / np.maximum(team_size, 1)
                 ).astype(np.float32)
+                rollout_mask = info.get("agent_mask") if isinstance(info, dict) else None
+                if rollout_mask is None:
+                    rollout_mask = (
+                        obs["agent_mask"] if "agent_mask" in obs else None
+                    )
+                if rollout_mask is not None:
+                    agent_rewards = agent_rewards * rollout_mask
+                    stored_done = np.repeat(
+                        done[:, None], args.robots, axis=1
+                    ).astype(np.float32) * rollout_mask
+                    stored_terminals = np.repeat(
+                        terminated[:, None], args.robots, axis=1
+                    ).astype(np.float32) * rollout_mask
+                else:
+                    stored_done = np.repeat(
+                        done[:, None], args.robots, axis=1
+                    ).astype(np.float32)
+                    stored_terminals = np.repeat(
+                        terminated[:, None], args.robots, axis=1
+                    ).astype(np.float32)
                 agent.buffer.store(
                     nodes, actions, agent_rewards,
-                    np.repeat(done[:, None], args.robots, axis=1).astype(np.float32),
+                    stored_done,
                     log_probs, values, ctx, states,
                     next_obs=transition_next_obs["nodes"],
                     next_ctx=transition_next_ctx, next_state=next_states,
                     geometry_features=geometry_features,
                     next_geometry_features=next_geometry,
-                    terminals=np.repeat(
-                        terminated[:, None], args.robots, axis=1
-                    ).astype(np.float32),
+                    terminals=stored_terminals,
                     scenario_id=info["scenario_id"],
                 )
 

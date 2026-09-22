@@ -68,6 +68,16 @@ class BalancedVectorVascularEnv:
         return np.concatenate([env.robot_positions for env in self.envs], axis=0)
 
     @property
+    def agent_mask(self) -> np.ndarray:
+        """[n_envs, num_robots] bool; True on real agents."""
+        return np.concatenate([env.agent_mask for env in self.envs], axis=0)
+
+    @property
+    def active_robots(self) -> int:
+        """Active agent count, valid when uniform across children (it is)."""
+        return int(self.envs[0].active_robots)
+
+    @property
     def robot_velocities(self) -> np.ndarray:
         return np.concatenate([env.robot_velocities for env in self.envs], axis=0)
 
@@ -155,9 +165,23 @@ class BalancedVectorVascularEnv:
         for key in (
             "agent_rewards", "team_reward", "success", "removal_rate",
             "wall_collisions", "wall_hits_total", "clots_engaged", "first_contact_step",
-            "contact_miss",
+            "contact_miss", "agent_mask",
         ):
-            info[key] = np.concatenate([np.asarray(item[key]) for item in infos], axis=0)
+            if all(key in item for item in infos):
+                info[key] = np.concatenate(
+                    [np.asarray(item[key]) for item in infos], axis=0
+                )
+        # Per-env team size for the reward split: scalar when every child uses
+        # the same active count, per-env array otherwise (mixed-N batching).
+        sizes = np.concatenate([
+            np.full(env.n_envs, env.active_robots, dtype=np.int64)
+            for env in self.envs
+        ])
+        info["active_robots"] = sizes
+        self.robot_team_size = (
+            int(sizes[0]) if np.all(sizes == sizes[0])
+            else sizes.astype(np.float32)
+        )
         info["scenario"] = self.scenario_names.copy()
         info["scenario_id"] = self.scenario_ids.copy()
         info["geometry_id"] = np.concatenate([

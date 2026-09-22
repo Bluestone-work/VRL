@@ -38,12 +38,21 @@ class GATLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
         self.layer_norm = nn.LayerNorm(out_dim)
 
-    def forward(self, x: torch.Tensor, adj_matrix: Optional[torch.Tensor] = None) -> torch.Tensor:
+    def forward(
+        self,
+        x: torch.Tensor,
+        adj_matrix: Optional[torch.Tensor] = None,
+        agent_mask: Optional[torch.Tensor] = None,
+    ) -> torch.Tensor:
         """
         Args:
             x: [batch, n_agents, in_dim] node features
             adj_matrix: [batch, n_agents, n_agents] adjacency matrix (optional)
                        If None, uses fully-connected graph
+            agent_mask: [batch, n_agents] or [n_agents] bool, True for a REAL
+                       agent and False for a padding slot. Padding rows are
+                       invisible in both directions: real agents never attend
+                       to them, and they attend to nothing.
         Returns:
             out: [batch, n_agents, out_dim] updated node features
         """
@@ -68,8 +77,25 @@ class GATLayer(nn.Module):
             mask = adj_matrix.unsqueeze(1).expand(-1, self.num_heads, -1, -1)  # [B, H, N, N]
             attn_scores = attn_scores.masked_fill(mask == 0, float('-inf'))
 
+        # Padding agents: mask their keys (no real agent attends to them) and
+        # their queries (they attend to nothing). A fully masked query row
+        # softmaxes to NaN, which nan_to_num below turns into an all-zero row
+        # so the padding output stays inert.
+        if agent_mask is not None:
+            am = agent_mask.to(torch.bool)
+            if am.ndim == 1:
+                am = am.unsqueeze(0).expand(batch_size, -1)
+            pad_keys = ~am[:, None, :]          # [B, 1, N]
+            attn_scores = attn_scores.masked_fill(pad_keys.unsqueeze(1), float('-inf'))
+            pad_queries = ~am[:, :, None]       # [B, N, 1]
+            attn_scores = attn_scores.masked_fill(pad_queries.unsqueeze(1), float('-inf'))
+
         # Softmax to get attention weights
         attn_weights = F.softmax(attn_scores, dim=-1)  # [B, H, N, N]
+        # A fully-masked row (padding query, or a real agent isolated with an
+        # all-zero adjacency row) would be NaN; those rows contribute nothing
+        # downstream, so zero them instead of poisoning the graph.
+        attn_weights = torch.nan_to_num(attn_weights, nan=0.0)
         attn_weights = self.dropout(attn_weights)
 
         # Apply attention to values
@@ -118,11 +144,14 @@ class GATEncoder(nn.Module):
         self,
         obs: torch.Tensor,
         adj_matrix: Optional[torch.Tensor] = None,
+        agent_mask: Optional[torch.Tensor] = None,
     ) -> torch.Tensor:
         """
         Args:
             obs: [batch, n_agents, obs_dim] agent observations
             adj_matrix: [batch, n_agents, n_agents] adjacency matrix
+            agent_mask: [batch, n_agents] or [n_agents] bool, True for real
+                agents, False for padding slots (see GATLayer.forward)
         Returns:
             features: [batch, n_agents, hidden_dim] graph-aware features
         """
@@ -131,7 +160,7 @@ class GATEncoder(nn.Module):
 
         # Apply GAT layers
         for gat_layer in self.gat_layers:
-            x = gat_layer(x, adj_matrix)
+            x = gat_layer(x, adj_matrix, agent_mask)
 
         # Final MLP
         x = self.output_mlp(x)
@@ -267,6 +296,7 @@ class GATCritic(nn.Module):
         actions_all: torch.Tensor,
         adj_matrix: Optional[torch.Tensor] = None,
         state: Optional[torch.Tensor] = None,
+        agent_mask: Optional[torch.Tensor] = None,
     ) -> torch.Tensor:
         """
         Args:
@@ -274,13 +304,27 @@ class GATCritic(nn.Module):
             actions_all: [batch, n_agents, action_dim]
             adj_matrix: [batch, n_agents, n_agents]
             state: [batch, state_dim] global state (e.g., clot positions)
+            agent_mask: [batch, n_agents] or [n_agents] bool, True for real
+                agents. Padding rows never influence the real agents' value
+                estimates.
         Returns:
             values: [batch, n_agents, 1] per-agent value estimates
         """
         batch_size, n_agents, _ = obs_all.shape
 
         # Encode observations with GAT
-        obs_features = self.obs_encoder(obs_all, adj_matrix)  # [B, N, hidden_dim]
+        obs_features = self.obs_encoder(
+            obs_all, adj_matrix, agent_mask
+        )  # [B, N, hidden_dim]
+
+        # A padding slot's value is forced to zero: it carries no observation,
+        # and the PPO update discards it via the same mask, so this only makes
+        # the masking boundary explicit instead of relying on the caller.
+        if agent_mask is not None:
+            am = agent_mask.to(torch.bool)
+            if am.ndim == 1:
+                am = am.unsqueeze(0).expand(batch_size, -1)
+            obs_features = obs_features * am.unsqueeze(-1).to(obs_features.dtype)
 
         # Encode actions only for legacy Q critics.
         if self.use_action_input:
