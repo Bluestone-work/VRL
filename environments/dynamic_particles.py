@@ -180,13 +180,27 @@ class DynamicIntravascularParticles:
         """Push robots out of particle overlaps; [n_envs, n_robots, 3].
 
         Same convention as the robot-robot term: a robot wedged between two
-        particles is pushed by both (sum over particles).
+        particles is pushed by both (sum over particles). Exact coincidence
+        (distance 0) has no defined direction, so a deterministic axis-ordered
+        unit vector is used -- the same disambiguation the robot-robot term
+        effectively gets from its `1e-8` denominator guard, made explicit
+        here because tests place a robot exactly on a particle.
         """
         delta = robot_positions[:, :, None, :] - self.positions[:, None, :, :]
         dist = np.linalg.norm(delta, axis=3)
         overlap = dist < self.contact_distance
         depth = np.where(overlap, self.contact_distance - dist, 0.0)
+        # Degenerate direction at exact coincidence: pick the first nonzero
+        # axis of the delta, else +x.
         direction = delta / np.maximum(dist, 1e-8)[..., None]
+        degenerate = overlap & (dist < 1e-9)
+        if np.any(degenerate):
+            fallback = np.zeros_like(direction)
+            fallback[..., 0] = 1.0
+            nonzero_axis = np.argmax(np.abs(delta) > 1e-12, axis=-1)
+            for axis in range(3):
+                fallback[..., axis] = np.where(nonzero_axis == axis, 1.0, 0.0)
+            direction = np.where(degenerate[..., None], fallback, direction)
         impulse = (direction * depth[..., None]).sum(axis=2)
         return impulse.astype(np.float32)
 

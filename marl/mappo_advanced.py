@@ -666,10 +666,6 @@ class MAPPOAdvanced(MAPPO):
         old_values = torch.as_tensor(data["values"], dtype=torch.float32, device=dev)
         rewards, dones, values_np = data["rewards"], data["dones"], data["values"]
 
-        ctx_all = {
-            k: torch.as_tensor(data[k], dtype=torch.float32, device=dev)
-            for k in CONTEXT_KEYS if k in data
-        }
         # agent_mask: True where the slot was a REAL agent during rollout.
         # Padding slots are zeroed in every per-agent quantity below so they
         # contribute nothing to GAE, the actor/critic losses, entropy or the
@@ -678,6 +674,15 @@ class MAPPOAdvanced(MAPPO):
             torch.as_tensor(data["agent_mask"], dtype=torch.bool, device=dev)
             if "agent_mask" in data else None
         )
+        ctx_all = {
+            k: torch.as_tensor(data[k], dtype=torch.float32, device=dev)
+            for k in CONTEXT_KEYS if k in data
+        }
+        # The mask must ride in ctx_all too: every encoder adapter reads it
+        # from there, and the pre-update ratio diagnostic forwards through
+        # the actor with ctx_all.
+        if agent_masks is not None:
+            ctx_all[MASK_KEY] = agent_masks
         states = (
             torch.as_tensor(data["states"], dtype=torch.float32, device=dev)
             if "states" in data else None
@@ -774,7 +779,24 @@ class MAPPOAdvanced(MAPPO):
         returns, mve_metrics = self._model_value_expansion(data, returns)
         advantages = torch.as_tensor(advantages, dtype=torch.float32, device=dev)
         returns = torch.as_tensor(returns, dtype=torch.float32, device=dev)
-        advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
+        # Advantage normalisation over REAL slots only. Padding rows are
+        # structurally zero, so including them would shrink the variance and
+        # shift the mean by a factor that depends on HOW MUCH padding the
+        # batch happens to contain -- silently coupling the update's scale to
+        # the padding ratio.
+        if agent_masks is not None:
+            adv_mask = agent_masks.reshape(-1).to(torch.bool)
+            real = advantages.reshape(-1)[adv_mask]
+            if real.numel() > 1:
+                mean = real.mean()
+                std = real.std()
+                advantages = (advantages - mean) / (std + 1e-8)
+                # Padding rows normalise to -mean/std; force back to exact 0.
+                advantages = advantages * agent_masks.to(advantages.dtype)
+            else:
+                advantages = advantages * 0.0
+        else:
+            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
 
         if vectorized:
             time_steps, n_envs, n_agents = obs.shape[:3]
@@ -791,6 +813,9 @@ class MAPPOAdvanced(MAPPO):
             }
             if agent_masks is not None:
                 agent_masks = agent_masks.reshape(samples, *agent_masks.shape[2:])
+                # ctx_all holds the SAME tensor object; after the reshape
+                # reassignment above it points at the old [T, E, N] view.
+                ctx_all[MASK_KEY] = agent_masks
             if states is not None:
                 states = states.reshape(samples, *states.shape[2:])
         else:
