@@ -54,6 +54,14 @@ def parse_args():
                         default=0.12,
                         help="minimum geodesic spawn separation as a fraction "
                              "of total vessel arclength")
+    parser.add_argument("--dynamic-particles", action="store_true",
+                        help="enable blood-cell-inspired dynamic intravascular "
+                             "obstacles (default off; legacy runs unaffected)")
+    parser.add_argument("--particle-count", type=int, default=24)
+    parser.add_argument("--particle-radius-ratio", type=float, default=1.6,
+                        help="obstacle radius as a ratio of robot radius")
+    parser.add_argument("--particle-lateral-drift", type=float, default=0.15)
+    parser.add_argument("--particle-seed", type=int, default=None)
     parser.add_argument("--clots", type=int, default=3)
     parser.add_argument("--horizon", type=int, default=300)
     parser.add_argument("--timesteps", type=int, default=500000,
@@ -298,6 +306,11 @@ def main():
         initialization_mode=args.initialization_mode,
         separated_min_euclidean_radii=args.separated_min_euclidean_radii,
         separated_min_geodesic_fraction=args.separated_min_geodesic_fraction,
+        dynamic_intravascular_particles=args.dynamic_particles,
+        particle_count=args.particle_count,
+        particle_radius_ratio=args.particle_radius_ratio,
+        particle_lateral_drift=args.particle_lateral_drift,
+        particle_seed=args.particle_seed,
     )
     if args.curriculum:
         env.set_difficulty(curriculum_difficulty(

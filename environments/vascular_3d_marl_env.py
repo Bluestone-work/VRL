@@ -111,6 +111,11 @@ class Vascular3DMARLEnv(gym.Env):
         control_margin: bool = True,
         separated_min_euclidean_radii: float = 8.0,
         separated_min_geodesic_fraction: float = 0.12,
+        dynamic_intravascular_particles: bool = False,
+        particle_count: int = 24,
+        particle_radius_ratio: float = 1.6,
+        particle_lateral_drift: float = 0.15,
+        particle_seed: int | None = None,
     ) -> None:
         """
         Args:
@@ -183,6 +188,14 @@ class Vascular3DMARLEnv(gym.Env):
         self.separated_min_euclidean_radii = float(separated_min_euclidean_radii)
         self.separated_min_geodesic_fraction = float(separated_min_geodesic_fraction)
         self.separated_relaxation_level = -1
+        # Deferred: particle construction needs the physical constants set
+        # below; see the block after `self.lubrication_floor`.
+        self.dynamic_intravascular_particles = bool(dynamic_intravascular_particles)
+        self._particle_params = (
+            int(particle_count), float(particle_radius_ratio),
+            float(particle_lateral_drift), particle_seed,
+        )
+        self.particles = None
 
         # --- physical scale ---------------------------------------------------
         # Domain is the unit cube. Vessel radius and robot radius are chosen so
@@ -232,6 +245,28 @@ class Vascular3DMARLEnv(gym.Env):
         # exploit physically rather than with a penalty term.
         self.lubrication_range = 4.0 * self.robot_radius
         self.lubrication_floor = 0.35
+
+        # --- blood-cell-inspired dynamic obstacles (off by default) --------
+        # First-version model: advected by the same local flow the robots see
+        # plus a small random lateral drift. NOT a red-blood-cell model (no
+        # haemorheology / deformability / near-wall lift). Size is relative
+        # to the robot radius. Dedicated RNG so the env's own stream is
+        # untouched; flag off reproduces legacy behaviour exactly.
+        if self.dynamic_intravascular_particles:
+            from environments.dynamic_particles import (
+                DynamicIntravascularParticles,
+            )
+
+            count, ratio, drift, pseed = self._particle_params
+            self.particles = DynamicIntravascularParticles(
+                n_envs=1,
+                robot_radius=self.robot_radius,
+                count=count,
+                radius_ratio=ratio,
+                lateral_drift=drift,
+                seed=pseed,
+            )
+            self.particles.configure_flow(self.flow_speed, self.tube_radius)
 
         self.wall_collision_penalty = 0.1
         self.robot_collision_penalty = 0.1
@@ -329,6 +364,8 @@ class Vascular3DMARLEnv(gym.Env):
             min_radius=3.0 * self.robot_radius,
         )
         self._route_cache = {}
+        if self.particles is not None:
+            self.particles.reset(self.tree)
 
     def _sample_clots(self) -> None:
         """Place clots at centerline stations, spread over branches.
@@ -539,6 +576,15 @@ class Vascular3DMARLEnv(gym.Env):
         frac = self.clot_masses / np.maximum(self.clot_initial_mass, 1e-8)
         block = (bump * (frac * alive)[None, :]).max(axis=1)
         return np.maximum(radius * (1.0 - self.clot_occlusion * block), 1e-4)
+
+    def _occluded_station_array(self) -> np.ndarray:
+        """[n_stations] occluded lumen radius for per-station lookups.
+
+        The robot path uses per-robot occlusion; the obstacles need the same
+        physical narrowing keyed by station so obstacle flow responds to
+        clots exactly as robot flow does.
+        """
+        return self._occluded_radius(np.arange(self.tree.n_stations, dtype=np.int32))
 
     def _lubrication(self, positions: np.ndarray, station: np.ndarray) -> np.ndarray:
         """Thrust scaling near the wall, in [lubrication_floor, 1].
@@ -1118,7 +1164,16 @@ class Vascular3DMARLEnv(gym.Env):
             0.0, self.brownian_sigma, prev_positions.shape
         ).astype(np.float32)
         _hits, _pairs, separation = self._robot_collisions()
-        proposed = prev_positions + commanded + flow + noise + separation
+        particle_impulse = np.zeros_like(separation)
+        if self.particles is not None:
+            # Obstacles advect first, using the same occluded-radius flow the
+            # robots see; then they push robots out of overlap.
+            station_occluded = self._occluded_station_array()
+            self.particles.step(self.tree, station_occluded)
+            particle_impulse = self.particles.separation_impulse(
+                prev_positions[None, :, :]
+            )[0]
+        proposed = prev_positions + commanded + flow + noise + separation + particle_impulse
 
         self.robot_positions, wall_hits, self.robot_stations, axis_point = (
             self.tree.project(proposed, self.robot_radius, hint=prev_stations)
@@ -1244,6 +1299,17 @@ class Vascular3DMARLEnv(gym.Env):
             "first_contact_step": self._first_contact_step,
             "difficulty": self._difficulty,
         }
+        if self.particles is not None:
+            # Robot-obstacle bookkeeping for this step.
+            overlap, clearance, _nearest = self.particles.nearest_stats(
+                self.robot_positions[None, :, :]
+            )
+            rel_speed = self.particles.relative_speed(
+                self.robot_positions[None, :, :], self.robot_velocities[None, :, :]
+            )
+            info["particle_collisions"] = int(overlap[0].sum())
+            info["particle_clearance_min"] = float(clearance[0].min())
+            info["particle_relative_speed_mean"] = float(rel_speed[0].mean())
         return self._build_observation(), reward, terminated, truncated, info
 
     # -------------------------------------------------------------- pybullet

@@ -68,6 +68,11 @@ class VectorVascularEnv:
         initialization_mode: str = "legacy",
         separated_min_euclidean_radii: float = 8.0,
         separated_min_geodesic_fraction: float = 0.12,
+        dynamic_intravascular_particles: bool = False,
+        particle_count: int = 24,
+        particle_radius_ratio: float = 1.6,
+        particle_lateral_drift: float = 0.15,
+        particle_seed: int | None = None,
     ) -> None:
         from environments.vascular_3d_marl_env import (
             LOOKAHEAD_OFFSETS,
@@ -131,6 +136,14 @@ class VectorVascularEnv:
         self.separated_min_geodesic_fraction = float(separated_min_geodesic_fraction)
         # Per-reset record of the relaxation ladder level actually used.
         self.separated_relaxation_levels = np.full(self.n_envs, -1, dtype=np.int8)
+        # Deferred: particle construction needs robot_radius, set below once
+        # the physical constants exist.
+        self.dynamic_intravascular_particles = bool(dynamic_intravascular_particles)
+        self._particle_params = (
+            int(particle_count), float(particle_radius_ratio),
+            float(particle_lateral_drift), particle_seed,
+        )
+        self.particles = None
         self._lookahead_offsets = LOOKAHEAD_OFFSETS
         self.node_feature_dim = (
             42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric"
@@ -178,6 +191,29 @@ class VectorVascularEnv:
         self.tree = None
         self._geometry_generation = 0
 
+        # --- blood-cell-inspired dynamic obstacles (off by default) --------
+        # First-version model: advected by the same local flow the robots see
+        # plus a small random lateral drift. NOT a red-blood-cell model (no
+        # haemorheology / deformability / near-wall lift). Sizes are relative
+        # to the robot radius. The dedicated RNG means enabling this flag
+        # leaves the env's own RNG stream untouched, so legacy runs reproduce
+        # bit-identically with the flag off.
+        if self.dynamic_intravascular_particles:
+            from environments.dynamic_particles import (
+                DynamicIntravascularParticles,
+            )
+
+            count, ratio, drift, pseed = self._particle_params
+            self.particles = DynamicIntravascularParticles(
+                n_envs=self.n_envs,
+                robot_radius=self.robot_radius,
+                count=count,
+                radius_ratio=ratio,
+                lateral_drift=drift,
+                seed=pseed,
+            )
+            self.particles.configure_flow(self.flow_speed, self.tube_radius)
+
         self.reset_all()
 
     # ------------------------------------------------------------------ setup
@@ -206,6 +242,9 @@ class VectorVascularEnv:
             end_arc[br.start : br.stop + 1] = self.tree.arclength[br.stop]
         self._clot_eligible_arc = arc
         self._clot_room = end_arc - self.tree.arclength
+        # A new tree invalidates obstacle placements as well.
+        if self.particles is not None:
+            self.particles.reset(self.tree)
 
     def _territory_clot_candidates(
         self,
@@ -585,6 +624,33 @@ class VectorVascularEnv:
         block = (bump * (frac * self.clot_alive)[:, None, :]).max(axis=2)
         return np.maximum(radius * (1.0 - self.clot_occlusion * block), 1e-4)
 
+    def _occluded_station_array(self) -> np.ndarray:
+        """[n_stations] occluded lumen radius, for per-station lookups.
+
+        The robots' `_occluded_radius` is per robot; the particles need the
+        same physical narrowing keyed by station so obstacle flow responds
+        to clots exactly as robot flow does.
+        """
+        tree = self.tree
+        radius = tree.radii.copy()
+        live = self.clot_alive & (self.clot_masses > 0)
+        if not np.any(live):
+            return radius
+        arc_c = tree.arclength[self.clot_stations]               # [E, S]
+        frac = np.where(
+            live, self.clot_masses / np.maximum(self.clot_initial, 1e-8), 0.0
+        )
+        # For each station take the max blockage over envs that are live.
+        arc_s = tree.arclength                                        # [N]
+        same = (
+            tree.branch_ids[:, None, None]
+            == tree.branch_ids[self.clot_stations][None, :, :]      # [N, E, S]
+        )
+        d_arc = np.abs(arc_s[:, None, None] - arc_c[None, :, :])
+        bump = np.exp(-0.5 * np.square(d_arc / self.clot_contact_radius)) * same
+        block = (bump * frac[None, :, :]).max(axis=(1, 2))
+        return np.maximum(radius * (1.0 - self.clot_occlusion * block), 1e-4)
+
     def _flow_and_axis(self, positions, station, occluded):
         """Batched flow lookup; returns (flow, axis_point, lumen_radius)."""
         tree = self.tree
@@ -672,7 +738,16 @@ class VectorVascularEnv:
             0.0, self.brownian_sigma, (e, self.active_robots, 3)
         ).astype(np.float32)
         _d, _hits, separation = self._pair_terms()
-        proposed = prev_pos + commanded + flow + noise + separation
+        particle_impulse = np.zeros_like(separation)
+        if self.particles is not None:
+            # Obstacles advect BEFORE the robot update, so the separation the
+            # robots feel this step is against where the particles are now.
+            # The occlusion field the robots see is reused for the particles'
+            # own flow: one flow model for both.
+            self.particles.step(tree, self._occluded_station_array())
+            particle_impulse = self.particles.separation_impulse(prev_pos)
+            particle_impulse = particle_impulse * self.agent_mask[:, :, None]
+        proposed = prev_pos + commanded + flow + noise + separation + particle_impulse
 
         clamped, outside, st, ax = tree.project(
             proposed.reshape(-1, 3), self.robot_radius, hint=prev_st.reshape(-1)
@@ -809,6 +884,19 @@ class VectorVascularEnv:
             # -1 when the mode is not "separated".
             "separated_relaxation_level": self.separated_relaxation_levels.copy(),
         }
+        if self.particles is not None:
+            # Robot-obstacle bookkeeping, real agents only.
+            overlap, clearance, _nearest = self.particles.nearest_stats(
+                self.robot_positions
+            )
+            overlap = overlap * self.agent_mask
+            clearance = clearance * self.agent_mask
+            rel_speed = self.particles.relative_speed(
+                self.robot_positions, self.robot_velocities
+            ) * self.agent_mask
+            info["particle_collisions"] = overlap.astype(np.int32)
+            info["particle_clearance"] = clearance.astype(np.float32)
+            info["particle_relative_speed"] = rel_speed.astype(np.float32)
 
         done = terminated | truncated
         # Periodic topology resampling. Without this the shared tree is sampled
@@ -868,6 +956,23 @@ class VectorVascularEnv:
             "milestone_hit": self._milestone_hit.copy(),
             "difficulty": self._difficulty,
             "rng_state": self._rng.bit_generator.state,
+            # Obstacle state (present only when enabled) for exact resume.
+            "particle_positions": (
+                None if self.particles is None
+                else self.particles.positions.copy()
+            ),
+            "particle_velocities": (
+                None if self.particles is None
+                else self.particles.velocities.copy()
+            ),
+            "particle_rng_state": (
+                None if self.particles is None
+                else self.particles._rng.bit_generator.state
+            ),
+            "task_assignments": (
+                None if self.task_assignments is None
+                else self.task_assignments.copy()
+            ),
         }
 
     def load_state_dict(self, state: dict[str, Any]) -> None:
@@ -888,6 +993,12 @@ class VectorVascularEnv:
         self._difficulty = float(state["difficulty"])
         self._rng.bit_generator.state = state["rng_state"]
         self.episode_wall_hits = state.get("episode_wall_hits", np.zeros(self.n_envs, np.int64)).copy()
+        if self.particles is not None and state.get("particle_positions") is not None:
+            self.particles.positions = state["particle_positions"].copy()
+            self.particles.velocities = state["particle_velocities"].copy()
+            self.particles._rng.bit_generator.state = state["particle_rng_state"]
+        assignments = state.get("task_assignments")
+        self.task_assignments = None if assignments is None else assignments.copy()
         self._route_cache = {}
 
     # ------------------------------------------------------------ observation
