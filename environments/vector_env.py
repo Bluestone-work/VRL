@@ -65,6 +65,9 @@ class VectorVascularEnv:
         reward_double_count: str = "on",
         control_margin: bool = True,
         active_robots: int | None = None,
+        initialization_mode: str = "legacy",
+        separated_min_euclidean_radii: float = 8.0,
+        separated_min_geodesic_fraction: float = 0.12,
     ) -> None:
         from environments.vascular_3d_marl_env import (
             LOOKAHEAD_OFFSETS,
@@ -115,10 +118,19 @@ class VectorVascularEnv:
             raise ValueError("unknown obs_mode")
         if reward_double_count not in ("on", "off"):
             raise ValueError("unknown reward_double_count")
+        if initialization_mode not in ("legacy", "stratified", "random", "separated"):
+            raise ValueError("unknown initialization_mode")
         self.contact_mode = contact_mode
         self.reward_double_count = reward_double_count
         self.control_margin = control_margin
         self.obs_mode = obs_mode
+        # Separated-spawn parameters; see the single env for semantics. Only
+        # "legacy" behaviour is reproduced when the mode is not "separated".
+        self.initialization_mode = initialization_mode
+        self.separated_min_euclidean_radii = float(separated_min_euclidean_radii)
+        self.separated_min_geodesic_fraction = float(separated_min_geodesic_fraction)
+        # Per-reset record of the relaxation ladder level actually used.
+        self.separated_relaxation_levels = np.full(self.n_envs, -1, dtype=np.int8)
         self._lookahead_offsets = LOOKAHEAD_OFFSETS
         self.node_feature_dim = (
             42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric"
@@ -246,6 +258,79 @@ class VectorVascularEnv:
             self._route_cache[station] = self.tree.route_to(int(station))
         return self._route_cache[station]
 
+    # ---------------------------------------------------- separated spawn
+    def _separated_spawn_stations(self, tree) -> np.ndarray:
+        """Geodesic FPS spawn stations for the shared tree (see single env).
+
+        One spawn set for the whole batch: the tree is shared per construction,
+        so the FPS ladder runs once and every env in the batch starts from the
+        same stations with independent radial offsets. The relaxation level
+        used is recorded on `self.separated_relaxation_levels` for reset rows.
+
+        The constraint constants are the same as the single env's: a Euclidean
+        minimum in robot radii and a geodesic minimum as a fraction of total
+        arclength. These are a GEOMETRIC PROXY for disjoint local control
+        regions; no magnetic-field model is involved or implied.
+        """
+        n = self.active_robots
+        rng = self._rng
+        eu_min = max(self.separated_min_euclidean_radii * 2.0 * self.robot_radius, 1e-4)
+        geo_min = self.separated_min_geodesic_fraction * tree.total_length
+
+        arc = tree.arclength / max(tree.total_length, 1e-8)
+        end_arc = np.zeros((tree.n_stations,), np.float32)
+        for br in tree.branches:
+            end_arc[br.start : br.stop + 1] = tree.arclength[br.stop]
+        room = end_arc - tree.arclength
+        candidates = np.flatnonzero((arc <= 0.92) & (room >= 0.0))
+        if candidates.size < 2:
+            candidates = np.arange(tree.n_stations, dtype=np.int32)
+
+        proximal = candidates[arc[candidates] <= 0.33]
+        pool = proximal if proximal.size >= 1 else candidates
+        first = int(rng.choice(pool))
+
+        chosen = [first]
+        for level, (eu_req, geo_req) in enumerate((
+            (eu_min, geo_min),
+            (0.5 * eu_min, 0.5 * geo_min),
+            (0.0, geo_min),
+            (0.0, 0.0),
+        )):
+            chosen = [first]
+            geo_to_chosen = [tree.route_to(first)[0][candidates]]
+            ok = True
+            while len(chosen) < n:
+                min_geo = np.stack(geo_to_chosen).min(axis=0)
+                pts = tree.points[candidates]
+                eu_all = np.linalg.norm(
+                    pts[:, None, :] - tree.points[np.asarray(chosen)][None, :, :],
+                    axis=2,
+                ).min(axis=1)
+                near = min_geo >= 0.9 * min_geo.max()
+                if eu_req > 0.0:
+                    feasible = near & (eu_all >= eu_req) & (min_geo >= geo_req)
+                    if not np.any(feasible):
+                        feasible = near & (min_geo >= geo_req)
+                    if not np.any(feasible):
+                        ok = False
+                        break
+                    order_ = np.flatnonzero(feasible)
+                    pick = int(order_[np.lexsort((eu_all[order_], min_geo[order_]))[-1]])
+                else:
+                    if geo_req > 0 and not np.any(min_geo >= geo_req):
+                        ok = False
+                        break
+                    pick = int(np.argmax(min_geo))
+                chosen.append(int(candidates[pick]))
+                geo_to_chosen.append(tree.route_to(int(candidates[pick]))[0][candidates])
+            if ok and len(chosen) >= n:
+                self.separated_relaxation_levels[:] = level
+                return np.asarray(chosen[:n], dtype=np.int32)
+
+        self.separated_relaxation_levels[:] = 3
+        return np.asarray(chosen[:n], dtype=np.int32)
+
     def reset_all(self) -> dict[str, np.ndarray]:
         """Resample the shared tree and reset every env."""
         self._sample_tree()
@@ -338,12 +423,15 @@ class VectorVascularEnv:
             stations = self.clot_stations[idx]
             self.clot_positions[idx] = tree.points[stations]
 
-        # --- robots: spread along the proximal trunk ---
+        # --- robots: spread along the proximal trunk (legacy) ---
         # Only the first `active_robots` slots are placed; the padding slots
         # keep their zeroed state and never enter pair terms, lysis or stats.
-        trunk = tree.stations_of_branch(0)
-        span = max(int(0.25 * trunk.size), 2)
-        sel = trunk[np.linspace(0, span - 1, self.active_robots).astype(np.int32)]
+        if self.initialization_mode == "separated":
+            sel = self._separated_spawn_stations(tree)
+        else:
+            trunk = tree.stations_of_branch(0)
+            span = max(int(0.25 * trunk.size), 2)
+            sel = trunk[np.linspace(0, span - 1, self.active_robots).astype(np.int32)]
         anchor = tree.points[sel]                               # [A, 3]
         radial = rng.normal(0.0, 0.25, size=(idx.size, self.active_robots, 3))
         radial = radial.astype(np.float32) * tree.radii[sel][None, :, None]
@@ -671,6 +759,9 @@ class VectorVascularEnv:
             # rollout buffer; [n_envs, num_robots] bool.
             "agent_mask": self.agent_mask.copy(),
             "active_robots": int(self.active_robots),
+            # Separated-spawn relaxation level per env (0 = constraints held);
+            # -1 when the mode is not "separated".
+            "separated_relaxation_level": self.separated_relaxation_levels.copy(),
         }
 
         done = terminated | truncated

@@ -109,6 +109,8 @@ class Vascular3DMARLEnv(gym.Env):
         approach_scale: float = 0.1,
         reward_double_count: str = "on",
         control_margin: bool = True,
+        separated_min_euclidean_radii: float = 8.0,
+        separated_min_geodesic_fraction: float = 0.12,
     ) -> None:
         """
         Args:
@@ -137,9 +139,12 @@ class Vascular3DMARLEnv(gym.Env):
             )
         if obs_mode not in OBS_MODES:
             raise ValueError(f"obs_mode must be one of {OBS_MODES}, got {obs_mode!r}")
-        if initialization_mode not in ("legacy", "stratified", "random"):
+        if initialization_mode not in (
+            "legacy", "stratified", "random", "separated",
+        ):
             raise ValueError(
-                "initialization_mode must be 'legacy', 'stratified', or 'random'"
+                "initialization_mode must be 'legacy', 'stratified', 'random', "
+                "or 'separated'"
             )
         if reward_mode not in ("baseline", "milestone"):
             raise ValueError(
@@ -171,6 +176,13 @@ class Vascular3DMARLEnv(gym.Env):
         self.reward_mode = reward_mode
         self.curriculum = bool(curriculum)
         self.initialization_mode = initialization_mode
+        # Separated-spawn tunables. Euclidean minimum is in robot radii
+        # (dimensionless relative to the device); geodesic minimum is a
+        # fraction of total vessel arclength. See
+        # `_separated_spawn_constraints` for what these are a proxy FOR.
+        self.separated_min_euclidean_radii = float(separated_min_euclidean_radii)
+        self.separated_min_geodesic_fraction = float(separated_min_geodesic_fraction)
+        self.separated_relaxation_level = -1
 
         # --- physical scale ---------------------------------------------------
         # Domain is the unit cube. Vessel radius and robot radius are chosen so
@@ -863,18 +875,41 @@ class Vascular3DMARLEnv(gym.Env):
 
         if self.use_pybullet:
             self._sync_pybullet(rebuild=True)
-        return self._build_observation(), {
+        info = {
             "scenario": self.active_scenario,
             "difficulty": self._difficulty,
         }
+        if self.initialization_mode == "separated":
+            # Report the relaxation ladder level for THIS reset so a spawn that
+            # could not satisfy the requested separation is visible, plus the
+            # achieved minima for audit.
+            info["separated_relaxation_level"] = int(self.separated_relaxation_level)
+            if self.num_robots > 1:
+                pts = self.robot_positions
+                eu = np.linalg.norm(pts[:, None, :] - pts[None, :, :], axis=2)
+                np.fill_diagonal(eu, np.inf)
+                info["separated_min_euclidean"] = float(eu.min())
+                geo_min = np.inf
+                for i in range(self.num_robots):
+                    d, _ = self.tree.route_to(int(self.robot_stations[i]))
+                    for j in range(i + 1, self.num_robots):
+                        geo_min = min(
+                            geo_min,
+                            float(d[int(self.robot_stations[j])]),
+                        )
+                info["separated_min_geodesic"] = float(geo_min)
+        return self._build_observation(), info
 
     def _initial_robot_stations(self) -> np.ndarray:
-        """Choose legacy, branch-stratified, or random starting stations."""
+        """Choose legacy, branch-stratified, random, or separated stations."""
         trunk = self.tree.stations_of_branch(0)
         if self.initialization_mode == "legacy":
             span = max(int(0.25 * trunk.size), 2)
             picks = np.linspace(0, span - 1, self.num_robots).astype(np.int32)
             return trunk[picks]
+
+        if self.initialization_mode == "separated":
+            return self._separated_robot_stations()
 
         branches = [branch for branch in self.tree.branches if branch.size >= 4]
         if not branches:
@@ -892,6 +927,118 @@ class Vascular3DMARLEnv(gym.Env):
             offset = int(self._rng.integers(low, min(high, branch.size - 1) + 1))
             stations.append(branch.start + offset)
         return np.asarray(stations, dtype=np.int32)
+
+    # ------------------------------------------------------------------ spawn
+
+    def _separated_spawn_constraints(self) -> tuple[float, float]:
+        """(min Euclidean distance, min geodesic distance) between spawns.
+
+        Default separation is expressed in robot radii, i.e. dimensionless
+        relative to the device: robots that will have disjoint local control
+        regions from the start should not begin inside each other's region.
+        This is a GEOMETRIC PROXY for the control region of each robot -- the
+        repository has no magnetic-field model and this mode does not claim to
+        simulate one.
+        """
+        # Multiples of the collision distance (2 robot radii) so a larger
+        # swarm automatically demands more room, with an absolute floor to
+        # avoid a degenerate zero on tiny devices.
+        eu_min = max(self.separated_min_euclidean_radii * 2.0 * self.robot_radius, 1e-4)
+        geo_min = self.separated_min_geodesic_fraction * self.tree.total_length
+        return float(eu_min), float(geo_min)
+
+    def _separated_robot_stations(self) -> np.ndarray:
+        """Geodesic farthest-point sampling over the vessel graph.
+
+        Picks the station that maximises the minimum geodesic distance to the
+        already-chosen ones (with a Euclidean tie-break/joint constraint), so
+        the swarm starts spread across the tree instead of clustered on the
+        trunk. Because FPS on a graph with one source yields a deterministic
+        tree-like spread, a random seed station is drawn first.
+
+        Relaxation ladder (recorded, bounded -- no unbounded retry loop):
+          R0 strict: satisfy both the Euclidean and geodesic minimum.
+          R1 halve both minimums and retry once (two passes total).
+          R2 geometric-only: drop the Euclidean constraint.
+          R3 fallback: geodesic FPS with NO minimum-distance constraint, which
+          always terminates because plain FPS always has a maximin candidate.
+
+        Whatever level was used is written to `self.separated_relaxation_level`
+        (0 = constraints fully satisfied) and to the reset info dict, so a
+        relaxation is visible rather than silent.
+        """
+        tree = self.tree
+        n = self.num_robots
+        rng = self._rng
+        eu_min, geo_min = self._separated_spawn_constraints()
+
+        # Candidate stations: anywhere on a real branch, excluding the distal
+        # cap (a robot spawned at the terminus has nowhere to go).
+        arc = tree.arclength / max(tree.total_length, 1e-8)
+        end_arc = np.zeros((tree.n_stations,), np.float32)
+        for br in tree.branches:
+            end_arc[br.start : br.stop + 1] = tree.arclength[br.stop]
+        room = end_arc - tree.arclength
+        candidates = np.flatnonzero((arc <= 0.92) & (room >= 0.0))
+        if candidates.size < 2:
+            candidates = np.arange(tree.n_stations, dtype=np.int32)
+
+        # Seed station: prefer the proximal half so the swarm keeps some
+        # access to the inlet side, drawn uniformly over the proximal third.
+        proximal = candidates[arc[candidates] <= 0.33]
+        pool = proximal if proximal.size >= 1 else candidates
+        first = int(rng.choice(pool))
+        # Geodesic distance matrix is computed lazily: one Dijkstra per chosen
+        # station, over candidates only.
+
+        for level, (eu_req, geo_req) in enumerate((
+            (eu_min, geo_min),
+            (0.5 * eu_min, 0.5 * geo_min),
+            (0.0, geo_min),
+            (0.0, 0.0),
+        )):
+            chosen = [first]
+            geo_to_chosen = [tree.route_to(first)[0][candidates]]
+            ok = True
+            while len(chosen) < n:
+                geo_stack = np.stack(geo_to_chosen)              # [k, C]
+                min_geo = geo_stack.min(axis=0)                  # [C]
+                # Maximise the min geodesic distance (FPS criterion).
+                best_geo = int(np.argmax(min_geo))
+                # Full Euclidean distance from every candidate to the NEAREST
+                # already-chosen spawn point.
+                pts = tree.points[candidates]
+                eu_all = np.linalg.norm(
+                    pts[:, None, :] - tree.points[np.asarray(chosen)][None, :, :],
+                    axis=2,
+                ).min(axis=1)
+                # FPS candidates: within 10% of the best geodesic margin.
+                near = min_geo >= 0.9 * min_geo.max()
+                if eu_req > 0.0:
+                    feasible = near & (eu_all >= eu_req) & (min_geo >= geo_req)
+                    if not np.any(feasible):
+                        feasible = near & (min_geo >= geo_req)
+                    if not np.any(feasible):
+                        ok = False
+                        break
+                    order_ = np.flatnonzero(feasible)
+                    # Among feasible: farthest geodesic, Euclidean as tiebreak.
+                    pick = int(order_[np.lexsort((eu_all[order_], min_geo[order_]))[-1]])
+                else:
+                    if geo_req > 0 and not np.any(min_geo >= geo_req):
+                        ok = False
+                        break
+                    pick = best_geo
+                chosen.append(int(candidates[pick]))
+                geo_to_chosen.append(tree.route_to(int(candidates[pick]))[0][candidates])
+            if ok and len(chosen) >= n:
+                self.separated_relaxation_level = level
+                return np.asarray(chosen[:n], dtype=np.int32)
+
+        # Level 3 is plain FPS and cannot fail, so this is unreachable in
+        # practice; kept as a defensive return for degenerate trees.
+        self.separated_relaxation_level = 3
+        return np.asarray(chosen[:n], dtype=np.int32)
 
     def state_dict(self) -> dict[str, Any]:
         """Serializable simulator state for exact training continuation."""

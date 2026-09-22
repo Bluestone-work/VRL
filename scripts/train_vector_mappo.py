@@ -42,6 +42,18 @@ def parse_args():
                         help="declared padding capacity recorded in checkpoint "
                              "meta; 0 = fixed-N (legacy). Must be >= --robots "
                              "when nonzero")
+    parser.add_argument("--initialization-mode",
+                        choices=("legacy", "stratified", "random", "separated"),
+                        default="legacy",
+                        help="robot spawn rule; 'separated' uses geodesic "
+                             "farthest-point sampling with min Euclidean and "
+                             "geodesic separation constraints")
+    parser.add_argument("--separated-min-euclidean-radii", type=float, default=8.0,
+                        help="minimum Euclidean spawn separation in robot radii")
+    parser.add_argument("--separated-min-geodesic-fraction", type=float,
+                        default=0.12,
+                        help="minimum geodesic spawn separation as a fraction "
+                             "of total vessel arclength")
     parser.add_argument("--clots", type=int, default=3)
     parser.add_argument("--horizon", type=int, default=300)
     parser.add_argument("--timesteps", type=int, default=500000,
@@ -283,6 +295,9 @@ def main():
         reward_double_count=args.reward_double_count,
         control_margin=not args.no_control_margin,
         active_robots=args.active_robots,
+        initialization_mode=args.initialization_mode,
+        separated_min_euclidean_radii=args.separated_min_euclidean_radii,
+        separated_min_geodesic_fraction=args.separated_min_geodesic_fraction,
     )
     if args.curriculum:
         env.set_difficulty(curriculum_difficulty(
@@ -321,6 +336,10 @@ def main():
     agent.meta.update({key: getattr(args, key) for key in
                        ("obs_mode", "contact_mode", "reward_double_count", "coverage_bonus",
                         "step_cost", "approach_scale", "no_control_margin")})
+    agent.meta.update({
+        "initialization_mode": args.initialization_mode,
+        "active_robots": args.active_robots,
+    })
     agent.buffer = ContextRolloutBuffer()
 
     if args.world_model:
