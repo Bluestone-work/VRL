@@ -1,0 +1,27 @@
+{
+  "experiment_id": "EXP_0007_SEPARATED_INIT",
+  "parent": "EXP_0005_DIRECT_LOCAL",
+  "date": "2026-09-23",
+  "research_question": "Does geodesic farthest-point-sample initialization spread the swarm over the vessel graph while satisfying joint Euclidean and geodesic separation constraints, with a recorded bounded relaxation ladder?",
+  "main_variable": "initialization_mode='separated' (spawn rule only). No reward, observation, physics or action-semantics change.",
+  "implementation": {
+    "sampling": "geodesic FPS over station candidates (excludes distal cap); random proximal seed station; joint constraints",
+    "constraints": {
+      "min_euclidean": "8 robot radii (dimensionless relative to the device)",
+      "min_geodesic": "0.12 of total vessel arclength"
+    },
+    "relaxation_ladder": "R0 strict; R1 both minimums halved; R2 geodesic only; R3 unconstrained FPS (always terminates). Level + achieved minima reported per reset; no unbounded retry loop.",
+    "scope_statement": "The Euclidean minimum is a GEOMETRIC PROXY for disjoint local control regions. There is no magnetic-field model in this repository and this experiment does not claim to simulate one."
+  },
+  "invariants": {
+    "reward_unchanged": true,
+    "legacy_default": "initialization_mode='legacy' reproduces historical trunk placement bit-identically"
+  },
+  "validation": {
+    "pytest": "tests/test_separated_initialization.py: constraints hold at level 0 across anatomical scenarios; ladder bounded under infeasible constraints (no deadlock); spread exceeds legacy cluster; legacy unchanged; vector env mode",
+    "measured": "14 anatomical scenarios x 8 episodes, 5 robots, default constraints: 112/112 resets at relaxation level 0; min pairwise Euclidean 0.0715 (required 0.0176); min geodesic fraction 0.196 (required 0.12)",
+    "smoke": "scripts/run_scaling_smokes.sh separated_init: 448 transitions, PPO update finite"
+  },
+  "status": "capability_implemented_and_tested",
+  "performance_claim": "none: whether separated spawns improve success is a training question requiring new 1M-transition runs"
+}

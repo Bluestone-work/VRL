@@ -1,0 +1,28 @@
+{
+  "experiment_id": "EXP_0009_DYNAMIC_OBSTACLES",
+  "parent": "EXP_0005_DIRECT_LOCAL",
+  "date": "2026-09-23",
+  "research_question": "Can blood-cell-inspired dynamic intravascular obstacles be added as an optional, default-off environment feature that moves with the local flow and records robot-obstacle interaction, without perturbing legacy runs?",
+  "main_variable": "dynamic_intravascular_particles flag (obstacle presence only). No reward, physics-of-robots or action-semantics change; obstacles exert a separation impulse, not a reward penalty.",
+  "model": {
+    "advection": "tree.flow with the same occluded-radius override the robots see (one flow model for both)",
+    "drift": "small random drift scaled to the local flow speed (lateral tumbling proxy)",
+    "containment": "projected back into the lumen every step like a robot",
+    "size": "radius_ratio (default 1.6) x robot_radius -- dimensionless, follows device scale",
+    "scope_statement": "First-version geometric model. NOT a red-blood-cell model: no haemorheology, no deformability, no near-wall lift, no rouleaux. 'Blood-cell-inspired' is the honest ceiling of the claim."
+  },
+  "records": {
+    "per_step": ["particle_collisions", "particle_clearance", "particle_relative_speed"],
+    "persistence": "state_dict round-trips particle state and its dedicated RNG"
+  },
+  "invariants": {
+    "reward_unchanged": true,
+    "legacy_default": "flag off reproduces legacy behaviour bit-identically; dedicated particle RNG leaves the env's own RNG stream untouched even when enabled"
+  },
+  "validation": {
+    "pytest": "tests/test_dynamic_particles.py: displacement aligns with local flow (mean cos > 0.8), lumen containment, dimensionless size, RNG stream preservation, flag-off bit-identity, info records, separation impulse at exact overlap, state round-trip",
+    "smoke": "scripts/run_scaling_smokes.sh dynamic_obstacles: 448 transitions with 16 particles, PPO update finite"
+  },
+  "status": "capability_implemented_and_tested",
+  "performance_claim": "none: impact on success/collision rates requires new training runs with the flag enabled"
+}

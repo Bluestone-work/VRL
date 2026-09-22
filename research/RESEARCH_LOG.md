@@ -240,3 +240,37 @@ F005覆盖字段编号边界保留，分析以正generation重算。F006跨设�
 Engineering Improvement：协议和身份校验。Algorithmic Improvement：无。Scientific Contribution：固定模拟器下的设备敏感性及历史证据边界。Potential Novel Contribution：无。Needs Literature Verification：I1–I7；H1–H5未验证。
 ### 下一步
 Phase0 gate通过，进入EXP_0003的完整科研指标与测量正确性检查；后续独立接入split消费并注册训练对照。继续固定cuda:0，不按分数择设备，不运行封存test、不跳到WM规划。
+
+## 2026-09-23 — EXP_0006–EXP_0009 — Direct Local scaling capabilities (preregistration and implementation)
+
+### 今天解决的问题
+在 Direct Local GAT-MAPPO（EXP_0005，不接 World Model、不回到 flow-guided residual controller）之上实现四项能力：可变数量智能体、分散初始化、connectivity-aware 任务分配、动态障碍物。全部默认关闭/兼容旧路径，不改变 reward、MAPPO 核心超参数与 direct-Frenet 动作语义。
+### 修改内容
+- `marl/gat_policy.py`、`marl/mappo_advanced.py`：GATLayer/GATEncoder/GATCritic 接受 `agent_mask`（padding 同时从 key 和 query 两侧被屏蔽，全 -inf 行经 nan_to_num 归零）；`MAPPOAdvanced(max_agents=...)` 记入 checkpoint meta；rollout buffer 存 bool mask；update 内对 rewards/dones/terminals/values/bootstrap 全部按 mask 置零，actor/critic/entropy 损失只对真实 slot 求均值，advantage 统计只在真实 slot 上计算，team 项除以 per-sample 真实数量（支持同一 batch 混合 N）。
+- `environments/vector_env.py`：`active_robots <= num_robots` 填充；动作、pair 项、lysis 接触、wall 统计、reward 分摊、peer/crowding 特征、观测行与 adjacency 全部按 mask 屏蔽；Brownian 噪声只为 active slot 抽取，RNG 流不变（同种子与未填充 env bit 级一致）。另加 `initialization_mode="separated"`（血管图 geodesic FPS + 双距离约束 + 有界松弛阶梯）与 `dynamic_intravascular_particles` 开关。
+- `environments/vascular_3d_marl_env.py`：separated 初始化模式（含 reset info 报告松弛等级与实际最小距离）；动态障碍物钩子与 per-step 记录。
+- `environments/dynamic_particles.py`：blood-cell-inspired 障碍物——用与机器人相同的 tree.flow（含 occluded 半径覆盖）平流 + 少量随机漂移；每步投影回管腔；尺寸 = radius_ratio × robot_radius（无量纲）；专用 RNG。
+- `marl/connectivity_allocator.py`：connectivity_aware 分配器（geodesic 距离、路径重叠、边拥堵、逆向流代价、目标切换惩罚、clot 容量软约束+有替代时硬约束），greedy 顺序求解；`nearest` 与 `flow_spread` baseline 同模块保留；`env.set_task_assignments` 只改目标不改动作。
+- `scripts/train_vector_mappo.py`：`--active-robots/--max-agents/--initialization-mode/--dynamic-particles` 等新旗标；`scripts/run_scaling_smokes.sh` 六组 feature+control 冒烟。
+- 新测试四份：test_variable_agents / test_separated_initialization / test_connectivity_allocator / test_dynamic_particles。
+### 为什么这样修改
+用户授权的四项改造全部落在"能力/机制"层，最小侵入：所有默认路径与 EXP_0001–EXP_0005 bit 级一致（专用 RNG、mask 旗标默认关），因此旧实验可复现；四项各自单独预注册为 EXP_0006–0009，不混合比较。
+### 实验结果
+- 全量 pytest：220 passed / 1 skipped（taskset 0-5,8-23；此前一次 rc139 为已知 core 6/7 不稳定，换核后通过）。
+- 六组冒烟（448 transitions，CPU，均完成 PPO update 且有限）：variable_n(8 槽/5 实际/capacity10)、separated_init、dynamic_obstacles(16 粒子) 及各自对照，对照组 update 指标与历史 legacy 路径一致。
+- variable-N 等价性：padding 前向对 3/5/8 真实 agent 与未填充输出一致（float32 舍入级）；env 级 20 步 bit 一致；混合 N batch (3/6/5/2) 训练有限。
+- separated spawn：14 解剖场景 × 8 episode × 5 robots，112/112 reset 松弛等级 0；最小欧氏 0.0715（要求 0.0176）、最小测地占比 0.196（要求 0.12）。
+- connectivity 分配（静态场景 8 robots）：mean 路径重叠 nearest 3.433 / flow_spread 2.856 / connectivity_aware 2.787；对 nearest 14/14 场景占优、对 flow_spread 8/14。
+- 动态障碍物：位移与局部流方向平均 cos 0.994（孤立树测试 >0.8 断言）；开启后 env RNG 流不变；关闭时与 legacy bit 一致。
+### 相对 baseline 的变化
+无性能主张。机制层新增能力，所有数字都是等价性/约束满足/静态场景度量，不是训练增益。EXP_0005 的 direct-local 语义、reward、超参数完全未动。
+### 出现的问题
+- 测试驱动发现并修复两个真 bug：advantage 归一化曾把 padding 零计入统计（更新尺度被 padding 比例耦合）；vectorized reshape 分支曾丢失 ctx_all 中的 mask。
+- `exactly-on-particle` 重合时分离脉冲方向未定义，已用确定性轴向兜底。
+- 本机 core 6/7 不稳定（已知 F-类问题），全程 taskset 0-5,8-23。
+### 当前解释
+四项能力在机制层可信：等价性测试、约束满足测试、静态场景度量和冒烟都通过。跨 N 迁移、separated spawn 对成功率的影响、allocator 闭环效果、障碍物对碰撞率的影响都需要新的 1M-transition 级训练实验，本轮未获授权（长跑须单独确认）。
+### 创新性影响
+Engineering Improvement：mask 基础设施、FPS 初始化、allocator、障碍物模型。Algorithmic Improvement：无（无训练结果）。Scientific Contribution：静态场景下 corridor-overlap 度量的对比证据。Potential Novel Contribution：connectivity-aware 血管任务分配需文献核验（C²-Explorer 思想改编，非实现）。H1–H5 未验证状态不变。
+### 下一步
+如需性能结论，分别预注册 1M-transition 级训练实验（每项单独、seed 42/43/44、prospective 协议），先与用户确认授权边界。

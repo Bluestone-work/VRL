@@ -1,0 +1,30 @@
+{
+  "experiment_id": "EXP_0006_VARIABLE_N",
+  "parent": "EXP_0005_DIRECT_LOCAL",
+  "date": "2026-09-23",
+  "research_question": "Does one Direct Local GAT-MAPPO checkpoint serve different robot counts (3/5/8/10) via max_agents + agent_mask, with padding agents excluded from attention, losses, GAE, rewards and statistics?",
+  "main_variable": "Agent-count machinery only: max_agents padding capacity and agent_mask exclusion. No reward, MAPPO hyperparameter or action-semantics change.",
+  "implementation": {
+    "max_agents": "checkpoint meta field; interaction models run at slot count N with padding slots masked",
+    "agent_mask": "[batch, n_agents] bool; GAT keys AND queries masked; losses/entropy/GAE normalized over real slots only; mixed-N batches supported",
+    "env_side": "VectorVascularEnv active_robots <= num_robots; padding slots inert (zero state, zero reward, no collisions/lysis/stats); RNG stream unchanged",
+    "parameter_sharing": "retained: one set of weights, agents differ only by observation"
+  },
+  "invariants": {
+    "reward_unchanged": true,
+    "mappo_hyperparameters_unchanged": true,
+    "action_semantics": "direct_local_frenet",
+    "world_model": "disabled",
+    "legacy_default": "active_robots=None and max_agents=0 reproduce fixed-N behaviour bit-identically"
+  },
+  "validation": {
+    "pytest": "tests/test_variable_agents.py: padded forward/update equivalence for 3/5/8 real agents in a 10-slot tensor; mixed-N batch (3/6/5/2) update; checkpoint reload at n<=max_agents; env bit-identity vs legacy",
+    "bugs_found_and_fixed": [
+      "advantage normalization included padding zeros, coupling update scale to the padding ratio",
+      "ctx_all lost the agent_mask through the vectorized reshape branch"
+    ],
+    "smoke": "scripts/run_scaling_smokes.sh variable_n: 8-slot tensors, 5 active agents, max_agents=10, 448 transitions, PPO update finite"
+  },
+  "status": "capability_implemented_and_tested",
+  "performance_claim": "none: cross-N transfer is a training question requiring new 1M-transition runs; this experiment registers the mechanism and its tests only"
+}

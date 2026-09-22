@@ -1,0 +1,37 @@
+{
+  "experiment_id": "EXP_0008_CONNECTIVITY_ALLOCATION",
+  "parent": "EXP_0005_DIRECT_LOCAL",
+  "date": "2026-09-23",
+  "research_question": "Does a connectivity/contiguity-inspired allocator reduce unnecessary shared corridors between robots and clots while respecting clot capacity, compared to the nearest and flow_spread baselines?",
+  "main_variable": "Task allocation rule only: connectivity_aware allocator vs nearest / flow_spread baselines. The allocator emits targets; the final 3D action remains Direct Local GAT-MAPPO output.",
+  "reference": "C2-Explorer connectivity/contiguity concept adapted to vascular tasks. Its communication-connectivity constraint has no vascular counterpart and is replaced by corridor overlap. This is an adaptation, not an implementation of C2-Explorer.",
+  "cost_terms": {
+    "geodesic_distance": "along-vessel travel, normalized by total arclength",
+    "path_overlap": "fraction of a candidate corridor already used by previously assigned routes",
+    "edge_congestion": "penalty for edges used by more than one assigned route (first trunk user is free)",
+    "flow_cost": "fraction of local flow opposing the route direction",
+    "switching_penalty": "cost of abandoning the robot's previous target",
+    "clot_capacity": "soft overflow beyond the env's lysis saturation (4 robots), hard respect while an unsaturated clot exists"
+  },
+  "solver": "greedy sequential allocation in increasing geodesic-distance order (overlap couples rows, so a global Hungarian assignment is not applicable); deterministic",
+  "application": "env.set_task_assignments / vector set_task_assignments override the nearest-clot rule with a live-clot guard; auto-reset invalidates stale rows; planner can also provide corridor hints from the route next-hop field",
+  "measured": {
+    "protocol": "14 anatomical scenarios x 20 episodes, 8 robots, 3 clots, seed 3000+",
+    "mean_route_overlap": {
+      "nearest": 3.433,
+      "flow_spread": 2.856,
+      "connectivity_aware": 2.787
+    },
+    "note": "connectivity_aware beats nearest on 14/14 scenarios and flow_spread on 8/14; single-episode snapshot (5 robots): 1.653 vs 1.649 vs 1.959"
+  },
+  "invariants": {
+    "reward_unchanged": true,
+    "action_semantics": "direct_local_frenet (allocator never emits actions)",
+    "baselines_preserved": ["nearest", "flow_spread"]
+  },
+  "validation": {
+    "pytest": "tests/test_connectivity_allocator.py: capacity respected, single-clot totality, overlap <= nearest everywhere and <= flow_spread*1.02 on average, switching stability, dispatch validation, vector env override"
+  },
+  "status": "allocator_implemented_and_measured_on_static_scenes",
+  "performance_claim": "none on episode success: allocator behaviour is measured on corridor overlap only; closed-loop success requires new training/evaluation runs"
+}
