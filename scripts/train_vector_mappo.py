@@ -21,6 +21,7 @@ from environments.vascular_3d_marl_env import Vascular3DMARLEnv
 from environments.vessel_geometry import resolve_pool
 from marl.mappo_advanced import MAPPOAdvanced, ContextRolloutBuffer
 from marl.transition_dataset import EpisodeTransitionWriter
+from marl.vector_task_planner import replan_allocations
 
 
 TRAIN_ARCHITECTURES = ("gat", "edge_bias_gat", "mlp")
@@ -125,7 +126,20 @@ def parse_args():
                         default=(0.2, 0.5), metavar="FRACTION",
                         help="cumulative transition fractions where difficulty changes")
     parser.add_argument("--curriculum-difficulties", type=float, nargs="+",
-                        default=(0.2, 0.6, 1.0), metavar="DIFFICULTY")
+                        default=(0.2, 0.6, 1.0), metavar="DIFFICULTY",
+                        help="difficulty values at the curriculum boundaries")
+    parser.add_argument("--task-allocator", default="none",
+                        choices=("none", "nearest", "flow_spread",
+                                 "connectivity_aware"),
+                        help="external task allocator overriding the env's "
+                             "nearest-clot rule (EXP_0013). 'none' (default) "
+                             "is the legacy path: the env assigns targets. "
+                             "The allocator re-plans once per env step for "
+                             "rows whose scene changed (reset/resample); "
+                             "other rows keep their frozen plan, so the "
+                             "switching penalty has something to stabilise. "
+                             "Targets only -- the 3-D action stays the "
+                             "direct-local Frenet policy output.")
     return parser.parse_args()
 
 
@@ -352,6 +366,7 @@ def main():
     agent.meta.update({
         "initialization_mode": args.initialization_mode,
         "active_robots": args.active_robots,
+        "task_allocator": args.task_allocator,
     })
     agent.buffer = ContextRolloutBuffer()
 
@@ -472,6 +487,12 @@ def main():
             remaining_steps = int(np.ceil((args.timesteps - transitions) / args.n_envs))
             rollout_steps = min(args.n_steps, remaining_steps)
             for _ in range(rollout_steps):
+                # EXP_0013: re-plan targets before the policy acts when an
+                # external allocator is enabled. 'none' (default) is a no-op
+                # and the env's own nearest rule keeps full control -- the
+                # legacy bit-identical path.
+                if args.task_allocator != "none":
+                    replan_allocations(env, args.task_allocator)
                 nodes = obs["nodes"]
                 states = obs["clot_state"].reshape(args.n_envs, -1)
                 ctx = build_context(env, obs)
