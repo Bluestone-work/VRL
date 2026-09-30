@@ -1,0 +1,6 @@
+{
+  "episodes": 2,
+  "root_and_frozen_evaluation_identical": true,
+  "identical_to_training_evaluation_prefix": true,
+  "world_model": false
+}

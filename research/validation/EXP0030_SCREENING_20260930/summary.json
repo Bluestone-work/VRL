@@ -1,0 +1,96 @@
+{
+  "as_of": "2026-09-30T16:07:01.033286+08:00",
+  "scope": "Paired 20-layout development screening; three policy seeds, fixed anatomy, not sealed test",
+  "results": {
+    "a_fixed": {
+      "seeds": [
+        {
+          "seed": 42,
+          "success_rate": 0.15,
+          "collision_free_success_rate": 0.0,
+          "particle_collision_episode_rate": 0.45,
+          "mean_removal_fraction": 0.5739132912138664
+        },
+        {
+          "seed": 43,
+          "success_rate": 0.0,
+          "collision_free_success_rate": 0.0,
+          "particle_collision_episode_rate": 0.7,
+          "mean_removal_fraction": 0.669218395875194
+        },
+        {
+          "seed": 44,
+          "success_rate": 0.5,
+          "collision_free_success_rate": 0.2,
+          "particle_collision_episode_rate": 0.65,
+          "mean_removal_fraction": 0.8615460306420744
+        }
+      ],
+      "means": {
+        "success_rate": 0.21666666666666667,
+        "collision_free_success_rate": 0.06666666666666667,
+        "particle_collision_episode_rate": 0.6,
+        "mean_removal_fraction": 0.7015592392437116
+      }
+    },
+    "b_low_actor_lr": {
+      "seeds": [
+        {
+          "seed": 42,
+          "success_rate": 0.15,
+          "collision_free_success_rate": 0.1,
+          "particle_collision_episode_rate": 0.65,
+          "mean_removal_fraction": 0.7833693740531575
+        },
+        {
+          "seed": 43,
+          "success_rate": 0.25,
+          "collision_free_success_rate": 0.05,
+          "particle_collision_episode_rate": 0.7,
+          "mean_removal_fraction": 0.8123159611835196
+        },
+        {
+          "seed": 44,
+          "success_rate": 0.45,
+          "collision_free_success_rate": 0.15,
+          "particle_collision_episode_rate": 0.55,
+          "mean_removal_fraction": 0.8540275280055903
+        }
+      ],
+      "means": {
+        "success_rate": 0.2833333333333333,
+        "collision_free_success_rate": 0.1,
+        "particle_collision_episode_rate": 0.6333333333333333,
+        "mean_removal_fraction": 0.8165709544140891
+      }
+    }
+  },
+  "sources": {
+    "a_fixed/42": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/a_fixed/seed_42/evaluation_65536.json",
+      "sha256": "0ece124028bdb71a66b7b06063ce045591fc9432de74b95971296451eaec8375"
+    },
+    "a_fixed/43": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/a_fixed/seed_43/evaluation_65536.json",
+      "sha256": "ffc069b057f4ec99335df50850aba723eae6f5e816e8c4cdddcf56f7cc7e530f"
+    },
+    "a_fixed/44": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/a_fixed/seed_44/evaluation_65536.json",
+      "sha256": "316ef160c7a01e5337e16ab94ce2e9e9ab8dc84508219891f961668bac2b6e92"
+    },
+    "b_low_actor_lr/42": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_42/evaluation_65536.json",
+      "sha256": "3206685010c1de4fe316e8b2f086fb377041344f3b061904360e6fdfc12a9c98"
+    },
+    "b_low_actor_lr/43": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_43/evaluation_65536.json",
+      "sha256": "b1800964c874e8048a1e4af5baeeab04c636d6c9eda5ef122dea733edc6b2b51"
+    },
+    "b_low_actor_lr/44": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_44/evaluation_65536.json",
+      "sha256": "ae81845fa57d329b16b01f15937c030075c9ecaee092384fbd467785eda2d23b"
+    }
+  },
+  "world_model": false,
+  "layout_sha256": "551603b147f4e52bf4522a9de50f66a874b9cb0dfa19f8ea4e50e538f81f6e1f"
+}

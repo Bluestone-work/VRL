@@ -1,0 +1,11 @@
+{
+  "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0030_PPO_REPAIR_20260930a/a_fixed/seed_42/policy_65536.pt",
+  "checkpoint_sha256": "d78d966b940ec37195e0b43807f510c6070fde63bebbbb76e98b508ed0195e6e",
+  "checkpoint_steps": 65536,
+  "episodes": 2,
+  "validation_seed_base": 920000000,
+  "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./configs/experiments/EXP_0030_A_FIXED_PURE_RL.json",
+  "evaluation_script_sha256": "85cfecc50553add6cd9d3b5b6154a2fd2e226b2288da11de8067e0c4121c79c8",
+  "world_model": false,
+  "scope": "Repeated development validation on fixed anatomy; not a sealed final test"
+}

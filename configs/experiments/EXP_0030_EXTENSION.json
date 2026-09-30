@@ -1,0 +1,15 @@
+{
+  "experiment": "EXP_0030_PPO_REPAIR_EXTENDED_COMPARISON",
+  "screening_steps_per_arm_seed": 65536,
+  "target_steps_per_arm_seed": 500000,
+  "additional_steps_after_screening": 434464,
+  "seeds": [42, 43, 44],
+  "arm_order": ["b_low_actor_lr", "a_fixed"],
+  "evaluation_layouts": 100,
+  "validation_seed_base": 920000000,
+  "world_model": false,
+  "physics_and_rewards": "unchanged EXP29",
+  "resume_semantics": "Frozen training sources and protocol; explicit --timesteps override; preserve per-arm optimizer, environments and RNG. Save short evaluation before publishing full 100-layout validation.",
+  "reason": "Paired 20-layout screening is too small for a reliable performance claim; extend both arms equally. B has a promising descriptive mean but is not declared a winner.",
+  "authorization": "User requested continued pure-RL experiments and improvements before any world-model integration."
+}
