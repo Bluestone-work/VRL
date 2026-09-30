@@ -1,0 +1,32 @@
+[
+  {
+    "wall": 1790743452.783832,
+    "seed": 900000006,
+    "sim": 0.0,
+    "frame": 0,
+    "rendered": 1,
+    "median_motion": 0.0,
+    "speed": 5.0,
+    "image_sha256": "c096442a87ec3ff1a70d3314853723643f0ea1c9f4bc741a606c9b78e8d58bf8"
+  },
+  {
+    "wall": 1790743454.7874866,
+    "seed": 900000006,
+    "sim": 13.799999999999967,
+    "frame": 415,
+    "rendered": 26,
+    "median_motion": 0.2568435575962765,
+    "speed": 5.0,
+    "image_sha256": "dbce56fc36e31166bcd79d46ec497a25373d879629399591ad3bd7e4ac5de3f3"
+  },
+  {
+    "wall": 1790743456.7897713,
+    "seed": 900000006,
+    "sim": 24.400000000000077,
+    "frame": 728,
+    "rendered": 44,
+    "median_motion": 0.47635061686515745,
+    "speed": 5.0,
+    "image_sha256": "7009d608177aa9c98118e7f32a1a3ffb1f215496f803201f4a70c99a0a85d79b"
+  }
+]

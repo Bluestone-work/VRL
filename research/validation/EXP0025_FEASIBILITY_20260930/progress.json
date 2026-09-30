@@ -1,0 +1,12 @@
+{
+  "cases": 120,
+  "last_batch": {
+    "horizon_s": 15.0,
+    "start": "at_clots_oracle",
+    "controller": "maximum_brake_oracle",
+    "episodes": 10,
+    "success_rate": 0.0,
+    "removal_fraction": 8.39224284581622e-05,
+    "elapsed_s": 0.25
+  }
+}

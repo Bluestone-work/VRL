@@ -1,0 +1,313 @@
+{
+  "engineering_checks": {
+    "healthy_inlet": true,
+    "conservation": true,
+    "finite_speeds": true,
+    "reopening_monotonic": true,
+    "closed_site_zero_flow": true,
+    "pressure_held_fixed": true,
+    "source_snapshots_verified": true,
+    "user_document_hash_verified": true
+  },
+  "engineering_checks_passed": true,
+  "geometry_cases": 6,
+  "flow_cases": 1296,
+  "reachability_cases": 11664,
+  "numerical_cases": 3888,
+  "maximum_conservation_residual_mm3_s": 4.547473508864641e-13,
+  "nominal_mean_inlet_speed_mm_s": 344.2462472802477,
+  "nominal_centerline_inlet_speed_mm_s": 688.4924945604954,
+  "nominal_optimistic_upstream_margin_mm_s": -70.4808207685919,
+  "healthy_site_upstream_excluded_count": 1944,
+  "healthy_site_cases": 1944,
+  "numerical_substeps_range": [
+    662,
+    80948
+  ],
+  "geometries": [
+    {
+      "seed": 42,
+      "variation": 0.0,
+      "stations": 117,
+      "mm_per_unit": 71.30351300501866,
+      "legacy_nominal_mm_per_unit": 71.30351300501866,
+      "inlet_diameter_mm": 3.0,
+      "minimum_radius_mm": 0.3000000199219714,
+      "robot_displacement_per_control_step": 0.0007012277220686277,
+      "old_0_018_step_as_mm_s": 25.669264681806716,
+      "old_contact_radius_as_mm": 2.4956229551756532,
+      "old_300_step_horizon_as_s": 15.0,
+      "old_lysis_0_018_per_step_as_mass_per_s": 0.35999999999999993
+    },
+    {
+      "seed": 43,
+      "variation": 0.0,
+      "stations": 117,
+      "mm_per_unit": 71.30351300501866,
+      "legacy_nominal_mm_per_unit": 71.30351300501866,
+      "inlet_diameter_mm": 3.0,
+      "minimum_radius_mm": 0.3000000199219714,
+      "robot_displacement_per_control_step": 0.0007012277220686277,
+      "old_0_018_step_as_mm_s": 25.669264681806716,
+      "old_contact_radius_as_mm": 2.4956229551756532,
+      "old_300_step_horizon_as_s": 15.0,
+      "old_lysis_0_018_per_step_as_mass_per_s": 0.35999999999999993
+    },
+    {
+      "seed": 44,
+      "variation": 0.0,
+      "stations": 117,
+      "mm_per_unit": 71.30351300501866,
+      "legacy_nominal_mm_per_unit": 71.30351300501866,
+      "inlet_diameter_mm": 3.0,
+      "minimum_radius_mm": 0.3000000199219714,
+      "robot_displacement_per_control_step": 0.0007012277220686277,
+      "old_0_018_step_as_mm_s": 25.669264681806716,
+      "old_contact_radius_as_mm": 2.4956229551756532,
+      "old_300_step_horizon_as_s": 15.0,
+      "old_lysis_0_018_per_step_as_mass_per_s": 0.35999999999999993
+    },
+    {
+      "seed": 42,
+      "variation": 1.0,
+      "stations": 121,
+      "mm_per_unit": 80.46614757062032,
+      "legacy_nominal_mm_per_unit": 82.02053990741825,
+      "inlet_diameter_mm": 2.625605620272209,
+      "minimum_radius_mm": 0.35381787176981305,
+      "robot_displacement_per_control_step": 0.0006213793192487312,
+      "old_0_018_step_as_mm_s": 28.967813125423312,
+      "old_contact_radius_as_mm": 2.8163151649717117,
+      "old_300_step_horizon_as_s": 15.0,
+      "old_lysis_0_018_per_step_as_mass_per_s": 0.35999999999999993
+    },
+    {
+      "seed": 43,
+      "variation": 1.0,
+      "stations": 119,
+      "mm_per_unit": 71.02797007218832,
+      "legacy_nominal_mm_per_unit": 65.68262598579234,
+      "inlet_diameter_mm": 3.244144201278686,
+      "minimum_radius_mm": 0.25358297984304684,
+      "robot_displacement_per_control_step": 0.0007039480355299915,
+      "old_0_018_step_as_mm_s": 25.570069225987794,
+      "old_contact_radius_as_mm": 2.4859789525265916,
+      "old_300_step_horizon_as_s": 15.0,
+      "old_lysis_0_018_per_step_as_mass_per_s": 0.35999999999999993
+    },
+    {
+      "seed": 44,
+      "variation": 1.0,
+      "stations": 122,
+      "mm_per_unit": 67.79114289953051,
+      "legacy_nominal_mm_per_unit": 66.96898810684084,
+      "inlet_diameter_mm": 3.036829948425293,
+      "minimum_radius_mm": 0.2220678761955535,
+      "robot_displacement_per_control_step": 0.000737559478442519,
+      "old_0_018_step_as_mm_s": 24.404811443830983,
+      "old_contact_radius_as_mm": 2.3726900014835683,
+      "old_300_step_horizon_as_s": 15.0,
+      "old_lysis_0_018_per_step_as_mass_per_s": 0.35999999999999993
+    }
+  ],
+  "training_ready": false,
+  "success_rate": null,
+  "training_gate": {
+    "ready": false,
+    "success_rate": null,
+    "blocking_items": [
+      "hardware speed and effective body size in blood not measured",
+      "shared-field actuation versus independent agent commands unresolved",
+      "outlet impedance and obstructed flow not calibrated",
+      "lysis rate per second and mass-to-lumen law not calibrated",
+      "physical substeps, exit boundaries and obstacle dynamics not integrated into RL workers"
+    ]
+  },
+  "interpretation": "Local steady straight-lumen bounds, not a navigation success estimate or proof about arbitrary 3D flow.",
+  "generated_at_utc": "2026-09-28T07:46:30.846074+00:00",
+  "protocol": "EXP_0022_MCA_PHYSIOLOGY_CALIBRATION",
+  "git_commit": "d0020c2816f43188acd0bc1fb89be711075da9e8",
+  "source_sha256": {
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "environments/vessel_anatomy.py": "6689590a57d7b980dc77fe3be7d0d0a00348d2b73eef32f1f48579f3281d517e",
+    "environments/vessel_tree_generator.py": "454bd40d0e184963014981ea3b89847c98e8fa8bf23e9e38b9cf7d0b5878b476",
+    "scripts/validate_mca_physiology.py": "b28f04ffee1b3d173efbe069a470a1f00eb2e38448a9f5d6bab57552464b1450",
+    "tests/test_mca_physiology.py": "a4b36084e934341f32c7375febe8215a1f3957db2aa8533720fc12396dd0d103",
+    "research/validation/EXP0022_REFERENCE_MANIFEST.json": "51378e8ca13fd516950d6d3aceff1d9f746a8df6920ac706f933715100c59438",
+    "/home/wj/桌面/血管模型选择依据.docx": "3e507eb549ac87f1d3205e8b2b0d3d2137630bd733cdd334b27ca7ce45fe2dfd"
+  },
+  "config_sha256": "44a950a8c5b08c953345bf4f40e63265e8d107484ef735c6a79b788b11c3ea97",
+  "references": {
+    "archive_date": "2026-09-28",
+    "provenance": "Sources downloaded in the preceding session and inspected in this continuation; no new device measurement.",
+    "sources": [
+      {
+        "archive_path": "research/runs/EXP0022_REFERENCES_20260928/mca_flow_source_2015.html",
+        "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4420884/",
+        "location": "Table 1, MCA row; volume flow ml/min",
+        "sha256": "8a87978eaab58b37bc6b566e5de81c250047e8bcf6d83f8bdf773fdcf445185d"
+      },
+      {
+        "archive_path": "research/runs/EXP0022_REFERENCES_20260928/an2026_turbo.html",
+        "source_url": "https://www.nature.com/articles/s42256-026-01252-6",
+        "location": "Article and link to supplementary information",
+        "sha256": "5f69742aed6914141429b4fd1a9a75278c76c21674d0798bcf78cf8eab78bca0"
+      },
+      {
+        "archive_path": "research/runs/EXP0022_REFERENCES_20260928/an2026_turbo_supplement.pdf",
+        "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs42256-026-01252-6/MediaObjects/42256_2026_1252_MOESM1_ESM.pdf",
+        "location": "Supplementary Table 4, printed p39; real-world deployment printed pp30-31",
+        "sha256": "18b9feabd13fc26812f2501fd099e0f170ba655da8ae3ed25b89f68bf68f3ce5"
+      },
+      {
+        "archive_path": "research/runs/EXP0022_REFERENCES_20260928/an2026_turbo_supplement.txt",
+        "source_url": null,
+        "location": "pdftotext extraction; same supplement, unit symbols checked against rendered table",
+        "sha256": "c097eeca855faa372317f42e9e9e2f1722a9dcb34c8d90d4dffd9ee28eba82e2"
+      }
+    ]
+  },
+  "runtime": {
+    "python": "3.10.20",
+    "numpy": "1.26.4"
+  },
+  "config": {
+    "experiment": "EXP_0022_MCA_PHYSIOLOGY_CALIBRATION",
+    "date": "2026-09-28",
+    "status": "engineering_validation_not_RL_training",
+    "primary_scenario": "mca_m1_lvo",
+    "primary_region": "distal M1, M1/M2 bifurcation, proximal M2",
+    "physical_geometry_scale": 1.0,
+    "user_document": "/home/wj/桌面/血管模型选择依据.docx",
+    "user_document_sha256": "3e507eb549ac87f1d3205e8b2b0d3d2137630bd733cdd334b27ca7ce45fe2dfd",
+    "source_manifest": "research/validation/EXP0022_REFERENCE_MANIFEST.json",
+    "reference_inlet": {
+      "method": "cardiac-cycle-averaged phase-contrast MRI volume flow, each MCA",
+      "healthy_flow_ml_min": 146.0,
+      "reported_sd_ml_min": 31.0,
+      "healthy_young_group_mean_ml_min": 161.0,
+      "healthy_elderly_group_mean_ml_min": 131.0,
+      "sensitivity_values_ml_min": [
+        115.0,
+        146.0,
+        177.0
+      ],
+      "sensitivity_definition": "reported mean plus/minus one SD, not a universal normal range",
+      "source_doi": "10.1038/jcbfm.2014.241",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4420884/",
+      "diameter_nominal_mm": 3.0,
+      "diameter_provenance": "repository MCA nominal anatomy, not patient-specific measured diameter"
+    },
+    "robot_speed_mm_s": 1.0,
+    "control_dt_s": 0.05,
+    "robot_radius_mm": 0.08,
+    "robot_and_control_parameter_status": "engineering_sensitivity_assumptions_not_device_measurements",
+    "robot_reference": {
+      "source_doi": "10.1038/s42256-026-01252-6",
+      "source_url": "https://www.nature.com/articles/s42256-026-01252-6",
+      "supplement_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs42256-026-01252-6/MediaObjects/42256_2026_1252_MOESM1_ESM.pdf",
+      "speed_source": "Supplementary Table 4, printed page 39; TRAINING domain-randomization swarm velocity, not measured individual robot swimming speed in blood",
+      "speed_sensitivity_mm_s": [
+        0.25,
+        0.625,
+        1.0
+      ],
+      "nominal_speed_reason": "upper end of the reported training range; optimistic engineering proxy, not calibrated maximum thrust",
+      "reported_swarm_width_mm": [
+        1.25,
+        1.75
+      ],
+      "radius_sensitivity_mm": [
+        0.025,
+        0.05,
+        0.08
+      ],
+      "radius_provenance": "unmeasured engineering sensitivity; 0.08 mm approximates the old 0.0011-unit robot at nominal MCA scale; NOT the paper's 1.25-1.75 mm-wide swarm",
+      "latency_source": "supplement printed pages 30-31, end-to-end delay under 30 ms",
+      "control_period_provenance": "50 ms / 20 Hz is an engineering assumption allowing time beyond the reported delay; paper does not establish this update rate",
+      "control_dt_sensitivity_s": [
+        0.03,
+        0.05,
+        0.1
+      ],
+      "actuation_constraint": "the reference uses a shared three-axis Helmholtz field; independent per-agent velocity commands in existing MARL are not hardware validated"
+    },
+    "geometry_validation": {
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "variation_levels": [
+        0.0,
+        1.0
+      ],
+      "length_scale_field": "physical_mm_per_unit",
+      "radius_floor": 0.0,
+      "provenance": "procedural nominal anatomy; not patient-specific segmentation or an imported SimVascular mesh"
+    },
+    "occlusion_sensitivity": {
+      "radius_fractions": [
+        1.0,
+        0.75,
+        0.5,
+        0.35,
+        0.1,
+        0.0
+      ],
+      "gaussian_width_mm": 2.5,
+      "extent_provenance": "engineering sweep of local radius reduction, not calibrated thrombus permeability or mass-to-lumen law",
+      "distal_resistance_ratios": [
+        0.0,
+        1.0,
+        9.0
+      ],
+      "distal_provenance": "unmeasured terminal resistance relative to healthy resolved-tree resistance; report all cases, never select by navigation success"
+    },
+    "numerics": {
+      "maximum_displacement_fraction_of_radius": 0.1,
+      "conservation_tolerance_mm3_s": 1e-08,
+      "flow_speed_cap": null,
+      "substep_policy": "report required adaptive substeps; never lower physical speed to meet compute budget"
+    },
+    "training_gate": {
+      "ready": false,
+      "success_rate": null,
+      "blocking_items": [
+        "hardware speed and effective body size in blood not measured",
+        "shared-field actuation versus independent agent commands unresolved",
+        "outlet impedance and obstructed flow not calibrated",
+        "lysis rate per second and mass-to-lumen law not calibrated",
+        "physical substeps, exit boundaries and obstacle dynamics not integrated into RL workers"
+      ]
+    },
+    "flow_model": "quasisteady_pressure_driven_tree",
+    "flow_model_limitations": [
+      "equal terminal reference pressures, optional unmeasured distal resistance, fixed driving pressure calibrated to healthy flow",
+      "no measured outlet impedance, autoregulation or pulsatile waveform",
+      "no stenotic jet or bifurcation secondary-flow CFD",
+      "not yet connected to historical RL workers; old physics preserved"
+    ],
+    "primary_evaluation": {
+      "scenario": "mca_m1_lvo",
+      "all_seeds_required": [
+        42,
+        43,
+        44
+      ],
+      "success_threshold": 0.85,
+      "success_definition": "all assigned clots completely cleared, unchanged",
+      "report": [
+        "success",
+        "path_mm",
+        "physical_seconds",
+        "collision_rate",
+        "remaining_mass",
+        "inlet_flow_ml_min"
+      ],
+      "no_easy_flow_selection": true,
+      "other_13_scenarios": "secondary robustness report; do not pool changed and legacy physics"
+    }
+  },
+  "user_document_matches_recorded_hash": true
+}

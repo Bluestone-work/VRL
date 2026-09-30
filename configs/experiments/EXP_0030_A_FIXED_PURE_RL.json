@@ -1,0 +1,61 @@
+{
+  "experiment": "EXP_0030_A_FIXED_PURE_RL",
+  "parent": "EXP_0029_MCA_ALL_RANDOM_AVOIDANCE",
+  "scope": "Repair PPO masked minibatch loss normalization; paired learning-rate comparison with identical physical environment and initial weights",
+  "authorization": "User requests improve pure reinforcement learning through experiments before adding any world model",
+  "physics_config": "configs/experiments/EXP_0029_MCA_ALL_RANDOM_DYNAMICS.json",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "timesteps_per_seed": 65536,
+  "transition_unit": "one environment control step, not individual robot samples",
+  "rollout_steps": 512,
+  "epochs": 4,
+  "batch_size": 256,
+  "hidden_dim": 128,
+  "checkpoint_interval": 4096,
+  "milestones": [
+    65536
+  ],
+  "eval_episodes": 20,
+  "training_seed_base": 1200000000,
+  "validation_seed_base": 920000000,
+  "architecture": "adaptive_edge_gat",
+  "control": "direct_local_frenet",
+  "world_model": false,
+  "guidance_controller": false,
+  "fresh_weights": false,
+  "weight_initialization": "compatible_weights_only",
+  "initialization_checkpoints": {
+    "42": {
+      "path": "research/initializations/EXP0030_FROM_EXP0029_500K_20260930/seed_42.pt",
+      "sha256": "bb0a477b406c18ae348a5d8f4fcb335f75129a0442d3f354e756d4ba7da022d8"
+    },
+    "43": {
+      "path": "research/initializations/EXP0030_FROM_EXP0029_500K_20260930/seed_43.pt",
+      "sha256": "da32f16fe50471b0b040aa36193f92a85369b2d4324eac29dab3261baa73fe1d"
+    },
+    "44": {
+      "path": "research/initializations/EXP0030_FROM_EXP0029_500K_20260930/seed_44.pt",
+      "sha256": "5235be46202cf1774b4d643921e5a150a47d7bc005b0ca8d05c295119ebdba8d"
+    }
+  },
+  "comparability": "Both arms start from identical per-seed EXP29 500K actor/critic, with fresh optimizer/RNG/environment/counters, matched training layout streams. Only actor learning rate differs between A and B; PPO normalization repaired in both. Historical EXP29 is not a matched continuation control.",
+  "pure_rl": true,
+  "oracle_used_for_training": false,
+  "require_randomization_boundaries": true,
+  "require_random_clot_evidence": true,
+  "feasibility_certificate": "research/validation/EXP0029_FEASIBILITY_20260930/certificate.json",
+  "reference_certificate": "research/validation/EXP0029_REFERENCE_20260930/certificate.json",
+  "feasibility_image": "research/validation/EXP0029_FEASIBILITY_20260930/feasibility.png",
+  "task_limit": "Controlled in-vitro goal-conditioned ideal-actuator simulation with perfect state. All object positions randomized on fixed MCA anatomy. Soft overlap costs, not hard collision physics. Diagnostic clearance feasibility is not collision-free policy performance or hardware verification.",
+  "dashboard_message": "EXP30纯RL修正筛选：修复PPO小批次归一化，A原学习率/B降低actor学习率。环境与碰撞指标不变，尚未证明达到80%。",
+  "physical_calibration_ready": false,
+  "sealed_test_used": false,
+  "ppo": {
+    "lr_actor": 0.0003
+  },
+  "study_stage": "screening; 20 paired development layouts, not final success evidence"
+}

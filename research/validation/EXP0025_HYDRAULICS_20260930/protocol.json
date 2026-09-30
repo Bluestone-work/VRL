@@ -1,0 +1,12 @@
+{
+  "method": "independent nodal sparse pressure solve",
+  "cases": 21,
+  "relative_flow_tolerance": 1e-08,
+  "source_sha256": {
+    "scripts/audit_mca_hydraulics.py": "d4f095f8e5a7af3f77f95ec7f8953cc51c67e7fcd3bcd4af75caa3d72b5795e3",
+    "configs/experiments/EXP_0024_MCA_DISTRIBUTED_DYNAMICS.json": "690030e849aa66d9bcee412debbecd091037f38ae3dd65d090d8aa9ba2da46df",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "environments/mca_compiled.py": "1d25d13b9e5c11bdccf465abcc66b1f7856eb36e8db9727e7f8caf4ee8e62a53",
+    "environments/mca_physical_env.py": "bd294bc3f48a8c7d2d5664d03182d10ce0c62ab9bbde5e092e555078c39c6a71"
+  }
+}

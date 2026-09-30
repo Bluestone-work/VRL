@@ -125,12 +125,15 @@ class EdgeFeatureGAT(nn.Module):
         nodes: torch.Tensor,
         edges: torch.Tensor,
         adj_matrix: torch.Tensor,
+        agent_mask: Optional[torch.Tensor] = None,
     ) -> torch.Tensor:
         """
         Args:
             nodes: [batch, n_agents, node_dim]
             edges: [batch, n_agents, n_agents, edge_dim]
             adj_matrix: [batch, n_agents, n_agents]
+            agent_mask: optional [batch, n_agents] or [n_agents] bool; padding
+                slots are masked as keys AND queries (mirrors gat_policy).
         Returns:
             out: [batch, n_agents, out_dim]
         """
@@ -163,8 +166,24 @@ class EdgeFeatureGAT(nn.Module):
         mask = adj_matrix.unsqueeze(-1).expand(-1, -1, -1, self.num_heads)
         attn_scores = attn_scores.masked_fill(mask == 0, float('-inf'))
 
+        # Padding agents: mask their keys (no real agent attends to them) and
+        # their queries (they attend to nothing). A fully masked query row
+        # softmaxes to NaN, which nan_to_num below turns into an all-zero row
+        # so the padding output stays inert.
+        if agent_mask is not None:
+            am = agent_mask.to(torch.bool)
+            if am.ndim == 1:
+                am = am.unsqueeze(0).expand(batch_size, -1)
+            pad_keys = ~am[:, None, :]
+            attn_scores = attn_scores.masked_fill(
+                pad_keys[..., None], float('-inf'))
+            pad_queries = ~am[:, :, None]
+            attn_scores = attn_scores.masked_fill(
+                pad_queries[..., None], float('-inf'))
+
         # Softmax attention weights
         attn_weights = F.softmax(attn_scores, dim=2)  # [B, N, N, H]
+        attn_weights = torch.nan_to_num(attn_weights, nan=0.0)
         attn_weights = self.dropout(attn_weights)
 
         # Apply attention to neighbor features (including edge info)
@@ -402,12 +421,15 @@ class EdgeBiasGATLayer(nn.Module):
         nn.init.zeros_(self.edge_bias.bias)
 
     def forward(self, x: torch.Tensor, edges: torch.Tensor,
-                adj_matrix: Optional[torch.Tensor] = None) -> torch.Tensor:
+                adj_matrix: Optional[torch.Tensor] = None,
+                agent_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
         """
         Args:
             x:     [batch, n_agents, in_dim]
             edges: [batch, n_agents, n_agents, edge_dim]
             adj_matrix: [batch, n_agents, n_agents]
+            agent_mask: optional [batch, n_agents] or [n_agents] bool; padding
+                slots are masked as keys AND queries (mirrors gat_policy).
         Returns:
             [batch, n_agents, out_dim]
         """
@@ -425,8 +447,19 @@ class EdgeBiasGATLayer(nn.Module):
         if adj_matrix is not None:
             mask = adj_matrix.unsqueeze(1).expand(-1, self.num_heads, -1, -1)
             scores = scores.masked_fill(mask == 0, float("-inf"))
+        # Padding agents: mask keys and queries; nan_to_num handles the
+        # fully-masked padding query rows exactly as gat_policy does.
+        if agent_mask is not None:
+            am = agent_mask.to(torch.bool)
+            if am.ndim == 1:
+                am = am.unsqueeze(0).expand(B, -1)
+            pad_keys = ~am[:, None, :]
+            scores = scores.masked_fill(pad_keys.unsqueeze(1), float("-inf"))
+            pad_queries = ~am[:, :, None]
+            scores = scores.masked_fill(pad_queries.unsqueeze(1), float("-inf"))
 
         w = self.dropout(F.softmax(scores, dim=-1))
+        w = torch.nan_to_num(w, nan=0.0)
         out = torch.matmul(w, V).transpose(1, 2).contiguous().view(B, N, self.out_dim)
         return self.layer_norm(out + self.W_v(x))
 
@@ -453,10 +486,95 @@ class EdgeBiasGATEncoder(nn.Module):
             nn.LayerNorm(hidden_dim),
         )
 
-    def forward(self, obs, edges, adj_matrix=None):
+    def forward(self, obs, edges, adj_matrix=None, agent_mask=None):
         h = F.relu(self.input_proj(obs))
         for layer in self.layers:
-            h = layer(h, edges, adj_matrix)
+            h = layer(h, edges, adj_matrix, agent_mask)
+        return self.output_mlp(h)
+
+
+class AdaptiveEdgeGATLayer(nn.Module):
+    """GAT with edge-conditioned attention and communication gating.
+
+    The edge network has two roles: a per-head logit bias selects useful
+    neighbours, while a bounded gate scales the value message itself.  The
+    gate is initialized near one and the bias at zero, so the new arm starts
+    close to the plain GAT dynamics and learns when communication is useful.
+    """
+
+    def __init__(self, in_dim: int, out_dim: int, edge_dim: int = 8,
+                 num_heads: int = 4, dropout: float = 0.1):
+        super().__init__()
+        assert out_dim % num_heads == 0
+        self.num_heads = num_heads
+        self.out_dim = out_dim
+        self.head_dim = out_dim // num_heads
+        self.W_q = nn.Linear(in_dim, out_dim)
+        self.W_k = nn.Linear(in_dim, out_dim)
+        self.W_v = nn.Linear(in_dim, out_dim)
+        self.dropout = nn.Dropout(dropout)
+        self.layer_norm = nn.LayerNorm(out_dim)
+        self.edge_bias = nn.Linear(edge_dim, num_heads)
+        self.edge_gate = nn.Linear(edge_dim, num_heads)
+        nn.init.zeros_(self.edge_bias.weight)
+        nn.init.zeros_(self.edge_bias.bias)
+        nn.init.zeros_(self.edge_gate.weight)
+        # sigmoid(2) ~= .88: preserve most of the vanilla message initially.
+        nn.init.constant_(self.edge_gate.bias, 2.0)
+
+    def forward(self, x: torch.Tensor, edges: torch.Tensor,
+                adj_matrix: Optional[torch.Tensor] = None,
+                agent_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+        B, N, _ = x.shape
+        Q = self.W_q(x).view(B, N, self.num_heads, self.head_dim).transpose(1, 2)
+        K = self.W_k(x).view(B, N, self.num_heads, self.head_dim).transpose(1, 2)
+        V = self.W_v(x).view(B, N, self.num_heads, self.head_dim).transpose(1, 2)
+        scores = torch.matmul(Q, K.transpose(-2, -1)) / np.sqrt(self.head_dim)
+        bias = self.edge_bias(edges).permute(0, 3, 1, 2)
+        gate = torch.sigmoid(self.edge_gate(edges)).permute(0, 3, 1, 2)
+        scores = scores + bias
+        if adj_matrix is not None:
+            mask = adj_matrix.unsqueeze(1).expand(-1, self.num_heads, -1, -1)
+            scores = scores.masked_fill(mask == 0, float("-inf"))
+            gate = gate * (mask > 0).to(gate.dtype)
+        # Padding agents: mask keys and queries; nan_to_num handles the
+        # fully-masked padding query rows exactly as gat_policy does.
+        if agent_mask is not None:
+            am = agent_mask.to(torch.bool)
+            if am.ndim == 1:
+                am = am.unsqueeze(0).expand(B, -1)
+            pad_keys = ~am[:, None, :]
+            scores = scores.masked_fill(pad_keys.unsqueeze(1), float("-inf"))
+            pad_queries = ~am[:, :, None]
+            scores = scores.masked_fill(pad_queries.unsqueeze(1), float("-inf"))
+            gate = gate * am[:, None, :].unsqueeze(1).to(gate.dtype)
+        weights = F.softmax(scores, dim=-1)
+        weights = torch.nan_to_num(weights, nan=0.0)
+        weights = self.dropout(weights)
+        out = torch.matmul(weights * gate, V)
+        out = out.transpose(1, 2).contiguous().view(B, N, self.out_dim)
+        return self.layer_norm(out + self.W_v(x))
+
+
+class AdaptiveEdgeGATEncoder(nn.Module):
+    """Stacked adaptive edge-gated attention encoder."""
+
+    def __init__(self, obs_dim: int, hidden_dim: int = 128, num_layers: int = 2,
+                 num_heads: int = 4, edge_dim: int = 8, dropout: float = 0.1):
+        super().__init__()
+        self.input_proj = nn.Linear(obs_dim, hidden_dim)
+        self.layers = nn.ModuleList([
+            AdaptiveEdgeGATLayer(hidden_dim, hidden_dim, edge_dim, num_heads, dropout)
+            for _ in range(num_layers)
+        ])
+        self.output_mlp = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim), nn.ReLU(), nn.LayerNorm(hidden_dim)
+        )
+
+    def forward(self, obs, edges, adj_matrix=None, agent_mask=None):
+        h = F.relu(self.input_proj(obs))
+        for layer in self.layers:
+            h = layer(h, edges, adj_matrix, agent_mask)
         return self.output_mlp(h)
 
 

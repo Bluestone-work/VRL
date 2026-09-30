@@ -1,0 +1,6 @@
+{
+  "returncode": 1,
+  "message": "ValueError: All-clot success is provably unreachable: optimistic removal 1.8 < initial mass 4. Validate task duration and physical reachability before success-target training. --allow-unreachable-baseline is only for explicitly labelled engineering diagnostics.",
+  "created_training_directory": false,
+  "passed": true
+}

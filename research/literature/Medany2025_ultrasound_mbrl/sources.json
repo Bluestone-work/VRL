@@ -1,0 +1,12 @@
+{
+  "title": "Model-based reinforcement learning for ultrasound-driven autonomous microrobots",
+  "doi": "10.1038/s42256-025-01054-2",
+  "publication_date": "2025-06-26",
+  "access_date": "2026-09-30",
+  "full_text_source": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12283351/fullTextXML",
+  "paper": "https://www.nature.com/articles/s42256-025-01054-2",
+  "authors_repository": "https://github.com/M-Medany/Model-Based-Reinforcement-Learning-for-Ultrasound-Driven-Autonomous-Microrobots",
+  "readme_source": "https://raw.githubusercontent.com/M-Medany/Model-Based-Reinforcement-Learning-for-Ultrasound-Driven-Autonomous-Microrobots/main/README.md",
+  "article_sha256": "a6e793698e472730eda4645921d0e9c72d3eed3ecae5b0ac806d35234844ccf6",
+  "limitations": "Publisher supplement download failed; GitHub recursive API rate-limited. Full paper and authors README read, underlying environment code not audited."
+}

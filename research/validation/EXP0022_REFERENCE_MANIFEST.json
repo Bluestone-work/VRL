@@ -1,0 +1,30 @@
+{
+  "archive_date": "2026-09-28",
+  "provenance": "Sources downloaded in the preceding session and inspected in this continuation; no new device measurement.",
+  "sources": [
+    {
+      "archive_path": "research/runs/EXP0022_REFERENCES_20260928/mca_flow_source_2015.html",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4420884/",
+      "location": "Table 1, MCA row; volume flow ml/min",
+      "sha256": "8a87978eaab58b37bc6b566e5de81c250047e8bcf6d83f8bdf773fdcf445185d"
+    },
+    {
+      "archive_path": "research/runs/EXP0022_REFERENCES_20260928/an2026_turbo.html",
+      "source_url": "https://www.nature.com/articles/s42256-026-01252-6",
+      "location": "Article and link to supplementary information",
+      "sha256": "5f69742aed6914141429b4fd1a9a75278c76c21674d0798bcf78cf8eab78bca0"
+    },
+    {
+      "archive_path": "research/runs/EXP0022_REFERENCES_20260928/an2026_turbo_supplement.pdf",
+      "source_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs42256-026-01252-6/MediaObjects/42256_2026_1252_MOESM1_ESM.pdf",
+      "location": "Supplementary Table 4, printed p39; real-world deployment printed pp30-31",
+      "sha256": "18b9feabd13fc26812f2501fd099e0f170ba655da8ae3ed25b89f68bf68f3ce5"
+    },
+    {
+      "archive_path": "research/runs/EXP0022_REFERENCES_20260928/an2026_turbo_supplement.txt",
+      "source_url": null,
+      "location": "pdftotext extraction; same supplement, unit symbols checked against rendered table",
+      "sha256": "c097eeca855faa372317f42e9e9e2f1722a9dcb34c8d90d4dffd9ee28eba82e2"
+    }
+  ]
+}

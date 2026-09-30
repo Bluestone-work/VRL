@@ -7,3 +7,6 @@ gymnasium==1.2.3
 pybullet==3.2.7
 pillow==12.2.0
 pytest==8.3.4
+
+# Compiled MCA integrator; keeps NumPy 1.26.4 unchanged.
+numba==0.61.2

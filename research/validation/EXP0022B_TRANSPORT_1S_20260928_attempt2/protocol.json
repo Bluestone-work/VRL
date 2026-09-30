@@ -1,0 +1,30 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "spatial_fractions": [
+    0.1,
+    0.05,
+    0.025,
+    0.0125
+  ],
+  "duration_s": 1.0,
+  "threshold_mm": 0.05,
+  "reference_fraction": 0.0125,
+  "evaluation": "all control-time samples, active masks and exit-node identity",
+  "scope": "fixed-pressure/fixed-clot-mass transport only; no lysis or policy performance",
+  "after_all_robots_exit": "continue passive tracer transport for entire physical window",
+  "config_sha256": "d77578c52e394882ada1b365b28f99cd3eb9594c9e13188487e6b9e847052a4a",
+  "source_sha256": {
+    "scripts/audit_mca_transport.py": "c5c824e54ad59f7cd425f0455762751a1e1c571b3619e336c1188e833c20664a",
+    "scripts/validate_mca_dynamics.py": "68915782fae965b035cc81c6aadd66f88bbfc372ef278e0269bd0fcbd852f63d",
+    "environments/mca_physical_dynamics.py": "74f71aba4e8207673e1b3dfefdd6246ac104191b0bd052146d8f1a9ad578b05d",
+    "environments/mca_physical_env.py": "6c6f5230faf0d095573d62ca00b2447264a200f94e10a08eee858f2dd9be0465",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "environments/vessel_anatomy.py": "6689590a57d7b980dc77fe3be7d0d0a00348d2b73eef32f1f48579f3281d517e",
+    "environments/vessel_tree_generator.py": "454bd40d0e184963014981ea3b89847c98e8fa8bf23e9e38b9cf7d0b5878b476",
+    "environments/vessel_geometry.py": "f2c6525cd9dc43a9b18d6a3dff354dd04cb9c892696e745f64f71082f217ee8d"
+  }
+}

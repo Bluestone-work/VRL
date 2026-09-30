@@ -95,7 +95,7 @@ def load_policy(
     # in words instead of letting it surface as a matmul shape error.
     stored_dim = meta.get("obs_dim")
     if stored_dim is not None and stored_dim != env_obs_dim:
-        expected = {20: "legacy", 36: "geometric", 42: "geometric_v2"}.get(stored_dim, "unknown")
+        expected = {20: "legacy", 36: "geometric", 42: "geometric_v2", 44: "geometric_dynamic", 52: "geometric_predictive"}.get(stored_dim, "unknown")
         raise SystemExit(
             f"checkpoint expects obs_dim={stored_dim} but the env provides "
             f"{env_obs_dim}.\nRe-run with --obs-mode {expected}"

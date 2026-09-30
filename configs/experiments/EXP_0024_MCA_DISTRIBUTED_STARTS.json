@@ -1,0 +1,42 @@
+{
+  "experiment": "EXP_0024_MCA_DISTRIBUTED_STARTS",
+  "parent": "EXP_0023_MCA_PURE_RL",
+  "scope": "New start distribution and corrected current-policy entropy; fresh pure MAPPO weights",
+  "authorization": "User requested different robot initial positions and authorized continuing formal pure-RL training; local audit 2026-09-30",
+  "physics_config": "configs/experiments/EXP_0024_MCA_DISTRIBUTED_DYNAMICS.json",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "timesteps_per_seed": 3000000,
+  "transition_unit": "one environment control step, not individual robot samples",
+  "rollout_steps": 128,
+  "epochs": 5,
+  "batch_size": 128,
+  "hidden_dim": 128,
+  "checkpoint_interval": 4096,
+  "milestones": [
+    100000,
+    1000000,
+    2000000,
+    3000000
+  ],
+  "eval_episodes": 20,
+  "training_seed_base": 100000000,
+  "validation_seed_base": 900000000,
+  "architecture": "adaptive_edge_gat",
+  "control": "direct_local_frenet",
+  "world_model": false,
+  "guidance_controller": false,
+  "fresh_weights": true,
+  "task": "Nominal MCA anatomy and clot sites; seeded starts on distinct navigable branches; random passive tracers",
+  "task_limit": "1 second horizon; total mass 4; optimistic total lysis upper bound 5*0.36*1=1.8, so all-clot success is unreachable under separated target contacts",
+  "reporting": "reward, removed mass, contact time, exits, success with explicit task ceiling; no clinical or anatomy-generalization claim",
+  "physical_calibration_ready": false,
+  "long_duration_lysis_feedback_validated": false,
+  "sealed_test_used": false,
+  "initialization_sampling": "Each episode: shuffled navigable branches without replacement; length-weighted edge, radial offset <=65% of clearance; reject overlaps and invalid lumen projections. No clot-target bias.",
+  "entropy_estimator": "Reparameterized current-policy tanh entropy; replaces incorrect cross-entropy on rollout actions",
+  "comparability": "Separate protocol: do not pool EXP23 fixed-start results or reuse its divergent weights"
+}

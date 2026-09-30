@@ -1,0 +1,291 @@
+{
+  "as_of": "2026-09-30T15:21:34+08:00",
+  "run_dir": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a",
+  "user_clearance_target": 0.8,
+  "statuses": {
+    "42": {
+      "phase": "running",
+      "pid": 4057208,
+      "seed": 42,
+      "transitions": 853792,
+      "target": 3000000,
+      "episodes": 553,
+      "updates": 1670,
+      "wall_seconds": 2726.4362084979657,
+      "fps": 313.15311810297834,
+      "timestamp": 1790752894.1905024,
+      "preflight": false,
+      "backend": "compiled_parallel",
+      "n_envs": 8,
+      "start_transitions": 0,
+      "metrics": {
+        "actor_loss": -0.001634079284320416,
+        "critic_loss": 0.0046587066603520225,
+        "entropy": 0.1341864925131879,
+        "approx_kl": 0.008375589871836543,
+        "clip_fraction": 0.09501912053868398,
+        "mve_fraction": 0.0,
+        "mve_uncertainty": 0.0,
+        "mve_target_delta": 0.0,
+        "pre_update_ratio_max_error": 2.5272369384765625e-05,
+        "explained_variance": 0.9736459851264954
+      }
+    },
+    "43": {
+      "phase": "running",
+      "pid": 4057209,
+      "seed": 43,
+      "transitions": 609056,
+      "target": 3000000,
+      "episodes": 403,
+      "updates": 1192,
+      "wall_seconds": 2724.564691507956,
+      "fps": 223.5424990635505,
+      "timestamp": 1790752894.8344357,
+      "preflight": false,
+      "backend": "compiled_parallel",
+      "n_envs": 8,
+      "start_transitions": 0,
+      "metrics": {
+        "actor_loss": -0.0020367822598927887,
+        "critic_loss": 0.0019123309781744783,
+        "entropy": 0.1316214528950778,
+        "approx_kl": 0.008675457340772652,
+        "clip_fraction": 0.10494652406417114,
+        "mve_fraction": 0.0,
+        "mve_uncertainty": 0.0,
+        "mve_target_delta": 0.0,
+        "pre_update_ratio_max_error": 4.6253204345703125e-05,
+        "explained_variance": 0.9949559569358826
+      }
+    },
+    "44": {
+      "phase": "running",
+      "pid": 4057210,
+      "seed": 44,
+      "transitions": 541472,
+      "target": 3000000,
+      "episodes": 378,
+      "updates": 1060,
+      "wall_seconds": 2723.6458814488724,
+      "fps": 198.80411168281472,
+      "timestamp": 1790752893.81761,
+      "preflight": false,
+      "backend": "compiled_parallel",
+      "n_envs": 8,
+      "start_transitions": 0,
+      "metrics": {
+        "actor_loss": -0.0017544971223370258,
+        "critic_loss": 0.0015991701061466301,
+        "entropy": 0.13748439181257377,
+        "approx_kl": 0.014003738578439668,
+        "clip_fraction": 0.17860962566844918,
+        "mve_fraction": 0.0,
+        "mve_uncertainty": 0.0,
+        "mve_target_delta": 0.0,
+        "pre_update_ratio_max_error": 0.00010347366333007812,
+        "explained_variance": 0.9930327534675598
+      }
+    }
+  },
+  "evaluations": [
+    {
+      "policy_seed": 42,
+      "transitions": 20000,
+      "episodes": 100,
+      "successes": 7,
+      "collision_free_successes": 3,
+      "particle_collision_episodes": 74,
+      "robot_loss_episodes": 3,
+      "termination_reasons": {
+        "time_limit": 93,
+        "all_clots_cleared": 7
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_42/evaluation_20000.json",
+      "source_sha256": "5b9c8e2d8b032911d583d47c66ab1bdb1c69f0a57b8bb25b1b10164953144931",
+      "success_rate": 0.07,
+      "collision_free_success_rate": 0.03,
+      "particle_collision_episode_rate": 0.74,
+      "mean_removal_fraction": 0.6455998813432798
+    },
+    {
+      "policy_seed": 43,
+      "transitions": 20000,
+      "episodes": 100,
+      "successes": 53,
+      "collision_free_successes": 10,
+      "particle_collision_episodes": 74,
+      "robot_loss_episodes": 3,
+      "termination_reasons": {
+        "all_clots_cleared": 53,
+        "time_limit": 47
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_43/evaluation_20000.json",
+      "source_sha256": "69330c018256d88ffd76e4b95ac6161f9d7f2149625b7e2719650e37700c8b02",
+      "success_rate": 0.53,
+      "collision_free_success_rate": 0.1,
+      "particle_collision_episode_rate": 0.74,
+      "mean_removal_fraction": 0.8515048748845996
+    },
+    {
+      "policy_seed": 44,
+      "transitions": 20000,
+      "episodes": 100,
+      "successes": 45,
+      "collision_free_successes": 9,
+      "particle_collision_episodes": 76,
+      "robot_loss_episodes": 6,
+      "termination_reasons": {
+        "all_clots_cleared": 45,
+        "time_limit": 55
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_44/evaluation_20000.json",
+      "source_sha256": "4f14cb660c82be656a71cd43436031a6dfe016740cba8d8868f1e5d328e56345",
+      "success_rate": 0.45,
+      "collision_free_success_rate": 0.09,
+      "particle_collision_episode_rate": 0.76,
+      "mean_removal_fraction": 0.8395352992612342
+    },
+    {
+      "policy_seed": 42,
+      "transitions": 100000,
+      "episodes": 100,
+      "successes": 41,
+      "collision_free_successes": 5,
+      "particle_collision_episodes": 85,
+      "robot_loss_episodes": 9,
+      "termination_reasons": {
+        "all_clots_cleared": 41,
+        "time_limit": 59
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_42/evaluation_100000.json",
+      "source_sha256": "de030570f5a49f0ca2341404fdaf91fd3fd91263c182ef437a373defbfbe1a0f",
+      "success_rate": 0.41,
+      "collision_free_success_rate": 0.05,
+      "particle_collision_episode_rate": 0.85,
+      "mean_removal_fraction": 0.8216796977948247
+    },
+    {
+      "policy_seed": 43,
+      "transitions": 100000,
+      "episodes": 100,
+      "successes": 0,
+      "collision_free_successes": 0,
+      "particle_collision_episodes": 71,
+      "robot_loss_episodes": 37,
+      "termination_reasons": {
+        "time_limit": 100
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_43/evaluation_100000.json",
+      "source_sha256": "fdb9f87e6db08a1e054d94bc1db24251c92c07352f1ba00a0933de85f11ab999",
+      "success_rate": 0.0,
+      "collision_free_success_rate": 0.0,
+      "particle_collision_episode_rate": 0.71,
+      "mean_removal_fraction": 0.4274668813291742
+    },
+    {
+      "policy_seed": 44,
+      "transitions": 100000,
+      "episodes": 100,
+      "successes": 14,
+      "collision_free_successes": 0,
+      "particle_collision_episodes": 80,
+      "robot_loss_episodes": 75,
+      "termination_reasons": {
+        "time_limit": 82,
+        "all_clots_cleared": 14,
+        "all_robots_exited": 4
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_44/evaluation_100000.json",
+      "source_sha256": "4616ffb77ee85273e3a68d2c471996fe5293f1b45d54d4fec4b29c721163be40",
+      "success_rate": 0.14,
+      "collision_free_success_rate": 0.0,
+      "particle_collision_episode_rate": 0.8,
+      "mean_removal_fraction": 0.6501320025045907
+    },
+    {
+      "policy_seed": 42,
+      "transitions": 500000,
+      "episodes": 100,
+      "successes": 33,
+      "collision_free_successes": 8,
+      "particle_collision_episodes": 81,
+      "robot_loss_episodes": 0,
+      "termination_reasons": {
+        "time_limit": 67,
+        "all_clots_cleared": 33
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_42/evaluation_500000.json",
+      "source_sha256": "37d60ecc068155b149eac519bd5a2e1f47971bab4821e14817cc1c603c0cd20e",
+      "success_rate": 0.33,
+      "collision_free_success_rate": 0.08,
+      "particle_collision_episode_rate": 0.81,
+      "mean_removal_fraction": 0.8212508869111482
+    },
+    {
+      "policy_seed": 43,
+      "transitions": 500000,
+      "episodes": 100,
+      "successes": 15,
+      "collision_free_successes": 2,
+      "particle_collision_episodes": 78,
+      "robot_loss_episodes": 2,
+      "termination_reasons": {
+        "time_limit": 85,
+        "all_clots_cleared": 15
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_43/evaluation_500000.json",
+      "source_sha256": "a3deeda57a19e2d834c914f27646ec560577d038e9ada88efe04e8c456de0de0",
+      "success_rate": 0.15,
+      "collision_free_success_rate": 0.02,
+      "particle_collision_episode_rate": 0.78,
+      "mean_removal_fraction": 0.7070413939626912
+    },
+    {
+      "policy_seed": 44,
+      "transitions": 500000,
+      "episodes": 100,
+      "successes": 27,
+      "collision_free_successes": 5,
+      "particle_collision_episodes": 71,
+      "robot_loss_episodes": 1,
+      "termination_reasons": {
+        "all_clots_cleared": 27,
+        "time_limit": 73
+      },
+      "validation_layouts_sha256": "0336bef8682c2b522bc098b9a16cce80f96cc17626b6a96248a0db64bddd24f1",
+      "source": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0029_MCA_ALL_RANDOM_20260930a/seed_44/evaluation_500000.json",
+      "source_sha256": "b5772886f461b4fb4ee98a1e7d5d109cebeb65282cdd04f84612db1195f93a0a",
+      "success_rate": 0.27,
+      "collision_free_success_rate": 0.05,
+      "particle_collision_episode_rate": 0.71,
+      "mean_removal_fraction": 0.7789329902711583
+    }
+  ],
+  "common_checkpoint": 500000,
+  "common_checkpoint_aggregate": {
+    "success_rate": {
+      "mean": 0.25,
+      "sample_std": 0.09165151389911681
+    },
+    "collision_free_success_rate": {
+      "mean": 0.05,
+      "sample_std": 0.030000000000000002
+    },
+    "particle_collision_episode_rate": {
+      "mean": 0.7666666666666667,
+      "sample_std": 0.05131601439446889
+    }
+  },
+  "clearance_target_met_all_seeds": false,
+  "best_observed_clearance": 0.53,
+  "interpretation": "Development validation on one anatomy; the same layouts are reused across policies/checkpoints. Seed means are descriptive; episodes are not 300 independent policy trainings. No sealed test, no eventual-performance guarantee."
+}

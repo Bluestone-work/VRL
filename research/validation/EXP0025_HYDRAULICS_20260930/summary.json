@@ -1,0 +1,383 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "all_mass_0",
+      "masses": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "inlet_flow_ml_min": 146.0,
+      "independent_inlet_flow_ml_min": 145.99999999998835,
+      "maximum_node_flow_error_mm3_s": 3.019522409886122e-10,
+      "relative_error": 1.2408996205011458e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 0.024724337612025415,
+      "passed": true
+    },
+    {
+      "case": "all_mass_0.25",
+      "masses": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "inlet_flow_ml_min": 136.40418734202393,
+      "independent_inlet_flow_ml_min": 136.4041873420123,
+      "maximum_node_flow_error_mm3_s": 2.2737367544323206e-10,
+      "relative_error": 1.0001467544677722e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 0.0666484222628716,
+      "passed": true
+    },
+    {
+      "case": "all_mass_0.5",
+      "masses": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "inlet_flow_ml_min": 119.88299118718794,
+      "independent_inlet_flow_ml_min": 119.88299118717201,
+      "maximum_node_flow_error_mm3_s": 2.75349520961754e-10,
+      "relative_error": 1.3780913450773873e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 0.33359808351656195,
+      "passed": true
+    },
+    {
+      "case": "all_mass_0.75",
+      "masses": [
+        0.75,
+        0.75,
+        0.75,
+        0.75
+      ],
+      "inlet_flow_ml_min": 91.53508898459559,
+      "independent_inlet_flow_ml_min": 91.53508898459143,
+      "maximum_node_flow_error_mm3_s": 2.3101165425032377e-10,
+      "relative_error": 1.5142498258074607e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 1.399422586198229,
+      "passed": true
+    },
+    {
+      "case": "all_mass_1",
+      "masses": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 50.96254369319374,
+      "independent_inlet_flow_ml_min": 50.962543693184855,
+      "maximum_node_flow_error_mm3_s": 1.5234036254696548e-10,
+      "relative_error": 1.793556814558821e-13,
+      "compiled_flow_error_mm3_s": 1.1368683772161603e-13,
+      "exact_taper_inlet_difference_percent": 4.860763155425096,
+      "passed": true
+    },
+    {
+      "case": "clot_0_mass_0",
+      "masses": [
+        0.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 60.79606902577043,
+      "independent_inlet_flow_ml_min": 60.79606902577914,
+      "maximum_node_flow_error_mm3_s": 2.8114754968555644e-10,
+      "relative_error": 2.774661791699553e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 4.092404486690837,
+      "passed": true
+    },
+    {
+      "case": "clot_0_mass_0.25",
+      "masses": [
+        0.25,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 60.489621845682635,
+      "independent_inlet_flow_ml_min": 60.48962184567936,
+      "maximum_node_flow_error_mm3_s": 2.319211489520967e-10,
+      "relative_error": 2.3004390691390946e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 4.06759172163742,
+      "passed": true
+    },
+    {
+      "case": "clot_0_mass_0.5",
+      "masses": [
+        0.5,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 59.70999855649954,
+      "independent_inlet_flow_ml_min": 59.709998556473295,
+      "maximum_node_flow_error_mm3_s": 4.51223058917094e-10,
+      "relative_error": 4.5341457359788625e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 4.018954204329095,
+      "passed": true
+    },
+    {
+      "case": "clot_0_mass_0.75",
+      "masses": [
+        0.75,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 57.702615589634874,
+      "independent_inlet_flow_ml_min": 57.70261558963219,
+      "maximum_node_flow_error_mm3_s": 1.942908056662418e-10,
+      "relative_error": 2.0202634180188768e-13,
+      "compiled_flow_error_mm3_s": 1.1368683772161603e-13,
+      "exact_taper_inlet_difference_percent": 4.0412468066924,
+      "passed": true
+    },
+    {
+      "case": "clot_1_mass_0",
+      "masses": [
+        1.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 58.06354672928071,
+      "independent_inlet_flow_ml_min": 58.063546729262455,
+      "maximum_node_flow_error_mm3_s": 3.198010745109059e-10,
+      "relative_error": 3.304666275403059e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 4.727559617560129,
+      "passed": true
+    },
+    {
+      "case": "clot_1_mass_0.25",
+      "masses": [
+        1.0,
+        0.25,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 57.91169653103944,
+      "independent_inlet_flow_ml_min": 57.91169653103454,
+      "maximum_node_flow_error_mm3_s": 1.5631940186722204e-10,
+      "relative_error": 1.6195630026149016e-13,
+      "compiled_flow_error_mm3_s": 0.0,
+      "exact_taper_inlet_difference_percent": 4.709060088788175,
+      "passed": true
+    },
+    {
+      "case": "clot_1_mass_0.5",
+      "masses": [
+        1.0,
+        0.5,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 57.435761465471785,
+      "independent_inlet_flow_ml_min": 57.43576146546285,
+      "maximum_node_flow_error_mm3_s": 1.0163603292312473e-10,
+      "relative_error": 1.0617360717074271e-13,
+      "compiled_flow_error_mm3_s": 3.410605131648481e-13,
+      "exact_taper_inlet_difference_percent": 4.654656521983158,
+      "passed": true
+    },
+    {
+      "case": "clot_1_mass_0.75",
+      "masses": [
+        1.0,
+        0.75,
+        1.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 56.075983100168834,
+      "independent_inlet_flow_ml_min": 56.07598310016794,
+      "maximum_node_flow_error_mm3_s": 1.687112671788782e-10,
+      "relative_error": 1.805171389086572e-13,
+      "compiled_flow_error_mm3_s": 1.7053025658242404e-13,
+      "exact_taper_inlet_difference_percent": 4.592746981895446,
+      "passed": true
+    },
+    {
+      "case": "clot_2_mass_0",
+      "masses": [
+        1.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      "inlet_flow_ml_min": 54.8500694865784,
+      "independent_inlet_flow_ml_min": 54.85006948657567,
+      "maximum_node_flow_error_mm3_s": 9.322320693172514e-11,
+      "relative_error": 1.019760315394348e-13,
+      "compiled_flow_error_mm3_s": 2.2737367544323206e-13,
+      "exact_taper_inlet_difference_percent": 4.341810141955893,
+      "passed": true
+    },
+    {
+      "case": "clot_2_mass_0.25",
+      "masses": [
+        1.0,
+        1.0,
+        0.25,
+        1.0
+      ],
+      "inlet_flow_ml_min": 54.68158582275943,
+      "independent_inlet_flow_ml_min": 54.681585822757334,
+      "maximum_node_flow_error_mm3_s": 6.775735528208315e-11,
+      "relative_error": 7.434753867787208e-14,
+      "compiled_flow_error_mm3_s": 1.7053025658242404e-13,
+      "exact_taper_inlet_difference_percent": 4.3437578742126615,
+      "passed": true
+    },
+    {
+      "case": "clot_2_mass_0.5",
+      "masses": [
+        1.0,
+        1.0,
+        0.5,
+        1.0
+      ],
+      "inlet_flow_ml_min": 54.33914001985357,
+      "independent_inlet_flow_ml_min": 54.33914001984056,
+      "maximum_node_flow_error_mm3_s": 1.872422217275016e-10,
+      "relative_error": 2.067484560768794e-13,
+      "compiled_flow_error_mm3_s": 1.7053025658242404e-13,
+      "exact_taper_inlet_difference_percent": 4.35865246581808,
+      "passed": true
+    },
+    {
+      "case": "clot_2_mass_0.75",
+      "masses": [
+        1.0,
+        1.0,
+        0.75,
+        1.0
+      ],
+      "inlet_flow_ml_min": 53.49997659620556,
+      "independent_inlet_flow_ml_min": 53.49997659620131,
+      "maximum_node_flow_error_mm3_s": 7.344169716816396e-11,
+      "relative_error": 8.236455621930804e-14,
+      "compiled_flow_error_mm3_s": 3.410605131648481e-13,
+      "exact_taper_inlet_difference_percent": 4.436984449421533,
+      "passed": true
+    },
+    {
+      "case": "clot_3_mass_0",
+      "masses": [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ],
+      "inlet_flow_ml_min": 71.60900498802107,
+      "independent_inlet_flow_ml_min": 71.60900498801143,
+      "maximum_node_flow_error_mm3_s": 1.77351466845721e-10,
+      "relative_error": 1.4859985853068797e-13,
+      "compiled_flow_error_mm3_s": 4.547473508864641e-13,
+      "exact_taper_inlet_difference_percent": 4.203293197489222,
+      "passed": true
+    },
+    {
+      "case": "clot_3_mass_0.25",
+      "masses": [
+        1.0,
+        1.0,
+        1.0,
+        0.25
+      ],
+      "inlet_flow_ml_min": 70.30720227316527,
+      "independent_inlet_flow_ml_min": 70.30720227315557,
+      "maximum_node_flow_error_mm3_s": 1.1618794815149158e-10,
+      "relative_error": 9.915451993102961e-14,
+      "compiled_flow_error_mm3_s": 2.2737367544323206e-13,
+      "exact_taper_inlet_difference_percent": 4.1310846520368205,
+      "passed": true
+    },
+    {
+      "case": "clot_3_mass_0.5",
+      "masses": [
+        1.0,
+        1.0,
+        1.0,
+        0.5
+      ],
+      "inlet_flow_ml_min": 67.82035027086097,
+      "independent_inlet_flow_ml_min": 67.82035027085105,
+      "maximum_node_flow_error_mm3_s": 1.3642420526593924e-10,
+      "relative_error": 1.2069315895988871e-13,
+      "compiled_flow_error_mm3_s": 2.2737367544323206e-13,
+      "exact_taper_inlet_difference_percent": 4.057683809196133,
+      "passed": true
+    },
+    {
+      "case": "clot_3_mass_0.75",
+      "masses": [
+        1.0,
+        1.0,
+        1.0,
+        0.75
+      ],
+      "inlet_flow_ml_min": 62.49581585392491,
+      "independent_inlet_flow_ml_min": 62.495815853916575,
+      "maximum_node_flow_error_mm3_s": 1.241460267920047e-10,
+      "relative_error": 1.1918816493140443e-13,
+      "compiled_flow_error_mm3_s": 5.684341886080801e-13,
+      "exact_taper_inlet_difference_percent": 4.113357819556174,
+      "passed": true
+    }
+  ],
+  "contact_geometry": [
+    {
+      "clot": 0,
+      "lumen_radius_mm": 0.49700000123958926,
+      "contact_centre_radius_mm": 0.12,
+      "minimum_contact_cross_section_flow_mm_s": 1728.609233236799,
+      "propulsion_mm_s": 1.0,
+      "minimum_gap_between_robot_surface_and_lumen_wall_mm": 0.29700000123958925,
+      "point_contact_can_touch_lumen_wall": false
+    },
+    {
+      "clot": 1,
+      "lumen_radius_mm": 0.47600002541158126,
+      "contact_centre_radius_mm": 0.12,
+      "minimum_contact_cross_section_flow_mm_s": 1688.8429426074588,
+      "propulsion_mm_s": 1.0,
+      "minimum_gap_between_robot_surface_and_lumen_wall_mm": 0.27600002541158125,
+      "point_contact_can_touch_lumen_wall": false
+    },
+    {
+      "clot": 2,
+      "lumen_radius_mm": 0.36817306911604797,
+      "contact_centre_radius_mm": 0.12,
+      "minimum_contact_cross_section_flow_mm_s": 992.183827110379,
+      "propulsion_mm_s": 1.0,
+      "minimum_gap_between_robot_surface_and_lumen_wall_mm": 0.16817306911604796,
+      "point_contact_can_touch_lumen_wall": false
+    },
+    {
+      "clot": 3,
+      "lumen_radius_mm": 0.3506730815119413,
+      "contact_centre_radius_mm": 0.12,
+      "minimum_contact_cross_section_flow_mm_s": 1853.3947575694826,
+      "propulsion_mm_s": 1.0,
+      "minimum_gap_between_robot_surface_and_lumen_wall_mm": 0.1506730815119413,
+      "point_contact_can_touch_lumen_wall": false
+    }
+  ],
+  "physical_inputs_changed": false,
+  "policy_training_started": false,
+  "policy_success_rate": null,
+  "scope": "Numerical implementation and point-contact semantics only; no calibration claim"
+}

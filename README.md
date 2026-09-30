@@ -1,5 +1,9 @@
 # vascular_marl_local
 
+> 当前研究进度（2026-09-30）：MCA体外低流量仿真已支持血栓、机器人和动态粒子全部随机初始化、纯MAPPO训练及VTK三维回放。EXP29三seed新增50万步的完整清栓率为33%/15%/27%，无粒子碰撞且全机器人保留的清栓率为8%/2%/5%，尚未达到80%。EXP30修复PPO带mask小批次损失分母，正在比较原actor学习率与降低学习率。世界模型暂缓接入。详见[EXP29环境说明](research/experiments/EXP_0029_ALL_RANDOM_AVOIDANCE.md)、[EXP30修正实验](research/experiments/EXP_0030_PPO_REPAIR.md)与[续接记录](research/CONTINUATION_20260928.md)。下文早期环境的高成功率属于历史实验，不代表当前随机MCA任务。
+
+当前验证：`python -m pytest tests -q`，401通过、1跳过；EXP30两组分别完成16,384环境步GPU预检。不要对含历史源码快照的整个仓库执行pytest收集。训练权重、逐步日志、原始大样本诊断和视频留在本机，Git保留源码、配置、研究说明和轻量验证证据；新机器需按配置重新验证/训练或取得协议中哈希对应的归档权重。
+
 自包含的血管内微型机器人 MARL 训练包，用于在本机复现实验并用 PyBullet GUI
 实时观察仿真。
 

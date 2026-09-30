@@ -1,0 +1,91 @@
+{
+  "verified_at": 1790700298.0342052,
+  "training": [
+    {
+      "seed": 42,
+      "steps": 23536,
+      "updates": 183,
+      "fps": 137.76208962972015,
+      "checkpoint_steps": 20480,
+      "start_mode": "distributed_branches",
+      "verified_distinct_episodes": 25,
+      "max_ratio_error": 1.430511474609375e-06
+    },
+    {
+      "seed": 43,
+      "steps": 21120,
+      "updates": 165,
+      "fps": 124.20048524174287,
+      "checkpoint_steps": 20480,
+      "start_mode": "distributed_branches",
+      "verified_distinct_episodes": 25,
+      "max_ratio_error": 1.9669532775878906e-06
+    },
+    {
+      "seed": 44,
+      "steps": 20992,
+      "updates": 164,
+      "fps": 123.71698709473898,
+      "checkpoint_steps": 20480,
+      "start_mode": "distributed_branches",
+      "verified_distinct_episodes": 25,
+      "max_ratio_error": 2.1457672119140625e-06
+    }
+  ],
+  "viewer": {
+    "renderer": "existing PVRenderer from watch_gui.py",
+    "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0024_MCA_DISTRIBUTED_20260930a/seed_42/latest.pt",
+    "checkpoint_steps": 16384,
+    "episode_seed": 900000001,
+    "frames": 259,
+    "playback_slowdown": 80.0,
+    "robot_initialization": "distributed_branches",
+    "initial_positions_mm": [
+      [
+        26.74738344015977,
+        39.77442020699769,
+        32.18276578669856
+      ],
+      [
+        49.49215722227788,
+        5.870578631285933,
+        34.302366305481065
+      ],
+      [
+        38.93816740096894,
+        45.25154167149932,
+        42.43590221215607
+      ],
+      [
+        34.191702339276056,
+        39.75874501125073,
+        41.871706128632844
+      ],
+      [
+        29.654976836745252,
+        40.09252424025054,
+        40.60317198450423
+      ]
+    ],
+    "initial_branch_ids": [
+      3,
+      5,
+      2,
+      1,
+      4
+    ],
+    "training_phase": "running",
+    "robot_display_scale": 4,
+    "particle_display_scale": 3,
+    "clot_surface_model": false,
+    "physical_duration_s": 0.2516327068298702,
+    "replay_index": 1,
+    "updated_at": 1790700263.6328516
+  },
+  "full_tests": {
+    "passed": 355,
+    "skipped": 1
+  },
+  "long_training_completed": false,
+  "success_claim": false
+}

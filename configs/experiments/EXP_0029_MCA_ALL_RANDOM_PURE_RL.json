@@ -1,0 +1,62 @@
+{
+  "experiment": "EXP_0029_MCA_ALL_RANDOM_AVOIDANCE",
+  "parent": "EXP_0028_MCA_RANDOMIZED_POINTS",
+  "scope": "Randomize clots, robots and particles; predictive multi-obstacle observations, stronger contact and clearance costs, separate collision-free success",
+  "authorization": "User explicitly requested random initialization of all three object classes and stronger dynamic-obstacle sensitivity; prior continue-training and visualization instructions persist",
+  "physics_config": "configs/experiments/EXP_0029_MCA_ALL_RANDOM_DYNAMICS.json",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "timesteps_per_seed": 3000000,
+  "transition_unit": "one environment control step, not individual robot samples",
+  "rollout_steps": 512,
+  "epochs": 4,
+  "batch_size": 256,
+  "hidden_dim": 128,
+  "checkpoint_interval": 4096,
+  "milestones": [
+    20000,
+    100000,
+    500000,
+    1000000,
+    2000000,
+    3000000
+  ],
+  "eval_episodes": 100,
+  "training_seed_base": 300000000,
+  "validation_seed_base": 920000000,
+  "architecture": "adaptive_edge_gat",
+  "control": "direct_local_frenet",
+  "world_model": false,
+  "guidance_controller": false,
+  "fresh_weights": false,
+  "weight_initialization": "expand_point36_to_obstacles76",
+  "initialization_checkpoints": {
+    "42": {
+      "path": "research/initializations/EXP0029_FROM_EXP0028_20260930/seed_42.pt",
+      "sha256": "18f745fefb9c439f31f5a9b888d1f073202bd0b3b5b21dc283f74720a718478a"
+    },
+    "43": {
+      "path": "research/initializations/EXP0029_FROM_EXP0028_20260930/seed_43.pt",
+      "sha256": "b40bbd7b43b0b329e452b6bde6e8430ee4c6b59f8ddda7adaeffe53c4a688ddc"
+    },
+    "44": {
+      "path": "research/initializations/EXP0029_FROM_EXP0028_20260930/seed_44.pt",
+      "sha256": "abb7b2e5fefce25e8b4f395524e857f9a558ed92e331ade6a061eb594bc97267"
+    }
+  },
+  "comparability": "New 76-D schema. Explicitly expand two input projections from 36 to 76, preserving old columns and zero-initializing extra obstacle columns. All other actor/critic weights transfer; fresh optimizers, environments, RNG and counters. Parent success rates excluded.",
+  "pure_rl": true,
+  "oracle_used_for_training": false,
+  "require_randomization_boundaries": true,
+  "require_random_clot_evidence": true,
+  "feasibility_certificate": "research/validation/EXP0029_FEASIBILITY_20260930/certificate.json",
+  "reference_certificate": "research/validation/EXP0029_REFERENCE_20260930/certificate.json",
+  "feasibility_image": "research/validation/EXP0029_FEASIBILITY_20260930/feasibility.png",
+  "task_limit": "Controlled in-vitro goal-conditioned ideal-actuator simulation with perfect state. All object positions randomized on fixed MCA anatomy. Soft overlap costs, not hard collision physics. Diagnostic clearance feasibility is not collision-free policy performance or hardware verification.",
+  "dashboard_message": "EXP29：血栓、动态障碍物、五个机器人每回合全部随机；提前观测四个潜在碰撞障碍物，加强碰撞惩罚。完整清除率与无碰撞清除率分别报告，100种布局独立评估。旧环境成绩不沿用。",
+  "physical_calibration_ready": false,
+  "sealed_test_used": false
+}

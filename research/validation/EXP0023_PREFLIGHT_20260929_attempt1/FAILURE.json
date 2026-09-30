@@ -1,0 +1,6 @@
+{
+  "stage": "preflight initial env.reset",
+  "error": "ValueError: Initial body does not fit the obstructed lumen",
+  "resolution": "Training-only deterministic rejection sampler for invalid passive tracer positions; original physics unchanged",
+  "formal_training_launched": false
+}

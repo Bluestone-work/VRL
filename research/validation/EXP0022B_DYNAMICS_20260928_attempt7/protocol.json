@@ -1,0 +1,18 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "spatial_fractions": [
+    0.1,
+    0.05,
+    0.025
+  ],
+  "trajectory_duration_s": 0.1,
+  "maximum_position_error_mm": 0.05,
+  "convergence_compares": "all control-time samples and final state against .025 reference; identical initial states/actions",
+  "required_event_checks": "same sampling grid, active masks and exit-node identity",
+  "formal_training": false,
+  "policy_performance_estimate": null
+}

@@ -1,0 +1,65 @@
+{
+  "experiment": "EXP_0028_MCA_RANDOMIZED_POINTS",
+  "parent": "EXP_0027_MCA_DISTRIBUTED_POINTS",
+  "scope": "Pure MAPPO fine-tuning with per-episode randomized starts, mixed particle densities and shared faster in-vitro flow",
+  "authorization": "User requested original distributed point-like clots and more dynamic obstacles; earlier correct-first-then-train and visualization authorization persists",
+  "physics_config": "configs/experiments/EXP_0028_MCA_RANDOMIZED_DYNAMICS.json",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "timesteps_per_seed": 3000000,
+  "transition_unit": "one environment control step, not individual robot samples",
+  "rollout_steps": 512,
+  "epochs": 4,
+  "batch_size": 256,
+  "hidden_dim": 128,
+  "checkpoint_interval": 4096,
+  "milestones": [
+    20000,
+    100000,
+    500000,
+    1000000,
+    2000000,
+    3000000
+  ],
+  "eval_episodes": 20,
+  "training_seed_base": 200000000,
+  "validation_seed_base": 910000000,
+  "architecture": "adaptive_edge_gat",
+  "control": "direct_local_frenet",
+  "world_model": false,
+  "guidance_controller": false,
+  "fresh_weights": false,
+  "task": "Original-scale MCA, four discrete clot targets, random distinct-branch robot starts, 32 advected moving spheres with contact penalty",
+  "task_limit": "Controlled in-vitro point-target simulation. Radius 0.12 mm reaction regions; Gaussian flow-resistance smoothing is not a reaction zone or clot volume. No hardware/clinical claim.",
+  "reporting": "Independent deterministic policy evaluations; diagnostic oracle success never reported as RL success",
+  "physical_calibration_ready": false,
+  "long_duration_lysis_feedback_validated": true,
+  "sealed_test_used": false,
+  "initialization_sampling": "Each episode: shuffled navigable branches without replacement; length-weighted edge, radial offset <=65% of clearance; reject overlaps and invalid lumen projections. No clot-target bias.",
+  "entropy_estimator": "Reparameterized current-policy tanh entropy; replaces incorrect cross-entropy on rollout actions",
+  "comparability": "Compatible mca_point_36_v3 actor/critic warm-start from each matching EXP27 seed; optimizer, environment, RNG, step counters and evaluations start fresh. Parent scores excluded.",
+  "feasibility_certificate": "research/validation/EXP0028_FEASIBILITY_20260930/certificate.json",
+  "reference_certificate": "research/validation/EXP0028_REFERENCE_20260930/certificate.json",
+  "pure_rl": true,
+  "oracle_used_for_training": false,
+  "feasibility_image": "research/validation/EXP0028_FEASIBILITY_20260930/feasibility.png",
+  "dashboard_message": "EXP28：每回合随机机器人位置、三种障碍物疏密分布及15–25μL/min体外参考流量；继承EXP27策略权重继续纯强化学习，新环境成绩单独评估。",
+  "initialization_checkpoints": {
+    "42": {
+      "path": "research/initializations/EXP0028_FROM_EXP0027_20260930/seed_42.pt",
+      "sha256": "5d2294d2460332f1de788f4ccef0ff8f203ff335a81f1b2ba8477c8fe609e513"
+    },
+    "43": {
+      "path": "research/initializations/EXP0028_FROM_EXP0027_20260930/seed_43.pt",
+      "sha256": "0f9239fa7ba21b186cd3cb9bf81bedf270f842288aa0e7615e8e542a0d0b97a5"
+    },
+    "44": {
+      "path": "research/initializations/EXP0028_FROM_EXP0027_20260930/seed_44.pt",
+      "sha256": "a96e428353e7a30ec66c6cef06687dd49e51968ef35827a1883c4be552529922"
+    }
+  },
+  "require_randomization_boundaries": true
+}

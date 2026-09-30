@@ -1,0 +1,90 @@
+{
+  "experiment": "EXP_0022_MCA_PHYSIOLOGY_CALIBRATION",
+  "date": "2026-09-28",
+  "status": "engineering_validation_not_RL_training",
+  "primary_scenario": "mca_m1_lvo",
+  "primary_region": "distal M1, M1/M2 bifurcation, proximal M2",
+  "physical_geometry_scale": 1.0,
+  "user_document": "/home/wj/桌面/血管模型选择依据.docx",
+  "user_document_sha256": "3e507eb549ac87f1d3205e8b2b0d3d2137630bd733cdd334b27ca7ce45fe2dfd",
+  "source_manifest": "research/validation/EXP0022_REFERENCE_MANIFEST.json",
+  "reference_inlet": {
+    "method": "cardiac-cycle-averaged phase-contrast MRI volume flow, each MCA",
+    "healthy_flow_ml_min": 146.0,
+    "reported_sd_ml_min": 31.0,
+    "healthy_young_group_mean_ml_min": 161.0,
+    "healthy_elderly_group_mean_ml_min": 131.0,
+    "sensitivity_values_ml_min": [115.0, 146.0, 177.0],
+    "sensitivity_definition": "reported mean plus/minus one SD, not a universal normal range",
+    "source_doi": "10.1038/jcbfm.2014.241",
+    "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4420884/",
+    "diameter_nominal_mm": 3.0,
+    "diameter_provenance": "repository MCA nominal anatomy, not patient-specific measured diameter"
+  },
+  "robot_speed_mm_s": 1.0,
+  "control_dt_s": 0.05,
+  "robot_radius_mm": 0.08,
+  "robot_and_control_parameter_status": "engineering_sensitivity_assumptions_not_device_measurements",
+  "robot_reference": {
+    "source_doi": "10.1038/s42256-026-01252-6",
+    "source_url": "https://www.nature.com/articles/s42256-026-01252-6",
+    "supplement_url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs42256-026-01252-6/MediaObjects/42256_2026_1252_MOESM1_ESM.pdf",
+    "speed_source": "Supplementary Table 4, printed page 39; TRAINING domain-randomization swarm velocity, not measured individual robot swimming speed in blood",
+    "speed_sensitivity_mm_s": [0.25, 0.625, 1.0],
+    "nominal_speed_reason": "upper end of the reported training range; optimistic engineering proxy, not calibrated maximum thrust",
+    "reported_swarm_width_mm": [1.25, 1.75],
+    "radius_sensitivity_mm": [0.025, 0.05, 0.08],
+    "radius_provenance": "unmeasured engineering sensitivity; 0.08 mm approximates the old 0.0011-unit robot at nominal MCA scale; NOT the paper's 1.25-1.75 mm-wide swarm",
+    "latency_source": "supplement printed pages 30-31, end-to-end delay under 30 ms",
+    "control_period_provenance": "50 ms / 20 Hz is an engineering assumption allowing time beyond the reported delay; paper does not establish this update rate",
+    "control_dt_sensitivity_s": [0.03, 0.05, 0.1],
+    "actuation_constraint": "the reference uses a shared three-axis Helmholtz field; independent per-agent velocity commands in existing MARL are not hardware validated"
+  },
+  "geometry_validation": {
+    "seeds": [42, 43, 44],
+    "variation_levels": [0.0, 1.0],
+    "length_scale_field": "physical_mm_per_unit",
+    "radius_floor": 0.0,
+    "provenance": "procedural nominal anatomy; not patient-specific segmentation or an imported SimVascular mesh"
+  },
+  "occlusion_sensitivity": {
+    "radius_fractions": [1.0, 0.75, 0.5, 0.35, 0.1, 0.0],
+    "gaussian_width_mm": 2.5,
+    "extent_provenance": "engineering sweep of local radius reduction, not calibrated thrombus permeability or mass-to-lumen law",
+    "distal_resistance_ratios": [0.0, 1.0, 9.0],
+    "distal_provenance": "unmeasured terminal resistance relative to healthy resolved-tree resistance; report all cases, never select by navigation success"
+  },
+  "numerics": {
+    "maximum_displacement_fraction_of_radius": 0.1,
+    "conservation_tolerance_mm3_s": 1e-8,
+    "flow_speed_cap": null,
+    "substep_policy": "report required adaptive substeps; never lower physical speed to meet compute budget"
+  },
+  "training_gate": {
+    "ready": false,
+    "success_rate": null,
+    "blocking_items": [
+      "hardware speed and effective body size in blood not measured",
+      "shared-field actuation versus independent agent commands unresolved",
+      "outlet impedance and obstructed flow not calibrated",
+      "lysis rate per second and mass-to-lumen law not calibrated",
+      "physical substeps, exit boundaries and obstacle dynamics not integrated into RL workers"
+    ]
+  },
+  "flow_model": "quasisteady_pressure_driven_tree",
+  "flow_model_limitations": [
+    "equal terminal reference pressures, optional unmeasured distal resistance, fixed driving pressure calibrated to healthy flow",
+    "no measured outlet impedance, autoregulation or pulsatile waveform",
+    "no stenotic jet or bifurcation secondary-flow CFD",
+    "not yet connected to historical RL workers; old physics preserved"
+  ],
+  "primary_evaluation": {
+    "scenario": "mca_m1_lvo",
+    "all_seeds_required": [42, 43, 44],
+    "success_threshold": 0.85,
+    "success_definition": "all assigned clots completely cleared, unchanged",
+    "report": ["success", "path_mm", "physical_seconds", "collision_rate", "remaining_mass", "inlet_flow_ml_min"],
+    "no_easy_flow_selection": true,
+    "other_13_scenarios": "secondary robustness report; do not pool changed and legacy physics"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "training_seed": 44,
+  "success": {
+    "mean": 0.6571428571428571,
+    "sample_sd": 0.4763685860809125,
+    "n": 140
+  },
+  "removal_rate": {
+    "mean": 0.8624161484668057,
+    "sample_sd": 0.25654265769443857,
+    "n": 140
+  },
+  "steps": {
+    "mean": 166.80714285714285,
+    "sample_sd": 103.41387800696711,
+    "n": 140
+  },
+  "completion_steps": {
+    "mean": 97.31521739130434,
+    "sample_sd": 45.778955131362,
+    "n": 92
+  },
+  "first_contact_steps": {
+    "mean": 5.585714285714285,
+    "sample_sd": 5.738906363473385,
+    "n": 140
+  },
+  "wall_contact_rate": {
+    "mean": 0.5700951452181329,
+    "sample_sd": 0.2866876504269536,
+    "n": 140
+  },
+  "collision_rate": {
+    "mean": 0.12982796486498413,
+    "sample_sd": 0.21390786407501694,
+    "n": 140
+  },
+  "mean_action_magnitude": {
+    "mean": 0.9588120886257716,
+    "sample_sd": 0.10274051650306876,
+    "n": 140
+  },
+  "mean_flow_speed": {
+    "mean": 0.011167377373203636,
+    "sample_sd": 0.003940210487949031,
+    "n": 140
+  },
+  "blood_flow_exposure": {
+    "mean": 2.041465554705688,
+    "sample_sd": 1.790192463878248,
+    "n": 140
+  },
+  "mean_simultaneously_contacted_clots": {
+    "mean": 0.613549157464327,
+    "sample_sd": 0.35992364268864585,
+    "n": 140
+  },
+  "failure_labels": {
+    "navigation_failure": 0,
+    "contact_acquisition_failure": 7,
+    "contact_maintenance_failure": 27,
+    "completion_tail_failure": 7,
+    "wall_dominated_failure": 37,
+    "robot_crowding_failure": 24,
+    "timeout": 6
+  }
+}

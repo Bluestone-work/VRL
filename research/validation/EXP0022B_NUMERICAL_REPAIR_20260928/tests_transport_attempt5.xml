@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="10" time="0.197" timestamp="2026-09-28T21:24:59.077236+08:00" hostname="wj-System-Product-Name"><testcase classname="tests.test_mca_physical_dynamics" name="test_uniform_pipe_exact_advection_and_path_in_mm" time="0.012" /><testcase classname="tests.test_mca_physical_dynamics" name="test_control_interval_is_world_hold_not_residual_controller" time="0.007" /><testcase classname="tests.test_mca_physical_dynamics" name="test_internal_pipe_stations_are_not_caps[-1]" time="0.016"><failure message="AssertionError: &#10;Not equal to tolerance rtol=1e-07, atol=1e-10&#10;&#10;Mismatched elements: 2 / 3 (66.7%)&#10;Max absolute difference: 0.71374847&#10;Max relative difference: 0.52913823&#10; x: array([[6.963748, 0.141259, 0.      ]])&#10; y: array([[6.25, 0.3 , 0.  ]])">sign = -1
+
+    @pytest.mark.parametrize('sign', [-1, 1])
+    def test_internal_pipe_stations_are_not_caps(sign):
+        transport, solution = setup_transport(inlet=1e-12)
+        start = np.array([[10.25, .3, 0.]])
+        result = move(transport, solution, start, [[sign*5., 0., 0.]], dt=.8)
+&gt;       np.testing.assert_allclose(result.positions_mm, start + [[sign*4., 0., 0.]], atol=1e-10)
+
+tests/test_mca_physical_dynamics.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (&lt;function assert_allclose.&lt;locals&gt;.compare at 0x7d6289285b40&gt;, array([[6.96374847, 0.14125853, 0.        ]]), array([[6.25, 0.3 , 0.  ]]))
+kwds = {'equal_nan': True, 'err_msg': '', 'header': 'Not equal to tolerance rtol=1e-07, atol=1e-10', 'verbose': True}
+
+    @wraps(func)
+    def inner(*args, **kwds):
+        with self._recreate_cm():
+&gt;           return func(*args, **kwds)
+E           AssertionError: 
+E           Not equal to tolerance rtol=1e-07, atol=1e-10
+E           
+E           Mismatched elements: 2 / 3 (66.7%)
+E           Max absolute difference: 0.71374847
+E           Max relative difference: 0.52913823
+E            x: array([[6.963748, 0.141259, 0.      ]])
+E            y: array([[6.25, 0.3 , 0.  ]])
+
+../../miniconda3/envs/v/lib/python3.10/contextlib.py:79: AssertionError</failure></testcase><testcase classname="tests.test_mca_physical_dynamics" name="test_internal_pipe_stations_are_not_caps[1]" time="0.015" /><testcase classname="tests.test_mca_physical_dynamics" name="test_junction_uses_forward_incident_branch_and_preserves_world_action[-1]" time="0.004" /><testcase classname="tests.test_mca_physical_dynamics" name="test_junction_uses_forward_incident_branch_and_preserves_world_action[1]" time="0.004" /><testcase classname="tests.test_mca_physical_dynamics" name="test_coincident_junction_checks_child_aperture_and_records_blocking" time="0.054" /><testcase classname="tests.test_mca_physical_dynamics" name="test_inward_motion_in_new_tube_cap_does_not_switch_back_to_parent" time="0.001" /><testcase classname="tests.test_mca_physical_dynamics" name="test_outlet_crossing_time_and_no_respawn" time="0.004" /><testcase classname="tests.test_mca_physical_dynamics" name="test_inlet_is_open_boundary_too" time="0.004"><failure message="assert not True">def test_inlet_is_open_boundary_too():
+        transport, solution = setup_transport(inlet=1e-12)
+        result = move(transport, solution, [[.02, 0., 0.]], [[-1., 0., 0.]])
+&gt;       assert not result.active[0]
+E       assert not True
+
+tests/test_mca_physical_dynamics.py:130: AssertionError</failure></testcase></testsuite></testsuites>

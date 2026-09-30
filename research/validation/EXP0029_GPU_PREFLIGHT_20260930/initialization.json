@@ -1,0 +1,11 @@
+{
+  "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/initializations/EXP0029_FROM_EXP0028_20260930/seed_42.pt",
+  "sha256": "18f745fefb9c439f31f5a9b888d1f073202bd0b3b5b21dc283f74720a718478a",
+  "experiment": "EXP_0028_MCA_RANDOMIZED_POINTS",
+  "parent_transitions": 2695296,
+  "expanded_input_weights": [
+    "actor.encoder.input_proj.weight",
+    "critic.inner.obs_encoder.input_proj.weight"
+  ],
+  "reused": "actor and critic weights only; fresh optimizer, environments, RNG and counters"
+}

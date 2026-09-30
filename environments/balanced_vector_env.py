@@ -164,8 +164,8 @@ class BalancedVectorVascularEnv:
         info: dict[str, Any] = {}
         for key in (
             "agent_rewards", "team_reward", "success", "removal_rate",
-            "wall_collisions", "wall_hits_total", "clots_engaged", "first_contact_step",
-            "contact_miss", "agent_mask",
+            "wall_collisions", "wall_hits_total", "removed_mass", "clots_engaged", "first_contact_step",
+            "contact_miss", "agent_mask", "path_length", "robot_path_length",
         ):
             if all(key in item for item in infos):
                 info[key] = np.concatenate(

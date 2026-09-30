@@ -1,0 +1,42 @@
+{
+  "disjoint_contact_regions": true,
+  "minimum_clot_separation_mm": 6.060422935275818,
+  "initial_mass": 4.0,
+  "one_second_optimistic_removed_mass": 1.7999999999999998,
+  "one_second_all_clear_possible": false,
+  "optimistic_min_time_s": 2.2222222222222223,
+  "local_flow_margins": [
+    {
+      "clot": 0,
+      "branch": 0,
+      "radius_mm": 0.49700000123958926,
+      "mean_flow_mm_s": 917.8106564250165,
+      "minimum_accessible_flow_mm_s": 543.383561287767,
+      "optimistic_upstream_margin_mm_s": -542.383561287767
+    },
+    {
+      "clot": 1,
+      "branch": 0,
+      "radius_mm": 0.47600002541158126,
+      "mean_flow_mm_s": 901.7308173200364,
+      "minimum_accessible_flow_mm_s": 555.2639182095777,
+      "optimistic_upstream_margin_mm_s": -554.2639182095777
+    },
+    {
+      "clot": 2,
+      "branch": 1,
+      "radius_mm": 0.36817306911604797,
+      "mean_flow_mm_s": 555.0571672376379,
+      "minimum_accessible_flow_mm_s": 430.01796160389927,
+      "optimistic_upstream_margin_mm_s": -429.01796160389927
+    },
+    {
+      "clot": 3,
+      "branch": 2,
+      "radius_mm": 0.3506730815119413,
+      "mean_flow_mm_s": 1049.6065098418212,
+      "minimum_accessible_flow_mm_s": 848.5457442546241,
+      "optimistic_upstream_margin_mm_s": -847.5457442546241
+    }
+  ]
+}

@@ -33,6 +33,7 @@ from typing import Any, Sequence
 
 import numpy as np
 from environments.contact_geometry import continuous_route_distance, append_flow_features
+from marl.dynamic_predictor import predict_obstacle_risk
 
 from environments.vessel_geometry import (
     SCENARIOS,
@@ -119,7 +120,7 @@ class VectorVascularEnv:
         self._steps_since_tree = 0
         if contact_mode not in ("geodesic", "euclidean"):
             raise ValueError("unknown contact_mode")
-        if obs_mode not in ("legacy", "geometric", "geometric_v2"):
+        if obs_mode not in ("legacy", "geometric", "geometric_v2", "geometric_dynamic", "geometric_predictive"):
             raise ValueError("unknown obs_mode")
         if reward_double_count not in ("on", "off"):
             raise ValueError("unknown reward_double_count")
@@ -146,7 +147,7 @@ class VectorVascularEnv:
         self.particles = None
         self._lookahead_offsets = LOOKAHEAD_OFFSETS
         self.node_feature_dim = (
-            42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric"
+            52 if obs_mode == "geometric_predictive" else 44 if obs_mode == "geometric_dynamic" else 42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric"
             else NODE_FEATURE_DIM_LEGACY
         )
 
@@ -385,6 +386,8 @@ class VectorVascularEnv:
         self.robot_stations = np.zeros((n, r), np.int32)
         self.robot_velocities = np.zeros((n, r, 3), np.float32)
         self.steps = np.zeros((n,), np.int32)
+        self.path_length = np.zeros((n,), np.float32)
+        self.robot_path_length = np.zeros((n, r), np.float32)
         self.first_contact = np.full((n,), -1, np.int32)
         self.episode_wall_hits = np.zeros(n, np.int64)
         self._milestone_hit = np.zeros((n, len(self._milestones)), bool)
@@ -497,6 +500,8 @@ class VectorVascularEnv:
         )
         self.robot_stations[idx] = stations_view
         self.steps[idx] = 0
+        self.path_length[idx] = 0.0
+        self.robot_path_length[idx] = 0.0
         self.first_contact[idx] = -1
         self.episode_wall_hits[idx] = 0
         self._milestone_hit[idx] = False
@@ -761,6 +766,9 @@ class VectorVascularEnv:
         wall_hits = outside.astype(np.float32)
         self.episode_wall_hits += wall_hits.sum(axis=1).astype(np.int64)
         self.robot_velocities = (self.robot_positions - prev_pos).astype(np.float32)
+        step_distance = np.linalg.norm(self.robot_velocities, axis=2)
+        self.robot_path_length += step_distance
+        self.path_length += step_distance.sum(axis=1)
 
         # Kill outward velocity on wall contact.
         axis = ax.reshape(e, r, 3)
@@ -869,8 +877,11 @@ class VectorVascularEnv:
             "team_reward": team,
             "success": success,
             "removal_rate": removal_rate.astype(np.float32),
+            "removed_mass": removed_mass.astype(np.float32),
             "wall_collisions": wall_hits.sum(axis=1).astype(np.int32),
             "wall_hits_total": self.episode_wall_hits.copy(),
+            "path_length": self.path_length.copy(),
+            "robot_path_length": self.robot_path_length.copy(),
             "clots_engaged": engaged.astype(np.int32),
             "first_contact_step": self.first_contact.copy(),
             "contact_miss": self.first_contact < 0,
@@ -950,6 +961,8 @@ class VectorVascularEnv:
             "robot_positions": self.robot_positions.copy(),
             "robot_stations": self.robot_stations.copy(),
             "robot_velocities": self.robot_velocities.copy(),
+            "path_length": self.path_length.copy(),
+            "robot_path_length": self.robot_path_length.copy(),
             "steps": self.steps.copy(),
             "first_contact": self.first_contact.copy(),
             "episode_wall_hits": self.episode_wall_hits.copy(),
@@ -993,6 +1006,10 @@ class VectorVascularEnv:
         self._difficulty = float(state["difficulty"])
         self._rng.bit_generator.state = state["rng_state"]
         self.episode_wall_hits = state.get("episode_wall_hits", np.zeros(self.n_envs, np.int64)).copy()
+        self.path_length = state.get("path_length", np.zeros(self.n_envs, np.float32)).copy()
+        self.robot_path_length = state.get(
+            "robot_path_length", np.zeros((self.n_envs, self.num_robots), np.float32)
+        ).copy()
         if self.particles is not None and state.get("particle_positions") is not None:
             self.particles.positions = state["particle_positions"].copy()
             self.particles.velocities = state["particle_velocities"].copy()
@@ -1151,6 +1168,65 @@ class VectorVascularEnv:
         if self.obs_mode == "geometric_v2":
             append_flow_features(nodes, flow, look_rel[:, :, 0], lube, self.max_speed,
                                  tprog, remaining, crowd, self.control_margin)
+        if self.obs_mode in ("geometric_dynamic", "geometric_predictive"):
+            # Current, local obstacle sensing only.  No future particle state is
+            # exposed: relative position, clearance, relative speed, and local
+            # overlap count are measured at the current step.
+            if self.particles is not None:
+                _overlap, particle_clearance, nearest = self.particles.nearest_stats(
+                    self.robot_positions
+                )
+                particle_rel_speed = self.particles.relative_speed(
+                    self.robot_positions, self.robot_velocities
+                )
+                particle_delta = np.take_along_axis(
+                    self.particles.positions,
+                    nearest[:, :, None], axis=1
+                ) - self.robot_positions
+                particle_local = np.stack([
+                    np.sum(particle_delta * t_hat, axis=2),
+                    np.sum(particle_delta * n_hat, axis=2),
+                    np.sum(particle_delta * b_hat, axis=2),
+                ], axis=2)
+                nodes[:, :, 36:39] = np.clip(particle_local / 0.12, -1.0, 1.0)
+                nodes[:, :, 39] = np.clip(
+                    particle_clearance / max(self.neighbor_radius, 1e-8), -1.0, 1.0
+                )
+                nodes[:, :, 40] = np.clip(particle_rel_speed / max(self.max_speed, 1e-8), 0.0, 1.0)
+                nodes[:, :, 41] = np.clip(_overlap / 4.0, 0.0, 1.0)
+                nodes[:, :, 42] = np.clip(
+                    np.linalg.norm(particle_delta, axis=2) / 0.12, 0.0, 1.0
+                )
+                nodes[:, :, 43] = np.clip(
+                    np.abs(np.sum(particle_delta * t_hat, axis=2)) / 0.12, 0.0, 1.0
+                )
+                if self.obs_mode == "geometric_predictive":
+                    particle_velocity = np.take_along_axis(
+                        self.particles.velocities, nearest[:, :, None], axis=1
+                    )
+                    prediction = predict_obstacle_risk(
+                        particle_delta,
+                        particle_velocity - self.robot_velocities,
+                        particle_clearance,
+                        self.particles.contact_distance,
+                        horizon=0.45,
+                        drift_sigma=self.particles.lateral_drift * self.flow_speed,
+                    )
+                    predicted_local = np.stack([
+                        np.sum(prediction["predicted_relative_position"] * t_hat, axis=2),
+                        np.sum(prediction["predicted_relative_position"] * n_hat, axis=2),
+                        np.sum(prediction["predicted_relative_position"] * b_hat, axis=2),
+                    ], axis=2)
+                    nodes[:, :, 44:47] = np.clip(predicted_local / 0.12, -1.0, 1.0)
+                    nodes[:, :, 47] = np.clip(
+                        prediction["predicted_clearance"] / max(self.neighbor_radius, 1e-8), -1.0, 1.0
+                    )
+                    nodes[:, :, 48] = np.clip(
+                        prediction["closing_speed"] / max(self.max_speed, 1e-8), 0.0, 1.0
+                    )
+                    nodes[:, :, 49] = np.clip(prediction["ttc"] / 0.9, 0.0, 1.0)
+                    nodes[:, :, 50] = np.clip(prediction["uncertainty"] / 0.12, 0.0, 1.0)
+                    nodes[:, :, 51] = prediction["collision_probability"]
 
         adjacency = (d <= self.neighbor_radius).astype(np.float32)
         idx = np.arange(r)

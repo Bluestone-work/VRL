@@ -61,6 +61,7 @@ from typing import Any, Sequence
 import gymnasium as gym
 import numpy as np
 from environments.contact_geometry import continuous_route_distance, append_flow_features
+from marl.dynamic_predictor import predict_obstacle_risk
 from gymnasium import spaces
 
 from environments.vessel_geometry import (
@@ -72,13 +73,15 @@ from environments.vessel_geometry import (
 
 # Per-agent egocentric feature layouts. See `_build_observation`.
 NODE_FEATURE_DIM_GEOMETRIC = 36
+NODE_FEATURE_DIM_DYNAMIC = 44
+NODE_FEATURE_DIM_PREDICTIVE = 52
 NODE_FEATURE_DIM_LEGACY = 20
 
 # Station offsets sampled ahead of each robot along its route. Spread over
 # roughly half a branch so the agent sees the next junction before reaching it.
 LOOKAHEAD_OFFSETS = (4, 12, 26)
 
-OBS_MODES = ("geometric", "geometric_v2", "legacy")
+OBS_MODES = ("geometric", "geometric_v2", "geometric_dynamic", "geometric_predictive", "legacy")
 
 
 class Vascular3DMARLEnv(gym.Env):
@@ -170,7 +173,7 @@ class Vascular3DMARLEnv(gym.Env):
         self.use_pybullet = bool(use_pybullet) or render_mode in ("rgb_array", "human")
         if contact_mode not in ("geodesic", "euclidean"):
             raise ValueError("unknown contact_mode")
-        if obs_mode not in ("legacy", "geometric", "geometric_v2"):
+        if obs_mode not in ("legacy", "geometric", "geometric_v2", "geometric_dynamic", "geometric_predictive"):
             raise ValueError("unknown obs_mode")
         if reward_double_count not in ("on", "off"):
             raise ValueError("unknown reward_double_count")
@@ -294,7 +297,7 @@ class Vascular3DMARLEnv(gym.Env):
         self._milestones_hit: set[float] = set()
 
         self.node_feature_dim = (
-            42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC
+            NODE_FEATURE_DIM_PREDICTIVE if obs_mode == "geometric_predictive" else NODE_FEATURE_DIM_DYNAMIC if obs_mode == "geometric_dynamic" else 42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC
             if obs_mode == "geometric"
             else NODE_FEATURE_DIM_LEGACY
         )
@@ -305,8 +308,7 @@ class Vascular3DMARLEnv(gym.Env):
         self.observation_space = spaces.Dict(
             {
                 "nodes": spaces.Box(
-                    low=np.array([-1.0] * 36 + [0.0, -np.inf, -np.inf, 0.0, 0.0, 0.0], np.float32)[None, :].repeat(self.num_robots, 0) if obs_mode == "geometric_v2" else -1.0,
-                    high=np.array([1.0] * 36 + [np.inf, np.inf, 1.0, 1.0, 1.0, 1.0], np.float32)[None, :].repeat(self.num_robots, 0) if obs_mode == "geometric_v2" else 1.0,
+                    low=-1.0, high=1.0,
                     shape=(self.num_robots, self.node_feature_dim), dtype=np.float32,
                 ),
                 "adjacency": spaces.Box(
@@ -333,6 +335,8 @@ class Vascular3DMARLEnv(gym.Env):
         self.task_assignments: np.ndarray | None = None
         self.steps = 0
         self.path_length = 0.0
+        self.robot_path_length = np.zeros((self.num_robots,), np.float32)
+        self.robot_path_length = np.zeros((self.num_robots,), np.float32)
         self._pb = None
         self._route_cache: dict[int, tuple[np.ndarray, np.ndarray]] = {}
 
@@ -873,6 +877,55 @@ class Vascular3DMARLEnv(gym.Env):
         if self.obs_mode == "geometric_v2":
             append_flow_features(nodes, flow, look_rel[:, 0], lube, self.max_speed,
                                  time_progress, remaining_frac, crowding, self.control_margin)
+        if self.obs_mode in ("geometric_dynamic", "geometric_predictive"):
+            if self.particles is not None:
+                _overlap, particle_clearance, nearest = self.particles.nearest_stats(
+                    self.robot_positions[None, :, :]
+                )
+                particle_rel_speed = self.particles.relative_speed(
+                    self.robot_positions[None, :, :], self.robot_velocities[None, :, :]
+                )
+                particle_delta = self.particles.positions[0, nearest[0]] - self.robot_positions
+                particle_local = np.stack([
+                    np.sum(particle_delta * t_hat, axis=1),
+                    np.sum(particle_delta * n_hat, axis=1),
+                    np.sum(particle_delta * b_hat, axis=1),
+                ], axis=1)
+                nodes[:, 36:39] = np.clip(particle_local / 0.12, -1.0, 1.0)
+                nodes[:, 39] = np.clip(
+                    particle_clearance[0] / max(self.neighbor_radius, 1e-8), -1.0, 1.0
+                )
+                nodes[:, 40] = np.clip(
+                    particle_rel_speed[0] / max(self.max_speed, 1e-8), 0.0, 1.0
+                )
+                nodes[:, 41] = np.clip(_overlap[0] / 4.0, 0.0, 1.0)
+                nodes[:, 42] = np.clip(np.linalg.norm(particle_delta, axis=1) / 0.12, 0.0, 1.0)
+                nodes[:, 43] = np.clip(np.abs(np.sum(particle_delta * t_hat, axis=1)) / 0.12, 0.0, 1.0)
+                if self.obs_mode == "geometric_predictive":
+                    particle_velocity = self.particles.velocities[0, nearest[0]]
+                    prediction = predict_obstacle_risk(
+                        particle_delta,
+                        particle_velocity - self.robot_velocities,
+                        particle_clearance[0],
+                        self.particles.contact_distance,
+                        horizon=0.45,
+                        drift_sigma=self.particles.lateral_drift * self.flow_speed,
+                    )
+                    predicted_local = np.stack([
+                        np.sum(prediction["predicted_relative_position"] * t_hat, axis=1),
+                        np.sum(prediction["predicted_relative_position"] * n_hat, axis=1),
+                        np.sum(prediction["predicted_relative_position"] * b_hat, axis=1),
+                    ], axis=1)
+                    nodes[:, 44:47] = np.clip(predicted_local / 0.12, -1.0, 1.0)
+                    nodes[:, 47] = np.clip(
+                        prediction["predicted_clearance"] / max(self.neighbor_radius, 1e-8), -1.0, 1.0
+                    )
+                    nodes[:, 48] = np.clip(
+                        prediction["closing_speed"] / max(self.max_speed, 1e-8), 0.0, 1.0
+                    )
+                    nodes[:, 49] = np.clip(prediction["ttc"] / 0.9, 0.0, 1.0)
+                    nodes[:, 50] = np.clip(prediction["uncertainty"] / 0.12, 0.0, 1.0)
+                    nodes[:, 51] = prediction["collision_probability"]
 
         adjacency = (d <= self.neighbor_radius).astype(np.float32)
         np.fill_diagonal(adjacency, 1.0)  # self-loops, as a GAT layer expects
@@ -1102,6 +1155,7 @@ class Vascular3DMARLEnv(gym.Env):
             "task_assignments": None if self.task_assignments is None else self.task_assignments.copy(),
             "steps": self.steps,
             "path_length": self.path_length,
+            "robot_path_length": self.robot_path_length.copy(),
             "first_contact_step": self._first_contact_step,
             "milestones_hit": set(self._milestones_hit),
             "difficulty": self._difficulty,
@@ -1124,6 +1178,10 @@ class Vascular3DMARLEnv(gym.Env):
         self.task_assignments = None if assignments is None else assignments.copy()
         self.steps = int(state["steps"])
         self.path_length = float(state["path_length"])
+        self.robot_path_length = np.asarray(
+            state.get("robot_path_length", np.zeros((self.num_robots,), np.float32)),
+            dtype=np.float32,
+        ).copy()
         self._first_contact_step = int(state["first_contact_step"])
         self._milestones_hit = set(state["milestones_hit"])
         self._difficulty = float(state["difficulty"])
@@ -1192,7 +1250,9 @@ class Vascular3DMARLEnv(gym.Env):
                 self.robot_velocities - np.maximum(vn, 0.0) * outward,
                 self.robot_velocities,
             ).astype(np.float32)
-        self.path_length += float(np.linalg.norm(self.robot_velocities, axis=1).mean())
+        step_distance = np.linalg.norm(self.robot_velocities, axis=1)
+        self.robot_path_length += step_distance
+        self.path_length += float(step_distance.sum())
 
         peer_hits, collision_pairs, _ = self._robot_collisions()
 

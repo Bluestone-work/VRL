@@ -1,0 +1,43 @@
+{
+  "experiment_id": "EXP_0015_DYNAMIC_RISK_GAT",
+  "parent": "EXP_0014_ADAPTIVE_EDGE_GAT",
+  "date": "2026-09-27",
+  "research_question": "Does current-state dynamic-obstacle sensing plus risk-aware connectivity scheduling improve direct-local navigation without using future obstacle information?",
+  "main_variable": "geometric_dynamic observation and risk_aware_connectivity target scheduling",
+  "algorithm": "Direct Local Adaptive Edge-GAT MAPPO with current-risk task allocation",
+  "action_semantics": "direct_local_frenet",
+  "training": {
+    "architecture": "adaptive_edge_gat",
+    "control_mode": "local",
+    "obs_mode": "geometric_dynamic",
+    "contact_mode": "geodesic",
+    "critic_value_mode": "v",
+    "task_allocator": "risk_aware_connectivity",
+    "dynamic_particles": true,
+    "particle_count": 24,
+    "particle_radius_ratio": 1.6,
+    "particle_lateral_drift": 0.15,
+    "robots": 5,
+    "clots": 3,
+    "horizon": 300,
+    "timesteps_per_seed": 1000000,
+    "seeds": [42, 43, 44],
+    "n_envs": 64,
+    "n_steps": 128,
+    "batch_size": 2048,
+    "n_epochs": 5,
+    "cpu_affinity": "0-5,8-23",
+    "world_model": "disabled"
+  },
+  "information_boundary": [
+    "observation contains only current nearest-particle relative state",
+    "allocator uses only current particle positions and current vessel geometry",
+    "no future particle trajectory, episode outcome, or sealed test data is read",
+    "allocator changes targets only; it does not overwrite actions"
+  ],
+  "evaluation": {
+    "metrics": ["success", "mass_removal", "path_length", "path_length_per_removed_mass", "wall_contact", "pair_collision"],
+    "success_gate": "three-seed mean on fixed dynamic validation must be >= 0.85; otherwise report gate failure",
+    "sealed_test": "not accessed"
+  }
+}

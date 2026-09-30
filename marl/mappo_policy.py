@@ -90,7 +90,14 @@ class GaussianActor(nn.Module):
         dist = self._distribution(features)
         raw_action = self._atanh(actions)
         log_prob = self._squashed_log_prob(dist, raw_action, actions)
-        return log_prob, -log_prob
+        # -log pi(a_old) is cross-entropy under the rollout distribution, not
+        # entropy of the CURRENT policy. Maximising it drives the new mean away
+        # from old actions without bound. Estimate H[tanh(Z)] = H[Z] + E log J
+        # using a reparameterized current-policy sample and a stable Jacobian.
+        entropy_sample = dist.rsample()
+        log_jacobian = 2.0 * (np.log(2.0) - entropy_sample - F.softplus(-2.0*entropy_sample))
+        entropy = (dist.entropy() + log_jacobian).sum(dim=-1)
+        return log_prob, entropy
 
 
 class GATActorStochastic(nn.Module):

@@ -1,0 +1,67 @@
+{
+  "experiment_id": "EXP_0015_DYNAMIC_RISK_GAT",
+  "split": "prospective_dynamic_validation",
+  "episodes_per_seed": 140,
+  "episodes_total": 420,
+  "sealed_test_accessed": false,
+  "per_seed": [
+    {
+      "seed": 42,
+      "success": 0.34299999999999997,
+      "removal_rate": 0.795,
+      "path_length": 6.8104,
+      "path_length_per_removed_mass": 3.0828,
+      "wall_hits": 903.8,
+      "steps": 231.0
+    },
+    {
+      "seed": 43,
+      "success": 0.521,
+      "removal_rate": 0.878,
+      "path_length": 7.624,
+      "path_length_per_removed_mass": 3.5261,
+      "wall_hits": 569.0,
+      "steps": 197.0
+    },
+    {
+      "seed": 44,
+      "success": 0.736,
+      "removal_rate": 0.945,
+      "path_length": 8.4144,
+      "path_length_per_removed_mass": 3.0571,
+      "wall_hits": 418.3,
+      "steps": 169.0
+    }
+  ],
+  "aggregate": {
+    "success": {
+      "mean": 0.5333333333333333,
+      "sample_sd": 0.19679007427544037
+    },
+    "removal_rate": {
+      "mean": 0.8726666666666667,
+      "sample_sd": 0.07514208762959229
+    },
+    "path_length": {
+      "mean": 7.616266666666666,
+      "sample_sd": 0.802027962937287
+    },
+    "path_length_per_removed_mass": {
+      "mean": 3.222,
+      "sample_sd": 0.26367163290729617
+    },
+    "wall_hits": {
+      "mean": 630.3666666666667,
+      "sample_sd": 248.49942320523266
+    },
+    "steps": {
+      "mean": 199.0,
+      "sample_sd": 31.04834939252005
+    }
+  },
+  "success_gate": {
+    "threshold": 0.85,
+    "passed": false,
+    "criterion": "three-seed mean success >= 85%"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "renderer": "existing PVRenderer from watch_gui.py",
+  "checkpoint": "research/validation/EXP0024_DISTRIBUTED_STARTS_20260930/smoke_seed42/latest.pt",
+  "checkpoint_steps": 2048,
+  "episode_seed": 900000000,
+  "frames": 154,
+  "playback_slowdown": 80.0,
+  "robot_initialization": "distributed_branches",
+  "initial_positions_mm": [
+    [
+      54.993319307189694,
+      24.76161418411921,
+      43.18088060687094
+    ],
+    [
+      28.465854972910456,
+      38.939388997369306,
+      42.29108634286016
+    ],
+    [
+      26.822006946298764,
+      39.24891682518852,
+      34.80637158862207
+    ],
+    [
+      39.51922122679755,
+      48.0432504890826,
+      42.183806030265536
+    ],
+    [
+      52.94578075788631,
+      12.753040249800698,
+      37.62012672631113
+    ]
+  ],
+  "initial_branch_ids": [
+    1,
+    0,
+    3,
+    2,
+    5
+  ],
+  "training_phase": "completed",
+  "robot_display_scale": 4,
+  "particle_display_scale": 3,
+  "clot_surface_model": false,
+  "physical_duration_s": 0.15000000000000002,
+  "replay_index": 0,
+  "updated_at": 1790700115.014122
+}

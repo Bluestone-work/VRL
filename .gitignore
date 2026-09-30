@@ -60,3 +60,17 @@ vascular_marl_local/
 !/configs/experiments/
 !/configs/experiments/*.json
 /research/runs/
+
+# Large raw diagnostics, replay frames and downloaded source material stay local.
+/research/results/**/flow_action_samples.csv
+/research/validation/**/source_before/
+/research/validation/**/source_after/
+/research/validation/**/policy_before/
+/research/validation/**/source_snapshot/
+/research/validation/**/scene.png
+/research/validation/**/initial_scene.png
+/research/validation/**/*.prof
+/research/literature/**/article.xml
+
+/research/literature/**/authors_README.md
+/research/validation/**/profile.txt

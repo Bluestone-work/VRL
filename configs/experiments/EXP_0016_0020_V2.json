@@ -1,0 +1,20 @@
+{
+  "protocol": "research/EXP16_20_V2_PROTOCOL.md",
+  "worker": "scripts/research16_20_worker.py",
+  "supervisor": "scripts/research16_20_queue.py",
+  "seeds": [42, 43, 44],
+  "policy_arms": [16, 17, 18, 20],
+  "world_model_experiment": 19,
+  "n_envs": 56,
+  "timesteps": 3000000,
+  "checkpoint_interval": 1000000,
+  "model_data_steps": 50000,
+  "world_data_budget_ladder": [50000, 150000],
+  "fit_epochs": 30,
+  "ppo_epochs": 5,
+  "evaluation_episodes_per_scenario": 10,
+  "evaluation_device": "cuda:0",
+  "evaluation_split": "development_validation_v2",
+  "max_jobs": 18,
+  "note": "Effective arguments, exact rounded transitions, source hashes and all attempts are saved in each run. No sealed test access."
+}

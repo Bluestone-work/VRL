@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="11" skipped="0" tests="11" time="13.700" timestamp="2026-09-29T21:25:36.538625+08:00" hostname="wj-System-Product-Name"><testcase classname="tests.test_mca_compiled" name="test_nominal_full_episode_matches_reference[42]" time="4.226"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">seed = 42
+
+    @pytest.mark.parametrize('seed',[42,43,44,520000000,530000000,540000000])
+    def test_nominal_full_episode_matches_reference(seed):
+        ref,fast=pair(MCAPhysicalEnv(),seed)
+        rng=np.random.default_rng(seed)
+        for _ in range(20):
+&gt;           if compare(ref,fast,rng.uniform(-1,1,(5,3))): break
+
+tests/test_mca_compiled.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_nominal_full_episode_matches_reference[43]" time="1.541"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">seed = 43
+
+    @pytest.mark.parametrize('seed',[42,43,44,520000000,530000000,540000000])
+    def test_nominal_full_episode_matches_reference(seed):
+        ref,fast=pair(MCAPhysicalEnv(),seed)
+        rng=np.random.default_rng(seed)
+        for _ in range(20):
+&gt;           if compare(ref,fast,rng.uniform(-1,1,(5,3))): break
+
+tests/test_mca_compiled.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_nominal_full_episode_matches_reference[44]" time="1.666"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">seed = 44
+
+    @pytest.mark.parametrize('seed',[42,43,44,520000000,530000000,540000000])
+    def test_nominal_full_episode_matches_reference(seed):
+        ref,fast=pair(MCAPhysicalEnv(),seed)
+        rng=np.random.default_rng(seed)
+        for _ in range(20):
+&gt;           if compare(ref,fast,rng.uniform(-1,1,(5,3))): break
+
+tests/test_mca_compiled.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_nominal_full_episode_matches_reference[520000000]" time="1.684"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">seed = 520000000
+
+    @pytest.mark.parametrize('seed',[42,43,44,520000000,530000000,540000000])
+    def test_nominal_full_episode_matches_reference(seed):
+        ref,fast=pair(MCAPhysicalEnv(),seed)
+        rng=np.random.default_rng(seed)
+        for _ in range(20):
+&gt;           if compare(ref,fast,rng.uniform(-1,1,(5,3))): break
+
+tests/test_mca_compiled.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_nominal_full_episode_matches_reference[530000000]" time="1.675"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">seed = 530000000
+
+    @pytest.mark.parametrize('seed',[42,43,44,520000000,530000000,540000000])
+    def test_nominal_full_episode_matches_reference(seed):
+        ref,fast=pair(MCAPhysicalEnv(),seed)
+        rng=np.random.default_rng(seed)
+        for _ in range(20):
+&gt;           if compare(ref,fast,rng.uniform(-1,1,(5,3))): break
+
+tests/test_mca_compiled.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_nominal_full_episode_matches_reference[540000000]" time="1.689"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">seed = 540000000
+
+    @pytest.mark.parametrize('seed',[42,43,44,520000000,530000000,540000000])
+    def test_nominal_full_episode_matches_reference(seed):
+        ref,fast=pair(MCAPhysicalEnv(),seed)
+        rng=np.random.default_rng(seed)
+        for _ in range(20):
+&gt;           if compare(ref,fast,rng.uniform(-1,1,(5,3))): break
+
+tests/test_mca_compiled.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_pipe_and_wall_dynamics_match[-1]" time="0.017"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">sign = -1
+
+    @pytest.mark.parametrize('sign',[-1,0,1])
+    def test_pipe_and_wall_dynamics_match(sign):
+        cfg=replace(DynamicsConfig.from_json(),num_robots=1,particle_count=0,
+                    inlet_flow_ml_min=1e-10,episode_duration_s=.5,robot_speed_mm_s=12.)
+        ref,fast=pair(MCAPhysicalEnv(cfg,tree=pipe(),clot_stations=[10]),options={'robot_positions_mm':np.array([[10.,.2,0.]])})
+        for _ in range(10):
+&gt;           if compare(ref,fast,np.array([[sign,.2,0.]])): break
+
+tests/test_mca_compiled.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_pipe_and_wall_dynamics_match[0]" time="0.010"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">sign = 0
+
+    @pytest.mark.parametrize('sign',[-1,0,1])
+    def test_pipe_and_wall_dynamics_match(sign):
+        cfg=replace(DynamicsConfig.from_json(),num_robots=1,particle_count=0,
+                    inlet_flow_ml_min=1e-10,episode_duration_s=.5,robot_speed_mm_s=12.)
+        ref,fast=pair(MCAPhysicalEnv(cfg,tree=pipe(),clot_stations=[10]),options={'robot_positions_mm':np.array([[10.,.2,0.]])})
+        for _ in range(10):
+&gt;           if compare(ref,fast,np.array([[sign,.2,0.]])): break
+
+tests/test_mca_compiled.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_pipe_and_wall_dynamics_match[1]" time="0.017"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">sign = 1
+
+    @pytest.mark.parametrize('sign',[-1,0,1])
+    def test_pipe_and_wall_dynamics_match(sign):
+        cfg=replace(DynamicsConfig.from_json(),num_robots=1,particle_count=0,
+                    inlet_flow_ml_min=1e-10,episode_duration_s=.5,robot_speed_mm_s=12.)
+        ref,fast=pair(MCAPhysicalEnv(cfg,tree=pipe(),clot_stations=[10]),options={'robot_positions_mm':np.array([[10.,.2,0.]])})
+        for _ in range(10):
+&gt;           if compare(ref,fast,np.array([[sign,.2,0.]])): break
+
+tests/test_mca_compiled.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_sustained_lysis_and_time_limit_match" time="0.009"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">def test_sustained_lysis_and_time_limit_match():
+        cfg=replace(DynamicsConfig.from_json(),num_robots=1,particle_count=0,
+                    inlet_flow_ml_min=1e-12,episode_duration_s=2.,initial_radius_fraction=.35)
+        ref,fast=pair(MCAPhysicalEnv(cfg,tree=pipe(),clot_stations=[10]),options={'robot_positions_mm':np.array([[10.,0.,0.]])})
+        for _ in range(40):
+&gt;           if compare(ref,fast,np.zeros((1,3))): break
+
+tests/test_mca_compiled.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mca_compiled.py:20: in compare
+    ro,rr,rt,rx,ri=ref.step(action);fo,fr,ft,fx,fi=fast.step(action)
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase><testcase classname="tests.test_mca_compiled" name="test_budget_error_is_transactional" time="0.034"><failure message="numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)&#10;No implementation of function Function(&lt;class 'float'&gt;) found for signature:&#10; &#10; &gt;&gt;&gt; float(bool)&#10; &#10;There are 4 candidate implementations:&#10;     - Of which 2 did not match due to:&#10;     Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.&#10;       With argument(s): '(bool)':&#10;      Rejected as the implementation raised a specific error:&#10;        NumbaTypeError: float() only support for numbers&#10;  raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005&#10;     - Of which 2 did not match due to:&#10;     Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.&#10;       With argument(s): '(bool)':&#10;      No match.&#10;&#10;During: resolving callee type: Function(&lt;class 'float'&gt;)&#10;During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)&#10;&#10;&#10;File &quot;environments/mca_compiled.py&quot;, line 154:&#10;def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,&#10;    &lt;source elided&gt;&#10;            pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))&#10;            walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt&#10;            ^&#10;&#10;During: Pass nopython_type_inference">def test_budget_error_is_transactional():
+        cfg=replace(DynamicsConfig.from_json(),max_substeps_per_control=1)
+        ref,fast=pair(MCAPhysicalEnv(cfg))
+        before=fast.positions_mm.copy();mass=fast.masses.copy()
+&gt;       with pytest.raises(RuntimeError,match='budget'): fast.step(np.zeros((5,3)))
+
+tests/test_mca_compiled.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+environments/mca_compiled.py:219: in step
+    values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:424: in _compile_for_args
+    error_rewrite(e, 'typing')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = TypingError('Failed in nopython mode pipeline (step: nopython frontend)\nNo implementation of function Function(&lt;class...         walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt\n            ^\n\nDuring: Pass nopython_type_inference')
+issue_type = 'typing'
+
+    def error_rewrite(e, issue_type):
+        """
+        Rewrite and raise Exception `e` with help supplied based on the
+        specified issue_type.
+        """
+        if config.SHOW_HELP:
+            help_msg = errors.error_extras[issue_type]
+            e.patch_message('\n'.join((str(e).rstrip(), help_msg)))
+        if config.FULL_TRACEBACKS:
+            raise e
+        else:
+&gt;           raise e.with_traceback(None)
+E           numba.core.errors.TypingError: Failed in nopython mode pipeline (step: nopython frontend)
+E           No implementation of function Function(&lt;class 'float'&gt;) found for signature:
+E            
+E            &gt;&gt;&gt; float(bool)
+E            
+E           There are 4 candidate implementations:
+E                - Of which 2 did not match due to:
+E                Overload in function 'Float.generic': File: numba/core/typing/old_builtins.py: Line 992.
+E                  With argument(s): '(bool)':
+E                 Rejected as the implementation raised a specific error:
+E                   NumbaTypeError: float() only support for numbers
+E             raised from /home/wj/miniconda3/envs/v/lib/python3.10/site-packages/numba/core/typing/old_builtins.py:1005
+E                - Of which 2 did not match due to:
+E                Overload of function 'float': File: numba/experimental/jitclass/overloads.py: Line 137.
+E                  With argument(s): '(bool)':
+E                 No match.
+E           
+E           During: resolving callee type: Function(&lt;class 'float'&gt;)
+E           During: typing of call at /home/wj/桌面/vascular_marl_local.tar./environments/mca_compiled.py (154)
+E           
+E           
+E           File "environments/mca_compiled.py", line 154:
+E           def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
+E               &lt;source elided&gt;
+E                       pos[i]=fixed;edge[i]=ne;path[i]+=np.sqrt(np.sum((fixed-current)**2))
+E                       walls[i]+=float(wall)*dt;blocks[i]+=float(blocked)*dt
+E                       ^
+E           
+E           During: Pass nopython_type_inference
+
+../../miniconda3/envs/v/lib/python3.10/site-packages/numba/core/dispatcher.py:365: TypingError</failure></testcase></testsuite></testsuites>

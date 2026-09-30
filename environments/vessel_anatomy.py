@@ -1055,6 +1055,10 @@ def build_territory(name: str, rng=None, variation: float = 1.0,
     tree.territory = terr
     tree.segment_index = dict(index)
     tree.mm_per_unit = _mm_per_unit(terr, tree)
+    # Segment inputs above are in millimetres. Preserve their actual scale for
+    # explicit-unit consumers; leave the historical nominal-calibre field
+    # unchanged so archived workers/checkpoints keep their existing semantics.
+    tree.physical_mm_per_unit = tree.source_units_per_unit
     # Stenoses run after normalisation, so they would otherwise undercut the
     # `min_radius` floor that `segments_to_vessel_tree` already applied: a 60%
     # diameter stenosis on an already-small distal vessel left lumina at 1.0x

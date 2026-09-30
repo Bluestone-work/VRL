@@ -1,0 +1,46 @@
+{
+  "experiment_id": "EXP_0022B_MCA_DYNAMICS",
+  "date": "2026-09-28",
+  "scope": "numerical environment repair and pure direct-local PPO interface; no formal training",
+  "numerical_gate_passed": true,
+  "ppo_interface_passed": true,
+  "formal_training_ready": false,
+  "policy_success_rate": null,
+  "tests": {
+    "tests": 330,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 329
+  },
+  "input_config_changed_fields": [
+    "numerical_method"
+  ],
+  "short_max_error_mm": 0.0007552806421825761,
+  "full_1s_max_error_all_resolutions_mm": 0.0024758054442615323,
+  "full_1s_fine_max_error_mm": 0.00035670802705595184,
+  "checks": {
+    "short": "research/validation/EXP0022B_DYNAMICS_20260928_attempt8",
+    "episode": "research/validation/EXP0022B_LONG_20260928_attempt4",
+    "transport": "research/validation/EXP0022B_TRANSPORT_1S_20260928_attempt3"
+  },
+  "source_sha256": {
+    "configs/experiments/EXP_0022B_MCA_DYNAMICS.json": "d77578c52e394882ada1b365b28f99cd3eb9594c9e13188487e6b9e847052a4a",
+    "environments/mca_physical_dynamics.py": "cf195e2112f3dd2a7d2359cc07ea5110025fc964338feb74faf492166209f530",
+    "environments/mca_physical_env.py": "6c6f5230faf0d095573d62ca00b2447264a200f94e10a08eee858f2dd9be0465",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "environments/vessel_anatomy.py": "6689590a57d7b980dc77fe3be7d0d0a00348d2b73eef32f1f48579f3281d517e",
+    "environments/vessel_geometry.py": "f2c6525cd9dc43a9b18d6a3dff354dd04cb9c892696e745f64f71082f217ee8d",
+    "environments/vessel_tree_generator.py": "454bd40d0e184963014981ea3b89847c98e8fa8bf23e9e38b9cf7d0b5878b476",
+    "marl/geometric_control.py": "5800a8f7e13151e4de15b3722212c10eacec024beda57a52fa804411b54a8c74",
+    "marl/mappo_advanced.py": "28c844e26a579cc7c0adfa43e23dd81eef367d730ee5629afe2a03fd5f7c234d",
+    "marl/mca_physical_policy.py": "dab0a243d26006440b39e8143d2e827994da547153e2e62f89e9ca3d578e929c",
+    "scripts/audit_mca_transport.py": "c5c824e54ad59f7cd425f0455762751a1e1c571b3619e336c1188e833c20664a",
+    "scripts/validate_mca_dynamics.py": "68915782fae965b035cc81c6aadd66f88bbfc372ef278e0269bd0fcbd852f63d",
+    "tests/test_mca_physical_dynamics.py": "fa37585b69d5962939487e44acc7a5e4801204d02cf245033113cf0d7c46e484"
+  },
+  "archived_failure_vs_handoff_source_drift": [
+    "environments/mca_physical_dynamics.py"
+  ],
+  "created_at_utc": "2026-09-28T13:32:38.484248+00:00"
+}

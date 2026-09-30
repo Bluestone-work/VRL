@@ -1,0 +1,77 @@
+[
+  {
+    "seed": 42,
+    "phase": "failed",
+    "failed_steps": 166944,
+    "timestamp": 1790691204.2516692,
+    "eval_steps": 100000,
+    "eval_episodes": 20,
+    "success_rate": 0.0,
+    "mean_removal_fraction": 0.00017553871037666037,
+    "last_metrics": {
+      "transitions": 166816,
+      "updates": 1304,
+      "episodes": 55603,
+      "actor_loss": 916064841380866.2,
+      "critic_loss": 2.1082083401235963e-08,
+      "entropy": 8614732.825,
+      "approx_kl": 3968995027262718.0,
+      "clip_fraction": 0.9949152542372881,
+      "mve_fraction": 0.0,
+      "mve_uncertainty": 0.0,
+      "mve_target_delta": 0.0,
+      "pre_update_ratio_max_error": 3.831007739580998e+22,
+      "explained_variance": -2.6209280490875244
+    }
+  },
+  {
+    "seed": 43,
+    "phase": "failed",
+    "failed_steps": 131616,
+    "timestamp": 1790690951.8844576,
+    "eval_steps": 100000,
+    "eval_episodes": 20,
+    "success_rate": 0.0,
+    "mean_removal_fraction": 0.00017383595154947805,
+    "last_metrics": {
+      "transitions": 131488,
+      "updates": 1028,
+      "episodes": 43827,
+      "actor_loss": -998.916379292806,
+      "critic_loss": 1.8070801947415543e-08,
+      "entropy": 99896.92838541667,
+      "approx_kl": 12372.153977220132,
+      "clip_fraction": 0.9809116809116809,
+      "mve_fraction": 0.0,
+      "mve_uncertainty": 0.0,
+      "mve_target_delta": 0.0,
+      "pre_update_ratio_max_error": 0.9887373447418213,
+      "explained_variance": 0.4149184226989746
+    }
+  },
+  {
+    "seed": 44,
+    "phase": "failed",
+    "failed_steps": 179872,
+    "timestamp": 1790691441.200238,
+    "eval_steps": 100000,
+    "eval_episodes": 20,
+    "success_rate": 0.0,
+    "mean_removal_fraction": 0.00017576744502797447,
+    "last_metrics": {
+      "transitions": 179744,
+      "updates": 1405,
+      "episodes": 59914,
+      "actor_loss": -371.0542944590251,
+      "critic_loss": 2.0886756172770285e-08,
+      "entropy": 37110.4732421875,
+      "approx_kl": 9576.031187344312,
+      "clip_fraction": 0.9675070028011205,
+      "mve_fraction": 0.0,
+      "mve_uncertainty": 0.0,
+      "mve_target_delta": 0.0,
+      "pre_update_ratio_max_error": 0.34564709663391113,
+      "explained_variance": -0.46631455421447754
+    }
+  }
+]

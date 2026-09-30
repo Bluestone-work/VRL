@@ -1,0 +1,14 @@
+{
+  "renderer": "existing PVRenderer from watch_gui.py",
+  "checkpoint": "research/runs/EXP_0023_MCA_PURE_RL_20260929a/seed_42/latest.pt",
+  "checkpoint_steps": 4096,
+  "episode_seed": 900000000,
+  "frames": 153,
+  "playback_slowdown": 80.0,
+  "robot_display_scale": 4,
+  "particle_display_scale": 3,
+  "clot_surface_model": false,
+  "physical_duration_s": 0.15000000000000002,
+  "replay_index": 0,
+  "updated_at": 1790689411.7793458
+}

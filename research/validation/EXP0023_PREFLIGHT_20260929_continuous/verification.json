@@ -1,0 +1,38 @@
+{
+  "exact_resume_matches": true,
+  "physical_tests_passed": 43,
+  "evaluation": {
+    "episodes": [
+      {
+        "seed": 900000000,
+        "reset_info": {
+          "requested_seed": 900000000,
+          "accepted_seed": 900000000,
+          "rejected_particle_seeds": []
+        },
+        "reward": -6.172906832059712e-05,
+        "success": false,
+        "removal_fraction": 0.00016728386645992188,
+        "lost_robots": 5,
+        "elapsed_s": 0.15000000000000002,
+        "reason": "all_robots_exited"
+      },
+      {
+        "seed": 900000001,
+        "reset_info": {
+          "requested_seed": 900000001,
+          "accepted_seed": 900000001,
+          "rejected_particle_seeds": []
+        },
+        "reward": -4.267947392509768e-05,
+        "success": false,
+        "removal_fraction": 0.00016966506575921692,
+        "lost_robots": 5,
+        "elapsed_s": 0.15000000000000002,
+        "reason": "all_robots_exited"
+      }
+    ],
+    "success_rate": 0.0,
+    "mean_removal_fraction": 0.0001684744661095694
+  }
+}

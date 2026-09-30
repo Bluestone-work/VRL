@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="0.812" timestamp="2026-09-29T21:25:19.591700+08:00" hostname="wj-System-Product-Name"><testcase classname="" name="tests.test_mca_compiled" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./tests/test_mca_compiled.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_mca_compiled.py:9: in &lt;module&gt;
+    from test_mca_physical_dynamics import pipe
+E   ModuleNotFoundError: No module named 'test_mca_physical_dynamics'</error></testcase></testsuite></testsuites>

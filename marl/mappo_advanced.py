@@ -28,6 +28,7 @@ from typing import Dict, Optional, Tuple
 
 from marl.gat_policy import GATEncoder, GATCritic, build_adjacency_matrix
 from marl.gnn_advanced import (
+    AdaptiveEdgeGATEncoder,
     EdgeBiasGATEncoder,
     EdgeFeatureGAT,
     HierarchicalGNN,
@@ -52,6 +53,7 @@ ARCHITECTURES = (
     "edge_gat",           # 8-D edge features, but also ~3x fewer params and
                           # additive attention -- NOT a controlled comparison
     "edge_bias_gat",      # `gat` + edge bias only; capacity-matched to `gat`
+    "adaptive_edge_gat",  # edge bias + value-message communication gate
     "transformer",        # full all-to-all attention
     "sparse_transformer", # k-NN masked attention
     "hierarchical_gnn",   # robot-level + swarm-level GNN
@@ -139,7 +141,21 @@ class EdgeBiasGATActor(_ActorBase):
 
     def encode(self, obs, ctx):
         edges = compute_edge_features(ctx["positions"], ctx["velocities"])
-        return self.encoder(obs, edges, ctx.get("adjacency"))
+        return self.encoder(obs, edges, ctx.get("adjacency"), ctx.get(MASK_KEY))
+
+
+class AdaptiveEdgeGATActor(_ActorBase):
+    """Edge-conditioned GAT with a learned per-head message gate."""
+
+    def __init__(self, obs_dim, action_dim, hidden_dim, num_layers, num_heads):
+        super().__init__(hidden_dim, action_dim)
+        self.encoder = AdaptiveEdgeGATEncoder(
+            obs_dim, hidden_dim, num_layers, num_heads, edge_dim=8
+        )
+
+    def encode(self, obs, ctx):
+        edges = compute_edge_features(ctx["positions"], ctx["velocities"])
+        return self.encoder(obs, edges, ctx.get("adjacency"), ctx.get(MASK_KEY))
 
 
 class TransformerActorAdapter(_ActorBase):
@@ -253,6 +269,8 @@ def build_actor_critic(
         actor = EdgeGATActor(*a)
     elif architecture == "edge_bias_gat":
         actor = EdgeBiasGATActor(*a)
+    elif architecture == "adaptive_edge_gat":
+        actor = AdaptiveEdgeGATActor(*a)
     elif architecture == "transformer":
         actor = TransformerActorAdapter(*a, sparse_k=0)
     elif architecture == "sparse_transformer":
@@ -318,7 +336,8 @@ class MAPPOAdvanced(MAPPO):
             raise ValueError("critic_value_mode must be v or q")
         if not 0 <= dropout < 1:
             raise ValueError("dropout must be in [0, 1)")
-        if control_mode != "world" and obs_dim not in (36, 42):
+        if (control_mode != "world" and obs_dim not in (36, 42, 44, 52)
+                and not (control_mode == "local" and obs_dim == 76)):
             raise ValueError("local control requires geometric observations")
         if not np.isfinite(residual_scale) or residual_scale < 0:
             raise ValueError("residual scale must be finite and nonnegative")
@@ -840,17 +859,20 @@ class MAPPOAdvanced(MAPPO):
         metrics.update(approx_kl=0.0, clip_fraction=0.0)
         n_updates = 0
 
-        def _padded_real_mean(per_agent: torch.Tensor) -> torch.Tensor:
+        def _padded_real_mean(per_agent: torch.Tensor, batch_mask) -> torch.Tensor:
             """Mean over real agent-slots only; 0 for an all-padding batch row.
 
             Dividing by the per-sample agent count (not by N) keeps the loss
             scale independent of how much padding a minibatch happens to
             contain, which is what makes mixed-N batches comparable.
             """
-            if mask_f is None:
+            if batch_mask is None:
                 return per_agent.mean()
             total = per_agent.sum()
-            count = mask_f.sum().clamp(min=1.0)
+            # The loss contains this MINIBATCH only. Using mask_f here divides
+            # by the entire rollout and changes gradient/entropy scale with
+            # rollout length, minibatch size and active-agent distribution.
+            count = batch_mask.sum().clamp(min=1.0)
             return total / count
 
         # These diagnostics are computed BEFORE the first gradient, once per rollout.
@@ -908,7 +930,7 @@ class MAPPOAdvanced(MAPPO):
                     entropy_term = entropy * mask_b
                 else:
                     entropy_term = entropy
-                actor_loss = -_padded_real_mean(surr) - self.entropy_coef * _padded_real_mean(entropy_term)
+                actor_loss = -_padded_real_mean(surr, mask_b) - self.entropy_coef * _padded_real_mean(entropy_term, mask_b)
 
                 # Trust region around the value that generated the rollout.
                 ov = old_values[idx]
@@ -919,22 +941,27 @@ class MAPPOAdvanced(MAPPO):
                 )
                 if mask_b is not None:
                     per_slot_critic = per_slot_critic * mask_b
-                critic_loss = self.value_loss_coef * _padded_real_mean(per_slot_critic)
+                critic_loss = self.value_loss_coef * _padded_real_mean(per_slot_critic, mask_b)
 
+                if not torch.isfinite(actor_loss) or not torch.isfinite(critic_loss):
+                    raise FloatingPointError('Nonfinite PPO loss before optimizer step')
                 self.actor_optimizer.zero_grad()
                 actor_loss.backward()
-                nn.utils.clip_grad_norm_(self.actor.parameters(), self.max_grad_norm)
-                self.actor_optimizer.step()
-
                 self.critic_optimizer.zero_grad()
                 critic_loss.backward()
-                nn.utils.clip_grad_norm_(self.critic.parameters(), self.max_grad_norm)
+                # Validate BOTH networks before either optimizer can corrupt
+                # parameters with a nonfinite gradient. Do not mask NaNs.
+                nn.utils.clip_grad_norm_(self.actor.parameters(), self.max_grad_norm,
+                                         error_if_nonfinite=True)
+                nn.utils.clip_grad_norm_(self.critic.parameters(), self.max_grad_norm,
+                                         error_if_nonfinite=True)
+                self.actor_optimizer.step()
                 self.critic_optimizer.step()
 
                 metrics["actor_loss"] += actor_loss.item()
                 metrics["critic_loss"] += critic_loss.item()
                 metrics["entropy"] += (
-                    _padded_real_mean(entropy_term).item()
+                    _padded_real_mean(entropy_term, mask_b).item()
                     if mask_b is not None else entropy.mean().item()
                 )
                 n_updates += 1

@@ -22,9 +22,10 @@ from environments.vessel_geometry import resolve_pool
 from marl.mappo_advanced import MAPPOAdvanced, ContextRolloutBuffer
 from marl.transition_dataset import EpisodeTransitionWriter
 from marl.vector_task_planner import replan_allocations
+from marl.connectivity_allocator import allocate
 
 
-TRAIN_ARCHITECTURES = ("gat", "edge_bias_gat", "mlp")
+TRAIN_ARCHITECTURES = ("gat", "edge_bias_gat", "adaptive_edge_gat", "mlp")
 
 
 def parse_args():
@@ -74,7 +75,7 @@ def parse_args():
     parser.add_argument("--scenario-pool", default="anatomical")
     parser.add_argument("--tree-resample-interval", type=int, default=900)
     parser.add_argument("--robot-radius", type=float, default=0.0011)
-    parser.add_argument("--obs-mode", choices=("geometric", "geometric_v2", "legacy"),
+    parser.add_argument("--obs-mode", choices=("geometric", "geometric_v2", "geometric_dynamic", "geometric_predictive", "legacy"),
                         default="geometric")
     parser.add_argument("--reward-mode", choices=("milestone", "baseline"), default="milestone")
     parser.add_argument("--contact-mode", choices=("geodesic", "euclidean"), default="geodesic")
@@ -130,7 +131,8 @@ def parse_args():
                         help="difficulty values at the curriculum boundaries")
     parser.add_argument("--task-allocator", default="none",
                         choices=("none", "nearest", "flow_spread",
-                                 "connectivity_aware"),
+                                 "connectivity_aware", "risk_aware_connectivity",
+                                 "predictive_risk_connectivity"),
                         help="external task allocator overriding the env's "
                              "nearest-clot rule (EXP_0013). 'none' (default) "
                              "is the legacy path: the env assigns targets. "
@@ -207,15 +209,30 @@ def evaluate_territories(agent, args, episodes_per_territory):
                 approach_scale=args.approach_scale,
                 reward_double_count=args.reward_double_count,
                 control_margin=not args.no_control_margin,
+                dynamic_intravascular_particles=getattr(args, "dynamic_particles", False),
+                particle_count=getattr(args, "particle_count", 24),
+                particle_radius_ratio=getattr(args, "particle_radius_ratio", 1.6),
+                particle_lateral_drift=getattr(args, "particle_lateral_drift", 0.15),
+                particle_seed=getattr(args, "particle_seed", None),
                 seed=args.eval_seed + scenario_index * 10000,
             )
-            records = {"success": [], "removal_rate": [], "return": [], "wall_hits": [], "wall_hits_total": [], "wall_hits_per_step": []}
+            records = {"success": [], "removal_rate": [], "return": [], "wall_hits": [], "wall_hits_total": [], "wall_hits_per_step": [], "path_length": [], "path_length_per_removed_mass": []}
+            previous_assignment = None
             for episode in range(episodes_per_territory):
                 obs, _ = env.reset(seed=args.eval_seed + scenario_index * 10000 + episode)
+                previous_assignment = None
                 total_return = 0.0
+                removed_mass_total = 0.0
                 wall_total = 0
                 episode_steps = 0
                 while True:
+                    if getattr(args, "task_allocator", "none") != "none":
+                        plan = allocate(
+                            env, getattr(args, "task_allocator", "none"),
+                            previous_assignments=previous_assignment,
+                        )
+                        env.set_task_assignments(plan.assignments)
+                        previous_assignment = plan.assignments.copy()
                     ctx = build_context(env, obs)
                     state = obs["clot_state"].reshape(-1)
                     action, _, _ = agent.act(
@@ -225,6 +242,7 @@ def evaluate_territories(agent, args, episodes_per_territory):
                         agent.env_action(action, obs, env)
                     )
                     total_return += reward
+                    removed_mass_total += float(info.get("removed_mass", 0.0))
                     wall_total += int(info["wall_collisions"])
                     episode_steps += 1
                     if terminated or truncated:
@@ -233,6 +251,7 @@ def evaluate_territories(agent, args, episodes_per_territory):
                                         "episode_seed": args.eval_seed + scenario_index * 10000 + episode,
                                         "success": float(info["success"]),
                                         "removal_rate": float(info["removal_rate"]),
+                                        "path_length": float(info.get("path_length", 0.0)),
                                         "wall_hits_total": wall_total, "steps": episode_steps})
                 records["success"].append(float(info["success"]))
                 records["removal_rate"].append(float(info["removal_rate"]))
@@ -240,14 +259,22 @@ def evaluate_territories(agent, args, episodes_per_territory):
                 records["wall_hits"].append(float(wall_total))
                 records["wall_hits_total"].append(float(wall_total))
                 records["wall_hits_per_step"].append(wall_total / max(episode_steps, 1))
+                path_length = float(info.get("path_length", 0.0))
+                records["path_length"].append(path_length)
+                records["path_length_per_removed_mass"].append(
+                    np.nan if removed_mass_total <= 1e-8 else path_length / removed_mass_total
+                )
             env.close()
             per_territory[scenario] = {
-                key: float(np.mean(values)) for key, values in records.items()
+                key: (
+                    float(np.nanmean(values)) if np.any(np.isfinite(values)) else float("nan")
+                ) if key == "path_length_per_removed_mass" else float(np.mean(values))
+                for key, values in records.items()
             }
 
         macro = {
             key: float(np.mean([metrics[key] for metrics in per_territory.values()]))
-            for key in ("success", "removal_rate", "return", "wall_hits", "wall_hits_total", "wall_hits_per_step")
+            for key in ("success", "removal_rate", "return", "wall_hits", "wall_hits_total", "wall_hits_per_step", "path_length", "path_length_per_removed_mass")
         }
         return {"macro": macro, "per_territory": per_territory, "episodes": episode_records, "split": "validation"}
     finally:
@@ -613,6 +640,10 @@ def main():
                         "return": float(episode_returns[index]),
                         "success": success,
                         "removal_rate": removal,
+                        "path_length": float(info.get("path_length", np.zeros(args.n_envs))[index]),
+                        "robot_path_length": np.asarray(
+                            info.get("robot_path_length", np.zeros((args.n_envs, args.robots)))[index]
+                        ).tolist(),
                         "terminated": bool(terminated[index]),
                         "truncated": bool(truncated[index]),
                         "wall_collisions": int(info["wall_collisions"][index]),
@@ -691,7 +722,9 @@ def main():
         if args.skip_evaluation:
             final_evaluation = {
                 "macro": {"success": None, "removal_rate": None,
-                           "return": None, "wall_hits": None},
+                           "return": None, "wall_hits": None,
+                           "path_length": None,
+                           "path_length_per_removed_mass": None},
                 "per_territory": {},
                 "skipped": True,
             }

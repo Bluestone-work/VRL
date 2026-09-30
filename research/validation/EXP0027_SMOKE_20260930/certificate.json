@@ -1,0 +1,420 @@
+{
+  "passed": true,
+  "scope": "constructive in-vitro simulation feasibility, NOT RL or hardware performance",
+  "policy_success_rate": null,
+  "controller": "bounded diagnostic known-map path follower; excluded from training",
+  "config": "configs/experiments/EXP_0027_MCA_POINT_DYNAMICS.json",
+  "source_sha256": {
+    "configs/experiments/EXP_0027_MCA_POINT_DYNAMICS.json": "71de961bbaa6d97eaf682b3b3253d07472d0da4ab8804fac70d0f44ec8b5368b",
+    "environments/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "environments/balanced_vector_env.py": "9b344305f60ed61c0e83530b5a2c522708ed28073a7e07d853698bbf8cd6ed35",
+    "environments/contact_geometry.py": "4a1bb75b6fc543e8a625e8da96483a5b8dc3b72b3d59b1c56b028e9b8b0191f1",
+    "environments/dynamic_particles.py": "b087a9a4a61365b58b9723696925e433d13cba2d54aaafd4b2b5a4b111874a08",
+    "environments/exp21_tail_env.py": "33a649c6deb17ba87aeb2e84a89d751801271d383086eb99e14f3fe9a9cf6dd2",
+    "environments/helix_render.py": "d181bddc927aedc9991c8fde4b989fb19960f0b87db2a1f4922e3c84722d8a11",
+    "environments/mca_compiled.py": "5a12d7fd8aee608363f3169b39cf677a199450eb735e504adefcb085eae2054e",
+    "environments/mca_physical_dynamics.py": "cf195e2112f3dd2a7d2359cc07ea5110025fc964338feb74faf492166209f530",
+    "environments/mca_physical_env.py": "d16ab26a9027584d2f29fc7c7fdbda54ae1c9579c2a6f7c77dd968cec37622c1",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "environments/pv_render.py": "1be6bfef8984ed5f9a68f025776df6f1751b60c4bc801357c2f6ef4a4b4c2a02",
+    "environments/research_predictive_env.py": "473c576a9e9d5ddf98571a1d46d4651262c8e7c9b268caa892e6dec3b595bc2e",
+    "environments/vascular_3d_marl_env.py": "a258f3786795ef98f89bc43f26659796af89a2f73e40ab8237dc85f044fec7cc",
+    "environments/vector_env.py": "79e741657d6cd6edbbd86ed5cecbb56a35e33b6f4750b604a172bba13b018427",
+    "environments/vessel_anatomy.py": "6689590a57d7b980dc77fe3be7d0d0a00348d2b73eef32f1f48579f3281d517e",
+    "environments/vessel_geometry.py": "f2c6525cd9dc43a9b18d6a3dff354dd04cb9c892696e745f64f71082f217ee8d",
+    "environments/vessel_render.py": "590c1c818bc48a9bb90c2b8a477d3b2b1c10a12ef926c11733c75de33c071f56",
+    "environments/vessel_tree_generator.py": "454bd40d0e184963014981ea3b89847c98e8fa8bf23e9e38b9cf7d0b5878b476",
+    "scripts/validate_mca_surface_task.py": "e226822705da406e1f379bee1b92bfa2086bce9fcb516044c5e2dca0a1b7c730"
+  },
+  "episodes": [
+    {
+      "seed": 830000000,
+      "reset": {
+        "requested_seed": 830000000,
+        "accepted_seed": 830000000,
+        "rejected_particle_seeds": [],
+        "robot_initialization": "distributed_branches",
+        "robot_positions_mm": [
+          [
+            29.579769294622647,
+            39.69631660403708,
+            41.33795494135952
+          ],
+          [
+            30.97392691686826,
+            39.96785222989393,
+            42.408162545181426
+          ],
+          [
+            39.011875079290185,
+            49.04112696312267,
+            42.36282801650727
+          ],
+          [
+            52.96902884051273,
+            8.77359018366994,
+            36.135422572624634
+          ],
+          [
+            26.64599447982024,
+            39.8069388722912,
+            30.477090499957264
+          ]
+        ],
+        "robot_branch_ids": [
+          4,
+          0,
+          2,
+          5,
+          3
+        ]
+      },
+      "backend": "compiled",
+      "success": true,
+      "elapsed_s": 32.800000000000196,
+      "remaining_masses": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lost_robots": 0,
+      "initial_positions_mm": [
+        [
+          29.579769294622647,
+          39.69631660403708,
+          41.33795494135952
+        ],
+        [
+          30.97392691686826,
+          39.96785222989393,
+          42.408162545181426
+        ],
+        [
+          39.011875079290185,
+          49.04112696312267,
+          42.36282801650727
+        ],
+        [
+          52.96902884051273,
+          8.77359018366994,
+          36.135422572624634
+        ],
+        [
+          26.64599447982024,
+          39.8069388722912,
+          30.477090499957264
+        ]
+      ],
+      "final_positions_mm": [
+        [
+          29.241359560783692,
+          39.36548532628963,
+          41.973929776747426
+        ],
+        [
+          29.26427196471732,
+          39.37095017197385,
+          41.97509090094789
+        ],
+        [
+          25.753457845139998,
+          38.81928042225998,
+          41.79855737870911
+        ],
+        [
+          54.0116399323562,
+          27.580110316397036,
+          42.932821139888624
+        ],
+        [
+          24.386886647365106,
+          38.68532794492195,
+          41.730241497112395
+        ]
+      ],
+      "path_mm": [
+        0.9380983131188855,
+        19.841366017175098,
+        19.815418205178815,
+        23.619736884850198,
+        11.928445983462645
+      ],
+      "contact_robot_seconds": [
+        0.0,
+        5.563026108158963,
+        5.644024096208707,
+        0.0,
+        0.0
+      ],
+      "max_action_norm": 0.9931645998010349,
+      "termination_reason": "all_clots_cleared",
+      "wall_seconds": 9.213370990939438,
+      "initial_particle_count": 32,
+      "active_particles": 32,
+      "particle_contact_seconds": 0.0,
+      "maximum_particle_displacement_mm": 2.215203389022559
+    },
+    {
+      "seed": 830000001,
+      "reset": {
+        "requested_seed": 830000001,
+        "accepted_seed": 830000001,
+        "rejected_particle_seeds": [],
+        "robot_initialization": "distributed_branches",
+        "robot_positions_mm": [
+          [
+            30.31653168268097,
+            41.47302714799803,
+            37.12963511685117
+          ],
+          [
+            53.418392260291164,
+            11.869758181860101,
+            37.12752241122893
+          ],
+          [
+            25.254652976517946,
+            39.10323381201644,
+            39.822066218925215
+          ],
+          [
+            16.88768987094777,
+            38.541463193209914,
+            42.090923596836774
+          ],
+          [
+            37.37539968347131,
+            62.656868530934624,
+            42.78382827766689
+          ]
+        ],
+        "robot_branch_ids": [
+          4,
+          5,
+          3,
+          0,
+          2
+        ]
+      },
+      "backend": "compiled",
+      "success": true,
+      "elapsed_s": 45.10000000000037,
+      "remaining_masses": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lost_robots": 0,
+      "initial_positions_mm": [
+        [
+          30.31653168268097,
+          41.47302714799803,
+          37.12963511685117
+        ],
+        [
+          53.418392260291164,
+          11.869758181860101,
+          37.12752241122893
+        ],
+        [
+          25.254652976517946,
+          39.10323381201644,
+          39.822066218925215
+        ],
+        [
+          16.88768987094777,
+          38.541463193209914,
+          42.090923596836774
+        ],
+        [
+          37.37539968347131,
+          62.656868530934624,
+          42.78382827766689
+        ]
+      ],
+      "final_positions_mm": [
+        [
+          27.96219897942105,
+          39.12873207585334,
+          41.90943176928583
+        ],
+        [
+          43.65717686273709,
+          32.2762538822378,
+          42.59805142112827
+        ],
+        [
+          24.38688676796288,
+          38.685327959051676,
+          41.730241440915634
+        ],
+        [
+          25.753451629686484,
+          38.81925851815326,
+          41.798556963835125
+        ],
+        [
+          29.100759124203876,
+          39.33976447079431,
+          41.96684164614272
+        ]
+      ],
+      "path_mm": [
+        28.598574268667132,
+        32.46165433899224,
+        2.4081706866491492,
+        30.769891384922946,
+        30.635276136213186
+      ],
+      "contact_robot_seconds": [
+        5.565831262957476,
+        0.0,
+        0.0,
+        2.8019410038947234,
+        2.800000000000001
+      ],
+      "max_action_norm": 0.9556386675301498,
+      "termination_reason": "all_clots_cleared",
+      "wall_seconds": 0.6654838018584996,
+      "initial_particle_count": 32,
+      "active_particles": 31,
+      "particle_contact_seconds": 0.1906604009855807,
+      "maximum_particle_displacement_mm": 3.4064209185720964
+    },
+    {
+      "seed": 830000002,
+      "reset": {
+        "requested_seed": 830000002,
+        "accepted_seed": 830000002,
+        "rejected_particle_seeds": [],
+        "robot_initialization": "distributed_branches",
+        "robot_positions_mm": [
+          [
+            29.408742130146603,
+            39.55271590043852,
+            41.4485945599736
+          ],
+          [
+            36.44761353042668,
+            34.603783974506634,
+            42.28960779107469
+          ],
+          [
+            36.538869964139984,
+            58.015657363342214,
+            42.733252069650206
+          ],
+          [
+            26.833430677585728,
+            39.74734586162686,
+            31.375248304950986
+          ],
+          [
+            52.572836902162294,
+            22.965344343361245,
+            42.04693027527909
+          ]
+        ],
+        "robot_branch_ids": [
+          4,
+          1,
+          2,
+          3,
+          5
+        ]
+      },
+      "backend": "compiled",
+      "success": true,
+      "elapsed_s": 42.70000000000034,
+      "remaining_masses": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lost_robots": 0,
+      "initial_positions_mm": [
+        [
+          29.408742130146603,
+          39.55271590043852,
+          41.4485945599736
+        ],
+        [
+          36.44761353042668,
+          34.603783974506634,
+          42.28960779107469
+        ],
+        [
+          36.538869964139984,
+          58.015657363342214,
+          42.733252069650206
+        ],
+        [
+          26.833430677585728,
+          39.74734586162686,
+          31.375248304950986
+        ],
+        [
+          52.572836902162294,
+          22.965344343361245,
+          42.04693027527909
+        ]
+      ],
+      "final_positions_mm": [
+        [
+          29.24136035771798,
+          39.36548569971276,
+          41.973929295368066
+        ],
+        [
+          25.753426409070553,
+          38.81927360539967,
+          41.79855578887618
+        ],
+        [
+          25.960610704071147,
+          38.845357255770786,
+          41.80894166787223
+        ],
+        [
+          24.386887012781,
+          38.685327990414336,
+          41.730241284727555
+        ],
+        [
+          34.723473535434024,
+          38.04992182991674,
+          42.27726202010017
+        ]
+      ],
+      "path_mm": [
+        0.763576432226954,
+        25.193317715367506,
+        28.85829872566747,
+        11.092306346678598,
+        30.73549753075252
+      ],
+      "contact_robot_seconds": [
+        0.0,
+        8.377096803463965,
+        2.8506707670354134,
+        0.0,
+        0.0
+      ],
+      "max_action_norm": 0.9937405786303846,
+      "termination_reason": "all_clots_cleared",
+      "wall_seconds": 0.6344930068589747,
+      "initial_particle_count": 32,
+      "active_particles": 29,
+      "particle_contact_seconds": 0.0,
+      "maximum_particle_displacement_mm": 2.7051081904706287
+    }
+  ],
+  "sampled_flow_states": 81,
+  "maximum_sampled_centerline_flow_mm_s": 0.2744293478542107,
+  "robot_speed_mm_s": 1.0,
+  "all_four_masses_zero_required": true,
+  "calibration_ready": false
+}

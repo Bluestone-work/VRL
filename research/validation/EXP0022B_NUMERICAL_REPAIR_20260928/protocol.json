@@ -1,0 +1,32 @@
+{
+  "purpose": "Repair numerical transport and validate unchanged pure-RL interface",
+  "date": "2026-09-28",
+  "source_before_sha256": {
+    "environments/mca_physical_dynamics.py": "c01729fa94b31118cc4e8b5a284329704a0204f7d1912fbd2642d4d806e8cda7",
+    "environments/mca_physical_env.py": "6c6f5230faf0d095573d62ca00b2447264a200f94e10a08eee858f2dd9be0465",
+    "marl/mca_physical_policy.py": "dab0a243d26006440b39e8143d2e827994da547153e2e62f89e9ca3d578e929c",
+    "scripts/validate_mca_dynamics.py": "3f28e849f1d37fdcf1e5158e9c6206bb55f80757f1422529484aa4829f8ae889",
+    "tests/test_mca_physical_dynamics.py": "8522a62f00d7bef6f14159957d4604f27d6298ad3e09773b9b004280ab5e8502",
+    "configs/experiments/EXP_0022B_MCA_DYNAMICS.json": "6b723e4dbcd915daea7279541bfa7ba99b19f262c16a9f3b724f84bdbb0c29d2"
+  },
+  "formal_training": false,
+  "threshold_mm": 0.05,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "spatial_fractions": [
+    0.1,
+    0.05,
+    0.025
+  ],
+  "unchanged": "flow, robot speed, contact/lysis, geometry, success definition; retain failed attempts",
+  "next_checks": [
+    "Analytical transport regressions",
+    "Registered 0.1-second MCA convergence gate",
+    "Longer and junction trajectory audits",
+    "PPO interface smoke",
+    "Existing regression tests"
+  ]
+}

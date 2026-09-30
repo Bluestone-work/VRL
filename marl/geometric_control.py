@@ -9,7 +9,7 @@ CONTROL_MODES = ("world", "local", "guided", "flow_guided", "flow_spread")
 
 def route_guidance(nodes, max_speed=0.018, contact_radius=0.035, speed=0.65):
     nodes = np.asarray(nodes, dtype=np.float32)
-    if nodes.shape[-1] not in (36, 42):
+    if nodes.shape[-1] not in (36, 42, 44, 52):
         raise ValueError("geometric control requires 36-dimensional observations")
     waypoint = nodes[..., 6:9] * 0.25
     target_delta = nodes[..., 25:28] * 0.5
@@ -67,7 +67,7 @@ def direct_local_action(action, env):
 
 def flow_guidance(nodes, max_speed=0.018, contact_radius=0.035, speed=0.65):
     nodes = np.asarray(nodes, dtype=np.float32)
-    if nodes.shape[-1] not in (36, 42):
+    if nodes.shape[-1] not in (36, 42, 44, 52):
         raise ValueError("geometric control requires 36-dimensional observations")
     lumen = nodes[..., 19] * 0.055
     occluded = lumen * nodes[..., 20]
@@ -163,7 +163,8 @@ def policy_action(action, obs, env, mode="world", residual_scale=0.2,
     action = np.asarray(action, dtype=np.float32)
     if mode == "world":
         return action
-    if obs["nodes"].shape[-1] not in (36, 42):
+    if (obs["nodes"].shape[-1] not in (36, 42, 44, 52)
+            and not (mode == "local" and obs["nodes"].shape[-1] == 76)):
         raise ValueError("local control requires geometric observations")
     if mode == "local":
         # Keep this branch free of all controller calls.  In particular,

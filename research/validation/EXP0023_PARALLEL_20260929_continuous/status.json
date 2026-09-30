@@ -1,0 +1,16 @@
+{
+  "phase": "completed",
+  "pid": 2376512,
+  "seed": 42,
+  "transitions": 1152,
+  "target": 1152,
+  "episodes": 384,
+  "updates": 9,
+  "wall_seconds": 11.977583067957312,
+  "fps": 96.17967109590374,
+  "timestamp": 1790689129.0924113,
+  "preflight": true,
+  "backend": "compiled_parallel",
+  "n_envs": 8,
+  "start_transitions": 0
+}

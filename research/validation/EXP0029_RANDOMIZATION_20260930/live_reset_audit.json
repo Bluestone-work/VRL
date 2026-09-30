@@ -1,0 +1,29 @@
+[
+  {
+    "seed": 42,
+    "phase": "evaluating",
+    "steps": 20000,
+    "completed_episodes": 14,
+    "unique_clot_layouts": 14,
+    "unique_robot_layouts": 14,
+    "unique_particle_layouts": 14
+  },
+  {
+    "seed": 43,
+    "phase": "evaluating",
+    "steps": 20000,
+    "completed_episodes": 15,
+    "unique_clot_layouts": 15,
+    "unique_robot_layouts": 15,
+    "unique_particle_layouts": 15
+  },
+  {
+    "seed": 44,
+    "phase": "evaluating",
+    "steps": 20000,
+    "completed_episodes": 19,
+    "unique_clot_layouts": 19,
+    "unique_robot_layouts": 19,
+    "unique_particle_layouts": 19
+  }
+]

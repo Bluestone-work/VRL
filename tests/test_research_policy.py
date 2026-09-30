@@ -6,7 +6,7 @@ from marl.mappo_advanced import MAPPOAdvanced
 from marl.policy_loader import load_policy
 
 
-@pytest.mark.parametrize('architecture', ['gat', 'edge_bias_gat', 'transformer', 'mlp'])
+@pytest.mark.parametrize('architecture', ['gat', 'edge_bias_gat', 'adaptive_edge_gat', 'transformer', 'mlp'])
 def test_v_critic_independent_and_first_ratio(architecture):
     agent = MAPPOAdvanced(3, 36, 3, hidden_dim=16, num_layers=1,
                           architecture=architecture, device='cpu')

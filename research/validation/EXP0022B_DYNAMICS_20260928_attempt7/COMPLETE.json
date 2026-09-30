@@ -1,0 +1,19 @@
+{
+  "status": "complete",
+  "artifact_sha256": {
+    "REPORT.md": "67395a9ddd02588c286d71492b0774234e1143ef84cd86011ceb269017660568",
+    "config.json": "d77578c52e394882ada1b365b28f99cd3eb9594c9e13188487e6b9e847052a4a",
+    "ppo_smoke.json": "8b4ae6de5687ec857871982ea47fe48d34091de4a60b5f52707f1d549c39ad43",
+    "protocol.json": "f42db81abd4d95c581b173481bf969b90e3790b22d00473b967f132de02130ba",
+    "seed_42_fraction_0.025.npz": "b5e9a4ee5805efa31e95aca480342c092bd94d8953a0ad4f44ee3dd092c325f7",
+    "seed_42_fraction_0.05.npz": "9d83de2ec2ec16ec2ccc36768f0e6c272017ac2cc96fc11f62d771c9d0d82256",
+    "seed_42_fraction_0.1.npz": "affe40e288afd7a2a5bd998826470fe63d14a710cbe8a15487f541e9c2e080c3",
+    "seed_43_fraction_0.025.npz": "13eec1dadc5a56a41bafcbc6510fc09628584ebab7b4e345d66ed393b7d5425b",
+    "seed_43_fraction_0.05.npz": "1e5df2ccb6fa89f3e933080b57fdfe705bb206ad93a89b018a40efca8036e034",
+    "seed_43_fraction_0.1.npz": "87ede2b48711e936762998447ef8fec86eeb00c87135867321a5bfe7d151e90e",
+    "seed_44_fraction_0.025.npz": "ea7dce1c15f7b9e66dc40193635b39b74141362a140bfc699b9417c9c57cba7a",
+    "seed_44_fraction_0.05.npz": "a0cdb74ff814ccd3892f236a233980e47630efd88f7d57112be45bd4c34bb0b0",
+    "seed_44_fraction_0.1.npz": "4fefecb4902d7fce7cc1365ae5b27e1c2813d055b4a83c31d115b9ff72ebc796",
+    "summary.json": "755636ddb83fc0e87abdd6a063bf5c2943464d4cb73a7c9fde44d518b77d9d14"
+  }
+}

@@ -20,6 +20,8 @@ if str(ROOT) not in sys.path:
 
 from environments.vascular_3d_marl_env import (  # noqa: E402
     NODE_FEATURE_DIM_GEOMETRIC,
+    NODE_FEATURE_DIM_DYNAMIC,
+    NODE_FEATURE_DIM_PREDICTIVE,
     NODE_FEATURE_DIM_LEGACY,
     OBS_MODES,
     SCENARIOS,
@@ -67,7 +69,7 @@ def test_observation_matches_space(obs_mode: str) -> None:
     obs, info = env.reset(seed=1)
     assert env.observation_space.contains(obs), "observation left its declared space"
     expected = (
-        42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric" else NODE_FEATURE_DIM_LEGACY
+        NODE_FEATURE_DIM_PREDICTIVE if obs_mode == "geometric_predictive" else NODE_FEATURE_DIM_DYNAMIC if obs_mode == "geometric_dynamic" else 42 if obs_mode == "geometric_v2" else NODE_FEATURE_DIM_GEOMETRIC if obs_mode == "geometric" else NODE_FEATURE_DIM_LEGACY
     )
     assert obs["nodes"].shape == (3, expected)
     for _ in range(20):

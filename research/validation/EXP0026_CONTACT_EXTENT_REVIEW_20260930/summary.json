@@ -1,0 +1,26 @@
+{
+  "review": "Clot footprint and reaction support audit; no RL evaluation",
+  "nominal_gaussian_sigma_mm": 2.5,
+  "nominal_contact_length_mm": 15.0,
+  "first_two_center_geodesic_distance_mm": 7.199118137359619,
+  "cutoff_bump": 0.011108996538242306,
+  "radius_reduction_at_cutoff_fraction": 0.007220847749857499,
+  "first_10ms_contact_comparison": [
+    {
+      "axial_offset_from_first_clot_mm": 0.0,
+      "removed_mass": 0.0036,
+      "duration_s": 0.01,
+      "remaining_first_clot_mass": 0.9964,
+      "contact_seconds": 0.01
+    },
+    {
+      "axial_offset_from_first_clot_mm": -6.5,
+      "removed_mass": 0.0036,
+      "duration_s": 0.01,
+      "remaining_first_clot_mass": 0.9964,
+      "contact_seconds": 0.01
+    }
+  ],
+  "conclusion": "Contact extent was materially expanded; spatial tails dissolve the entire lumped clot at the same rate. This is an unvalidated model assumption, not merely a rendering change. Observed RL success applies only to EXP26.",
+  "correct_model_definition_pending": true
+}

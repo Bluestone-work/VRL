@@ -1,0 +1,16 @@
+{
+  "checkpoint": "research/runs/EXP_0023_MCA_PURE_RL_20260929a/seed_42/latest.pt",
+  "checkpoint_steps": 4096,
+  "episode_seed": 900000000,
+  "frame_count": 153,
+  "physical_duration_s": 0.15000000000000002,
+  "playback_slowdown": 60.0,
+  "visualization_only": true,
+  "robot_radius_mm": 0.08,
+  "particle_radius_mm": 0.02,
+  "clot_markers": "red location markers; NOT resolved clot surface geometry",
+  "tracer_marker_scale": 3,
+  "robot_halo_scale": 4,
+  "success": false,
+  "removed_mass": 0.0006972708448582665
+}

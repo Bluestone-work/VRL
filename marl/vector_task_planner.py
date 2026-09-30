@@ -58,6 +58,10 @@ class _RowEnv:
         return self._env.robot_stations[self._row]
 
     @property
+    def robot_velocities(self):
+        return self._env.robot_velocities[self._row]
+
+    @property
     def active_clots(self):
         # The vector env has no per-row active count; the allocator uses this
         # only to bound `_alive_clots`'s slice, so the slot dimension is the

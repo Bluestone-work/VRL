@@ -58,6 +58,9 @@ DEFAULT_WEIGHTS = {
     "flow": 0.25,
     "switching": 0.5,
     "capacity": 0.75,
+    "particle": 0.8,
+    "path_length": 0.25,
+    "prediction": 0.9,
 }
 
 
@@ -107,6 +110,8 @@ def connectivity_assignment(
     env,
     weights: dict[str, float] | None = None,
     previous_assignments: np.ndarray | None = None,
+    risk_aware: bool = False,
+    predictive: bool = False,
 ) -> ConnectivityResult:
     """Assign robots to clots with corridor-overlap awareness.
 
@@ -131,6 +136,7 @@ def connectivity_assignment(
     geodesic = np.full(result_shape, np.inf, np.float64)
     overlap = np.zeros(result_shape, np.float64)
     flow_cost = np.zeros(result_shape, np.float64)
+    particle_risk = np.zeros(result_shape, np.float64)
 
     if alive.size == 0 or n_robots == 0:
         return ConnectivityResult(
@@ -175,6 +181,49 @@ def connectivity_assignment(
                            / max(float(env.max_speed), 1e-8), 0.0, 1.0)
         flow_cost[:, column] = opposing
 
+    # Dynamic-obstacle risk uses only particles at the current time.  The
+    # allocator never queries a future particle position or a rollout outcome.
+    # Sampling route stations keeps this closed-loop planner bounded while
+    # still penalising a corridor whose present clearance is poor.
+    if risk_aware and getattr(env, "particles", None) is not None:
+        particles = env.particles
+        row = getattr(env, "_row", None)
+        particle_positions = particles.positions if row is None else particles.positions[int(row):int(row) + 1]
+        particle_velocities = particles.velocities if row is None else particles.velocities[int(row):int(row) + 1]
+        if particle_positions.shape[0] == 1:
+            particle_positions = particle_positions[0]
+            particle_velocities = particle_velocities[0]
+        else:
+            particle_positions = particle_positions[0]
+            particle_velocities = particle_velocities[0]
+        robot_positions = np.asarray(env.robot_positions)
+        robot_velocities = np.asarray(getattr(env, "robot_velocities", np.zeros_like(robot_positions)))
+        current_dist = np.linalg.norm(robot_positions[:, None, :] - particle_positions[None, :, :], axis=2)
+        nearest = np.argmin(current_dist, axis=1)
+        current_clearance = current_dist[np.arange(n_robots), nearest] - float(particles.contact_distance)
+        current_rel_speed = np.linalg.norm(
+            robot_velocities - particle_velocities[nearest], axis=1
+        ) / max(float(env.max_speed), 1e-8)
+        current_risk = np.exp(-np.clip(current_clearance, -0.02, 0.2) / 0.02) + 0.25 * current_rel_speed
+        for column, clot in enumerate(alive):
+            # Route geometry is shared across robots; evaluate the remaining
+            # corridor from each robot's station so branch-specific risk is kept.
+            for robot in range(n_robots):
+                route = _route_path(tree, int(stations[robot]), int(clot), hop_fields[int(clot)])
+                points = tree.points[route[::max(1, route.size // 24)]]
+                clearance = np.linalg.norm(points[:, None, :] - particle_positions[None, :, :], axis=2).min()
+                corridor_risk = np.exp(-np.clip(clearance - float(particles.contact_distance), -0.02, 0.2) / 0.02)
+                particle_risk[robot, column] = 0.5 * current_risk[robot] + 0.5 * corridor_risk
+                if predictive:
+                    future_particles = particle_positions + 0.45 * particle_velocities
+                    future_clearance = np.linalg.norm(
+                        points[:, None, :] - future_particles[None, :, :], axis=2
+                    ).min() - float(particles.contact_distance)
+                    particle_risk[robot, column] += 0.75 / (
+                        1.0 + np.exp(np.clip(future_clearance / 0.02, -30.0, 30.0))
+                    )
+        particle_risk = np.clip(particle_risk, 0.0, 4.0)
+
     capacity = float(getattr(env, "lysis_saturation", 4.0))
     loads = np.zeros((alive.size,), np.int32)
     assignments = np.full((n_robots,), -1, np.int32)
@@ -196,6 +245,12 @@ def connectivity_assignment(
             + w["overlap"] * overlap[robot]
             + w["flow"] * flow_cost[robot]
         )
+        if risk_aware:
+            # Geodesic distance is also the physically meaningful path-length
+            # lower bound; the explicit term documents that tradeoff separately
+            # from obstacle risk and makes it available for auditing.
+            column_costs = column_costs + w["particle"] * particle_risk[robot]
+            column_costs = column_costs + w["path_length"] * geodesic_norm[robot]
         # Congestion: penalise edges already used by MORE than one assigned
         # route. The first user of the trunk is free (unavoidable); the second
         # and later pay.
@@ -346,7 +401,10 @@ def flow_spread_assignment(env, congestion_penalty: float = 0.35) -> Connectivit
     )
 
 
-ALLOCATION_MODES = ("nearest", "flow_spread", "connectivity_aware")
+ALLOCATION_MODES = (
+    "nearest", "flow_spread", "connectivity_aware", "risk_aware_connectivity",
+    "predictive_risk_connectivity",
+)
 
 
 def allocate(env, mode: str = "connectivity_aware",
@@ -360,4 +418,8 @@ def allocate(env, mode: str = "connectivity_aware",
         return nearest_assignment(env)
     if mode == "flow_spread":
         return flow_spread_assignment(env)
-    return connectivity_assignment(env, weights, previous_assignments)
+    return connectivity_assignment(
+        env, weights, previous_assignments,
+        risk_aware=(mode in ("risk_aware_connectivity", "predictive_risk_connectivity")),
+        predictive=(mode == "predictive_risk_connectivity"),
+    )

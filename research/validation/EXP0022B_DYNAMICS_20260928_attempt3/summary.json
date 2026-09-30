@@ -1,0 +1,2512 @@
+{
+  "protocol": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "spatial_fractions": [
+      0.1,
+      0.05,
+      0.025
+    ],
+    "trajectory_duration_s": 0.1,
+    "maximum_position_error_mm": 0.05,
+    "convergence_compares": "all control-time samples and final state against .025 reference; identical initial states/actions",
+    "required_event_checks": "same sampling grid, active masks and exit-node identity",
+    "formal_training": false,
+    "policy_performance_estimate": null
+  },
+  "convergence": [
+    {
+      "seed": 42,
+      "coarse_error_mm": 0.02820812722582647,
+      "fine_error_mm": 0.010598964459296872,
+      "robot_fine_error_mm": 0.009510157610660718,
+      "final_fine_error_mm": 0.009769686526527202,
+      "sampling_grid_match": true,
+      "active_masks_match": true,
+      "exit_nodes_match": true,
+      "passed": true
+    },
+    {
+      "seed": 43,
+      "coarse_error_mm": 0.07677071506159157,
+      "fine_error_mm": 0.049859520337064304,
+      "robot_fine_error_mm": 0.016185229406213104,
+      "final_fine_error_mm": 0.049859520337064304,
+      "sampling_grid_match": true,
+      "active_masks_match": true,
+      "exit_nodes_match": true,
+      "passed": true
+    },
+    {
+      "seed": 44,
+      "coarse_error_mm": 0.04296878001366519,
+      "fine_error_mm": 0.018826590594025732,
+      "robot_fine_error_mm": 0.007353700774074285,
+      "final_fine_error_mm": 0.018826590594025732,
+      "sampling_grid_match": true,
+      "active_masks_match": true,
+      "exit_nodes_match": true,
+      "passed": true
+    }
+  ],
+  "trajectories": [
+    {
+      "seed": 42,
+      "spatial_fraction": 0.1,
+      "initial_state_sha256": "e37e3050fbb77cae1c23109414a2bd05dc3fbcf3aa534352be10b9453802b904",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.1,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.999310277605238,
+          "inlet_flow_ml_min": 50.996997163750876,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.879028883946336,
+            27.44964501788889,
+            27.780222160371753,
+            27.983810588076324,
+            28.094117342612023
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.0009353585192002356,
+            0.0008590155048295856,
+            0.0008355522877536714,
+            0.0008462235564365983,
+            0.0009210740681737661
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 2544,
+          "contact_s": [
+            0.000398710693754597,
+            0.0003775043102527367,
+            0.0003709867510857339,
+            0.0003739509916142955,
+            0.00039474279429679084
+          ],
+          "removed_mass": 0.0006897223947614953,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.999310277605238,
+          "inlet_flow_ml_min": 50.996997163750876,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.418302977549686,
+            43.786880307996796,
+            44.26940526458051,
+            44.79594521868252,
+            44.80674230017891
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09892346210273723
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 1370,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 3914,
+      "wall_time_s": 1.0870623840019107,
+      "remaining_mass": 3.999310277605238,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.07931710388468,
+          62.67883674422272,
+          42.811673280556455
+        ],
+        [
+          38.89937794275032,
+          63.394173726222945,
+          42.83865545563616
+        ],
+        [
+          40.011565801169,
+          64.21689634049365,
+          42.85372746004807
+        ],
+        [
+          41.22201106738015,
+          65.00562627362304,
+          42.87910718401303
+        ],
+        [
+          41.97437844423466,
+          65.50979151295347,
+          42.894466997135595
+        ],
+        [
+          50.180182268434145,
+          18.935246183084722,
+          40.55001249158594
+        ],
+        [
+          39.06448528300991,
+          33.01481804704095,
+          42.822704766402126
+        ],
+        [
+          26.273793046010095,
+          39.678511500422545,
+          29.289210775140724
+        ],
+        [
+          41.76593238586343,
+          65.81935170597261,
+          42.777412420053125
+        ],
+        [
+          40.66593385849969,
+          64.29705113846218,
+          43.42788451536231
+        ],
+        [
+          50.49979797883063,
+          17.436815638024456,
+          39.658069883163286
+        ],
+        [
+          48.924225428645165,
+          5.691112012601445,
+          33.7792357529593
+        ],
+        [
+          36.59005589953192,
+          60.10424703432787,
+          43.050651227390475
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "seed": 42,
+      "spatial_fraction": 0.05,
+      "initial_state_sha256": "e37e3050fbb77cae1c23109414a2bd05dc3fbcf3aa534352be10b9453802b904",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.05,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.9993092327122657,
+          "inlet_flow_ml_min": 50.99690719492676,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.86254970180284,
+            27.4517095078847,
+            27.775104699108123,
+            27.990878741976886,
+            28.100836551825843
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.0008866926073096693,
+            0.0008565150783397257,
+            0.00085073133232072,
+            0.0009086012141779065,
+            0.000905132619664073
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 4671,
+          "contact_s": [
+            0.0003851923851259635,
+            0.0003768097510568327,
+            0.0003752031544752178,
+            0.00039127812107487116,
+            0.00039031460974940456
+          ],
+          "removed_mass": 0.0006907672877336244,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.9993092327122657,
+          "inlet_flow_ml_min": 50.99690719492676,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.412799801739155,
+            43.79039785602761,
+            44.26478052340616,
+            44.80682454790078,
+            44.80541049104877
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09888632756213678
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 2740,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 7411,
+      "wall_time_s": 2.0590667829383165,
+      "remaining_mass": 3.9993092327122657,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.07459250042191,
+          62.68115010261164,
+          42.81119091623455
+        ],
+        [
+          38.90075200295911,
+          63.395468531333506,
+          42.838625980506094
+        ],
+        [
+          40.012942553116574,
+          64.21437614397574,
+          42.85349165587316
+        ],
+        [
+          41.2312096367099,
+          65.01152201078739,
+          42.87951149749833
+        ],
+        [
+          41.97497471287536,
+          65.5089133554901,
+          42.894600076437975
+        ],
+        [
+          50.18074141476662,
+          18.933543713955856,
+          40.54924627664897
+        ],
+        [
+          39.065758274083954,
+          33.0155107114508,
+          42.82274515079199
+        ],
+        [
+          26.276570292936118,
+          39.67661777753674,
+          29.310013621412185
+        ],
+        [
+          41.76583999562193,
+          65.81948692774453,
+          42.777415026078565
+        ],
+        [
+          40.65364750680322,
+          64.28662258865671,
+          43.427528204751454
+        ],
+        [
+          50.50361091028257,
+          17.428292375013932,
+          39.65459554623535
+        ],
+        [
+          48.923076812546306,
+          5.692529415178167,
+          33.780299508959686
+        ],
+        [
+          36.59031764959104,
+          60.10449990053446,
+          43.05064490432466
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "seed": 42,
+      "spatial_fraction": 0.025,
+      "initial_state_sha256": "e37e3050fbb77cae1c23109414a2bd05dc3fbcf3aa534352be10b9453802b904",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.025,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.999301265414506,
+          "inlet_flow_ml_min": 50.99732630288597,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.861409963107658,
+            27.445503275601137,
+            27.77459453998895,
+            27.980625301431807,
+            28.09285456960509
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.0008970999042503536,
+            0.0008969663758762181,
+            0.0008761569624766707,
+            0.0009086165810003877,
+            0.000908506044652313
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 9343,
+          "contact_s": [
+            0.000388083313667894,
+            0.0003880462077054201,
+            0.0003822658223457042,
+            0.00039128237921311155,
+            0.00039125168121986157
+          ],
+          "removed_mass": 0.000698734585494717,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.999301265414506,
+          "inlet_flow_ml_min": 50.99732630288597,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.41170694817125,
+            43.78535599812294,
+            44.26309155419001,
+            44.79994020550324,
+            44.80511108287428
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09888885243699118
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 5476,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 14819,
+      "wall_time_s": 4.13898822106421,
+      "remaining_mass": 3.999301265414506,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.074064250484156,
+          62.68258866057142,
+          42.81111717425062
+        ],
+        [
+          38.89599518605981,
+          63.39558918991025,
+          42.8383490782517
+        ],
+        [
+          40.009164454585694,
+          64.21620974994323,
+          42.85346959636475
+        ],
+        [
+          41.223712618082345,
+          65.01214546256001,
+          42.87910936324673
+        ],
+        [
+          41.97129313466895,
+          65.51431365169364,
+          42.89437567543504
+        ],
+        [
+          50.18128119868625,
+          18.93088105689065,
+          40.54813527096734
+        ],
+        [
+          39.064482859688106,
+          33.01444139358398,
+          42.82267091865086
+        ],
+        [
+          26.277545776820165,
+          39.67594694780546,
+          29.31705028883852
+        ],
+        [
+          41.76652525710807,
+          65.81848398728971,
+          42.777395589713144
+        ],
+        [
+          40.64620989676662,
+          64.28029155257663,
+          43.427312070712496
+        ],
+        [
+          50.50519822991965,
+          17.423615071861878,
+          39.65273255317
+        ],
+        [
+          48.92327087882652,
+          5.692247287703126,
+          33.78017709595366
+        ],
+        [
+          36.59092750218834,
+          60.111092444812805,
+          43.05066335316872
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        false,
+        true,
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "seed": 43,
+      "spatial_fraction": 0.1,
+      "initial_state_sha256": "398a3a7a7642f7dc5810597c760992302e9311560ada0e8f601d1447f5183079",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.1,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.9993032627438807,
+          "inlet_flow_ml_min": 50.997357143247534,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.88013183885329,
+            27.473709117523406,
+            27.79177596631741,
+            27.97323655343662,
+            28.09733994350276
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.0008590923971496522,
+            0.0009352070628665388,
+            0.0008354713791050017,
+            0.0009116154978983104,
+            0.0009259862126782537
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 2330,
+          "contact_s": [
+            0.000377525662784784,
+            0.0003986686217526168,
+            0.0003709642784911352,
+            0.0003921154222002022,
+            0.0003961072817697193
+          ],
+          "removed_mass": 0.0006967372561194447,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.9993032627438807,
+          "inlet_flow_ml_min": 50.997357143247534,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.431561996507995,
+            43.790338003400365,
+            44.26648255456962,
+            44.737289900431165,
+            44.83913555552542
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09899767087238384
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 276,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 2606,
+      "wall_time_s": 0.7548698408063501,
+      "remaining_mass": 3.9993032627438807,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.04251310701622,
+          62.69564635497682,
+          42.79338367845478
+        ],
+        [
+          38.895315385691866,
+          63.39956334949099,
+          42.81407120140482
+        ],
+        [
+          39.98951887576784,
+          64.20423826495598,
+          42.86968685493925
+        ],
+        [
+          41.092205404024526,
+          64.99157249886463,
+          42.87598052219551
+        ],
+        [
+          41.94646366180274,
+          65.55035651633305,
+          42.90323698381609
+        ],
+        [
+          53.51973566723716,
+          26.935407576348613,
+          42.830664040775666
+        ],
+        [
+          41.96421983903812,
+          65.50938533275581,
+          43.313901860995045
+        ],
+        [
+          51.77155432140321,
+          30.375367714893933,
+          42.91796985957514
+        ],
+        [
+          26.330684754054946,
+          40.05141345331249,
+          28.28246033648246
+        ],
+        [
+          26.460469165381994,
+          40.22710347697887,
+          28.2797725849858
+        ],
+        [
+          38.081547650454084,
+          63.376556816785616,
+          43.15808805193841
+        ],
+        [
+          48.788126006350716,
+          6.126945473842652,
+          33.54526225271476
+        ],
+        [
+          26.26980163509531,
+          39.76954249789421,
+          28.26454663992349
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "seed": 43,
+      "spatial_fraction": 0.05,
+      "initial_state_sha256": "398a3a7a7642f7dc5810597c760992302e9311560ada0e8f601d1447f5183079",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.05,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.9993041716015165,
+          "inlet_flow_ml_min": 50.99719557418519,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.86734977064524,
+            27.4595010146031,
+            27.789947900552818,
+            27.976527883970626,
+            28.08839235332939
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.0008866660646162927,
+            0.0008564726449549198,
+            0.000934516778215766,
+            0.000914733624085784,
+            0.0008658948354423046
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 4391,
+          "contact_s": [
+            0.00038518501207486473,
+            0.0003767979615093068,
+            0.0003984768880418163,
+            0.0003929815646544305,
+            0.00037941523617233985
+          ],
+          "removed_mass": 0.000695828398482993,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.9993041716015165,
+          "inlet_flow_ml_min": 50.99719557418519,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.426139075879234,
+            43.78803504522203,
+            44.27866451646615,
+            44.76955870238984,
+            44.830332757383154
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09896835843095692
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 552,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 4943,
+      "wall_time_s": 1.4126948190387338,
+      "remaining_mass": 3.9993041716015165,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.052689896144656,
+          62.694883729552,
+          42.793012856315755
+        ],
+        [
+          38.89528382818995,
+          63.40191706392552,
+          42.8136425587101
+        ],
+        [
+          40.00595548175779,
+          64.21763595365027,
+          42.86999730090353
+        ],
+        [
+          41.15521091414337,
+          64.99387231339466,
+          42.876569453258405
+        ],
+        [
+          41.94876139561723,
+          65.54701054724703,
+          42.90270622763974
+        ],
+        [
+          53.50127336092379,
+          26.975727809288376,
+          42.82947419678441
+        ],
+        [
+          41.965404715560204,
+          65.50765116178133,
+          43.313868253082745
+        ],
+        [
+          51.73917566198366,
+          30.38309448786417,
+          42.91705215967245
+        ],
+        [
+          26.33036139485576,
+          40.05140402541813,
+          28.282508208472954
+        ],
+        [
+          26.460291701930966,
+          40.22709830306338,
+          28.27979885773675
+        ],
+        [
+          38.10112974122022,
+          63.39050118020747,
+          43.158589394709814
+        ],
+        [
+          48.788126006350716,
+          6.126945473842652,
+          33.54526225271476
+        ],
+        [
+          26.26869145217658,
+          39.769510172406534,
+          28.264711002053087
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "seed": 43,
+      "spatial_fraction": 0.025,
+      "initial_state_sha256": "398a3a7a7642f7dc5810597c760992302e9311560ada0e8f601d1447f5183079",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.025,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.999304466548439,
+          "inlet_flow_ml_min": 50.99719632756435,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.86805172147275,
+            27.458026786655445,
+            27.788483278379022,
+            27.96816680446502,
+            28.08730596760341
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.0008820428629405797,
+            0.0008818983333185315,
+            0.0009061481687240303,
+            0.0008926726877689362,
+            0.0008925725123845041
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 8782,
+          "contact_s": [
+            0.0003839007923879752,
+            0.00038386064035381194,
+            0.0003905967124002309,
+            0.00038685352771586785,
+            0.00038682569259052544
+          ],
+          "removed_mass": 0.000695533451561428,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.999304466548439,
+          "inlet_flow_ml_min": 50.99719632756435,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.426564532733195,
+            43.79135539880746,
+            44.28348081156899,
+            44.767162292422185,
+            44.82508612728027
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09894158359455041
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 1104,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 9886,
+      "wall_time_s": 2.811371781863272,
+      "remaining_mass": 3.999304466548439,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.065502062130555,
+          62.695286403658365,
+          42.79307213431604
+        ],
+        [
+          38.90677087638792,
+          63.39994030723547,
+          42.813591304343085
+        ],
+        [
+          40.02212934006126,
+          64.21702989606861,
+          42.87002284926111
+        ],
+        [
+          41.16895265776566,
+          64.99343734291847,
+          42.87633278760284
+        ],
+        [
+          41.952618126465445,
+          65.54136890590267,
+          42.902513869317694
+        ],
+        [
+          53.496565542071146,
+          26.986486475213734,
+          42.82916192710925
+        ],
+        [
+          41.9658126556831,
+          65.50705410576744,
+          43.31385667605433
+        ],
+        [
+          51.74508773173805,
+          30.38058034516769,
+          42.917240233401955
+        ],
+        [
+          26.329845080048905,
+          40.051388999067164,
+          28.28258464937411
+        ],
+        [
+          26.46029181830854,
+          40.22709830646651,
+          28.279798840508494
+        ],
+        [
+          38.141841281150064,
+          63.41926690311767,
+          43.15962644352078
+        ],
+        [
+          48.788126006350694,
+          6.12694547384264,
+          33.54526225271483
+        ],
+        [
+          26.268068269122175,
+          39.76949198965482,
+          28.26480326045853
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "seed": 44,
+      "spatial_fraction": 0.1,
+      "initial_state_sha256": "7eb1163038fb8efbf97973f688d895f6c05e086c940b095123db7599cc508efd",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.1,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.9993265718758235,
+          "inlet_flow_ml_min": 50.99619035256844,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.865287264945305,
+            27.4529547439944,
+            27.783198854380355,
+            27.971645139083456,
+            28.098513656859332
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.0008591886144131422,
+            0.0008590708603151143,
+            0.0008355692843906581,
+            0.0008426769054494798,
+            0.0008377755293622613
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 2407,
+          "contact_s": [
+            0.00037755239187723885,
+            0.0003775196816703671,
+            0.00037099147003006585,
+            0.0003729658145799444,
+            0.00037160432011018433
+          ],
+          "removed_mass": 0.0006734281241764081,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.9993265718758235,
+          "inlet_flow_ml_min": 50.99619035256844,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.4169157711203,
+            43.769515316875754,
+            44.27397898166818,
+            44.77809807719369,
+            44.80827712421781
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09886115021348109
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 909,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 3316,
+      "wall_time_s": 0.9269472919404507,
+      "remaining_mass": 3.9993265718758235,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.0638199521862,
+          62.686719549482945,
+          42.78088886696549
+        ],
+        [
+          38.918276031561426,
+          63.37453207213134,
+          42.81603862932149
+        ],
+        [
+          40.03424488202663,
+          64.21180630401034,
+          42.850921335426776
+        ],
+        [
+          41.1796782669295,
+          65.00253944639866,
+          42.87953099279464
+        ],
+        [
+          41.96200515478825,
+          65.5274559062307,
+          42.90702952491684
+        ],
+        [
+          26.39139906762905,
+          39.61321642283384,
+          30.479423753121395
+        ],
+        [
+          28.960599146852026,
+          44.69657179940918,
+          30.5160289487276
+        ],
+        [
+          42.20229894549519,
+          65.17123566077838,
+          43.02450059274659
+        ],
+        [
+          48.899033107508046,
+          5.727695525655484,
+          33.79518070116021
+        ],
+        [
+          41.78892091646515,
+          65.77961576486983,
+          42.94388473093297
+        ],
+        [
+          50.022223393960275,
+          31.59134416955281,
+          42.593604047041005
+        ],
+        [
+          50.745906981888886,
+          31.293211790669588,
+          42.813871748300954
+        ],
+        [
+          52.23737346397168,
+          14.85173732877892,
+          38.117796623393026
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 44,
+      "spatial_fraction": 0.05,
+      "initial_state_sha256": "7eb1163038fb8efbf97973f688d895f6c05e086c940b095123db7599cc508efd",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.05,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.9993069302005,
+          "inlet_flow_ml_min": 50.99706731554282,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.860832758297374,
+            27.448755560572934,
+            27.788250368450363,
+            27.976601363542642,
+            28.088777215834167
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.0009342213161289692,
+            0.0009040597942657769,
+            0.0008557593100704253,
+            0.000866093032527715,
+            0.0008705645450390875
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 4544,
+          "contact_s": [
+            0.0003983948020909397,
+            0.00039001661551757406,
+            0.00037659981165130273,
+            0.00037947028090813646,
+            0.00038071237733327737
+          ],
+          "removed_mass": 0.0006930697995004428,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.9993069302005,
+          "inlet_flow_ml_min": 50.99706731554282,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.41233855406549,
+            43.7787808584368,
+            44.285190001904084,
+            44.78911371078557,
+            44.802962694871184
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09886281835128828
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 1816,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 6360,
+      "wall_time_s": 1.760554714128375,
+      "remaining_mass": 3.9993069302005,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.06036393956395,
+          62.68887851800853,
+          42.78069223485594
+        ],
+        [
+          38.9174773728162,
+          63.38792384681842,
+          42.81616737503867
+        ],
+        [
+          40.05153412187206,
+          64.21734763749268,
+          42.85131215655269
+        ],
+        [
+          41.18741319102795,
+          65.01005277095973,
+          42.87988448471921
+        ],
+        [
+          41.96231192243953,
+          65.52702001499124,
+          42.906661609257306
+        ],
+        [
+          26.394616293940995,
+          39.611042778877035,
+          30.50325169039133
+        ],
+        [
+          28.96011434650811,
+          44.69650826502529,
+          30.516165930912702
+        ],
+        [
+          42.20382245118094,
+          65.16900587732505,
+          43.02445735037103
+        ],
+        [
+          48.89889993918304,
+          5.72789892280479,
+          33.795251528906256
+        ],
+        [
+          41.78892091646514,
+          65.77961576486986,
+          42.94388473093294
+        ],
+        [
+          50.022854829687866,
+          31.584414742357108,
+          42.59369028932048
+        ],
+        [
+          50.743466356307536,
+          31.27914474347369,
+          42.813570586527014
+        ],
+        [
+          52.239425987199,
+          14.855633827163084,
+          38.120166167436004
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "seed": 44,
+      "spatial_fraction": 0.025,
+      "initial_state_sha256": "7eb1163038fb8efbf97973f688d895f6c05e086c940b095123db7599cc508efd",
+      "effective_config": {
+        "control_dt_s": 0.05,
+        "episode_duration_s": 0.1,
+        "robot_speed_mm_s": 1.0,
+        "robot_radius_mm": 0.08,
+        "num_robots": 5,
+        "inlet_flow_ml_min": 146.0,
+        "distal_resistance_ratio": 1.0,
+        "geometry_variation": 0.0,
+        "initial_radius_fraction": 0.35,
+        "clot_width_mm": 2.5,
+        "contact_distance_mm": 0.12,
+        "lysis_mass_per_s": 0.36,
+        "lysis_saturation": 4.0,
+        "particle_count": 8,
+        "particle_radius_mm": 0.02,
+        "spatial_fraction": 0.025,
+        "max_substeps_per_control": 100000,
+        "lubrication_floor": 1.0,
+        "assumption_provenance": "Explicit unmeasured engineering assumptions; not a calibrated biological or magnetic hardware model"
+      },
+      "intervals": [
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.05,
+          "remaining_mass": 3.999312076448732,
+          "inlet_flow_ml_min": 50.996842355952026,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 5,
+          "lost_robots": 0,
+          "robot_path_mm": [
+            26.862607156472603,
+            27.450852280719776,
+            27.783301473062593,
+            27.967950450213745,
+            28.092295984640227
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            0.000882101827301085,
+            0.0008803135715425014,
+            0.0008580817375332117,
+            0.0008684087079018354,
+            0.0008903297130018473
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 9090,
+          "contact_s": [
+            0.00038391716834280113,
+            0.0003834204307104734,
+            0.00037724492815870175,
+            0.00038011352807172893,
+            0.0003862026982380528
+          ],
+          "removed_mass": 0.0006879235512678327,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": null
+        },
+        {
+          "protocol": "EXP0022B_engineering",
+          "observation_schema": "mca_physical_36_v1",
+          "success": false,
+          "elapsed_s": 0.1,
+          "remaining_mass": 3.999312076448732,
+          "inlet_flow_ml_min": 50.996842355952026,
+          "conservation_residual_mm3_s": 1.1368683772161603e-13,
+          "active_robots": 4,
+          "lost_robots": 1,
+          "robot_path_mm": [
+            43.412235891265,
+            43.78240881010891,
+            44.281400708966075,
+            44.78044580701367,
+            44.801458669406756
+          ],
+          "robot_exit_time_s": [
+            null,
+            null,
+            null,
+            null,
+            0.09884323043273416
+          ],
+          "robot_exit_node": [
+            -1,
+            -1,
+            -1,
+            -1,
+            69
+          ],
+          "formal_training_ready": false,
+          "clinical_validity": "unmeasured_engineering_assumptions",
+          "agent_rewards": [
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257,
+            -0.0005000000237487257
+          ],
+          "team_reward": 0.0,
+          "step_duration_s": 0.05,
+          "substeps": 3627,
+          "contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "removed_mass": 0.0,
+          "wall_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "blocked_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "robot_pair_contact_s": 0.0,
+          "particle_contact_s": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "termination_reason": "time_limit"
+        }
+      ],
+      "total_substeps": 12717,
+      "wall_time_s": 3.5223012040369213,
+      "remaining_mass": 3.999312076448732,
+      "lost_robots": 1,
+      "success": false,
+      "termination_reason": "time_limit",
+      "final_positions_mm": [
+        [
+          38.06059249330713,
+          62.688509978997466,
+          42.78065939262817
+        ],
+        [
+          38.91965172641473,
+          63.39061939000992,
+          42.816265387323995
+        ],
+        [
+          40.0474838981364,
+          64.21731171748758,
+          42.85110568069007
+        ],
+        [
+          41.185117291952054,
+          65.00706324017692,
+          42.87950134507079
+        ],
+        [
+          41.96212686877218,
+          65.52728797282803,
+          42.90674601249939
+        ],
+        [
+          26.397141808749378,
+          39.60932584999607,
+          30.521828946474116
+        ],
+        [
+          28.959739980345105,
+          44.69645919924028,
+          30.516271707544583
+        ],
+        [
+          42.204178544566105,
+          65.16848470381778,
+          43.02444723714462
+        ],
+        [
+          48.89826739730814,
+          5.728865051662361,
+          33.795587951095506
+        ],
+        [
+          41.78892091646512,
+          65.77961576486987,
+          42.94388473093298
+        ],
+        [
+          50.020041561895724,
+          31.581219939522093,
+          42.5934761600935
+        ],
+        [
+          50.746148049989344,
+          31.279498196702956,
+          42.81359014496352
+        ],
+        [
+          52.238879162658804,
+          14.861250631136135,
+          38.12240315373298
+        ]
+      ],
+      "final_active": [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "convergence_passed": true,
+  "ppo_interface_passed": true,
+  "formal_training_ready": false,
+  "policy_success_rate": null,
+  "optimizer_smoke": {
+    "transitions": 6,
+    "completed_episodes": 2,
+    "optimizer_updates": 1,
+    "metrics": {
+      "actor_loss": 0.004601713269948959,
+      "critic_loss": 0.00024859145196387544,
+      "entropy": 0.11671719544877608,
+      "approx_kl": 0.006443133926950395,
+      "clip_fraction": 0.10833333333333334,
+      "mve_fraction": 0.0,
+      "mve_uncertainty": 0.0,
+      "mve_target_delta": 0.0,
+      "pre_update_ratio_max_error": 3.5762786865234375e-07,
+      "explained_variance": -0.24998533725738525
+    },
+    "checkpoint_written": false,
+    "policy_meta": {
+      "algo": "mappo_advanced",
+      "critic_value_mode": "v",
+      "dropout": 0,
+      "architecture": "adaptive_edge_gat",
+      "n_agents": 5,
+      "obs_dim": 36,
+      "action_dim": 3,
+      "state_dim": 16,
+      "hidden_dim": 32,
+      "num_layers": 1,
+      "num_heads": 4,
+      "sparse_k": 8,
+      "control_mode": "local",
+      "residual_scale": 0.2,
+      "guidance_speed": 0.65,
+      "action_semantics": "direct_local_frenet",
+      "max_agents": 5,
+      "observation_schema": "mca_physical_36_v1",
+      "environment_protocol": "EXP0022B_engineering",
+      "physical_action_semantics": "Frenet_unit_to_world_zero_order_hold",
+      "hardware_validated": false
+    },
+    "performance_estimate": null
+  },
+  "created_at_utc": "2026-09-28T13:12:37.728838+00:00",
+  "source_sha256": {
+    "environments/mca_physical_dynamics.py": "61ae18f1eed4da1699dc84b70a5eb47e9db552b61575b7781964290d7d293df1",
+    "environments/mca_physical_env.py": "6c6f5230faf0d095573d62ca00b2447264a200f94e10a08eee858f2dd9be0465",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "environments/vessel_geometry.py": "f2c6525cd9dc43a9b18d6a3dff354dd04cb9c892696e745f64f71082f217ee8d",
+    "environments/vessel_anatomy.py": "6689590a57d7b980dc77fe3be7d0d0a00348d2b73eef32f1f48579f3281d517e",
+    "environments/vessel_tree_generator.py": "454bd40d0e184963014981ea3b89847c98e8fa8bf23e9e38b9cf7d0b5878b476",
+    "marl/mca_physical_policy.py": "dab0a243d26006440b39e8143d2e827994da547153e2e62f89e9ca3d578e929c",
+    "marl/mappo_advanced.py": "28c844e26a579cc7c0adfa43e23dd81eef367d730ee5629afe2a03fd5f7c234d",
+    "marl/geometric_control.py": "5800a8f7e13151e4de15b3722212c10eacec024beda57a52fa804411b54a8c74",
+    "scripts/validate_mca_dynamics.py": "68915782fae965b035cc81c6aadd66f88bbfc372ef278e0269bd0fcbd852f63d",
+    "tests/test_mca_physical_dynamics.py": "f27e8423894ae158624af2b64898dd502d884eba21642e7f7aecc976e6948707"
+  },
+  "config_sha256": "6b723e4dbcd915daea7279541bfa7ba99b19f262c16a9f3b724f84bdbb0c29d2"
+}

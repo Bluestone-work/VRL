@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="8.495" timestamp="2026-09-29T21:28:59.043668+08:00" hostname="wj-System-Product-Name"><testcase classname="tests.test_mca_compiled" name="test_nominal_full_episode_matches_reference[42]" time="7.708"><failure message="AssertionError: &#10;Not equal to tolerance rtol=0, atol=1e-07&#10;&#10;Mismatched elements: 27 / 39 (69.2%)&#10;Max absolute difference: 6.68693421e-05&#10;Max relative difference: 1.38235783e-06&#10; x: array([[39.445387, 47.086919, 42.454795],&#10;       [39.415455, 48.373462, 42.488147],&#10;       [39.198333, 49.650252, 42.445295],...&#10; y: array([[39.445394, 47.086921, 42.454795],&#10;       [39.415459, 48.373395, 42.488145],&#10;       [39.198339, 49.650216, 42.445294],...">tests/test_mca_compiled.py:41: in test_nominal_full_episode_matches_reference
+    if compare(ref,fast,rng.uniform(-1,1,(5,3))): break
+tests/test_mca_compiled.py:21: in compare
+    np.testing.assert_allclose(fast.positions_mm,ref.positions_mm,rtol=0,atol=1e-7)
+../../miniconda3/envs/v/lib/python3.10/contextlib.py:79: in inner
+    return func(*args, **kwds)
+E   AssertionError: 
+E   Not equal to tolerance rtol=0, atol=1e-07
+E   
+E   Mismatched elements: 27 / 39 (69.2%)
+E   Max absolute difference: 6.68693421e-05
+E   Max relative difference: 1.38235783e-06
+E    x: array([[39.445387, 47.086919, 42.454795],
+E          [39.415455, 48.373462, 42.488147],
+E          [39.198333, 49.650252, 42.445295],...
+E    y: array([[39.445394, 47.086921, 42.454795],
+E          [39.415459, 48.373395, 42.488145],
+E          [39.198339, 49.650216, 42.445294],...</failure></testcase></testsuite></testsuites>

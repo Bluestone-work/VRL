@@ -1,0 +1,39 @@
+{
+  "steps": 12,
+  "episodes": 4,
+  "timing": {
+    "policy_s": 0.19456068170256913,
+    "environment_s": 14.798447161447257,
+    "reset_s": 0.12430030992254615,
+    "buffer_s": 0.00035082409158349037,
+    "update_s": 0.12721077003516257
+  },
+  "substeps": [
+    2306,
+    342,
+    325,
+    2756,
+    2403,
+    1566,
+    2675,
+    727,
+    240,
+    2711,
+    2097,
+    839
+  ],
+  "environment_percent": 97.07165365690395,
+  "note": "cProfile adds overhead; diagnostic independent of running formal workers; 12-step update not 128-step production batch",
+  "metrics": {
+    "actor_loss": -0.041742170229554176,
+    "critic_loss": 0.0007726698704118462,
+    "entropy": 0.866192901134491,
+    "approx_kl": 0.031984129441636,
+    "clip_fraction": 0.325,
+    "mve_fraction": 0.0,
+    "mve_uncertainty": 0.0,
+    "mve_target_delta": 0.0,
+    "pre_update_ratio_max_error": 9.5367431640625e-07,
+    "explained_variance": 0.4665380120277405
+  }
+}

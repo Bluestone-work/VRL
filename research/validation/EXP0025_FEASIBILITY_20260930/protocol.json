@@ -1,0 +1,33 @@
+{
+  "scope": "engineering feasibility diagnostic, not policy validation",
+  "seeds": [
+    810000000,
+    810000001,
+    810000002,
+    810000003,
+    810000004,
+    810000005,
+    810000006,
+    810000007,
+    810000008,
+    810000009
+  ],
+  "horizons_s": [
+    1.0,
+    15.0
+  ],
+  "starts": [
+    "distributed_branches",
+    "at_clots_oracle"
+  ],
+  "controllers": [
+    "zero",
+    "random",
+    "maximum_brake_oracle"
+  ],
+  "config_path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./configs/experiments/EXP_0024_MCA_DISTRIBUTED_DYNAMICS.json",
+  "config_sha256": "690030e849aa66d9bcee412debbecd091037f38ae3dd65d090d8aa9ba2da46df",
+  "physical_parameters_changed": false,
+  "diagnostic_time_window_changed": true,
+  "oracle_results_excluded_from_policy_success": true
+}

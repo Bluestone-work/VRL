@@ -1,0 +1,18 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "fractions": [
+    0.1,
+    0.05,
+    0.025
+  ],
+  "position_tolerance_mm": 0.001,
+  "mass_tolerance": 2e-05,
+  "exit_time_tolerance_s": 2e-05,
+  "reward_tolerance": 0.0001,
+  "require_exact_masks_edges_and_exit_nodes": true,
+  "note": "0.001 mm paired-backend bound is stricter than original unchanged 0.05 mm convergence gate; not bitwise equality"
+}

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="48" failures="0" skipped="0" tests="48" time="1.376" timestamp="2026-09-30T00:39:40.328271+08:00" hostname="wj-System-Product-Name"><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_connectivity_allocator" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_connectivity_allocator' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_connectivity_allocator.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_connectivity_allocator.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_direct_local_control" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_direct_local_control' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_direct_local_control.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_direct_local_control.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_dynamic_particles" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_dynamic_particles' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_dynamic_particles.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_dynamic_particles.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_dynamic_predictor" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_dynamic_predictor' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_dynamic_predictor.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_dynamic_predictor.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_env" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_env' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_env.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_env.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_geometric_control" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_geometric_control' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_geometric_control.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_geometric_control.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_gnn_mappo" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_gnn_mappo' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_gnn_mappo.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_gnn_mappo.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_maddpg" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_maddpg' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_maddpg.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_maddpg.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_predictive_research_v2" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_predictive_research_v2' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_predictive_research_v2.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_predictive_research_v2.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_research_environment" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_environment' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_environment.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_research_environment.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_research_ladder" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_ladder' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_ladder.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_research_ladder.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_research_policy" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_policy' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_policy.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_research_policy.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_research_protocol" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_protocol' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_protocol.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_research_protocol.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_research_reproduction" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_reproduction' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_reproduction.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_research_reproduction.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_separated_initialization" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_separated_initialization' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_separated_initialization.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_separated_initialization.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_spread_control" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_spread_control' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_spread_control.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_spread_control.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_variable_agents" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_variable_agents' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_variable_agents.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_variable_agents.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_vector_env" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_vector_env' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_vector_env.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_vector_env.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_vessel_geometry" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_vessel_geometry' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_vessel_geometry.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_vessel_geometry.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.runs.EXP16_20_SMOKE_20260927a.snapshot.tests.test_world_model" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_world_model' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_world_model.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_SMOKE_20260927a/snapshot/tests/test_world_model.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="research.validation.EXP0022B_NUMERICAL_REPAIR_20260928.source_after.tests.test_mca_physical_dynamics" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./research/validation/EXP0022B_NUMERICAL_REPAIR_20260928/source_after/tests/test_mca_physical_dynamics.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+research/validation/EXP0022B_NUMERICAL_REPAIR_20260928/source_after/tests/test_mca_physical_dynamics.py:8: in &lt;module&gt;
+    from environments.mca_physiology import PressureDrivenTreeFlow
+E   ModuleNotFoundError: No module named 'environments.mca_physiology'</error></testcase><testcase classname="" name="research.validation.EXP0022B_NUMERICAL_REPAIR_20260928.source_before.tests.test_mca_physical_dynamics" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./research/validation/EXP0022B_NUMERICAL_REPAIR_20260928/source_before/tests/test_mca_physical_dynamics.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+research/validation/EXP0022B_NUMERICAL_REPAIR_20260928/source_before/tests/test_mca_physical_dynamics.py:7: in &lt;module&gt;
+    from environments.mca_physiology import PressureDrivenTreeFlow
+E   ModuleNotFoundError: No module named 'environments.mca_physiology'</error></testcase><testcase classname="" name="tests.test_connectivity_allocator" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_connectivity_allocator' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_connectivity_allocator.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_connectivity_allocator.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_direct_local_control" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_direct_local_control' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_direct_local_control.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_direct_local_control.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_dynamic_particles" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_dynamic_particles' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_dynamic_particles.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_dynamic_particles.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_dynamic_predictor" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_dynamic_predictor' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_dynamic_predictor.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_dynamic_predictor.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_env" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_env' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_env.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_env.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_exp21_tail" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./tests/test_exp21_tail.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+E   ModuleNotFoundError: No module named 'tests.test_exp21_tail'</error></testcase><testcase classname="" name="tests.test_geometric_control" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_geometric_control' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_geometric_control.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_geometric_control.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_gnn_mappo" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_gnn_mappo' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_gnn_mappo.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_gnn_mappo.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_maddpg" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_maddpg' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_maddpg.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_maddpg.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_mca_compiled" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./tests/test_mca_compiled.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+E   ModuleNotFoundError: No module named 'tests.test_mca_compiled'</error></testcase><testcase classname="" name="tests.test_mca_initialization" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./tests/test_mca_initialization.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+E   ModuleNotFoundError: No module named 'tests.test_mca_initialization'</error></testcase><testcase classname="" name="tests.test_mca_physical_dynamics" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./tests/test_mca_physical_dynamics.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+E   ModuleNotFoundError: No module named 'tests.test_mca_physical_dynamics'</error></testcase><testcase classname="" name="tests.test_mca_physiology" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./tests/test_mca_physiology.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+E   ModuleNotFoundError: No module named 'tests.test_mca_physiology'</error></testcase><testcase classname="" name="tests.test_policy_entropy" time="0.000"><error message="collection failure">ImportError while importing test module '/home/wj/桌面/vascular_marl_local.tar./tests/test_policy_entropy.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../miniconda3/envs/v/lib/python3.10/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+E   ModuleNotFoundError: No module named 'tests.test_policy_entropy'</error></testcase><testcase classname="" name="tests.test_predictive_research_v2" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_predictive_research_v2' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_predictive_research_v2.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_predictive_research_v2.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_research_environment" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_environment' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_environment.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_research_environment.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_research_ladder" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_ladder' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_ladder.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_research_ladder.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_research_policy" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_policy' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_policy.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_research_policy.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_research_protocol" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_protocol' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_protocol.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_research_protocol.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_research_reproduction" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_research_reproduction' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_research_reproduction.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_research_reproduction.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_separated_initialization" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_separated_initialization' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_separated_initialization.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_separated_initialization.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_spread_control" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_spread_control' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_spread_control.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_spread_control.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_variable_agents" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_variable_agents' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_variable_agents.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_variable_agents.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_vector_env" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_vector_env' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_vector_env.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_vector_env.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_vessel_geometry" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_vessel_geometry' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_vessel_geometry.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_vessel_geometry.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase><testcase classname="" name="tests.test_world_model" time="0.000"><error message="collection failure">import file mismatch:
+imported module 'tests.test_world_model' has this __file__ attribute:
+  /home/wj/桌面/vascular_marl_local.tar./research/runs/EXP16_20_FORMAL_20260927a/snapshot/tests/test_world_model.py
+which is not the same as the test file we want to collect:
+  /home/wj/桌面/vascular_marl_local.tar./tests/test_world_model.py
+HINT: remove __pycache__ / .pyc files and/or use a unique basename for your test file modules</error></testcase></testsuite></testsuites>

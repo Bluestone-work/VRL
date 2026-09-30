@@ -394,8 +394,14 @@ def segments_to_vessel_tree(
 
     points = np.concatenate(points_list, axis=0)
     radii = np.concatenate(radii_list, axis=0)
+    source_units_per_unit = 1.0
     if fit_unit_cube:
+        source_max_radius = float(radii.max())
         points, radii = _fit_to_unit_cube(points, radii)
+        # Save the actual isotropic conversion BEFORE the navigability floor.
+        # Reconstructing it later from a nominal diameter erases sampled
+        # anatomical size variation. Metadata only; geometry is unchanged.
+        source_units_per_unit = source_max_radius / float(radii.max())
     radii = np.maximum(radii, min_radius)
 
     # Murray flow fractions: split the parent's flow among siblings by r^3.
@@ -427,7 +433,9 @@ def segments_to_vessel_tree(
         for bid, (s, e, p) in enumerate(raw_branches)
     ]
 
-    return VesselTree(points, radii, branches, extra_links=[], scenario=scenario)
+    tree = VesselTree(points, radii, branches, extra_links=[], scenario=scenario)
+    tree.source_units_per_unit = source_units_per_unit
+    return tree
 
 
 # ------------------------------------------------------------------ presets
