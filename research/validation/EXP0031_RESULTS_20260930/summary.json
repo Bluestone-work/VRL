@@ -1,0 +1,217 @@
+{
+  "as_of": "2026-09-30T20:04:36.161475+08:00",
+  "completed_at": "2026-09-30T18:30:09.612713+08:00",
+  "run": "research/runs/EXP_0031_EXPLORATION_20260930a",
+  "baseline": "control",
+  "candidate": "annealed",
+  "steps_per_arm_seed": 500000,
+  "layout_count": 100,
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "paired_reset_records_verified": true,
+  "matched_parent_weights": true,
+  "source_snapshots_verified": true,
+  "all_logged_update_metrics_finite": true,
+  "arms": {
+    "control": {
+      "42": {
+        "success_rate": 0.06,
+        "collision_free_success_rate": 0.01,
+        "particle_collision_episode_rate": 0.63,
+        "mean_removal_fraction": 0.6634745974701123,
+        "mean_particle_events": 1.97,
+        "mean_particle_contact_s": 0.3693921760976621,
+        "mean_elapsed_s": 175.6449999999999,
+        "last100_updates": {
+          "critic_loss": 0.21431953482510643,
+          "approx_kl": 0.006547195029641558,
+          "clip_fraction": 0.07864871878658934,
+          "explained_variance": 0.9451538628339767
+        }
+      },
+      "43": {
+        "success_rate": 0.26,
+        "collision_free_success_rate": 0.05,
+        "particle_collision_episode_rate": 0.74,
+        "mean_removal_fraction": 0.7923337435969505,
+        "mean_particle_events": 2.86,
+        "mean_particle_contact_s": 0.4660590641393539,
+        "mean_elapsed_s": 153.64499999999975,
+        "last100_updates": {
+          "critic_loss": 0.27813409213811446,
+          "approx_kl": 0.006770119020254348,
+          "clip_fraction": 0.07811459787575613,
+          "explained_variance": 0.9573333543539048
+        }
+      },
+      "44": {
+        "success_rate": 0.42,
+        "collision_free_success_rate": 0.18,
+        "particle_collision_episode_rate": 0.66,
+        "mean_removal_fraction": 0.8272027695455295,
+        "mean_particle_events": 2.02,
+        "mean_particle_contact_s": 0.32261022692880964,
+        "mean_elapsed_s": 133.92399999999978,
+        "last100_updates": {
+          "critic_loss": 0.28928869421981895,
+          "approx_kl": 0.005332335563027074,
+          "clip_fraction": 0.059193082195359153,
+          "explained_variance": 0.9492578607797623
+        }
+      }
+    },
+    "annealed": {
+      "42": {
+        "success_rate": 0.25,
+        "collision_free_success_rate": 0.07,
+        "particle_collision_episode_rate": 0.62,
+        "mean_removal_fraction": 0.7449692668857554,
+        "mean_particle_events": 1.32,
+        "mean_particle_contact_s": 0.23863403532688104,
+        "mean_elapsed_s": 161.55899999999951,
+        "last100_updates": {
+          "critic_loss": 0.23653778260774827,
+          "approx_kl": 0.022742787545188093,
+          "clip_fraction": 0.24180718954248365,
+          "explained_variance": 0.9599021381139755
+        }
+      },
+      "43": {
+        "success_rate": 0.49,
+        "collision_free_success_rate": 0.16,
+        "particle_collision_episode_rate": 0.72,
+        "mean_removal_fraction": 0.8332085866806846,
+        "mean_particle_events": 1.96,
+        "mean_particle_contact_s": 0.6284322701529027,
+        "mean_elapsed_s": 132.51899999999944,
+        "last100_updates": {
+          "critic_loss": 0.5687292279210339,
+          "approx_kl": 0.01907309174799693,
+          "clip_fraction": 0.20554580278579845,
+          "explained_variance": 0.947577947974205
+        }
+      },
+      "44": {
+        "success_rate": 0.3,
+        "collision_free_success_rate": 0.07,
+        "particle_collision_episode_rate": 0.7,
+        "mean_removal_fraction": 0.7420360893255954,
+        "mean_particle_events": 2.61,
+        "mean_particle_contact_s": 0.6587026660529863,
+        "mean_elapsed_s": 149.23699999999968,
+        "last100_updates": {
+          "critic_loss": 0.285999625512442,
+          "approx_kl": 0.025995265692054768,
+          "clip_fraction": 0.21920068330362447,
+          "explained_variance": 0.9190061956644058
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "control": {
+      "success_rate": 0.24666666666666667,
+      "collision_free_success_rate": 0.08,
+      "particle_collision_episode_rate": 0.6766666666666666,
+      "mean_removal_fraction": 0.7610037035375308,
+      "mean_particle_events": 2.283333333333333,
+      "mean_particle_contact_s": 0.3860204890552752,
+      "mean_elapsed_s": 154.4046666666665
+    },
+    "annealed": {
+      "success_rate": 0.3466666666666667,
+      "collision_free_success_rate": 0.1,
+      "particle_collision_episode_rate": 0.6799999999999999,
+      "mean_removal_fraction": 0.7734046476306785,
+      "mean_particle_events": 1.9633333333333334,
+      "mean_particle_contact_s": 0.5085896571775901,
+      "mean_elapsed_s": 147.77166666666622
+    }
+  },
+  "candidate_minus_baseline": {
+    "success_rate": 0.1,
+    "collision_free_success_rate": 0.020000000000000004,
+    "particle_collision_episode_rate": 0.0033333333333332993,
+    "mean_removal_fraction": 0.012400944093147737,
+    "mean_particle_events": -0.31999999999999984,
+    "mean_particle_contact_s": 0.12256916812231489,
+    "mean_elapsed_s": -6.633000000000266
+  },
+  "paired_discordances": {
+    "42": {
+      "success": {
+        "candidate_only": 22,
+        "baseline_only": 3
+      },
+      "collision_free_success": {
+        "candidate_only": 7,
+        "baseline_only": 1
+      }
+    },
+    "43": {
+      "success": {
+        "candidate_only": 29,
+        "baseline_only": 6
+      },
+      "collision_free_success": {
+        "candidate_only": 14,
+        "baseline_only": 3
+      }
+    },
+    "44": {
+      "success": {
+        "candidate_only": 7,
+        "baseline_only": 19
+      },
+      "collision_free_success": {
+        "candidate_only": 4,
+        "baseline_only": 15
+      }
+    }
+  },
+  "provenance": {
+    "control/42": {
+      "checkpoint_sha256": "0edc82e37264c21932e6efeed52c2bf09a28ab625e5850bf66aca7a6d664d5b9",
+      "evaluation_sha256": "179c2105b2f82ae6c5d8f4653d6b3e06313f0dda9350df82dd0bfca76a20a197",
+      "parent_sha256": "751e09a6ecc6b0a6337d50c8723fe4ad331af01133484a67b1a2633c7a5b8c35",
+      "source_files_verified": 44
+    },
+    "control/43": {
+      "checkpoint_sha256": "3ab244580a67695d83b51152585c7d5eedeefbb02beb91fb2fe42ff42148aa65",
+      "evaluation_sha256": "f74d798c45b9e393f5e67b1e58cb0f3280fbef9dfbd740c7fdcf0d5d003cf5b8",
+      "parent_sha256": "59609bd556df87cf0cd64cb82e0abec033996dc24a7e1bb60ce7aa2fee5193dc",
+      "source_files_verified": 44
+    },
+    "control/44": {
+      "checkpoint_sha256": "6757b8f8a614bda3174d379ca81a61d061121b99d71561e2401e693fee9ca03a",
+      "evaluation_sha256": "1193e086d1db866e9927ade62d3ef2aec72389324bf808998d3ae77dbff34054",
+      "parent_sha256": "cbb943bf7f587937ba438493e471ee5b76442b165114dd4fc6eb31c61681e574",
+      "source_files_verified": 44
+    },
+    "annealed/42": {
+      "checkpoint_sha256": "459f5b97c9ca2c1ddab31bbbd96fc0b6791fedf61ac48a23edabd589a1531ec5",
+      "evaluation_sha256": "b40c0b01ab5fc80c36a46682eccbc0b9faea1349089df627c122f9c24ed7d0d4",
+      "parent_sha256": "751e09a6ecc6b0a6337d50c8723fe4ad331af01133484a67b1a2633c7a5b8c35",
+      "source_files_verified": 44
+    },
+    "annealed/43": {
+      "checkpoint_sha256": "142264369b24ad385fc435ce4415310b4b0ae2cd20596a7ae2dbf07fe76eb9c0",
+      "evaluation_sha256": "9832717feb79bd79de9e6d992734383b3e2cd1355543185143734366561686d2",
+      "parent_sha256": "59609bd556df87cf0cd64cb82e0abec033996dc24a7e1bb60ce7aa2fee5193dc",
+      "source_files_verified": 44
+    },
+    "annealed/44": {
+      "checkpoint_sha256": "67e62fc36b810cbfef40ad47b2b5e3e91eed99f3909888329f8796b35d46e685",
+      "evaluation_sha256": "f67e6b39dc23a8333c71b4391e2d0e80612f09ae7bc8a5929b183123d65ad16d",
+      "parent_sha256": "cbb943bf7f587937ba438493e471ee5b76442b165114dd4fc6eb31c61681e574",
+      "source_files_verified": 44
+    }
+  },
+  "world_model": false,
+  "scope": "Paired deterministic development validation; 100 shared layouts and three training seeds, not 300 independent layouts or a sealed final test",
+  "physical_parameters_equal_except_observation_mode": true,
+  "training_protocol_pairing_verified": true
+}

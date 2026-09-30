@@ -1,0 +1,217 @@
+{
+  "as_of": "2026-09-30T20:04:36.161475+08:00",
+  "completed_at": "2026-09-30T19:40:20.735787+08:00",
+  "run": "research/runs/EXP_0032_TRAJECTORY_20260930a",
+  "baseline": "masked",
+  "candidate": "trajectory",
+  "steps_per_arm_seed": 500000,
+  "layout_count": 100,
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "paired_reset_records_verified": true,
+  "matched_parent_weights": true,
+  "source_snapshots_verified": true,
+  "all_logged_update_metrics_finite": true,
+  "arms": {
+    "masked": {
+      "42": {
+        "success_rate": 0.29,
+        "collision_free_success_rate": 0.15,
+        "particle_collision_episode_rate": 0.46,
+        "mean_removal_fraction": 0.7665034128430315,
+        "mean_particle_events": 1.26,
+        "mean_particle_contact_s": 0.21418114659744444,
+        "mean_elapsed_s": 146.22499999999994,
+        "last100_updates": {
+          "critic_loss": 0.16861536152278087,
+          "approx_kl": 0.007180544568505863,
+          "clip_fraction": 0.0845042548192412,
+          "explained_variance": 0.9552822887897492
+        }
+      },
+      "43": {
+        "success_rate": 0.6,
+        "collision_free_success_rate": 0.15,
+        "particle_collision_episode_rate": 0.71,
+        "mean_removal_fraction": 0.8644584373302195,
+        "mean_particle_events": 2.17,
+        "mean_particle_contact_s": 0.39520743260024493,
+        "mean_elapsed_s": 110.59199999999969,
+        "last100_updates": {
+          "critic_loss": 0.33638848369103497,
+          "approx_kl": 0.005975382998235927,
+          "clip_fraction": 0.06728737309701592,
+          "explained_variance": 0.9497993135452271
+        }
+      },
+      "44": {
+        "success_rate": 0.46,
+        "collision_free_success_rate": 0.15,
+        "particle_collision_episode_rate": 0.65,
+        "mean_removal_fraction": 0.8097885781186669,
+        "mean_particle_events": 2.51,
+        "mean_particle_contact_s": 2.6975245025025054,
+        "mean_elapsed_s": 127.62599999999969,
+        "last100_updates": {
+          "critic_loss": 0.19795833699704168,
+          "approx_kl": 0.007052947374510665,
+          "clip_fraction": 0.08299732620320856,
+          "explained_variance": 0.9442702251672744
+        }
+      }
+    },
+    "trajectory": {
+      "42": {
+        "success_rate": 0.06,
+        "collision_free_success_rate": 0,
+        "particle_collision_episode_rate": 0.69,
+        "mean_removal_fraction": 0.724274242380805,
+        "mean_particle_events": 3.46,
+        "mean_particle_contact_s": 0.5850379689265084,
+        "mean_elapsed_s": 171.98899999999998,
+        "last100_updates": {
+          "critic_loss": 0.2567083035942315,
+          "approx_kl": 0.009544545915021295,
+          "clip_fraction": 0.11473726141692685,
+          "explained_variance": 0.9253120851516724
+        }
+      },
+      "43": {
+        "success_rate": 0.09,
+        "collision_free_success_rate": 0.01,
+        "particle_collision_episode_rate": 0.63,
+        "mean_removal_fraction": 0.7055179161216409,
+        "mean_particle_events": 3.1,
+        "mean_particle_contact_s": 0.5139060824421521,
+        "mean_elapsed_s": 172.70499999999984,
+        "last100_updates": {
+          "critic_loss": 0.3736151883951706,
+          "approx_kl": 0.008375610747785235,
+          "clip_fraction": 0.10667804463671102,
+          "explained_variance": 0.933936288356781
+        }
+      },
+      "44": {
+        "success_rate": 0.21,
+        "collision_free_success_rate": 0.03,
+        "particle_collision_episode_rate": 0.77,
+        "mean_removal_fraction": 0.7755804466102968,
+        "mean_particle_events": 3.34,
+        "mean_particle_contact_s": 0.8394986310522934,
+        "mean_elapsed_s": 160.51399999999973,
+        "last100_updates": {
+          "critic_loss": 0.26805580597589584,
+          "approx_kl": 0.009544573893244463,
+          "clip_fraction": 0.1169010170458253,
+          "explained_variance": 0.9059301167726517
+        }
+      }
+    }
+  },
+  "aggregate": {
+    "masked": {
+      "success_rate": 0.45,
+      "collision_free_success_rate": 0.15,
+      "particle_collision_episode_rate": 0.6066666666666667,
+      "mean_removal_fraction": 0.813583476097306,
+      "mean_particle_events": 1.98,
+      "mean_particle_contact_s": 1.1023043605667315,
+      "mean_elapsed_s": 128.14766666666645
+    },
+    "trajectory": {
+      "success_rate": 0.12,
+      "collision_free_success_rate": 0.013333333333333332,
+      "particle_collision_episode_rate": 0.6966666666666667,
+      "mean_removal_fraction": 0.7351242017042475,
+      "mean_particle_events": 3.3,
+      "mean_particle_contact_s": 0.6461475608069847,
+      "mean_elapsed_s": 168.4026666666665
+    }
+  },
+  "candidate_minus_baseline": {
+    "success_rate": -0.33,
+    "collision_free_success_rate": -0.13666666666666666,
+    "particle_collision_episode_rate": 0.08999999999999997,
+    "mean_removal_fraction": -0.07845927439305844,
+    "mean_particle_events": 1.3199999999999998,
+    "mean_particle_contact_s": -0.4561567997597469,
+    "mean_elapsed_s": 40.25500000000005
+  },
+  "paired_discordances": {
+    "42": {
+      "success": {
+        "candidate_only": 2,
+        "baseline_only": 25
+      },
+      "collision_free_success": {
+        "candidate_only": 0,
+        "baseline_only": 15
+      }
+    },
+    "43": {
+      "success": {
+        "candidate_only": 0,
+        "baseline_only": 51
+      },
+      "collision_free_success": {
+        "candidate_only": 1,
+        "baseline_only": 15
+      }
+    },
+    "44": {
+      "success": {
+        "candidate_only": 8,
+        "baseline_only": 33
+      },
+      "collision_free_success": {
+        "candidate_only": 1,
+        "baseline_only": 13
+      }
+    }
+  },
+  "provenance": {
+    "masked/42": {
+      "checkpoint_sha256": "fdc84ad9648840f98e867bdc01ccf95fe60349e52ae0e4f11ffd8d6cee98ae8f",
+      "evaluation_sha256": "a8d946153e744a8dba9e151257a4d112ce53d4ff02d2607b64c7d8b4ca52db7b",
+      "parent_sha256": "751e09a6ecc6b0a6337d50c8723fe4ad331af01133484a67b1a2633c7a5b8c35",
+      "source_files_verified": 45
+    },
+    "masked/43": {
+      "checkpoint_sha256": "b12331101df9125f04257f03d2203783dd6071644094090476249339de54fe40",
+      "evaluation_sha256": "6170061e551dfb5b04c72687f1023716b1969b054ae906a5e0b54291049c03bd",
+      "parent_sha256": "59609bd556df87cf0cd64cb82e0abec033996dc24a7e1bb60ce7aa2fee5193dc",
+      "source_files_verified": 45
+    },
+    "masked/44": {
+      "checkpoint_sha256": "e9fa66955a6880fe1c3cae7981d7f80b7e3a121535a1c86051207819914cd478",
+      "evaluation_sha256": "e6abfea87fc109c2249ca2a2a8b43dc57c340a15397b6a395d19cf3148ae1667",
+      "parent_sha256": "cbb943bf7f587937ba438493e471ee5b76442b165114dd4fc6eb31c61681e574",
+      "source_files_verified": 45
+    },
+    "trajectory/42": {
+      "checkpoint_sha256": "936de42ba0e70c71c4793c54383b5e533728f2177c1091c7c5101a21dec74fab",
+      "evaluation_sha256": "9429f6d0dd78475ce6aae60c33a41bd346da418584bb876f63f29f1185aea12d",
+      "parent_sha256": "751e09a6ecc6b0a6337d50c8723fe4ad331af01133484a67b1a2633c7a5b8c35",
+      "source_files_verified": 45
+    },
+    "trajectory/43": {
+      "checkpoint_sha256": "aa6e857974f55426d78ce2ca6ffbbdc3bf23aa90d3d73a45ccd73b7a4c475701",
+      "evaluation_sha256": "0ebc186d78f7b3682b673a1129e8f5ade1544a09c9cdeff1b9c33daf2c5565c4",
+      "parent_sha256": "59609bd556df87cf0cd64cb82e0abec033996dc24a7e1bb60ce7aa2fee5193dc",
+      "source_files_verified": 45
+    },
+    "trajectory/44": {
+      "checkpoint_sha256": "6745a7c4aeae10fbe70ea60444b3bc3e3e50c5b7696a5dde851131dc600d8d6e",
+      "evaluation_sha256": "f4f4bd452ce4c88f5a259144c1c4b4875989a8f157b50956f4ef9a6ec4926fa7",
+      "parent_sha256": "cbb943bf7f587937ba438493e471ee5b76442b165114dd4fc6eb31c61681e574",
+      "source_files_verified": 45
+    }
+  },
+  "world_model": false,
+  "scope": "Paired deterministic development validation; 100 shared layouts and three training seeds, not 300 independent layouts or a sealed final test",
+  "physical_parameters_equal_except_observation_mode": true,
+  "training_protocol_pairing_verified": true
+}

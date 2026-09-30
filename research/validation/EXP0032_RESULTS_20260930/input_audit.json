@@ -1,0 +1,146 @@
+{
+  "as_of": "2026-09-30T20:05:32.450313+08:00",
+  "scope": "Read-only observation and first-layer contribution audit: 100 reset layouts plus up to 24 saved final training states. Instantaneous feature masking is a sensitivity diagnostic, not a closed-loop performance result or proof of causation.",
+  "policy_seeds": {
+    "42": {
+      "checkpoint_sha256": "936de42ba0e70c71c4793c54383b5e533728f2177c1091c7c5101a21dec74fab",
+      "saved_states": 8,
+      "reset_states_for_policy_sensitivity": 20,
+      "first_projection": {
+        "actor": {
+          "appended_to_legacy_projection_norm_ratio": {
+            "count": 140,
+            "mean": 0.6703441143035889,
+            "median": 0.682103157043457,
+            "p95": 0.7567974835634231,
+            "maximum": 0.9039035439491272
+          },
+          "appended_weight_norm": 1.7887834310531616
+        },
+        "critic": {
+          "appended_to_legacy_projection_norm_ratio": {
+            "count": 140,
+            "mean": 0.6918198466300964,
+            "median": 0.6880372762680054,
+            "p95": 0.7819303333759307,
+            "maximum": 1.049373984336853
+          },
+          "appended_weight_norm": 5.760528564453125
+        }
+      },
+      "instantaneous_action_change_l2_when_masked": {
+        "count": 140,
+        "mean": 0.550158414510744,
+        "median": 0.508292019367218,
+        "p95": 0.9272562265396116,
+        "maximum": 1.512137770652771
+      }
+    },
+    "43": {
+      "checkpoint_sha256": "aa6e857974f55426d78ce2ca6ffbbdc3bf23aa90d3d73a45ccd73b7a4c475701",
+      "saved_states": 8,
+      "reset_states_for_policy_sensitivity": 20,
+      "first_projection": {
+        "actor": {
+          "appended_to_legacy_projection_norm_ratio": {
+            "count": 140,
+            "mean": 0.5353631377220154,
+            "median": 0.5377521514892578,
+            "p95": 0.6035950303077696,
+            "maximum": 0.6602758765220642
+          },
+          "appended_weight_norm": 1.8902450799942017
+        },
+        "critic": {
+          "appended_to_legacy_projection_norm_ratio": {
+            "count": 140,
+            "mean": 0.6264175176620483,
+            "median": 0.6207983493804932,
+            "p95": 0.7386386245489119,
+            "maximum": 0.808284342288971
+          },
+          "appended_weight_norm": 6.07232666015625
+        }
+      },
+      "instantaneous_action_change_l2_when_masked": {
+        "count": 140,
+        "mean": 0.356569206821067,
+        "median": 0.334788978099823,
+        "p95": 0.6941137015819546,
+        "maximum": 0.904909074306488
+      }
+    },
+    "44": {
+      "checkpoint_sha256": "6745a7c4aeae10fbe70ea60444b3bc3e3e50c5b7696a5dde851131dc600d8d6e",
+      "saved_states": 8,
+      "reset_states_for_policy_sensitivity": 20,
+      "first_projection": {
+        "actor": {
+          "appended_to_legacy_projection_norm_ratio": {
+            "count": 140,
+            "mean": 0.6983174085617065,
+            "median": 0.7099007368087769,
+            "p95": 0.7802422642707825,
+            "maximum": 0.8617681264877319
+          },
+          "appended_weight_norm": 1.9949002265930176
+        },
+        "critic": {
+          "appended_to_legacy_projection_norm_ratio": {
+            "count": 140,
+            "mean": 0.668395459651947,
+            "median": 0.6654831171035767,
+            "p95": 0.772316852211952,
+            "maximum": 0.8086795210838318
+          },
+          "appended_weight_norm": 4.644956111907959
+        }
+      },
+      "instantaneous_action_change_l2_when_masked": {
+        "count": 140,
+        "mean": 0.45770656841674023,
+        "median": 0.4380567818880081,
+        "p95": 0.7936141520738599,
+        "maximum": 1.1714234352111816
+      }
+    }
+  },
+  "world_model": false,
+  "active_robot_observations": 620,
+  "absolute_feature_values": {
+    "base36": {
+      "count": 22320,
+      "mean": 0.5569180250167847,
+      "median": 0.20481270551681519,
+      "p95": 1.2963848054409022,
+      "maximum": 18.33542823791504
+    },
+    "legacy_obstacles40": {
+      "count": 24800,
+      "mean": 7.329154014587402,
+      "median": 0.7389308214187622,
+      "p95": 43.08353195190427,
+      "maximum": 269.26593017578125
+    },
+    "appended_trajectories96": {
+      "count": 59520,
+      "mean": 6.572479248046875,
+      "median": 1.0,
+      "p95": 38.20267105102539,
+      "maximum": 269.25933837890625
+    },
+    "target_direction": {
+      "count": 1860,
+      "mean": 0.44028761982917786,
+      "median": 0.32847684621810913,
+      "p95": 0.9961173415184021,
+      "maximum": 0.9999502301216125
+    }
+  },
+  "fraction_absolute_values_over10": {
+    "base36": 0.0015232974910394266,
+    "legacy_obstacles40": 0.16475806451612904,
+    "appended_trajectories96": 0.14077620967741936
+  },
+  "input_scaling_caveat": "Large clearance values also exist in the legacy40 inputs; this audit cannot isolate scaling, redundancy, training variance, or prediction bias as the cause of regression."
+}
