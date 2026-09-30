@@ -1,0 +1,88 @@
+{
+  "as_of": "2026-09-30T17:32:49.776764+08:00",
+  "scope": "20 paired development layouts; one action RNG stream per layout; execution diagnostic only, canonical100-layout deterministic scores retained",
+  "world_model": false,
+  "results": {
+    "42": {
+      "deterministic": {
+        "success": 0.4,
+        "collision_free_success": 0.15,
+        "removal_fraction": 0.8,
+        "particle_collision_episode_rate": 0.45,
+        "source_sha256": "f4baa6e7184abbd9f2de834fbdfc14ae4d2c4893eb7b532f7d064deb0896ba63"
+      },
+      "sampled": {
+        "success": 0.35,
+        "collision_free_success": 0.05,
+        "removal_fraction": 0.8,
+        "particle_collision_episode_rate": 0.65,
+        "source_sha256": "9c2a6ae9ee0de8f98e213689555d776026ea2d9e7144cf7267dddc79e2ff2a7b"
+      }
+    },
+    "43": {
+      "deterministic": {
+        "success": 0.0,
+        "collision_free_success": 0.0,
+        "removal_fraction": 0.7145538080424065,
+        "particle_collision_episode_rate": 0.6,
+        "source_sha256": "f40d9db38376eebfb9cd404284234b7ea045cf716d8644b3111256953f70c22e"
+      },
+      "sampled": {
+        "success": 0.45,
+        "collision_free_success": 0.1,
+        "removal_fraction": 0.8887222102100916,
+        "particle_collision_episode_rate": 0.9,
+        "source_sha256": "59b0e407b60428a0149539a3859cee77c2204a291dc1f013d31b8ff65453bddb"
+      }
+    },
+    "44": {
+      "deterministic": {
+        "success": 0.65,
+        "collision_free_success": 0.3,
+        "removal_fraction": 0.9045849519342772,
+        "particle_collision_episode_rate": 0.5,
+        "source_sha256": "db0acd0e64dfb605eb78c61210e5ee26e097333bd850d2caccd22d4896a3bc6f"
+      },
+      "sampled": {
+        "success": 0.6,
+        "collision_free_success": 0.2,
+        "removal_fraction": 0.8970967166771711,
+        "particle_collision_episode_rate": 0.8,
+        "source_sha256": "d1dc4f38e2797253581c4ae854282adfd6436866cf24f60343484094603f029b"
+      }
+    }
+  },
+  "sources": {
+    "42": {
+      "checkpoint": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_42/policy_500000.pt",
+      "checkpoint_sha256": "751e09a6ecc6b0a6337d50c8723fe4ad331af01133484a67b1a2633c7a5b8c35",
+      "script_sha256": "2b31ab090056fa8df70d82545f4d900c5f3d171d07dd7d692cee6c9fdfca6aba",
+      "count": 20,
+      "action_seed_base": 710000000,
+      "training_seed": 42,
+      "world_model": false,
+      "scope": "Paired execution diagnostic; does not replace canonical deterministic validation"
+    },
+    "43": {
+      "checkpoint": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_43/policy_500000.pt",
+      "checkpoint_sha256": "59609bd556df87cf0cd64cb82e0abec033996dc24a7e1bb60ce7aa2fee5193dc",
+      "script_sha256": "2b31ab090056fa8df70d82545f4d900c5f3d171d07dd7d692cee6c9fdfca6aba",
+      "count": 20,
+      "action_seed_base": 710000000,
+      "training_seed": 43,
+      "world_model": false,
+      "scope": "Paired execution diagnostic; does not replace canonical deterministic validation"
+    },
+    "44": {
+      "checkpoint": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_44/policy_500000.pt",
+      "checkpoint_sha256": "cbb943bf7f587937ba438493e471ee5b76442b165114dd4fc6eb31c61681e574",
+      "script_sha256": "2b31ab090056fa8df70d82545f4d900c5f3d171d07dd7d692cee6c9fdfca6aba",
+      "count": 20,
+      "action_seed_base": 710000000,
+      "training_seed": 44,
+      "world_model": false,
+      "scope": "Paired execution diagnostic; does not replace canonical deterministic validation"
+    }
+  },
+  "all_deterministic_prefixes_reproduced": true
+}

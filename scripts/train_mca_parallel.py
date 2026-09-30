@@ -19,6 +19,7 @@ import torch
 from environments.mca_compiled import CompiledMCAPhysicalEnv
 from environments.mca_physical_env import DynamicsConfig
 from marl.mca_physical_policy import make_physical_agent, physical_context, initialize_expanded_obstacle_policy
+from marl.mca_exploration import apply_exploration_schedule, exploration_cap
 from marl.geometric_control import direct_local_action
 from scripts.train_mca_physical import ROOT, DEFAULT_PROTOCOL, atomic_json, reset_with_valid_particles, episode_accumulator
 from scripts.train_mca_compiled import evaluate
@@ -41,6 +42,7 @@ def context_batch(envs,obs):
 def train(args):
     protocol_path=Path(args.protocol).resolve()
     protocol=json.loads(protocol_path.read_text())
+    exploration_cap(protocol.get('exploration_schedule'), 0)
     physics_path=ROOT/protocol['physics_config'];source=hashes(protocol_path,physics_path)
     cfg=DynamicsConfig.from_json(physics_path)
     gate_env=CompiledMCAPhysicalEnv(cfg);reset_with_valid_particles(gate_env,args.seed)
@@ -153,6 +155,7 @@ def train(args):
         if args.resume: logs.write(json.dumps(dict(event='resume',restored_transition=transitions))+'\n')
         try:
             while transitions<target:
+                std_cap=apply_exploration_schedule(agent, protocol.get('exploration_schedule'), transitions)
                 count=min(rollout,target-transitions,milestones[0]-transitions if milestones else target)
                 for _ in range(count//args.n_envs):
                     ctx=context_batch(envs,obs);nodes=np.stack([o['nodes'] for o in obs]);states=np.stack([o['clot_state'].reshape(-1) for o in obs])
@@ -182,6 +185,9 @@ def train(args):
                     if time.monotonic()-heartbeat>=10: status('running');heartbeat=time.monotonic()
                 pending_rollout=agent.buffer._d
                 metrics=agent.update(n_epochs=protocol['epochs'],batch_size=protocol['batch_size']);updates+=1
+                if std_cap is not None:
+                    metrics.update(exploration_std_cap=std_cap,
+                                   policy_raw_std_max=float(agent.actor.policy_head.log_std.detach().clamp(-5.,2.).exp().max()))
                 if not all(np.isfinite(v) for v in metrics.values()): raise FloatingPointError('Nonfinite PPO metrics')
                 if not all(torch.isfinite(p).all() for net in (agent.actor,agent.critic) for p in net.parameters()): raise FloatingPointError('Nonfinite weights')
                 record=dict(transitions=transitions,updates=updates,episodes=episodes,**metrics);logs.write(json.dumps(record,allow_nan=False)+'\n');print(json.dumps(record),flush=True)

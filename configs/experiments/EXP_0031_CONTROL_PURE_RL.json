@@ -1,0 +1,62 @@
+{
+  "experiment": "EXP_0031_CONTROL_PURE_RL",
+  "parent": "EXP_0030_B_LOW_ACTOR_LR_PURE_RL",
+  "scope": "Paired test of declining raw-Gaussian exploration cap for deterministic execution robustness; no task or success-definition change",
+  "authorization": "User requests improve pure reinforcement learning through experiments before adding any world model",
+  "physics_config": "configs/experiments/EXP_0029_MCA_ALL_RANDOM_DYNAMICS.json",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "timesteps_per_seed": 500000,
+  "transition_unit": "one environment control step, not individual robot samples",
+  "rollout_steps": 512,
+  "epochs": 4,
+  "batch_size": 256,
+  "hidden_dim": 128,
+  "checkpoint_interval": 4096,
+  "milestones": [
+    500000
+  ],
+  "eval_episodes": 100,
+  "training_seed_base": 1700000000,
+  "validation_seed_base": 930000000,
+  "architecture": "adaptive_edge_gat",
+  "control": "direct_local_frenet",
+  "world_model": false,
+  "guidance_controller": false,
+  "fresh_weights": false,
+  "weight_initialization": "compatible_weights_only",
+  "initialization_checkpoints": {
+    "42": {
+      "path": "research/initializations/EXP0031_FROM_EXP0030B_500K_20260930/seed_42.pt",
+      "sha256": "751e09a6ecc6b0a6337d50c8723fe4ad331af01133484a67b1a2633c7a5b8c35"
+    },
+    "43": {
+      "path": "research/initializations/EXP0031_FROM_EXP0030B_500K_20260930/seed_43.pt",
+      "sha256": "59609bd556df87cf0cd64cb82e0abec033996dc24a7e1bb60ce7aa2fee5193dc"
+    },
+    "44": {
+      "path": "research/initializations/EXP0031_FROM_EXP0030B_500K_20260930/seed_44.pt",
+      "sha256": "cbb943bf7f587937ba438493e471ee5b76442b165114dd4fc6eb31c61681e574"
+    }
+  },
+  "comparability": "Same per-seed EXP30 B 500K actor/critic weights; fresh optimizers/RNG/environments/counters in both arms. Identical training stream and 100 new paired development layouts; only exploration standard-deviation cap schedule differs.",
+  "pure_rl": true,
+  "oracle_used_for_training": false,
+  "require_randomization_boundaries": true,
+  "require_random_clot_evidence": true,
+  "feasibility_certificate": "research/validation/EXP0029_FEASIBILITY_20260930/certificate.json",
+  "reference_certificate": "research/validation/EXP0029_REFERENCE_20260930/certificate.json",
+  "feasibility_image": "research/validation/EXP0029_FEASIBILITY_20260930/feasibility.png",
+  "task_limit": "Controlled in-vitro goal-conditioned ideal-actuator simulation with perfect state. All object positions randomized on fixed MCA anatomy. Soft overlap costs, not hard collision physics. Diagnostic clearance feasibility is not collision-free policy performance or hardware verification.",
+  "dashboard_message": "EXP31 CONTROL纯RL：诊断seed43依赖随机探索，配对测试训练噪声逐步收紧。每seed本轮50万步、100个新随机布局。确定性评估与碰撞指标不变；尚未达到80%。",
+  "physical_calibration_ready": false,
+  "sealed_test_used": false,
+  "ppo": {
+    "lr_actor": 0.0001
+  },
+  "study_stage": "Equal-budget 500K per arm/seed; 100 paired new development layouts, not sealed test",
+  "exploration_schedule": null
+}

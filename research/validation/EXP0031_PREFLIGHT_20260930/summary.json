@@ -1,0 +1,61 @@
+{
+  "as_of": "2026-09-30T17:33:35.267761+08:00",
+  "tests": {
+    "command": "python -m pytest tests -q",
+    "passed": 412,
+    "skipped": 1
+  },
+  "world_model": false,
+  "arms": {
+    "CONTROL": {
+      "transitions": 16384,
+      "updates": 32,
+      "checkpoint_sha256": "329fb1ec04558c5af2b5eba20380827383903cd1f434f25637e71363304c66d9",
+      "manifest_sha256": "3e877e3a0c50f49708a3a954ed198d857aa74145ad4d2b041a366b8e11dd97f1",
+      "source_hashes_match": true,
+      "all_metrics_and_parameters_finite": true,
+      "max_pre_update_ratio_error": 7.712841033935547e-05,
+      "final_metrics": {
+        "transitions": 16384,
+        "updates": 32,
+        "episodes": 11,
+        "actor_loss": -0.019533014951527795,
+        "critic_loss": 0.4140349959277294,
+        "entropy": 1.3028500405224888,
+        "approx_kl": 0.005826170059817463,
+        "clip_fraction": 0.07308377896613188,
+        "mve_fraction": 0.0,
+        "mve_uncertainty": 0.0,
+        "mve_target_delta": 0.0,
+        "pre_update_ratio_max_error": 1.4543533325195312e-05,
+        "explained_variance": 0.9652167558670044
+      }
+    },
+    "ANNEALED": {
+      "transitions": 16384,
+      "updates": 32,
+      "checkpoint_sha256": "151efeaa5e325836e7edfec16a1ee01f00dfb63ad8c9a9f39fd77fc12a213a2e",
+      "manifest_sha256": "e1fb4010fa25d4d436e575445a1e8dbd749835d8aec56d63b643fb6a293b4696",
+      "source_hashes_match": true,
+      "all_metrics_and_parameters_finite": true,
+      "max_pre_update_ratio_error": 7.712841033935547e-05,
+      "final_metrics": {
+        "transitions": 16384,
+        "updates": 32,
+        "episodes": 12,
+        "actor_loss": -0.015948326390405946,
+        "critic_loss": 0.7248492718420245,
+        "entropy": 1.285061614079909,
+        "approx_kl": 0.007004992316441124,
+        "clip_fraction": 0.07789661319073084,
+        "mve_fraction": 0.0,
+        "mve_uncertainty": 0.0,
+        "mve_target_delta": 0.0,
+        "pre_update_ratio_max_error": 1.8298625946044922e-05,
+        "explained_variance": 0.9430227279663086,
+        "exploration_std_cap": 0.622199982593199,
+        "policy_raw_std_max": 0.623180091381073
+      }
+    }
+  }
+}
