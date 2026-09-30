@@ -1,0 +1,381 @@
+{
+  "as_of": "2026-09-30T17:20:24.704915+08:00",
+  "completed_at": "2026-09-30T17:04:31.216125+08:00",
+  "audit_base_commit": "4025b48e8a27556410cd6ac78a0fde4c7d8dd2c9",
+  "scope": "Paired development validation: 100 shared layouts on one anatomy, 3 policy seeds per arm, not sealed final test; 600 policy-layout episodes are not 600 independent layouts",
+  "steps_per_arm_seed": 500000,
+  "additional_steps_after_screening": 434464,
+  "world_model": false,
+  "success_target_reached": false,
+  "results": {
+    "a_fixed": {
+      "seeds": [
+        {
+          "seed": 42,
+          "episodes": 100,
+          "success_rate": 0.31,
+          "collision_free_success_rate": 0.1,
+          "particle_collision_episode_rate": 0.64,
+          "mean_removal_fraction": 0.7902896440964752,
+          "reasons": {
+            "time_limit": 69,
+            "all_clots_cleared": 31
+          },
+          "failed_with_removal_at_least_75_percent": 32,
+          "lost_robot_episodes": 3
+        },
+        {
+          "seed": 43,
+          "episodes": 100,
+          "success_rate": 0.03,
+          "collision_free_success_rate": 0.01,
+          "particle_collision_episode_rate": 0.64,
+          "mean_removal_fraction": 0.6411875172994326,
+          "reasons": {
+            "time_limit": 97,
+            "all_clots_cleared": 3
+          },
+          "failed_with_removal_at_least_75_percent": 27,
+          "lost_robot_episodes": 14
+        },
+        {
+          "seed": 44,
+          "episodes": 100,
+          "success_rate": 0.41,
+          "collision_free_success_rate": 0.08,
+          "particle_collision_episode_rate": 0.8,
+          "mean_removal_fraction": 0.8594367745022413,
+          "reasons": {
+            "time_limit": 59,
+            "all_clots_cleared": 41
+          },
+          "failed_with_removal_at_least_75_percent": 38,
+          "lost_robot_episodes": 11
+        }
+      ],
+      "means": {
+        "success_rate": 0.25,
+        "collision_free_success_rate": 0.06333333333333334,
+        "particle_collision_episode_rate": 0.6933333333333334,
+        "mean_removal_fraction": 0.7636379786327163
+      },
+      "reasons": {
+        "time_limit": 225,
+        "all_clots_cleared": 75
+      },
+      "failed_with_removal_at_least_75_percent": 97
+    },
+    "b_low_actor_lr": {
+      "seeds": [
+        {
+          "seed": 42,
+          "episodes": 100,
+          "success_rate": 0.31,
+          "collision_free_success_rate": 0.14,
+          "particle_collision_episode_rate": 0.56,
+          "mean_removal_fraction": 0.7626890532815166,
+          "reasons": {
+            "time_limit": 69,
+            "all_clots_cleared": 31
+          },
+          "failed_with_removal_at_least_75_percent": 47,
+          "lost_robot_episodes": 1
+        },
+        {
+          "seed": 43,
+          "episodes": 100,
+          "success_rate": 0.03,
+          "collision_free_success_rate": 0,
+          "particle_collision_episode_rate": 0.76,
+          "mean_removal_fraction": 0.7391494136525609,
+          "reasons": {
+            "time_limit": 97,
+            "all_clots_cleared": 3
+          },
+          "failed_with_removal_at_least_75_percent": 44,
+          "lost_robot_episodes": 3
+        },
+        {
+          "seed": 44,
+          "episodes": 100,
+          "success_rate": 0.65,
+          "collision_free_success_rate": 0.22,
+          "particle_collision_episode_rate": 0.67,
+          "mean_removal_fraction": 0.8884169903868554,
+          "reasons": {
+            "all_clots_cleared": 65,
+            "time_limit": 35
+          },
+          "failed_with_removal_at_least_75_percent": 26,
+          "lost_robot_episodes": 0
+        }
+      ],
+      "means": {
+        "success_rate": 0.33,
+        "collision_free_success_rate": 0.12000000000000001,
+        "particle_collision_episode_rate": 0.6633333333333333,
+        "mean_removal_fraction": 0.7967518191069777
+      },
+      "reasons": {
+        "time_limit": 201,
+        "all_clots_cleared": 99
+      },
+      "failed_with_removal_at_least_75_percent": 117
+    }
+  },
+  "sources": {
+    "a_fixed/42": {
+      "evaluation_path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/a_fixed/seed_42/full_validation/evaluation_500000.json",
+      "evaluation_sha256": "0b9bc0979e06a2ac3d3487ba356a6c9bd74862ee944f61037494911046c7b632",
+      "provenance_sha256": "00dc7a07d6b1f8fbacb2f3eebfaa2ca38279176314d74d28134e0f35a9e4c5e9",
+      "checkpoint_sha256": "714006da7fa49f392df8f81ffa71be7d516662ed561fcba3083a9782ea088623",
+      "evaluation_script_sha256": "a94130c7471c126bc58569056322c7763b55c7cf9b76da7503a16e3743bbd780",
+      "first_20_exact_reproduction": true,
+      "canonical_evaluation_matches": true,
+      "unique_initial_positions": {
+        "clot_positions_mm": 100,
+        "robot_positions_mm": 100,
+        "particle_positions_mm": 100
+      }
+    },
+    "a_fixed/43": {
+      "evaluation_path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/a_fixed/seed_43/full_validation/evaluation_500000.json",
+      "evaluation_sha256": "b033bf033b5d61aa8b4b5fdbd145f6b44083584445996cc825436af0b6586a77",
+      "provenance_sha256": "f3fe48fec0d1c8ab2d14539334b16fc39c53d42d709462d87884da6f02ce5a79",
+      "checkpoint_sha256": "dd23f9b3faed19f23b55333f4f8c9c8e8e1d1dd766b2374e75609286bee3db89",
+      "evaluation_script_sha256": "a94130c7471c126bc58569056322c7763b55c7cf9b76da7503a16e3743bbd780",
+      "first_20_exact_reproduction": true,
+      "canonical_evaluation_matches": true,
+      "unique_initial_positions": {
+        "clot_positions_mm": 100,
+        "robot_positions_mm": 100,
+        "particle_positions_mm": 100
+      }
+    },
+    "a_fixed/44": {
+      "evaluation_path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/a_fixed/seed_44/full_validation/evaluation_500000.json",
+      "evaluation_sha256": "b3b8a558122404ffb2837428942b6aebacbb25557681962817c3ad1b13da6ac3",
+      "provenance_sha256": "3bb68873510c55ba10670a6b844079fdf8541ce45ee6fc6e416d9ae13dc061ff",
+      "checkpoint_sha256": "ffb43100c709e248f4d8c2a029ea94ebdca7abbeead4194af31466b800e486a6",
+      "evaluation_script_sha256": "a94130c7471c126bc58569056322c7763b55c7cf9b76da7503a16e3743bbd780",
+      "first_20_exact_reproduction": true,
+      "canonical_evaluation_matches": true,
+      "unique_initial_positions": {
+        "clot_positions_mm": 100,
+        "robot_positions_mm": 100,
+        "particle_positions_mm": 100
+      }
+    },
+    "b_low_actor_lr/42": {
+      "evaluation_path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_42/full_validation/evaluation_500000.json",
+      "evaluation_sha256": "53bd8cb21c3d0a9e2cc5d34c42ef64a2e0f7715dba2f6104f06e1d087bf8fca5",
+      "provenance_sha256": "b2a35bf2f38f82f5daf435d85b61f63481731ea71850cb6e15ebbd1e3ddca1c7",
+      "checkpoint_sha256": "751e09a6ecc6b0a6337d50c8723fe4ad331af01133484a67b1a2633c7a5b8c35",
+      "evaluation_script_sha256": "a94130c7471c126bc58569056322c7763b55c7cf9b76da7503a16e3743bbd780",
+      "first_20_exact_reproduction": true,
+      "canonical_evaluation_matches": true,
+      "unique_initial_positions": {
+        "clot_positions_mm": 100,
+        "robot_positions_mm": 100,
+        "particle_positions_mm": 100
+      }
+    },
+    "b_low_actor_lr/43": {
+      "evaluation_path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_43/full_validation/evaluation_500000.json",
+      "evaluation_sha256": "1e38b5e5f79e2fc24bab83ba09eb98d60a1d2ecdf1dd98df407ac7ea4267d317",
+      "provenance_sha256": "8c753d07ec1046e894ca5de963a27f02cfa8c359b330be0802c1f112a286ece3",
+      "checkpoint_sha256": "59609bd556df87cf0cd64cb82e0abec033996dc24a7e1bb60ce7aa2fee5193dc",
+      "evaluation_script_sha256": "a94130c7471c126bc58569056322c7763b55c7cf9b76da7503a16e3743bbd780",
+      "first_20_exact_reproduction": true,
+      "canonical_evaluation_matches": true,
+      "unique_initial_positions": {
+        "clot_positions_mm": 100,
+        "robot_positions_mm": 100,
+        "particle_positions_mm": 100
+      }
+    },
+    "b_low_actor_lr/44": {
+      "evaluation_path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_44/full_validation/evaluation_500000.json",
+      "evaluation_sha256": "6d5a09fe77ca6c3ba091a1a50a81bf767e83b928bf4b12b7b5df87c1a2348944",
+      "provenance_sha256": "3dccd86612039bbb42388f476dc5e7793303223fc05ccd4d99ab4004bf3fbc44",
+      "checkpoint_sha256": "cbb943bf7f587937ba438493e471ee5b76442b165114dd4fc6eb31c61681e574",
+      "evaluation_script_sha256": "a94130c7471c126bc58569056322c7763b55c7cf9b76da7503a16e3743bbd780",
+      "first_20_exact_reproduction": true,
+      "canonical_evaluation_matches": true,
+      "unique_initial_positions": {
+        "clot_positions_mm": 100,
+        "robot_positions_mm": 100,
+        "particle_positions_mm": 100
+      }
+    }
+  },
+  "snapshot_checks": {
+    "a_fixed": {
+      "verified_training_source_count": 43,
+      "source_manifest_sha256": "88f8c9f0a83d4ff0a6c603bcf9955629d8017e8ba2089b009d2de1ba578ede7e"
+    },
+    "b_low_actor_lr": {
+      "verified_training_source_count": 43,
+      "source_manifest_sha256": "08c4577c0dd7bfb1500b7e2632f373b63ae912e578aa8dc47efd6b689deecfef"
+    }
+  },
+  "paired_comparison": {
+    "42": {
+      "success": {
+        "both_success": 18,
+        "A_only": 13,
+        "B_only": 13,
+        "both_fail": 56,
+        "B_minus_A_percentage_points": 0
+      },
+      "collision_free_success": {
+        "both_success": 3,
+        "A_only": 7,
+        "B_only": 11,
+        "both_fail": 79,
+        "B_minus_A_percentage_points": 4
+      }
+    },
+    "43": {
+      "success": {
+        "both_success": 0,
+        "A_only": 3,
+        "B_only": 3,
+        "both_fail": 94,
+        "B_minus_A_percentage_points": 0
+      },
+      "collision_free_success": {
+        "both_success": 0,
+        "A_only": 1,
+        "B_only": 0,
+        "both_fail": 99,
+        "B_minus_A_percentage_points": -1
+      }
+    },
+    "44": {
+      "success": {
+        "both_success": 36,
+        "A_only": 5,
+        "B_only": 29,
+        "both_fail": 30,
+        "B_minus_A_percentage_points": 24
+      },
+      "collision_free_success": {
+        "both_success": 5,
+        "A_only": 3,
+        "B_only": 17,
+        "both_fail": 75,
+        "B_minus_A_percentage_points": 14
+      }
+    }
+  },
+  "validation_checks": {
+    "all_six_share_exact_100_layouts": true,
+    "all_metrics_recomputed_from_episodes": true,
+    "all_original_training_source_hashes_match": true,
+    "all_checkpoint_and_evaluator_hashes_match": true,
+    "all_short_evaluations_reproduced_exactly": true
+  },
+  "layout_sha256": [
+    "5b19eb8e583cb1ca4fa53ae1ad6aed0b4f145fee8eac939bb1a311d00bf0202d",
+    "5aca05b1bc819d8874923eb36610784b9371b44ad878f246ca0f3d94a6753ac2",
+    "46e298696bc1eb8c88e025702e5d08f7e01502aa5ef099e2e35a0ba2e8dcc045",
+    "0ce019ceff5c1c7f6a6144e71d9e0178cd2bf6d095068accad720343e17340f9",
+    "79bd4b05e5d270b263e6e33f2cad7b7ed3e91d98759db6662f6bac903480156f",
+    "e12845bf00b65e7889b52b85014b8aebebc4270f3d64f7301e945b6cb5da562f",
+    "04e0bb9a8d953f3ba37a4d3d56d54beff3d4b22c89d85aad5e49ffa66c8b3924",
+    "ef89f5d7198cbe703c308a583c231854fc5ab61c8d6521d5c6afcea70eefa756",
+    "74bcd5ec191ef70dc2ed2cd23fdd0fe9f55463d4e7e2d94ef01f53873b074447",
+    "b8b38a6a4c2ed6a850649f4c65972a300b53d7c9286b7ae6f49ed7befb68f0d0",
+    "8b42c6ed67adb52f22850fce0cb26142540e2c4fccc8fc8776555f060a5e4b29",
+    "0d25ec236271f0e4d941e300354539701fad24c39deceb4f6ba951fe2de379de",
+    "0514be0b4cca3a8bc8d1172be1d07e9a37781110baeb9ae0c491a1c7a88707a6",
+    "aa9bec514cb9f6554a065c84a8567cc009840d8980971e18c6148fcc019aec66",
+    "3286246b6510e37c6f9efa191a33a9a2427a9905ee66acdc37b22b1c7f0a353c",
+    "15883654f2b4f9e0d7095393868d9ca2e917799817baa9c866bba6d94d8dd37f",
+    "a429ce3c673f9086d522a1b32720126e136e7e64ff1b7709afc67680ad5c4634",
+    "fa6d99d3dc7ebd5d2ad07c159fe0c3f5c023345dde35e3a25373d49e6fd42c1a",
+    "1cf85e9fab0b809520d8af4688884b9e5c2c55dec7dda1c159f7986a820d2cf3",
+    "eefb03c1b1159596482b8a1d32d0ba0b5395a9801fd9b60c6d1338862c457d3d",
+    "ca149ed7ff19ac132e5caf5ce5d2593a09b8af80b4127f14d99ad5d2bf111fe2",
+    "1ee52b324e9438192e5958b34147999297d0e8565744faf13d2889279420fd58",
+    "d77a7b2850a03545e069908fe732e563ab9bf2a0c6a16bb67abbb735269323d7",
+    "b5e49d75cdb96dd4f0f90e798e119cf0eae6f4e63b08d2e2774e0a369fd2a56f",
+    "f481a37ec569e0805b0abebf347a52665909233377314ccf32b19a15adaa5420",
+    "4403f433f0dc70c9009d113f933a73e79bf8b71863562e3e5b554410552d297c",
+    "1b9dfae78f68af92657969edfa9c4598adb08b6e64504f23c5fb535192d71da6",
+    "b4e88f0b6ac7df87cca2c2911b0cd32c3cf303fe669bde6b1f7dcc68ff5ec95a",
+    "7e8c98b4c16d0d05c3381b957a59df7a4c296eb061874cbb8f2ba3c23cf3b7a6",
+    "20ee04877de5f0bb50e2d46ec12708101a9a0f3147f5860a2a1ac60b3c0a1782",
+    "5c5bdb7a0bee48d909d31889e99cf16313d8446200d73a5a0bea7334bde7e01e",
+    "0a21435d39594e9ccbb6692543523f49426e374c368b605d9e2f0ed4fc5d009c",
+    "462ccbf58489ffdd9d97c8cda9f1735f88ed107d7c284036c0388e548cfbedd5",
+    "a46c8484cfaca4d8f43c73c56e0dfb6385994114e2631df28626d79369a5d24f",
+    "a58728264692cc320f4a4bb942bee1f64a4b3ceaf39a588a366e7ae22baf4d78",
+    "59af207b56efdf63611b11fd6b5934be54f80503fa31cead54b737ff6dce9d6d",
+    "9133f0a863a9f5a39747552e012eb6b229d6bec71284c626bdfd8e7270d96543",
+    "64bb9cb2f1af33d4d4162b7ecf6113f7201529a33dd7f8f923d4f43696c41b8e",
+    "d6dce1c8b342f821d31084e60d700a8f5d6d957ea9ddf483ad763c93a5b240e3",
+    "ca3da54af16ad24655002c2212b76a014983d8f22430442b964dfd7faa9b07db",
+    "db7e955538b071c181b85de3406c0387423402b9ee041d50944bbbc58855e06d",
+    "8c6ef2a0e92200c92ae676f584f8dc12427e71bc864d7895f00f8ea6298bf52a",
+    "189a9c7d37c521938226e6a6ff3bd534a1abf5f03e1f5e3764c74b7f7a0d6310",
+    "52bfcd6dd3d9a90bb7ba6ff935de4300b91728d3552300bb2e1f0eec8f10b00d",
+    "b80448e2efdeaac35e7f2094126a0f59b8bbe7915d7f905a9ebdba30938fd552",
+    "20dbb5d17c1bcb0e78ebea97b5fecafbde4bf54cf7fc5f627dafe85fa03a0e78",
+    "69192251c8495c2595a15ce0c9338769a9c87c058cbe523dc12966c493e40075",
+    "b97919aaf3d6ec6fabc7dcc28fb7b33c9212df49d7a4f8d0389f5bbd4396e997",
+    "8a3b6ee1bee43c46b1a2046985793bf6151a4e105ddfb42d7c1f433577e48768",
+    "b8ba3276b861f259774a91038762c40dfef35ff567e92d5f226462f3f32387ac",
+    "7788f17f82bc101d5ec7f03bb1a3b706fbbf18ae17c7f8727ed9f91067ce2e6f",
+    "a1ffe8dd84c7302754ede3c46e7acc5e25fa7438d7b85c89584b9e7f504e3ef4",
+    "e7eaffaa5eae0deb979b96fed7b2add20fc51738cd2ec6f34b250ab8120d41a4",
+    "a0b42b121f787304611596bb89e8f107fb2265c1bcb78d5a4b9a4c45aa6ca1ac",
+    "7ba5df0a5a4dac692ad5f59512e9d6475c7cb44e01f6d370205020af5e77bb21",
+    "eb37cfe4e77c8a6bb67a4092f949bf43de8656f389b273b3b013b9e423258194",
+    "d3fdfc84d1b9ccab5dffbedaa214bb03613df3eb108aa648efa7705d3c19606b",
+    "052b92f1d0a90ae5a975f2e4cf6565268d3afe3ca2825a8fb8fe63f0af5caa7c",
+    "0e3b78a69bfa656472c24c7e1d09e0fa68e7d206bd4bf373ec61d8b7d92ecbe4",
+    "adb95d9182d71c561799cde1a017f4ab251e230a72c789b020565a11e60effe2",
+    "6efef3caca83f2883c623079014deff425f3dc7f7482be0b4e07aea6d46bcf4f",
+    "1feeed058b02741bcdae213cd582abeb90b7b2512d50aba138cd54feb9cbff31",
+    "b725be27ef1fcb61e9a0ac411234b82a51d59a142025762cb59bba5b2a83410c",
+    "4c9d44a22b91104e55fab33b57964fc3617575adedb1c1a5a682458938fa23c9",
+    "2866c5f484853da91bab0106ff0e5de9aaa44e4855292d20d601aabad65e1070",
+    "44e24169e30db28f85cfc672eefd1f2cc2e53050fa5cafd3bcf6ca0e0ad5ee0e",
+    "de1b233502f60c10b3d3f56ce4b9827ad0167a5bc234a9e053b04030f2537291",
+    "d09db3f850559daebac5d5bb2bc7155f708efa6257704bacb960d804916434f9",
+    "2f5781828c1d82f24e0746e49e578156cb980ebb37356e4431ffcf46fb553e7b",
+    "0e9f8fc20b35c23c7e52b47cd909e5b908472493547b3cd2edc66d5fbb836c93",
+    "c429b19a87c338f2755c2148c2f4c529268c5219210fe04131519995492938af",
+    "d88c3f75a39cd1277cdc0423c32d9d5562a3323cc963a8795a68fc14055b301e",
+    "16607f426c10ca9062f0d56233c3c468bb62ea4c6b17747a8d8d686ab21d2272",
+    "78633f66b8de46e13425e73d61d7c6258979f8906146c29a6d3b2b10ea5e1002",
+    "ca531e1de1ee94fe73255e62ba22ed53f2830f85c089d26cdd0d12f328acf6a2",
+    "70bf88e3fb740014430ebc8f7b30ffd62de5723dd0f21f59e35d865baeb786e6",
+    "662c4446c46cf534b7dc3482f0aee68b9aa883f8000114000d05983846662a8b",
+    "999a2ebb980fa580031b40082c6984c1e12aee35a99435d2ad313bb149bac692",
+    "14b750a91efba787e614beecbd47e7cc1ce569b4a75bab68b1d39fd60326caa6",
+    "9d9dbb7ba77ca2bf24b179b4720976e43bf4a15b71f6761eb09eea5b7f84abaa",
+    "4d45d380e5e738bc1e5619c4f77b7d0d05eca33852c75fe8a0abcbb26ad845b5",
+    "4eb968fcb54d8b4733f16e40c6f1447db36b71daaa1bea8632a5c1e6b43244b0",
+    "8dc45634659694c7165345796a9910b4e8c1c919427958713ba034606ec6f3d3",
+    "dd6538798d38e24d246a177aa3e00547a00e2c1c4b12ea2a4d626ffe1e5d46e0",
+    "69420a4e2dff806b2809d1d63315ca069aead2260dc3f8f7facf610955f32eda",
+    "5c639c2f6e46af1c66a68a19ea49a003b34bfef9dbdc91ef97e59b36ae52fa1c",
+    "ae7171e8494aa2b4037383ed2cac2878af2a0d3fb27ca802898fde155368bcbd",
+    "0bb17643759f955d795bfdf501c774aab525d19d279799d1f97bf602f899b57a",
+    "bcd4d73b418e0408b46eb1bdd34dfee09b7f11cf48d3bc67312b1f5d8b51f7e5",
+    "c9320f3030a46928a4ba5a684d2b325de6c8942c60a1e51c3967d75ecb5ec35f",
+    "ffce397e235c8c78009ba079125a7da8fcc8a4ecfe43670045344de317e4564c",
+    "16ebaadfbcae2d5bf5e6715fc5fa8e8c8aff91d9cfe23628fcfb0e5cb308db66",
+    "39de6ff6744e5e918a91088c15a6e22b56e00f6b2d7d1b1357f5a1969e48348f",
+    "d7c71664760c28a6634c2ec574393dabbcea7d407a0cde0266288c6e74ad3eae",
+    "5c475155e896403f5937a74853981b765e967d5cd3901c600b60f369a990ac99",
+    "a7044b2bae574918fd3da5f0ed7be6799bc6d4c18d6b6e49602aaae281605292",
+    "2a3d30b6a90eeba47c72f5318c213e13cb89d8c136f33cb102b85d6c19aaf747",
+    "3a6b986a8a042bd0467030e2e68b423487407ad25a9d5799f96d023f9303d161",
+    "5569a8255280c9ea62643b320e4f4b884fc679fb7ffe8cff91985bc19e48c64b",
+    "d46304accea998ad05a7ac1d25940f9e54e77912aeb0ceab099d65b154929ef7"
+  ]
+}
