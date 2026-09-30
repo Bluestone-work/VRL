@@ -1,0 +1,22 @@
+{
+  "as_of": "2026-09-30T18:18:22.706288+08:00",
+  "study_phase": "waiting_for_exp31",
+  "study_pid": 982176,
+  "source_snapshots": {
+    "trajectory": {
+      "files_verified": 45,
+      "snapshot_matches_recorded_and_current_source": true
+    },
+    "masked": {
+      "files_verified": 45,
+      "snapshot_matches_recorded_and_current_source": true
+    }
+  },
+  "viewer_pid": 999498,
+  "viewer_playhead_age_s": 0.2702212333679199,
+  "viewer_checkpoint": "/home/wj/桌面/vascular_marl_local.tar./research/runs/EXP_0031_EXPLORATION_20260930a/control/seed_42/latest.pt",
+  "viewer_checkpoint_steps": 500000,
+  "dashboard_http_status": 200,
+  "world_model": false,
+  "policy_performance_claim": null
+}

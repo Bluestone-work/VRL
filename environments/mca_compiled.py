@@ -292,6 +292,21 @@ class CompiledMCAPhysicalEnv(MCAPhysicalEnv):
         self._args_cache=(geom,hyd)
         return self._args_cache
 
+    def _advance_particle_prediction(self, positions, edges, body, active, duration):
+        # Particle-only transport with frozen current radii/flux. No env.step,
+        # no future actions or masses, and no mutation of actual simulator state.
+        geom, hyd = self._compiled_arguments();c = self.config
+        values = integrate(positions.copy(), edges.copy(), active.copy(), body,
+            np.zeros_like(positions), duration, geom, hyd,
+            self.solution['radius_mm'].copy(), self.solution['station_inflow_mm3_s'].copy(),
+            self.masses.copy(), self.initial_mass, self.flow_model.healthy_radius_mm,
+            self._occlusion_bump, c.initial_radius_fraction,
+            np.asarray(self.routes).reshape(self.num_clots, -1) if self.num_clots else np.empty((0, len(self.transport.points))),
+            self.clot_positions_mm, 0, c.contact_distance_mm, 0., c.lysis_saturation,
+            c.spatial_fraction, c.lubrication_floor, c.max_substeps_per_control, 0., False,
+            np.zeros((0, len(positions)), dtype=np.bool_), c.particle_safety_margin_mm)
+        return TransportResult(*values[:9], float(duration))
+
     def step(self, action):
         if self._done or not self._reset_called:
             raise RuntimeError('Call reset before stepping a new or completed episode')

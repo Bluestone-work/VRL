@@ -1,0 +1,9 @@
+{
+  "schema": "mca_point_trajectories_172_v5",
+  "obs_dim": 172,
+  "checkpoint_steps": 16384,
+  "frames": 4903,
+  "physical_duration_s": 180.0,
+  "wall_s": 7.446547006024048,
+  "scope": "Viewer rollout compatibility smoke, not model performance evidence"
+}

@@ -44,15 +44,20 @@ def make_physical_agent(env, *, seed=42, hidden_dim=32, device='cpu', ppo=None):
 
 
 def initialize_expanded_obstacle_policy(agent, checkpoint):
-    """Explicit v3->v4 transfer: preserve 36 inputs, add 40 zero-weight inputs."""
+    """Explicit schema expansion; preserve old inputs, zero new input weights."""
     meta=checkpoint['meta']
-    if (meta.get('observation_schema')!='mca_point_36_v3' or
-            agent.meta.get('observation_schema')!='mca_point_obstacles_76_v4'):
-        raise ValueError('Only the explicit point v3 to obstacle v4 expansion is supported')
+    schemas = {
+        ('mca_point_36_v3', 'mca_point_obstacles_76_v4'): (36, 76),
+        ('mca_point_obstacles_76_v4', 'mca_point_trajectories_172_v5'): (76, 172),
+    }
+    pair = (meta.get('observation_schema'), agent.meta.get('observation_schema'))
+    if pair not in schemas:
+        raise ValueError('Only explicit point v3->v4 or obstacle v4->trajectory v5 expansion is supported')
+    old_dim, new_dim = schemas[pair]
     for key in ('architecture','n_agents','action_dim','state_dim','hidden_dim','num_layers',
                 'critic_value_mode','dropout','action_semantics','physical_action_semantics'):
         if meta.get(key)!=agent.meta.get(key):raise ValueError(f'Expanded initialization {key} mismatch')
-    if meta.get('obs_dim')!=36 or agent.meta.get('obs_dim')!=76:
+    if meta.get('obs_dim')!=old_dim or agent.meta.get('obs_dim')!=new_dim:
         raise ValueError('Expanded observation dimensions mismatch')
     expanded=[];states={}
     for name,net,input_key in (('actor',agent.actor,'encoder.input_proj.weight'),
@@ -61,8 +66,8 @@ def initialize_expanded_obstacle_policy(agent, checkpoint):
         if current.keys()!=old.keys():raise ValueError('Expanded initialization network keys mismatch')
         for key,value in old.items():
             if key==input_key:
-                if value.shape!=(current[key].shape[0],36):raise ValueError('Unexpected input projection')
-                weight=torch.zeros_like(current[key]);weight[:,:36]=value.to(weight.device)
+                if value.shape!=(current[key].shape[0],old_dim):raise ValueError('Unexpected input projection')
+                weight=torch.zeros_like(current[key]);weight[:,:old_dim]=value.to(weight.device)
                 current[key]=weight;expanded.append(f'{name}.{key}')
             elif value.shape==current[key].shape:
                 current[key]=value

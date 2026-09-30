@@ -1,0 +1,93 @@
+{
+  "scope": "24 saved training-environment states from3 parent policies; diagnostic accuracy, not collision-rate or generalization evidence",
+  "states": 24,
+  "predictions": 1963,
+  "flow_changed_state_horizons": 11,
+  "validity_mask_agreement": 1.0,
+  "world_model": false,
+  "sources": {
+    "42": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_42/policy_500000.pt",
+      "sha256": "751e09a6ecc6b0a6337d50c8723fe4ad331af01133484a67b1a2633c7a5b8c35"
+    },
+    "43": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_43/policy_500000.pt",
+      "sha256": "59609bd556df87cf0cd64cb82e0abec033996dc24a7e1bb60ce7aa2fee5193dc"
+    },
+    "44": {
+      "path": "research/runs/EXP_0030_PPO_REPAIR_20260930a/b_low_actor_lr/seed_44/policy_500000.pt",
+      "sha256": "cbb943bf7f587937ba438493e471ee5b76442b165114dd4fc6eb31c61681e574"
+    }
+  },
+  "assumptions": "Frozen current flow/lumen; future actions and lysis are not available to predictor; comparisons below use subsequent real deterministic policy rollout",
+  "error_by_horizon": {
+    "0.5": {
+      "count": 656,
+      "route_error_mm": {
+        "mean": 3.6417871870974865e-05,
+        "median": 5.907347525756363e-11,
+        "p95": 8.926293929314217e-07,
+        "maximum": 0.002054322849566777
+      },
+      "linear_error_mm": {
+        "mean": 8.912881278813982e-05,
+        "median": 2.8160454537801854e-06,
+        "p95": 0.0002637315340647482,
+        "maximum": 0.0095299870828908
+      }
+    },
+    "1.0": {
+      "count": 655,
+      "route_error_mm": {
+        "mean": 0.00015980100607689574,
+        "median": 4.0858329320961336e-10,
+        "p95": 0.00031340564837441655,
+        "maximum": 0.00829404327881165
+      },
+      "linear_error_mm": {
+        "mean": 0.0003362881745735146,
+        "median": 1.3336249897753358e-05,
+        "p95": 0.0016086047313771808,
+        "maximum": 0.02065543496499355
+      }
+    },
+    "2.0": {
+      "count": 652,
+      "route_error_mm": {
+        "mean": 0.0010379705149292377,
+        "median": 9.187334175468167e-10,
+        "p95": 0.007129769374233033,
+        "maximum": 0.05464437511619885
+      },
+      "linear_error_mm": {
+        "mean": 0.0017027053259903908,
+        "median": 7.497518141358952e-05,
+        "p95": 0.011301971450448626,
+        "maximum": 0.052718833990029766
+      }
+    }
+  },
+  "observation_benchmark": {
+    "predictive_four": {
+      "cpu_ms_per_call": 0.4244611400000009,
+      "wall_ms_per_call": 0.42448283871635795,
+      "scope": "Single-process fixed-state observation only; not end-to-end training throughput"
+    },
+    "trajectory_four": {
+      "cpu_ms_per_call": 2.6477702300000017,
+      "wall_ms_per_call": 2.6478152093477547,
+      "scope": "Single-process fixed-state observation only; not end-to-end training throughput"
+    },
+    "trajectory_four_masked": {
+      "cpu_ms_per_call": 0.4191298299999957,
+      "wall_ms_per_call": 0.4191569215618074,
+      "scope": "Single-process fixed-state observation only; not end-to-end training throughput"
+    }
+  },
+  "source_sha256": {
+    "scripts/audit_mca_obstacle_forecast.py": "8b04acf9595f8f85868c0b4df72bcc1246db6b221e92ae5707c6a70dedf49d61",
+    "environments/mca_obstacle_forecast.py": "8b2262acb0c58469c0311dd3c2af623a2cadb69c3f4c84c0d45c4862d718f2b0",
+    "environments/mca_physical_env.py": "33cdde89790911a13c89565aa09122addc6852d57429bf50aed4ca1438f5e0e4",
+    "environments/mca_compiled.py": "29c9838c30d073f44f9a13295682eeb69f7fa3f4fa9519eceb08823d1f7d591a"
+  }
+}

@@ -17,6 +17,7 @@ from gymnasium import spaces
 from environments.mca_physical_dynamics import PhysicalTubeTransport
 from environments.mca_physiology import PhysicalUnits, PressureDrivenTreeFlow, _finite_scalar
 from environments.vessel_anatomy import build_territory
+from environments.mca_obstacle_forecast import forecast_particles, trajectory_features
 
 
 CONFIG_PATH = Path(__file__).resolve().parents[1] / 'configs/experiments/EXP_0022B_MCA_DYNAMICS.json'
@@ -78,7 +79,7 @@ class DynamicsConfig:
                 if value not in ('historical_sites','random_branches'):
                     raise ValueError('Invalid clot_initialization')
             elif name == 'obstacle_observation':
-                if value not in ('nearest','predictive_four'):
+                if value not in ('nearest','predictive_four','trajectory_four','trajectory_four_masked'):
                     raise ValueError('Invalid obstacle_observation')
             elif name == 'assumption_provenance':
                 if not isinstance(value, str) or not value.strip():
@@ -126,11 +127,14 @@ class MCAPhysicalEnv(gym.Env):
             self.observation_schema = 'mca_surface_36_v2'
         elif self.config.contact_model == 'localized_point':
             self.observation_schema = 'mca_point_36_v3'
-        if self.config.obstacle_observation == 'predictive_four':
+        if self.config.obstacle_observation in ('predictive_four','trajectory_four','trajectory_four_masked'):
             if self.config.contact_model != 'localized_point':
                 raise ValueError('Predictive obstacle observations require localized point targets')
             self.observation_schema = 'mca_point_obstacles_76_v4'
-        self.obs_dim = 76 if self.config.obstacle_observation == 'predictive_four' else 36
+        self.obs_dim = 76 if self.config.obstacle_observation != 'nearest' else 36
+        if self.config.obstacle_observation in ('trajectory_four','trajectory_four_masked'):
+            self.observation_schema = 'mca_point_trajectories_172_v5'
+            self.obs_dim = 172
         self.num_robots = self.config.num_robots
         self._fixed_tree = tree
         self._fixed_clot_stations = None if clot_stations is None else np.asarray(clot_stations, np.int32)
@@ -428,6 +432,10 @@ class MCAPhysicalEnv(gym.Env):
         distances[:, self.masses <= 0] = np.inf
         return distances
 
+    def _advance_particle_prediction(self, positions, edges, body, active, duration):
+        return self.transport.advance(positions, edges, body, np.zeros_like(positions),
+                                      active, self.solution, duration)
+
     def _observation(self):
         n = self.num_robots
         nodes = np.zeros((n, self.obs_dim), np.float32)
@@ -486,7 +494,7 @@ class MCAPhysicalEnv(gym.Env):
             self.flow_model.healthy_radius_mm[self.robot_stations], 1e-12)
         nodes[:, 34] = np.log1p(np.linalg.norm(flow, axis=-1)/self.config.robot_speed_mm_s)
         nodes[:, 35] = self.agent_mask.mean()
-        if self.config.obstacle_observation == 'predictive_four' and len(particle_ids):
+        if self.config.obstacle_observation != 'nearest' and len(particle_ids):
             velocities = self.transport.velocity_mm_s(self.positions_mm[particle_ids],self.edges[particle_ids],self.solution)
             relative_velocity = velocities[None]-self.velocity_mm_s[:,None]
             relative_position = self.positions_mm[particle_ids][None]-pos[:,None]
@@ -506,6 +514,12 @@ class MCAPhysicalEnv(gym.Env):
                     nodes[i,start+7] = closest_time[i,j]/horizon
                     nodes[i,start+8] = closest_clearance[i,j]/self.config.particle_safety_margin_mm
                     nodes[i,start+9] = 1.
+        if self.config.obstacle_observation == 'trajectory_four' and len(particle_ids):
+            predictions, valid, exits = forecast_particles(self, particle_ids)
+            nodes[:, 76:] = trajectory_features(pos, self.velocity_mm_s, frame,
+                self.positions_mm[particle_ids], velocities, predictions, valid, exits,
+                self.config.robot_radius_mm, self.config.particle_radius_mm,
+                self.config.robot_speed_mm_s, self.config.particle_safety_margin_mm)
         nodes[~self.agent_mask] = 0
         adjacency = np.outer(self.agent_mask, self.agent_mask).astype(np.float32)
         state = np.column_stack((self.clot_positions_mm/self.units.mm_per_unit*2-1,

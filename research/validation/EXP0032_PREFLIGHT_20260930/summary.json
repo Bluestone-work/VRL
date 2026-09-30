@@ -1,0 +1,42 @@
+{
+  "as_of": "2026-09-30T18:12:54.342602+08:00",
+  "tests": {
+    "passed": 420,
+    "skipped": 1,
+    "command": "python -m pytest tests -q"
+  },
+  "world_model": false,
+  "scope": "GPU smoke and gradient-flow checks, not success-rate evidence",
+  "arms": {
+    "TRAJECTORY": {
+      "transitions": 16384,
+      "updates": 32,
+      "checkpoint_sha256": "cf1ea18dccbb4c43505435de4f1b5391fc0cc0754fa9c861284b902a21df39e7",
+      "source_hashes_match": true,
+      "all_parameters_and_metrics_finite": true,
+      "appended_input_weight_norms": {
+        "actor": 0.3742091953754425,
+        "critic": 0.9964712858200073
+      },
+      "max_pre_update_ratio_error": 0.00016009807586669922,
+      "fps": 251.7641357739518,
+      "workers": 2,
+      "benchmark_caveat": "Concurrent preflights on spare2CPU cores each while EXP31 runs; not formal-run ETA"
+    },
+    "MASKED": {
+      "transitions": 16384,
+      "updates": 32,
+      "checkpoint_sha256": "a4974a2eda08d43ae13d9b0b66f5aefd0739baa18df8bb21a6aaaecf72bd6cfd",
+      "source_hashes_match": true,
+      "all_parameters_and_metrics_finite": true,
+      "appended_input_weight_norms": {
+        "actor": 0.0,
+        "critic": 0.0
+      },
+      "max_pre_update_ratio_error": 7.480382919311523e-05,
+      "fps": 401.8007566410785,
+      "workers": 2,
+      "benchmark_caveat": "Concurrent preflights on spare2CPU cores each while EXP31 runs; not formal-run ETA"
+    }
+  }
+}

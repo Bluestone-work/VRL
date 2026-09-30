@@ -74,3 +74,6 @@ vascular_marl_local/
 
 /research/literature/**/authors_README.md
 /research/validation/**/profile.txt
+
+# EXP32 witness progress is transient; final certificates are versioned.
+/research/validation/EXP0032_*/progress.json
