@@ -318,6 +318,7 @@ class CompiledMCAPhysicalEnv(MCAPhysicalEnv):
         commands=np.zeros_like(self.positions_mm);commands[:self.num_robots]=action*self.config.robot_speed_mm_s
         duration=min(self.config.control_dt_s,self.config.episode_duration_s-self.elapsed_s)
         potential_before=self._reward_potential()
+        assignment_before=self._shaping_assignment()
         geom,hyd=self._compiled_arguments();c=self.config;n=self.num_robots
         values=integrate(self.positions_mm.copy(),self.edges.copy(),self.active.copy(),self.body_radius,commands,
                          duration,geom,hyd,self.solution['radius_mm'].copy(),self.solution['station_inflow_mm3_s'].copy(),
@@ -351,7 +352,7 @@ class CompiledMCAPhysicalEnv(MCAPhysicalEnv):
         self._done = terminated or truncated
         agent_reward = 10*agent_removed - result.wall_contact_s[:n] - .01*duration
         agent_reward -= particle_penalty
-        shaping = self.config.reward_discount*self._reward_potential()-potential_before
+        shaping = self._shaping(potential_before, assignment_before)
         agent_reward += shaping
         already_lost = (~self.active[:n]) & (self.exit_time_s[:n] < self.elapsed_s-duration-1e-12)
         agent_reward[already_lost] = 0

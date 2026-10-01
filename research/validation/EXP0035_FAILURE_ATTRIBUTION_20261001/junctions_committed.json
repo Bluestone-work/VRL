@@ -1,0 +1,42 @@
+{
+ "alive1|F": {
+  "committed_decisions": 212,
+  "wrong": 81,
+  "wrong_frac": 0.382
+ },
+ "alive1|S": {
+  "committed_decisions": 208,
+  "wrong": 41,
+  "wrong_frac": 0.197
+ },
+ "alive2|F": {
+  "committed_decisions": 109,
+  "wrong": 35,
+  "wrong_frac": 0.321
+ },
+ "alive2|S": {
+  "committed_decisions": 87,
+  "wrong": 26,
+  "wrong_frac": 0.299
+ },
+ "alive3|F": {
+  "committed_decisions": 61,
+  "wrong": 22,
+  "wrong_frac": 0.361
+ },
+ "alive3|S": {
+  "committed_decisions": 66,
+  "wrong": 18,
+  "wrong_frac": 0.273
+ },
+ "alive4|F": {
+  "committed_decisions": 63,
+  "wrong": 31,
+  "wrong_frac": 0.492
+ },
+ "alive4|S": {
+  "committed_decisions": 81,
+  "wrong": 25,
+  "wrong_frac": 0.309
+ }
+}

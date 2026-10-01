@@ -1,0 +1,30 @@
+{
+ "last_target": {
+  "wandering_far (entered branch/upstream, net progress ~0)": 45,
+  "never_entered_target_branch (branch selection)": 15,
+  "insufficient_contact (contact began, mass left)": 8,
+  "collision/stuck (robots lost or wall-bound)": 4,
+  "near_miss (<0.7 mm, never in contact)": 3,
+  "reached_contact_zone_no_lysis": 1
+ },
+ "ALL": {
+  "wandering_far (entered branch/upstream, net progress ~0)": 54,
+  "never_entered_target_branch (branch selection)": 25,
+  "near_miss (<0.7 mm, never in contact)": 5,
+  "insufficient_contact (contact began, mass left)": 14,
+  "collision/stuck (robots lost or wall-bound)": 6,
+  "reached_contact_zone_no_lysis": 2
+ },
+ "two_left": {
+  "near_miss (<0.7 mm, never in contact)": 2,
+  "wandering_far (entered branch/upstream, net progress ~0)": 5,
+  "collision/stuck (robots lost or wall-bound)": 2,
+  "never_entered_target_branch (branch selection)": 10,
+  "insufficient_contact (contact began, mass left)": 4,
+  "reached_contact_zone_no_lysis": 1
+ },
+ "early (<=1 cleared)": {
+  "wandering_far (entered branch/upstream, net progress ~0)": 4,
+  "insufficient_contact (contact began, mass left)": 2
+ }
+}

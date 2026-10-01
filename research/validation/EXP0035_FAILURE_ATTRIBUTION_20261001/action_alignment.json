@@ -1,0 +1,30 @@
+{
+ "alive1|F": {
+  "route_own": 0.144,
+  "straight_own": 0.063,
+  "straight_nearest": 0.063,
+  "route_nearest": 0.144,
+  "flow": -0.085
+ },
+ "alive1|S": {
+  "route_own": 0.381,
+  "straight_own": 0.276,
+  "straight_nearest": 0.276,
+  "route_nearest": 0.381,
+  "flow": 0.025
+ },
+ "alive>=2|F": {
+  "route_own": 0.181,
+  "straight_own": 0.095,
+  "straight_nearest": 0.123,
+  "route_nearest": 0.211,
+  "flow": -0.117
+ },
+ "alive>=2|S": {
+  "route_own": 0.379,
+  "straight_own": 0.289,
+  "straight_nearest": 0.34,
+  "route_nearest": 0.435,
+  "flow": -0.208
+ }
+}

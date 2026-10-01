@@ -1,0 +1,130 @@
+{
+ "last_map": [
+  {
+   "seed": 42,
+   "success": 0.85,
+   "n": 100,
+   "rescued": 34,
+   "broken": 0,
+   "swapped": 0.238,
+   "cf": 0.35,
+   "elapsed_med": 42.20000000000033
+  },
+  {
+   "seed": 43,
+   "success": 0.94,
+   "n": 100,
+   "rescued": 16,
+   "broken": 0,
+   "swapped": 0.286,
+   "cf": 0.26,
+   "elapsed_med": 36.95000000000026
+  },
+  {
+   "seed": 44,
+   "success": 0.9,
+   "n": 100,
+   "rescued": 26,
+   "broken": 1,
+   "swapped": 0.312,
+   "cf": 0.28,
+   "elapsed_med": 32.30000000000019
+  }
+ ],
+ "far_map": [
+  {
+   "seed": 42,
+   "success": 0.87,
+   "n": 100,
+   "rescued": 38,
+   "broken": 2,
+   "swapped": 0.684,
+   "cf": 0.23,
+   "elapsed_med": 27.200000000000117
+  },
+  {
+   "seed": 43,
+   "success": 0.96,
+   "n": 100,
+   "rescued": 20,
+   "broken": 2,
+   "swapped": 0.73,
+   "cf": 0.2,
+   "elapsed_med": 27.050000000000114
+  },
+  {
+   "seed": 44,
+   "success": 0.95,
+   "n": 100,
+   "rescued": 32,
+   "broken": 2,
+   "swapped": 0.77,
+   "cf": 0.27,
+   "elapsed_med": 24.60000000000008
+  }
+ ],
+ "near_map": [
+  {
+   "seed": 42,
+   "success": 0.54,
+   "n": 100,
+   "rescued": 4,
+   "broken": 1,
+   "swapped": 0.055,
+   "cf": 0.17,
+   "elapsed_med": 36.50000000000025
+  },
+  {
+   "seed": 43,
+   "success": 0.84,
+   "n": 100,
+   "rescued": 12,
+   "broken": 6,
+   "swapped": 0.093,
+   "cf": 0.27,
+   "elapsed_med": 31.350000000000176
+  },
+  {
+   "seed": 44,
+   "success": 0.66,
+   "n": 100,
+   "rescued": 5,
+   "broken": 4,
+   "swapped": 0.063,
+   "cf": 0.15,
+   "elapsed_med": 34.65000000000022
+  }
+ ],
+ "gate0.3": [
+  {
+   "seed": 42,
+   "success": 0.44,
+   "n": 100,
+   "rescued": 2,
+   "broken": 9,
+   "swapped": 0.474,
+   "cf": 0.18,
+   "elapsed_med": 54.75000000000051
+  },
+  {
+   "seed": 43,
+   "success": 0.71,
+   "n": 100,
+   "rescued": 7,
+   "broken": 14,
+   "swapped": 0.283,
+   "cf": 0.25,
+   "elapsed_med": 42.600000000000335
+  },
+  {
+   "seed": 44,
+   "success": 0.53,
+   "n": 100,
+   "rescued": 0,
+   "broken": 12,
+   "swapped": 0.31,
+   "cf": 0.13,
+   "elapsed_med": 40.500000000000306
+  }
+ ]
+}

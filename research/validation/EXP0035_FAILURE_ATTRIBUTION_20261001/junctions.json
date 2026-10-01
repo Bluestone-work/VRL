@@ -1,0 +1,74 @@
+{
+ "alive1|F": {
+  "robot_steps": 514799,
+  "frac_on_target_branch": 0.26,
+  "frac_upstream": 0.326,
+  "frac_off_path": 0.414,
+  "junction_crossings": 16224,
+  "wrong_turn_frac": 0.5,
+  "crossings_per_robot_min": 18.91
+ },
+ "alive1|S": {
+  "robot_steps": 268831,
+  "frac_on_target_branch": 0.301,
+  "frac_upstream": 0.278,
+  "frac_off_path": 0.421,
+  "junction_crossings": 4490,
+  "wrong_turn_frac": 0.479,
+  "crossings_per_robot_min": 10.02
+ },
+ "alive2|F": {
+  "robot_steps": 276756,
+  "frac_on_target_branch": 0.319,
+  "frac_upstream": 0.371,
+  "frac_off_path": 0.31,
+  "junction_crossings": 2694,
+  "wrong_turn_frac": 0.496,
+  "crossings_per_robot_min": 5.84
+ },
+ "alive2|S": {
+  "robot_steps": 131760,
+  "frac_on_target_branch": 0.338,
+  "frac_upstream": 0.288,
+  "frac_off_path": 0.373,
+  "junction_crossings": 3934,
+  "wrong_turn_frac": 0.488,
+  "crossings_per_robot_min": 17.91
+ },
+ "alive3|F": {
+  "robot_steps": 90935,
+  "frac_on_target_branch": 0.421,
+  "frac_upstream": 0.354,
+  "frac_off_path": 0.224,
+  "junction_crossings": 2972,
+  "wrong_turn_frac": 0.496,
+  "crossings_per_robot_min": 19.61
+ },
+ "alive3|S": {
+  "robot_steps": 64215,
+  "frac_on_target_branch": 0.492,
+  "frac_upstream": 0.227,
+  "frac_off_path": 0.281,
+  "junction_crossings": 1409,
+  "wrong_turn_frac": 0.506,
+  "crossings_per_robot_min": 13.17
+ },
+ "alive4|F": {
+  "robot_steps": 56535,
+  "frac_on_target_branch": 0.553,
+  "frac_upstream": 0.251,
+  "frac_off_path": 0.196,
+  "junction_crossings": 1351,
+  "wrong_turn_frac": 0.509,
+  "crossings_per_robot_min": 14.34
+ },
+ "alive4|S": {
+  "robot_steps": 72355,
+  "frac_on_target_branch": 0.646,
+  "frac_upstream": 0.132,
+  "frac_off_path": 0.222,
+  "junction_crossings": 685,
+  "wrong_turn_frac": 0.485,
+  "crossings_per_robot_min": 5.68
+ }
+}

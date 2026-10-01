@@ -113,7 +113,7 @@ class DynamicsConfig:
                 if value not in ('nearest_euclidean', 'routed_assigned', 'routed_assigned_masked'):
                     raise ValueError('Invalid target_observation')
             elif name == 'progress_potential':
-                if value not in ('nearest', 'mass_weighted'):
+                if value not in ('nearest', 'mass_weighted', 'assigned'):
                     raise ValueError('Invalid progress_potential')
             elif name == 'command_speed':
                 if value not in ('bounded', 'unit'):
@@ -731,6 +731,8 @@ class MCAPhysicalEnv(gym.Env):
             return np.zeros(self.num_robots)
         if self.config.progress_potential == 'mass_weighted':
             return self._mass_weighted_potential()
+        if self.config.progress_potential == 'assigned':
+            return self._assigned_potential()
         distance = self._target_distances().min(axis=1)
         _, radius, radial, _ = self.transport.coordinates(
             self.positions_mm[:self.num_robots], self.edges[:self.num_robots], self.solution)
@@ -762,6 +764,39 @@ class MCAPhysicalEnv(gym.Env):
                                - self.config.contact_distance_mm, 0.)
         total = (remaining*weight).sum(axis=1)
         return -self.config.progress_reward_scale*total*self.active[:n]
+
+    def _assigned_potential(self):
+        """Distance to each robot's OWN allocated target (the one it observes as assigned).
+
+        EXP35 attribution: the mass-weighted form averages over every remaining
+        target, so it points toward a geodesic median and rewarded 32 percent of
+        robots for moving away from their own target, with only 0.075/mm left
+        on the final target. Within one allocation this is a pure state
+        potential. Allocation changes only when a target is cleared; on that
+        step `_shaping` gives the reassigned robot zero shaping, so finishing a
+        target is never penalised and teammates get no distance windfall.
+        """
+        n = self.num_robots
+        assignment = self._assigned_targets()
+        distance = self._target_distances()
+        _, _, radial, _ = self.transport.coordinates(
+            self.positions_mm[:n], self.edges[:n], self.solution)
+        valid = assignment >= 0
+        own = np.where(valid, distance[np.arange(n), np.clip(assignment, 0, None)], 0.)
+        own = np.where(np.isfinite(own), own, 0.)
+        remaining = np.where(valid, np.maximum(np.hypot(own, radial)-self.config.contact_distance_mm, 0.), 0.)
+        return -self.config.progress_reward_scale*remaining*self.active[:n]
+
+    def _shaping_assignment(self):
+        if self.config.progress_potential != 'assigned' or not self.config.progress_reward_scale:
+            return None
+        return self._assigned_targets().copy() if np.any(self.masses > 0) else np.full(self.num_robots, -1)
+
+    def _shaping(self, potential_before, assignment_before):
+        shaping = self.config.reward_discount*self._reward_potential()-potential_before
+        if assignment_before is not None:
+            shaping[self._shaping_assignment() != assignment_before] = 0.
+        return shaping
 
     def _surface_contacts(self, positions, edges, solution, masses):
         """Contact with the lumen-facing annular stenosis surface, not its axis.
@@ -798,6 +833,7 @@ class MCAPhysicalEnv(gym.Env):
         commands[:self.num_robots] = action*self.config.robot_speed_mm_s
         duration = min(self.config.control_dt_s, self.config.episode_duration_s-self.elapsed_s)
         potential_before = self._reward_potential()
+        assignment_before = self._shaping_assignment()
         # Transactional: callbacks change only local copies. A numerical budget
         # error cannot leave mass/time partially advanced in the live env.
         masses = self.masses.copy()
@@ -879,7 +915,7 @@ class MCAPhysicalEnv(gym.Env):
         self._done = terminated or truncated
         agent_reward = 10*agent_removed - result.wall_contact_s[:n] - .01*duration
         agent_reward -= particle_penalty
-        shaping = self.config.reward_discount*self._reward_potential()-potential_before
+        shaping = self._shaping(potential_before, assignment_before)
         agent_reward += shaping
         already_lost = (~self.active[:n]) & (self.exit_time_s[:n] < self.elapsed_s-duration-1e-12)
         agent_reward[already_lost] = 0
