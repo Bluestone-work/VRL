@@ -44,7 +44,7 @@ def _check_frozen_source(payload):
 
 
 def _worker(job):
-    protocol, checkpoint, base, count = job
+    protocol, checkpoint, base, count, anatomy = job
     import torch
     torch.set_num_threads(1)
     from environments.mca_compiled import CompiledMCAPhysicalEnv
@@ -52,6 +52,10 @@ def _worker(job):
     from marl.mca_physical_policy import make_physical_agent
     from scripts.train_mca_compiled import evaluate
     cfg = DynamicsConfig.from_json(Path(protocol['physics_config']))
+    if anatomy != getattr(cfg, 'anatomy', 'mca_m1_lvo'):
+        # Older snapshots have no anatomy field and can only evaluate MCA.
+        from dataclasses import replace
+        cfg = replace(cfg, anatomy=anatomy)
     payload = torch.load(checkpoint, map_location='cpu', weights_only=False)
     agent = make_physical_agent(CompiledMCAPhysicalEnv(cfg), seed=payload['meta']['training_seed'],
                                 hidden_dim=protocol['hidden_dim'], device='cpu', ppo=protocol.get('ppo'))
@@ -134,7 +138,7 @@ def main(argv=None):
                      test_seed_base=base, layouts=count, started=time.time(), complete=False, partial=partial)
         ledger.data['entries'].append(entry); ledger.save()
     chunks = np.array_split(np.arange(count), max(1, min(args.workers, count)))
-    jobs = [(protocol, str(checkpoint), base+int(c[0]), len(c)) for c in chunks if len(c)]
+    jobs = [(protocol, str(checkpoint), base+int(c[0]), len(c), args.anatomy) for c in chunks if len(c)]
     with ProcessPoolExecutor(len(jobs)) as pool:
         records = [r for part in pool.map(_worker, jobs) for r in part]
     if [r['seed'] for r in records] != list(range(base, base+count)):

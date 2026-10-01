@@ -626,3 +626,22 @@ EXP27 安全暂停于 828192 / 610080 / 550176 步。新协议/源代码/父权�
 ## 2026-10-01 21:50 EXP39 sealed-test result (first formal result on the fixed splits)
 
 > Checkpoint selected on the validation split (200 layouts), one evaluation per selected checkpoint on the sealed test (500 layouts). assigned 49.4/78.2/70.6 (66.1%), control 55.8/78.2/60.6 (64.9%), EXP35 sealed baseline 61.9%. Paired +1.2 pp, seeds not in the same direction: no reliable gain. Training stability clearly improved (milestone-mean validation 61.7% vs 43.4%, at 500K 66.5% vs 40.0%): the own-target potential removes the continued-training degradation. 80% not reached. Report: `research/validation/EXP_0039_SEALED_RESULTS/REPORT.md`.
+
+## 2026-10-02 00:40 — EXP40 / EXP41 sealed results; all 14 anatomies registered
+
+Sealed test, MCA, 500 layouts, selection on the 200-layout validation split:
+
+| method | seed 42 / 43 / 44 | mean | collision-free (mean) |
+|---|---|---:|---:|
+| EXP35 pure RL baseline | 47.0 / 78.2 / 60.6 | 61.9% | — |
+| EXP39 assigned potential (pure RL) | 49.4 / 78.2 / 70.6 | 66.1% | — |
+| EXP40 own bearing in fixed obs columns (pure RL) | 59.2 / 75.2 / 70.2 | 68.2% | 22.2% |
+| route prior alone (no learning) | — | 88.4% | 22.8% |
+| EXP41 route prior + RL residual 0.5 | 88.0 / 89.2 / 94.2 | 90.5% | 24.0% |
+| route + avoid prior alone, gain 6 (no learning) | — | 94.4% | 84.8% |
+
+- EXP40 vs EXP39 paired: +9.8 / −3.0 / −0.4 pp. Exposing the own bearing helps pure RL only slightly and inconsistently; pure RL still does not learn to follow it.
+- EXP41 vs EXP40 paired: +28.8 / +14.0 / +24.0 pp. The structural prior, not the network, carries the gain. EXP41 vs the prior alone: +2.1 pp mean, but collision-free rate is unchanged (~23%), so the RL residual did not learn particle avoidance.
+- The hand-written avoid term is still the strongest result. EXP42 (RL residual on top of it) is training.
+
+Multi-anatomy: `DynamicsConfig.anatomy` (default mca_m1_lvo) selects the territory; all 14 territories now have fixed validation/diagnostic/test splits in configs/evaluation_splits.json (diagnostic rule moved to 970M+k·1M after a collision with MCA validation at k≥10). Prior-only probe on 30 diagnostic layouts each: 13 of 14 anatomies at 97–100% complete, sma_embolism 90%, MCA 97%; MCA is the hardest territory for this controller. Zero-shot sealed tests of the gain-6 prior on the 13 non-MCA anatomies are running (study PRIOR_ZERO_SHOT_ANATOMIES, 13 declared).

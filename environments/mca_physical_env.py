@@ -104,6 +104,7 @@ class DynamicsConfig:
     action_prior: str = 'none'
     action_residual_scale: float = 1.
     action_avoid_gain: float = 0.
+    anatomy: str = 'mca_m1_lvo'
     particle_collision_event_penalty: float = 0.
     particle_near_penalty_per_s: float = 0.
     particle_safety_margin_mm: float = .15
@@ -126,6 +127,10 @@ class DynamicsConfig:
             elif name == 'particle_initialization':
                 if value not in ('length_uniform', 'mixed_branch_density'):
                     raise ValueError('Invalid particle_initialization')
+            elif name == 'anatomy':
+                from environments.vessel_anatomy import TERRITORIES
+                if value not in TERRITORIES:
+                    raise ValueError(f'Invalid anatomy {value!r}')
             elif name == 'clot_initialization':
                 if value not in ('historical_sites','random_branches'):
                     raise ValueError('Invalid clot_initialization')
@@ -168,7 +173,7 @@ class DynamicsConfig:
                       'robot_initialization', 'contact_model', 'progress_reward_scale', 'reward_discount',
                       'particle_contact_penalty_per_s', 'particle_initialization',
                       'inlet_flow_multiplier_min', 'inlet_flow_multiplier_max', 'clot_initialization',
-                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain',
+                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain', 'anatomy',
                       'particle_collision_event_penalty',
                       'particle_near_penalty_per_s', 'particle_safety_margin_mm', 'particle_prediction_horizon_s')
                       else data[f.name] for f in fields(cls)})
@@ -470,7 +475,7 @@ class MCAPhysicalEnv(gym.Env):
         unknown = set(options) - {'robot_positions_mm', 'particle_positions_mm'}
         if unknown:
             raise ValueError(f'Unknown reset options: {sorted(unknown)}')
-        self.tree = self._fixed_tree or build_territory('mca_m1_lvo', rng=self.np_random,
+        self.tree = self._fixed_tree or build_territory(self.config.anatomy, rng=self.np_random,
                         variation=self.config.geometry_variation, min_radius=0)
         scale = getattr(self.tree, 'physical_mm_per_unit', None)
         if scale is None:

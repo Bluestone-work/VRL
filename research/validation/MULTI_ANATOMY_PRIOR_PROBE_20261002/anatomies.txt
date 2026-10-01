@@ -1,0 +1,14 @@
+pulmonary_saddle
+coronary_lm_bifurcation
+coronary_rca
+iliac_may_thurner
+popliteal_calf_dvt
+mca_m1_lvo
+ica_siphon
+ica_terminus_t
+carotid_bifurcation
+basilar_vertebral
+cerebral_venous_sinus
+sma_embolism
+femoropopliteal_pad
+renal_artery

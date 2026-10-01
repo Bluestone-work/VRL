@@ -1,22 +1,257 @@
 {
-  "version": 1,
-  "description": "Fixed layout splits per anatomy. Every layout is one seed passed to reset_with_valid_particles. validation: checkpoint/hyper-parameter/direction choices, reusable. diagnostic: failure analysis and interventions, reusable, never reported as a result. test: sealed, evaluated only through scripts/evaluate_mca_sealed_test.py, which logs every access in research/sealed_test/LEDGER.json and never evaluates the same checkpoint twice.",
-  "history": "Until 2026-10-01 the MCA development set 940000000-940000099 was used to pick EXP35 and to design the EXP38 potential, so it is retired to diagnostic use. The MCA selection base 950000000 (100 layouts in EXP37) becomes the validation split and grows to 200 layouts.",
-  "anatomies": {
-    "mca_m1_lvo": {
-      "validation": {"seed_base": 950000000, "count": 200},
-      "diagnostic": {"seed_base": 940000000, "count": 100},
-      "test": {"seed_base": 990000000, "count": 500}
-    }
+ "version": 1,
+ "description": "Fixed layout splits per anatomy. Every layout is one seed passed to reset_with_valid_particles. validation: checkpoint/hyper-parameter/direction choices, reusable. diagnostic: failure analysis and interventions, reusable, never reported as a result. test: sealed, evaluated only through scripts/evaluate_mca_sealed_test.py, which logs every access in research/sealed_test/LEDGER.json and never evaluates the same checkpoint twice.",
+ "history": "Until 2026-10-01 the MCA development set 940000000-940000099 was used to pick EXP35 and to design the EXP38 potential, so it is retired to diagnostic use. The MCA selection base 950000000 (100 layouts in EXP37) becomes the validation split and grows to 200 layouts. 2026-10-02: all 14 territories in environments/vessel_anatomy.py registered by new_anatomy_rule, order = anatomy_order (mca_m1_lvo first, then TERRITORIES order).",
+ "anatomies": {
+  "mca_m1_lvo": {
+   "validation": {
+    "seed_base": 950000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 940000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 990000000,
+    "count": 500
+   }
   },
-  "new_anatomy_rule": "Anatomy k (1-based order of addition after mca_m1_lvo) uses validation 950000000+k*1000000, diagnostic 940000000+k*1000000, test 990000000+k*1000000, same counts.",
-  "reserved_ranges": [
-    {"name": "feasibility certificates", "start": 820000000, "stop": 870000000},
-    {"name": "legacy validation/screening", "start": 900000000, "stop": 940000000},
-    {"name": "training stream 100000000 + seed*1e7", "start": 520000000, "stop": 550000000},
-    {"name": "training stream 300000000 + seed*1e7", "start": 720000000, "stop": 750000000},
-    {"name": "training stream 1200000000 + seed*1e7", "start": 1620000000, "stop": 1650000000},
-    {"name": "training stream 1700000000 + seed*1e7", "start": 2120000000, "stop": 2150000000},
-    {"name": "training stream 1900000000 + seed*1e7", "start": 2320000000, "stop": 2350000000}
-  ]
+  "pulmonary_saddle": {
+   "validation": {
+    "seed_base": 951000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 971000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 991000000,
+    "count": 500
+   }
+  },
+  "coronary_lm_bifurcation": {
+   "validation": {
+    "seed_base": 952000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 972000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 992000000,
+    "count": 500
+   }
+  },
+  "coronary_rca": {
+   "validation": {
+    "seed_base": 953000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 973000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 993000000,
+    "count": 500
+   }
+  },
+  "iliac_may_thurner": {
+   "validation": {
+    "seed_base": 954000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 974000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 994000000,
+    "count": 500
+   }
+  },
+  "popliteal_calf_dvt": {
+   "validation": {
+    "seed_base": 955000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 975000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 995000000,
+    "count": 500
+   }
+  },
+  "ica_siphon": {
+   "validation": {
+    "seed_base": 956000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 976000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 996000000,
+    "count": 500
+   }
+  },
+  "ica_terminus_t": {
+   "validation": {
+    "seed_base": 957000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 977000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 997000000,
+    "count": 500
+   }
+  },
+  "carotid_bifurcation": {
+   "validation": {
+    "seed_base": 958000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 978000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 998000000,
+    "count": 500
+   }
+  },
+  "basilar_vertebral": {
+   "validation": {
+    "seed_base": 959000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 979000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 999000000,
+    "count": 500
+   }
+  },
+  "cerebral_venous_sinus": {
+   "validation": {
+    "seed_base": 960000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 980000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 1000000000,
+    "count": 500
+   }
+  },
+  "sma_embolism": {
+   "validation": {
+    "seed_base": 961000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 981000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 1001000000,
+    "count": 500
+   }
+  },
+  "femoropopliteal_pad": {
+   "validation": {
+    "seed_base": 962000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 982000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 1002000000,
+    "count": 500
+   }
+  },
+  "renal_artery": {
+   "validation": {
+    "seed_base": 963000000,
+    "count": 200
+   },
+   "diagnostic": {
+    "seed_base": 983000000,
+    "count": 100
+   },
+   "test": {
+    "seed_base": 1003000000,
+    "count": 500
+   }
+  }
+ },
+ "new_anatomy_rule": "Anatomy k (1-based index in anatomy_order) uses validation 950000000+k*1000000, diagnostic 970000000+k*1000000, test 990000000+k*1000000, same counts. (Diagnostic moved from 940000000+k*1e6 on 2026-10-02 because k>=10 collided with mca_m1_lvo validation; a probe run under the old rule was discarded before completion.)",
+ "reserved_ranges": [
+  {
+   "name": "feasibility certificates",
+   "start": 820000000,
+   "stop": 870000000
+  },
+  {
+   "name": "legacy validation/screening",
+   "start": 900000000,
+   "stop": 940000000
+  },
+  {
+   "name": "training stream 100000000 + seed*1e7",
+   "start": 520000000,
+   "stop": 550000000
+  },
+  {
+   "name": "training stream 300000000 + seed*1e7",
+   "start": 720000000,
+   "stop": 750000000
+  },
+  {
+   "name": "training stream 1200000000 + seed*1e7",
+   "start": 1620000000,
+   "stop": 1650000000
+  },
+  {
+   "name": "training stream 1700000000 + seed*1e7",
+   "start": 2120000000,
+   "stop": 2150000000
+  },
+  {
+   "name": "training stream 1900000000 + seed*1e7",
+   "start": 2320000000,
+   "stop": 2350000000
+  }
+ ],
+ "anatomy_order": [
+  "mca_m1_lvo",
+  "pulmonary_saddle",
+  "coronary_lm_bifurcation",
+  "coronary_rca",
+  "iliac_may_thurner",
+  "popliteal_calf_dvt",
+  "ica_siphon",
+  "ica_terminus_t",
+  "carotid_bifurcation",
+  "basilar_vertebral",
+  "cerebral_venous_sinus",
+  "sma_embolism",
+  "femoropopliteal_pad",
+  "renal_artery"
+ ]
 }
