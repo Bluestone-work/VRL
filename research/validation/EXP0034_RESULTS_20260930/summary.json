@@ -1,0 +1,145 @@
+{
+ "study": "research/runs/EXP_0034_ROUTED_20260930a",
+ "arms": [
+  "masked",
+  "masked_potential",
+  "routed"
+ ],
+ "control": "masked",
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "steps_per_arm_seed": 500000,
+ "evaluation_layouts": 100,
+ "evaluation_sha256": {
+  "masked/seed_42": "454bae56a1bdce3a9df45259443b1e8efcce352e43c213b1d6015ea23deb969a",
+  "masked/seed_43": "5c605e1e7729ef8111c2ed1eb8d0335c51b1426db8b9c9808423cc82fd08a3c6",
+  "masked/seed_44": "3662165e0cac87ba755a00ad48cd257a0e2a2dfaf3179b57597833158b6e7cd2",
+  "masked_potential/seed_42": "288695b4404ba5facde259b901885559f04858711644e5d2e6d70515088b86bd",
+  "masked_potential/seed_43": "1db04a2e79fa46196cfe6a03bce088281d4125622888f2fb96e0b467614fc0ee",
+  "masked_potential/seed_44": "e7f6a34ae6b833ecb44519d04b616f4649b2c2b99c425934e06904f2c1aa278e",
+  "routed/seed_42": "7da9e85f03277170e88593a4c2c129a210f5d89d1724c422bfc7107c9a62aa2a",
+  "routed/seed_43": "bca26c80c54de22d32d6c79980030b27a594869517c98d6561bc7f8424609117",
+  "routed/seed_44": "62ef77836cde3c4a5206ec9bd70f298e79ee56e1dc6097876d9fdf473ac3752a"
+ },
+ "results": {
+  "masked": {
+   "42": {
+    "success": 23.0,
+    "clean": 9.0,
+    "collision": 61.0,
+    "removal": 72.67439674955398,
+    "events": 1.63,
+    "contact_s": 0.29713426588163994,
+    "duration": 153.3539999999999
+   },
+   "43": {
+    "success": 18.0,
+    "clean": 3.0,
+    "collision": 70.0,
+    "removal": 74.84896866702427,
+    "events": 2.46,
+    "contact_s": 0.5249337499672021,
+    "duration": 159.85899999999987
+   },
+   "44": {
+    "success": 56.99999999999999,
+    "clean": 14.000000000000002,
+    "collision": 65.0,
+    "removal": 87.05783309794279,
+    "events": 3.21,
+    "contact_s": 0.6722986915342196,
+    "duration": 107.77499999999985
+   },
+   "mean": {
+    "success": 32.666666666666664,
+    "clean": 8.666666666666666,
+    "collision": 65.33333333333333,
+    "removal": 78.19373283817369,
+    "events": 2.433333333333333,
+    "contact_s": 0.49812223579435394,
+    "duration": 140.3293333333332
+   }
+  },
+  "masked_potential": {
+   "42": {
+    "success": 45.0,
+    "clean": 20.0,
+    "collision": 51.0,
+    "removal": 80.89736293483995,
+    "events": 1.56,
+    "contact_s": 0.2609102152202702,
+    "duration": 134.34899999999953
+   },
+   "43": {
+    "success": 13.0,
+    "clean": 1.0,
+    "collision": 75.0,
+    "removal": 73.31875256625017,
+    "events": 2.13,
+    "contact_s": 0.4951173492475613,
+    "duration": 168.17799999999986
+   },
+   "44": {
+    "success": 25.0,
+    "clean": 9.0,
+    "collision": 56.99999999999999,
+    "removal": 73.39266838589924,
+    "events": 1.1,
+    "contact_s": 0.28163318129286147,
+    "duration": 157.03799999999967
+   },
+   "mean": {
+    "success": 27.666666666666668,
+    "clean": 10.0,
+    "collision": 61.0,
+    "removal": 75.86959462899645,
+    "events": 1.5966666666666667,
+    "contact_s": 0.34588691525356435,
+    "duration": 153.18833333333302
+   }
+  },
+  "routed": {
+   "42": {
+    "success": 57.99999999999999,
+    "clean": 19.0,
+    "collision": 59.0,
+    "removal": 86.15356912737431,
+    "events": 1.81,
+    "contact_s": 0.2821189647802775,
+    "duration": 113.82999999999967
+   },
+   "43": {
+    "success": 53.0,
+    "clean": 13.0,
+    "collision": 72.0,
+    "removal": 85.5108638947518,
+    "events": 2.44,
+    "contact_s": 0.4347732232345043,
+    "duration": 118.08799999999965
+   },
+   "44": {
+    "success": 31.0,
+    "clean": 12.0,
+    "collision": 62.0,
+    "removal": 72.67433997005634,
+    "events": 1.42,
+    "contact_s": 0.23856220548090068,
+    "duration": 150.10599999999963
+   },
+   "mean": {
+    "success": 47.333333333333336,
+    "clean": 14.666666666666666,
+    "collision": 64.33333333333333,
+    "removal": 81.44625766406081,
+    "events": 1.89,
+    "contact_s": 0.31848479783189415,
+    "duration": 127.341333333333
+   }
+  }
+ },
+ "scope": "Paired development validation on 100 shared layouts; not a sealed test",
+ "world_model": false
+}

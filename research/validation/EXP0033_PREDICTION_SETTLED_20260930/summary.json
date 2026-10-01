@@ -1,0 +1,353 @@
+{
+  "states": 47,
+  "checkpoint_sha256": {
+    "trajectory/42": "936de42ba0e70c71c4793c54383b5e533728f2177c1091c7c5101a21dec74fab",
+    "trajectory/43": "aa6e857974f55426d78ce2ca6ffbbdc3bf23aa90d3d73a45ccd73b7a4c475701",
+    "trajectory/44": "6745a7c4aeae10fbe70ea60444b3bc3e3e50c5b7696a5dde851131dc600d8d6e",
+    "masked/42": "fdc84ad9648840f98e867bdc01ccf95fe60349e52ae0e4f11ffd8d6cee98ae8f",
+    "masked/43": "b12331101df9125f04257f03d2203783dd6071644094090476249339de54fe40",
+    "masked/44": "e9fa66955a6880fe1c3cae7981d7f80b7e3a121535a1c86051207819914cd478"
+  },
+  "world_model": false,
+  "deterministic_warmup_steps": 50,
+  "scope": "Saved states of six EXP32 final models, future deterministic policy execution; correlated diagnostic samples, not independent evaluation episodes.",
+  "definitions": {
+    "particle": "route transport vs constant particle velocity",
+    "robot": "constant robot velocity error (route column) vs stationary robot error (linear column)",
+    "relative": "four linear-risk-ranked particle-robot pairs; route or linear particles minus constant-velocity robot",
+    "near": "current or actual future center distance <0.5 mm; diagnostic selection uses future only after rollout, never policy observation"
+  },
+  "errors": {
+    "0.1": {
+      "particle": {
+        "route_error_mm": {
+          "count": 1293,
+          "mean": 1.471856284072713e-06,
+          "median": 2.760163596285996e-13,
+          "p95": 1.9638057059346856e-06,
+          "maximum": 0.00019095206738073295
+        },
+        "linear_error_mm": {
+          "count": 1293,
+          "mean": 5.924866900717385e-06,
+          "median": 1.264315033219248e-07,
+          "p95": 9.503444672090647e-06,
+          "maximum": 0.0031106869531370126
+        }
+      },
+      "robot": {
+        "route_error_mm": {
+          "count": 235,
+          "mean": 0.032639601717732517,
+          "median": 0.014966026520346698,
+          "p95": 0.14531123087703565,
+          "maximum": 0.3109704630915642
+        },
+        "linear_error_mm": {
+          "count": 235,
+          "mean": 0.037183391943360365,
+          "median": 0.031525374343776974,
+          "p95": 0.08822363190148967,
+          "maximum": 0.23153856808739318
+        }
+      },
+      "relative": {
+        "route_error_mm": {
+          "count": 940,
+          "mean": 0.03263960615092395,
+          "median": 0.014966026526025387,
+          "p95": 0.14939516093516114,
+          "maximum": 0.3109704630988568
+        },
+        "linear_error_mm": {
+          "count": 940,
+          "mean": 0.03264013068353668,
+          "median": 0.014965990741332655,
+          "p95": 0.1493950006460016,
+          "maximum": 0.3109774557862898
+        }
+      },
+      "relative_near": {
+        "route_error_mm": {
+          "count": 9,
+          "mean": 0.07747037121999906,
+          "median": 0.08036366579361455,
+          "p95": 0.15116742646123413,
+          "maximum": 0.15234893681180903
+        },
+        "linear_error_mm": {
+          "count": 9,
+          "mean": 0.07747083759642313,
+          "median": 0.080365062227387,
+          "p95": 0.15116750624156125,
+          "maximum": 0.15234904885964393
+        }
+      }
+    },
+    "0.5": {
+      "particle": {
+        "route_error_mm": {
+          "count": 1290,
+          "mean": 4.846462374475956e-05,
+          "median": 8.89553650764789e-11,
+          "p95": 9.888691301297016e-05,
+          "maximum": 0.005324941302114006
+        },
+        "linear_error_mm": {
+          "count": 1290,
+          "mean": 0.00012795245682455773,
+          "median": 3.888841791856026e-06,
+          "p95": 0.0004782843705952855,
+          "maximum": 0.024197329948676263
+        }
+      },
+      "robot": {
+        "route_error_mm": {
+          "count": 235,
+          "mean": 0.11508213501665665,
+          "median": 0.056143519310876494,
+          "p95": 0.4516346855990066,
+          "maximum": 0.6319483477570476
+        },
+        "linear_error_mm": {
+          "count": 235,
+          "mean": 0.13010366365717024,
+          "median": 0.07803225591491794,
+          "p95": 0.38078199144894276,
+          "maximum": 0.662676654118033
+        }
+      },
+      "relative": {
+        "route_error_mm": {
+          "count": 940,
+          "mean": 0.11508682304591066,
+          "median": 0.05614351931112509,
+          "p95": 0.454045090199367,
+          "maximum": 0.6319673966519238
+        },
+        "linear_error_mm": {
+          "count": 940,
+          "mean": 0.1150968879163706,
+          "median": 0.05614340222243807,
+          "p95": 0.454041050000705,
+          "maximum": 0.6320534721373825
+        }
+      },
+      "relative_near": {
+        "route_error_mm": {
+          "count": 12,
+          "mean": 0.23442191661942366,
+          "median": 0.14784008958547276,
+          "p95": 0.5726810617403711,
+          "maximum": 0.6319483477641656
+        },
+        "linear_error_mm": {
+          "count": 12,
+          "mean": 0.23443358950716497,
+          "median": 0.1478544864119895,
+          "p95": 0.572684357458188,
+          "maximum": 0.6319500786616219
+        }
+      }
+    },
+    "1.0": {
+      "particle": {
+        "route_error_mm": {
+          "count": 1290,
+          "mean": 0.0003164516981316623,
+          "median": 2.0994117150826587e-10,
+          "p95": 0.002349547211022159,
+          "maximum": 0.016200090946217747
+        },
+        "linear_error_mm": {
+          "count": 1290,
+          "mean": 0.0005799848323174468,
+          "median": 1.6050187127827547e-05,
+          "p95": 0.0033756816755323464,
+          "maximum": 0.05058092762567215
+        }
+      },
+      "robot": {
+        "route_error_mm": {
+          "count": 235,
+          "mean": 0.2284337399999768,
+          "median": 0.13486084052769154,
+          "p95": 0.8935481573661697,
+          "maximum": 1.2012664132465831
+        },
+        "linear_error_mm": {
+          "count": 235,
+          "mean": 0.24737740180332388,
+          "median": 0.14368983375205266,
+          "p95": 0.7663850199506183,
+          "maximum": 1.1504167723494672
+        }
+      },
+      "relative": {
+        "route_error_mm": {
+          "count": 940,
+          "mean": 0.2284623441846981,
+          "median": 0.13486084052758573,
+          "p95": 0.9366678722118487,
+          "maximum": 1.2013041270612177
+        },
+        "linear_error_mm": {
+          "count": 940,
+          "mean": 0.2284911163018564,
+          "median": 0.1348601856286103,
+          "p95": 0.936684668618467,
+          "maximum": 1.2018638299140012
+        }
+      },
+      "relative_near": {
+        "route_error_mm": {
+          "count": 14,
+          "mean": 0.35758582095985236,
+          "median": 0.23527122317810273,
+          "p95": 1.0292195180644568,
+          "maximum": 1.2013041270612177
+        },
+        "linear_error_mm": {
+          "count": 14,
+          "mean": 0.3576865285403979,
+          "median": 0.23527046118879474,
+          "p95": 1.029355210190656,
+          "maximum": 1.2016533793879915
+        }
+      }
+    },
+    "2.0": {
+      "particle": {
+        "route_error_mm": {
+          "count": 1287,
+          "mean": 0.0012433853476606102,
+          "median": 5.325073582103854e-10,
+          "p95": 0.008093113850125335,
+          "maximum": 0.05520083924480177
+        },
+        "linear_error_mm": {
+          "count": 1287,
+          "mean": 0.002129329199024561,
+          "median": 6.955466022349619e-05,
+          "p95": 0.01421678580428496,
+          "maximum": 0.10343791660324025
+        }
+      },
+      "robot": {
+        "route_error_mm": {
+          "count": 235,
+          "mean": 0.4877636842711289,
+          "median": 0.27753383758180733,
+          "p95": 1.7880159575865537,
+          "maximum": 2.5295167401603202
+        },
+        "linear_error_mm": {
+          "count": 235,
+          "mean": 0.4758407147976975,
+          "median": 0.2751640249370805,
+          "p95": 1.4833790207967075,
+          "maximum": 1.7352852018844418
+        }
+      },
+      "relative": {
+        "route_error_mm": {
+          "count": 939,
+          "mean": 0.48823410796628564,
+          "median": 0.27686402656581977,
+          "p95": 1.8506477304291236,
+          "maximum": 2.529517687349621
+        },
+        "linear_error_mm": {
+          "count": 939,
+          "mean": 0.48830364144873123,
+          "median": 0.27686403417085065,
+          "p95": 1.850647472262024,
+          "maximum": 2.529517593590387
+        }
+      },
+      "relative_near": {
+        "route_error_mm": {
+          "count": 15,
+          "mean": 0.8338581315476231,
+          "median": 0.6481240830503693,
+          "p95": 2.0468210050564486,
+          "maximum": 2.283044946426345
+        },
+        "linear_error_mm": {
+          "count": 15,
+          "mean": 0.834163308661529,
+          "median": 0.6481239699377425,
+          "p95": 2.0474203267182944,
+          "maximum": 2.283135319171169
+        }
+      }
+    }
+  },
+  "initial_distance_strata": {
+    "near_third": {
+      "layout_count": 34,
+      "maximum_nearest_robot_geodesic_distance_mm": {
+        "count": 34,
+        "mean": 7.922081477445592,
+        "median": 8.178505073542945,
+        "p95": 11.780660066426368,
+        "maximum": 11.92928153760119
+      },
+      "results": {
+        "masked": {
+          "success_rate": 0.49019607843137253,
+          "collision_free_success_rate": 0.14705882352941177
+        },
+        "trajectory": {
+          "success_rate": 0.18627450980392157,
+          "collision_free_success_rate": 0.00980392156862745
+        }
+      }
+    },
+    "middle_third": {
+      "layout_count": 33,
+      "maximum_nearest_robot_geodesic_distance_mm": {
+        "count": 33,
+        "mean": 14.837846593207338,
+        "median": 15.370783629399021,
+        "p95": 16.969220686821714,
+        "maximum": 17.27548964854951
+      },
+      "results": {
+        "masked": {
+          "success_rate": 0.46464646464646464,
+          "collision_free_success_rate": 0.20202020202020202
+        },
+        "trajectory": {
+          "success_rate": 0.08080808080808081,
+          "collision_free_success_rate": 0.010101010101010102
+        }
+      }
+    },
+    "far_third": {
+      "layout_count": 33,
+      "maximum_nearest_robot_geodesic_distance_mm": {
+        "count": 33,
+        "mean": 24.347654547619307,
+        "median": 21.926026291664378,
+        "p95": 38.29644479732545,
+        "maximum": 43.858649465482856
+      },
+      "results": {
+        "masked": {
+          "success_rate": 0.3939393939393939,
+          "collision_free_success_rate": 0.10101010101010101
+        },
+        "trajectory": {
+          "success_rate": 0.09090909090909091,
+          "collision_free_success_rate": 0.020202020202020204
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "scripts/audit_mca_prediction_components.py": "dd0d584859b52ed43954c7d43dd445c272c31a7c39d35706abcb19af0c3f2884",
+    "environments/mca_obstacle_forecast.py": "8b2262acb0c58469c0311dd3c2af623a2cadb69c3f4c84c0d45c4862d718f2b0",
+    "environments/mca_physical_env.py": "33cdde89790911a13c89565aa09122addc6852d57429bf50aed4ca1438f5e0e4"
+  }
+}

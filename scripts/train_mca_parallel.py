@@ -72,7 +72,9 @@ def train(args):
     if args.initialize_from:
         initial_path=Path(args.initialize_from).resolve()
         parent=torch.load(initial_path,map_location='cpu',weights_only=False)
-        expansion=protocol.get('weight_initialization') in ('expand_point36_to_obstacles76', 'expand_obstacles76_to_trajectories172')
+        expansion=protocol.get('weight_initialization') in ('expand_point36_to_obstacles76', 'expand_obstacles76_to_trajectories172',
+            'expand_obstacles76_to_bounded172', 'expand_obstacles76_to_anchored172',
+            'expand_obstacles76_to_routed112', 'expand_bounded172_to_routed208')
         for key in (('action_semantics','physical_action_semantics') if expansion else
                     ('observation_schema','action_semantics','physical_action_semantics')):
             if parent['meta'].get(key)!=agent.meta.get(key):

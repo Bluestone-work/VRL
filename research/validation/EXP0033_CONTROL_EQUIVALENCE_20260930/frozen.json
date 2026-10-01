@@ -1,0 +1,50 @@
+{
+  "source_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0032_TRAJECTORY_20260930a/trajectory/source_snapshot",
+  "results": {
+    "TRAJECTORY": [
+      {
+        "seed": 940000000,
+        "sha256": "d9a512ee75536e2ff85529dccf0ea6e16ee9080fa56f5e3bf0e20dfc92569c25"
+      },
+      {
+        "seed": 940000001,
+        "sha256": "751544420f88c6eb0f0a41a264b6bc691d2d79a17799fd88e258ce79c8096f55"
+      },
+      {
+        "seed": 940000002,
+        "sha256": "d69398c71ea81f1f8dd88c5bc9378d9237900c5e38f1fa95fc6fc6d3b5905d72"
+      },
+      {
+        "seed": 940000003,
+        "sha256": "e409deb2eef16c5f28c59f063d7221e6ad1e8cb9c53b710ea4edcee63cd45064"
+      },
+      {
+        "seed": 940000004,
+        "sha256": "590ff2362a81391eb31c896b43f27534344b207784d976b142ddcb18169f6ba1"
+      }
+    ],
+    "MASKED": [
+      {
+        "seed": 940000000,
+        "sha256": "dc200698a3dcdf91109fe350428f1204a78cc1ef92f5037b87aae1fad82342eb"
+      },
+      {
+        "seed": 940000001,
+        "sha256": "84df4b6219ec6aedf953812fb888e287506c73269f2e4bea4cf4f3c329e17f00"
+      },
+      {
+        "seed": 940000002,
+        "sha256": "612bf26bb86e657ef04a2c4d1b6a676512c2db7192e97808fe18734514302e6c"
+      },
+      {
+        "seed": 940000003,
+        "sha256": "4f3eaee165a0aafc4804cc5a44417969d1a9a4e9d4fc89dac5625989e9c4c016"
+      },
+      {
+        "seed": 940000004,
+        "sha256": "beabf2e50131bb640558e8c3fdc1fa463918a2ebbb7df57072b7dd4847f4ba90"
+      }
+    ]
+  },
+  "scope": "Five fixed action streams per EXP32 arm; entire observations, initialization, physics and reward byte comparison. Not policy performance."
+}

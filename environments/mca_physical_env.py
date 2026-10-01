@@ -17,10 +17,34 @@ from gymnasium import spaces
 from environments.mca_physical_dynamics import PhysicalTubeTransport
 from environments.mca_physiology import PhysicalUnits, PressureDrivenTreeFlow, _finite_scalar
 from environments.vessel_anatomy import build_territory
-from environments.mca_obstacle_forecast import forecast_particles, trajectory_features
+from environments.mca_obstacle_forecast import (forecast_particles, trajectory_features,
+    linear_particle_predictions, bound_trajectory_features)
 
 
 CONFIG_PATH = Path(__file__).resolve().parents[1] / 'configs/experiments/EXP_0022B_MCA_DYNAMICS.json'
+
+# Appended routed-target block: per-clot slot features plus a per-robot summary.
+TARGET_SLOT_DIMS = 8
+TARGET_SUMMARY_DIMS = 4
+# Route lookahead mirrors the diagnostic path follower; a robot standing on its
+# routing node steps to the next hop instead of reporting a degenerate bearing.
+ROUTE_LOOKAHEAD_MM = .06
+# Inside this geodesic range the route collapses onto the target point itself.
+ROUTE_DIRECT_MM = .7
+
+
+def bound_command(action, mode='bounded'):
+    """Clip to the unit ball; 'unit' then runs every nonzero direction at full speed.
+
+    'unit' models a constant-speed actuator: the policy still chooses the
+    direction (and can stop with an exactly zero command), but not a slower
+    speed. No route, target or flow information is read here.
+    """
+    action = np.clip(action, -1, 1)
+    norm = np.linalg.norm(action, axis=1, keepdims=True)
+    if mode == 'unit':
+        return np.where(norm > 1e-12, action/np.maximum(norm, 1e-12), 0.)
+    return action/np.maximum(norm, 1)
 
 
 @dataclass(frozen=True)
@@ -53,6 +77,9 @@ class DynamicsConfig:
     inlet_flow_multiplier_max: float = 1.
     clot_initialization: str = 'historical_sites'
     obstacle_observation: str = 'nearest'
+    target_observation: str = 'nearest_euclidean'
+    progress_potential: str = 'nearest'
+    command_speed: str = 'bounded'
     particle_collision_event_penalty: float = 0.
     particle_near_penalty_per_s: float = 0.
     particle_safety_margin_mm: float = .15
@@ -79,8 +106,18 @@ class DynamicsConfig:
                 if value not in ('historical_sites','random_branches'):
                     raise ValueError('Invalid clot_initialization')
             elif name == 'obstacle_observation':
-                if value not in ('nearest','predictive_four','trajectory_four','trajectory_four_masked'):
+                if value not in ('nearest','predictive_four','trajectory_four','trajectory_four_masked',
+                                 'bounded_trajectory_four','bounded_linear_four','anchored_linear_four'):
                     raise ValueError('Invalid obstacle_observation')
+            elif name == 'target_observation':
+                if value not in ('nearest_euclidean', 'routed_assigned', 'routed_assigned_masked'):
+                    raise ValueError('Invalid target_observation')
+            elif name == 'progress_potential':
+                if value not in ('nearest', 'mass_weighted'):
+                    raise ValueError('Invalid progress_potential')
+            elif name == 'command_speed':
+                if value not in ('bounded', 'unit'):
+                    raise ValueError('Invalid command_speed')
             elif name == 'assumption_provenance':
                 if not isinstance(value, str) or not value.strip():
                     raise ValueError('Explicit assumption provenance required')
@@ -103,7 +140,8 @@ class DynamicsConfig:
                       'robot_initialization', 'contact_model', 'progress_reward_scale', 'reward_discount',
                       'particle_contact_penalty_per_s', 'particle_initialization',
                       'inlet_flow_multiplier_min', 'inlet_flow_multiplier_max', 'clot_initialization',
-                      'obstacle_observation', 'particle_collision_event_penalty',
+                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed',
+                      'particle_collision_event_penalty',
                       'particle_near_penalty_per_s', 'particle_safety_margin_mm', 'particle_prediction_horizon_s')
                       else data[f.name] for f in fields(cls)})
 
@@ -127,18 +165,31 @@ class MCAPhysicalEnv(gym.Env):
             self.observation_schema = 'mca_surface_36_v2'
         elif self.config.contact_model == 'localized_point':
             self.observation_schema = 'mca_point_36_v3'
-        if self.config.obstacle_observation in ('predictive_four','trajectory_four','trajectory_four_masked'):
+        if self.config.obstacle_observation != 'nearest':
             if self.config.contact_model != 'localized_point':
                 raise ValueError('Predictive obstacle observations require localized point targets')
             self.observation_schema = 'mca_point_obstacles_76_v4'
         self.obs_dim = 76 if self.config.obstacle_observation != 'nearest' else 36
-        if self.config.obstacle_observation in ('trajectory_four','trajectory_four_masked'):
+        if self.config.obstacle_observation not in ('nearest','predictive_four'):
             self.observation_schema = 'mca_point_trajectories_172_v5'
             self.obs_dim = 172
+        if self.config.obstacle_observation in ('bounded_trajectory_four','bounded_linear_four'):
+            self.observation_schema = 'mca_point_bounded_172_v6'
+        elif self.config.obstacle_observation == 'anchored_linear_four':
+            self.observation_schema = 'mca_point_anchored_172_v7'
         self.num_robots = self.config.num_robots
         self._fixed_tree = tree
         self._fixed_clot_stations = None if clot_stations is None else np.asarray(clot_stations, np.int32)
         self.num_clots = 4 if clot_stations is None else len(clot_stations)
+        # Routed/assigned target features are appended; the whole prefix above
+        # stays byte-identical so a v4/v5/v6/v7 parent expands into this schema.
+        self.target_block = 0
+        if self.config.target_observation != 'nearest_euclidean':
+            if self.config.contact_model != 'localized_point':
+                raise ValueError('Routed target observations require localized point targets')
+            self.target_block = TARGET_SLOT_DIMS*self.num_clots + TARGET_SUMMARY_DIMS
+            self.observation_schema = f'mca_point_routed_{self.obs_dim+self.target_block}_v8'
+            self.obs_dim += self.target_block
         self.action_space = spaces.Box(-1., 1., (self.num_robots, 3), dtype=np.float32)
         self.observation_space = spaces.Dict({
             'nodes': spaces.Box(-np.inf, np.inf, (self.num_robots, self.obs_dim), dtype=np.float32),
@@ -286,7 +337,14 @@ class MCAPhysicalEnv(gym.Env):
         arc = (self.tree.arclength[:,None]-self.tree.arclength[self.clot_stations])*self.units.mm_per_unit
         same = self.tree.branch_ids[:,None] == self.tree.branch_ids[self.clot_stations]
         self._occlusion_bump = np.exp(-.5*(arc/self.config.clot_width_mm)**2)*same
-        self.routes = [self.tree.route_to(int(station))[0]*self.units.mm_per_unit for station in self.clot_stations]
+        routing = [self.tree.route_to(int(station)) for station in self.clot_stations]
+        self.routes = [distance*self.units.mm_per_unit for distance, _ in routing]
+        self._route_next_hop = [hop for _, hop in routing]
+
+    def _reset_targets(self):
+        """Clear the sticky allocation; a new episode never inherits targets."""
+        self._assignment = None
+        self._assignment_alive = None
 
     def _reset_avoidance(self):
         self._particle_overlaps = np.zeros((self.num_robots,self.config.particle_count),bool)
@@ -417,6 +475,7 @@ class MCAPhysicalEnv(gym.Env):
         self.elapsed_s, self.steps = 0., 0
         self._done, self._reset_called = False, True
         self._reset_avoidance()
+        self._reset_targets()
         self._sync_public_state()
         return self._observation(), self._info()
 
@@ -431,6 +490,76 @@ class MCAPhysicalEnv(gym.Env):
                                         route[ends[:, 1]]+(1-t)*length) for route in self.routes], axis=1)
         distances[:, self.masses <= 0] = np.inf
         return distances
+
+    def _solve_assignment(self, live):
+        """Balanced geodesic robot->target allocation; observation only.
+
+        Target columns are replicated so every remaining target gets a robot
+        before any target gets a second one, which is what a nearest-target
+        argmin cannot express. This assigns and never commands: no action, no
+        waypoint and no velocity is derived from it anywhere.
+        """
+        from scipy.optimize import linear_sum_assignment
+        assignment = np.full(self.num_robots, -1, np.int64)
+        rows = np.flatnonzero(self.active[:self.num_robots])
+        if not len(live) or not len(rows):
+            return assignment
+        cost = self._target_distances()[np.ix_(rows, live)]
+        cost = np.where(np.isfinite(cost), cost, 1e9)
+        # Stage 1 covers every remaining target exactly once: a rectangular
+        # assignment uses each column at most once, so with robots >= targets no
+        # target is left for nobody. Column replication alone does NOT guarantee
+        # this - Hungarian will happily double up on two cheap targets instead.
+        covered, columns = linear_sum_assignment(cost)
+        assignment[rows[covered]] = live[columns]
+        # Stage 2 sends the surplus robots to their own nearest remaining target.
+        surplus = np.setdiff1d(np.arange(len(rows)), covered, assume_unique=False)
+        if len(surplus):
+            assignment[rows[surplus]] = live[np.argmin(cost[surplus], axis=1)]
+        return assignment
+
+    def _assigned_targets(self):
+        """Sticky allocation: recomputed only when the remaining target set changes.
+
+        EXP_0013 measured per-step reallocation as harmful (-9.8pp); holding the
+        assignment between clearances keeps the observed target consistent.
+        """
+        live = np.flatnonzero(self.masses > 0)
+        signature = live.tobytes()
+        if self._assignment is None or self._assignment_alive != signature:
+            self._assignment = self._solve_assignment(live)
+            self._assignment_alive = signature
+        return self._assignment
+
+    def _route_directions(self, axis):
+        """Unit world-frame direction along the centreline route to each target.
+
+        Uses the same known-map `routes`/next-hop tables that `_target_distances`
+        already reads, so this adds no information the geodesic distance feature
+        did not already expose - only the bearing that went with it. Cleared
+        targets stay zero.
+        """
+        n, t = self.num_robots, self.transport
+        pos, edge = self.positions_mm[:n], self.edges[:n]
+        ends = t.ends[edge]
+        _, _, _, fraction = t.coordinates(pos, edge, self.solution)
+        length = t.length[edge]
+        distance = self._target_distances()
+        directions = np.zeros((n, self.num_clots, 3))
+        for j in range(self.num_clots):
+            if self.masses[j] <= 0:
+                continue
+            route, station = self.routes[j], int(self.clot_stations[j])
+            node = np.where(route[ends[:, 0]]+fraction*length <=
+                            route[ends[:, 1]]+(1-fraction)*length, ends[:, 0], ends[:, 1])
+            goal = t.points[node].copy()
+            step = (np.linalg.norm(goal-axis, axis=1) < ROUTE_LOOKAHEAD_MM) & (node != station)
+            if np.any(step):
+                goal[step] = t.points[self._route_next_hop[j][node[step]]]
+            goal = np.where((distance[:, j] < ROUTE_DIRECT_MM)[:, None], self.clot_positions_mm[j], goal)
+            delta = goal-pos
+            directions[:, j] = delta/np.maximum(np.linalg.norm(delta, axis=1, keepdims=True), 1e-12)
+        return directions
 
     def _advance_particle_prediction(self, positions, edges, body, active, duration):
         return self.transport.advance(positions, edges, body, np.zeros_like(positions),
@@ -514,18 +643,63 @@ class MCAPhysicalEnv(gym.Env):
                     nodes[i,start+7] = closest_time[i,j]/horizon
                     nodes[i,start+8] = closest_clearance[i,j]/self.config.particle_safety_margin_mm
                     nodes[i,start+9] = 1.
-        if self.config.obstacle_observation == 'trajectory_four' and len(particle_ids):
-            predictions, valid, exits = forecast_particles(self, particle_ids)
-            nodes[:, 76:] = trajectory_features(pos, self.velocity_mm_s, frame,
+        mode = self.config.obstacle_observation
+        if mode in ('trajectory_four','bounded_trajectory_four','bounded_linear_four','anchored_linear_four') and len(particle_ids):
+            if mode in ('bounded_linear_four','anchored_linear_four'):
+                predictions, valid, exits = linear_particle_predictions(self.positions_mm[particle_ids], velocities)
+            else:
+                predictions, valid, exits = forecast_particles(self, particle_ids)
+            features = trajectory_features(pos, self.velocity_mm_s, frame,
                 self.positions_mm[particle_ids], velocities, predictions, valid, exits,
                 self.config.robot_radius_mm, self.config.particle_radius_mm,
-                self.config.robot_speed_mm_s, self.config.particle_safety_margin_mm)
+                self.config.robot_speed_mm_s, self.config.particle_safety_margin_mm,
+                reference_velocities=np.zeros_like(self.velocity_mm_s) if mode=='anchored_linear_four' else None)
+            nodes[:, 76:76+96] = features if mode=='trajectory_four' else bound_trajectory_features(features)
+        if self.target_block:
+            self._write_target_block(nodes, pos, axis, to_local)
         nodes[~self.agent_mask] = 0
         adjacency = np.outer(self.agent_mask, self.agent_mask).astype(np.float32)
         state = np.column_stack((self.clot_positions_mm/self.units.mm_per_unit*2-1,
                                  self.masses/self.initial_mass)).astype(np.float32)
         return dict(nodes=nodes, adjacency=adjacency, clot_state=state,
                     agent_mask=self.agent_mask.astype(np.int8))
+
+    def _write_target_block(self, nodes, pos, axis, to_local):
+        """Every remaining target plus this robot's allocation, appended in place.
+
+        Per slot: route bearing in the robot frame (3), geodesic distance (1),
+        remaining mass fraction (1), mine (1), teammates sharing it (1), alive
+        (1). Summary: remaining targets, my geodesic distance, whether my target
+        is alive, remaining mass fraction of the whole task.
+        """
+        n = self.num_robots
+        start = self.obs_dim-self.target_block
+        if not self.num_clots or self.config.target_observation == 'routed_assigned_masked':
+            return
+        distance = self._target_distances()
+        fraction = self.masses/self.initial_mass
+        assignment = self._assigned_targets()
+        directions = self._route_directions(axis)
+        alive = self.masses > 0
+        shared = np.bincount(assignment[assignment >= 0], minlength=self.num_clots)
+        span = max(self.units.mm_per_unit, 1e-12)
+        for j in range(self.num_clots):
+            slot = start+TARGET_SLOT_DIMS*j
+            if not alive[j]:
+                continue
+            nodes[:, slot:slot+3] = to_local(directions[:, j])
+            nodes[:, slot+3] = np.minimum(distance[:, j]/span, 1e3)
+            nodes[:, slot+4] = fraction[j]
+            nodes[:, slot+5] = assignment == j
+            nodes[:, slot+6] = shared[j]/n
+            nodes[:, slot+7] = 1.
+        summary = start+TARGET_SLOT_DIMS*self.num_clots
+        mine = assignment.clip(0)
+        valid = (assignment >= 0) & alive[mine]
+        nodes[:, summary] = alive.sum()/self.num_clots
+        nodes[:, summary+1] = np.where(valid, np.minimum(distance[np.arange(n), mine]/span, 1e3), 0.)
+        nodes[:, summary+2] = valid
+        nodes[:, summary+3] = self.masses.sum()/self.initial_mass.sum()
 
     def _info(self):
         success = bool(self.num_clots and np.all(self.masses <= 0))
@@ -555,6 +729,8 @@ class MCAPhysicalEnv(gym.Env):
         """
         if not self.config.progress_reward_scale or not np.any(self.masses > 0):
             return np.zeros(self.num_robots)
+        if self.config.progress_potential == 'mass_weighted':
+            return self._mass_weighted_potential()
         distance = self._target_distances().min(axis=1)
         _, radius, radial, _ = self.transport.coordinates(
             self.positions_mm[:self.num_robots], self.edges[:self.num_robots], self.solution)
@@ -564,6 +740,28 @@ class MCAPhysicalEnv(gym.Env):
             return -self.config.progress_reward_scale*remaining*self.active[:self.num_robots]
         gap = np.maximum(radius-radial-self.config.robot_radius_mm-.5*self.config.contact_distance_mm, 0)
         return -self.config.progress_reward_scale*np.hypot(distance, gap)*self.active[:self.num_robots]
+
+    def _mass_weighted_potential(self):
+        """Mass-weighted distance over ALL remaining targets, so Phi is monotone.
+
+        The nearest-target form drops to the next target the instant one is
+        cleared, which makes finishing a target a measured -6.17 mean penalty
+        for the robot that finishes it. Weighting every target by its remaining
+        mass fraction removes a cleared target's term instead, so clearing can
+        only raise Phi. This stays a pure function of state, so the potential
+        shaping remains policy-invariant, and its magnitude is no larger than
+        the nearest-target form, so the gamma<1 survival drift does not grow.
+        """
+        n = self.num_robots
+        distance = self._target_distances()
+        _, _, radial, _ = self.transport.coordinates(
+            self.positions_mm[:n], self.edges[:n], self.solution)
+        alive = self.masses > 0
+        weight = np.where(alive, self.masses/self.initial_mass.sum(), 0.)
+        remaining = np.maximum(np.hypot(np.where(alive, distance, 0.), radial[:, None])
+                               - self.config.contact_distance_mm, 0.)
+        total = (remaining*weight).sum(axis=1)
+        return -self.config.progress_reward_scale*total*self.active[:n]
 
     def _surface_contacts(self, positions, edges, solution, masses):
         """Contact with the lumen-facing annular stenosis surface, not its axis.
@@ -595,8 +793,7 @@ class MCAPhysicalEnv(gym.Env):
         action = np.asarray(action, np.float64)
         if action.shape != (self.num_robots, 3) or not np.isfinite(action).all():
             raise ValueError('Expected finite world-frame [num_robots,3] actions')
-        action = np.clip(action, -1, 1)
-        action /= np.maximum(np.linalg.norm(action, axis=1, keepdims=True), 1)
+        action = bound_command(action, self.config.command_speed)
         commands = np.zeros_like(self.positions_mm)
         commands[:self.num_robots] = action*self.config.robot_speed_mm_s
         duration = min(self.config.control_dt_s, self.config.episode_duration_s-self.elapsed_s)

@@ -1,0 +1,103 @@
+{
+ "study": "research/runs/EXP_0036_SHAPING_20261001a",
+ "arms": [
+  "control",
+  "shaping"
+ ],
+ "control": "control",
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "steps_per_arm_seed": 500000,
+ "evaluation_layouts": 100,
+ "evaluation_sha256": {
+  "control/seed_42": "4b8c2230c0c65f13408ea2aba9312d01622158259b011202513832e7f45e1515",
+  "control/seed_43": "38dd19dc7c4791bd3787aa26b079afb84a7fb91ca5fe5c62adaac8cda5aa58fe",
+  "control/seed_44": "61b37354d85ef82e6b796eacef4bde6dad36501c74e830cabc3a663b399f3821",
+  "shaping/seed_42": "6c2ed6c856d575c7e94f514961253575d996054ea7643fe1e96128ed833b24ef",
+  "shaping/seed_43": "7ac3975e85d10ffc1684f55a396037af86b675604184b32d59be501cba20bd1b",
+  "shaping/seed_44": "ca6f6f98cf0009dfe528f28bcb0de591e0e342c60648522bfbe04103d0e29b0b"
+ },
+ "results": {
+  "control": {
+   "42": {
+    "success": 43.0,
+    "clean": 23.0,
+    "collision": 48.0,
+    "removal": 81.69382998680445,
+    "events": 1.05,
+    "contact_s": 0.14487838937916622,
+    "duration": 131.37899999999968
+   },
+   "43": {
+    "success": 38.0,
+    "clean": 12.0,
+    "collision": 56.00000000000001,
+    "removal": 80.91978525278908,
+    "events": 2.1,
+    "contact_s": 0.27497824738556126,
+    "duration": 142.82899999999952
+   },
+   "44": {
+    "success": 30.0,
+    "clean": 11.0,
+    "collision": 60.0,
+    "removal": 78.45481580648476,
+    "events": 1.8,
+    "contact_s": 0.2592064885185379,
+    "duration": 149.5249999999997
+   },
+   "mean": {
+    "success": 37.0,
+    "clean": 15.333333333333334,
+    "collision": 54.666666666666664,
+    "removal": 80.35614368202609,
+    "events": 1.6500000000000001,
+    "contact_s": 0.2263543750944218,
+    "duration": 141.24433333333295
+   }
+  },
+  "shaping": {
+   "42": {
+    "success": 8.0,
+    "clean": 5.0,
+    "collision": 53.0,
+    "removal": 55.60249404275615,
+    "events": 1.53,
+    "contact_s": 0.16227204729115013,
+    "duration": 174.02099999999984
+   },
+   "43": {
+    "success": 56.00000000000001,
+    "clean": 13.0,
+    "collision": 73.0,
+    "removal": 86.24914874425477,
+    "events": 2.55,
+    "contact_s": 0.36602491805003323,
+    "duration": 103.96499999999993
+   },
+   "44": {
+    "success": 0.0,
+    "clean": 0.0,
+    "collision": 55.00000000000001,
+    "removal": 12.488459182878001,
+    "events": 1.35,
+    "contact_s": 0.19190455175433788,
+    "duration": 180.0
+   },
+   "mean": {
+    "success": 21.333333333333332,
+    "clean": 6.0,
+    "collision": 60.333333333333336,
+    "removal": 51.44670065662964,
+    "events": 1.8099999999999998,
+    "contact_s": 0.24006717236517372,
+    "duration": 152.66199999999992
+   }
+  }
+ },
+ "scope": "Paired development validation on 100 shared layouts; not a sealed test",
+ "world_model": false
+}

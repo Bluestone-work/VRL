@@ -32,12 +32,14 @@ def forecast_particles(env, particle_ids):
 
 def trajectory_features(robot_positions, robot_velocities, frame, particle_positions,
                         particle_velocities, predictions, valid, exit_times,
-                        robot_radius, particle_radius, speed_scale, safety_margin):
+                        robot_radius, particle_radius, speed_scale, safety_margin,
+                        *, reference_velocities=None):
     """Four risk-ranked trajectories: current state, 3 future points, swept risk.
 
     Per-slot layout: position3, velocity3; 3*(future relative position3,
     clearance1, alive1); minimum swept clearance1, time of minimum1, present1.
-    Exited particles contribute only until their predicted exit time.
+    Exited particles contribute only until their predicted exit time. Optional
+    reference velocities change the future reference, never current velocities.
     """
     n, count = len(robot_positions), len(particle_positions)
     features = np.zeros((n, FORECAST_SLOTS*FEATURES_PER_SLOT), np.float32)
@@ -45,6 +47,7 @@ def trajectory_features(robot_positions, robot_velocities, frame, particle_posit
         return features
     current = particle_positions[None] - robot_positions[:, None]
     rel_velocity = particle_velocities[None] - robot_velocities[:, None]
+    future_velocity = robot_velocities if reference_velocities is None else reference_velocities
     radius = robot_radius + particle_radius
     closest = np.linalg.norm(current, axis=-1) - radius
     closest_time = np.zeros((n, count))
@@ -53,8 +56,8 @@ def trajectory_features(robot_positions, robot_velocities, frame, particle_posit
     for k, horizon in enumerate(HORIZONS_S):
         end_time = np.minimum(horizon, exit_times)
         duration = np.maximum(end_time-previous_time, 0.)
-        start_relative = previous_positions[None] - (robot_positions[:, None] + robot_velocities[:, None]*previous_time)
-        end_relative = predictions[k][None] - (robot_positions[:, None] + robot_velocities[:, None]*end_time[None, :, None])
+        start_relative = previous_positions[None] - (robot_positions[:, None] + future_velocity[:, None]*previous_time)
+        end_relative = predictions[k][None] - (robot_positions[:, None] + future_velocity[:, None]*end_time[None, :, None])
         delta = end_relative-start_relative
         fraction = np.clip(-np.sum(start_relative*delta, axis=-1)/np.maximum(np.sum(delta*delta, axis=-1), 1e-15), 0., 1.)
         gap = np.linalg.norm(start_relative+fraction[:, :, None]*delta, axis=-1)-radius
@@ -72,7 +75,7 @@ def trajectory_features(robot_positions, robot_velocities, frame, particle_posit
             for k, horizon in enumerate(HORIZONS_S):
                 start = offset+6+5*k
                 if valid[k, j]:
-                    relative = predictions[k, j] - robot_positions[i] - robot_velocities[i]*horizon
+                    relative = predictions[k, j] - robot_positions[i] - future_velocity[i]*horizon
                     features[i, start:start+3] = frame[i] @ relative / 1.5
                     features[i, start+3] = (np.linalg.norm(relative)-radius)/safety_margin
                     features[i, start+4] = 1.
@@ -80,3 +83,22 @@ def trajectory_features(robot_positions, robot_velocities, frame, particle_posit
             features[i, offset+22] = closest_time[i, j]/HORIZONS_S[-1]
             features[i, offset+23] = 1.
     return features
+
+
+def linear_particle_predictions(positions, velocities):
+    """Constant observed velocity; future exits are unknown, not oracle-masked."""
+    points = positions[None]+np.asarray(HORIZONS_S)[:, None, None]*velocities[None]
+    return points, np.ones(points.shape[:2], dtype=bool), np.full(len(positions), np.inf)
+
+
+def bound_trajectory_features(features):
+    """Softsign only continuous geometry; preserve masks and normalized times.
+
+    x/(1+abs(x)) is monotone, retains the sign and maps finite inputs to (-1,1).
+    The original 76 inputs are untouched. No running statistics or RNG state.
+    """
+    slots = features.copy().reshape(-1, FORECAST_SLOTS, FEATURES_PER_SLOT)
+    indices = [*range(10), *range(11,15), *range(16,20), 21]
+    values = slots[:, :, indices]
+    slots[:, :, indices] = values/(1+np.abs(values))
+    return slots.reshape(features.shape)

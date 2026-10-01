@@ -1,0 +1,64 @@
+{
+  "experiment": "EXP_0036_SHAPING_PURE_RL",
+  "parent": "EXP_0035_UNIT_SPEED_PURE_RL",
+  "scope": "Paired single-bundle study of routed/assigned target observations plus a monotone progress potential, against a dimension-matched masked control with the unchanged potential. Same parents, training stream, budget and 100 development layouts as the completed EXP32/EXP33 arms.",
+  "authorization": "User asked for the measured routing and coverage deficits to be fixed. Code, tests, certificates and GPU preflight are autonomous; the formal 500K x 3 seed run is not.",
+  "physics_config": "configs/experiments/EXP_0036_SHAPING_DYNAMICS.json",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "timesteps_per_seed": 500000,
+  "transition_unit": "one environment control step, not individual robot samples",
+  "rollout_steps": 512,
+  "epochs": 4,
+  "batch_size": 256,
+  "hidden_dim": 128,
+  "checkpoint_interval": 4096,
+  "milestones": [
+    500000
+  ],
+  "eval_episodes": 100,
+  "training_seed_base": 1900000000,
+  "validation_seed_base": 940000000,
+  "architecture": "adaptive_edge_gat",
+  "control": "direct_local_frenet",
+  "world_model": false,
+  "guidance_controller": false,
+  "fresh_weights": false,
+  "weight_initialization": "compatible_weights_only",
+  "initialization_checkpoints": {
+    "42": {
+      "path": "research/initializations/EXP0036_FROM_EXP0035U_500K_20261001/seed_42.pt",
+      "sha256": "4721cdcd3aeff4546ad74df09a5d571768d71ca03e9f4fe375e21eede3e26fbe"
+    },
+    "43": {
+      "path": "research/initializations/EXP0036_FROM_EXP0035U_500K_20261001/seed_43.pt",
+      "sha256": "436b9a03f5c141afb1c2d24a45da0bbb7e912700ac5f81dbe4acd243dff8d3b1"
+    },
+    "44": {
+      "path": "research/initializations/EXP0036_FROM_EXP0035U_500K_20261001/seed_44.pt",
+      "sha256": "5afa33b2b74d1182e0affbe14dd3103d3933253ae8e6fd8ae7ae42aaef1eb941"
+    }
+  },
+  "comparability": "Both arms share physics, reward terms other than the potential, parents, PPO settings, 512-transition rollouts, 500K budget, training layout stream 1900000000 and validation layouts 940000000-940000099, which are the same layouts EXP32 and EXP33 used. The arms differ only in whether the appended 36 target features are computed and which progress potential is used; the 76-feature prefix and all other rewards are bit-identical, which is asserted by tests/test_mca_routed_targets.py.",
+  "pure_rl": true,
+  "oracle_used_for_training": false,
+  "require_randomization_boundaries": true,
+  "require_random_clot_evidence": true,
+  "feasibility_certificate": "research/validation/EXP0036_SHAPING_FEASIBILITY_20261001/certificate.json",
+  "reference_certificate": "research/validation/EXP0036_SHAPING_REFERENCE_20261001/certificate.json",
+  "feasibility_image": "research/validation/EXP0029_FEASIBILITY_20260930/feasibility.png",
+  "task_limit": "Controlled in-vitro goal-conditioned ideal-actuator simulation with perfect state. All object positions randomized on fixed MCA anatomy. Soft overlap costs, not hard collision physics. Diagnostic clearance feasibility is not collision-free policy performance or hardware verification.",
+  "dashboard_message": "EXP36 SHAPING 纯RL：同父权重，势函数系数0.3→1.2（末段每毫米梯度恢复到原nearest形式），续训50万步。尚无改善结论。",
+  "physical_calibration_ready": false,
+  "sealed_test_used": false,
+  "ppo": {
+    "lr_actor": 0.0001
+  },
+  "study_stage": "Matched 500K extension of EXP32/EXP33 on the same 100 development layouts; not a new generalization test.",
+  "exploration_schedule": null,
+  "observation_schema": "mca_point_routed_112_v8",
+  "bundled_variables": "Two changes move together on purpose: at 355 training episodes per 500K-step run the seed spread (6/26/42 percent in EXP31 control) cannot resolve either alone. The allocation is only observed and the potential stays a pure state function, so neither introduces a controller or changes the success definition."
+}

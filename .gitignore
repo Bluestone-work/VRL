@@ -77,3 +77,6 @@ vascular_marl_local/
 
 # EXP32 witness progress is transient; final certificates are versioned.
 /research/validation/EXP0032_*/progress.json
+
+# EXP33+ witness progress is transient too.
+/research/validation/EXP003[3-9]_*/progress.json

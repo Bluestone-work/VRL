@@ -1,0 +1,103 @@
+{
+ "study": "research/runs/EXP_0035_UNIT_SPEED_20260930a",
+ "arms": [
+  "continue",
+  "unit_speed"
+ ],
+ "control": "continue",
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "steps_per_arm_seed": 500000,
+ "evaluation_layouts": 100,
+ "evaluation_sha256": {
+  "continue/seed_42": "96b2dd6d71d71f26de7b6981b9e6b32ba8819d977e270543f56e6f3b93638e98",
+  "continue/seed_43": "bac96b9a25b1e7390e4019435f73fd5c8c81c12bfcc5fd93547a8e0c840a7cf8",
+  "continue/seed_44": "4010fbfaa9db72a701c64901b7d832c50c8c4fe5b83b99a9e77553c11b5ad538",
+  "unit_speed/seed_42": "c31a6c0dea3c6abc8d9a99dfa098588ed9c037a9bd21012f0f2fb1d80d96209e",
+  "unit_speed/seed_43": "c4652faee0aedb13d1e7c9b94475b22977ba95e5aa39adbd5c6052b7eb412089",
+  "unit_speed/seed_44": "5eac9d80cd4a8a76a6f14f4fd37f6be728abb483f4b5009ddb8360f4b3ea2001"
+ },
+ "results": {
+  "continue": {
+   "42": {
+    "success": 43.0,
+    "clean": 25.0,
+    "collision": 43.0,
+    "removal": 80.87793796802036,
+    "events": 0.81,
+    "contact_s": 0.14480412668128753,
+    "duration": 132.95199999999969
+   },
+   "43": {
+    "success": 38.0,
+    "clean": 14.000000000000002,
+    "collision": 51.0,
+    "removal": 76.93997102990612,
+    "events": 1.37,
+    "contact_s": 0.3043853936875514,
+    "duration": 137.82299999999978
+   },
+   "44": {
+    "success": 34.0,
+    "clean": 10.0,
+    "collision": 60.0,
+    "removal": 78.33908199005333,
+    "events": 1.49,
+    "contact_s": 0.24435578286548423,
+    "duration": 142.21099999999984
+   },
+   "mean": {
+    "success": 38.333333333333336,
+    "clean": 16.333333333333332,
+    "collision": 51.333333333333336,
+    "removal": 78.71899699599327,
+    "events": 1.2233333333333334,
+    "contact_s": 0.2311817677447744,
+    "duration": 137.66199999999978
+   }
+  },
+  "unit_speed": {
+   "42": {
+    "success": 52.0,
+    "clean": 22.0,
+    "collision": 54.0,
+    "removal": 83.01288929430456,
+    "events": 1.68,
+    "contact_s": 0.26596774421949904,
+    "duration": 116.75599999999982
+   },
+   "43": {
+    "success": 79.0,
+    "clean": 24.0,
+    "collision": 68.0,
+    "removal": 93.55758878368525,
+    "events": 2.77,
+    "contact_s": 0.40894985114569943,
+    "duration": 79.89599999999979
+   },
+   "44": {
+    "success": 60.0,
+    "clean": 16.0,
+    "collision": 70.0,
+    "removal": 87.01641544533885,
+    "events": 2.71,
+    "contact_s": 0.31015816274882074,
+    "duration": 102.30099999999986
+   },
+   "mean": {
+    "success": 63.666666666666664,
+    "clean": 20.666666666666668,
+    "collision": 64.0,
+    "removal": 87.86229784110954,
+    "events": 2.3866666666666667,
+    "contact_s": 0.32835858603800644,
+    "duration": 99.65099999999983
+   }
+  }
+ },
+ "scope": "Paired development validation on 100 shared layouts; not a sealed test",
+ "world_model": false
+}

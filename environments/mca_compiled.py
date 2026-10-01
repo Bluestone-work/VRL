@@ -7,7 +7,7 @@ import numpy as np
 import copy
 import gymnasium as gym
 from numba import njit
-from environments.mca_physical_env import MCAPhysicalEnv
+from environments.mca_physical_env import MCAPhysicalEnv, bound_command
 from environments.mca_physical_dynamics import TransportResult
 
 
@@ -273,6 +273,7 @@ class CompiledMCAPhysicalEnv(MCAPhysicalEnv):
         self.elapsed_s, self.steps = 0., 0
         self._done, self._reset_called = False, True
         self._reset_avoidance()
+        self._reset_targets()
         self._sync_public_state()
         return self._observation(), self._info()
 
@@ -313,7 +314,7 @@ class CompiledMCAPhysicalEnv(MCAPhysicalEnv):
         action=np.asarray(action,np.float64)
         if action.shape!=(self.num_robots,3) or not np.isfinite(action).all():
             raise ValueError('Expected finite world-frame [num_robots,3] actions')
-        action=np.clip(action,-1,1);action/=np.maximum(np.linalg.norm(action,axis=1,keepdims=True),1)
+        action=bound_command(action,self.config.command_speed)
         commands=np.zeros_like(self.positions_mm);commands[:self.num_robots]=action*self.config.robot_speed_mm_s
         duration=min(self.config.control_dt_s,self.config.episode_duration_s-self.elapsed_s)
         potential_before=self._reward_potential()

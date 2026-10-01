@@ -337,7 +337,7 @@ class MAPPOAdvanced(MAPPO):
         if not 0 <= dropout < 1:
             raise ValueError("dropout must be in [0, 1)")
         if (control_mode != "world" and obs_dim not in (36, 42, 44, 52)
-                and not (control_mode == "local" and obs_dim in (76, 172))):
+                and not (control_mode == "local" and obs_dim in (76, 112, 172, 208))):
             raise ValueError("local control requires geometric observations")
         if not np.isfinite(residual_scale) or residual_scale < 0:
             raise ValueError("residual scale must be finite and nonnegative")

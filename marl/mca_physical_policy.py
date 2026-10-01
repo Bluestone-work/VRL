@@ -49,10 +49,15 @@ def initialize_expanded_obstacle_policy(agent, checkpoint):
     schemas = {
         ('mca_point_36_v3', 'mca_point_obstacles_76_v4'): (36, 76),
         ('mca_point_obstacles_76_v4', 'mca_point_trajectories_172_v5'): (76, 172),
+        ('mca_point_obstacles_76_v4', 'mca_point_bounded_172_v6'): (76, 172),
+        ('mca_point_obstacles_76_v4', 'mca_point_anchored_172_v7'): (76, 172),
+        ('mca_point_obstacles_76_v4', 'mca_point_routed_112_v8'): (76, 112),
+        ('mca_point_bounded_172_v6', 'mca_point_routed_208_v8'): (172, 208),
     }
     pair = (meta.get('observation_schema'), agent.meta.get('observation_schema'))
     if pair not in schemas:
-        raise ValueError('Only explicit point v3->v4 or obstacle v4->trajectory v5 expansion is supported')
+        raise ValueError('Only explicit point v3->v4, obstacle v4->trajectory v5/v6/v7 '
+                         'or v4/v6->routed v8 expansion is supported')
     old_dim, new_dim = schemas[pair]
     for key in ('architecture','n_agents','action_dim','state_dim','hidden_dim','num_layers',
                 'critic_value_mode','dropout','action_semantics','physical_action_semantics'):
