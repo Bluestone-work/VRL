@@ -46,31 +46,49 @@ def test_protocols_using_test_layouts_are_rejected():
         check_protocol(dict(base, training_seed_base=990000000-42*10_000_000))
 
 
-PREFLIGHT = ROOT/'research/runs/EXP0039_ASSIGNED_PREFLIGHT_20261001/latest.pt'
 PROTOCOL = ROOT/'configs/experiments/EXP_0039_ASSIGNED_PURE_RL.json'
 
 
-def test_partial_runs_cannot_write_the_real_ledger():
+@pytest.fixture
+def checkpoint(tmp_path):
+    """An untrained policy whose recorded sources are the current code."""
+    import hashlib
+    from environments.mca_compiled import CompiledMCAPhysicalEnv
+    from environments.mca_physical_env import DynamicsConfig
+    from marl.mca_physical_policy import make_physical_agent
+    from scripts.train_mca_physical import reset_with_valid_particles
+    protocol = json.loads(PROTOCOL.read_text())
+    env = CompiledMCAPhysicalEnv(DynamicsConfig.from_json(ROOT/protocol['physics_config']))
+    reset_with_valid_particles(env, 940000000)
+    agent = make_physical_agent(env, seed=42, hidden_dim=protocol['hidden_dim'], device='cpu')
+    agent.meta.update(training_seed=42, source_sha256={
+        str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
+        for folder in ('environments', 'marl') for p in sorted((ROOT/folder).rglob('*.py'))})
+    path = tmp_path/'policy.pt'; agent.save(path)
+    return path
+
+
+def test_partial_runs_cannot_write_the_real_ledger(checkpoint):
     with pytest.raises(ValueError, match='tests only'):
-        sealed.main(['--protocol', str(PROTOCOL), '--checkpoint', str(PREFLIGHT), '--study', 'X', '--label', 'x',
+        sealed.main(['--protocol', str(PROTOCOL), '--checkpoint', str(checkpoint), '--study', 'X', '--label', 'x',
                      '--declare-candidates', '1', '--count', '1'])
 
 
-@pytest.mark.skipif(not PREFLIGHT.exists(), reason='local preflight checkpoint not available')
-def test_ledger_caches_repeats_and_enforces_the_declared_budget(tmp_path):
-    common = ['--protocol', str(PROTOCOL), '--count', '1', '--workers', '1', '--ledger-dir', str(tmp_path)]
+def test_ledger_caches_repeats_and_enforces_the_declared_budget(tmp_path, checkpoint):
+    PREFLIGHT = checkpoint
+    common = ['--protocol', str(PROTOCOL), '--count', '1', '--workers', '1', '--ledger-dir', str(tmp_path/'ledger')]
     with pytest.raises(ValueError, match='declare'):
         sealed.main(common+['--checkpoint', str(PREFLIGHT), '--study', 'S', '--label', 'a'])
     first = sealed.main(common+['--checkpoint', str(PREFLIGHT), '--study', 'S', '--label', 'a', '--declare-candidates', '1'])
     assert [e['seed'] for e in first['episodes']] == [990000000]
     again = sealed.main(common+['--checkpoint', str(PREFLIGHT), '--study', 'S', '--label', 'b'])
     assert again['success_rate'] == first['success_rate']
-    ledger = json.loads((tmp_path/'LEDGER.json').read_text())
+    ledger = json.loads((tmp_path/'ledger'/'LEDGER.json').read_text())
     assert ledger['studies']['S']['used'] == 1 and len(ledger['entries']) == 1
     other = tmp_path/'other.pt'
     other.write_bytes(PREFLIGHT.read_bytes()+b'')  # identical bytes: still cached by sha
     sealed.main(common+['--checkpoint', str(other), '--study', 'S', '--label', 'c'])
-    assert json.loads((tmp_path/'LEDGER.json').read_text())['studies']['S']['used'] == 1
+    assert json.loads((tmp_path/'ledger'/'LEDGER.json').read_text())['studies']['S']['used'] == 1
 
 
 def test_checkpoint_from_different_code_is_refused():

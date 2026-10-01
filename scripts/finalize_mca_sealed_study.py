@@ -37,6 +37,7 @@ def main():
     p.add_argument('--cpus', default='0-5,8-23')
     p.add_argument('--parallel', type=int, default=18)
     p.add_argument('--test-workers', type=int, default=18)
+    p.add_argument('--reference', help='NAME=path/to/summary.json:ARM, an arm of an earlier sealed study to pair against')
     args = p.parse_args()
     study_dir = args.study_dir.resolve(); arms = args.arms.split(',')
     out = ROOT/f'research/validation/{args.study}_SEALED_RESULTS'
@@ -94,10 +95,21 @@ def main():
         rates = [report['baseline'][s]['success_rate'] for s in SEEDS]
         rows.append('| baseline EXP35 500K | ' + ' / '.join(f'{100*r:.1f}' for r in rates) + f' | {100*np.mean(rates):.1f}% |')
     paired = []
-    if len(arms) == 2:
-        a, b = arms
+    pair_names = None
+    if args.reference:
+        name, spec = args.reference.split('=', 1); path, ref_arm = spec.rsplit(':', 1)
+        ref = json.loads(Path(path).read_text())['arms'][ref_arm]
+        report['reference'] = {name: {s: ref[str(s)] for s in SEEDS}}
+        rates = [ref[str(s)]['test_success_rate'] for s in SEEDS]
+        rows.append(f'| {name} (reference) | ' + ' / '.join(f'{100*r:.1f}' for r in rates) + f' | {100*np.mean(rates):.1f}% |')
+        pair_names = (arms[0], name)
+        for s in SEEDS:
+            paired.append(float((successes(report['arms'][arms[0]][s]['test_result'])-successes(ref[str(s)]['test_result'])).mean()))
+    elif len(arms) == 2:
+        a, b = arms; pair_names = (a, b)
         for s in SEEDS:
             paired.append(float((successes(report['arms'][a][s]['test_result'])-successes(report['arms'][b][s]['test_result'])).mean()))
+    if paired:
         report['paired_diff'] = dict(zip(map(str, SEEDS), paired))
     (out/'summary.json').write_text(json.dumps(report, indent=1)+'\n')
     lines = [f'# {args.study} sealed-test result', '',
@@ -106,7 +118,7 @@ def main():
     for arm in arms:
         lines.append(f'- {arm} selected steps: ' + ', '.join(f'seed {s}: {report["arms"][arm][s]["selected_step"]}' for s in SEEDS))
     if paired:
-        lines.append(f'- paired {arms[0]} - {arms[1]} on identical test layouts: ' +
+        lines.append(f'- paired {pair_names[0]} - {pair_names[1]} on identical test layouts: ' +
                      ' / '.join(f'{100*d:+.1f}' for d in paired) + f' pp, mean {100*np.mean(paired):+.1f} pp')
     (out/'REPORT.md').write_text('\n'.join(lines)+'\n')
     print('\n'.join(lines))

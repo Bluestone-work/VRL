@@ -53,6 +53,7 @@ def initialize_expanded_obstacle_policy(agent, checkpoint):
         ('mca_point_obstacles_76_v4', 'mca_point_anchored_172_v7'): (76, 172),
         ('mca_point_obstacles_76_v4', 'mca_point_routed_112_v8'): (76, 112),
         ('mca_point_bounded_172_v6', 'mca_point_routed_208_v8'): (172, 208),
+        ('mca_point_routed_112_v8', 'mca_point_routed_115_own_v9'): (112, 115),
     }
     pair = (meta.get('observation_schema'), agent.meta.get('observation_schema'))
     if pair not in schemas:

@@ -26,6 +26,7 @@ CONFIG_PATH = Path(__file__).resolve().parents[1] / 'configs/experiments/EXP_002
 # Appended routed-target block: per-clot slot features plus a per-robot summary.
 TARGET_SLOT_DIMS = 8
 TARGET_SUMMARY_DIMS = 4
+OWN_BEARING_DIMS = 3
 # Route lookahead mirrors the diagnostic path follower; a robot standing on its
 # routing node steps to the next hop instead of reporting a degenerate bearing.
 ROUTE_LOOKAHEAD_MM = .06
@@ -110,7 +111,8 @@ class DynamicsConfig:
                                  'bounded_trajectory_four','bounded_linear_four','anchored_linear_four'):
                     raise ValueError('Invalid obstacle_observation')
             elif name == 'target_observation':
-                if value not in ('nearest_euclidean', 'routed_assigned', 'routed_assigned_masked'):
+                if value not in ('nearest_euclidean', 'routed_assigned', 'routed_assigned_masked',
+                                 'routed_assigned_own', 'routed_assigned_own_masked'):
                     raise ValueError('Invalid target_observation')
             elif name == 'progress_potential':
                 if value not in ('nearest', 'mass_weighted', 'assigned'):
@@ -188,7 +190,12 @@ class MCAPhysicalEnv(gym.Env):
             if self.config.contact_model != 'localized_point':
                 raise ValueError('Routed target observations require localized point targets')
             self.target_block = TARGET_SLOT_DIMS*self.num_clots + TARGET_SUMMARY_DIMS
-            self.observation_schema = f'mca_point_routed_{self.obs_dim+self.target_block}_v8'
+            version = 'v8'
+            if self.config.target_observation.startswith('routed_assigned_own'):
+                # Own route bearing in a fixed position (appended after the v8 summary).
+                self.target_block += OWN_BEARING_DIMS
+                version = 'own_v9'
+            self.observation_schema = f'mca_point_routed_{self.obs_dim+self.target_block}_{version}'
             self.obs_dim += self.target_block
         self.action_space = spaces.Box(-1., 1., (self.num_robots, 3), dtype=np.float32)
         self.observation_space = spaces.Dict({
@@ -700,6 +707,12 @@ class MCAPhysicalEnv(gym.Env):
         nodes[:, summary+1] = np.where(valid, np.minimum(distance[np.arange(n), mine]/span, 1e3), 0.)
         nodes[:, summary+2] = valid
         nodes[:, summary+3] = self.masses.sum()/self.initial_mass.sum()
+        if self.config.target_observation == 'routed_assigned_own':
+            # EXP35/39: the own target's bearing sat in a target-indexed slot, so the
+            # policy had to locate it via the 'mine' flag; the action matched it with
+            # cosine 0.14-0.25. Same vector, fixed position; zero when unassigned.
+            own = directions[np.arange(n), mine]*valid[:, None]
+            nodes[:, summary+4:summary+4+OWN_BEARING_DIMS] = to_local(own)
 
     def _info(self):
         success = bool(self.num_clots and np.all(self.masses <= 0))
