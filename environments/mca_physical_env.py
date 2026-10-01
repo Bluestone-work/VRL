@@ -34,6 +34,26 @@ ROUTE_LOOKAHEAD_MM = .06
 ROUTE_DIRECT_MM = .7
 
 
+def observed_particle_repulsion(nodes, config):
+    """Repulsion (robot Frenet frame) from the four observed predicted-clearance particle slots.
+
+    Per slot: direction away from the predicted closest-approach offset, weight
+    (1 - predicted clearance / safety margin)^2 clipped to [0, 1]. Reads only
+    observation columns 36:76 (schema predictive_four).
+    """
+    push = np.zeros((len(nodes), 3))
+    for k in range(4):
+        s = 36+10*k
+        rel = nodes[:, s:s+3]*1.5
+        relv = nodes[:, s+3:s+6]*config.robot_speed_mm_s
+        t = nodes[:, s+7]*config.particle_prediction_horizon_s
+        closest = rel+t[:, None]*relv
+        away = -closest/np.maximum(np.linalg.norm(closest, axis=1, keepdims=True), 1e-9)
+        weight = np.clip(1-nodes[:, s+8], 0, 1)**2*(nodes[:, s+9] > 0)
+        push += weight[:, None]*away
+    return push
+
+
 def bound_command(action, mode='bounded'):
     """Clip to the unit ball; 'unit' then runs every nonzero direction at full speed.
 
@@ -83,6 +103,7 @@ class DynamicsConfig:
     command_speed: str = 'bounded'
     action_prior: str = 'none'
     action_residual_scale: float = 1.
+    action_avoid_gain: float = 0.
     particle_collision_event_penalty: float = 0.
     particle_near_penalty_per_s: float = 0.
     particle_safety_margin_mm: float = .15
@@ -92,7 +113,7 @@ class DynamicsConfig:
     def __post_init__(self):
         nonnegative = {'distal_resistance_ratio', 'geometry_variation', 'lysis_mass_per_s',
                        'initial_radius_fraction', 'progress_reward_scale', 'particle_contact_penalty_per_s',
-                       'particle_collision_event_penalty', 'particle_near_penalty_per_s'}
+                       'particle_collision_event_penalty', 'particle_near_penalty_per_s', 'action_avoid_gain'}
         integers = {'num_robots': 1, 'particle_count': 0, 'max_substeps_per_control': 1}
         for field in fields(self):
             name, value = field.name, getattr(self, field.name)
@@ -120,7 +141,7 @@ class DynamicsConfig:
                 if value not in ('nearest', 'mass_weighted', 'assigned'):
                     raise ValueError('Invalid progress_potential')
             elif name == 'action_prior':
-                if value not in ('none', 'own_route_bearing'):
+                if value not in ('none', 'own_route_bearing', 'own_route_bearing_avoid'):
                     raise ValueError('Invalid action_prior')
             elif name == 'command_speed':
                 if value not in ('bounded', 'unit'):
@@ -147,7 +168,7 @@ class DynamicsConfig:
                       'robot_initialization', 'contact_model', 'progress_reward_scale', 'reward_discount',
                       'particle_contact_penalty_per_s', 'particle_initialization',
                       'inlet_flow_multiplier_min', 'inlet_flow_multiplier_max', 'clot_initialization',
-                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale',
+                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain',
                       'particle_collision_event_penalty',
                       'particle_near_penalty_per_s', 'particle_safety_margin_mm', 'particle_prediction_horizon_s')
                       else data[f.name] for f in fields(cls)})
@@ -202,6 +223,9 @@ class MCAPhysicalEnv(gym.Env):
                 version = 'own_v9'
             self.observation_schema = f'mca_point_routed_{self.obs_dim+self.target_block}_{version}'
             self.obs_dim += self.target_block
+        if self.config.action_prior != 'none' and (self.config.target_observation != 'routed_assigned_own'
+                                                   or self.config.obstacle_observation != 'predictive_four'):
+            raise ValueError('Action priors read the own_v9 bearing and predictive particle slots')
         self.action_space = spaces.Box(-1., 1., (self.num_robots, 3), dtype=np.float32)
         self.observation_space = spaces.Dict({
             'nodes': spaces.Box(-np.inf, np.inf, (self.num_robots, self.obs_dim), dtype=np.float32),
@@ -826,6 +850,17 @@ class MCAPhysicalEnv(gym.Env):
         """
         if self.config.action_prior == 'none':
             return action
+        if self.config.action_prior == 'own_route_bearing_avoid':
+            # Everything is read back from the observation the policy receives.
+            nodes = self._observation()['nodes'].astype(np.float64)
+            local = nodes[:, 112:115]+self.config.action_avoid_gain*observed_particle_repulsion(nodes, self.config)
+            # Bound in the robot frame exactly like direct_local_action (as in the measured probe).
+            local = np.clip(local, -1, 1)
+            local /= np.maximum(np.linalg.norm(local, axis=1, keepdims=True), 1.)
+            frame = np.stack((self.tree.tangents[self.robot_stations], self.tree.normals[self.robot_stations],
+                              self.tree.binormals[self.robot_stations]), axis=1)
+            prior = np.einsum('nji,nj->ni', frame, local)*self.active[:self.num_robots, None]
+            return prior + self.config.action_residual_scale*action
         n = self.num_robots
         prior = np.zeros((n, 3))
         if np.any(self.masses > 0):

@@ -83,3 +83,36 @@ def test_inactive_and_unassigned_robots_get_no_prior():
     assert not env._apply_action_prior(np.zeros((prior.num_robots, 3)))[0].any()
     env.masses[:] = 0.
     assert not env._apply_action_prior(np.zeros((prior.num_robots, 3))).any()
+
+
+def test_avoid_prior_matches_the_observation_only_probe():
+    import importlib.util
+    base, _ = configs()
+    cfg = replace(base, action_prior='own_route_bearing_avoid', action_residual_scale=.5, action_avoid_gain=6.)
+    spec = importlib.util.spec_from_file_location('probe', 'research/validation/EXP0041_ROUTE_PRIOR_PROBE_20261001/probe_avoid.py')
+    from environments.mca_physical_env import observed_particle_repulsion
+    runs = []
+    for env_cfg, manual in ((cfg, False), (base, True)):
+        env = CompiledMCAPhysicalEnv(env_cfg)
+        obs, _ = reset_with_valid_particles(env, SEED)
+        trace = []
+        for _ in range(60):
+            if manual:
+                nodes = obs['nodes'].astype(np.float64)
+                act = direct_local_action(nodes[:, 112:115]+6.*observed_particle_repulsion(nodes, base), env)
+                act[~env.active[:base.num_robots]] = 0
+            else:
+                act = np.zeros((base.num_robots, 3))
+            obs, _, term, trunc, _ = env.step(act)
+            trace.append(env.positions_mm[:base.num_robots].copy())
+            if term or trunc:
+                break
+        runs.append(np.array(trace))
+    assert runs[0].shape == runs[1].shape and np.allclose(runs[0], runs[1], atol=1e-4)
+
+
+def test_priors_require_the_observed_features():
+    import pytest
+    base, _ = configs()
+    with pytest.raises(ValueError, match='own_v9'):
+        CompiledMCAPhysicalEnv(replace(base, target_observation='routed_assigned', action_prior='own_route_bearing'))

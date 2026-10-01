@@ -22,6 +22,17 @@ PYTHON = '/home/wj/miniconda3/envs/v/bin/python'
 SEEDS = (42, 43, 44)
 
 
+def parent_is_candidate(protocol):
+    """Step 0 is a candidate only when the parent file IS the training start.
+
+    Not for schema expansion (the parent has fewer inputs; its expanded copy acts
+    identically and was sealed-tested as its own baseline) nor for a zeroed actor
+    head (step 0 is the prior alone, sealed-tested as a baseline).
+    """
+    return (protocol.get('weight_initialization') == 'compatible_weights_only'
+            and not protocol.get('zero_actor_mean_head'))
+
+
 def run(cmd, cwd, cpus):
     env = dict(os.environ, PYTHONPATH='.', OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1')
     subprocess.run(['taskset', '-c', cpus, *cmd], cwd=cwd, env=env, check=True,
@@ -50,7 +61,8 @@ def main():
         milestones = protocol['milestones']
         for seed in SEEDS:
             cands = {m: study_dir/arm/f'seed_{seed}/policy_{m}.pt' for m in milestones}
-            cands[0] = snap/protocol['initialization_checkpoints'][str(seed)]['path']
+            if parent_is_candidate(protocol):
+                cands[0] = snap/protocol['initialization_checkpoints'][str(seed)]['path']
             for m, ckpt in cands.items():
                 target = sel_dir/f'{arm}_seed_{seed}_{m}.json'
                 if not target.exists():
@@ -71,7 +83,7 @@ def main():
         report['arms'][arm] = {}
         for seed in SEEDS:
             scores = {m: json.loads((sel_dir/f'{arm}_seed_{seed}_{m}.json').read_text())['success_rate']
-                      for m in [0]+protocol['milestones']}
+                      for m in ([0] if parent_is_candidate(protocol) else [])+protocol['milestones']}
             best = max(scores, key=lambda m: (scores[m], -m))
             ckpt = (snap/protocol['initialization_checkpoints'][str(seed)]['path'] if best == 0
                     else study_dir/arm/f'seed_{seed}/policy_{best}.pt')
@@ -98,6 +110,11 @@ def main():
     pair_names = None
     if args.reference:
         name, spec = args.reference.split('=', 1); path, ref_arm = spec.rsplit(':', 1)
+        import time
+        for _ in range(720):  # the reference study may still be finishing (up to 2 h)
+            if Path(path).exists():
+                break
+            time.sleep(10)
         ref = json.loads(Path(path).read_text())['arms'][ref_arm]
         report['reference'] = {name: {s: ref[str(s)] for s in SEEDS}}
         rates = [ref[str(s)]['test_success_rate'] for s in SEEDS]
