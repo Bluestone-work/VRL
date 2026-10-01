@@ -645,3 +645,9 @@ Sealed test, MCA, 500 layouts, selection on the 200-layout validation split:
 - The hand-written avoid term is still the strongest result. EXP42 (RL residual on top of it) is training.
 
 Multi-anatomy: `DynamicsConfig.anatomy` (default mca_m1_lvo) selects the territory; all 14 territories now have fixed validation/diagnostic/test splits in configs/evaluation_splits.json (diagnostic rule moved to 970M+k·1M after a collision with MCA validation at k≥10). Prior-only probe on 30 diagnostic layouts each: 13 of 14 anatomies at 97–100% complete, sma_embolism 90%, MCA 97%; MCA is the hardest territory for this controller. Zero-shot sealed tests of the gain-6 prior on the 13 non-MCA anatomies are running (study PRIOR_ZERO_SHOT_ANATOMIES, 13 declared).
+
+## 2026-10-02 01:20 — EXP42 and zero-shot multi-anatomy sealed tests
+
+- EXP42 (RL residual 0.5 on route+avoid prior, 500K × 3): sealed 95.4 / 94.8 / 92.8, mean 94.3%, collision-free ~83.8%. Paired vs prior alone: +1.0 / +0.4 / −1.6 pp. No gain from RL over the prior.
+- Route+avoid prior, zero-shot on the 13 other anatomies (sealed, 500 layouts each): 11 at 100% complete, sma_embolism 93.2%, cerebral_venous_sinus 88.0%. See research/validation/MULTI_ANATOMY_PRIOR_SEALED_20261002/REPORT.md.
+- Open: cerebral_venous_sinus (retrograde flow) is the weakest anatomy; per-anatomy failure analysis on its diagnostic split is the next step.

@@ -1,0 +1,105 @@
+{
+ "study": "EXP_0042",
+ "arms": {
+  "route_avoid": {
+   "42": {
+    "selected_step": 500000,
+    "validation_scores": {
+     "100000": 0.935,
+     "200000": 0.95,
+     "300000": 0.945,
+     "400000": 0.95,
+     "500000": 0.955
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0042/route_avoid_seed_42_500000.json",
+    "test_success_rate": 0.954
+   },
+   "43": {
+    "selected_step": 500000,
+    "validation_scores": {
+     "100000": 0.94,
+     "200000": 0.935,
+     "300000": 0.935,
+     "400000": 0.955,
+     "500000": 0.975
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0042/route_avoid_seed_43_500000.json",
+    "test_success_rate": 0.948
+   },
+   "44": {
+    "selected_step": 400000,
+    "validation_scores": {
+     "100000": 0.885,
+     "200000": 0.93,
+     "300000": 0.905,
+     "400000": 0.945,
+     "500000": 0.915
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0042/route_avoid_seed_44_400000.json",
+    "test_success_rate": 0.928
+   }
+  }
+ },
+ "baseline": {
+  "42": {
+   "checkpoint_sha256": "4721cdcd3aeff4546ad74df09a5d571768d71ca03e9f4fe375e21eede3e26fbe",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_42.json",
+   "success_rate": 0.47
+  },
+  "43": {
+   "checkpoint_sha256": "436b9a03f5c141afb1c2d24a45da0bbb7e912700ac5f81dbe4acd243dff8d3b1",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_43.json",
+   "success_rate": 0.782
+  },
+  "44": {
+   "checkpoint_sha256": "5afa33b2b74d1182e0affbe14dd3103d3933253ae8e6fd8ae7ae42aaef1eb941",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_44.json",
+   "success_rate": 0.606
+  }
+ },
+ "reference": {
+  "EXP41_route_prior": {
+   "42": {
+    "selected_step": 500000,
+    "validation_scores": {
+     "100000": 0.835,
+     "200000": 0.805,
+     "300000": 0.8,
+     "400000": 0.865,
+     "500000": 0.88
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0041/route_prior_seed_42_500000.json",
+    "test_success_rate": 0.88
+   },
+   "43": {
+    "selected_step": 300000,
+    "validation_scores": {
+     "100000": 0.87,
+     "200000": 0.885,
+     "300000": 0.905,
+     "400000": 0.905,
+     "500000": 0.88
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0041/route_prior_seed_43_300000.json",
+    "test_success_rate": 0.892
+   },
+   "44": {
+    "selected_step": 200000,
+    "validation_scores": {
+     "100000": 0.82,
+     "200000": 0.925,
+     "300000": 0.895,
+     "400000": 0.825,
+     "500000": 0.775
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0041/route_prior_seed_44_200000.json",
+    "test_success_rate": 0.942
+   }
+  }
+ },
+ "paired_diff": {
+  "42": 0.074,
+  "43": 0.056,
+  "44": -0.014
+ }
+}
