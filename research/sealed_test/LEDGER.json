@@ -1,0 +1,62 @@
+{
+ "studies": {
+  "BASELINE_EXP35": {
+   "declared": 3,
+   "used": 3,
+   "created": 1790852819.1670547
+  }
+ },
+ "entries": [
+  {
+   "study": "BASELINE_EXP35",
+   "label": "exp35_unit_speed_500k_seed_42",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/seed_42/policy_500000.pt",
+   "checkpoint_sha256": "4721cdcd3aeff4546ad74df09a5d571768d71ca03e9f4fe375e21eede3e26fbe",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/source_snapshot/configs/experiments/EXP_0035_UNIT_SPEED_PURE_RL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790852819.1670842,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_42.json",
+   "success_rate": 0.47,
+   "finished": 1790852947.9245894
+  },
+  {
+   "study": "BASELINE_EXP35",
+   "label": "exp35_unit_speed_500k_seed_43",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/seed_43/policy_500000.pt",
+   "checkpoint_sha256": "436b9a03f5c141afb1c2d24a45da0bbb7e912700ac5f81dbe4acd243dff8d3b1",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/source_snapshot/configs/experiments/EXP_0035_UNIT_SPEED_PURE_RL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790852948.6871295,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_43.json",
+   "success_rate": 0.782,
+   "finished": 1790853030.9404063
+  },
+  {
+   "study": "BASELINE_EXP35",
+   "label": "exp35_unit_speed_500k_seed_44",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/seed_44/policy_500000.pt",
+   "checkpoint_sha256": "5afa33b2b74d1182e0affbe14dd3103d3933253ae8e6fd8ae7ae42aaef1eb941",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/source_snapshot/configs/experiments/EXP_0035_UNIT_SPEED_PURE_RL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0035_UNIT_SPEED_20260930a/unit_speed/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790853031.704701,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_44.json",
+   "success_rate": 0.606,
+   "finished": 1790853148.8914068
+  }
+ ]
+}

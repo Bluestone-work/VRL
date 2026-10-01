@@ -104,6 +104,11 @@ def main():
         report[out.name]=results
         atomic_json(study/'results.json',dict(results=report,steps_per_arm_seed=500000,evaluation_layouts=100,
                     world_model=False,scope='Paired development validation of the own-target potential (final 500K); selection runs separately, not sealed test'))
+    atomic_json(study/'study_status.json',dict(phase='selecting_and_sealed_testing',timestamp=time.time(),completed_arms=list(report),world_model=False))
+    # Selection on the registered validation split, then one sealed-test evaluation per selected checkpoint.
+    subprocess.run([PYTHON,'-u',str(ROOT/'scripts/finalize_mca_sealed_study.py'),'--study-dir',str(study),'--study','EXP_0039',
+                    '--arms','assigned,control'],cwd=ROOT,env=environment,check=True,
+                   stdout=(study/'finalize.stdout.log').open('x'),stderr=subprocess.STDOUT)
     atomic_json(study/'study_status.json',dict(phase='completed',timestamp=time.time(),completed_arms=list(report),world_model=False))
 
 
