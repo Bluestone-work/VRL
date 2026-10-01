@@ -81,6 +81,8 @@ class DynamicsConfig:
     target_observation: str = 'nearest_euclidean'
     progress_potential: str = 'nearest'
     command_speed: str = 'bounded'
+    action_prior: str = 'none'
+    action_residual_scale: float = 1.
     particle_collision_event_penalty: float = 0.
     particle_near_penalty_per_s: float = 0.
     particle_safety_margin_mm: float = .15
@@ -117,6 +119,9 @@ class DynamicsConfig:
             elif name == 'progress_potential':
                 if value not in ('nearest', 'mass_weighted', 'assigned'):
                     raise ValueError('Invalid progress_potential')
+            elif name == 'action_prior':
+                if value not in ('none', 'own_route_bearing'):
+                    raise ValueError('Invalid action_prior')
             elif name == 'command_speed':
                 if value not in ('bounded', 'unit'):
                     raise ValueError('Invalid command_speed')
@@ -142,7 +147,7 @@ class DynamicsConfig:
                       'robot_initialization', 'contact_model', 'progress_reward_scale', 'reward_discount',
                       'particle_contact_penalty_per_s', 'particle_initialization',
                       'inlet_flow_multiplier_min', 'inlet_flow_multiplier_max', 'clot_initialization',
-                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed',
+                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale',
                       'particle_collision_event_penalty',
                       'particle_near_penalty_per_s', 'particle_safety_margin_mm', 'particle_prediction_horizon_s')
                       else data[f.name] for f in fields(cls)})
@@ -811,6 +816,26 @@ class MCAPhysicalEnv(gym.Env):
             shaping[self._shaping_assignment() != assignment_before] = 0.
         return shaping
 
+    def _apply_action_prior(self, action):
+        """Structured policy: executed command = own route bearing + scale * policy action.
+
+        Not pure RL. The bearing is exactly the observed own-target route
+        direction (columns 112:115 of the own_v9 schema, here in world frame);
+        the policy output becomes a residual. Diagnostic EXP41 probe: the
+        bearing alone clears all targets in 89/100 diagnostic layouts.
+        """
+        if self.config.action_prior == 'none':
+            return action
+        n = self.num_robots
+        prior = np.zeros((n, 3))
+        if np.any(self.masses > 0):
+            axis, _, _, _ = self.transport.coordinates(self.positions_mm[:n], self.edges[:n], self.solution)
+            assignment = self._assigned_targets()
+            mine = assignment.clip(0)
+            valid = (assignment >= 0) & (self.masses[mine] > 0) & self.active[:n]
+            prior = self._route_directions(axis)[np.arange(n), mine]*valid[:, None]
+        return prior + self.config.action_residual_scale*action
+
     def _surface_contacts(self, positions, edges, solution, masses):
         """Contact with the lumen-facing annular stenosis surface, not its axis.
 
@@ -841,7 +866,7 @@ class MCAPhysicalEnv(gym.Env):
         action = np.asarray(action, np.float64)
         if action.shape != (self.num_robots, 3) or not np.isfinite(action).all():
             raise ValueError('Expected finite world-frame [num_robots,3] actions')
-        action = bound_command(action, self.config.command_speed)
+        action = bound_command(self._apply_action_prior(action), self.config.command_speed)
         commands = np.zeros_like(self.positions_mm)
         commands[:self.num_robots] = action*self.config.robot_speed_mm_s
         duration = min(self.config.control_dt_s, self.config.episode_duration_s-self.elapsed_s)

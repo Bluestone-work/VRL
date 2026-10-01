@@ -84,6 +84,11 @@ def train(args):
             raise ValueError('Warm-start seed mismatch')
         expanded=initialize_expanded_obstacle_policy(agent,parent) if expansion else []
         if not expansion:agent.load(initial_path,load_optimizers=False)
+        if protocol.get('zero_actor_mean_head'):
+            # Residual over an action prior: start exactly at the prior (deterministic residual 0).
+            with torch.no_grad():
+                agent.actor.policy_head.mean.weight.zero_();agent.actor.policy_head.mean.bias.zero_()
+            expanded=list(expanded)+['actor.policy_head.mean (zeroed)']
         initialization=dict(checkpoint=str(initial_path),sha256=hashlib.sha256(initial_path.read_bytes()).hexdigest(),
                             experiment=parent['meta'].get('training_experiment'),
                             parent_transitions=parent['training_state']['transitions'],

@@ -128,6 +128,11 @@ def main():
     args=p.parse_args();out=Path(args.out);out.mkdir(parents=True,exist_ok=False)
     config_path=Path(args.config).resolve()
     config=DynamicsConfig.from_json(config_path)
+    # Feasibility is a property of the task physics. An action prior is part of
+    # the policy's action mapping, so the witness commands the actuator directly.
+    if config.action_prior!='none':
+        from dataclasses import replace
+        config=replace(config,action_prior='none')
     source=source_hashes(config_path)
     env=CompiledMCAPhysicalEnv(config);reset_with_valid_particles(env,args.start_seed)
     samples=[]
