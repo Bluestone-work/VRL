@@ -622,3 +622,7 @@ EXP27 安全暂停于 828192 / 610080 / 550176 步。新协议/源代码/父权�
 - EXP37（`research/validation/EXP0037_RESULTS_20261001/REPORT.md`）：两组续训都退化，500K 时 low_lr 54.0%、control 40.0%，父权重 63.7%。
 - EXP38 50K 诊断（`research/validation/EXP0038_DIAGNOSTIC_20261001/REPORT.md`）：assigned 53/71/59%，control 32/53/58%，逐场配对 +13.3 个百分点；但还没超过父权重，导航余弦 0.252（父权重 0.236）。
 - EXP39 正式配对（assigned vs control，500K × 3 seed，10 万步里程碑 + 选择集选模）：证书和 16K 预检都通过，驱动为 `scripts/run_mca_assigned_formal.py`。**未启动，等待用户批准。** 80% 目标未达到，世界模型未启用。
+
+## 2026-10-01 21:50 EXP39 sealed-test result (first formal result on the fixed splits)
+
+> Checkpoint selected on the validation split (200 layouts), one evaluation per selected checkpoint on the sealed test (500 layouts). assigned 49.4/78.2/70.6 (66.1%), control 55.8/78.2/60.6 (64.9%), EXP35 sealed baseline 61.9%. Paired +1.2 pp, seeds not in the same direction: no reliable gain. Training stability clearly improved (milestone-mean validation 61.7% vs 43.4%, at 500K 66.5% vs 40.0%): the own-target potential removes the continued-training degradation. 80% not reached. Report: `research/validation/EXP_0039_SEALED_RESULTS/REPORT.md`.
