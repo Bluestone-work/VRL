@@ -54,6 +54,11 @@
    "declared": 3,
    "used": 3,
    "created": 1790929274.7883399
+  },
+  "EXP_0045_SHIELD_EVAL": {
+   "declared": 3,
+   "used": 3,
+   "created": 1790949870.501799
   }
  },
  "entries": [
@@ -685,6 +690,57 @@
    "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0044/wait_seed_44_100000.json",
    "success_rate": 0.87,
    "finished": 1790929444.9504356
+  },
+  {
+   "study": "EXP_0045_SHIELD_EVAL",
+   "label": "exp43_selected_shield_seed_42",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/initializations/EXP0045_FROM_EXP0043_SELECTED_20261002/seed_42.pt",
+   "checkpoint_sha256": "5cb34d02499d94616902503a5aae16e1180d3b7897138996ce3fd7eff9ff184b",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./configs/experiments/EXP_0045_SHIELD_EVAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar.",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790949870.5018258,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0045_SHIELD_EVAL/exp43_selected_shield_seed_42.json",
+   "success_rate": 0.984,
+   "finished": 1790949907.9619372
+  },
+  {
+   "study": "EXP_0045_SHIELD_EVAL",
+   "label": "exp43_selected_shield_seed_43",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/initializations/EXP0045_FROM_EXP0043_SELECTED_20261002/seed_43.pt",
+   "checkpoint_sha256": "8c4d858a8794a25a7c48cd4cfd5823731e4d7ba4a42557e9c6b463191ceffce2",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./configs/experiments/EXP_0045_SHIELD_EVAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar.",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790949908.7323463,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0045_SHIELD_EVAL/exp43_selected_shield_seed_43.json",
+   "success_rate": 0.978,
+   "finished": 1790949948.0775402
+  },
+  {
+   "study": "EXP_0045_SHIELD_EVAL",
+   "label": "exp43_selected_shield_seed_44",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/initializations/EXP0045_FROM_EXP0043_SELECTED_20261002/seed_44.pt",
+   "checkpoint_sha256": "b5c8b023cb290b7f42ab8b9b23b6b42def2cea7833eec015bdca9e4af8dd1f66",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./configs/experiments/EXP_0045_SHIELD_EVAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar.",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790949948.8677635,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0045_SHIELD_EVAL/exp43_selected_shield_seed_44.json",
+   "success_rate": 0.988,
+   "finished": 1790949988.701188
   }
  ]
 }

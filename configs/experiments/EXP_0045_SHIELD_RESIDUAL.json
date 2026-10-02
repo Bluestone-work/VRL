@@ -1,0 +1,84 @@
+{
+ "experiment": "EXP_0045_SHIELD_RESIDUAL",
+ "parent": "EXP_0043_GATED_RESIDUAL",
+ "scope": "Continue the EXP43 validation-selected policies with the post-policy safety shield in the loop and collision event penalty 20. 500K x 3 seeds. Validation selection on collision-free rate (step 0 = EXP43 selected + shield is a candidate), sealed test once.",
+ "authorization": "User 2026-10-02 midday: find a deep-RL method that clearly beats the traditional prior; auto-approve while away.",
+ "physics_config": "configs/experiments/EXP_0045_SHIELD_TRAIN_DYNAMICS.json",
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "timesteps_per_seed": 500000,
+ "transition_unit": "one environment control step, not individual robot samples",
+ "rollout_steps": 512,
+ "epochs": 4,
+ "batch_size": 256,
+ "hidden_dim": 128,
+ "checkpoint_interval": 4096,
+ "milestones": [
+  100000,
+  200000,
+  300000,
+  400000,
+  500000
+ ],
+ "eval_episodes": 100,
+ "training_seed_base": 1900000000,
+ "validation_seed_base": 940000000,
+ "architecture": "adaptive_edge_gat",
+ "control": "direct_local_frenet",
+ "world_model": false,
+ "guidance_controller": "route + observed particle repulsion prior with policy-controlled stop (residual RL)",
+ "fresh_weights": false,
+ "weight_initialization": "compatible_weights_only",
+ "initialization_checkpoints": {
+  "42": {
+   "path": "research/initializations/EXP0045_FROM_EXP0043_SELECTED_20261002/seed_42.pt",
+   "sha256": "5cb34d02499d94616902503a5aae16e1180d3b7897138996ce3fd7eff9ff184b"
+  },
+  "43": {
+   "path": "research/initializations/EXP0045_FROM_EXP0043_SELECTED_20261002/seed_43.pt",
+   "sha256": "8c4d858a8794a25a7c48cd4cfd5823731e4d7ba4a42557e9c6b463191ceffce2"
+  },
+  "44": {
+   "path": "research/initializations/EXP0045_FROM_EXP0043_SELECTED_20261002/seed_44.pt",
+   "sha256": "b5c8b023cb290b7f42ab8b9b23b6b42def2cea7833eec015bdca9e4af8dd1f66"
+  }
+ },
+ "comparability": "Structured-policy track. Compared on the same sealed layouts to the prior alone and to EXP41.",
+ "pure_rl": false,
+ "oracle_used_for_training": false,
+ "require_randomization_boundaries": true,
+ "require_random_clot_evidence": true,
+ "feasibility_certificate": "research/validation/EXP0045_SHIELD_FEASIBILITY_20261002/certificate.json",
+ "reference_certificate": "research/validation/EXP0045_SHIELD_REFERENCE_20261002/certificate.json",
+ "feasibility_image": "research/validation/EXP0029_FEASIBILITY_20260930/feasibility.png",
+ "task_limit": "Controlled in-vitro goal-conditioned ideal-actuator simulation with perfect state. All object positions randomized on fixed MCA anatomy. Soft overlap costs, not hard collision physics. Diagnostic clearance feasibility is not collision-free policy performance or hardware verification.",
+ "dashboard_message": "EXP45 \u5b89\u5168\u62a4\u76fe\u5728\u73af+\u78b0\u649e\u60e9\u7f5a20\uff0c\u7eed\u8bad EXP43\uff08\u975e\u7eafRL\uff09\u3002",
+ "physical_calibration_ready": false,
+ "sealed_test_used": false,
+ "ppo": {
+  "lr_actor": 0.0001
+ },
+ "study_stage": "Formal 500K paired study; validation split for selection, sealed test (500 layouts) for the reported result.",
+ "exploration_schedule": null,
+ "observation_schema": "mca_point_routed_115_own_v9",
+ "bundled_variables": "Shield in the training loop; collision event penalty 6 -> 20; parents are EXP43 selected checkpoints; 500K.",
+ "checkpoint_selection": {
+  "selection_seed_base": 950000000,
+  "selection_layouts": 200,
+  "rule": "Pick the milestone with the highest collision-free clearance rate on the 200 registered validation layouts, ties broken by complete clearance then earlier milestone. Changed from EXP42 (complete clearance) because collision-free clearance is the metric with headroom.",
+  "metric": "collision_free_success_rate"
+ },
+ "sealed_test": {
+  "anatomy": "mca_m1_lvo",
+  "registry": "configs/evaluation_splits.json",
+  "evaluator": "scripts/evaluate_mca_sealed_test.py",
+  "study": "EXP_0045",
+  "candidates": "one selected checkpoint per seed (3)",
+  "report": "Final claims use only sealed-test results; 940000000-940000099 is diagnostic only."
+ },
+ "zero_actor_mean_head": false,
+ "actor_log_std_init": null
+}
