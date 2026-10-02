@@ -62,7 +62,7 @@
   },
   "EXP43_SHIELD_ZERO_SHOT_ANATOMIES": {
    "declared": 13,
-   "used": 12,
+   "used": 13,
    "created": 1790951504.6353314
   },
   "EXP_0045": {
@@ -984,8 +984,28 @@
    "test_seed_base": 1002000000,
    "layouts": 500,
    "started": 1790953655.653737,
-   "complete": false,
-   "partial": false
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP43_SHIELD_ZERO_SHOT_ANATOMIES/exp43_seed42_shield_femoropopliteal_pad.json",
+   "success_rate": 0.948,
+   "finished": 1790953968.6680372
+  },
+  {
+   "study": "EXP43_SHIELD_ZERO_SHOT_ANATOMIES",
+   "label": "exp43_seed42_shield_renal_artery",
+   "anatomy": "renal_artery",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/initializations/EXP0045_FROM_EXP0043_SELECTED_20261002/seed_42.pt",
+   "checkpoint_sha256": "5cb34d02499d94616902503a5aae16e1180d3b7897138996ce3fd7eff9ff184b",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./configs/experiments/EXP_0045_SHIELD_EVAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar.",
+   "test_seed_base": 1003000000,
+   "layouts": 500,
+   "started": 1790953969.5812654,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP43_SHIELD_ZERO_SHOT_ANATOMIES/exp43_seed42_shield_renal_artery.json",
+   "success_rate": 1.0,
+   "finished": 1790954107.9475422
   }
  ]
 }
