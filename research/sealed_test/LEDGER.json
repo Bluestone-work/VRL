@@ -44,6 +44,16 @@
    "declared": 1,
    "used": 1,
    "created": 1790917663.4275162
+  },
+  "EXP_0043": {
+   "declared": 3,
+   "used": 3,
+   "created": 1790922022.3211343
+  },
+  "EXP_0044": {
+   "declared": 3,
+   "used": 3,
+   "created": 1790929274.7883399
   }
  },
  "entries": [
@@ -573,6 +583,108 @@
    "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_WAIT_PRIOR_ONLY/wait_prior_only.json",
    "success_rate": 0.926,
    "finished": 1790917877.8246868
+  },
+  {
+   "study": "EXP_0043",
+   "label": "gated_seed_42_1000000",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/seed_42/policy_1000000.pt",
+   "checkpoint_sha256": "b5af54214124bce993cce9512ea66fd1472321339a22e03a18eee8c7b205d40f",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/source_snapshot/configs/experiments/EXP_0043_GATED_RESIDUAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790922022.3211615,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0043/gated_seed_42_1000000.json",
+   "success_rate": 0.984,
+   "finished": 1790922057.2394571
+  },
+  {
+   "study": "EXP_0043",
+   "label": "gated_seed_43_300000",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/seed_43/policy_300000.pt",
+   "checkpoint_sha256": "0f3d84cf9aa6e6f5812bfefcb071f384182bb2954f77634d11d364087bcdce8b",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/source_snapshot/configs/experiments/EXP_0043_GATED_RESIDUAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790922058.0446951,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0043/gated_seed_43_300000.json",
+   "success_rate": 0.986,
+   "finished": 1790922094.5853457
+  },
+  {
+   "study": "EXP_0043",
+   "label": "gated_seed_44_800000",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/seed_44/policy_800000.pt",
+   "checkpoint_sha256": "3229ce6b178231e212428ae592ec490b20754039d9b7dca2f4c8eb01d2e3c66c",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/source_snapshot/configs/experiments/EXP_0043_GATED_RESIDUAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0043_GATED_20261002a/gated/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790922095.3652432,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0043/gated_seed_44_800000.json",
+   "success_rate": 0.996,
+   "finished": 1790922128.2518618
+  },
+  {
+   "study": "EXP_0044",
+   "label": "wait_seed_42_800000",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/seed_42/policy_800000.pt",
+   "checkpoint_sha256": "d1b4f9159a3c80a698fc5a5a9316d69dfb97be9acb963a51fad3f18a3273ae6c",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/source_snapshot/configs/experiments/EXP_0044_WAIT_RESIDUAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790929274.788366,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0044/wait_seed_42_800000.json",
+   "success_rate": 0.952,
+   "finished": 1790929322.7960896
+  },
+  {
+   "study": "EXP_0044",
+   "label": "wait_seed_43_100000",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/seed_43/policy_100000.pt",
+   "checkpoint_sha256": "89b02b81a39cad18f3ffc14a1f6bbbf304c9f0ae1d73bcad423af6e87eace420",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/source_snapshot/configs/experiments/EXP_0044_WAIT_RESIDUAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790929323.5988684,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0044/wait_seed_43_100000.json",
+   "success_rate": 0.9,
+   "finished": 1790929380.978999
+  },
+  {
+   "study": "EXP_0044",
+   "label": "wait_seed_44_100000",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/seed_44/policy_100000.pt",
+   "checkpoint_sha256": "1da5d6eca9527badc61a6a758124b413aec9f681cb85bada20b43ff956904f49",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/source_snapshot/configs/experiments/EXP_0044_WAIT_RESIDUAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP_0044_WAIT_20261002a/wait/source_snapshot",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790929381.763122,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0044/wait_seed_44_100000.json",
+   "success_rate": 0.87,
+   "finished": 1790929444.9504356
   }
  ]
 }

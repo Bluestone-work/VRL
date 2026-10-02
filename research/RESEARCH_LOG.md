@@ -651,3 +651,9 @@ Multi-anatomy: `DynamicsConfig.anatomy` (default mca_m1_lvo) selects the territo
 - EXP42 (RL residual 0.5 on route+avoid prior, 500K × 3): sealed 95.4 / 94.8 / 92.8, mean 94.3%, collision-free ~83.8%. Paired vs prior alone: +1.0 / +0.4 / −1.6 pp. No gain from RL over the prior.
 - Route+avoid prior, zero-shot on the 13 other anatomies (sealed, 500 layouts each): 11 at 100% complete, sma_embolism 93.2%, cerebral_venous_sinus 88.0%. See research/validation/MULTI_ANATOMY_PRIOR_SEALED_20261002/REPORT.md.
 - Open: cerebral_venous_sinus (retrograde flow) is the weakest anatomy; per-anatomy failure analysis on its diagnostic split is the next step.
+
+## 2026-10-02 22:00 — EXP43 / EXP44 sealed
+
+- Diagnosis behind EXP43: on the unit-speed actuator the EXP42 residual (0.5) could never cancel the unit prior, so RL could not wait. A hand-written wait rule (sealed baseline BASELINE_WAIT_PRIOR_ONLY) gives 92.6% / 91.4% collision-free, the strongest traditional result.
+- EXP43 (residual 1.0 + stop deadzone, 1M × 3, selection on collision-free): sealed complete 98.4 / 98.6 / 99.6 (98.9%), collision-free 88.4 / 88.2 / 90.0 (88.9%). Paired vs prior alone +4.5 / +4.0 pp; vs wait rule +6.3 pp complete, −2.5 pp collision-free.
+- EXP44 (residual RL over the wait-rule prior): worse; complete 95.2 / 90.0 / 87.0, collision-free 89.8 / 88.6 / 82.6. Two seeds selected at 100K, i.e. RL degraded the stronger prior. Negative result.

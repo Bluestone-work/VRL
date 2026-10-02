@@ -1,0 +1,162 @@
+{
+ "study": "EXP_0043",
+ "arms": {
+  "gated": {
+   "42": {
+    "selected_step": 1000000,
+    "selection_metric": "collision_free_success_rate",
+    "validation_scores": {
+     "100000": 0.935,
+     "200000": 0.965,
+     "300000": 0.98,
+     "400000": 0.965,
+     "500000": 0.96,
+     "600000": 0.955,
+     "700000": 0.97,
+     "800000": 0.975,
+     "900000": 0.97,
+     "1000000": 0.98
+    },
+    "validation_collision_free": {
+     "100000": 0.83,
+     "200000": 0.855,
+     "300000": 0.86,
+     "400000": 0.865,
+     "500000": 0.855,
+     "600000": 0.825,
+     "700000": 0.875,
+     "800000": 0.865,
+     "900000": 0.845,
+     "1000000": 0.885
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0043/gated_seed_42_1000000.json",
+    "test_success_rate": 0.984,
+    "test_collision_free_rate": 0.884
+   },
+   "43": {
+    "selected_step": 300000,
+    "selection_metric": "collision_free_success_rate",
+    "validation_scores": {
+     "100000": 0.965,
+     "200000": 0.97,
+     "300000": 1.0,
+     "400000": 1.0,
+     "500000": 0.94,
+     "600000": 0.975,
+     "700000": 0.99,
+     "800000": 0.975,
+     "900000": 0.995,
+     "1000000": 1.0
+    },
+    "validation_collision_free": {
+     "100000": 0.835,
+     "200000": 0.85,
+     "300000": 0.87,
+     "400000": 0.85,
+     "500000": 0.855,
+     "600000": 0.84,
+     "700000": 0.845,
+     "800000": 0.81,
+     "900000": 0.865,
+     "1000000": 0.855
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0043/gated_seed_43_300000.json",
+    "test_success_rate": 0.986,
+    "test_collision_free_rate": 0.882
+   },
+   "44": {
+    "selected_step": 800000,
+    "selection_metric": "collision_free_success_rate",
+    "validation_scores": {
+     "100000": 0.95,
+     "200000": 0.96,
+     "300000": 0.955,
+     "400000": 0.985,
+     "500000": 0.98,
+     "600000": 1.0,
+     "700000": 0.995,
+     "800000": 0.985,
+     "900000": 0.995,
+     "1000000": 0.98
+    },
+    "validation_collision_free": {
+     "100000": 0.835,
+     "200000": 0.86,
+     "300000": 0.855,
+     "400000": 0.895,
+     "500000": 0.86,
+     "600000": 0.87,
+     "700000": 0.895,
+     "800000": 0.905,
+     "900000": 0.87,
+     "1000000": 0.85
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0043/gated_seed_44_800000.json",
+    "test_success_rate": 0.996,
+    "test_collision_free_rate": 0.9
+   }
+  }
+ },
+ "baseline": {
+  "42": {
+   "checkpoint_sha256": "4721cdcd3aeff4546ad74df09a5d571768d71ca03e9f4fe375e21eede3e26fbe",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_42.json",
+   "success_rate": 0.47
+  },
+  "43": {
+   "checkpoint_sha256": "436b9a03f5c141afb1c2d24a45da0bbb7e912700ac5f81dbe4acd243dff8d3b1",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_43.json",
+   "success_rate": 0.782
+  },
+  "44": {
+   "checkpoint_sha256": "5afa33b2b74d1182e0affbe14dd3103d3933253ae8e6fd8ae7ae42aaef1eb941",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_44.json",
+   "success_rate": 0.606
+  }
+ },
+ "reference": {
+  "EXP42_route_avoid": {
+   "42": {
+    "selected_step": 500000,
+    "validation_scores": {
+     "100000": 0.935,
+     "200000": 0.95,
+     "300000": 0.945,
+     "400000": 0.95,
+     "500000": 0.955
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0042/route_avoid_seed_42_500000.json",
+    "test_success_rate": 0.954
+   },
+   "43": {
+    "selected_step": 500000,
+    "validation_scores": {
+     "100000": 0.94,
+     "200000": 0.935,
+     "300000": 0.935,
+     "400000": 0.955,
+     "500000": 0.975
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0042/route_avoid_seed_43_500000.json",
+    "test_success_rate": 0.948
+   },
+   "44": {
+    "selected_step": 400000,
+    "validation_scores": {
+     "100000": 0.885,
+     "200000": 0.93,
+     "300000": 0.905,
+     "400000": 0.945,
+     "500000": 0.915
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0042/route_avoid_seed_44_400000.json",
+    "test_success_rate": 0.928
+   }
+  }
+ },
+ "paired_diff": {
+  "42": 0.03,
+  "43": 0.038,
+  "44": 0.068
+ }
+}
