@@ -39,6 +39,11 @@
    "declared": 3,
    "used": 3,
    "created": 1790874850.842645
+  },
+  "BASELINE_WAIT_PRIOR_ONLY": {
+   "declared": 1,
+   "used": 1,
+   "created": 1790917663.4275162
   }
  },
  "entries": [
@@ -551,6 +556,23 @@
    "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0042/route_avoid_seed_44_400000.json",
    "success_rate": 0.928,
    "finished": 1790874992.3656044
+  },
+  {
+   "study": "BASELINE_WAIT_PRIOR_ONLY",
+   "label": "wait_prior_only",
+   "anatomy": "mca_m1_lvo",
+   "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/initializations/WAIT_PRIOR_ONLY_20261002.pt",
+   "checkpoint_sha256": "ddd0f885199fcc96f113aa8e2cbddf5ed65f04ce1d1ff1b570f5965eb943a7ba",
+   "protocol": "/home/wj/\u684c\u9762/vascular_marl_local.tar./configs/experiments/EXP_0044_WAIT_RESIDUAL.json",
+   "code_root": "/home/wj/\u684c\u9762/vascular_marl_local.tar.",
+   "test_seed_base": 990000000,
+   "layouts": 500,
+   "started": 1790917663.4275484,
+   "complete": true,
+   "partial": false,
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_WAIT_PRIOR_ONLY/wait_prior_only.json",
+   "success_rate": 0.926,
+   "finished": 1790917877.8246868
   }
  ]
 }
