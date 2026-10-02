@@ -117,7 +117,7 @@ class DynamicsConfig:
     def __post_init__(self):
         nonnegative = {'distal_resistance_ratio', 'geometry_variation', 'lysis_mass_per_s',
                        'initial_radius_fraction', 'progress_reward_scale', 'particle_contact_penalty_per_s',
-                       'particle_collision_event_penalty', 'particle_near_penalty_per_s', 'action_avoid_gain', 'action_stop_deadzone', 'action_wait_horizon_s'}
+                       'particle_collision_event_penalty', 'particle_near_penalty_per_s', 'action_avoid_gain', 'action_stop_deadzone', 'action_wait_clearance', 'action_wait_horizon_s'}
         integers = {'num_robots': 1, 'particle_count': 0, 'max_substeps_per_control': 1}
         for field in fields(self):
             name, value = field.name, getattr(self, field.name)
