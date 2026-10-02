@@ -1,0 +1,93 @@
+{
+ "study": "EXP_0045",
+ "arms": {
+  "shield": {
+   "42": {
+    "selected_step": 100000,
+    "selection_metric": "collision_free_success_rate",
+    "validation_scores": {
+     "0": 0.995,
+     "100000": 0.98,
+     "200000": 0.995,
+     "300000": 0.985,
+     "400000": 0.975,
+     "500000": 0.98
+    },
+    "validation_collision_free": {
+     "0": 0.965,
+     "100000": 0.97,
+     "200000": 0.95,
+     "300000": 0.95,
+     "400000": 0.95,
+     "500000": 0.955
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0045/shield_seed_42_100000.json",
+    "test_success_rate": 0.98,
+    "test_collision_free_rate": 0.96
+   },
+   "43": {
+    "selected_step": 300000,
+    "selection_metric": "collision_free_success_rate",
+    "validation_scores": {
+     "0": 0.965,
+     "100000": 0.98,
+     "200000": 0.945,
+     "300000": 0.97,
+     "400000": 0.97,
+     "500000": 0.99
+    },
+    "validation_collision_free": {
+     "0": 0.95,
+     "100000": 0.93,
+     "200000": 0.93,
+     "300000": 0.96,
+     "400000": 0.94,
+     "500000": 0.955
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0045/shield_seed_43_300000.json",
+    "test_success_rate": 0.97,
+    "test_collision_free_rate": 0.958
+   },
+   "44": {
+    "selected_step": 0,
+    "selection_metric": "collision_free_success_rate",
+    "validation_scores": {
+     "0": 0.98,
+     "100000": 0.995,
+     "200000": 0.995,
+     "300000": 0.985,
+     "400000": 0.965,
+     "500000": 0.97
+    },
+    "validation_collision_free": {
+     "0": 0.935,
+     "100000": 0.93,
+     "200000": 0.92,
+     "300000": 0.915,
+     "400000": 0.9,
+     "500000": 0.895
+    },
+    "test_result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/EXP_0045_SHIELD_EVAL/exp43_selected_shield_seed_44.json",
+    "test_success_rate": 0.988,
+    "test_collision_free_rate": 0.95
+   }
+  }
+ },
+ "baseline": {
+  "42": {
+   "checkpoint_sha256": "4721cdcd3aeff4546ad74df09a5d571768d71ca03e9f4fe375e21eede3e26fbe",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_42.json",
+   "success_rate": 0.47
+  },
+  "43": {
+   "checkpoint_sha256": "436b9a03f5c141afb1c2d24a45da0bbb7e912700ac5f81dbe4acd243dff8d3b1",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_43.json",
+   "success_rate": 0.782
+  },
+  "44": {
+   "checkpoint_sha256": "5afa33b2b74d1182e0affbe14dd3103d3933253ae8e6fd8ae7ae42aaef1eb941",
+   "result": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/sealed_test/BASELINE_EXP35/exp35_unit_speed_500k_seed_44.json",
+   "success_rate": 0.606
+  }
+ }
+}

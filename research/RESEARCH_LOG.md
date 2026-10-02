@@ -657,3 +657,8 @@ Multi-anatomy: `DynamicsConfig.anatomy` (default mca_m1_lvo) selects the territo
 - Diagnosis behind EXP43: on the unit-speed actuator the EXP42 residual (0.5) could never cancel the unit prior, so RL could not wait. A hand-written wait rule (sealed baseline BASELINE_WAIT_PRIOR_ONLY) gives 92.6% / 91.4% collision-free, the strongest traditional result.
 - EXP43 (residual 1.0 + stop deadzone, 1M × 3, selection on collision-free): sealed complete 98.4 / 98.6 / 99.6 (98.9%), collision-free 88.4 / 88.2 / 90.0 (88.9%). Paired vs prior alone +4.5 / +4.0 pp; vs wait rule +6.3 pp complete, −2.5 pp collision-free.
 - EXP44 (residual RL over the wait-rule prior): worse; complete 95.2 / 90.0 / 87.0, collision-free 89.8 / 88.6 / 82.6. Two seeds selected at 100K, i.e. RL degraded the stronger prior. Negative result.
+
+## 2026-10-02 23:10 — EXP43 + shield; EXP45
+
+- EXP43 selected checkpoints + post-policy shield (stop on forecast clearance < 0.3 within 0.5 s), no retraining: sealed complete 98.4 / 97.8 / 98.8 (98.3%), collision-free 96.4 / 96.4 / 95.0 (95.9%). Paired vs the wait rule, the strongest traditional controller: +5.8 / +5.2 / +6.2 and +5.0 / +5.0 / +3.6 pp. First method that beats every traditional controller on both metrics on all seeds. Report: research/validation/EXP0045_SHIELD_PROBE_20261002/REPORT.md.
+- EXP45 (continue with shield in loop, collision penalty 20, 500K): 97.9% / 95.6%; paired vs EXP43 + shield −0.4 / −0.8 / 0.0 pp. Null result.
