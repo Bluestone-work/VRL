@@ -89,6 +89,10 @@ def train(args):
             with torch.no_grad():
                 agent.actor.policy_head.mean.weight.zero_();agent.actor.policy_head.mean.bias.zero_()
             expanded=list(expanded)+['actor.policy_head.mean (zeroed)']
+        if protocol.get('actor_log_std_init') is not None:
+            # Exploration noise relative to the prior: a residual of scale 1 with the inherited std would swamp it.
+            with torch.no_grad():agent.actor.policy_head.log_std.fill_(float(protocol['actor_log_std_init']))
+            expanded=list(expanded)+[f"actor.policy_head.log_std (set to {protocol['actor_log_std_init']})"]
         initialization=dict(checkpoint=str(initial_path),sha256=hashlib.sha256(initial_path.read_bytes()).hexdigest(),
                             experiment=parent['meta'].get('training_experiment'),
                             parent_transitions=parent['training_state']['transitions'],

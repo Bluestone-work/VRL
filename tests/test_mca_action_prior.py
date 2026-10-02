@@ -116,3 +116,21 @@ def test_priors_require_the_observed_features():
     base, _ = configs()
     with pytest.raises(ValueError, match='own_v9'):
         CompiledMCAPhysicalEnv(replace(base, target_observation='routed_assigned', action_prior='own_route_bearing'))
+
+
+def test_gated_prior_zero_policy_is_the_avoid_prior_and_policy_can_stop():
+    base, _ = configs()
+    avoid = replace(base, action_prior='own_route_bearing_avoid', action_residual_scale=1., action_avoid_gain=6.)
+    gated = replace(avoid, action_prior='own_route_bearing_avoid_gated', action_stop_deadzone=.35)
+    a, b = CompiledMCAPhysicalEnv(avoid), CompiledMCAPhysicalEnv(gated)
+    reset_with_valid_particles(a, SEED); reset_with_valid_particles(b, SEED)
+    z = np.zeros((base.num_robots, 3))
+    prior = a._apply_action_prior(z)
+    assert np.allclose(b._apply_action_prior(z)[np.linalg.norm(prior, axis=1) >= .35], prior[np.linalg.norm(prior, axis=1) >= .35])
+    # Cancelling the prior executes an exact stop, which the unit actuator keeps at zero.
+    from environments.mca_physical_env import bound_command
+    stop = b._apply_action_prior(-prior)
+    assert not stop.any() and not bound_command(stop, 'unit').any()
+    before = b.positions_mm[:base.num_robots].copy()
+    b.step(-prior)
+    assert np.linalg.norm(b.positions_mm[:base.num_robots]-before, axis=1).max() < base.robot_speed_mm_s*base.control_dt_s*.5

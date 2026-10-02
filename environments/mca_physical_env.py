@@ -104,6 +104,7 @@ class DynamicsConfig:
     action_prior: str = 'none'
     action_residual_scale: float = 1.
     action_avoid_gain: float = 0.
+    action_stop_deadzone: float = 0.
     anatomy: str = 'mca_m1_lvo'
     particle_collision_event_penalty: float = 0.
     particle_near_penalty_per_s: float = 0.
@@ -114,7 +115,7 @@ class DynamicsConfig:
     def __post_init__(self):
         nonnegative = {'distal_resistance_ratio', 'geometry_variation', 'lysis_mass_per_s',
                        'initial_radius_fraction', 'progress_reward_scale', 'particle_contact_penalty_per_s',
-                       'particle_collision_event_penalty', 'particle_near_penalty_per_s', 'action_avoid_gain'}
+                       'particle_collision_event_penalty', 'particle_near_penalty_per_s', 'action_avoid_gain', 'action_stop_deadzone'}
         integers = {'num_robots': 1, 'particle_count': 0, 'max_substeps_per_control': 1}
         for field in fields(self):
             name, value = field.name, getattr(self, field.name)
@@ -146,7 +147,7 @@ class DynamicsConfig:
                 if value not in ('nearest', 'mass_weighted', 'assigned'):
                     raise ValueError('Invalid progress_potential')
             elif name == 'action_prior':
-                if value not in ('none', 'own_route_bearing', 'own_route_bearing_avoid'):
+                if value not in ('none', 'own_route_bearing', 'own_route_bearing_avoid', 'own_route_bearing_avoid_gated'):
                     raise ValueError('Invalid action_prior')
             elif name == 'command_speed':
                 if value not in ('bounded', 'unit'):
@@ -173,7 +174,7 @@ class DynamicsConfig:
                       'robot_initialization', 'contact_model', 'progress_reward_scale', 'reward_discount',
                       'particle_contact_penalty_per_s', 'particle_initialization',
                       'inlet_flow_multiplier_min', 'inlet_flow_multiplier_max', 'clot_initialization',
-                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain', 'anatomy',
+                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain', 'action_stop_deadzone', 'anatomy',
                       'particle_collision_event_penalty',
                       'particle_near_penalty_per_s', 'particle_safety_margin_mm', 'particle_prediction_horizon_s')
                       else data[f.name] for f in fields(cls)})
@@ -855,7 +856,7 @@ class MCAPhysicalEnv(gym.Env):
         """
         if self.config.action_prior == 'none':
             return action
-        if self.config.action_prior == 'own_route_bearing_avoid':
+        if self.config.action_prior in ('own_route_bearing_avoid', 'own_route_bearing_avoid_gated'):
             # Everything is read back from the observation the policy receives.
             nodes = self._observation()['nodes'].astype(np.float64)
             local = nodes[:, 112:115]+self.config.action_avoid_gain*observed_particle_repulsion(nodes, self.config)
@@ -865,7 +866,14 @@ class MCAPhysicalEnv(gym.Env):
             frame = np.stack((self.tree.tangents[self.robot_stations], self.tree.normals[self.robot_stations],
                               self.tree.binormals[self.robot_stations]), axis=1)
             prior = np.einsum('nji,nj->ni', frame, local)*self.active[:self.num_robots, None]
-            return prior + self.config.action_residual_scale*action
+            command = prior + self.config.action_residual_scale*action
+            if self.config.action_prior == 'own_route_bearing_avoid_gated':
+                # A unit-speed actuator runs every nonzero command at full speed, so a residual
+                # alone can steer but never wait. Commands shorter than the deadzone become an
+                # exact stop: the policy can cancel the prior (action = -prior/scale) to wait.
+                small = np.linalg.norm(command, axis=1) < self.config.action_stop_deadzone
+                command[small] = 0.
+            return command
         n = self.num_robots
         prior = np.zeros((n, 3))
         if np.any(self.masses > 0):

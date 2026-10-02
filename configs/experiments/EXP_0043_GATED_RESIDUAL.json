@@ -1,0 +1,89 @@
+{
+ "experiment": "EXP_0043_GATED_RESIDUAL",
+ "parent": "EXP_0042_ROUTE_AVOID_RESIDUAL",
+ "scope": "Deep RL residual with a stop action over the route+avoid prior, 1M x 3 seeds from the same EXP40-derived parents (actor mean head zeroed, log_std reset). Validation selection, sealed test once.",
+ "authorization": "User 2026-10-02 midday: find a deep-RL method that clearly beats the traditional prior; auto-approve while away.",
+ "physics_config": "configs/experiments/EXP_0043_GATED_PRIOR_DYNAMICS.json",
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "timesteps_per_seed": 1000000,
+ "transition_unit": "one environment control step, not individual robot samples",
+ "rollout_steps": 512,
+ "epochs": 4,
+ "batch_size": 256,
+ "hidden_dim": 128,
+ "checkpoint_interval": 4096,
+ "milestones": [
+  100000,
+  200000,
+  300000,
+  400000,
+  500000,
+  600000,
+  700000,
+  800000,
+  900000,
+  1000000
+ ],
+ "eval_episodes": 100,
+ "training_seed_base": 1900000000,
+ "validation_seed_base": 940000000,
+ "architecture": "adaptive_edge_gat",
+ "control": "direct_local_frenet",
+ "world_model": false,
+ "guidance_controller": "route + observed particle repulsion prior with policy-controlled stop (residual RL)",
+ "fresh_weights": false,
+ "weight_initialization": "compatible_weights_only",
+ "initialization_checkpoints": {
+  "42": {
+   "path": "research/initializations/EXP0041_FROM_EXP0040_500K_20261001/seed_42.pt",
+   "sha256": "1a539f7f5525339ee185b0c8d25cb4868ae6318b3984e37659dc8355e3215a4c"
+  },
+  "43": {
+   "path": "research/initializations/EXP0041_FROM_EXP0040_500K_20261001/seed_43.pt",
+   "sha256": "6a59f493fe15ce761435f9065f7f8662e1e945633f417e1b4a7bfe201cca2461"
+  },
+  "44": {
+   "path": "research/initializations/EXP0041_FROM_EXP0040_500K_20261001/seed_44.pt",
+   "sha256": "7a3eecfbee78a696b1975dea6458f8a040202a72139edb434f504e45695f9836"
+  }
+ },
+ "comparability": "Structured-policy track. Compared on the same sealed layouts to the prior alone and to EXP41.",
+ "pure_rl": false,
+ "oracle_used_for_training": false,
+ "require_randomization_boundaries": true,
+ "require_random_clot_evidence": true,
+ "feasibility_certificate": "research/validation/EXP0043_GATED_FEASIBILITY_20261002/certificate.json",
+ "reference_certificate": "research/validation/EXP0043_GATED_REFERENCE_20261002/certificate.json",
+ "feasibility_image": "research/validation/EXP0029_FEASIBILITY_20260930/feasibility.png",
+ "task_limit": "Controlled in-vitro goal-conditioned ideal-actuator simulation with perfect state. All object positions randomized on fixed MCA anatomy. Soft overlap costs, not hard collision physics. Diagnostic clearance feasibility is not collision-free policy performance or hardware verification.",
+ "dashboard_message": "EXP43 \u95e8\u63a7\u5148\u9a8c+\u6b8b\u5deeRL\uff08\u53ef\u505c\u8f66\uff0c\u975e\u7eafRL\uff09\u3002",
+ "physical_calibration_ready": false,
+ "sealed_test_used": false,
+ "ppo": {
+  "lr_actor": 0.0001
+ },
+ "study_stage": "Formal 500K paired study; validation split for selection, sealed test (500 layouts) for the reported result.",
+ "exploration_schedule": null,
+ "observation_schema": "mca_point_routed_115_own_v9",
+ "bundled_variables": "Residual scale 0.5->1.0, stop deadzone 0.35, exploration std reset to exp(-2.3)=0.10 (diagnostic noise probe: std 0.1 keeps 100/94, 0.6 drops cf to 82), 1M steps.",
+ "checkpoint_selection": {
+  "selection_seed_base": 950000000,
+  "selection_layouts": 200,
+  "rule": "Pick the milestone with the highest collision-free clearance rate on the 200 registered validation layouts, ties broken by complete clearance then earlier milestone. Changed from EXP42 (complete clearance) because collision-free clearance is the metric with headroom.",
+  "metric": "collision_free_success_rate"
+ },
+ "sealed_test": {
+  "anatomy": "mca_m1_lvo",
+  "registry": "configs/evaluation_splits.json",
+  "evaluator": "scripts/evaluate_mca_sealed_test.py",
+  "study": "EXP_0043",
+  "candidates": "one selected checkpoint per seed (3)",
+  "report": "Final claims use only sealed-test results; 940000000-940000099 is diagnostic only."
+ },
+ "zero_actor_mean_head": true,
+ "actor_log_std_init": -2.3
+}

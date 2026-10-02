@@ -82,9 +82,12 @@ def main():
         proto_rel = next((snap/'configs/experiments').glob(f'{protocol["experiment"]}.json')).relative_to(snap)
         report['arms'][arm] = {}
         for seed in SEEDS:
-            scores = {m: json.loads((sel_dir/f'{arm}_seed_{seed}_{m}.json').read_text())['success_rate']
-                      for m in ([0] if parent_is_candidate(protocol) else [])+protocol['milestones']}
-            best = max(scores, key=lambda m: (scores[m], -m))
+            metric = protocol['checkpoint_selection'].get('metric', 'success_rate')
+            results = {m: json.loads((sel_dir/f'{arm}_seed_{seed}_{m}.json').read_text())
+                       for m in ([0] if parent_is_candidate(protocol) else [])+protocol['milestones']}
+            scores = {m: r['success_rate'] for m, r in results.items()}
+            # Selection metric is declared in the protocol; complete clearance breaks ties, then the earlier milestone.
+            best = max(results, key=lambda m: (results[m][metric], results[m]['success_rate'], -m))
             ckpt = (snap/protocol['initialization_checkpoints'][str(seed)]['path'] if best == 0
                     else study_dir/arm/f'seed_{seed}/policy_{best}.pt')
             cmd = [PYTHON, str(ROOT/'scripts/evaluate_mca_sealed_test.py'), '--protocol', str(proto_rel), '--checkpoint', str(ckpt),
@@ -95,8 +98,11 @@ def main():
             import hashlib
             digest = hashlib.sha256(Path(ckpt).read_bytes()).hexdigest()
             entry = next(e for e in ledger['entries'] if e['checkpoint_sha256'] == digest and e['complete'] and not e['partial'])
-            report['arms'][arm][seed] = dict(selected_step=best, validation_scores=scores, test_result=entry['result'],
-                                             test_success_rate=entry['success_rate'])
+            test = json.loads(Path(entry['result']).read_text())
+            report['arms'][arm][seed] = dict(selected_step=best, selection_metric=metric, validation_scores=scores,
+                                             validation_collision_free={m: r['collision_free_success_rate'] for m, r in results.items()},
+                                             test_result=entry['result'], test_success_rate=entry['success_rate'],
+                                             test_collision_free_rate=test['collision_free_success_rate'])
     def successes(path):
         return np.array([r['success'] for r in json.loads(Path(path).read_text())['episodes']], float)
     rows = []
