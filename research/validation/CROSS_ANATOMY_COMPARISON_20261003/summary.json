@@ -1,0 +1,1218 @@
+{
+ "seeds": {
+  "pure_rl": [
+   42,
+   43,
+   44
+  ],
+  "route_prior": [
+   0
+  ],
+  "route_avoid": [
+   0
+  ],
+  "route_avoid_wait": [
+   0
+  ],
+  "residual": [
+   42,
+   43,
+   44
+  ],
+  "residual_shield": [
+   42,
+   43,
+   44
+  ]
+ },
+ "per_anatomy": {
+  "pure_rl": {
+   "mca_m1_lvo": {
+    "complete": [
+     0.592,
+     0.752,
+     0.702
+    ],
+    "collision_free": [
+     0.234,
+     0.224,
+     0.208
+    ],
+    "removal": [
+     0.8792903255128426,
+     0.9339948532521799,
+     0.9091336578901918
+    ]
+   },
+   "pulmonary_saddle": {
+    "complete": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "collision_free": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "removal": [
+     0.04792302847757375,
+     0.00120693102271156,
+     0.050354903905046
+    ]
+   },
+   "coronary_lm_bifurcation": {
+    "complete": [
+     0.478,
+     0.366,
+     0.596
+    ],
+    "collision_free": [
+     0.288,
+     0.25,
+     0.39
+    ],
+    "removal": [
+     0.8574116809842341,
+     0.8734172879757394,
+     0.915549954729512
+    ]
+   },
+   "coronary_rca": {
+    "complete": [
+     0.556,
+     0.488,
+     0.824
+    ],
+    "collision_free": [
+     0.288,
+     0.27,
+     0.456
+    ],
+    "removal": [
+     0.8765798748209674,
+     0.9198699569709808,
+     0.9639471009169588
+    ]
+   },
+   "iliac_may_thurner": {
+    "complete": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "collision_free": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "removal": [
+     0.08737010486921527,
+     0.007462999137666903,
+     0.14678790458982316
+    ]
+   },
+   "popliteal_calf_dvt": {
+    "complete": [
+     0.01,
+     0.0,
+     0.026
+    ],
+    "collision_free": [
+     0.006,
+     0.0,
+     0.018
+    ],
+    "removal": [
+     0.39774899934190955,
+     0.20115944830245627,
+     0.5401172817808472
+    ]
+   },
+   "ica_siphon": {
+    "complete": [
+     0.488,
+     0.0,
+     0.342
+    ],
+    "collision_free": [
+     0.346,
+     0.0,
+     0.224
+    ],
+    "removal": [
+     0.8468502323025208,
+     0.49433924127472473,
+     0.870134823723959
+    ]
+   },
+   "ica_terminus_t": {
+    "complete": [
+     0.764,
+     0.61,
+     0.872
+    ],
+    "collision_free": [
+     0.498,
+     0.394,
+     0.536
+    ],
+    "removal": [
+     0.9460868521628295,
+     0.9417879426159665,
+     0.9676223959445391
+    ]
+   },
+   "carotid_bifurcation": {
+    "complete": [
+     0.082,
+     0.002,
+     0.046
+    ],
+    "collision_free": [
+     0.044,
+     0.0,
+     0.032
+    ],
+    "removal": [
+     0.5965888468843941,
+     0.4561002288414518,
+     0.6579976375374289
+    ]
+   },
+   "basilar_vertebral": {
+    "complete": [
+     0.71,
+     0.084,
+     0.58
+    ],
+    "collision_free": [
+     0.464,
+     0.05,
+     0.364
+    ],
+    "removal": [
+     0.9203817251383003,
+     0.7889635199474637,
+     0.898878231619886
+    ]
+   },
+   "cerebral_venous_sinus": {
+    "complete": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "collision_free": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "removal": [
+     0.27945430808212324,
+     0.04893428101579499,
+     0.3423425616775247
+    ]
+   },
+   "sma_embolism": {
+    "complete": [
+     0.106,
+     0.0,
+     0.086
+    ],
+    "collision_free": [
+     0.08,
+     0.0,
+     0.074
+    ],
+    "removal": [
+     0.606285726087555,
+     0.4146118033312354,
+     0.705727790709145
+    ]
+   },
+   "femoropopliteal_pad": {
+    "complete": [
+     0.022,
+     0.0,
+     0.036
+    ],
+    "collision_free": [
+     0.01,
+     0.0,
+     0.03
+    ],
+    "removal": [
+     0.41730424345817024,
+     0.24650195705209424,
+     0.579709440306593
+    ]
+   },
+   "renal_artery": {
+    "complete": [
+     0.476,
+     0.088,
+     0.542
+    ],
+    "collision_free": [
+     0.344,
+     0.062,
+     0.396
+    ],
+    "removal": [
+     0.8653674623353207,
+     0.7622285501614414,
+     0.9333877223407915
+    ]
+   }
+  },
+  "route_prior": {
+   "mca_m1_lvo": {
+    "complete": [
+     0.884
+    ],
+    "collision_free": [
+     0.228
+    ],
+    "removal": [
+     0.9695
+    ]
+   },
+   "pulmonary_saddle": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.992
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "coronary_lm_bifurcation": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.712
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "coronary_rca": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.694
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "iliac_may_thurner": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.988
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "popliteal_calf_dvt": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.92
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "ica_siphon": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.674
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "ica_terminus_t": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.648
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "carotid_bifurcation": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.786
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "basilar_vertebral": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.652
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "cerebral_venous_sinus": {
+    "complete": [
+     0.876
+    ],
+    "collision_free": [
+     0.86
+    ],
+    "removal": [
+     0.969
+    ]
+   },
+   "sma_embolism": {
+    "complete": [
+     0.928
+    ],
+    "collision_free": [
+     0.834
+    ],
+    "removal": [
+     0.982
+    ]
+   },
+   "femoropopliteal_pad": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.928
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "renal_artery": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.774
+    ],
+    "removal": [
+     1.0
+    ]
+   }
+  },
+  "route_avoid": {
+   "mca_m1_lvo": {
+    "complete": [
+     0.944
+    ],
+    "collision_free": [
+     0.848
+    ],
+    "removal": [
+     0.9855
+    ]
+   },
+   "pulmonary_saddle": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "coronary_lm_bifurcation": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.998
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "coronary_rca": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.998
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "iliac_may_thurner": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "popliteal_calf_dvt": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.998
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "ica_siphon": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.994
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "ica_terminus_t": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.998
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "carotid_bifurcation": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "basilar_vertebral": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.99
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "cerebral_venous_sinus": {
+    "complete": [
+     0.88
+    ],
+    "collision_free": [
+     0.88
+    ],
+    "removal": [
+     0.97
+    ]
+   },
+   "sma_embolism": {
+    "complete": [
+     0.932
+    ],
+    "collision_free": [
+     0.932
+    ],
+    "removal": [
+     0.983
+    ]
+   },
+   "femoropopliteal_pad": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "renal_artery": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.998
+    ],
+    "removal": [
+     1.0
+    ]
+   }
+  },
+  "route_avoid_wait": {
+   "mca_m1_lvo": {
+    "complete": [
+     0.926
+    ],
+    "collision_free": [
+     0.914
+    ],
+    "removal": [
+     0.9805
+    ]
+   },
+   "pulmonary_saddle": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "coronary_lm_bifurcation": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "coronary_rca": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.998
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "iliac_may_thurner": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "popliteal_calf_dvt": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "ica_siphon": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "ica_terminus_t": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.998
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "carotid_bifurcation": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "basilar_vertebral": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "cerebral_venous_sinus": {
+    "complete": [
+     0.882
+    ],
+    "collision_free": [
+     0.882
+    ],
+    "removal": [
+     0.9705
+    ]
+   },
+   "sma_embolism": {
+    "complete": [
+     0.93
+    ],
+    "collision_free": [
+     0.93
+    ],
+    "removal": [
+     0.9825
+    ]
+   },
+   "femoropopliteal_pad": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     1.0
+    ],
+    "removal": [
+     1.0
+    ]
+   },
+   "renal_artery": {
+    "complete": [
+     1.0
+    ],
+    "collision_free": [
+     0.998
+    ],
+    "removal": [
+     1.0
+    ]
+   }
+  },
+  "residual": {
+   "mca_m1_lvo": {
+    "complete": [
+     0.984,
+     0.986,
+     0.996
+    ],
+    "collision_free": [
+     0.884,
+     0.882,
+     0.9
+    ],
+    "removal": [
+     0.9955,
+     0.9965,
+     0.999
+    ]
+   },
+   "pulmonary_saddle": {
+    "complete": [
+     0.98,
+     0.906,
+     0.968
+    ],
+    "collision_free": [
+     0.98,
+     0.906,
+     0.968
+    ],
+    "removal": [
+     0.994,
+     0.9765,
+     0.99
+    ]
+   },
+   "coronary_lm_bifurcation": {
+    "complete": [
+     0.996,
+     0.994,
+     1.0
+    ],
+    "collision_free": [
+     0.996,
+     0.992,
+     0.996
+    ],
+    "removal": [
+     0.999,
+     0.998,
+     1.0
+    ]
+   },
+   "coronary_rca": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     1.0,
+     1.0,
+     0.992
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "iliac_may_thurner": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     1.0,
+     1.0,
+     0.998
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "popliteal_calf_dvt": {
+    "complete": [
+     0.994,
+     0.896,
+     1.0
+    ],
+    "collision_free": [
+     0.994,
+     0.896,
+     1.0
+    ],
+    "removal": [
+     0.9985,
+     0.974,
+     1.0
+    ]
+   },
+   "ica_siphon": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     0.994,
+     0.994,
+     0.992
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "ica_terminus_t": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     0.998,
+     1.0,
+     0.994
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "carotid_bifurcation": {
+    "complete": [
+     0.998,
+     0.984,
+     0.986
+    ],
+    "collision_free": [
+     0.998,
+     0.982,
+     0.98
+    ],
+    "removal": [
+     0.9995,
+     0.996,
+     0.9965
+    ]
+   },
+   "basilar_vertebral": {
+    "complete": [
+     0.998,
+     0.99,
+     1.0
+    ],
+    "collision_free": [
+     0.988,
+     0.982,
+     0.992
+    ],
+    "removal": [
+     0.9995,
+     0.9975,
+     1.0
+    ]
+   },
+   "cerebral_venous_sinus": {
+    "complete": [
+     1.0,
+     1.0,
+     0.998
+    ],
+    "collision_free": [
+     1.0,
+     1.0,
+     0.998
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     0.9995
+    ]
+   },
+   "sma_embolism": {
+    "complete": [
+     0.89,
+     0.926,
+     0.852
+    ],
+    "collision_free": [
+     0.89,
+     0.926,
+     0.85
+    ],
+    "removal": [
+     0.972,
+     0.9815,
+     0.962
+    ]
+   },
+   "femoropopliteal_pad": {
+    "complete": [
+     0.946,
+     0.938,
+     0.948
+    ],
+    "collision_free": [
+     0.946,
+     0.938,
+     0.948
+    ],
+    "removal": [
+     0.986,
+     0.9848840403960908,
+     0.987360000000001
+    ]
+   },
+   "renal_artery": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     1.0,
+     0.998,
+     0.998
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  },
+  "residual_shield": {
+   "mca_m1_lvo": {
+    "complete": [
+     0.984,
+     0.978,
+     0.988
+    ],
+    "collision_free": [
+     0.964,
+     0.964,
+     0.95
+    ],
+    "removal": [
+     0.995,
+     0.9945,
+     0.9965
+    ]
+   },
+   "pulmonary_saddle": {
+    "complete": [
+     0.982,
+     0.906,
+     0.968
+    ],
+    "collision_free": [
+     0.982,
+     0.906,
+     0.968
+    ],
+    "removal": [
+     0.9945,
+     0.9765,
+     0.99
+    ]
+   },
+   "coronary_lm_bifurcation": {
+    "complete": [
+     0.998,
+     0.992,
+     1.0
+    ],
+    "collision_free": [
+     0.996,
+     0.992,
+     0.998
+    ],
+    "removal": [
+     0.9995,
+     0.997,
+     1.0
+    ]
+   },
+   "coronary_rca": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     0.998,
+     0.998,
+     0.996
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "iliac_may_thurner": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     1.0,
+     1.0,
+     0.998
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "popliteal_calf_dvt": {
+    "complete": [
+     0.994,
+     0.894,
+     0.998
+    ],
+    "collision_free": [
+     0.994,
+     0.894,
+     0.998
+    ],
+    "removal": [
+     0.9985,
+     0.9735,
+     0.9995
+    ]
+   },
+   "ica_siphon": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     1.0,
+     1.0,
+     0.996
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "ica_terminus_t": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     1.0,
+     0.998,
+     0.996
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   "carotid_bifurcation": {
+    "complete": [
+     0.996,
+     0.986,
+     0.988
+    ],
+    "collision_free": [
+     0.996,
+     0.986,
+     0.986
+    ],
+    "removal": [
+     0.999,
+     0.9965,
+     0.997
+    ]
+   },
+   "basilar_vertebral": {
+    "complete": [
+     0.998,
+     0.992,
+     1.0
+    ],
+    "collision_free": [
+     0.998,
+     0.992,
+     0.998
+    ],
+    "removal": [
+     0.9995,
+     0.998,
+     1.0
+    ]
+   },
+   "cerebral_venous_sinus": {
+    "complete": [
+     1.0,
+     1.0,
+     0.998
+    ],
+    "collision_free": [
+     1.0,
+     1.0,
+     0.998
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     0.9995
+    ]
+   },
+   "sma_embolism": {
+    "complete": [
+     0.892,
+     0.928,
+     0.854
+    ],
+    "collision_free": [
+     0.892,
+     0.928,
+     0.854
+    ],
+    "removal": [
+     0.9725,
+     0.982,
+     0.9625
+    ]
+   },
+   "femoropopliteal_pad": {
+    "complete": [
+     0.948,
+     0.94,
+     0.944
+    ],
+    "collision_free": [
+     0.948,
+     0.94,
+     0.944
+    ],
+    "removal": [
+     0.9865,
+     0.985,
+     0.986360000000001
+    ]
+   },
+   "renal_artery": {
+    "complete": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "collision_free": [
+     1.0,
+     0.998,
+     0.998
+    ],
+    "removal": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   }
+  }
+ }
+}

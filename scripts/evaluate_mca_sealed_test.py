@@ -118,8 +118,9 @@ def main(argv=None):
     checkpoint = args.checkpoint.resolve(); digest = _sha(checkpoint)
     with Ledger(args.ledger_dir) as ledger:
         for entry in ledger.data['entries']:
+            # The same weights under a different protocol (prior, shield) are a different policy.
             if (entry['checkpoint_sha256'] == digest and entry['anatomy'] == args.anatomy and entry['complete']
-                    and entry['partial'] == partial):
+                    and entry['partial'] == partial and entry['protocol'] == str(args.protocol.resolve())):
                 print(json.dumps(dict(cached=True, **entry)), flush=True)
                 return json.loads(Path(entry['result']).read_text())
     payload = torch.load(checkpoint, map_location='cpu', weights_only=False)
@@ -152,7 +153,9 @@ def main(argv=None):
     out.write_text(json.dumps(result)+'\n')
     with Ledger(args.ledger_dir) as ledger:
         for e in ledger.data['entries']:
-            if e['checkpoint_sha256'] == digest and e['study'] == args.study and not e['complete']:
+            # Match this exact job: parallel jobs may share weights (other anatomies/protocols).
+            if (e['checkpoint_sha256'] == digest and e['study'] == args.study and e['label'] == args.label
+                    and e['anatomy'] == args.anatomy and e['protocol'] == entry['protocol'] and not e['complete']):
                 e.update(complete=True, result=str(out), success_rate=result['success_rate'], finished=time.time())
         ledger.save()
     print(json.dumps({k: v for k, v in result.items() if k not in ('episodes', 'provenance')}), flush=True)

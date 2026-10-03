@@ -662,3 +662,10 @@ Multi-anatomy: `DynamicsConfig.anatomy` (default mca_m1_lvo) selects the territo
 
 - EXP43 selected checkpoints + post-policy shield (stop on forecast clearance < 0.3 within 0.5 s), no retraining: sealed complete 98.4 / 97.8 / 98.8 (98.3%), collision-free 96.4 / 96.4 / 95.0 (95.9%). Paired vs the wait rule, the strongest traditional controller: +5.8 / +5.2 / +6.2 and +5.0 / +5.0 / +3.6 pp. First method that beats every traditional controller on both metrics on all seeds. Report: research/validation/EXP0045_SHIELD_PROBE_20261002/REPORT.md.
 - EXP45 (continue with shield in loop, collision penalty 20, 500K): 97.9% / 95.6%; paired vs EXP43 + shield −0.4 / −0.8 / 0.0 pp. Null result.
+
+## 2026-10-03 — Cross-anatomy sealed comparison (14 anatomies × 6 methods, 168 sealed evaluations)
+
+Report: research/validation/CROSS_ANATOMY_COMPARISON_20261003/REPORT.md. All methods tuned on MCA only; 13 anatomies zero-shot.
+14-anatomy mean (complete / collision-free): pure RL 27.0 / 15.7; route only 97.8 / 76.4; route+avoid 98.3 / 97.4; route+avoid+wait 98.1 / 98.0; residual RL 98.0 / 97.1; residual RL + shield 98.0 / 97.7.
+- Pure RL does not transfer (0% on 4 anatomies). Traditional and residual methods are tied on the 14-anatomy mean; residual RL's MCA gain (+5.7 / +4.5 vs wait rule) is offset by losses on femoropopliteal (−5.6), pulmonary (−4.8), SMA (−3.9), popliteal (−3.8), and it fixes cerebral venous sinus (+11.7).
+- Ledger bug found and fixed: completion marking matched only (sha, study), so concurrent jobs sharing weights claimed each other's results (151/168 mis-pointed in this study only; all earlier studies ran sequentially and are clean). Entries re-pointed to each job's own result file; completion now matches (sha, study, label, anatomy, protocol); regression test added.

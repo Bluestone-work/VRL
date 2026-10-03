@@ -95,3 +95,15 @@ def test_checkpoint_from_different_code_is_refused():
     payload = dict(meta=dict(source_sha256={'environments/mca_physical_env.py': '0'*64}))
     with pytest.raises(ValueError, match='does not match'):
         sealed._check_frozen_source(payload)
+
+
+def test_completion_does_not_claim_a_concurrent_job_with_the_same_weights(tmp_path, checkpoint):
+    # A parallel job (same weights, other anatomy) is still running: its entry must stay incomplete.
+    ledger_dir = tmp_path/'ledger'; ledger_dir.mkdir()
+    other = dict(study='S', label='other_anatomy', anatomy='coronary_rca', checkpoint=str(checkpoint),
+                 checkpoint_sha256=sealed._sha(checkpoint), protocol=str(PROTOCOL.resolve()), complete=False, partial=True)
+    (ledger_dir/'LEDGER.json').write_text(json.dumps(dict(version=1, studies=dict(S=dict(declared=2, used=1)), entries=[other])))
+    sealed.main(['--protocol', str(PROTOCOL), '--checkpoint', str(checkpoint), '--study', 'S', '--label', 'mine',
+                 '--count', '1', '--workers', '1', '--ledger-dir', str(ledger_dir)])
+    entries = {e['label']: e for e in json.loads((ledger_dir/'LEDGER.json').read_text())['entries']}
+    assert entries['mine']['complete'] and not entries['other_anatomy']['complete']
