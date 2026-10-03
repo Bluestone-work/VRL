@@ -682,3 +682,12 @@ Report: research/validation/CROSS_ANATOMY_COMPARISON_20261003/REPORT.md. All met
 - Failure modes: held-out wall contact 10–16 s vs teacher 0.01 s; femoropopliteal 75–85 and SMA 75–80; stop recall ~28%.
 - Next: GAT vs Graph Transformer with the same BC data; 3 seeds; larger diagnostic sample; DAgger rounds 2–3 with β→0 only if they show a closed-loop gain.
 Report: research/validation/EXP_TEACHER_BC_20261003/REPORT.md
+
+## 2026-10-03 — EXP_FAIR_OBS_REACTIVE: fair (Turbo-style) observation (branch research/fair-partial-observation)
+
+- Question: with only Turbo-level information (no map, no route, no allocation; straight-line clot vectors, local lumen view 4 mm, particles/teammates within 1.5 mm, 2.5 % noise), how much of the privileged teacher's performance does a reactive controller keep?
+- Single main variable: controller (privileged teacher vs reactive_bearing vs reactive_path), all on the same layouts.
+- Diagnostic, 20 layouts × 14 anatomies, 5 robots. 14-anatomy mean collision-free completion: teacher 97.9 %, reactive_bearing 79.6 %, reactive_path 66.1 %.
+- reactive_bearing reaches its rate by scraping the wall: robots touch the wall 52 % of the time (median 101 robot-s per episode vs 0 for the teacher). With wall contact < 1 robot-s it drops to 1.1 % (teacher 96.1 %, reactive_path 64.6 %). The current success definition ignores wall contact, and the simulator lets bodies slide along the wall, so straight-line pushing is rewarded by the metric.
+- reactive_path follows the true route direction with cos 0.61 (19 % wrong half-space) vs −0.05 for bearing; its failures are timeouts at junctions.
+- Interpretation: removing privileged map information removes most of the reactive controller's advantage, and exposes a metric gap (wall contact). Fair results: research/validation/EXP_FAIR_OBS_REACTIVE_20261003.
