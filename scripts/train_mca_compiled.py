@@ -85,9 +85,13 @@ def evaluate(agent, cfg, protocol, count, heartbeat=None):
             obs, reset_info = reset_with_valid_particles(env, seed)
             reward = 0.
             particle_contact_s = 0.
+            from scripts.safe_metrics import WallTracker, episode_metrics
+            tracker = WallTracker(env.num_robots)
             while True:
                 _, _, _, execution, _, _ = physical_policy_action(agent, env, obs, deterministic=True)
+                active_before = env.active[:env.num_robots].copy()
                 obs, r, term, trunc, info = env.step(execution)
+                tracker.update(info, active_before, float(info['step_duration_s']))
                 reward += r
                 particle_contact_s += float(info['particle_contact_s'].sum())
                 if heartbeat is not None and time.monotonic()-last_heartbeat>=10:
@@ -100,7 +104,8 @@ def evaluate(agent, cfg, protocol, count, heartbeat=None):
                                 removal_fraction=1-info['remaining_mass']/env.initial_mass.sum(),
                                 lost_robots=info['lost_robots'], elapsed_s=info['elapsed_s'],
                                 reason=info['termination_reason'],
-                                particle_contact_s=particle_contact_s,active_particles=info['active_particles']))
+                                particle_contact_s=particle_contact_s,active_particles=info['active_particles'],
+                                safe=episode_metrics(info, tracker, env.initial_mass.sum())))
             env.close()
     finally:
         agent.actor.train(modes[0]); agent.critic.train(modes[1])
@@ -110,7 +115,8 @@ def evaluate(agent, cfg, protocol, count, heartbeat=None):
     return dict(episodes=records, success_rate=float(np.mean([r['success'] for r in records])),
                 collision_free_success_rate=float(np.mean([r['collision_free_success'] for r in records])),
                 particle_collision_episode_rate=float(np.mean([r['particle_contact_s']>1e-12 for r in records])),
-                mean_removal_fraction=float(np.mean([r['removal_fraction'] for r in records])))
+                mean_removal_fraction=float(np.mean([r['removal_fraction'] for r in records])),
+                safe_success_rate=float(np.mean([r['safe']['safe_success'] for r in records])))
 
 
 def train(args):

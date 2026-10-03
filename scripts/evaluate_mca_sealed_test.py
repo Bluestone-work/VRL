@@ -67,7 +67,9 @@ def summarize(records):
     return dict(success_rate=float(np.mean([r['success'] for r in records])),
                 collision_free_success_rate=float(np.mean([r['collision_free_success'] for r in records])),
                 particle_collision_episode_rate=float(np.mean([r['particle_contact_s'] > 1e-12 for r in records])),
-                mean_removal_fraction=float(np.mean([r['removal_fraction'] for r in records])))
+                mean_removal_fraction=float(np.mean([r['removal_fraction'] for r in records])),
+                **({'safe_success_rate': float(np.mean([r['safe']['safe_success'] for r in records]))}
+                   if all('safe' in r for r in records) else {}))
 
 
 class Ledger:
