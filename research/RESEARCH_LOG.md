@@ -691,3 +691,11 @@ Report: research/validation/EXP_TEACHER_BC_20261003/REPORT.md
 - reactive_bearing reaches its rate by scraping the wall: robots touch the wall 52 % of the time (median 101 robot-s per episode vs 0 for the teacher). With wall contact < 1 robot-s it drops to 1.1 % (teacher 96.1 %, reactive_path 64.6 %). The current success definition ignores wall contact, and the simulator lets bodies slide along the wall, so straight-line pushing is rewarded by the metric.
 - reactive_path follows the true route direction with cos 0.61 (19 % wrong half-space) vs −0.05 for bearing; its failures are timeouts at junctions.
 - Interpretation: removing privileged map information removes most of the reactive controller's advantage, and exposes a metric gap (wall contact). Fair results: research/validation/EXP_FAIR_OBS_REACTIVE_20261003.
+
+## 2026-10-03 — EXP_SAFE_BASELINES: all existing controllers under the Safe Success metric
+
+Primary metric from now on: SafeSuccess = task success AND total wall contact over all robots < 1.0 robot-s (scripts/safe_metrics.py); raw success kept as secondary, Unsafe Success Gap = raw − safe. Diagnostic split, 20 layouts × 14 anatomies, 5 robots, 3,360 episodes. Privileged and fair controllers reported separately.
+- Privileged (known-map route information): teacher raw 97.9 / safe 96.1; residual EXP43 98.1 / 95.4; residual + shield 98.3 / 95.6; pure RL EXP40 28.3 / 21.9 (its observation contains the route bearing, so it is privileged too).
+- Fair observation: reactive_bearing 83.2 / 1.1 (gap 82.1 pp, wall contact 52 % of robot time); reactive_path 66.1 / 64.6 (34 % timeouts).
+- MCA is the anatomy where even privileged controllers lose most to wall contact (teacher safe 70 %, residual 62 %).
+- Interpretation: under the safe metric, every method with fair information is far below the privileged ones; the residual/shield methods' earlier advantage over the teacher disappears (95.4–95.6 vs 96.1). Table: research/validation/EXP_SAFE_BASELINES_20261003/summary_table.md.
