@@ -68,3 +68,13 @@
 - Root Cause Hypothesis / Evidence：`no_dataset=true`、树周期重采样但checkpoint间隔更长、initial/best权重没有完整env状态。原始checkpoint清单与observed generations保存于`runs/EXP_0002/splits/saved_training_geometries.json`。
 - Fix：新建560/140/280互斥实例清单，test只登记不评分；后续训练需显式接入消费/生成限制。本轮未重建或伪造缺失训练历史。
 - Scientific Lesson：在恢复到的420个独立树hash中未发现与验证的交集，只能说明这一子集无精确重复，不能证明全历史无泄漏。另已确认final validation复用模型选择回合比例25%，它始终是validation。
+
+## EXP_ONLINE_IMITATION_R1 — DAgger round 1 gives no completion gain (2026-10-03)
+- Symptoms: vs a step-matched BC-only control, train complete +1.7 pp [−1.7, +5.0], held-out −2.0 pp [−6.0, +2.0]; tracking of the teacher on the student's own states improves (cos +0.025 [+0.010, +0.040]).
+- Root cause hypothesis — NOT VERIFIED: the BC epoch-7 student already rarely leaves the teacher's state distribution on training anatomies, so DAgger adds little; the held-out gap (femoropopliteal, SMA) is an out-of-range scale problem that training-anatomy DAgger states cannot cover.
+- Fix: none applied; recorded as a null result.
+
+## EXP_TEACHER_BC — held-out wall contact and long-anatomy failures (2026-10-03)
+- Symptoms: held-out wall contact 12.3 s vs teacher 0.01 s; femoropopliteal_pad 80 vs 100, sma_embolism 80 vs 85.
+- Hypothesis — NOT VERIFIED: femoropopliteal (241 mm) is longer than every training anatomy (max 181 mm); geodesic and depth features are out of training range.
+- Lesson: offline imitation accuracy (cos 0.988) badly under-predicts closed-loop behaviour; select on rollouts.

@@ -669,3 +669,16 @@ Report: research/validation/CROSS_ANATOMY_COMPARISON_20261003/REPORT.md. All met
 14-anatomy mean (complete / collision-free): pure RL 27.0 / 15.7; route only 97.8 / 76.4; route+avoid 98.3 / 97.4; route+avoid+wait 98.1 / 98.0; residual RL 98.0 / 97.1; residual RL + shield 98.0 / 97.7.
 - Pure RL does not transfer (0% on 4 anatomies). Traditional and residual methods are tied on the 14-anatomy mean; residual RL's MCA gain (+5.7 / +4.5 vs wait rule) is offset by losses on femoropopliteal (−5.6), pulmonary (−4.8), SMA (−3.9), popliteal (−3.8), and it fixes cerebral venous sinus (+11.7).
 - Ledger bug found and fixed: completion marking matched only (sha, study), so concurrent jobs sharing weights claimed each other's results (151/168 mis-pointed in this study only; all earlier studies ran sequentially and are clean). Entries re-pointed to each job's own result file; completion now matches (sha, study, label, anatomy, protocol); regression test added.
+
+## 2026-10-03 — EXP_TEACHER_BC and EXP_ONLINE_IMITATION round 1 (branch research/graph-teacher-distillation)
+
+- Question: can a topology-reading Graph Transformer student imitate the route+avoid+wait teacher with no route controller at inference, and transfer to held-out anatomies?
+- Hypothesis: yes for training anatomies; held-out transfer better than pure RL because the scene graph carries topology instead of memorised geometry.
+- Single main variable: policy (teacher vs BC student vs pure RL); for EXP_ONLINE_IMITATION r1, training data (BC + DAgger states vs BC only, same steps/schedule/init).
+- Code: dc42d2e + trainer schedule fix. Seeds: student seed 0 (one seed). Budget: BC 8 epochs (24,848 steps × 64 scenes); DAgger r1 / control 14,121 steps each.
+- Diagnostic result (20 layouts × 14 anatomies): teacher 98.9 / 96.0 complete (train / held-out); BC epoch 7 97.8 / 91.0; pure RL EXP40 21–33 / 16–34; DAgger r1 97.8 / 89.0 vs control 96.1 / 91.0.
+- Validation / sealed test: not run (development stage).
+- Interpretation: imitation works and transfers zero-shot far better than pure RL. Epoch-0 gap was under-training (offline cos 0.980→0.988 but +20 pp closed loop). DAgger r1: closer tracking of the teacher (cos +0.025, CI excludes 0), no measurable completion gain (train +1.7 [−1.7, +5.0], held-out −2.0 [−6.0, +2.0]).
+- Failure modes: held-out wall contact 10–16 s vs teacher 0.01 s; femoropopliteal 75–85 and SMA 75–80; stop recall ~28%.
+- Next: GAT vs Graph Transformer with the same BC data; 3 seeds; larger diagnostic sample; DAgger rounds 2–3 with β→0 only if they show a closed-loop gain.
+Report: research/validation/EXP_TEACHER_BC_20261003/REPORT.md

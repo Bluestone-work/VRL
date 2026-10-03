@@ -108,6 +108,7 @@ def main():
     p.add_argument('--stop-weight', type=float, default=5.); p.add_argument('--subgoal-weight', type=float, default=.5)
     p.add_argument('--max-steps', type=int, default=0, help='smoke tests only')
     p.add_argument('--device', default='cuda:0')
+    p.add_argument('--init', help='start from a saved student (DAgger rounds)')
     args = p.parse_args()
     torch.manual_seed(args.seed); rng = np.random.default_rng(args.seed)
     args.out.mkdir(parents=True, exist_ok=False)
@@ -115,8 +116,13 @@ def main():
     tindex = [(e, t) for e, ep in enumerate(train) for t in range(len(ep[2][0]))]
     vindex = [(e, t) for e, ep in enumerate(val) for t in range(0, len(ep[2][0]), 4)]
     model = GraphTransformerStudent(args.dim, args.heads, args.layers).to(args.device)
+    if args.init:
+        from marl.graph_transformer_student import load_student
+        model.load_state_dict(load_student(args.init, args.device).state_dict()); model.train()
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     total = args.epochs*((len(tindex)+args.batch_size-1)//args.batch_size)
+    if args.max_steps:
+        total = min(total, args.max_steps)  # step-matched control arms get the same annealed schedule
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, args.lr, total_steps=max(total, 1), pct_start=.05)
     meta = dict(vars(args), out=str(args.out), train_episodes=len(train), train_scenes=len(tindex), val_episodes=len(val),
                 anatomies=sorted({m[3]['anatomy'] for m in train}), parameters=sum(x.numel() for x in model.parameters()))

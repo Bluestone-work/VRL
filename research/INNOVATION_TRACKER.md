@@ -49,3 +49,5 @@ EXP_0002已完成：同权重840对CPU/GPU回合出现10个success翻转，GPU�
 EXP16–20 v2（2026-09-27 15:07 完成）：arm 17（六帧历史 GRU 位移预测）在 2M 达 76.7%±4.4、3M 73.8%±3.3，为批次最佳；arm 16（CV 预测+adaptive-edge）67–71%；arm 18（八候选动作+解析风险评分）与 arm 20（+世界模型规划）崩溃至 0.7–4%，失败根源定位在 18 的控制器架构（每步 ~1500 次干预、coronary 场景 wall_rate 0.84），世界模型门槛三项全过且 20 的 model_trusted ~1499/1500 步仍与 18 同水平，排除世界模型为失败原因。85% 开发验证阈值未达到，负结果按协议保留。尾迹取证（同日）：61% 失败=最后一栓拖尾，机器人距存活栓 0.05–0.12 原地漂 227 步——收尾行为没学会，是训练密度与终止信号问题，非观测/物理问题。
 
 EXP_0010–0013（2026-09-27 17:47 prospective validation 完成）：variable-N 训练 +5.24pp（方差减半）；粒子训练+评估 +7.4~+12.0pp（16 最佳 81.0%，训练/评估贡献未分离，confounded）；separated-init −18.10pp、每步重规划 connectivity allocator −9.76pp 为保留负结果。全部为 validation 证据，非 test 结论。
+
+2026-10-03 EXP_TEACHER_BC: topology-aware Graph Transformer student distilled from the route+avoid+wait teacher, no route controller at inference. Diagnostic: 97.8% train / 91.0% held-out anatomies vs teacher 98.9 / 96.0 and pure RL 21–33 / 16–34. Category: algorithmic (imitation with topology graph); not yet validated on sealed test, single seed. DAgger round 1: null on completion.
