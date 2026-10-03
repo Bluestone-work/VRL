@@ -699,3 +699,12 @@ Primary metric from now on: SafeSuccess = task success AND total wall contact ov
 - Fair observation: reactive_bearing 83.2 / 1.1 (gap 82.1 pp, wall contact 52 % of robot time); reactive_path 66.1 / 64.6 (34 % timeouts).
 - MCA is the anatomy where even privileged controllers lose most to wall contact (teacher safe 70 %, residual 62 %).
 - Interpretation: under the safe metric, every method with fair information is far below the privileged ones; the residual/shield methods' earlier advantage over the teacher disappears (95.4–95.6 vs 96.1). Table: research/validation/EXP_SAFE_BASELINES_20261003/summary_table.md.
+
+## 2026-10-03 — EXP_WALL_KEEPING_PROBE: best previous method under the safe metric, with explicit wall keeping
+
+- Question: if the controller is also told to keep off the wall, what safe success does the previous best method (EXP43 residual RL + shield, privileged information) reach?
+- Change (single variable): wall-keeping term in the action prior from the robot's own lumen observation (outward radial direction, clearance): inside 1 robot radius of the wall, remove the outward command component and push back by gain g. Default off (action_wall_gain = 0).
+- Gain chosen on 40 MCA diagnostic layouts (g ∈ {0,1,3}, margin ∈ {1,2}): shield seed 42 safe 42.5 → 92.5 (g 3); teacher 65 → 90 (g 1). The 14-anatomy check reuses 20 of those MCA layouts, so the MCA row is optimistic; the other anatomies were not tuned on.
+- 14 anatomies × 20 diagnostic layouts: residual + shield safe 95.6 → 97.7 (seeds 98.2 / 97.1 / 97.9), raw 98.1, wall contact 0.18 → 0.08 robot-s; teacher 96.1 → 97.1. MCA: shield 62 → 90, teacher 70 → 85. Held-out anatomies: shield 96.0 → 96.3 (already wall-free).
+- Remaining failures: sma_embolism 87 % and femoropopliteal 95 % are timeouts, not wall contact.
+- Still privileged information and an idealised simulator; not a sealed result.

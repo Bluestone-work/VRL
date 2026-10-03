@@ -109,6 +109,8 @@ class DynamicsConfig:
     action_wait_horizon_s: float = 0.
     action_shield_clearance: float = 0.
     action_shield_horizon_s: float = 0.
+    action_wall_gain: float = 0.
+    action_wall_margin: float = 1.
     anatomy: str = 'mca_m1_lvo'
     particle_collision_event_penalty: float = 0.
     particle_near_penalty_per_s: float = 0.
@@ -119,7 +121,7 @@ class DynamicsConfig:
     def __post_init__(self):
         nonnegative = {'distal_resistance_ratio', 'geometry_variation', 'lysis_mass_per_s',
                        'initial_radius_fraction', 'progress_reward_scale', 'particle_contact_penalty_per_s',
-                       'particle_collision_event_penalty', 'particle_near_penalty_per_s', 'action_avoid_gain', 'action_stop_deadzone', 'action_wait_clearance', 'action_wait_horizon_s', 'action_shield_clearance', 'action_shield_horizon_s'}
+                       'particle_collision_event_penalty', 'particle_near_penalty_per_s', 'action_avoid_gain', 'action_stop_deadzone', 'action_wait_clearance', 'action_wait_horizon_s', 'action_shield_clearance', 'action_shield_horizon_s', 'action_wall_gain'}
         integers = {'num_robots': 1, 'particle_count': 0, 'max_substeps_per_control': 1}
         for field in fields(self):
             name, value = field.name, getattr(self, field.name)
@@ -179,7 +181,7 @@ class DynamicsConfig:
                       'robot_initialization', 'contact_model', 'progress_reward_scale', 'reward_discount',
                       'particle_contact_penalty_per_s', 'particle_initialization',
                       'inlet_flow_multiplier_min', 'inlet_flow_multiplier_max', 'clot_initialization',
-                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain', 'action_stop_deadzone', 'action_wait_clearance', 'action_wait_horizon_s', 'action_shield_clearance', 'action_shield_horizon_s', 'anatomy',
+                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain', 'action_stop_deadzone', 'action_wait_clearance', 'action_wait_horizon_s', 'action_shield_clearance', 'action_shield_horizon_s', 'action_wall_gain', 'action_wall_margin', 'anatomy',
                       'particle_collision_event_penalty',
                       'particle_near_penalty_per_s', 'particle_safety_margin_mm', 'particle_prediction_horizon_s')
                       else data[f.name] for f in fields(cls)})
@@ -866,6 +868,14 @@ class MCAPhysicalEnv(gym.Env):
             # Everything is read back from the observation the policy receives.
             nodes = self._observation()['nodes'].astype(np.float64)
             local = nodes[:, 112:115]+self.config.action_avoid_gain*observed_particle_repulsion(nodes, self.config)
+            if self.config.action_wall_gain > 0:
+                # Wall keeping from the robot's own lumen observation: columns 9:12 are the unit outward radial
+                # direction (Frenet frame), column 12 the wall clearance in robot radii. Inside the margin, drop
+                # the outward part of the command and push back toward the centreline.
+                out = nodes[:, 9:12]
+                near = np.clip(1-nodes[:, 12]/self.config.action_wall_margin, 0, 1)[:, None]
+                outward = np.maximum((local*out).sum(1, keepdims=True), 0)
+                local = local - near*outward*out - self.config.action_wall_gain*near*out
             # Bound in the robot frame exactly like direct_local_action (as in the measured probe).
             local = np.clip(local, -1, 1)
             local /= np.maximum(np.linalg.norm(local, axis=1, keepdims=True), 1.)

@@ -75,13 +75,17 @@ def main():
     p.add_argument('--count', type=int, default=20); p.add_argument('--robots', type=int, default=5)
     p.add_argument('--noise', type=float, default=.025); p.add_argument('--position-noise-mm', type=float, default=0.)
     p.add_argument('--tag', help='label for the output rows (defaults to the policy kind)')
+    p.add_argument('--wall-gain', type=float, default=0.); p.add_argument('--wall-margin', type=float, default=1.)
     p.add_argument('--out', required=True, type=Path)
     args = p.parse_args()
     base, size = split(args.split, args.anatomy)
     assert args.count <= size
     kind = args.policy.split(':')[0]
     cfg, act = make_controller(args.policy, args.anatomy, args.robots)
-    tcfg = teacher_config(student_env_config(args.anatomy, args.robots))
+    if args.wall_gain > 0 and kind in LEARNED_CONFIGS:
+        cfg = replace(cfg, action_wall_gain=args.wall_gain, action_wall_margin=args.wall_margin)
+    tcfg = teacher_config(student_env_config(args.anatomy, args.robots))          # diagnostics only
+    exec_tcfg = replace(tcfg, action_wall_gain=args.wall_gain, action_wall_margin=args.wall_margin)
     ocfg = PartialObsConfig(noise=args.noise, position_noise_mm=args.position_noise_mm)
     with args.out.open('a') as out:
         for seed in range(base, base+args.count):
@@ -92,7 +96,11 @@ def main():
             while True:
                 t_local, t_stop, _ = teacher_label(env, tcfg)
                 if act is None:
-                    local = np.where(t_stop[:, None], 0., t_local)
+                    if args.wall_gain > 0:
+                        t_local_x, t_stop_x, _ = teacher_label(env, exec_tcfg)
+                        local = np.where(t_stop_x[:, None], 0., t_local_x)
+                    else:
+                        local = np.where(t_stop[:, None], 0., t_local)
                     command = world = execute_local(env, local)
                 else:
                     command, world = act(env, obs, observer)
@@ -110,7 +118,7 @@ def main():
             agree = np.array(agree)
             row = dict(policy=args.tag or kind, information=INFORMATION[kind], checkpoint=args.policy.partition(':')[2] or None,
                        anatomy=args.anatomy, split=args.split, seed=seed, robots=args.robots,
-                       noise=args.noise, position_noise_mm=args.position_noise_mm,
+                       noise=args.noise, position_noise_mm=args.position_noise_mm, wall_gain=args.wall_gain, wall_margin=args.wall_margin,
                        **episode_metrics(info, tracker, env.initial_mass.sum()),
                        particle_events=int(info['episode_particle_collision_events']), lost=int(info['lost_robots']),
                        route_cos=float(agree.mean()) if len(agree) else None,
