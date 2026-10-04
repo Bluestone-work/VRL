@@ -1083,3 +1083,5 @@ Report: research/validation/BENCHMARK_V1_REPORT_20261005.md (development split o
 - I1 frontier tabu memory (motivation: 14/15 local failures were limit cycles): Safe +25.2 / +20.7 / +6.4 pp vs local_follow (N=1/2/3), held-out +20.7 / +21.3 / +2.0.
 - I2 learned frontier selector (privileged geodesic label at training, fair features at inference): decision accuracy 98.0 vs 83.1 %, closed-loop Safe tied with I1; N=2 T100 −10.7 s, path −21 mm.
 - Negative: tube/backoff/hold shields, conflict-aware allocation, visit-count memory. All kept.
+- Pure RL (parameter-shared PPO from scratch, same fair observation + target slot, 60 min / 26.8 M agent steps, 1 seed): Safe 0 % at every N, removal 16.6 / 23.3 / 29.9 %. Training removal still rising (~45 %), so this is a budget-limited result.
+- I2 three selector seeds, Safe N=1/2/3: 66.2/67.6/68.3, 78.6/78.6/78.3, 75.7/76.4/75.2 (I1: 65.0, 78.6, 75.2).

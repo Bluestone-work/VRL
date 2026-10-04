@@ -40,7 +40,7 @@ from scripts.safe_metrics import WallTracker, episode_metrics
 INFORMATION = {'plan_route': 'privileged', 'plan_reactive': 'fair', 'nearest_reactive': 'fair',
                'route_pursuit': 'privileged', 'local_pursuit': 'fair',
                'route_follow': 'privileged', 'local_follow': 'fair',
-               'bc_graph': 'privileged', 'bc_local': 'fair', 'local_memory': 'fair', 'local_tabu': 'fair', 'local_learned': 'fair'}
+               'bc_graph': 'privileged', 'bc_local': 'fair', 'local_memory': 'fair', 'local_tabu': 'fair', 'local_learned': 'fair', 'rl_local': 'fair'}
 STUDENT = {}   # checkpoint path per learned method, set from --checkpoint
 
 
@@ -219,6 +219,10 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
         from marl.graph_transformer_student import load_student, student_local_action
         from marl.scene_graph import extract_scene
         gmodel = load_student(STUDENT[method])
+    if method == 'rl_local':
+        import torch
+        from scripts.train_cluster_ppo import Policy, execute as rl_execute
+        rl = Policy(); rl.load_state_dict(torch.load(STUDENT[method], map_location='cpu', weights_only=False)['state']); rl.eval()
     if method == 'bc_local':
         from marl.local_student import load_local, local_student_action
         lmodel = load_local(STUDENT[method])
@@ -242,6 +246,11 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
             elif method == 'bc_graph':
                 scene = extract_scene(env); scene['robot_goal'] = np.where(env.active[:clusters], tgt, -1)
                 local = student_local_action(gmodel, [scene])[0].astype(np.float64)
+            elif method == 'rl_local':
+                sl = slots_for(packet, tgt)
+                with torch.no_grad():
+                    d, _ = rl.dist(torch.as_tensor(packet.navigation, dtype=torch.float32), torch.as_tensor(sl, dtype=torch.long))
+                local = rl_execute(d.mean.numpy().astype(np.float64)); local[sl < 0] = 0.
             elif method == 'bc_local':
                 local = local_student_action(lmodel, packet.navigation, slots_for(packet, tgt))
             elif method in ('route_pursuit', 'route_follow'):
