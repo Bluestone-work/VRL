@@ -26,7 +26,7 @@ from torch import nn
 
 from marl.scene_graph import CLOT, PARTICLE, ROBOT, VESSEL, VESSEL_DIM, ROBOT_DIM, CLOT_DIM, PARTICLE_DIM
 
-PAIR_DIM = 3+1+3+2+1+3+16
+PAIR_DIM = 3+1+3+2+1+3+16+1   # last: robot i is assigned to clot j (allocation A), symmetric
 TYPES = 4
 
 
@@ -45,8 +45,15 @@ def collate_scenes(scenes, device='cpu'):
         feats = [s['vessel'], s['robot'], s['clot'], s['particle']]
         nv = len(kept)
         adj = np.zeros((len(st), len(st)), bool); adj[:nv, :nv] = s['vessel_adjacency']
+        assign = np.zeros((len(st), len(st)), bool)
+        goal = s.get('robot_goal')
+        if goal is not None:
+            r0, c0 = nv, nv+len(s['robot_pos'])
+            for r, g in enumerate(np.asarray(goal)):
+                if g >= 0:
+                    assign[r0+r, c0+int(g)] = assign[c0+int(g), r0+r] = True
         per.append(dict(st=st, pos=pos, vel=vel, typ=typ, mask=mask, feats=feats,
-                        frame=s['station_frames'][st], geo=s['geodesic'][np.ix_(st, st)], depth=s['depth'][st], adj=adj,
+                        frame=s['station_frames'][st], geo=s['geodesic'][np.ix_(st, st)], depth=s['depth'][st], adj=adj, assign=assign,
                         n_robot=len(s['robot_pos']), n_clot=len(s['clot_pos']), robot_off=nv, clot_off=nv+len(s['robot_pos']),
                         scale=np.float32(s['robot_radius']+s['particle_radius']), speed=np.float32(s['robot_speed'])))
     B, N = len(per), max(len(p['st']) for p in per)
@@ -54,6 +61,7 @@ def collate_scenes(scenes, device='cpu'):
     out = dict(pos=np.zeros((B, N, 3), np.float32), vel=np.zeros((B, N, 3), np.float32), typ=np.zeros((B, N), np.int64),
                mask=np.zeros((B, N), bool), frame=np.tile(np.eye(3, dtype=np.float32), (B, N, 1, 1)),
                geo=np.zeros((B, N, N), np.float32), depth=np.zeros((B, N), np.float32), adj=np.zeros((B, N, N), bool),
+               assign=np.zeros((B, N, N), bool),
                scale=np.zeros(B, np.float32), speed=np.zeros(B, np.float32),
                robot_index=np.zeros((B, R), np.int64), robot_mask=np.zeros((B, R), bool),
                clot_index=np.zeros((B, C), np.int64), clot_mask=np.zeros((B, C), bool))
@@ -64,7 +72,7 @@ def collate_scenes(scenes, device='cpu'):
         n = len(p['st'])
         for key in ('pos', 'vel', 'typ', 'mask', 'frame', 'depth'):
             out[key][b, :n] = p[key]
-        out['geo'][b, :n, :n] = p['geo']; out['adj'][b, :n, :n] = p['adj']
+        out['geo'][b, :n, :n] = p['geo']; out['adj'][b, :n, :n] = p['adj']; out['assign'][b, :n, :n] = p['assign']
         out['scale'][b], out['speed'][b] = p['scale'], p['speed']
         offset = 0
         for k, f in enumerate(p['feats']):
@@ -96,7 +104,7 @@ def pair_features(batch, horizon_s=1.0):
     return torch.cat((direction, torch.log1p(dist), (rv_local/speed).clamp(-10, 10),
                       (t/horizon_s)[..., None], torch.tanh(clear/0.15)[..., None],
                       torch.log1p(geo)[..., None], batch['adj'].float()[..., None],
-                      down.float()[..., None], up.float()[..., None], tp), dim=-1)
+                      down.float()[..., None], up.float()[..., None], tp, batch['assign'].float()[..., None]), dim=-1)
 
 
 PAIR_EMBED = 32

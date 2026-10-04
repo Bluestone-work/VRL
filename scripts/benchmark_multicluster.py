@@ -39,7 +39,9 @@ from scripts.safe_metrics import WallTracker, episode_metrics
 
 INFORMATION = {'plan_route': 'privileged', 'plan_reactive': 'fair', 'nearest_reactive': 'fair',
                'route_pursuit': 'privileged', 'local_pursuit': 'fair',
-               'route_follow': 'privileged', 'local_follow': 'fair'}
+               'route_follow': 'privileged', 'local_follow': 'fair',
+               'bc_graph': 'privileged', 'bc_local': 'fair'}
+STUDENT = {}   # checkpoint path per learned method, set from --checkpoint
 
 
 def station_geodesic(env):
@@ -72,8 +74,11 @@ def preoperative_plan(env):
     return best[1], dict(makespan_mm=float(best[0][0]), total_mm=float(best[0][1]))
 
 
+FALLBACK = {'mode': 'help'}   # cluster whose own plan is done: 'help' -> nearest alive clot, 'hold' -> stay
+
+
 class PlanTargets:
-    """Current target of each cluster: first alive clot of its plan, else the nearest alive clot."""
+    """Current target of each cluster: first alive clot of its plan; afterwards FALLBACK."""
     def __init__(self, plan):
         self.plan = plan
 
@@ -84,7 +89,7 @@ class PlanTargets:
             nxt = [j for j in seq if alive[j]]
             if nxt:
                 out[i] = nxt[0]
-            elif alive.any():
+            elif alive.any() and FALLBACK['mode'] == 'help':
                 d = np.linalg.norm(env.clot_positions_mm-positions[i], axis=1)
                 out[i] = int(np.argmin(np.where(alive, d, np.inf)))
         return out
@@ -98,13 +103,39 @@ def slots_for(packet, targets):
     return slots
 
 
+SHIELD_MODE = {'mode': 'project'}
+BACKOFF_SPEED = .5   # 'project' (baseline) | 'tube' (longitudinal-only conflict resolution)
+
+
 class Shield(MultiClusterController):
-    """Spacing filter + right-of-way bookkeeping of MultiClusterController, applied to any nominal command."""
+    """Spacing filter + right-of-way bookkeeping of MultiClusterController, applied to any nominal command.
+
+    mode 'project' (baseline): lower-priority cluster stops on a predicted conflict and every command is
+    projected onto the linear clearance constraints, which deflects clusters sideways.
+    mode 'tube' (proposed): a vessel is a quasi-1-D tube, so sideways deflection mostly ends at the wall.
+    Keep the filter's along-vessel (Frenet tangent) correction only, i.e. resolve conflicts by slowing,
+    waiting or backing along the lumen; the lateral part of the nominal command is restored.
+    """
     def filtered(self, local, packet):
         n = self.config.clusters
         yielding = np.zeros(n, bool)
         if n > 1 and self.config.min_spacing_mm > 0:
+            nominal = local.copy()
             local, yielding = self._spacing_filter(local, packet)
+            if SHIELD_MODE['mode'] in ('tube', 'backoff'):
+                lateral = nominal.copy(); lateral[:, 0] = 0.               # Frenet frame: column 0 = tangent
+                local = np.column_stack((local[:, 0], lateral[:, 1:]))
+                local[yielding] = 0.
+                if SHIELD_MODE['mode'] == 'backoff':
+                    # Yielding cluster retreats along its lumen axis, away from the nearest visible peer that
+                    # it conflicts with, so a head-on pair in one tube can pass at the next junction.
+                    for i in np.flatnonzero(yielding):
+                        vis = np.flatnonzero(packet.peer_visible[i])
+                        if len(vis):
+                            j = vis[np.argmin(np.linalg.norm(packet.peer_relative_mm[i, vis], axis=1))]
+                            along = packet.peer_relative_mm[i, j, 0]
+                            local[i] = np.array([-np.sign(along) if abs(along) > 1e-6 else 0., 0., 0.])*BACKOFF_SPEED
+                local /= np.maximum(np.linalg.norm(local, axis=1, keepdims=True), 1.)
         local[~packet.active] = 0.
         self.yield_events += int(np.sum(yielding & ~self.previous_yielding))
         self.yield_agent_steps += int(yielding.sum())
@@ -133,6 +164,13 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
     from marl.edge_follower import LocalFollower, RouteFollower
     pursuit = {'route_pursuit': RoutePursuit, 'local_pursuit': LocalPursuit, 'route_follow': RouteFollower,
                'local_follow': LocalFollower}.get(method, lambda e: None)(env)
+    if method == 'bc_graph':
+        from marl.graph_transformer_student import load_student, student_local_action
+        from marl.scene_graph import extract_scene
+        gmodel = load_student(STUDENT[method])
+    if method == 'bc_local':
+        from marl.local_student import load_local, local_student_action
+        lmodel = load_local(STUDENT[method])
     targets = PlanTargets(plan)
     tcfg = teacher_config(env.config)
     walls = WallTracker(clusters)
@@ -150,6 +188,11 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
                 env._assignment = tgt.copy(); env._assignment_alive = np.flatnonzero(env.masses > 0).tobytes()
                 local, stop, _ = teacher_label(env, tcfg)
                 local = np.where(stop[:, None], 0., local).astype(np.float64)
+            elif method == 'bc_graph':
+                scene = extract_scene(env); scene['robot_goal'] = np.where(env.active[:clusters], tgt, -1)
+                local = student_local_action(gmodel, [scene])[0].astype(np.float64)
+            elif method == 'bc_local':
+                local = local_student_action(lmodel, packet.navigation, slots_for(packet, tgt))
             elif method in ('route_pursuit', 'route_follow'):
                 local = pursuit.act(tgt)
             elif method in ('local_pursuit', 'local_follow'):
@@ -177,7 +220,8 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
     sp = spacing.summary()
     ctl = nearest if method == 'nearest_reactive' else shield
     safe = bool(m['safe_collision_free'] and sp['spacing_compliant'] and pair <= 1e-12)
-    row = dict(method=method, information=INFORMATION[method], clusters=clusters, anatomy=anatomy, seed=seed,
+    tag = method + ('' if SHIELD_MODE['mode'] == 'project' else '+'+SHIELD_MODE['mode']) + ('' if FALLBACK['mode'] == 'help' else '+hold')
+    row = dict(method=tag, shield=SHIELD_MODE['mode'], fallback=FALLBACK['mode'], information=INFORMATION[method], checkpoint=STUDENT.get(method), clusters=clusters, anatomy=anatomy, seed=seed,
                horizon_s=horizon_s, d_min_mm=d_min, scenario_hash=manifest['scenario_hash'],
                plan=plan, plan_makespan_mm=plan_info['makespan_mm'], plan_total_mm=plan_info['total_mm'],
                cluster_safe_success=safe, **m, robot_pair_contact_s=pair,
@@ -198,7 +242,13 @@ def main():
     p.add_argument('--seeds', required=True, help='first:last (inclusive)')
     p.add_argument('--horizon-s', type=float, default=300.); p.add_argument('--d-min-mm', type=float, default=2.)
     p.add_argument('--out', required=True, type=Path)
+    p.add_argument('--checkpoint', help='learned methods')
+    p.add_argument('--shield', default='project', choices=('project', 'tube', 'backoff'))
+    p.add_argument('--fallback', default='help', choices=('help', 'hold'))
     a = p.parse_args()
+    if a.checkpoint:
+        STUDENT[a.method] = a.checkpoint
+    SHIELD_MODE['mode'] = a.shield; FALLBACK['mode'] = a.fallback
     s0, s1 = map(int, a.seeds.split(':'))
     with a.out.open('a') as f:
         for seed in range(s0, s1+1):
