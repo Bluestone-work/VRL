@@ -280,5 +280,19 @@
    "femoropopliteal_pad"
   ],
   "rule": "Learned students may be trained and selected only on train anatomies. Held-out anatomies are evaluated zero-shot (diagnostic split for development, sealed test for claims). Held-out set chosen to span venous retrograde flow (cerebral_venous_sinus), the longest anatomy (femoropopliteal_pad), the two weakest anatomies for the teacher (cerebral_venous_sinus 88.2, sma_embolism 93.0) and two cerebral/coronary arterial trees."
+ },
+ "multicluster_benchmark_v1": {
+  "registered": "2026-10-05, before any benchmark run",
+  "development": {
+   "seed_base": 2600000000,
+   "stride_per_anatomy": 100000,
+   "count": 30
+  },
+  "test": {
+   "seed_base": 2700000000,
+   "stride_per_anatomy": 100000,
+   "count": 100
+  },
+  "rule": "Anatomy k = index in anatomy_order; seeds base + k*stride + i. Development: baselines, failure analysis, method design and selection. Test: evaluated once per final method. Scenes from scripts/multicluster_protocol.paired_environment."
  }
 }
