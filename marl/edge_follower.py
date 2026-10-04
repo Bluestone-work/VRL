@@ -166,11 +166,14 @@ class RouteFollower:
 class LocalFollower:
     """[fair] junction-group path inside the local view only, towards the end that best points at the
     clot's straight-line direction; explored dead ends remembered (own odometry); choice held 2 s."""
-    def __init__(self, env, view_mm=4., commit_s=2.):
-        self.env, self.graph, self.view, self.commit = env, GroupGraph(env), view_mm, commit_s
+    def __init__(self, env, view_mm=4., commit_s=2., memory=False, tabu_s=0.):
+        self.env, self.graph, self.view, self.commit, self.memory = env, GroupGraph(env), view_mm, commit_s, memory
+        self.tabu_s = tabu_s
+        self.tabu = [dict() for _ in range(env.num_robots)]   # abandoned frontier group -> time it was abandoned
         n = env.num_robots
         self.end = [None]*n; self.until = np.zeros(n); self.goal = np.full(n, -1)
         self.dead = [set() for _ in range(n)]
+        self.visits = [dict() for _ in range(n)]   # junction groups passed (own odometry), per target
 
     def _local(self, sources):
         g = self.graph; dist = dict(sources); prev = {}
@@ -194,7 +197,7 @@ class LocalFollower:
             if t < 0 or not env.active[i]:
                 continue
             if self.goal[i] != t:
-                self.goal[i] = t; self.end[i] = None; self.until[i] = 0.
+                self.goal[i] = t; self.end[i] = None; self.until[i] = 0.; self.visits[i] = {}; self.tabu[i] = {}
             pos = env.positions_mm[i].astype(np.float64)
             clot = env.clot_positions_mm[t].astype(np.float64)
             gdir = (clot-pos)/max(np.linalg.norm(clot-pos), 1e-9)
@@ -204,6 +207,9 @@ class LocalFollower:
             for u in src:                                   # standing in an explored dead end
                 if len(g.adj.get(u, [])) == 1 and src[u] < .5 and u != goal_g:
                     self.dead[i].add(u)
+                if self.memory and src[u] < .3 and len(g.adj.get(u, [])) >= 3:
+                    self.visits[i][u] = self.visits[i].get(u, 0)+(1 if self.visits[i].get('_last') != u else 0)
+                    self.visits[i]['_last'] = u
             if goal_g in dist:                               # clot visible on the local lumen
                 end, point = goal_g, clot
             else:
@@ -213,8 +219,23 @@ class LocalFollower:
                     def score(u):
                         v = g.point[u]-pos; v /= max(np.linalg.norm(v), 1e-9)
                         leaf = len(g.adj.get(u, [])) == 1 and dist[u] < self.view
-                        return float(v@gdir) - 2.*leaf - 3.*(u in self.dead[i])
-                    self.end[i] = max(frontier, key=score) if frontier else None
+                        sc = float(v@gdir) - 2.*leaf - 3.*(u in self.dead[i])
+                        if self.tabu_s > 0:
+                            # a frontier abandoned recently lies behind us: re-choosing it closes a limit cycle
+                            near_tabu = any(np.linalg.norm(g.point[u]-g.point[q]) < 1.5 and env.elapsed_s-tq < self.tabu_s
+                                            for q, tq in self.tabu[i].items())
+                            sc -= 3.*near_tabu
+                        if self.memory:
+                            # penalise frontiers whose local path re-enters junctions already passed for this target
+                            q, rep = u, 0
+                            while q in prev:
+                                rep += self.visits[i].get(q, 0); q = prev[q]
+                            sc -= .75*rep
+                        return sc
+                    new_end = max(frontier, key=score) if frontier else None
+                    if self.tabu_s > 0 and self.end[i] is not None and new_end != self.end[i] and dist.get(self.end[i], 0.) >= .3:
+                        self.tabu[i][self.end[i]] = env.elapsed_s       # abandoned before reaching it
+                    self.end[i] = new_end
                     self.until[i] = env.elapsed_s+self.commit
                 end = self.end[i]
                 point = g.point[end] if end is not None else clot

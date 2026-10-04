@@ -40,7 +40,7 @@ from scripts.safe_metrics import WallTracker, episode_metrics
 INFORMATION = {'plan_route': 'privileged', 'plan_reactive': 'fair', 'nearest_reactive': 'fair',
                'route_pursuit': 'privileged', 'local_pursuit': 'fair',
                'route_follow': 'privileged', 'local_follow': 'fair',
-               'bc_graph': 'privileged', 'bc_local': 'fair'}
+               'bc_graph': 'privileged', 'bc_local': 'fair', 'local_memory': 'fair', 'local_tabu': 'fair'}
 STUDENT = {}   # checkpoint path per learned method, set from --checkpoint
 
 
@@ -52,8 +52,51 @@ def station_geodesic(env):
     return shortest_path(csr_matrix((w, (rows, cols)), shape=(n, n)), directed=False)
 
 
+ALLOCATION = {'mode': 'makespan', 'lambda': 1., 'site_mm': 2.5}
+
+
+def _station_paths(env):
+    from scipy.sparse import csr_matrix
+    from scipy.sparse.csgraph import shortest_path
+    tree = env.tree; n = tree.n_stations; scale = float(tree.physical_mm_per_unit)
+    rows, cols, w = zip(*[(i, j, d*scale) for i, nb in enumerate(tree.station_graph) for j, d in nb])
+    G, pred = shortest_path(csr_matrix((w, (rows, cols)), shape=(n, n)), directed=False, return_predecessors=True)
+    def path(a, b):
+        out = [b]
+        while out[-1] != a and pred[a, out[-1]] >= 0:
+            out.append(int(pred[a, out[-1]]))
+        return out
+    return G, path
+
+
+def conflict_penalty(env, tours, G, path):
+    """Vessel-occupancy conflicts of a plan (mm): length of cluster i's route inside the work site
+    (within site_mm geodesic) of a clot assigned to another cluster, plus half the corridor length
+    two clusters' routes share. Both measured on the pre-operative map."""
+    starts = np.asarray(env.robot_stations); clots = np.asarray(env.clot_stations)
+    spacing = float(np.median([d for nb in env.tree.station_graph for _, d in nb]))*float(env.tree.physical_mm_per_unit)
+    routes = []
+    for i, seq in enumerate(tours):
+        st, cur = set(), int(starts[i])
+        for c in seq:
+            st |= set(path(cur, int(clots[c]))); cur = int(clots[c])
+        routes.append(st)
+    pen = 0.
+    for i in range(len(tours)):
+        for j in range(len(tours)):
+            if i == j:
+                continue
+            for c in tours[j]:
+                site = np.flatnonzero(G[int(clots[c])] < ALLOCATION['site_mm'])
+                pen += spacing*len(routes[i] & set(site.tolist()))
+            if j > i:
+                pen += .5*spacing*len(routes[i] & routes[j])
+    return pen
+
+
 def preoperative_plan(env):
-    """Allocation A: ordered clot list per cluster minimising (makespan, total) of geodesic travel."""
+    """Allocation A: ordered clot list per cluster minimising (makespan, total) of geodesic travel.
+    mode 'conflict': minimise makespan + lambda * conflict_penalty instead (N>1)."""
     G = station_geodesic(env)
     starts = np.asarray(env.robot_stations); clots = np.asarray(env.clot_stations)
     n, m = len(starts), len(clots)
@@ -66,9 +109,14 @@ def preoperative_plan(env):
             best = min(best, (length, order))
         return best
     best = None
+    conflict = ALLOCATION['mode'] == 'conflict' and n > 1
+    if conflict:
+        Gs, spath = _station_paths(env)
     for labels in itertools.product(range(n), repeat=m):
         tours = [tour(i, [j for j in range(m) if labels[j] == i]) for i in range(n)]
         key = (max(t[0] for t in tours), sum(t[0] for t in tours))
+        if conflict:
+            key = (key[0]+ALLOCATION['lambda']*conflict_penalty(env, [list(t[1]) for t in tours], Gs, spath), key[1])
         if best is None or key < best[0]:
             best = (key, [list(t[1]) for t in tours])
     return best[1], dict(makespan_mm=float(best[0][0]), total_mm=float(best[0][1]))
@@ -104,7 +152,8 @@ def slots_for(packet, targets):
 
 
 SHIELD_MODE = {'mode': 'project'}
-BACKOFF_SPEED = .5   # 'project' (baseline) | 'tube' (longitudinal-only conflict resolution)
+BACKOFF_SPEED = .5
+TAG = {'tag': None}   # 'project' (baseline) | 'tube' (longitudinal-only conflict resolution)
 
 
 class Shield(MultiClusterController):
@@ -163,7 +212,8 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
     from marl.pursuit_controllers import LocalPursuit, RoutePursuit
     from marl.edge_follower import LocalFollower, RouteFollower
     pursuit = {'route_pursuit': RoutePursuit, 'local_pursuit': LocalPursuit, 'route_follow': RouteFollower,
-               'local_follow': LocalFollower}.get(method, lambda e: None)(env)
+               'local_follow': LocalFollower, 'local_memory': lambda e: LocalFollower(e, memory=True),
+               'local_tabu': lambda e: LocalFollower(e, tabu_s=30.)}.get(method, lambda e: None)(env)
     if method == 'bc_graph':
         from marl.graph_transformer_student import load_student, student_local_action
         from marl.scene_graph import extract_scene
@@ -195,7 +245,7 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
                 local = local_student_action(lmodel, packet.navigation, slots_for(packet, tgt))
             elif method in ('route_pursuit', 'route_follow'):
                 local = pursuit.act(tgt)
-            elif method in ('local_pursuit', 'local_follow'):
+            elif method in ('local_pursuit', 'local_follow', 'local_memory', 'local_tabu'):
                 local = pursuit.act(tgt, packet.navigation)
             elif method == 'plan_reactive':
                 local = fair_reactive_action(packet.navigation, 'path', PartialObsConfig(), target_slots=slots_for(packet, tgt))
@@ -220,8 +270,9 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
     sp = spacing.summary()
     ctl = nearest if method == 'nearest_reactive' else shield
     safe = bool(m['safe_collision_free'] and sp['spacing_compliant'] and pair <= 1e-12)
-    tag = method + ('' if SHIELD_MODE['mode'] == 'project' else '+'+SHIELD_MODE['mode']) + ('' if FALLBACK['mode'] == 'help' else '+hold')
-    row = dict(method=tag, shield=SHIELD_MODE['mode'], fallback=FALLBACK['mode'], information=INFORMATION[method], checkpoint=STUDENT.get(method), clusters=clusters, anatomy=anatomy, seed=seed,
+    tag = method + ('' if SHIELD_MODE['mode'] == 'project' else '+'+SHIELD_MODE['mode']) + ('' if FALLBACK['mode'] == 'help' else '+hold') \
+          + ('' if ALLOCATION['mode'] == 'makespan' else f"+conflict{ALLOCATION['lambda']:g}")
+    row = dict(method=TAG['tag'] or tag, shield=SHIELD_MODE['mode'], fallback=FALLBACK['mode'], information=INFORMATION[method], checkpoint=STUDENT.get(method), clusters=clusters, anatomy=anatomy, seed=seed,
                horizon_s=horizon_s, d_min_mm=d_min, scenario_hash=manifest['scenario_hash'],
                plan=plan, plan_makespan_mm=plan_info['makespan_mm'], plan_total_mm=plan_info['total_mm'],
                cluster_safe_success=safe, **m, robot_pair_contact_s=pair,
@@ -243,12 +294,17 @@ def main():
     p.add_argument('--horizon-s', type=float, default=300.); p.add_argument('--d-min-mm', type=float, default=2.)
     p.add_argument('--out', required=True, type=Path)
     p.add_argument('--checkpoint', help='learned methods')
+    p.add_argument('--tag', help='method label in the output rows')
     p.add_argument('--shield', default='project', choices=('project', 'tube', 'backoff'))
     p.add_argument('--fallback', default='help', choices=('help', 'hold'))
+    p.add_argument('--allocation', default='makespan', choices=('makespan', 'conflict'))
+    p.add_argument('--conflict-lambda', type=float, default=1.)
     a = p.parse_args()
     if a.checkpoint:
         STUDENT[a.method] = a.checkpoint
     SHIELD_MODE['mode'] = a.shield; FALLBACK['mode'] = a.fallback
+    ALLOCATION['mode'] = a.allocation; ALLOCATION['lambda'] = a.conflict_lambda
+    TAG['tag'] = a.tag
     s0, s1 = map(int, a.seeds.split(':'))
     with a.out.open('a') as f:
         for seed in range(s0, s1+1):
