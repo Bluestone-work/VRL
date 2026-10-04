@@ -1073,3 +1073,13 @@ EXP0057 120/120通过，51测试、130重算初态哈希、12父训练溯源通�
 ### EXP0059 高层隔离实验完成
 
 固定EXP0058连续低层，交叉部署规则/MAPPO bid/graph PPO/graph anchor高层，4×2×3×8=192条，全部通过。固定r_mappo低层时四类高层清除率均80.2083%；固定graph_ppo低层时前三者75.0%，graph anchor73.9583%。因此EXP0058图方法落后MAPPO主要跟随低层策略，而非高层图排序本身。高层只改变少数壁面/AUC，未改善清除或安全。交叉加载是接口诊断，不是端到端重新训练比较。
+
+## 2026-10-05 — Unified benchmark v1: baselines first, then motivated improvements (branch research/fair-partial-observation)
+
+Report: research/validation/BENCHMARK_V1_REPORT_20261005.md (development split only; test split unopened).
+- Tasks N=1 sequential / N=2,3 parallel (2 mm spacing), 14 anatomies × 30 fixed dev scenes, shared pre-operative allocation A, Safe success primary plus clearance, T50/T90/T100, AUC, path, wall, particle, spacing, deadlock, timeout.
+- Baselines (Safe, N=1/2/3): roadmap route_follow 78.1/87.1/79.5; fair local_follow 39.8/57.9/68.8; old reactive 17–44; BC graph student 37.4/52.4/56.4; BC local 28.3/38.8/43.6; local + DAgger r1 41.7/52.4/52.4 (DAgger vs step-matched BC +10–12 pp, CI excludes 0).
+- I0 edge-level junction-aware following (motivation: station-level following oscillates at bifurcations and cannot enter acute side branches): N=1 privileged clears 10/10 vs 0/10.
+- I1 frontier tabu memory (motivation: 14/15 local failures were limit cycles): Safe +25.2 / +20.7 / +6.4 pp vs local_follow (N=1/2/3), held-out +20.7 / +21.3 / +2.0.
+- I2 learned frontier selector (privileged geodesic label at training, fair features at inference): decision accuracy 98.0 vs 83.1 %, closed-loop Safe tied with I1; N=2 T100 −10.7 s, path −21 mm.
+- Negative: tube/backoff/hold shields, conflict-aware allocation, visit-count memory. All kept.
