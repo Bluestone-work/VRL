@@ -1,0 +1,27 @@
+{
+  "all_completed": true,
+  "unchanged_baseline": true,
+  "attempts": [
+    {
+      "name": "temporal_joint",
+      "returncode": 0,
+      "final_state_hash": "b870829610b067fe075eafbbcc9b1b3e1e80e62ee82679c28ba5587b612103e3",
+      "removal": 0.25,
+      "wall_contact_s": 155.06307595682927
+    },
+    {
+      "name": "tracked_joint",
+      "returncode": 0,
+      "final_state_hash": "b870829610b067fe075eafbbcc9b1b3e1e80e62ee82679c28ba5587b612103e3",
+      "removal": 0.25,
+      "wall_contact_s": 155.06307595682927
+    },
+    {
+      "name": "temporal_learned512",
+      "returncode": 0,
+      "final_state_hash": "b870829610b067fe075eafbbcc9b1b3e1e80e62ee82679c28ba5587b612103e3",
+      "removal": 0.25,
+      "wall_contact_s": 155.06307595682927
+    }
+  ]
+}

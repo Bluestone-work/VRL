@@ -1,0 +1,865 @@
+{
+  "date": "2026-10-04",
+  "studies": [
+    {
+      "experiment": "EXP0051",
+      "training_runs": [
+        {
+          "label": "hierarchical_s42",
+          "control_steps": 16384,
+          "model_l2_change": 1.9869929510811517,
+          "actor_head_weight_norm": 0.16789498925209045
+        },
+        {
+          "label": "hierarchical_s43",
+          "control_steps": 16384,
+          "model_l2_change": 1.789456629882558,
+          "actor_head_weight_norm": 0.17229081690311432
+        },
+        {
+          "label": "hierarchical_s44",
+          "control_steps": 16384,
+          "model_l2_change": 1.6978520992555801,
+          "actor_head_weight_norm": 0.17015427350997925
+        },
+        {
+          "label": "flat_s42",
+          "control_steps": 16384,
+          "model_l2_change": 2.922310896379462,
+          "actor_head_weight_norm": 0.2104213386774063
+        },
+        {
+          "label": "flat_s43",
+          "control_steps": 16384,
+          "model_l2_change": 2.929313383375105,
+          "actor_head_weight_norm": 0.19120070338249207
+        },
+        {
+          "label": "flat_s44",
+          "control_steps": 16384,
+          "model_l2_change": 2.5588722387496334,
+          "actor_head_weight_norm": 0.23171934485435486
+        }
+      ],
+      "phases": {
+        "validation": {
+          "requested": 144,
+          "completed": 144,
+          "audit_passed": true,
+          "issues": [],
+          "independent_scenes": 12,
+          "arms": {
+            "memory_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7374542164370469,
+              "auc": 0.5465954317493851,
+              "wall_cluster_s": 25.25251955921765,
+              "spacing_pair_s": 0.18823559021521286,
+              "worst_minimum_spacing_mm": 1.8076708042973841,
+              "T90_horizon_penalty_s": 158.7916666666659
+            },
+            "balanced_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 5,
+              "false_visual_completions": 0,
+              "removal": 0.8333333333333334,
+              "auc": 0.607209457645837,
+              "wall_cluster_s": 19.912972624209306,
+              "spacing_pair_s": 0.09663040680139083,
+              "worst_minimum_spacing_mm": 1.8477837152649899,
+              "T90_horizon_penalty_s": 150.8499999999982
+            },
+            "priority_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.7636466268937702,
+              "auc": 0.5828207842341192,
+              "wall_cluster_s": 22.762734611818235,
+              "spacing_pair_s": 0.2491771582303721,
+              "worst_minimum_spacing_mm": 1.850734119719052,
+              "T90_horizon_penalty_s": 155.11666666666562
+            },
+            "memory_n1": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.3333333333333333,
+              "auc": 0.24738917224662108,
+              "wall_cluster_s": 7.875806485204976,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": null,
+              "T90_horizon_penalty_s": 173.84166666666655
+            },
+            "legacy_memory_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7813294917609124,
+              "auc": 0.5494164385769161,
+              "wall_cluster_s": 16.588455608068823,
+              "spacing_pair_s": 0.715421520189205,
+              "worst_minimum_spacing_mm": 1.6813667014766012,
+              "T90_horizon_penalty_s": 166.54999999999828
+            },
+            "untrained_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7374542164370469,
+              "auc": 0.5465954317493851,
+              "wall_cluster_s": 25.25251955921765,
+              "spacing_pair_s": 0.18823559021521286,
+              "worst_minimum_spacing_mm": 1.8076708042973841,
+              "T90_horizon_penalty_s": 158.7916666666659
+            },
+            "hierarchical_s42": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7374542164370469,
+              "auc": 0.5465954317493851,
+              "wall_cluster_s": 25.25251955921765,
+              "spacing_pair_s": 0.18823559021521286,
+              "worst_minimum_spacing_mm": 1.8076708042973841,
+              "T90_horizon_penalty_s": 158.7916666666659
+            },
+            "hierarchical_s43": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7374542164370469,
+              "auc": 0.5465954317493851,
+              "wall_cluster_s": 25.25251955921765,
+              "spacing_pair_s": 0.18823559021521286,
+              "worst_minimum_spacing_mm": 1.8076708042973841,
+              "T90_horizon_penalty_s": 158.7916666666659
+            },
+            "hierarchical_s44": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7374542164370469,
+              "auc": 0.5465954317493851,
+              "wall_cluster_s": 25.25251955921765,
+              "spacing_pair_s": 0.18823559021521286,
+              "worst_minimum_spacing_mm": 1.8076708042973841,
+              "T90_horizon_penalty_s": 158.7916666666659
+            },
+            "flat_s42": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7374542164370469,
+              "auc": 0.5465954317493851,
+              "wall_cluster_s": 25.25251955921765,
+              "spacing_pair_s": 0.18823559021521286,
+              "worst_minimum_spacing_mm": 1.8076708042973841,
+              "T90_horizon_penalty_s": 158.7916666666659
+            },
+            "flat_s43": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7374542164370469,
+              "auc": 0.5465954317493851,
+              "wall_cluster_s": 25.25251955921765,
+              "spacing_pair_s": 0.18823559021521286,
+              "worst_minimum_spacing_mm": 1.8076708042973841,
+              "T90_horizon_penalty_s": 158.7916666666659
+            },
+            "flat_s44": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 6,
+              "false_visual_completions": 0,
+              "removal": 0.7374542164370469,
+              "auc": 0.5465954317493851,
+              "wall_cluster_s": 25.25251955921765,
+              "spacing_pair_s": 0.18823559021521286,
+              "worst_minimum_spacing_mm": 1.8076708042973841,
+              "T90_horizon_penalty_s": 158.7916666666659
+            }
+          },
+          "final_state_equivalence": {
+            "hierarchical_s42": {
+              "nominal": "memory_n3",
+              "completed": 12,
+              "same_final_state": 12
+            },
+            "hierarchical_s43": {
+              "nominal": "memory_n3",
+              "completed": 12,
+              "same_final_state": 12
+            },
+            "hierarchical_s44": {
+              "nominal": "memory_n3",
+              "completed": 12,
+              "same_final_state": 12
+            },
+            "flat_s42": {
+              "nominal": "memory_n3",
+              "completed": 12,
+              "same_final_state": 12
+            },
+            "flat_s43": {
+              "nominal": "memory_n3",
+              "completed": 12,
+              "same_final_state": 12
+            },
+            "flat_s44": {
+              "nominal": "memory_n3",
+              "completed": 12,
+              "same_final_state": 12
+            }
+          }
+        },
+        "coupling_stress": {
+          "requested": 40,
+          "completed": 40,
+          "audit_passed": true,
+          "issues": [],
+          "independent_scenes": 4,
+          "arms": {
+            "memory_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.6151047428554481,
+              "wall_cluster_s": 31.219926685629346,
+              "spacing_pair_s": 0.487971822606986,
+              "worst_minimum_spacing_mm": 1.7690519534478824,
+              "T90_horizon_penalty_s": 171.52499999999753
+            },
+            "balanced_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.8125,
+              "auc": 0.646272585458411,
+              "wall_cluster_s": 31.297022851622422,
+              "spacing_pair_s": 0.27666086557955594,
+              "worst_minimum_spacing_mm": 1.8484253154374288,
+              "T90_horizon_penalty_s": 150.97500000000016
+            },
+            "priority_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 1,
+              "false_visual_completions": 0,
+              "removal": 0.7725591783534791,
+              "auc": 0.6167680542242441,
+              "wall_cluster_s": 24.546301410690603,
+              "spacing_pair_s": 0.038465972589831435,
+              "worst_minimum_spacing_mm": 1.9907481223775723,
+              "T90_horizon_penalty_s": 150.80000000000015
+            },
+            "memory_n1": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.4375,
+              "auc": 0.32365254105631425,
+              "wall_cluster_s": 1.4535562797067214,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": null,
+              "T90_horizon_penalty_s": 163.62499999999943
+            },
+            "hierarchical_s42": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.6151047428554481,
+              "wall_cluster_s": 31.219926685629346,
+              "spacing_pair_s": 0.487971822606986,
+              "worst_minimum_spacing_mm": 1.7690519534478824,
+              "T90_horizon_penalty_s": 171.5249999999975
+            },
+            "hierarchical_s43": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.6151047428554481,
+              "wall_cluster_s": 31.219926685629346,
+              "spacing_pair_s": 0.487971822606986,
+              "worst_minimum_spacing_mm": 1.7690519534478824,
+              "T90_horizon_penalty_s": 171.5249999999975
+            },
+            "hierarchical_s44": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.6151047428554481,
+              "wall_cluster_s": 31.219926685629346,
+              "spacing_pair_s": 0.487971822606986,
+              "worst_minimum_spacing_mm": 1.7690519534478824,
+              "T90_horizon_penalty_s": 171.5249999999975
+            },
+            "flat_s42": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.6151047428554481,
+              "wall_cluster_s": 31.219926685629346,
+              "spacing_pair_s": 0.487971822606986,
+              "worst_minimum_spacing_mm": 1.7690519534478824,
+              "T90_horizon_penalty_s": 171.5249999999975
+            },
+            "flat_s43": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.6151047428554481,
+              "wall_cluster_s": 31.219926685629346,
+              "spacing_pair_s": 0.487971822606986,
+              "worst_minimum_spacing_mm": 1.7690519534478824,
+              "T90_horizon_penalty_s": 171.5249999999975
+            },
+            "flat_s44": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 3,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.6151047428554481,
+              "wall_cluster_s": 31.219926685629346,
+              "spacing_pair_s": 0.487971822606986,
+              "worst_minimum_spacing_mm": 1.7690519534478824,
+              "T90_horizon_penalty_s": 171.5249999999975
+            }
+          },
+          "final_state_equivalence": {
+            "hierarchical_s42": {
+              "nominal": "memory_n3",
+              "completed": 4,
+              "same_final_state": 4
+            },
+            "hierarchical_s43": {
+              "nominal": "memory_n3",
+              "completed": 4,
+              "same_final_state": 4
+            },
+            "hierarchical_s44": {
+              "nominal": "memory_n3",
+              "completed": 4,
+              "same_final_state": 4
+            },
+            "flat_s42": {
+              "nominal": "memory_n3",
+              "completed": 4,
+              "same_final_state": 4
+            },
+            "flat_s43": {
+              "nominal": "memory_n3",
+              "completed": 4,
+              "same_final_state": 4
+            },
+            "flat_s44": {
+              "nominal": "memory_n3",
+              "completed": 4,
+              "same_final_state": 4
+            }
+          }
+        }
+      }
+    },
+    {
+      "experiment": "EXP0052",
+      "training_runs": [
+        {
+          "label": "hierarchical_s42",
+          "control_steps": 32768,
+          "model_l2_change": 2.499899515445681,
+          "actor_head_weight_norm": 0.2925603985786438
+        },
+        {
+          "label": "hierarchical_s43",
+          "control_steps": 32768,
+          "model_l2_change": 2.612035095002218,
+          "actor_head_weight_norm": 0.321010947227478
+        },
+        {
+          "label": "hierarchical_s44",
+          "control_steps": 32768,
+          "model_l2_change": 3.1172957622778927,
+          "actor_head_weight_norm": 0.35183185338974
+        },
+        {
+          "label": "flat_s42",
+          "control_steps": 32768,
+          "model_l2_change": 3.624068591953033,
+          "actor_head_weight_norm": 0.3092605173587799
+        },
+        {
+          "label": "flat_s43",
+          "control_steps": 32768,
+          "model_l2_change": 3.1260650376022547,
+          "actor_head_weight_norm": 0.26900118589401245
+        },
+        {
+          "label": "flat_s44",
+          "control_steps": 32768,
+          "model_l2_change": 3.474710433115025,
+          "actor_head_weight_norm": 0.2693430781364441
+        }
+      ],
+      "phases": {
+        "validation": {
+          "requested": 168,
+          "completed": 168,
+          "audit_passed": true,
+          "issues": [],
+          "independent_scenes": 12,
+          "arms": {
+            "memory_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8635153051546656,
+              "auc": 0.6742221049297866,
+              "wall_cluster_s": 18.557683347251558,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0594931051287695,
+              "T90_horizon_penalty_s": 121.28333333333268
+            },
+            "balanced_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8340915107424833,
+              "auc": 0.6773350769176919,
+              "wall_cluster_s": 27.267841785654415,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0194472144463873,
+              "T90_horizon_penalty_s": 122.44166666666645
+            },
+            "balanced_fast_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8965915107424833,
+              "auc": 0.7176465526292343,
+              "wall_cluster_s": 20.823616527199462,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0194472144463873,
+              "T90_horizon_penalty_s": 115.3999999999997
+            },
+            "balanced_flat_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.87575817740915,
+              "auc": 0.7133808691388746,
+              "wall_cluster_s": 19.96909993959363,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0194472144463873,
+              "T90_horizon_penalty_s": 113.06666666666649
+            },
+            "priority_n3": {
+              "completed": 12,
+              "safe_successes": 1,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.81325817740915,
+              "auc": 0.6751053544596243,
+              "wall_cluster_s": 30.252167230702568,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.1314550495186313,
+              "T90_horizon_penalty_s": 138.13333333333307
+            },
+            "memory_n1": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.2708333333333333,
+              "auc": 0.20366214475747288,
+              "wall_cluster_s": 6.078741224968327,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": null,
+              "T90_horizon_penalty_s": 172.65833333333327
+            },
+            "untrained_balanced_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8340915107424833,
+              "auc": 0.6773350769176919,
+              "wall_cluster_s": 27.267841785654415,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0194472144463873,
+              "T90_horizon_penalty_s": 122.44166666666645
+            },
+            "untrained_flat_n3": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.87575817740915,
+              "auc": 0.7133808691388746,
+              "wall_cluster_s": 19.969099939593633,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0194472144463873,
+              "T90_horizon_penalty_s": 113.06666666666649
+            },
+            "hierarchical_s42": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8635153051546656,
+              "auc": 0.6742221049297868,
+              "wall_cluster_s": 18.557683347251558,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0594931051287695,
+              "T90_horizon_penalty_s": 121.28333333333268
+            },
+            "hierarchical_s43": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8218486384879989,
+              "auc": 0.6536717246728789,
+              "wall_cluster_s": 23.37697686565579,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0502220346466253,
+              "T90_horizon_penalty_s": 120.51666666666604
+            },
+            "hierarchical_s44": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8218486384879989,
+              "auc": 0.6497080929816808,
+              "wall_cluster_s": 23.0908908067176,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0502220346466253,
+              "T90_horizon_penalty_s": 127.50833333333283
+            },
+            "flat_s42": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8541666666666666,
+              "auc": 0.6950884931431914,
+              "wall_cluster_s": 20.475359340529096,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0355957349128686,
+              "T90_horizon_penalty_s": 116.89999999999958
+            },
+            "flat_s43": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8958333333333334,
+              "auc": 0.6981470894631517,
+              "wall_cluster_s": 25.493988261790406,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0194472144463873,
+              "T90_horizon_penalty_s": 115.49999999999909
+            },
+            "flat_s44": {
+              "completed": 12,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.87575817740915,
+              "auc": 0.7086664140965975,
+              "wall_cluster_s": 24.14089662568078,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0194472144463873,
+              "T90_horizon_penalty_s": 116.4666666666663
+            }
+          },
+          "final_state_equivalence": {
+            "hierarchical_s42": {
+              "nominal": "balanced_n3",
+              "completed": 12,
+              "same_final_state": 5
+            },
+            "hierarchical_s43": {
+              "nominal": "balanced_n3",
+              "completed": 12,
+              "same_final_state": 5
+            },
+            "hierarchical_s44": {
+              "nominal": "balanced_n3",
+              "completed": 12,
+              "same_final_state": 5
+            },
+            "flat_s42": {
+              "nominal": "balanced_flat_n3",
+              "completed": 12,
+              "same_final_state": 7
+            },
+            "flat_s43": {
+              "nominal": "balanced_flat_n3",
+              "completed": 12,
+              "same_final_state": 7
+            },
+            "flat_s44": {
+              "nominal": "balanced_flat_n3",
+              "completed": 12,
+              "same_final_state": 9
+            }
+          }
+        },
+        "coupling_stress": {
+          "requested": 56,
+          "completed": 56,
+          "audit_passed": true,
+          "issues": [],
+          "independent_scenes": 4,
+          "arms": {
+            "balanced_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 1,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.7054372515480573,
+              "wall_cluster_s": 62.25609579147873,
+              "spacing_pair_s": 15.382301019897596,
+              "worst_minimum_spacing_mm": 1.4675404414987798,
+              "T90_horizon_penalty_s": 100.74999999999942
+            },
+            "memory_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.869165073735841,
+              "auc": 0.687674312878012,
+              "wall_cluster_s": 17.125822449641085,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0538715804494636,
+              "T90_horizon_penalty_s": 112.99999999999935
+            },
+            "balanced_fast_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 1.0,
+              "auc": 0.81595302036371,
+              "wall_cluster_s": 14.480772085846414,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0534583670402724,
+              "T90_horizon_penalty_s": 71.64999999999965
+            },
+            "balanced_flat_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.9375,
+              "auc": 0.7607469440924057,
+              "wall_cluster_s": 20.07932900817687,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0534583670402724,
+              "T90_horizon_penalty_s": 110.8749999999994
+            },
+            "priority_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 1.0,
+              "auc": 0.8294602961687387,
+              "wall_cluster_s": 10.662199521684968,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.25963940035785,
+              "T90_horizon_penalty_s": 67.47499999999988
+            },
+            "memory_n1": {
+              "completed": 4,
+              "safe_successes": 1,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.4375,
+              "auc": 0.34335818072775764,
+              "wall_cluster_s": 10.796564438010575,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": null,
+              "T90_horizon_penalty_s": 153.15000000000003
+            },
+            "untrained_balanced_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 1,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.7054372515480571,
+              "wall_cluster_s": 62.25609579147873,
+              "spacing_pair_s": 15.382301019897596,
+              "worst_minimum_spacing_mm": 1.4675404414987798,
+              "T90_horizon_penalty_s": 100.74999999999942
+            },
+            "untrained_flat_n3": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.9375,
+              "auc": 0.7607469440924057,
+              "wall_cluster_s": 20.07932900817687,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0534583670402724,
+              "T90_horizon_penalty_s": 110.8749999999994
+            },
+            "hierarchical_s42": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.869165073735841,
+              "auc": 0.687674312878012,
+              "wall_cluster_s": 17.125822449641085,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0538715804494636,
+              "T90_horizon_penalty_s": 112.99999999999935
+            },
+            "hierarchical_s43": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 1,
+              "false_visual_completions": 0,
+              "removal": 0.8125,
+              "auc": 0.6302735006014936,
+              "wall_cluster_s": 71.33472897170441,
+              "spacing_pair_s": 15.382301019897596,
+              "worst_minimum_spacing_mm": 1.4675404414987798,
+              "T90_horizon_penalty_s": 153.04999999999856
+            },
+            "hierarchical_s44": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 2,
+              "false_visual_completions": 0,
+              "removal": 0.875,
+              "auc": 0.6167443906775977,
+              "wall_cluster_s": 77.2298103090131,
+              "spacing_pair_s": 15.411271239832448,
+              "worst_minimum_spacing_mm": 1.4675404414987798,
+              "T90_horizon_penalty_s": 146.04999999999745
+            },
+            "flat_s42": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.9375,
+              "auc": 0.7410654675833206,
+              "wall_cluster_s": 19.925190051581154,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0145396236970097,
+              "T90_horizon_penalty_s": 116.79999999999913
+            },
+            "flat_s43": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.8600252375551258,
+              "auc": 0.6478460781600968,
+              "wall_cluster_s": 57.94142813588999,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.047671773250655,
+              "T90_horizon_penalty_s": 118.07499999999861
+            },
+            "flat_s44": {
+              "completed": 4,
+              "safe_successes": 0,
+              "spacing_violating_episodes": 0,
+              "false_visual_completions": 0,
+              "removal": 0.9375,
+              "auc": 0.7604518228342222,
+              "wall_cluster_s": 18.740322805559025,
+              "spacing_pair_s": 0.0,
+              "worst_minimum_spacing_mm": 2.0534583670402724,
+              "T90_horizon_penalty_s": 111.09999999999941
+            }
+          },
+          "final_state_equivalence": {
+            "hierarchical_s42": {
+              "nominal": "balanced_n3",
+              "completed": 4,
+              "same_final_state": 0
+            },
+            "hierarchical_s43": {
+              "nominal": "balanced_n3",
+              "completed": 4,
+              "same_final_state": 1
+            },
+            "hierarchical_s44": {
+              "nominal": "balanced_n3",
+              "completed": 4,
+              "same_final_state": 1
+            },
+            "flat_s42": {
+              "nominal": "balanced_flat_n3",
+              "completed": 4,
+              "same_final_state": 3
+            },
+            "flat_s43": {
+              "nominal": "balanced_flat_n3",
+              "completed": 4,
+              "same_final_state": 0
+            },
+            "flat_s44": {
+              "nominal": "balanced_flat_n3",
+              "completed": 4,
+              "same_final_state": 2
+            }
+          }
+        }
+      }
+    }
+  ],
+  "training_control_steps": 294912,
+  "training_runs": 12,
+  "requested_main_and_stress": 408,
+  "completed_main_and_stress": 408,
+  "current_source_issues": [],
+  "confirmation_access_issues": [],
+  "actor_contract_flag_issues": [],
+  "all_numerical_pairing_gates_pass": true,
+  "no_hardware_safety_certificate": true,
+  "statistical_scope": "Development only; repeated policies and training seeds do not increase the number of independent scenes; prior native failures remain unresolved."
+}

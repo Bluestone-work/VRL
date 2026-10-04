@@ -1,0 +1,34 @@
+{
+  "phase": "completed",
+  "steps": 32768,
+  "episodes": 19,
+  "high_samples": 322,
+  "high_updates": 11,
+  "low_updates": 32,
+  "pending_high_events": 2,
+  "low": {
+    "samples": 1024,
+    "active_samples": 3072,
+    "anchored": true,
+    "loss": 0.023012155941614765,
+    "kl": 0.0003153177659829254,
+    "entropy": 1.256151206791401,
+    "anchor": 0.006777623173547909,
+    "actor_unclipped_grad_norm": 0.02440630145429168,
+    "critic_unclipped_grad_norm": 0.2665223138174042
+  },
+  "wall_s": 262.9284508128185,
+  "checkpoints": [
+    {
+      "path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/training/train_graph_anchor_43/policy_32768.pt",
+      "sha256": "4e1b10957f891c8399096485eff278a386579a8c6b7eea6eefd3800de0ebcd46",
+      "steps": 32768
+    }
+  ],
+  "model_l2_change": {
+    "high_actor": 1.3479392192867516,
+    "low_actor": 5.085032676481228,
+    "high_critic": 1.395593044797934,
+    "low_critic": 6.41357581223585
+  }
+}

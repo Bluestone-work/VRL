@@ -1,0 +1,71 @@
+{
+  "phase": "completed",
+  "training_runs": [
+    {
+      "label": "hierarchical_s42",
+      "variant": "hierarchical",
+      "seed": 42,
+      "scene_base": 1810000000,
+      "status": "completed",
+      "returncode": 0,
+      "wall_s": 167.66638058889657,
+      "console": "research/validation/EXP0052_STUDY_20261004/training/hierarchical_s42.console.txt"
+    },
+    {
+      "label": "hierarchical_s43",
+      "variant": "hierarchical",
+      "seed": 43,
+      "scene_base": 1810100000,
+      "status": "completed",
+      "returncode": 0,
+      "wall_s": 163.19296284695156,
+      "console": "research/validation/EXP0052_STUDY_20261004/training/hierarchical_s43.console.txt"
+    },
+    {
+      "label": "hierarchical_s44",
+      "variant": "hierarchical",
+      "seed": 44,
+      "scene_base": 1810200000,
+      "status": "completed",
+      "returncode": 0,
+      "wall_s": 177.56872049998492,
+      "console": "research/validation/EXP0052_STUDY_20261004/training/hierarchical_s44.console.txt"
+    },
+    {
+      "label": "flat_s42",
+      "variant": "flat",
+      "seed": 42,
+      "scene_base": 1810000000,
+      "status": "completed",
+      "returncode": 0,
+      "wall_s": 190.23836851282977,
+      "console": "research/validation/EXP0052_STUDY_20261004/training/flat_s42.console.txt"
+    },
+    {
+      "label": "flat_s43",
+      "variant": "flat",
+      "seed": 43,
+      "scene_base": 1810100000,
+      "status": "completed",
+      "returncode": 0,
+      "wall_s": 189.6889147858601,
+      "console": "research/validation/EXP0052_STUDY_20261004/training/flat_s43.console.txt"
+    },
+    {
+      "label": "flat_s44",
+      "variant": "flat",
+      "seed": 44,
+      "scene_base": 1810200000,
+      "status": "completed",
+      "returncode": 0,
+      "wall_s": 184.1285512528848,
+      "console": "research/validation/EXP0052_STUDY_20261004/training/flat_s44.console.txt"
+    }
+  ],
+  "main_audit": true,
+  "stress_audit": true,
+  "requested_evaluations": 224,
+  "completed_evaluations": 224,
+  "confirmation_accessed": false,
+  "learning_superiority_established": false
+}

@@ -1,0 +1,18 @@
+{
+  "experiment": "EXP_0057_CLEAN_RUNTIME_EVALUATION",
+  "stage": "prospective_frozen_policy_deployment_development_not_confirmation",
+  "scope": "Complete new-runtime evaluation of all 12 frozen EXP0056 policies and 3 conventional baselines; all training used the same OLD runtime, all deployment uses the same clean NEW runtime. Not a replacement row, not exact replay, not new training or an end-to-end independent MAPPO reproduction.",
+  "parent_study": "research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004",
+  "clean_prefix": "/home/wj/.cache/vascular-research/cpu312-clean-20261004",
+  "preflight_scene_base": 2050000000,
+  "preflight_scenes": 2,
+  "validation_scene_base": 1960000000,
+  "validation_scenes": 8,
+  "training_steps": 32768,
+  "new_training_steps": 0,
+  "runtime": "System CPython 3.12.3, isolated venv WITHOUT system site packages; official NumPy1.26.4, SciPy1.11.4, Torch2.3.0+cpu wheels. No original environment modified. Version/provenance admission is not a native root-cause diagnosis or proof of stability.",
+  "admission": "Relevant policy/geometry/observer tests; parent training and all 12 checkpoint hashes checked; unchanged parameter tensors after CPU transfer; 10 full-duration untrained/rule identity runs on two NEW preflight scenes. Any failure stops the matrix with no retries or substituted row.",
+  "selection": "Exactly all 12 final 32768 EXP0056 checkpoints, never selected by outcome. Full fresh 120-row evaluation on same eight DEVELOPMENT scenes, paired ACTUAL initial hashes within this runtime; no cross-runtime pooling. No confirmation pool access. Every requested job attempted once; any failure blocks ranking.",
+  "hypothesis": "Removing the mixed old dependency stack permits a reproducible complete comparison of the already updated method. No algorithm or hyperparameter selection based on the incomplete EXP0056 outcomes.",
+  "parent_failure": "EXP0056 N1 scene1960000007 SIGSEGV retained; parent comparison remains failed forever. Only parent training/checkpoint provenance is reused."
+}

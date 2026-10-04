@@ -1,0 +1,36 @@
+{
+  "phase": "completed",
+  "steps": 32768,
+  "episodes": 22,
+  "high_samples": 338,
+  "high_updates": 11,
+  "low_updates": 32,
+  "pending_high_events": 18,
+  "low": {
+    "samples": 1024,
+    "active_samples": 3068,
+    "loss": 0.02880519605241716,
+    "kl": 0.0017074288129919069,
+    "auxiliary": 0.0,
+    "entropy": 1.7644026763737202
+  },
+  "wall_s": 254.53331718803383,
+  "checkpoints": [
+    {
+      "path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/training/train_vctpg_no_ac_42/policy_8192.pt",
+      "sha256": "6d10bfec3b467536a581f093c19f609346fef57e56ad0455931b267035d17058",
+      "steps": 8192
+    },
+    {
+      "path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/training/train_vctpg_no_ac_42/policy_32768.pt",
+      "sha256": "0d24e1976392b7969f0e2d5f154aa4e25e951e0544db48ec55768dc06d1db38f",
+      "steps": 32768
+    }
+  ],
+  "model_l2_change": {
+    "high_actor": 1.1580921012581242,
+    "low_actor": 6.690061751171084,
+    "high_critic": 1.5864388819056108,
+    "low_critic": 5.774695304718679
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "repetitions": 20000,
+  "seed": 5504,
+  "purpose": "scalar clip/segment-distance numerical stress; no robot evaluation or replacement"
+}

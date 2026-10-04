@@ -1,0 +1,9 @@
+{
+  "basis": "frozen EXP0053 training reward; also shared unchanged by EXP0054",
+  "post_hoc_diagnostic": true,
+  "wall_penalty_per_cluster_second": 0.003703703703703704,
+  "reward_for_one_percentage_point_removal": 0.1,
+  "wall_seconds_equal_one_percentage_point_removal": 27.0,
+  "registered_wall_budget_cluster_s": 1.0,
+  "interpretation": "The scalar reward gives a weak wall-cost tradeoff relative to the registered safety-success criterion. This is a training-objective diagnosis, not evidence that stronger penalties improve control. No reward or safety threshold changed during EXP0054."
+}

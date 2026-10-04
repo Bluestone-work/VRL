@@ -1,0 +1,25 @@
+{
+  "revision": "EXP0046_v2_observation_paired",
+  "episodes": 1,
+  "aggregate": {
+    "episodes": 1,
+    "raw_success": 1.0,
+    "safe_success": 0.0,
+    "unsafe_success_gap": 1.0,
+    "collision_free": 1.0,
+    "safe_collision_free": 0.0,
+    "mean_wall_contact_s": 28.353940782520468,
+    "median_wall_contact_s": 28.353940782520468,
+    "wall_contact_ratio": 0.14385561026139124,
+    "max_continuous_wall_contact_s": 11.407117757680606,
+    "timeout_rate": 0.0,
+    "removal": 1.0,
+    "elapsed_s": 65.70000000000054
+  },
+  "cluster_safe_success": 0.0,
+  "budget": "fixed_total",
+  "duration_s": 180.0,
+  "requested_config": "/home/wj/\u684c\u9762/vascular_marl_local.tar./configs/experiments/EXP_0029_MCA_ALL_RANDOM_DYNAMICS.json",
+  "sealed_test_used": false,
+  "development_diagnostic_only": true
+}

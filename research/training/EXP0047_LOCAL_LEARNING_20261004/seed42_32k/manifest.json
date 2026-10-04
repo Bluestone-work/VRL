@@ -1,0 +1,92 @@
+{
+  "protocol": {
+    "experiment": "EXP_0047_LOCAL_LEARNING",
+    "date": "2026-10-04",
+    "stage": "development_learning_experiment",
+    "hypothesis": "A learned local maneuver selector can reduce joint wall/separation failures or navigation stagnation relative to matched conventional controllers.",
+    "architecture": "parameter_shared_PPO_discrete_local_maneuver_selector",
+    "clusters": 3,
+    "d_min_mm": 2.0,
+    "duration_s": 180.0,
+    "budget": "fixed_total",
+    "training_seeds": [
+      42,
+      43,
+      44
+    ],
+    "training_scene_base": 1310000000,
+    "training_scene_stride": 100000,
+    "validation_scene_base": 1320000000,
+    "validation_scenes": 12,
+    "confirmation_scene_base": 1330000000,
+    "confirmation_scenes": 40,
+    "pilot_steps_per_seed": 32768,
+    "maximum_steps_per_seed": 131072,
+    "checkpoints": [
+      32768,
+      65536,
+      131072
+    ],
+    "rollout_steps": 512,
+    "epochs": 4,
+    "minibatch_size": 256,
+    "learning_rate": 0.0003,
+    "gamma": 0.999,
+    "gae_lambda": 0.95,
+    "entropy_coef": 0.01,
+    "clip_coef": 0.2,
+    "hidden_dim": 128,
+    "reward": {
+      "removed_mass": 25.0,
+      "wall_contact_s": -5.0,
+      "spacing_pair_s": -10.0,
+      "particle_contact_s": -10.0,
+      "lost_cluster": -10.0,
+      "step_cost": -0.001
+    },
+    "checkpoint_selection": "validation cluster-safe rate first, common-horizon removal AUC second; no confirmation-set selection",
+    "primary_metric": "cluster_safe_success",
+    "secondary_metrics": [
+      "removal",
+      "removal_auc_180",
+      "wall_contact_s",
+      "spacing_violation_pair_s",
+      "T90_with_horizon_penalty"
+    ],
+    "baselines": [
+      "v2_spacing",
+      "joint_local_constraints",
+      "joint_local_constraints_with_navigation_memory",
+      "single_cluster_same_local_navigation"
+    ],
+    "ablation": "untrained_selector_using_identical_candidates_and_constraint_filter",
+    "claims": "No guarantee of superiority, hardware magnetic independence, or safety certification. Learning contribution must survive the strong shared-filter baseline and fresh-scene comparison.",
+    "native_fault_status": "Known intermittent fault unresolved; training and evaluation attempts must be retained; checkpoint resumes and failures documented separately.",
+    "sealed_test_used": false
+  },
+  "training_seed": 42,
+  "scene_base": 1310000000,
+  "target_steps": 32768,
+  "source_hashes": {
+    "marl/multicluster.py": "9b4bc0201c082e6e789c7df1ad5ca43dccfb2464a0337871123c58df25795217",
+    "marl/multicluster_observation.py": "020a23426c88056918966798029f4579508f283e2c2c8ce3cb174e122c7488a3",
+    "marl/partial_obs.py": "2cc6492436f4b7975149fcd3a3fa15d5065a7bc755646718fa2e396e5b6a714f",
+    "marl/fair_reactive.py": "4ca3675d42f1899efac2fe71a363de259ec0f1b7729e3955429c5e8c49bf0d52",
+    "marl/teacher.py": "6711942de8ac8e5c5738855688b7521069d59f593bd73bc1f9768a183400e999",
+    "scripts/evaluate_multicluster.py": "6b6ad6c91f3779736659a9b29063fcec60bad77514677b31d03871ea2e2d9490",
+    "scripts/multicluster_protocol.py": "872c4f95b74d71a828a797806eb211f678f0ed10444462671e5f4563b80cf46b",
+    "environments/mca_physical_env.py": "5954c655a368a21936ffa41b2b6d975b228275edeffe2ef0f8574eeb42cbaa65",
+    "environments/mca_physical_dynamics.py": "cf195e2112f3dd2a7d2359cc07ea5110025fc964338feb74faf492166209f530",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "marl/local_maneuver_learning.py": "1cd1206977d755ed95bccf9b891458191b1f7a262210a38301943cd2fb2df14d",
+    "scripts/local_learning_episode.py": "76c3c27a0d45cb3de850f97be440eda1e81c0c8d5e19641611f41727cd274192",
+    "scripts/run_local_learning.py": "11f48366bea4f92121b922c96d649486c0b642f374cb4f6a095805a3f47de5c1",
+    "configs/experiments/EXP_0047_LOCAL_LEARNING.json": "640e13687709922bc2c5cfc600ed7ea2e342933ebec7dff704d6bfbb19fc8bec"
+  },
+  "started": "2026-10-04T13:06:47.712445+08:00",
+  "device": "cpu",
+  "inference_no_privileged_state": true,
+  "continuation": null,
+  "initial_steps": 0,
+  "continuation_starts_fresh_disjoint_scenes": false
+}

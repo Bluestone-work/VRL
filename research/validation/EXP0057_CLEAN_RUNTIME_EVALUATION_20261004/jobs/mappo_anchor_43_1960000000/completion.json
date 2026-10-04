@@ -1,0 +1,21 @@
+{
+  "name": "mappo_anchor_43_1960000000",
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "scripts.run_clean_residual_eval",
+    "--variant",
+    "mappo_anchor",
+    "--seed",
+    "43",
+    "--scene",
+    "1960000000",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000000.jsonl",
+    "--trained"
+  ],
+  "requested_at": "2026-10-04T19:40:26.714087+08:00",
+  "returncode": 0,
+  "wall_s": 14.60697755892761,
+  "source_unchanged": true
+}

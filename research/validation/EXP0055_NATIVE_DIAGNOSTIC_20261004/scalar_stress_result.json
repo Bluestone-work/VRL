@@ -1,0 +1,9 @@
+{
+  "repetitions": 20000,
+  "seed": 5504,
+  "purpose": "scalar clip/segment-distance numerical stress; no robot evaluation or replacement",
+  "completed": true,
+  "wall_s": 0.7886138081084937,
+  "max_symmetry_error": 8.881784197001252e-16,
+  "root_cause_fixed": false
+}

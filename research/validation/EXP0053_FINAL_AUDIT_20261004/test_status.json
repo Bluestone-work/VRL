@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/home/wj/miniconda3/envs/v/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_measured_tpg.py",
+    "tests/test_measured_options.py",
+    "tests/test_aligned_option_learning.py",
+    "tests/test_command_aligned_tracking.py",
+    "-q"
+  ],
+  "returncode": 0
+}

@@ -1,0 +1,22 @@
+{
+  "name": "tpg_1960000007",
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "scripts.run_continuous_marl",
+    "evaluate",
+    "--variant",
+    "r_mappo",
+    "--scene",
+    "1960000007",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000007.jsonl",
+    "--rule"
+  ],
+  "requested_at": "2026-10-04T20:06:42.073902+08:00",
+  "returncode": 0,
+  "wall_s": 13.419808197999373,
+  "source_unchanged": true
+}

@@ -1,0 +1,38 @@
+{
+  "source_checks": {
+    "EXP0053_TPG_GENERIC_STUDY_20261004": {
+      "frozen_sources": 35,
+      "changed": []
+    },
+    "EXP0054_MEASURED_MARL_STUDY_20261004": {
+      "frozen_sources": 40,
+      "changed": []
+    },
+    "EXP0055_SAFETY_OBJECTIVE_STUDY_20261004": {
+      "frozen_sources": 43,
+      "changed": []
+    }
+  },
+  "recorded_training_seed_fields_checked": 2144,
+  "confirmation_guards_passed": true,
+  "main_experiments": {
+    "EXP0054": {
+      "training_runs": 12,
+      "control_steps": 393216,
+      "evaluations": 216,
+      "requested_evaluations": 216,
+      "admitted": true
+    },
+    "EXP0055": {
+      "training_runs": 24,
+      "additional_controls": 393216,
+      "evaluations": 191,
+      "requested_evaluations": 192,
+      "admitted": false
+    }
+  },
+  "diagnostic_replays": 3,
+  "diagnostic_replays_replace_failure": false,
+  "active_research_processes": [],
+  "latest_conclusion": "No demonstrated learning superiority. EXP0055 numerical gate failed despite successful diagnostic replays."
+}

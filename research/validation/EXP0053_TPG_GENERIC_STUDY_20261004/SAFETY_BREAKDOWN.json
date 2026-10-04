@@ -1,0 +1,90 @@
+{
+  "post_hoc_descriptive": true,
+  "independent_scenes": 4,
+  "rows": [
+    {
+      "arm": "balanced_1s",
+      "attempts": 4,
+      "task_successes": 3,
+      "wall_limit_failures": 4,
+      "spacing_failures": 0,
+      "particle_contact_episodes": 2,
+      "pair_contact_episodes": 0,
+      "lost_cluster_episodes": 1,
+      "t90_reached": 3,
+      "min_spacing_mm": 2.0226447745156237
+    },
+    {
+      "arm": "both",
+      "attempts": 12,
+      "task_successes": 9,
+      "wall_limit_failures": 12,
+      "spacing_failures": 0,
+      "particle_contact_episodes": 9,
+      "pair_contact_episodes": 0,
+      "lost_cluster_episodes": 3,
+      "t90_reached": 9,
+      "min_spacing_mm": 2.2042689938135043
+    },
+    {
+      "arm": "high",
+      "attempts": 12,
+      "task_successes": 9,
+      "wall_limit_failures": 12,
+      "spacing_failures": 0,
+      "particle_contact_episodes": 9,
+      "pair_contact_episodes": 0,
+      "lost_cluster_episodes": 3,
+      "t90_reached": 9,
+      "min_spacing_mm": 2.2042689938135043
+    },
+    {
+      "arm": "low",
+      "attempts": 12,
+      "task_successes": 9,
+      "wall_limit_failures": 12,
+      "spacing_failures": 0,
+      "particle_contact_episodes": 9,
+      "pair_contact_episodes": 0,
+      "lost_cluster_episodes": 3,
+      "t90_reached": 9,
+      "min_spacing_mm": 2.2042689938135043
+    },
+    {
+      "arm": "memory_n1",
+      "attempts": 4,
+      "task_successes": 1,
+      "wall_limit_failures": 3,
+      "spacing_failures": 0,
+      "particle_contact_episodes": 3,
+      "pair_contact_episodes": 0,
+      "lost_cluster_episodes": 1,
+      "t90_reached": 1,
+      "min_spacing_mm": null
+    },
+    {
+      "arm": "tpg",
+      "attempts": 4,
+      "task_successes": 3,
+      "wall_limit_failures": 4,
+      "spacing_failures": 0,
+      "particle_contact_episodes": 3,
+      "pair_contact_episodes": 0,
+      "lost_cluster_episodes": 1,
+      "t90_reached": 3,
+      "min_spacing_mm": 2.2042689938135043
+    },
+    {
+      "arm": "untrained",
+      "attempts": 4,
+      "task_successes": 3,
+      "wall_limit_failures": 4,
+      "spacing_failures": 0,
+      "particle_contact_episodes": 3,
+      "pair_contact_episodes": 0,
+      "lost_cluster_episodes": 1,
+      "t90_reached": 3,
+      "min_spacing_mm": 2.2042689938135043
+    }
+  ]
+}

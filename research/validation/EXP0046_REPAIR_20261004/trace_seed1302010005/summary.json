@@ -1,0 +1,17 @@
+{
+  "seed": 1302010005,
+  "final_state_identical": true,
+  "counts": {
+    "agent_steps": 5403,
+    "filter_changed_agent_steps": 0,
+    "wall_agent_steps": 165,
+    "wall_with_filter_changed": 0,
+    "wall_with_nominal_outward": 165,
+    "wall_with_filter_newly_outward": 0,
+    "wall_without_filter_change": 165
+  },
+  "wall_contact_s": 7.9323320465564535,
+  "removal": 0.5,
+  "spacing_violation_pair_s": 0.0,
+  "warning": "Wall/action associations do not establish a causal controller failure."
+}

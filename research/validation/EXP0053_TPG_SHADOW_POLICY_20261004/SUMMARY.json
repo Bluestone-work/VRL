@@ -1,0 +1,137 @@
+{
+  "post_hoc": true,
+  "rows": [
+    {
+      "variant": "both",
+      "seed": 42,
+      "level": "high",
+      "decisions": 50,
+      "different": 0,
+      "multi_choice": 50,
+      "minimum_margin": 4.863739013671875e-05,
+      "mean_nominal_probability": 0.4612778630852699,
+      "score_head_norm": 0.031107036396861076
+    },
+    {
+      "variant": "both",
+      "seed": 42,
+      "level": "low",
+      "decisions": 13010,
+      "different": 0,
+      "multi_choice": 12596,
+      "minimum_margin": 0.3811441659927368,
+      "mean_nominal_probability": 0.25977704016911257,
+      "score_head_norm": 0.07302742451429367
+    },
+    {
+      "variant": "both",
+      "seed": 43,
+      "level": "high",
+      "decisions": 50,
+      "different": 0,
+      "multi_choice": 50,
+      "minimum_margin": 5.054473876953125e-05,
+      "mean_nominal_probability": 0.46357824087142946,
+      "score_head_norm": 0.02002263441681862
+    },
+    {
+      "variant": "both",
+      "seed": 43,
+      "level": "low",
+      "decisions": 13010,
+      "different": 0,
+      "multi_choice": 12596,
+      "minimum_margin": 0.4114069938659668,
+      "mean_nominal_probability": 0.2547104704618271,
+      "score_head_norm": 0.05772850289940834
+    },
+    {
+      "variant": "both",
+      "seed": 44,
+      "level": "high",
+      "decisions": 50,
+      "different": 0,
+      "multi_choice": 50,
+      "minimum_margin": 4.9591064453125e-05,
+      "mean_nominal_probability": 0.46227416187524795,
+      "score_head_norm": 0.01751379668712616
+    },
+    {
+      "variant": "both",
+      "seed": 44,
+      "level": "low",
+      "decisions": 13010,
+      "different": 0,
+      "multi_choice": 12596,
+      "minimum_margin": 0.43343091011047363,
+      "mean_nominal_probability": 0.2544997123985635,
+      "score_head_norm": 0.04963579773902893
+    },
+    {
+      "variant": "high",
+      "seed": 42,
+      "level": "high",
+      "decisions": 50,
+      "different": 0,
+      "multi_choice": 50,
+      "minimum_margin": 4.9591064453125e-05,
+      "mean_nominal_probability": 0.46099127948284147,
+      "score_head_norm": 0.02211868390440941
+    },
+    {
+      "variant": "high",
+      "seed": 43,
+      "level": "high",
+      "decisions": 50,
+      "different": 0,
+      "multi_choice": 50,
+      "minimum_margin": 4.9591064453125e-05,
+      "mean_nominal_probability": 0.4620285323262215,
+      "score_head_norm": 0.020285243168473244
+    },
+    {
+      "variant": "high",
+      "seed": 44,
+      "level": "high",
+      "decisions": 50,
+      "different": 1,
+      "multi_choice": 50,
+      "minimum_margin": -0.0011277198791503906,
+      "mean_nominal_probability": 0.4647925710678101,
+      "score_head_norm": 0.030411560088396072
+    },
+    {
+      "variant": "low",
+      "seed": 42,
+      "level": "low",
+      "decisions": 13010,
+      "different": 0,
+      "multi_choice": 12596,
+      "minimum_margin": 0.03441739082336426,
+      "mean_nominal_probability": 0.23894706764970716,
+      "score_head_norm": 0.13098523020744324
+    },
+    {
+      "variant": "low",
+      "seed": 43,
+      "level": "low",
+      "decisions": 13010,
+      "different": 0,
+      "multi_choice": 12596,
+      "minimum_margin": 0.4500861167907715,
+      "mean_nominal_probability": 0.25646433005256897,
+      "score_head_norm": 0.04163379222154617
+    },
+    {
+      "variant": "low",
+      "seed": 44,
+      "level": "low",
+      "decisions": 13010,
+      "different": 0,
+      "multi_choice": 12596,
+      "minimum_margin": 0.42886149883270264,
+      "mean_nominal_probability": 0.2558593454840181,
+      "score_head_norm": 0.058662571012973785
+    }
+  ]
+}

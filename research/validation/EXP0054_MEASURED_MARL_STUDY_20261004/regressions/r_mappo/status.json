@@ -1,0 +1,31 @@
+{
+  "phase": "completed",
+  "steps": 2048,
+  "episodes": 1,
+  "high_samples": 10,
+  "high_updates": 1,
+  "low_updates": 2,
+  "pending_high_events": 10,
+  "low": {
+    "samples": 1024,
+    "active_samples": 2292,
+    "loss": 0.33933658921159804,
+    "kl": 4.61828669513515e-06,
+    "auxiliary": 0.0,
+    "entropy": 2.137898564338684
+  },
+  "wall_s": 15.216661628102884,
+  "checkpoints": [
+    {
+      "path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/regressions/r_mappo/policy_2048.pt",
+      "sha256": "9fadfc4ae97faee8374297bb583ca854b34563fb495fa1777334e0b92752bef3",
+      "steps": 2048
+    }
+  ],
+  "model_l2_change": {
+    "high_actor": 0.14734661502742763,
+    "low_actor": 0.6783333798583961,
+    "high_critic": 0.27216525155969246,
+    "low_critic": 1.9817510456871263
+  }
+}

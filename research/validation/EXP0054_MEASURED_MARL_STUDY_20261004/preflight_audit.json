@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "scene": 1970000000,
+      "variant": "r_mappo",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 1970000000,
+      "variant": "r_ippo",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 1970000000,
+      "variant": "vctpg_ac",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 1970000000,
+      "variant": "vctpg_no_ac",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 1970000001,
+      "variant": "r_mappo",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 1970000001,
+      "variant": "r_ippo",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 1970000001,
+      "variant": "vctpg_ac",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 1970000001,
+      "variant": "vctpg_no_ac",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    }
+  ]
+}

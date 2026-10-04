@@ -1,0 +1,26 @@
+{
+  "requested": 12,
+  "recorded": 12,
+  "completed": 12,
+  "failed_attempts": [],
+  "arms": {
+    "memory_n1": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.14724706870334725,
+        "removal_auc_180": 0.11828816336076871,
+        "wall_contact_s": 5.762452921107596,
+        "spacing_violation_pair_s": 0.0
+      }
+    }
+  },
+  "numerical_gate_passed": true
+}

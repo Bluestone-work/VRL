@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_conservative_residual.py",
+    "tests/test_measured_marl.py",
+    "tests/test_safety_marl.py",
+    "tests/test_measured_tpg.py",
+    "tests/test_command_aligned_tracking.py"
+  ],
+  "returncode": 0
+}

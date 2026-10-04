@@ -1,0 +1,53 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+{"seed": 1301000500, "task_success": true, "safe_success": false, "removal": 1.0, "elapsed_s": 46.9000000000004, "wall_contact_s": 1.7797565006214908, "yield_events": 0, "deadlock_events": 0, "spacing_violation_steps": 0}
+{"seed": 1301000501, "task_success": true, "safe_success": true, "removal": 1.0, "elapsed_s": 37.50000000000026, "wall_contact_s": 0.14777961814693913, "yield_events": 0, "deadlock_events": 0, "spacing_violation_steps": 0}
+{"seed": 1301000502, "task_success": true, "safe_success": true, "removal": 1.0, "elapsed_s": 55.300000000000516, "wall_contact_s": 0.14976125053539785, "yield_events": 0, "deadlock_events": 0, "spacing_violation_steps": 0}
+{"seed": 1301000503, "task_success": true, "safe_success": true, "removal": 1.0, "elapsed_s": 85.99999999999939, "wall_contact_s": 0.0, "yield_events": 290, "deadlock_events": 1, "spacing_violation_steps": 210}
+{"seed": 1301000504, "task_success": false, "safe_success": false, "removal": 0.5, "elapsed_s": 180.0, "wall_contact_s": 44.77951705598989, "yield_events": 679, "deadlock_events": 0, "spacing_violation_steps": 271}
+{"seed": 1301000505, "task_success": true, "safe_success": true, "removal": 1.0, "elapsed_s": 52.10000000000047, "wall_contact_s": 0.046651040827442855, "yield_events": 119, "deadlock_events": 0, "spacing_violation_steps": 97}
+{"seed": 1301000506, "task_success": false, "safe_success": false, "removal": 0.5, "elapsed_s": 180.0, "wall_contact_s": 1.4000000000000001, "yield_events": 237, "deadlock_events": 0, "spacing_violation_steps": 0}
+{"seed": 1301000507, "task_success": false, "safe_success": false, "removal": 0.5, "elapsed_s": 180.0, "wall_contact_s": 0.024977066067069034, "yield_events": 411, "deadlock_events": 0, "spacing_violation_steps": 262}
+{"seed": 1301000508, "task_success": false, "safe_success": false, "removal": 0.5, "elapsed_s": 180.0, "wall_contact_s": 17.814414504425642, "yield_events": 1262, "deadlock_events": 0, "spacing_violation_steps": 1213}
+{"seed": 1301000509, "task_success": false, "safe_success": false, "removal": 0.5, "elapsed_s": 180.0, "wall_contact_s": 2.0385466719401393, "yield_events": 1083, "deadlock_events": 0, "spacing_violation_steps": 932}
+{
+  "method": "multi_parallel",
+  "clusters": 3,
+  "min_spacing_mm": 4.0,
+  "episodes": 10,
+  "aggregate": {
+    "episodes": 10,
+    "raw_success": 0.5,
+    "safe_success": 0.4,
+    "unsafe_success_gap": 0.09999999999999998,
+    "collision_free": 0.5,
+    "safe_collision_free": 0.4,
+    "mean_wall_contact_s": 6.818140370855401,
+    "median_wall_contact_s": 0.774880625267699,
+    "wall_contact_ratio": 0.013749270862790361,
+    "max_continuous_wall_contact_s": 4.36529481674794,
+    "timeout_rate": 0.5,
+    "removal": 0.75,
+    "elapsed_s": 117.78000000000011
+  },
+  "mean_yield_events": 408.1,
+  "mean_deadlock_events": 0.1,
+  "mean_spacing_violation_steps": 298.5,
+  "min_observed_spacing_mm": 0.006740408045831325,
+  "config": "/home/wj/桌面/vascular_marl_local.tar./configs/experiments/EXP_0029_MCA_ALL_RANDOM_DYNAMICS.json",
+  "anatomy": "mca_m1_lvo",
+  "duration_s": 180.0,
+  "max_steps": null,
+  "development_feasibility": true,
+  "local_observation": true,
+  "sealed_test_used": false
+}
+[Inferior 1 (process 3241558) exited normally]
+No stack.
+No registers.

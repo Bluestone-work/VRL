@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "identities": [
+    {
+      "variant": "r_mappo",
+      "scene": 2020000000,
+      "initial": true,
+      "final": true,
+      "parent": true
+    },
+    {
+      "variant": "r_ippo",
+      "scene": 2020000000,
+      "initial": true,
+      "final": true,
+      "parent": true
+    },
+    {
+      "variant": "vctpg_ac",
+      "scene": 2020000000,
+      "initial": true,
+      "final": true,
+      "parent": true
+    },
+    {
+      "variant": "vctpg_no_ac",
+      "scene": 2020000000,
+      "initial": true,
+      "final": true,
+      "parent": true
+    },
+    {
+      "variant": "r_mappo",
+      "scene": 2020000001,
+      "initial": true,
+      "final": true,
+      "parent": true
+    },
+    {
+      "variant": "r_ippo",
+      "scene": 2020000001,
+      "initial": true,
+      "final": true,
+      "parent": true
+    },
+    {
+      "variant": "vctpg_ac",
+      "scene": 2020000001,
+      "initial": true,
+      "final": true,
+      "parent": true
+    },
+    {
+      "variant": "vctpg_no_ac",
+      "scene": 2020000001,
+      "initial": true,
+      "final": true,
+      "parent": true
+    }
+  ]
+}

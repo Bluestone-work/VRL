@@ -1,0 +1,14 @@
+{
+  "captured_at": "2026-10-04T13:39:51.867515+08:00",
+  "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+  "executable": "/home/wj/miniconda3/envs/v/bin/python",
+  "numpy": "1.26.4",
+  "torch": "2.3.0+cu121",
+  "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+  "thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "threadpoolctl_available": false
+}

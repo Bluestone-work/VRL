@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "variant": "r_mappo",
+      "completed": true,
+      "high_changed": true,
+      "low_changed": true,
+      "high_samples": 10
+    },
+    {
+      "variant": "r_ippo",
+      "completed": true,
+      "high_changed": true,
+      "low_changed": true,
+      "high_samples": 9
+    },
+    {
+      "variant": "vctpg_ac",
+      "completed": true,
+      "high_changed": true,
+      "low_changed": true,
+      "high_samples": 7
+    },
+    {
+      "variant": "vctpg_no_ac",
+      "completed": true,
+      "high_changed": true,
+      "low_changed": true,
+      "high_samples": 7
+    }
+  ]
+}

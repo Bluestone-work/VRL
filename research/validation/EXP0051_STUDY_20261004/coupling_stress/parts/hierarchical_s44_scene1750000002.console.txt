@@ -1,0 +1,1 @@
+{"scene_seed": 1750000002, "scheduler": "learned", "removal": 1.0, "cluster_safe_success": false, "wall_contact_s": 38.178244939821674, "spacing_violation_pair_s": 0.7149270120861457, "minimum_spacing_mm": 1.8036360567547547}

@@ -1,0 +1,23 @@
+{
+  "name": "regression_graph_ppo",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_residual_marl",
+    "train",
+    "--variant",
+    "graph_ppo",
+    "--seed",
+    "42",
+    "--steps",
+    "2048",
+    "--scene-base",
+    "2040001000",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/regressions/graph_ppo"
+  ],
+  "requested_at": "2026-10-04T19:09:44.056624+08:00",
+  "returncode": 0,
+  "wall_s": 20.15475335996598,
+  "source_unchanged": true
+}

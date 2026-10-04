@@ -1,0 +1,25 @@
+{
+  "name": "untrained_1940000000",
+  "command": [
+    "/home/wj/miniconda3/envs/v/bin/python",
+    "-m",
+    "scripts.run_tpg_learning",
+    "evaluate",
+    "--scene",
+    "1940000000",
+    "--policy",
+    "untrained",
+    "--variant",
+    "both",
+    "--clusters",
+    "3",
+    "--duration",
+    "180.0",
+    "--out",
+    "research/validation/EXP0053_TPG_PORTABLE_PREFLIGHT_20261004/results/untrained_1940000000.jsonl"
+  ],
+  "started_at": "2026-10-04T16:46:29.111360+08:00",
+  "returncode": -11,
+  "wall_s": 8.961672415025532,
+  "source_unchanged": true
+}

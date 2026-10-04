@@ -1,0 +1,222 @@
+{
+  "revision": "EXP0046_v2_observation_paired",
+  "registered_at": "2026-10-04T12:43:36.911649+08:00",
+  "scenarios": [
+    1302010000,
+    1302010001,
+    1302010002,
+    1302010003,
+    1302010004,
+    1302010005,
+    1302010006,
+    1302010007,
+    1302010008,
+    1302010009
+  ],
+  "cells": [
+    {
+      "method": "single_sequential",
+      "clusters": 1,
+      "d_min_mm": 2.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 1.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 2.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 4.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 1.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 2.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 4.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "single_sequential",
+      "clusters": 1,
+      "d_min_mm": 2.0,
+      "control_seed": 43,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 1.0,
+      "control_seed": 43,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 2.0,
+      "control_seed": 43,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 4.0,
+      "control_seed": 43,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 1.0,
+      "control_seed": 43,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 2.0,
+      "control_seed": 43,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 4.0,
+      "control_seed": 43,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "single_sequential",
+      "clusters": 1,
+      "d_min_mm": 2.0,
+      "control_seed": 44,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 1.0,
+      "control_seed": 44,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 2.0,
+      "control_seed": 44,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 4.0,
+      "control_seed": 44,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 1.0,
+      "control_seed": 44,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 2.0,
+      "control_seed": 44,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 4.0,
+      "control_seed": 44,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "single_route",
+      "clusters": 1,
+      "d_min_mm": 2.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_unshielded",
+      "clusters": 2,
+      "d_min_mm": 2.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "d_min_mm": 2.0,
+      "control_seed": 42,
+      "budget": "per_cluster"
+    },
+    {
+      "method": "multi_unshielded",
+      "clusters": 3,
+      "d_min_mm": 2.0,
+      "control_seed": 42,
+      "budget": "fixed_total"
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "d_min_mm": 2.0,
+      "control_seed": 42,
+      "budget": "per_cluster"
+    }
+  ],
+  "requested_episodes": 260,
+  "duration_s": 180.0,
+  "anatomy": "mca_m1_lvo",
+  "source_hashes": {
+    "marl/multicluster.py": "9b4bc0201c082e6e789c7df1ad5ca43dccfb2464a0337871123c58df25795217",
+    "marl/multicluster_observation.py": "020a23426c88056918966798029f4579508f283e2c2c8ce3cb174e122c7488a3",
+    "marl/partial_obs.py": "2cc6492436f4b7975149fcd3a3fa15d5065a7bc755646718fa2e396e5b6a714f",
+    "marl/fair_reactive.py": "4ca3675d42f1899efac2fe71a363de259ec0f1b7729e3955429c5e8c49bf0d52",
+    "marl/teacher.py": "6711942de8ac8e5c5738855688b7521069d59f593bd73bc1f9768a183400e999",
+    "scripts/evaluate_multicluster.py": "6b6ad6c91f3779736659a9b29063fcec60bad77514677b31d03871ea2e2d9490",
+    "scripts/multicluster_protocol.py": "872c4f95b74d71a828a797806eb211f678f0ed10444462671e5f4563b80cf46b",
+    "environments/mca_physical_env.py": "5954c655a368a21936ffa41b2b6d975b228275edeffe2ef0f8574eeb42cbaa65",
+    "environments/mca_physical_dynamics.py": "cf195e2112f3dd2a7d2359cc07ea5110025fc964338feb74faf492166209f530",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507"
+  },
+  "workers": 4,
+  "control_seeds_are_not_training_seeds": true,
+  "peer_sensing_radius_mm": 6.0,
+  "position_noise_mm": 0.02,
+  "observation_noise": 0.025,
+  "diagnostic_only": true,
+  "sealed_test_used": false
+}

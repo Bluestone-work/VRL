@@ -1,0 +1,6 @@
+{
+  "reason": "Legacy last committed CSV row has unquoted commas; whole-table DictWriter failed. Restored exact committed prefix plus EXP0046-53 raw lines captured before edit and EXP0054.",
+  "source_of_uncommitted_rows": "Prior read-only tail output in this turn",
+  "historical_rows_count": 44,
+  "new_rows_count": 1
+}

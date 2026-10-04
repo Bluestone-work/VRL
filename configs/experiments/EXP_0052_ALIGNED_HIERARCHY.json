@@ -1,0 +1,110 @@
+{
+  "experiment": "EXP_0052_ALIGNED_HIERARCHY",
+  "date": "2026-10-04",
+  "parent": "EXP0051; all frozen source retained",
+  "hypothesis": "Measured command-aligned tracking plus persistent five-second options initialized at the strongest measured allocation baseline; only improvements beyond matched allocation and flat learning count.",
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "training_scene_base": 1810000000,
+  "training_scene_stride": 100000,
+  "validation_scene_base": 1820000000,
+  "validation_scenes": 12,
+  "confirmation_scene_base": 1830000000,
+  "confirmation_scenes": 40,
+  "preflight_scene_base": 1840000000,
+  "stress_scene_base": 1850000000,
+  "stress_scenes": 4,
+  "duration_s": 180.0,
+  "clusters": 3,
+  "control_dt_s": 0.1,
+  "d_min_mm": 2.0,
+  "budget": "fixed_total",
+  "observation_contract": "command_aligned_tracked_v1; same measurements and requested-command history for every arm",
+  "options": [
+    "memory",
+    "target_slot_0",
+    "target_slot_1",
+    "target_slot_2",
+    "target_slot_3",
+    "measured_drift_hold",
+    "retreat"
+  ],
+  "option_steps": {
+    "hierarchical": 50,
+    "flat": 1
+  },
+  "option_target_identity": "Latch measured target ID at initiation; re-resolve observed slot during execution; terminate when locally confirmed target disappears.",
+  "pilot_steps_per_seed": 32768,
+  "variants": [
+    "hierarchical",
+    "flat"
+  ],
+  "rollout_control_steps": 1024,
+  "epochs": 4,
+  "minibatch_size": 128,
+  "learning_rate": 0.0003,
+  "gamma_per_control_step": 0.999,
+  "gae_lambda_per_control_step": 0.995,
+  "entropy_coef": 0.01,
+  "clip_coef": 0.15,
+  "target_kl": 0.03,
+  "hidden_dim": 96,
+  "memory_initial_logit_bias": 0.5,
+  "pretraining_revision": "Registered after EXP0051 completed. No EXP0052 validation/confirmation scenes have been opened.",
+  "reward": {
+    "removed_fraction": 10.0,
+    "removal_auc_fraction": 2.0,
+    "wall_fraction": -2.0,
+    "spacing_pair_fraction": -4.0,
+    "particle_fraction": -2.0,
+    "lost_fraction": -2.0,
+    "step_cost_per_horizon": -0.1
+  },
+  "reward_provenance": "Registered engineering normalization, not calibrated clinical utility. Identical reward in flat and hierarchical learning; physical zero-violation success is unchanged.",
+  "supervisor": {
+    "spacing_mm": 2.0,
+    "position_margin_mm": 0.12,
+    "relative_velocity_margin_mm_s": 0.3,
+    "horizon_s": 0.5,
+    "wall_margin_fraction": 0.08,
+    "iterations": 24
+  },
+  "supervisor_provenance": "Joint projection based only on tracked relative position/velocity and local lumen observations. Margins are uncalibrated engineering stress assumptions, not certified uncertainty bounds. Track loss and infeasibility are reported, not declared safe.",
+  "actuator_stress": {
+    "primary_coupling": 0.0,
+    "transfer_coupling": 0.1,
+    "length_scale_mm": 2.0,
+    "definition": "Synthetic off-diagonal velocity response alpha*exp(-distance/length), clipped by the same per-cluster command limit. Physics only; never an actor feature.",
+    "hardware_calibrated": false
+  },
+  "baselines": [
+    "memory_n3",
+    "balanced_n3",
+    "balanced_fast_n3",
+    "balanced_flat_n3",
+    "priority_n3",
+    "memory_n1",
+    "untrained_balanced_n3",
+    "untrained_flat_n3"
+  ],
+  "primary_metric": "cluster_safe_success",
+  "primary_gate": "Original physical and measured completion plus zero realized contact and spacing violations; no relaxation of 2 mm threshold.",
+  "selection": "No checkpoint or training-seed selection; all six fixed-budget learning runs reported. Confirmation remains unopened.",
+  "failure_rule": "Retain every requested process attempt. Any failed evaluation blocks admitted ranking; diagnostic repeats never replace failures.",
+  "claims": "No guarantees of learned superiority, hardware magnetic independence, or certified safety. Observer upgrades, initialization and heuristic projection alone are not learning gains.",
+  "nominal_prior": "Exact measured balanced assignment with hysteresis, provided identically to the matched baseline; learned logits modify this prior. Initial deterministic policy equals that baseline.",
+  "sensor_ablation": "Command history subtracted before drift filtering and integrated over image latency. Four unchanged preflight trajectories in two scenes showed smaller estimator residuals; this is not a learning contribution.",
+  "baseline_decision_steps": {
+    "memory_n3": 50,
+    "balanced_n3": 50,
+    "balanced_fast_n3": 10,
+    "balanced_flat_n3": 1,
+    "priority_n3": 10,
+    "memory_n1": 50,
+    "untrained_balanced_n3": 50,
+    "untrained_flat_n3": 1
+  }
+}

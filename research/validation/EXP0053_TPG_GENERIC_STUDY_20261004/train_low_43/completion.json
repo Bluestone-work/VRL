@@ -1,0 +1,23 @@
+{
+  "name": "train_low_43",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_tpg_learning",
+    "train",
+    "--variant",
+    "low",
+    "--seed",
+    "43",
+    "--steps",
+    "8192",
+    "--scene-base",
+    "1910100000",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_TPG_GENERIC_STUDY_20261004/training/train_low_43"
+  ],
+  "started_at": "2026-10-04T17:11:13.597876+08:00",
+  "returncode": 0,
+  "wall_s": 59.49988542194478,
+  "source_unchanged": true
+}

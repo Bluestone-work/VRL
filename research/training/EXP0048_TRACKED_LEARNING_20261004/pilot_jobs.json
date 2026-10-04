@@ -1,0 +1,24 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "steps": 32768,
+  "observation_contract": "tracked_local_v1",
+  "jobs": [
+    [
+      42,
+      1410000000
+    ],
+    [
+      43,
+      1410100000
+    ],
+    [
+      44,
+      1410200000
+    ]
+  ],
+  "preflight_native_failure_retained": true
+}

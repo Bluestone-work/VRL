@@ -1,0 +1,28 @@
+{
+  "phase": "completed",
+  "steps": 2048,
+  "episodes": 1,
+  "updates": 2,
+  "high": {
+    "samples": 8,
+    "loss": 0.5654993057250977,
+    "kl": 3.526608149210612e-06,
+    "aux": 0.0
+  },
+  "low": {
+    "samples": 1024,
+    "loss": 0.032834425976034254,
+    "kl": 6.486797550072272e-06,
+    "aux": 0.0903565005088846
+  },
+  "wall_s": 16.822252241894603,
+  "fps": 121.74350522525212,
+  "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_RUNTIME_REPAIR_20261004/generic_joint_0/policy_2048.pt",
+  "checkpoint_sha256": "2fcb204b328374c78cd7f9e8e288e3edf3b1345053438600dc2823e43c19d8ed",
+  "model_l2_change": {
+    "high": 0.23574715752328165,
+    "low": 1.8107930121569102
+  },
+  "high_samples": 21,
+  "low_samples": 2048
+}

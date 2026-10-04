@@ -1,0 +1,77 @@
+{
+  "requested": 48,
+  "recorded": 48,
+  "completed": 48,
+  "failed_attempts": [],
+  "arms": {
+    "v2_spacing_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.08333333333333333,
+        0.08333333333333333
+      ],
+      "conditional_means": {
+        "task_success": 0.3333333333333333,
+        "safe_success": 0.16666666666666666,
+        "cluster_safe_success": 0.08333333333333333,
+        "removal": 0.7083333333333334,
+        "removal_auc_180": 0.5822483941121855,
+        "wall_contact_s": 15.230082917646996,
+        "spacing_violation_pair_s": 1.2751334409798465
+      }
+    },
+    "joint_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.25,
+        0.25
+      ],
+      "conditional_means": {
+        "task_success": 0.4166666666666667,
+        "safe_success": 0.3333333333333333,
+        "cluster_safe_success": 0.25,
+        "removal": 0.7676073671430425,
+        "removal_auc_180": 0.6129597533947572,
+        "wall_contact_s": 1.0293979392321124,
+        "spacing_violation_pair_s": 0.37292990540402965
+      }
+    },
+    "memory_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.16666666666666666,
+        0.16666666666666666
+      ],
+      "conditional_means": {
+        "task_success": 0.5833333333333334,
+        "safe_success": 0.4166666666666667,
+        "cluster_safe_success": 0.16666666666666666,
+        "removal": 0.8541666666666666,
+        "removal_auc_180": 0.6682905567795943,
+        "wall_contact_s": 0.7729764750792577,
+        "spacing_violation_pair_s": 0.2327620732092225
+      }
+    },
+    "joint_n1": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.20833333333333334,
+        "removal_auc_180": 0.18088014088338497,
+        "wall_contact_s": 0.8196330566923353,
+        "spacing_violation_pair_s": 0.0
+      }
+    }
+  },
+  "numerical_gate_passed": true
+}

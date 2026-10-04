@@ -1,0 +1,20 @@
+[
+  {
+    "file": "turbo_fig2.html",
+    "url": "https://www.nature.com/articles/s42256-026-01252-6/figures/2",
+    "bytes": 171367,
+    "sha256": "47db341e31418a69d9857c5ac6c9faff73b7ed5666b7cbdfdb3e4cb661906bc9"
+  },
+  {
+    "file": "medany_fig3.html",
+    "url": "https://www.nature.com/articles/s42256-025-01054-2/figures/3",
+    "bytes": 169855,
+    "sha256": "96f2263b89874813aab029874a0432797c3238fedda4231473e997644645c20e"
+  },
+  {
+    "file": "numpy_mes_options.txt",
+    "url": "https://raw.githubusercontent.com/numpy/numpy/v1.26.4/meson_options.txt",
+    "bytes": 2451,
+    "sha256": "eba3e89a1aada6c4e3fccfdd96b99d8d272024003d32db6ac126ca732f82faae"
+  }
+]

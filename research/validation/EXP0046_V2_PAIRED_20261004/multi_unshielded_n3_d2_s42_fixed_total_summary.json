@@ -1,0 +1,52 @@
+{
+  "revision": "EXP0046_v2_observation_paired",
+  "requested_episodes": 10,
+  "completed_episodes": 9,
+  "failed_episodes": 1,
+  "failed_attempts": [
+    {
+      "seed": 1302010005,
+      "method": "multi_unshielded",
+      "clusters": 3,
+      "control_seed": 42,
+      "resource_budget": "fixed_total",
+      "min_spacing_threshold_mm": 2.0,
+      "sealed_test_used": false,
+      "status": "process_exit",
+      "returncode": -11,
+      "stderr_path": "research/validation/EXP0046_V2_PAIRED_20261004/multi_unshielded_n3_d2_s42_fixed_total_parts/episode_0005.stderr.txt",
+      "process_walltime_s": 6.894025593996048
+    }
+  ],
+  "conditional_completed_aggregate": {
+    "episodes": 9,
+    "raw_success": 0.6666666666666666,
+    "safe_success": 0.5555555555555556,
+    "unsafe_success_gap": 0.11111111111111105,
+    "collision_free": 0.6666666666666666,
+    "safe_collision_free": 0.5555555555555556,
+    "mean_wall_contact_s": 0.682609471051319,
+    "median_wall_contact_s": 0.33043448382570284,
+    "wall_contact_ratio": 0.0020407882178599215,
+    "max_continuous_wall_contact_s": 0.27473826894830605,
+    "timeout_rate": 0.3333333333333333,
+    "removal": 0.8333333333333334,
+    "elapsed_s": 103.16666666666667
+  },
+  "cluster_safe_success_completed": 0.1111111111111111,
+  "cluster_safe_success_missing_bounds": [
+    0.1,
+    0.2
+  ],
+  "numerical_gate_passed": false,
+  "performance_comparison_admissible": false,
+  "development_diagnostic_only": true,
+  "sealed_test_used": false,
+  "method": "multi_unshielded",
+  "clusters": 3,
+  "d_min_mm": 2.0,
+  "budget": "fixed_total",
+  "control_seed": 42,
+  "duration_s": 180.0,
+  "episode_isolated": true
+}

@@ -1,0 +1,15 @@
+{
+  "tests": 25,
+  "test_files": [
+    "tests/test_conservative_residual.py",
+    "tests/test_measured_marl.py",
+    "tests/test_safety_marl.py"
+  ],
+  "exit_code": 0,
+  "seconds": 2.59,
+  "initial_probability_all_nine_valid": {
+    "EXP0054": 0.1708745878800263,
+    "EXP0056": 0.5
+  },
+  "causation_claim": false
+}

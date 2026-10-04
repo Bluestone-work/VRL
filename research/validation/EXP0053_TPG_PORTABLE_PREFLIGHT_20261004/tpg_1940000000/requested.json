@@ -1,0 +1,22 @@
+{
+  "name": "tpg_1940000000",
+  "command": [
+    "/home/wj/miniconda3/envs/v/bin/python",
+    "-m",
+    "scripts.run_tpg_learning",
+    "evaluate",
+    "--scene",
+    "1940000000",
+    "--policy",
+    "tpg",
+    "--variant",
+    "both",
+    "--clusters",
+    "3",
+    "--duration",
+    "180.0",
+    "--out",
+    "research/validation/EXP0053_TPG_PORTABLE_PREFLIGHT_20261004/results/tpg_1940000000.jsonl"
+  ],
+  "started_at": "2026-10-04T16:46:29.110972+08:00"
+}

@@ -1,0 +1,306 @@
+{
+  "retrospective": true,
+  "performance_ranking_blocked": true,
+  "symptoms_are_nonexclusive": true,
+  "stagnation_definition": "Uncleared episode; <0.001 removal gain since last logged point at least 60 s before termination. Not proven deadlock.",
+  "independent_scenes": 10,
+  "controller_seeds": [
+    42,
+    43,
+    44
+  ],
+  "arms": [
+    {
+      "method": "single_sequential",
+      "clusters": 1,
+      "recorded": 30,
+      "completed": 30,
+      "terminal_reasons": {
+        "time_limit": 25,
+        "all_clots_cleared": 5
+      },
+      "raw_success": 5,
+      "cluster_safe_success": 5,
+      "wall_unsafe": 3,
+      "particle_contact": 0,
+      "any_cluster_lost": 0,
+      "separation_violation": 0,
+      "prolonged_yield_events": 0,
+      "late_stagnation_count": 22,
+      "late_stagnation_cases": [
+        {
+          "scene_seed": 1302010000,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010003,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010004,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010009,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010000,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010003,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010004,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010009,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010000,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010002,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010003,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010004,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010009,
+          "control_seed": 44
+        }
+      ]
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 2,
+      "recorded": 30,
+      "completed": 30,
+      "terminal_reasons": {
+        "all_clots_cleared": 9,
+        "time_limit": 21
+      },
+      "raw_success": 9,
+      "cluster_safe_success": 9,
+      "wall_unsafe": 6,
+      "particle_contact": 0,
+      "any_cluster_lost": 0,
+      "separation_violation": 4,
+      "prolonged_yield_events": 15,
+      "late_stagnation_count": 21,
+      "late_stagnation_cases": [
+        {
+          "scene_seed": 1302010002,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010004,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010006,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010009,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010002,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010004,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010006,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010009,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010002,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010004,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010006,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010009,
+          "control_seed": 44
+        }
+      ]
+    },
+    {
+      "method": "multi_parallel",
+      "clusters": 3,
+      "recorded": 30,
+      "completed": 30,
+      "terminal_reasons": {
+        "all_clots_cleared": 13,
+        "time_limit": 17
+      },
+      "raw_success": 13,
+      "cluster_safe_success": 5,
+      "wall_unsafe": 19,
+      "particle_contact": 0,
+      "any_cluster_lost": 0,
+      "separation_violation": 10,
+      "prolonged_yield_events": 52,
+      "late_stagnation_count": 15,
+      "late_stagnation_cases": [
+        {
+          "scene_seed": 1302010002,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010009,
+          "control_seed": 42
+        },
+        {
+          "scene_seed": 1302010002,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010004,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010009,
+          "control_seed": 43
+        },
+        {
+          "scene_seed": 1302010002,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010005,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010007,
+          "control_seed": 44
+        },
+        {
+          "scene_seed": 1302010008,
+          "control_seed": 44
+        }
+      ]
+    }
+  ]
+}

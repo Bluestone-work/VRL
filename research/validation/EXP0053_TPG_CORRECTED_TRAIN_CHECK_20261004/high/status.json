@@ -1,0 +1,25 @@
+{
+  "phase": "completed",
+  "steps": 2048,
+  "episodes": 1,
+  "updates": 2,
+  "high": {
+    "samples": 11,
+    "loss": 0.4278913239638011,
+    "kl": 4.027829116163654e-07,
+    "aux": 0.0
+  },
+  "low": {
+    "samples": 0
+  },
+  "wall_s": 14.869159708963707,
+  "fps": 137.734747588603,
+  "checkpoint": "research/validation/EXP0053_TPG_CORRECTED_TRAIN_CHECK_20261004/high/policy_2048.pt",
+  "checkpoint_sha256": "df58eb43d085ebf2be76da1cde885b534879bbaf3fc17d845d994e82cf1dabfb",
+  "model_l2_change": {
+    "high": 0.2395835215817645,
+    "low": 0.0
+  },
+  "high_samples": 41,
+  "low_samples": 0
+}

@@ -1,0 +1,34 @@
+{
+  "phase": "completed",
+  "steps": 16384,
+  "episodes": 11,
+  "high_samples": 125,
+  "high_updates": 4,
+  "low_updates": 16,
+  "pending_high_events": 29,
+  "low": {
+    "samples": 1024,
+    "active_samples": 3072,
+    "loss": -0.01859280202188529,
+    "kl": 0.0013379015839269925,
+    "auxiliary": 0.0,
+    "entropy": 2.063643477857113,
+    "actor_unclipped_grad_norm": 0.07254794077016413,
+    "critic_unclipped_grad_norm": 0.09267495406675152,
+    "gradient_clipping": "actor_and_critic_separately_at_0.5"
+  },
+  "wall_s": 130.6760581759736,
+  "checkpoints": [
+    {
+      "path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "sha256": "2350f166ab4dae81d0ee055b074b981a73d2d48cdc996bedca032d4df3c3fecf",
+      "steps": 16384
+    }
+  ],
+  "model_l2_change": {
+    "high_actor": 0.7005201586750409,
+    "low_actor": 2.416541726390366,
+    "high_critic": 0.6643545656657223,
+    "low_critic": 3.308137834192015
+  }
+}

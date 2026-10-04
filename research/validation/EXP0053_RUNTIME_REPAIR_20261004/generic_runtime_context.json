@@ -1,0 +1,17 @@
+{
+  "runtime_variant": "numpy1264_source_generic_no_svml",
+  "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+  "executable": "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+  "numpy": "1.26.4",
+  "numpy_file": "/home/wj/.cache/vascular-research/np1264-generic-20261004/lib/python3.10/site-packages/numpy/__init__.py",
+  "numpy_binary_sha256": "4a807318c9345038a50c2e988b030cb2163817bd790f21d910a3e31da4e9cf7a",
+  "numpy_cpu_baseline": [],
+  "numpy_cpu_dispatch": [],
+  "numpy_build_config": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"13.3.0\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.0.12\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"13.3.0\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"none\"\n    },\n    \"lapack\": {\n      \"name\": \"dep123174295166288\",\n      \"found\": true,\n      \"version\": \"1.26.4\",\n      \"detection method\": \"internal\",\n      \"include directory\": \"unknown\",\n      \"lib directory\": \"unknown\",\n      \"openblas configuration\": \"unknown\",\n      \"pc file directory\": \"unknown\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python\",\n    \"version\": \"3.10\"\n  }\n}\n",
+  "torch": "2.3.0+cu121",
+  "torch_file": "/home/wj/miniconda3/envs/v/lib/python3.10/site-packages/torch/__init__.py",
+  "NPY_DISABLE_CPU_FEATURES": null,
+  "native_fault_fixed": false,
+  "prior_failures_replaced": false,
+  "applies_to_all_arms": true
+}

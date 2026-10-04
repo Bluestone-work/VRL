@@ -1,0 +1,19 @@
+{
+  "name": "generic_pilot",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_tpg_study",
+    "--phase",
+    "pilot",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_TPG_GENERIC_STUDY_20261004",
+    "--workers",
+    "3"
+  ],
+  "requested_at": "2026-10-04T17:10:15.118353+08:00",
+  "returncode": 0,
+  "wall_s": 354.6277145689819,
+  "phase": "completed",
+  "complete": true
+}

@@ -1,0 +1,15 @@
+{
+  "phase": "completed",
+  "checkpoint": "research/validation/EXP0052_STUDY_20261004/training/flat_s44/policy_32768.pt",
+  "checkpoint_sha256": "f62280765fe85ac9f14b4982fef78bdf9e6bd701b92314ea36ad3dadfb8462e0",
+  "model_l2_change": 3.474710433115025,
+  "control_steps": 32768,
+  "macro_samples": 1024,
+  "episodes": 18,
+  "updates": 32,
+  "loss": 0.03414630040060729,
+  "kl": 0.0030182417831383646,
+  "entropy": 5.642110124230385,
+  "wall_s": 183.0016194640193,
+  "fps": 179.05852439369764
+}

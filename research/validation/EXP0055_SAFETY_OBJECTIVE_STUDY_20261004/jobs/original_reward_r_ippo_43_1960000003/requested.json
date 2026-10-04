@@ -1,0 +1,20 @@
+{
+  "name": "original_reward_r_ippo_43_1960000003",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_safety_marl",
+    "evaluate",
+    "--regime",
+    "original_reward",
+    "--variant",
+    "r_ippo",
+    "--checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+    "--scene",
+    "1960000003",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000003.jsonl"
+  ],
+  "requested_at": "2026-10-04T18:08:54.962550+08:00"
+}

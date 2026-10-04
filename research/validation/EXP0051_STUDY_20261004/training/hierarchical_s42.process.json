@@ -1,0 +1,10 @@
+{
+  "label": "hierarchical_s42",
+  "variant": "hierarchical",
+  "seed": 42,
+  "scene_base": 1710000000,
+  "status": "completed",
+  "returncode": 0,
+  "wall_s": 88.47315510502085,
+  "console": "research/validation/EXP0051_STUDY_20261004/training/hierarchical_s42.console.txt"
+}

@@ -1,0 +1,78 @@
+[
+  {
+    "name": "regression_r_mappo",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_residual_marl",
+      "train",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--steps",
+      "2048",
+      "--scene-base",
+      "2040001000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/regressions/r_mappo"
+    ]
+  },
+  {
+    "name": "regression_mappo_anchor",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_residual_marl",
+      "train",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--steps",
+      "2048",
+      "--scene-base",
+      "2040001000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/regressions/mappo_anchor"
+    ]
+  },
+  {
+    "name": "regression_graph_ppo",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_residual_marl",
+      "train",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--steps",
+      "2048",
+      "--scene-base",
+      "2040001000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/regressions/graph_ppo"
+    ]
+  },
+  {
+    "name": "regression_graph_anchor",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_residual_marl",
+      "train",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--steps",
+      "2048",
+      "--scene-base",
+      "2040001000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/regressions/graph_anchor"
+    ]
+  }
+]

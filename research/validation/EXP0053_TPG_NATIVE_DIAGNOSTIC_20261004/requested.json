@@ -1,0 +1,29 @@
+{
+  "command": [
+    "gdb",
+    "-batch",
+    "-ex",
+    "set pagination off",
+    "-ex",
+    "run",
+    "-ex",
+    "thread apply all bt 20",
+    "-ex",
+    "x/12i $pc-16",
+    "--args",
+    "/home/wj/miniconda3/envs/v/bin/python",
+    "-m",
+    "scripts.run_tpg_learning",
+    "evaluate",
+    "--scene",
+    "1940000001",
+    "--policy",
+    "untrained",
+    "--duration",
+    "180",
+    "--out",
+    "research/validation/EXP0053_TPG_NATIVE_DIAGNOSTIC_20261004/gdb_replay.jsonl"
+  ],
+  "diagnostic_only": true,
+  "replaces_failed_preflight": false
+}

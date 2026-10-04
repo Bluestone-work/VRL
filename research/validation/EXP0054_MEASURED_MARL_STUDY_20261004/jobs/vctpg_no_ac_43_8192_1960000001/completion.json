@@ -1,0 +1,23 @@
+{
+  "name": "vctpg_no_ac_43_8192_1960000001",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_measured_marl",
+    "evaluate",
+    "--variant",
+    "vctpg_no_ac",
+    "--scene",
+    "1960000001",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/results/vctpg_no_ac_43_8192_1960000001.jsonl",
+    "--checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/training/train_vctpg_no_ac_43/policy_8192.pt"
+  ],
+  "requested_at": "2026-10-04T17:50:50.420127+08:00",
+  "returncode": 0,
+  "wall_s": 14.443678874988109,
+  "source_unchanged": true
+}

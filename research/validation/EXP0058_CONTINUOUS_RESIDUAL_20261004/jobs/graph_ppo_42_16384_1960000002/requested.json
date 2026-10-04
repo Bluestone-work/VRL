@@ -1,0 +1,20 @@
+{
+  "name": "graph_ppo_42_16384_1960000002",
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "scripts.run_continuous_marl",
+    "evaluate",
+    "--variant",
+    "graph_ppo",
+    "--scene",
+    "1960000002",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000002.jsonl",
+    "--checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/training/train_graph_ppo_42/policy_16384.pt"
+  ],
+  "requested_at": "2026-10-04T20:03:04.746851+08:00"
+}

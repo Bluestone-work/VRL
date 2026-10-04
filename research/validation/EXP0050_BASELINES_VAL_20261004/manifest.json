@@ -1,0 +1,86 @@
+{
+  "stage": "validation",
+  "arms": [
+    {
+      "label": "v2_spacing_n3",
+      "policy": "v2_spacing",
+      "clusters": 3,
+      "checkpoint": null
+    },
+    {
+      "label": "joint_n3",
+      "policy": "joint",
+      "clusters": 3,
+      "checkpoint": null
+    },
+    {
+      "label": "memory_n3",
+      "policy": "memory",
+      "clusters": 3,
+      "checkpoint": null
+    },
+    {
+      "label": "joint_n1",
+      "policy": "joint",
+      "clusters": 1,
+      "checkpoint": null
+    },
+    {
+      "label": "memory_n1",
+      "policy": "memory",
+      "clusters": 1,
+      "checkpoint": null
+    }
+  ],
+  "scenes": [
+    1620000000,
+    1620000001,
+    1620000002,
+    1620000003,
+    1620000004,
+    1620000005,
+    1620000006,
+    1620000007,
+    1620000008,
+    1620000009,
+    1620000010,
+    1620000011
+  ],
+  "control_seed": 42,
+  "requested": 60,
+  "source_hashes": {
+    "marl/multicluster.py": "9b4bc0201c082e6e789c7df1ad5ca43dccfb2464a0337871123c58df25795217",
+    "marl/multicluster_observation.py": "020a23426c88056918966798029f4579508f283e2c2c8ce3cb174e122c7488a3",
+    "marl/partial_obs.py": "2cc6492436f4b7975149fcd3a3fa15d5065a7bc755646718fa2e396e5b6a714f",
+    "marl/fair_reactive.py": "4ca3675d42f1899efac2fe71a363de259ec0f1b7729e3955429c5e8c49bf0d52",
+    "marl/teacher.py": "6711942de8ac8e5c5738855688b7521069d59f593bd73bc1f9768a183400e999",
+    "scripts/evaluate_multicluster.py": "6b6ad6c91f3779736659a9b29063fcec60bad77514677b31d03871ea2e2d9490",
+    "scripts/multicluster_protocol.py": "872c4f95b74d71a828a797806eb211f678f0ed10444462671e5f4563b80cf46b",
+    "environments/mca_physical_env.py": "5954c655a368a21936ffa41b2b6d975b228275edeffe2ef0f8574eeb42cbaa65",
+    "environments/mca_physical_dynamics.py": "cf195e2112f3dd2a7d2359cc07ea5110025fc964338feb74faf492166209f530",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "marl/local_maneuver_learning.py": "1cd1206977d755ed95bccf9b891458191b1f7a262210a38301943cd2fb2df14d",
+    "scripts/local_learning_episode.py": "76c3c27a0d45cb3de850f97be440eda1e81c0c8d5e19641611f41727cd274192",
+    "scripts/run_local_learning.py": "11f48366bea4f92121b922c96d649486c0b642f374cb4f6a095805a3f47de5c1",
+    "configs/experiments/EXP_0047_LOCAL_LEARNING.json": "640e13687709922bc2c5cfc600ed7ea2e342933ebec7dff704d6bfbb19fc8bec",
+    "marl/tracked_sensors.py": "f61c44a6dce08fdb9429b8f0cd29975945d5e3d1394cdc105789d29d0f39cb78",
+    "scripts/tracked_learning_episode.py": "417785844a60ddefdd9c7ad737b0a8e9008d95d2a8fbd3de1afa478a7e9b8cf1",
+    "scripts/run_tracked_learning.py": "d9605488ee0f5d5e122b41e5916cf7f5e04dd0dfecddc36c1d381993a8cabc9e",
+    "configs/experiments/EXP_0048_TRACKED_LEARNING.json": "3074defe30613f7d648610eaa3edeafd2d835f14aa9e8a156cb17e3b94d39af0",
+    "marl/temporal_candidate_learning.py": "4d2fe3f2ce79b78cf86a649dc67a7dacf6b0e4fa5acffb2ed43c9719bdeed849",
+    "scripts/temporal_learning_episode.py": "1b9971c0366f2e19d6baedd57209340273e6c2673e678e12847de5ccf06afd48",
+    "scripts/run_temporal_learning.py": "8d2e4094e4f06993cbbcd3b9924455530f1e3e8612c1a4d30a1ea83f43f6eb23",
+    "configs/experiments/EXP_0049_TEMPORAL_CANDIDATES.json": "8b8f8a76f1cab63cfd8b60fc5f2e645320ea89e68310efe47fa67928a552d985",
+    "marl/memory_prior_learning.py": "af09d83e448caf67f391503e822a761c09ad03f52cba496cab9d9835eb1282c7",
+    "scripts/memory_prior_episode.py": "2b8f13a1e8de1735ca952bc085f8bf6835e7167acf75495a41b60d3b1ccd6658",
+    "scripts/run_memory_prior_learning.py": "bcb54aa8ec6dd6a36812e177c55be484278685779792a6d8cf67eead96a8202b",
+    "configs/experiments/EXP_0050_MEMORY_PRIOR.json": "78af553e86d4b2560c1ae8c8e3f520a48a1c6ff70dd3f0ba4ffec3b21783dad4"
+  },
+  "sealed_test_used": false,
+  "registered_at": "2026-10-04T13:48:21.643944+08:00",
+  "workers": 4,
+  "observation_contract": "memory_prior",
+  "development_scene_override": null,
+  "selection_manifest_sha256": null,
+  "runner_sha256": "f1321eb8e6d395e22ff5d6f5a9b1847b83668ac25c3805bcca160dd65001748e"
+}

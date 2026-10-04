@@ -1,0 +1,24 @@
+{
+  "name": "rule_high__graph_ppo_low_43_1960000004",
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "scripts.run_high_isolation_eval",
+    "--high-variant",
+    "rule",
+    "--low-variant",
+    "graph_ppo",
+    "--seed",
+    "43",
+    "--scene",
+    "1960000004",
+    "--low-checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/training/train_graph_ppo_43/policy_16384.pt",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0059_HIGH_LAYER_ISOLATION_20261004/results/rule_high__graph_ppo_low_43_1960000004.jsonl"
+  ],
+  "requested_at": "2026-10-04T23:57:31.447372+08:00",
+  "returncode": 0,
+  "wall_s": 6.030461041955277,
+  "source_unchanged": true
+}

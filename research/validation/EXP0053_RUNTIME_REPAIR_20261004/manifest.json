@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-04T17:01:49.784714+08:00",
+  "stage": "binary_provenance_before_runtime_selection",
+  "prior_failures_retained": true,
+  "confirmation_accessed": false,
+  "main_validation_accessed": false,
+  "plan": [
+    "Check installed numpy/scipy native binary hashes against distribution RECORD before changing runtime.",
+    "If mismatched, compare with a fresh hash-verified same-version official wheel in an isolated location; do not mutate global packages.",
+    "Register exact candidate runtime, native regression runs and admission before training.",
+    "Only after full admission run all nine corrected-source training seeds and 52 fixed-scene evaluations."
+  ]
+}

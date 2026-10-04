@@ -1,0 +1,25 @@
+{
+  "name": "tpg_1940000000",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_tpg_learning",
+    "evaluate",
+    "--scene",
+    "1940000000",
+    "--policy",
+    "tpg",
+    "--variant",
+    "both",
+    "--clusters",
+    "3",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_RUNTIME_REPAIR_20261004/generic_preflight_0/results/tpg_1940000000.jsonl"
+  ],
+  "started_at": "2026-10-04T17:09:21.041266+08:00",
+  "returncode": 0,
+  "wall_s": 9.841547982068732,
+  "source_unchanged": true
+}

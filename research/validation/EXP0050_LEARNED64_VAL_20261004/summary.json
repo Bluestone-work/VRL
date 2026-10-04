@@ -1,0 +1,71 @@
+{
+  "requested": 36,
+  "recorded": 36,
+  "completed": 35,
+  "failed_attempts": [
+    {
+      "arm": "learned_s44_t65536_n3",
+      "scene_seed": 1620000011,
+      "clusters": 3,
+      "method": "learned",
+      "status": "process_exit",
+      "returncode": -11,
+      "stderr_path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0050_LEARNED64_VAL_20261004/parts/learned_s44_t65536_n3_scene1620000011.stderr.txt",
+      "process_wall_s": 6.382117678876966
+    }
+  ],
+  "arms": {
+    "learned_s42_t65536_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.005741504740175919,
+        "removal_auc_180": 0.004258107916668357,
+        "wall_contact_s": 88.52184930585139,
+        "spacing_violation_pair_s": 0.1742005549469493
+      }
+    },
+    "learned_s43_t65536_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.02477326357076101,
+        "removal_auc_180": 0.015713585048835993,
+        "wall_contact_s": 0.005015842509659208,
+        "spacing_violation_pair_s": 0.0
+      }
+    },
+    "learned_s44_t65536_n3": {
+      "completed": 11,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.08333333333333333
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.10964586688027196,
+        "removal_auc_180": 0.087995533060715,
+        "wall_contact_s": 64.37234249713838,
+        "spacing_violation_pair_s": 0.0
+      }
+    }
+  },
+  "numerical_gate_passed": false
+}

@@ -1,0 +1,46 @@
+{
+  "completed_training_runs": 9,
+  "training_control_steps": 73728,
+  "completed_evaluations": 52,
+  "independent_scenes": 4,
+  "valid_comparison_gate": true,
+  "frozen_source_files_checked": 35,
+  "source_mismatches": [],
+  "n1_pair_checks": [
+    {
+      "scene": 1920000000,
+      "same_shared_scene": true,
+      "same_scenario_hash": true,
+      "same_total_catalytic_rate": true,
+      "n1_start_subset": true
+    },
+    {
+      "scene": 1920000001,
+      "same_shared_scene": true,
+      "same_scenario_hash": true,
+      "same_total_catalytic_rate": true,
+      "n1_start_subset": true
+    },
+    {
+      "scene": 1920000002,
+      "same_shared_scene": true,
+      "same_scenario_hash": true,
+      "same_total_catalytic_rate": true,
+      "n1_start_subset": true
+    },
+    {
+      "scene": 1920000003,
+      "same_shared_scene": true,
+      "same_scenario_hash": true,
+      "same_total_catalytic_rate": true,
+      "n1_start_subset": true
+    }
+  ],
+  "confirmation_accessed": false,
+  "logged_training_seed_references_checked": 224,
+  "shadow_replays": 4,
+  "shadow_reference_matches": true,
+  "prior_failures_preserved": true,
+  "original_native_fault_proven_fixed": false,
+  "scope": "Completed development pilot and post-hoc measured-state diagnostics only"
+}

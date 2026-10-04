@@ -1,0 +1,25 @@
+{
+  "phase": "completed",
+  "steps": 128,
+  "episodes": 0,
+  "updates": 1,
+  "high": {
+    "samples": 0
+  },
+  "low": {
+    "samples": 128,
+    "loss": 0.25141508877277374,
+    "kl": 3.1990930438041687e-07,
+    "aux": 0.10175307095050812
+  },
+  "wall_s": 1.3789912278298289,
+  "fps": 92.82144795334655,
+  "checkpoint": "research/validation/EXP0053_TPG_TRAIN_SMOKE_20261004/policy_128.pt",
+  "checkpoint_sha256": "a3169ed279eb41317fb02c54024c7d20a486f9e87958b9b67b9967b9bc4655c7",
+  "model_l2_change": {
+    "high": 0.0,
+    "low": 0.1747422293254903
+  },
+  "high_samples": 0,
+  "low_samples": 128
+}

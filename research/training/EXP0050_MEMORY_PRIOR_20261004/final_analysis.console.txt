@@ -1,0 +1,295 @@
+{
+  "audit_passed": false,
+  "issues": [
+    "Failed learned_s44_t65536_n3 scene 1620000011: process_exit"
+  ],
+  "arms": {
+    "v2_spacing_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.16666666666666666,
+        "removal": 0.5157781546784048,
+        "removal_auc_180": 0.43633844865215043,
+        "wall_contact_s": 172.02176064686003,
+        "spacing_violation_pair_s": 14.561835986346253,
+        "sensor_confirmed_all_cleared": 0.16666666666666666,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 151.98333333333332,
+        "elapsed_s": 163.9166666666666,
+        "command_squared_s": 436.46488829797204
+      }
+    },
+    "joint_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.08333333333333333,
+        "removal": 0.5436323684690275,
+        "removal_auc_180": 0.4234945267399364,
+        "wall_contact_s": 134.77246409705887,
+        "spacing_violation_pair_s": 29.832104296442207,
+        "sensor_confirmed_all_cleared": 0.08333333333333333,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 171.82499999999945,
+        "elapsed_s": 178.8083333333329,
+        "command_squared_s": 462.70314554744596
+      }
+    },
+    "memory_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.3333333333333333,
+        "removal": 0.752957718524424,
+        "removal_auc_180": 0.5281529072666982,
+        "wall_contact_s": 32.022400360052565,
+        "spacing_violation_pair_s": 0.8788193804858463,
+        "sensor_confirmed_all_cleared": 0.3333333333333333,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 161.54999999999907,
+        "elapsed_s": 159.91666666666532,
+        "command_squared_s": 405.8483557896007
+      }
+    },
+    "joint_n1": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.125,
+        "removal_auc_180": 0.11677574111480571,
+        "wall_contact_s": 91.96151777330567,
+        "spacing_violation_pair_s": 0.0,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 179.41437640584812
+      }
+    },
+    "memory_n1": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.08333333333333333,
+        0.08333333333333333
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0021075932318602264,
+        0.38479616515094406
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.08333333333333333,
+        "task_success": 0.16666666666666666,
+        "removal": 0.375,
+        "removal_auc_180": 0.2966455814488604,
+        "wall_contact_s": 20.661648347514788,
+        "spacing_violation_pair_s": 0.0,
+        "sensor_confirmed_all_cleared": 0.16666666666666666,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.08333333333333333,
+        "T90_with_horizon_penalty": 166.05833333333314,
+        "elapsed_s": 165.3333333333327,
+        "command_squared_s": 160.7062409491078
+      }
+    },
+    "learned_s42_t32768_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.26653926047756604,
+        "removal_auc_180": 0.239831948481362,
+        "wall_contact_s": 3.6394807416704804,
+        "spacing_violation_pair_s": 0.691765908247424,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 170.93333333333337,
+        "command_squared_s": 411.4057795256231
+      }
+    },
+    "learned_s43_t32768_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.5833333333333334,
+        "removal": 0.875,
+        "removal_auc_180": 0.6331382794950697,
+        "wall_contact_s": 24.81889351030803,
+        "spacing_violation_pair_s": 2.8132547991252554,
+        "sensor_confirmed_all_cleared": 0.5833333333333334,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 132.8249999999991,
+        "elapsed_s": 138.1583333333322,
+        "command_squared_s": 371.48923761514374
+      }
+    },
+    "learned_s44_t32768_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.3333333333333333,
+        "removal": 0.752957718524424,
+        "removal_auc_180": 0.5281529072666982,
+        "wall_contact_s": 32.022400360052565,
+        "spacing_violation_pair_s": 0.8788193804858463,
+        "sensor_confirmed_all_cleared": 0.3333333333333333,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 161.54999999999907,
+        "elapsed_s": 159.91666666666532,
+        "command_squared_s": 405.8483557896007
+      }
+    },
+    "learned_s42_t65536_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.005741504740175919,
+        "removal_auc_180": 0.004258107916668357,
+        "wall_contact_s": 88.52184930585138,
+        "spacing_violation_pair_s": 0.1742005549469493,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 72.33760539980796
+      }
+    },
+    "learned_s43_t65536_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.02477326357076101,
+        "removal_auc_180": 0.015713585048835993,
+        "wall_contact_s": 0.005015842509659208,
+        "spacing_violation_pair_s": 0.0,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 0.11726912572375559
+      }
+    },
+    "learned_s44_t65536_n3": {
+      "completed": 11,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.08333333333333333
+      ],
+      "cluster_safe_ci95_missing_envelope": [
+        0.0,
+        0.38479616515094406
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.10964586688027196,
+        "removal_auc_180": 0.08799553306071502,
+        "wall_contact_s": 64.37234249713838,
+        "spacing_violation_pair_s": 0.0,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 138.83920777722682
+      }
+    }
+  },
+  "comparisons": []
+}

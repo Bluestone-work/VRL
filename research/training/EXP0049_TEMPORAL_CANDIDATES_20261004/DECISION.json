@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-04",
+  "decision": "archive_temporal_at_65536;test_memory_initialized_interventions",
+  "primary_success": 0.0,
+  "learned_64k_means": {
+    "removal": 0.13165115944723146,
+    "removal_auc_180": 0.11109060009185212,
+    "wall_contact_s": 45.49986756376637,
+    "spacing_violation_pair_s": 2.033752020759516
+  },
+  "baseline_memory_removal": 0.8333333333333334,
+  "validation_attempts": 132,
+  "architecture_transfer_attempts": 36,
+  "numerical_audit_passed": true,
+  "confirmation_accessed": false,
+  "learning_superiority_established": false
+}

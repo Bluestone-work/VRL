@@ -1,0 +1,3650 @@
+[
+  {
+    "name": "original_reward_r_mappo_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_42_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_43_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_44_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_42_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_44_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_42_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_43_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_44_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_42_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_43_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_44_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_43_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_44_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_42_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_43_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_44_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_42_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_43_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_44_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_42_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_43_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_44_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_42_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_43_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_44_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_42_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_44_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_42_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_43_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_44_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_42_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_43_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_44_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_43_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_44_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_42_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_43_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_44_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_42_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_43_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_44_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_42_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_43_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_44_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_42_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_43_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_44_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_42_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_44_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_42_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_43_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_44_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_42_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_43_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_44_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_43_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_44_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_42_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_43_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_44_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_42_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_43_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_44_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_42_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_43_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_44_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_42_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_43_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_44_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_42_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_44_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_42_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_43_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_44_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_42_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_43_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_44_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_43_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_44_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_42_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_43_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_44_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_42_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_43_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_44_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_42_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_43_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_44_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_42_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_43_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_44_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_42_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_44_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_42_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_43_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_44_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_42_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_43_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_44_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_43_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_44_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_42_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_43_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_44_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_42_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_43_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_44_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_42_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_43_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_44_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_42_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_43_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_44_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_42_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_44_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_42_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_43_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_44_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_42_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_43_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_44_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_43_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_44_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_42_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_43_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_44_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_42_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_43_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_44_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_42_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_43_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_44_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_42_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_43_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_44_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_42_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_44_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_42_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_43_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_44_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_42_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_43_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_44_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_43_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_44_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_42_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_43_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_44_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_42_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_43_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_44_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_42_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_43_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_44_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_42_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_43_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_mappo_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_mappo_44_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_42_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_43_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_r_ippo_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_r_ippo_44_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_42_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_43_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_ac_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_ac_44_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_42_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_43_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "original_reward_vctpg_no_ac_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "original_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/original_reward_vctpg_no_ac_44_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_43/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_43_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_mappo_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_mappo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_44/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_44_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_42/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_42_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_43/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_43_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_r_ippo_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "r_ippo",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_ippo_44/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_ippo_44_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_42_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_43_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_ac_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_ac_44_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_42/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_42_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_43/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_43_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "safety_reward_vctpg_no_ac_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+      "-m",
+      "scripts.run_safety_marl",
+      "evaluate",
+      "--regime",
+      "safety_reward",
+      "--variant",
+      "vctpg_no_ac",
+      "--checkpoint",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44/policy_16384.pt",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_vctpg_no_ac_44_1960000007.jsonl"
+    ]
+  }
+]

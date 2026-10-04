@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-04",
+  "decision": "freeze_completed_models_and_failed_matrix;no_superiority_claim",
+  "training_steps_per_seed": 65536,
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "requested_validation_attempts": 132,
+  "completed_validation_attempts": 131,
+  "failed_attempts": [
+    {
+      "arm": "learned_s44_t65536_n3",
+      "scene_seed": 1620000011,
+      "clusters": 3,
+      "method": "learned",
+      "status": "process_exit",
+      "returncode": -11,
+      "stderr_path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0050_LEARNED64_VAL_20261004/parts/learned_s44_t65536_n3_scene1620000011.stderr.txt",
+      "process_wall_s": 6.382117678876966
+    }
+  ],
+  "numerical_gate_passed": false,
+  "confirmation_accessed": false,
+  "successor_requirements": [
+    "capture native fault root cause without replacing failed attempts",
+    "test measurement time alignment and objective tradeoffs using identical heuristic inputs",
+    "show replicated safety-and-clearing gains before confirmation"
+  ],
+  "learning_superiority_established": false
+}

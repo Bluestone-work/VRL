@@ -1,0 +1,27 @@
+{
+  "all_completed": true,
+  "unchanged_baseline_and_untrained": true,
+  "attempts": [
+    {
+      "name": "new_memory",
+      "returncode": 0,
+      "final_state_hash": "376653aab6986c346860b980dcf15e1cbf466df70f2c2df58d18abfb642befe1",
+      "removal": 0.75,
+      "wall_contact_s": 6.657577648621716
+    },
+    {
+      "name": "original_memory",
+      "returncode": 0,
+      "final_state_hash": "376653aab6986c346860b980dcf15e1cbf466df70f2c2df58d18abfb642befe1",
+      "removal": 0.75,
+      "wall_contact_s": 6.657577648621716
+    },
+    {
+      "name": "untrained_memory_prior",
+      "returncode": 0,
+      "final_state_hash": "376653aab6986c346860b980dcf15e1cbf466df70f2c2df58d18abfb642befe1",
+      "removal": 0.75,
+      "wall_contact_s": 6.657577648621716
+    }
+  ]
+}

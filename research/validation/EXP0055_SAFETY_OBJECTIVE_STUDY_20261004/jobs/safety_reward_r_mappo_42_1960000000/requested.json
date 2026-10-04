@@ -1,0 +1,20 @@
+{
+  "name": "safety_reward_r_mappo_42_1960000000",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_safety_marl",
+    "evaluate",
+    "--regime",
+    "safety_reward",
+    "--variant",
+    "r_mappo",
+    "--checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_r_mappo_42/policy_16384.pt",
+    "--scene",
+    "1960000000",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/results/safety_reward_r_mappo_42_1960000000.jsonl"
+  ],
+  "requested_at": "2026-10-04T18:07:02.937965+08:00"
+}

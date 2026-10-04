@@ -1,0 +1,25 @@
+{
+  "name": "safety_reward_vctpg_no_ac_44",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_safety_marl",
+    "train",
+    "--regime",
+    "safety_reward",
+    "--variant",
+    "vctpg_no_ac",
+    "--seed",
+    "44",
+    "--steps",
+    "16384",
+    "--scene-base",
+    "2010200000",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/safety_reward_vctpg_no_ac_44"
+  ],
+  "requested_at": "2026-10-04T18:04:24.266112+08:00",
+  "returncode": 0,
+  "wall_s": 143.74253699695691,
+  "source_unchanged": true
+}

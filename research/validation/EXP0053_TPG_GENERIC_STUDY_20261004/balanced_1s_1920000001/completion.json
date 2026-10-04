@@ -1,0 +1,29 @@
+{
+  "name": "balanced_1s_1920000001",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_aligned_options",
+    "evaluate",
+    "--policy",
+    "balanced",
+    "--variant",
+    "hierarchical",
+    "--decision-steps",
+    "10",
+    "--clusters",
+    "3",
+    "--scene-base",
+    "1920000001",
+    "--episodes",
+    "1",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_TPG_GENERIC_STUDY_20261004/results/balanced_1s_1920000001.jsonl"
+  ],
+  "started_at": "2026-10-04T17:14:21.408024+08:00",
+  "returncode": 0,
+  "wall_s": 7.76258490094915,
+  "source_unchanged": true
+}

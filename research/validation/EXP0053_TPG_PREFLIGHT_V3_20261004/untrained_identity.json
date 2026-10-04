@@ -1,0 +1,15 @@
+{
+  "pairs": [
+    {
+      "scene": 1940000000,
+      "initial_match": true,
+      "final_match": true
+    },
+    {
+      "scene": 1940000001,
+      "initial_match": true,
+      "final_match": true
+    }
+  ],
+  "passed": true
+}

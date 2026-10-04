@@ -1,0 +1,61 @@
+{
+  "stage": "validation",
+  "arms": [
+    {
+      "label": "learned_s42_t32768_n3",
+      "policy": "learned",
+      "clusters": 3,
+      "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/training/EXP0047_LOCAL_LEARNING_20261004/seed42_32k/policy_32768.pt",
+      "checkpoint_sha256": "2d2ca541cfdb65cf126a945ba8d2e0b51d4b95c4c10f1e359a2c0c8f4535d22e"
+    },
+    {
+      "label": "learned_s43_t32768_n3",
+      "policy": "learned",
+      "clusters": 3,
+      "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/training/EXP0047_LOCAL_LEARNING_20261004/seed43_32k/policy_32768.pt",
+      "checkpoint_sha256": "21ffdaef3ac5959247c969485b8fd4e005a849e04842cf69c3dd2900e160d604"
+    },
+    {
+      "label": "learned_s44_t32768_n3",
+      "policy": "learned",
+      "clusters": 3,
+      "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/training/EXP0047_LOCAL_LEARNING_20261004/seed44_32k/policy_32768.pt",
+      "checkpoint_sha256": "9f8e73b6fe23b765483ec59f98ff2b15cad195cde4a1c8685c53791ee017b79b"
+    }
+  ],
+  "scenes": [
+    1320000000,
+    1320000001,
+    1320000002,
+    1320000003,
+    1320000004,
+    1320000005,
+    1320000006,
+    1320000007,
+    1320000008,
+    1320000009,
+    1320000010,
+    1320000011
+  ],
+  "control_seed": 42,
+  "requested": 36,
+  "source_hashes": {
+    "marl/multicluster.py": "9b4bc0201c082e6e789c7df1ad5ca43dccfb2464a0337871123c58df25795217",
+    "marl/multicluster_observation.py": "020a23426c88056918966798029f4579508f283e2c2c8ce3cb174e122c7488a3",
+    "marl/partial_obs.py": "2cc6492436f4b7975149fcd3a3fa15d5065a7bc755646718fa2e396e5b6a714f",
+    "marl/fair_reactive.py": "4ca3675d42f1899efac2fe71a363de259ec0f1b7729e3955429c5e8c49bf0d52",
+    "marl/teacher.py": "6711942de8ac8e5c5738855688b7521069d59f593bd73bc1f9768a183400e999",
+    "scripts/evaluate_multicluster.py": "6b6ad6c91f3779736659a9b29063fcec60bad77514677b31d03871ea2e2d9490",
+    "scripts/multicluster_protocol.py": "872c4f95b74d71a828a797806eb211f678f0ed10444462671e5f4563b80cf46b",
+    "environments/mca_physical_env.py": "5954c655a368a21936ffa41b2b6d975b228275edeffe2ef0f8574eeb42cbaa65",
+    "environments/mca_physical_dynamics.py": "cf195e2112f3dd2a7d2359cc07ea5110025fc964338feb74faf492166209f530",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507",
+    "marl/local_maneuver_learning.py": "1cd1206977d755ed95bccf9b891458191b1f7a262210a38301943cd2fb2df14d",
+    "scripts/local_learning_episode.py": "76c3c27a0d45cb3de850f97be440eda1e81c0c8d5e19641611f41727cd274192",
+    "scripts/run_local_learning.py": "11f48366bea4f92121b922c96d649486c0b642f374cb4f6a095805a3f47de5c1",
+    "configs/experiments/EXP_0047_LOCAL_LEARNING.json": "640e13687709922bc2c5cfc600ed7ea2e342933ebec7dff704d6bfbb19fc8bec"
+  },
+  "sealed_test_used": false,
+  "registered_at": "2026-10-04T13:10:50.890965+08:00",
+  "workers": 4
+}

@@ -1,0 +1,38 @@
+{
+  "revision": "EXP0046_v2_observation_paired",
+  "requested_episodes": 10,
+  "completed_episodes": 10,
+  "failed_episodes": 0,
+  "failed_attempts": [],
+  "conditional_completed_aggregate": {
+    "episodes": 10,
+    "raw_success": 0.4,
+    "safe_success": 0.2,
+    "unsafe_success_gap": 0.2,
+    "collision_free": 0.4,
+    "safe_collision_free": 0.2,
+    "mean_wall_contact_s": 11.272337955676782,
+    "median_wall_contact_s": 2.839529451497904,
+    "wall_contact_ratio": 0.022837656659111534,
+    "max_continuous_wall_contact_s": 3.5547752920898303,
+    "timeout_rate": 0.6,
+    "removal": 0.675,
+    "elapsed_s": 131.7599999999999
+  },
+  "cluster_safe_success_completed": 0.2,
+  "cluster_safe_success_missing_bounds": [
+    0.2,
+    0.2
+  ],
+  "numerical_gate_passed": true,
+  "performance_comparison_admissible": true,
+  "development_diagnostic_only": true,
+  "sealed_test_used": false,
+  "method": "multi_parallel",
+  "clusters": 3,
+  "d_min_mm": 2.0,
+  "budget": "per_cluster",
+  "control_seed": 42,
+  "duration_s": 180.0,
+  "episode_isolated": true
+}

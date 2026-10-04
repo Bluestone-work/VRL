@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-04T17:04:49.408807+08:00",
+  "variant": "numpy1264_source_generic_no_svml",
+  "selection_basis": "Prior captured native signal was in NumPy SVML; CPU-dispatch mask already failed. Test a same-version source build with officially supported SVML and CPU-optimization disable flags, not a claimed root-cause fix.",
+  "numpy_version": "1.26.4",
+  "build_options": [
+    "-Ddisable-svml=true",
+    "-Ddisable-optimization=true",
+    "-Dblas=none",
+    "-Dlapack=none"
+  ],
+  "runtime_directory": "/home/wj/.cache/vascular-research/np1264-generic-20261004",
+  "global_packages_modified": false,
+  "other_python_packages": "inherited unchanged from v via system-site-packages",
+  "regression": {
+    "joint_training_repetitions": 3,
+    "joint_steps": 2048,
+    "joint_training_seed": 42,
+    "joint_scene_base": 1940000400,
+    "full_preflight_repetitions": 2,
+    "preflight_scenes": [
+      1940000000,
+      1940000001
+    ],
+    "preflight_policies": [
+      "tpg",
+      "untrained"
+    ],
+    "duration_s": 180,
+    "workers": 3
+  },
+  "admission": [
+    "Build/library provenance saved; NumPy version fixed and targeted numerical/torch interoperability checks pass.",
+    "All existing targeted project tests pass under candidate.",
+    "All three specified joint-training diagnostics complete; all eight preflight evaluations complete.",
+    "Untrained and tpg initial/final hashes match within each preflight; repeated deterministic rows agree.",
+    "Any failed requested run rejects this candidate; no replacement or success-only retry."
+  ],
+  "after_admission": "Run unchanged EXP0053 nine training jobs and 52 fixed-scene evaluations from scratch with all arms using the same interpreter; preserve all previous failures.",
+  "confirmation_accessed": false,
+  "root_cause_proven": false
+}

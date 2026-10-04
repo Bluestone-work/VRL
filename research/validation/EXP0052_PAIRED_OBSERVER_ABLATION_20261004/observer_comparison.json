@@ -1,0 +1,72 @@
+{
+  "exploratory_posthoc": true,
+  "learning_contribution": false,
+  "confirmation_accessed": false,
+  "admission_passed": true,
+  "issues": [],
+  "old_memory_renewal_equivalence": true,
+  "reference": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0052_STUDY_20261004/validation/attempts.jsonl",
+  "reference_sha256": "fba73785b44b717e027df7a39c7705404cf5253088c2a6e84ad0cb009565ea42",
+  "comparisons": {
+    "cluster_safe_success": {
+      "old_mean": 0.0,
+      "aligned_mean": 0.0,
+      "aligned_minus_old": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "scenes": 12
+      }
+    },
+    "removal": {
+      "old_mean": 0.8680605657691455,
+      "aligned_mean": 0.8635153051546656,
+      "aligned_minus_old": {
+        "mean": -0.004545260614479796,
+        "ci95": [
+          -0.1479844203314383,
+          0.1319394342308546
+        ],
+        "scenes": 12
+      }
+    },
+    "removal_auc_180": {
+      "old_mean": 0.6771801734924415,
+      "aligned_mean": 0.6742221049297866,
+      "aligned_minus_old": {
+        "mean": -0.0029580685626548198,
+        "ci95": [
+          -0.08393438399799935,
+          0.08181579351604194
+        ],
+        "scenes": 12
+      }
+    },
+    "wall_contact_s": {
+      "old_mean": 23.620153923558107,
+      "aligned_mean": 18.557683347251558,
+      "aligned_minus_old": {
+        "mean": -5.062470576306551,
+        "ci95": [
+          -12.724467230473877,
+          2.1112325838164536
+        ],
+        "scenes": 12
+      }
+    },
+    "spacing_violation_pair_s": {
+      "old_mean": 0.15334210222076916,
+      "aligned_mean": 0.0,
+      "aligned_minus_old": {
+        "mean": -0.15334210222076916,
+        "ci95": [
+          -0.394172039748697,
+          -0.012845353209747848
+        ],
+        "scenes": 12
+      }
+    }
+  }
+}

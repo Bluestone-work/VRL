@@ -1,0 +1,28 @@
+{
+  "phase": "completed",
+  "steps": 2048,
+  "episodes": 1,
+  "updates": 2,
+  "high": {
+    "samples": 8,
+    "loss": 0.5669781366984049,
+    "kl": 5.463759104410807e-07,
+    "aux": 0.0
+  },
+  "low": {
+    "samples": 1024,
+    "loss": 0.03045855511057501,
+    "kl": 8.585241933663687e-06,
+    "aux": 0.09198661334812641
+  },
+  "wall_s": 16.53765361593105,
+  "fps": 123.83860610946657,
+  "checkpoint": "research/validation/EXP0053_NUMPY_CPU_DIAGNOSTIC_20261004/disable_avx2_fma3_0/policy_2048.pt",
+  "checkpoint_sha256": "132aa9481d73b7f5317671d29628a0e6ab0f25215820890cd3027d5dbc67d55d",
+  "model_l2_change": {
+    "high": 0.23451996441918285,
+    "low": 1.8193304676939173
+  },
+  "high_samples": 21,
+  "low_samples": 2048
+}

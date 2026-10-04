@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-04",
+  "training_runs": 12,
+  "training_control_steps": 294912,
+  "predeclared_main_and_stress_completed": 408,
+  "preflight_completed": 28,
+  "old_observer_ablation_completed": 12,
+  "same_layout_uncoupled_completed": 56,
+  "shadow_replays_completed": 4,
+  "measurement_diagnostic_completed": 1,
+  "renewal_interval_replay_completed": 1,
+  "research_evaluations_and_replays_completed": 510,
+  "targeted_tests_passed": 81,
+  "source_errors": [],
+  "confirmation_access_issues": [],
+  "supplementary_gates": [
+    {
+      "folder": "EXP0051_PREFLIGHT_20261004",
+      "requested": 12,
+      "completed": 12,
+      "audit_passed": true
+    },
+    {
+      "folder": "EXP0052_PREFLIGHT_20261004",
+      "requested": 16,
+      "completed": 16,
+      "audit_passed": true
+    },
+    {
+      "folder": "EXP0052_PAIRED_OBSERVER_ABLATION_20261004",
+      "requested": 12,
+      "completed": 12,
+      "audit_passed": true
+    },
+    {
+      "folder": "EXP0052_SAME_LAYOUT_UNCOUPLED_20261004",
+      "requested": 56,
+      "completed": 56,
+      "audit_passed": true
+    }
+  ],
+  "learning_superiority_established": false,
+  "all_registered_jobs_finished": true,
+  "native_fault_root_cause_resolved": false,
+  "hardware_magnetic_independence_validated": false,
+  "note": "510 counts repeated policies/seeds and diagnostic replays, not 510 independent layouts."
+}

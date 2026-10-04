@@ -1,0 +1,23 @@
+{
+  "name": "mappo_anchor_42_16384_1960000005",
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "scripts.run_continuous_marl",
+    "evaluate",
+    "--variant",
+    "mappo_anchor",
+    "--scene",
+    "1960000005",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000005.jsonl",
+    "--checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/training/train_mappo_anchor_42/policy_16384.pt"
+  ],
+  "requested_at": "2026-10-04T20:04:43.092325+08:00",
+  "returncode": 0,
+  "wall_s": 13.200117788976058,
+  "source_unchanged": true
+}

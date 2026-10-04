@@ -1,0 +1,8 @@
+{
+  "debugger_returncode": 1,
+  "diagnostic_only": true,
+  "replaces_failed_preflight": false,
+  "inferior_exited_normally": true,
+  "inferior_native_signal": false,
+  "native_cause_proven": false
+}

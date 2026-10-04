@@ -1,0 +1,72 @@
+{
+  "post_hoc": true,
+  "registered_results_replaced": false,
+  "source": "completed EXP0054 final32768 evaluation logs",
+  "rows": [
+    {
+      "seed": 42,
+      "controls": 14408,
+      "active_agent_choices": 42719,
+      "action_counts": [
+        7,
+        190,
+        16,
+        597,
+        938,
+        489,
+        2278,
+        10957,
+        27247
+      ],
+      "hold_retreat_fraction": 0.8943093237201245,
+      "mean_removal": 0.01887391603212732,
+      "mean_wall_cluster_s": 247.00242447595556,
+      "supervisor_changed_steps": 13772,
+      "supervisor_infeasible_steps": 0
+    },
+    {
+      "seed": 43,
+      "controls": 11465,
+      "active_agent_choices": 32533,
+      "action_counts": [
+        27383,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4581,
+        569
+      ],
+      "hold_retreat_fraction": 0.15830080226231827,
+      "mean_removal": 0.8125,
+      "mean_wall_cluster_s": 24.359533772831412,
+      "supervisor_changed_steps": 861,
+      "supervisor_infeasible_steps": 0
+    },
+    {
+      "seed": 44,
+      "controls": 11933,
+      "active_agent_choices": 35768,
+      "action_counts": [
+        19614,
+        433,
+        0,
+        547,
+        337,
+        1,
+        912,
+        7383,
+        6541
+      ],
+      "hold_retreat_fraction": 0.38928651308432116,
+      "mean_removal": 0.5965771926818344,
+      "mean_wall_cluster_s": 18.70363599310503,
+      "supervisor_changed_steps": 2515,
+      "supervisor_infeasible_steps": 0
+    }
+  ],
+  "inference": "Seed42 often holds/retreats despite negligible clearing. Projection is active on most controls while reporting near-zero modeled residual; modeled feasibility is not true wall safety. This does not establish whether dynamics prediction, stochastic-to-greedy mismatch or objective scaling is the sole cause.",
+  "additional_evaluations": 0
+}

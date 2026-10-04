@@ -1,0 +1,1568 @@
+{
+  "revision": "EXP0046_v2_observation_paired",
+  "seed": 1302010005,
+  "control_seed": 42,
+  "method": "multi_parallel",
+  "clusters": 3,
+  "min_spacing_threshold_mm": 2.0,
+  "reset_info": {
+    "requested_seed": 1302010005,
+    "accepted_seed": 1302010005,
+    "rejected_attempts": [],
+    "scenario_hash": "702d1e82b7dbeea2d7305e7327abc66c01ee1d067787a4f31f72f94d52ba89ad",
+    "pool_size": 3,
+    "spawn_clearance_mm": 4.0,
+    "shared_scene": {
+      "accepted_seed": 1302010005,
+      "anatomy": "mca_m1_lvo",
+      "geometry_mm": [
+        [
+          16.180971542305016,
+          38.73902244037421,
+          41.32427594923103
+        ],
+        [
+          17.377957958973667,
+          38.68010440529684,
+          41.383240734534596
+        ],
+        [
+          18.57498687584796,
+          38.62201087420887,
+          41.442209769858735
+        ],
+        [
+          19.772408919624407,
+          38.573182387950204,
+          41.50124680551189
+        ],
+        [
+          20.970464216464883,
+          38.54503450175548,
+          41.560415591802524
+        ],
+        [
+          22.168746889405522,
+          38.55869406784786,
+          41.619805379162486
+        ],
+        [
+          23.365939432071524,
+          38.61140282288137,
+          41.67933541720106
+        ],
+        [
+          24.561030339568674,
+          38.700015751638716,
+          41.73893345556865
+        ],
+        [
+          25.7534522341517,
+          38.819258578600106,
+          41.79855699405962
+        ],
+        [
+          26.942427362057394,
+          38.969050553374814,
+          41.85815928244778
+        ],
+        [
+          28.12634921551261,
+          39.154453450454454,
+          41.91768507046579
+        ],
+        [
+          29.303607036723633,
+          39.378348783781355,
+          41.97707485782575
+        ],
+        [
+          30.472366941817132,
+          39.643180315179755,
+          42.03624364411638
+        ],
+        [
+          31.6364093240847,
+          39.92815269403049,
+          42.095280679769544
+        ],
+        [
+          32.798228945597344,
+          40.22213086645612,
+          42.154253965114236
+        ],
+        [
+          33.95984669113321,
+          40.51691229276833,
+          42.21321875041781
+        ],
+        [
+          33.95984669113321,
+          40.51691229276833,
+          42.21321875041781
+        ],
+        [
+          34.303766855205254,
+          39.403993407863936,
+          42.242097640149524
+        ],
+        [
+          34.64411487699334,
+          38.28999076771575,
+          42.27090852955221
+        ],
+        [
+          35.00965914569451,
+          37.1841779171942,
+          42.300174171155234
+        ],
+        [
+          35.441641860860884,
+          36.103134186519064,
+          42.330566068207695
+        ],
+        [
+          36.018665027811515,
+          35.092424046155934,
+          42.363121225727184
+        ],
+        [
+          36.80464258079665,
+          34.2386777902691,
+          42.39775889332298
+        ],
+        [
+          37.76632448393462,
+          33.584104498088955,
+          42.432906563386446
+        ],
+        [
+          38.825803610268515,
+          33.10274079399061,
+          42.46717447919318
+        ],
+        [
+          39.930065203284244,
+          32.733989884773976,
+          42.50042664008515
+        ],
+        [
+          41.062134680849574,
+          32.46084531315258,
+          42.53256529558937
+        ],
+        [
+          42.212878748772695,
+          32.285219588380194,
+          42.56334394451315
+        ],
+        [
+          43.37705713169831,
+          32.26693387490401,
+          42.591525830872385
+        ],
+        [
+          44.54119301441828,
+          32.30566643731313,
+          42.61864521209064
+        ],
+        [
+          45.70532889713826,
+          32.344398999722245,
+          42.645768843329456
+        ],
+        [
+          46.86950728006387,
+          32.326113286246056,
+          42.673946479668125
+        ],
+        [
+          48.02025134798699,
+          32.15048968648395,
+          42.7047251285919
+        ],
+        [
+          49.15232082555233,
+          31.87734298985228,
+          42.73686803411669
+        ],
+        [
+          50.25658241856806,
+          31.50859208063564,
+          42.77012019500865
+        ],
+        [
+          51.31606579492252,
+          31.027228376537302,
+          42.804388110815395
+        ],
+        [
+          52.277743448039914,
+          30.372657209367436,
+          42.83953578087886
+        ],
+        [
+          53.06372525104562,
+          29.518908828470323,
+          42.87417344847466
+        ],
+        [
+          53.64074629298597,
+          28.508198688107196,
+          42.90672860599414
+        ],
+        [
+          54.07273113316262,
+          27.427157082442342,
+          42.9371205030466
+        ],
+        [
+          54.4382754018638,
+          26.321342106910507,
+          42.96638614464963
+        ],
+        [
+          54.778621298641596,
+          25.207339466762317,
+          42.99519703405232
+        ],
+        [
+          55.12254146271364,
+          24.0944227068682,
+          43.02407592378403
+        ],
+        [
+          33.95984669113321,
+          40.51691229276833,
+          42.21321875041781
+        ],
+        [
+          34.926314117426124,
+          41.17678748560195,
+          42.23726536676836
+        ],
+        [
+          35.89529968090314,
+          41.83293966042159,
+          42.26123973276933
+        ],
+        [
+          36.84938679729341,
+          42.510299437855096,
+          42.28562210074444
+        ],
+        [
+          37.76006845366455,
+          43.244086738315524,
+          42.31106272383995
+        ],
+        [
+          38.55682405879975,
+          44.09974762846639,
+          42.33861985717629
+        ],
+        [
+          39.11529801099923,
+          45.12177557359119,
+          42.36841250132924
+        ],
+        [
+          39.3957568680111,
+          46.25597431145904,
+          42.398778898258314
+        ],
+        [
+          39.452554142827076,
+          47.423484710506756,
+          42.428197540601644
+        ],
+        [
+          39.37606227271798,
+          48.59050635718962,
+          42.45654942778343
+        ],
+        [
+          39.19068487576172,
+          49.745661946458064,
+          42.48373680933071
+        ],
+        [
+          38.90072297276897,
+          50.87859842821844,
+          42.50954293419472
+        ],
+        [
+          38.45705057604159,
+          51.96089166493936,
+          42.53287554709054
+        ],
+        [
+          37.961778679647885,
+          53.021106044830816,
+          42.55524765533892
+        ],
+        [
+          37.46651103327474,
+          54.081316174701705,
+          42.57761976358729
+        ],
+        [
+          37.02283863654736,
+          55.16361791146375,
+          42.600952376483114
+        ],
+        [
+          36.73287673355461,
+          56.29655014320356,
+          42.626758501347126
+        ],
+        [
+          36.54749933659836,
+          57.45170573247201,
+          42.653945882894405
+        ],
+        [
+          36.471007466489255,
+          58.618727379154876,
+          42.68229352005563
+        ],
+        [
+          36.5278089913258,
+          59.78623777820258,
+          42.71171641241952
+        ],
+        [
+          36.808267848337664,
+          60.92043226604987,
+          42.742082809348595
+        ],
+        [
+          37.36673755051659,
+          61.942464461195236,
+          42.77187545350154
+        ],
+        [
+          38.163497405672345,
+          62.7981253513461,
+          42.79943258683788
+        ],
+        [
+          39.074179062043484,
+          63.531916901827096,
+          42.8248732099334
+        ],
+        [
+          40.02826192841319,
+          64.20926817921948,
+          42.8492555779085
+        ],
+        [
+          40.99724961690049,
+          64.86542885408024,
+          42.87322994390947
+        ],
+        [
+          41.963717043193405,
+          65.52530404691386,
+          42.897276560260025
+        ],
+        [
+          24.343901038979507,
+          38.681702413028866,
+          41.7280959031307
+        ],
+        [
+          24.843193454826665,
+          38.79212644732016,
+          40.67925032824768
+        ],
+        [
+          25.339523606340784,
+          38.90264398206385,
+          39.6290234966814
+        ],
+        [
+          25.804076354098612,
+          39.01410077135217,
+          38.56452509606154
+        ],
+        [
+          26.18954046918279,
+          39.127414819626914,
+          37.46939679723763
+        ],
+        [
+          26.481686882745386,
+          39.24215262479056,
+          36.345912361211376
+        ],
+        [
+          26.69030339214506,
+          39.35750243291542,
+          35.203872335403126
+        ],
+        [
+          26.822245280551385,
+          39.472847991019705,
+          34.05045712955559
+        ],
+        [
+          26.868870131147666,
+          39.58759004620392,
+          32.89054789228642
+        ],
+        [
+          26.817963384833256,
+          39.70089984445811,
+          31.730679030212602
+        ],
+        [
+          26.6824812292972,
+          39.812356633746425,
+          30.57715757385097
+        ],
+        [
+          26.51245065659719,
+          39.92287416849012,
+          29.428064638916926
+        ],
+        [
+          26.339181568227485,
+          40.03329820278141,
+          28.27943708123463
+        ],
+        [
+          29.196867770261242,
+          39.35629117705471,
+          41.97168158173015
+        ],
+        [
+          29.533675524919598,
+          39.84225552841347,
+          40.948183129490246
+        ],
+        [
+          29.864329249801425,
+          40.32902313365881,
+          39.92303991929211
+        ],
+        [
+          30.15004113223027,
+          40.82107776448564,
+          38.88711440692336
+        ],
+        [
+          30.33471090076264,
+          41.3220064382499,
+          37.83326655783663
+        ],
+        [
+          30.41468778773414,
+          41.82848563887062,
+          36.76851315598293
+        ],
+        [
+          30.407020750636864,
+          42.336358846236294,
+          35.701460493004156
+        ],
+        [
+          30.31175016466616,
+          42.842833796836445,
+          34.63796722224765
+        ],
+        [
+          30.11195669795715,
+          43.34376247060071,
+          33.586881886527465
+        ],
+        [
+          29.81138461862662,
+          43.83581710142754,
+          32.555170269547816
+        ],
+        [
+          29.466034322634822,
+          44.32258470667288,
+          31.534882707843938
+        ],
+        [
+          29.114551246969317,
+          44.808553308052204,
+          30.516331279540413
+        ],
+        [
+          55.12254146271364,
+          24.0944227068682,
+          43.02407592378403
+        ],
+        [
+          54.10336528138723,
+          23.564462142631932,
+          42.62973776576242
+        ],
+        [
+          53.08201733955265,
+          23.037878219733678,
+          42.236581113457575
+        ],
+        [
+          52.09344980632745,
+          22.46378119194129,
+          41.827134132331295
+        ],
+        [
+          51.21866382363903,
+          21.75564701560457,
+          41.375012694722884
+        ],
+        [
+          50.65484759559071,
+          20.819545986240737,
+          40.86834224317679
+        ],
+        [
+          50.468080441910054,
+          19.73936925976064,
+          40.35491850895466
+        ],
+        [
+          50.54449156162844,
+          18.630028892171048,
+          39.86882240695842
+        ],
+        [
+          50.77939019819529,
+          17.530372196436307,
+          39.41140969374795
+        ],
+        [
+          51.15437801258945,
+          16.457288754277357,
+          38.98743614233425
+        ],
+        [
+          51.69727138940167,
+          15.437685445884268,
+          38.61325158182667
+        ],
+        [
+          52.27995345873315,
+          14.43494834409902,
+          38.25273933747315
+        ],
+        [
+          52.82284683554537,
+          13.41534503570593,
+          37.878554776965565
+        ],
+        [
+          53.1978388999601,
+          12.342261593546981,
+          37.45458122555187
+        ],
+        [
+          53.432737536526936,
+          11.242607022822522,
+          36.997168512341396
+        ],
+        [
+          53.50914440622476,
+          10.133262405212367,
+          36.51107241034516
+        ],
+        [
+          53.32238150256467,
+          9.053087803742551,
+          35.99764867612302
+        ],
+        [
+          52.75856527451636,
+          8.116984649368433,
+          35.490978224576935
+        ],
+        [
+          51.88377504180737,
+          7.408852598041999,
+          35.03885466195823
+        ],
+        [
+          50.89520750858217,
+          6.834755570249609,
+          34.629409805842236
+        ],
+        [
+          49.87386381676816,
+          6.308171647351356,
+          34.2362531535374
+        ],
+        [
+          48.854683385421176,
+          5.778211083115084,
+          33.841914995515786
+        ]
+      ],
+      "healthy_radius_mm": [
+        1.5,
+        1.4900001000525676,
+        1.4800000672919924,
+        1.4700000345314173,
+        1.4600001345839846,
+        1.4500001018234094,
+        1.4400000690628343,
+        1.4300000363022591,
+        1.4200000035416838,
+        1.4099999707811086,
+        1.4000000708336762,
+        1.390000038073101,
+        1.3800000053125259,
+        1.3699999725519505,
+        1.360000072604518,
+        1.350000039843943,
+        1.100000017708419,
+        1.090384611808877,
+        1.080769205909335,
+        1.0711539328229354,
+        1.061538460516822,
+        1.05192305461728,
+        1.0423077815308806,
+        1.032692309224767,
+        1.023076903325225,
+        1.0134616302388255,
+        1.003846157932712,
+        0.99423075203317,
+        0.9846154125401992,
+        0.9750000730472285,
+        0.9653846007411151,
+        0.9557692612481443,
+        0.9461538553486022,
+        0.9365384494490602,
+        0.9269231099560894,
+        0.9173077040565473,
+        0.9076923645635765,
+        0.8980769586640344,
+        0.8884615527644923,
+        0.8788462132715216,
+        0.8692307409654082,
+        0.8596154014724374,
+        0.8500000619794666,
+        1.0499999867186858,
+        1.040384647225715,
+        1.0307692413261729,
+        1.0211538354266307,
+        1.01153849593366,
+        1.001923090034118,
+        0.9923076841345759,
+        0.9826923446416052,
+        0.973076938742063,
+        0.9634615328425209,
+        0.9538461933495501,
+        0.9442307874500081,
+        0.934615381550466,
+        0.9250000420574952,
+        0.9153846361579531,
+        0.905769230258411,
+        0.8961538907654403,
+        0.8865384848658981,
+        0.8769230789663561,
+        0.867307673066814,
+        0.8576923335738432,
+        0.8480769276743011,
+        0.8384615217747591,
+        0.8288461822817883,
+        0.8192308427888175,
+        0.809615370482704,
+        0.8000000309897333,
+        0.4500000132813143,
+        0.4416666858507873,
+        0.4333333584202603,
+        0.4250000309897333,
+        0.41666667035592064,
+        0.40833334292539364,
+        0.40000001549486663,
+        0.3916666880643397,
+        0.383333327430527,
+        0.375,
+        0.36666667256947305,
+        0.35833331193566037,
+        0.35000001770841904,
+        0.40000001549486663,
+        0.3909091218988242,
+        0.3818181950994961,
+        0.372727268300168,
+        0.3636363747041255,
+        0.3545454479047974,
+        0.345454554308755,
+        0.3363636607127125,
+        0.3272727339133844,
+        0.3181818071140563,
+        0.3090909135180139,
+        0.3000000199219714,
+        0.8000000309897333,
+        0.7904761997520291,
+        0.780952434920896,
+        0.7714286036831918,
+        0.7619047724454876,
+        0.7523810076143546,
+        0.7428571763766503,
+        0.7333333451389461,
+        0.7238095803078131,
+        0.7142857490701088,
+        0.7047619178324045,
+        0.6952381530012716,
+        0.6857143217635673,
+        0.676190490525863,
+        0.6666667256947301,
+        0.6571428944570258,
+        0.6476190632193215,
+        0.6380952983881886,
+        0.6285714671504843,
+        0.61904763591278,
+        0.6095238710816471,
+        0.6000000398439428
+      ],
+      "clot_stations": [
+        67,
+        107,
+        3,
+        79
+      ],
+      "initial_mass": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "particles_mm": [
+        [
+          18.171357158648572,
+          38.43145151633826,
+          41.38654144820752
+        ],
+        [
+          29.69630129982721,
+          40.275178247368785,
+          40.17493589002399
+        ],
+        [
+          37.9576650923438,
+          54.55215535742781,
+          42.931028837713754
+        ],
+        [
+          30.344113967700846,
+          41.29259486479728,
+          37.86670205586383
+        ],
+        [
+          36.02844552824184,
+          56.801820349451624,
+          43.005077486086655
+        ],
+        [
+          30.428608324198905,
+          42.541466450881025,
+          35.58905179425156
+        ],
+        [
+          44.38822763366661,
+          31.998094337575115,
+          43.37280471842545
+        ],
+        [
+          29.34507017529282,
+          44.145026910434794,
+          31.349352827694275
+        ],
+        [
+          51.8441312348449,
+          7.4889153671007085,
+          34.77630126870166
+        ],
+        [
+          26.233899335082715,
+          39.975530799480026,
+          28.712862960399434
+        ],
+        [
+          44.83308526503204,
+          31.918615119070864,
+          43.05747881609414
+        ],
+        [
+          30.522053796113426,
+          41.88774514574415,
+          36.793575515074224
+        ],
+        [
+          36.4701556551897,
+          34.27783475881519,
+          42.25773938532074
+        ],
+        [
+          29.903451462651,
+          43.40823830260667,
+          33.398066524379466
+        ],
+        [
+          23.705384988723708,
+          38.7113424624697,
+          41.65365235311466
+        ],
+        [
+          54.95796916829929,
+          24.240430787023886,
+          43.17660633627492
+        ],
+        [
+          36.49450652595303,
+          42.90798590870764,
+          42.0502833965411
+        ],
+        [
+          29.536158359022107,
+          43.8592705074616,
+          32.114806419533366
+        ],
+        [
+          29.588685074551986,
+          40.46234927586429,
+          40.0761805313434
+        ],
+        [
+          29.65202142123396,
+          39.66623216089675,
+          40.871514048519046
+        ],
+        [
+          36.57460982234406,
+          56.226916383979265,
+          42.908104236553335
+        ],
+        [
+          29.263856687293615,
+          39.56250290999136,
+          41.533292558299195
+        ],
+        [
+          30.307932810829413,
+          41.05079599903787,
+          38.190146528112905
+        ],
+        [
+          23.4352767057307,
+          39.49281142749474,
+          41.53589671169157
+        ],
+        [
+          50.3708305208692,
+          19.223335228424375,
+          40.24875656318705
+        ],
+        [
+          30.23887385866382,
+          40.81751174174511,
+          39.138089543918895
+        ],
+        [
+          29.882518827466125,
+          40.442699745425315,
+          40.1045500287238
+        ],
+        [
+          30.321138676052627,
+          42.66377431255789,
+          34.72012566794115
+        ],
+        [
+          26.869552233055845,
+          39.66839796190155,
+          32.88483604884193
+        ],
+        [
+          29.372328133168406,
+          44.25127531393903,
+          31.414032431341944
+        ],
+        [
+          36.89302966792878,
+          42.83186416590001,
+          42.98924980942981
+        ],
+        [
+          20.882525048138902,
+          38.62545030712167,
+          41.71926924588056
+        ]
+      ],
+      "start_pool_mm": [
+        [
+          53.57722206517848,
+          10.025126897778003,
+          36.16428793750729
+        ],
+        [
+          20.64620587187855,
+          38.71901890823355,
+          41.51830970334362
+        ],
+        [
+          38.43187124341491,
+          43.584193602112805,
+          42.29672285513688
+        ]
+      ],
+      "flow_multiplier": 1.6230103689568147,
+      "driving_pressure": 19.015093425570157
+    },
+    "selected_start_indices": [
+      0,
+      1,
+      2
+    ],
+    "resource_budget": "fixed_total",
+    "per_cluster_lysis_mass_per_s": 0.12,
+    "aggregate_lysis_capacity_mass_per_s": 0.36,
+    "resource_matching_scope": "catalytic_rate_proxy_only; body_size_and_total_magnetic_power_not_matched",
+    "actual_config": {
+      "control_dt_s": 0.1,
+      "episode_duration_s": 180.0,
+      "robot_speed_mm_s": 1.0,
+      "robot_radius_mm": 0.08,
+      "num_robots": 3,
+      "inlet_flow_ml_min": 0.01,
+      "distal_resistance_ratio": 1.0,
+      "geometry_variation": 0.0,
+      "initial_radius_fraction": 0.35,
+      "clot_width_mm": 2.5,
+      "contact_distance_mm": 0.12,
+      "lysis_mass_per_s": 0.12,
+      "lysis_saturation": 4.0,
+      "particle_count": 32,
+      "particle_radius_mm": 0.02,
+      "spatial_fraction": 0.1,
+      "max_substeps_per_control": 100000,
+      "lubrication_floor": 1.0,
+      "robot_initialization": "distributed_branches",
+      "contact_model": "localized_point",
+      "progress_reward_scale": 0.0,
+      "reward_discount": 0.999,
+      "particle_contact_penalty_per_s": 20.0,
+      "particle_initialization": "mixed_branch_density",
+      "inlet_flow_multiplier_min": 1.5,
+      "inlet_flow_multiplier_max": 2.5,
+      "clot_initialization": "random_branches",
+      "obstacle_observation": "predictive_four",
+      "target_observation": "routed_assigned_own",
+      "progress_potential": "nearest",
+      "command_speed": "bounded",
+      "action_prior": "none",
+      "action_residual_scale": 1.0,
+      "action_avoid_gain": 0.0,
+      "action_stop_deadzone": 0.0,
+      "action_wait_clearance": 0.0,
+      "action_wait_horizon_s": 0.0,
+      "action_shield_clearance": 0.0,
+      "action_shield_horizon_s": 0.0,
+      "action_wall_gain": 0.0,
+      "action_wall_margin": 1.0,
+      "anatomy": "mca_m1_lvo",
+      "particle_collision_event_penalty": 6.0,
+      "particle_near_penalty_per_s": 1.0,
+      "particle_safety_margin_mm": 0.15,
+      "particle_prediction_horizon_s": 1.0,
+      "assumption_provenance": "Original-scale MCA controlled in-vitro simulation; randomized point targets, body starts and advected obstacle density. Shared uncalibrated pressure flow and ideal independent actuators, not hardware or clinical validation."
+    },
+    "revision": "EXP0046_v2_observation_paired"
+  },
+  "actual_config": {
+    "control_dt_s": 0.1,
+    "episode_duration_s": 180.0,
+    "robot_speed_mm_s": 1.0,
+    "robot_radius_mm": 0.08,
+    "num_robots": 3,
+    "inlet_flow_ml_min": 0.01,
+    "distal_resistance_ratio": 1.0,
+    "geometry_variation": 0.0,
+    "initial_radius_fraction": 0.35,
+    "clot_width_mm": 2.5,
+    "contact_distance_mm": 0.12,
+    "lysis_mass_per_s": 0.12,
+    "lysis_saturation": 4.0,
+    "particle_count": 32,
+    "particle_radius_mm": 0.02,
+    "spatial_fraction": 0.1,
+    "max_substeps_per_control": 100000,
+    "lubrication_floor": 1.0,
+    "robot_initialization": "distributed_branches",
+    "contact_model": "localized_point",
+    "progress_reward_scale": 0.0,
+    "reward_discount": 0.999,
+    "particle_contact_penalty_per_s": 20.0,
+    "particle_initialization": "mixed_branch_density",
+    "inlet_flow_multiplier_min": 1.5,
+    "inlet_flow_multiplier_max": 2.5,
+    "clot_initialization": "random_branches",
+    "obstacle_observation": "predictive_four",
+    "target_observation": "routed_assigned_own",
+    "progress_potential": "nearest",
+    "command_speed": "bounded",
+    "action_prior": "none",
+    "action_residual_scale": 1.0,
+    "action_avoid_gain": 0.0,
+    "action_stop_deadzone": 0.0,
+    "action_wait_clearance": 0.0,
+    "action_wait_horizon_s": 0.0,
+    "action_shield_clearance": 0.0,
+    "action_shield_horizon_s": 0.0,
+    "action_wall_gain": 0.0,
+    "action_wall_margin": 1.0,
+    "anatomy": "mca_m1_lvo",
+    "particle_collision_event_penalty": 6.0,
+    "particle_near_penalty_per_s": 1.0,
+    "particle_safety_margin_mm": 0.15,
+    "particle_prediction_horizon_s": 1.0,
+    "assumption_provenance": "Original-scale MCA controlled in-vitro simulation; randomized point targets, body starts and advected obstacle density. Shared uncalibrated pressure flow and ideal independent actuators, not hardware or clinical validation."
+  },
+  "final_state_hash": "ddee03a4cfa3b14697d36eed70316dfd09761484028d7de2ba751c0136d2c4c9",
+  "controller_config": {
+    "method": "multi_parallel",
+    "clusters": 3,
+    "min_spacing_mm": 2.0,
+    "deadlock_window_steps": 10,
+    "wait_horizon_s": 0.5,
+    "observation_noise": 0.025,
+    "peer_sensing_radius_mm": 6.0,
+    "position_noise_mm": 0.02,
+    "spacing_buffer_mm": 0.1,
+    "control_seed": 42
+  },
+  "source_hashes": {
+    "marl/multicluster.py": "9b4bc0201c082e6e789c7df1ad5ca43dccfb2464a0337871123c58df25795217",
+    "marl/multicluster_observation.py": "020a23426c88056918966798029f4579508f283e2c2c8ce3cb174e122c7488a3",
+    "marl/partial_obs.py": "2cc6492436f4b7975149fcd3a3fa15d5065a7bc755646718fa2e396e5b6a714f",
+    "marl/fair_reactive.py": "4ca3675d42f1899efac2fe71a363de259ec0f1b7729e3955429c5e8c49bf0d52",
+    "marl/teacher.py": "6711942de8ac8e5c5738855688b7521069d59f593bd73bc1f9768a183400e999",
+    "scripts/evaluate_multicluster.py": "6b6ad6c91f3779736659a9b29063fcec60bad77514677b31d03871ea2e2d9490",
+    "scripts/multicluster_protocol.py": "872c4f95b74d71a828a797806eb211f678f0ed10444462671e5f4563b80cf46b",
+    "environments/mca_physical_env.py": "5954c655a368a21936ffa41b2b6d975b228275edeffe2ef0f8574eeb42cbaa65",
+    "environments/mca_physical_dynamics.py": "cf195e2112f3dd2a7d2359cc07ea5110025fc964338feb74faf492166209f530",
+    "environments/mca_physiology.py": "e273635482da42f55921eaa1b1c173045f5bb9bc8da8a49f157d49660e170507"
+  },
+  "runtime": {
+    "python": "3.10.20",
+    "numpy": "1.26.4"
+  },
+  "controller": {
+    "method": "multi_parallel",
+    "clusters": 3,
+    "yield_events": 0,
+    "yield_agent_steps": 0,
+    "persistent_yield_events": 0,
+    "predicted_conflict_agent_steps": 0,
+    "safety_certificate": false,
+    "controller_input": "measured_observation_only"
+  },
+  "trace": [
+    {
+      "step": 1,
+      "elapsed_s": 0.1,
+      "removal": 0.0,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 18.448966255068928,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 100,
+      "elapsed_s": 9.99999999999998,
+      "removal": 0.4259893972141593,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 9.32803011147197,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 200,
+      "elapsed_s": 20.000000000000014,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 300,
+      "elapsed_s": 30.000000000000156,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 400,
+      "elapsed_s": 40.0000000000003,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 500,
+      "elapsed_s": 50.00000000000044,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 600,
+      "elapsed_s": 60.00000000000058,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 700,
+      "elapsed_s": 70.0000000000003,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 800,
+      "elapsed_s": 79.99999999999973,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 900,
+      "elapsed_s": 89.99999999999916,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1000,
+      "elapsed_s": 99.9999999999986,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1100,
+      "elapsed_s": 109.99999999999802,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1200,
+      "elapsed_s": 119.99999999999746,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1300,
+      "elapsed_s": 129.9999999999969,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1400,
+      "elapsed_s": 139.99999999999633,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1500,
+      "elapsed_s": 149.99999999999577,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1600,
+      "elapsed_s": 159.9999999999952,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1700,
+      "elapsed_s": 169.99999999999463,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1800,
+      "elapsed_s": 179.99999999999406,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    },
+    {
+      "step": 1801,
+      "elapsed_s": 180.0,
+      "removal": 0.5,
+      "control": {
+        "method": "multi_parallel",
+        "clusters": 3,
+        "yield_events": 0,
+        "yield_agent_steps": 0,
+        "persistent_yield_events": 0,
+        "predicted_conflict_agent_steps": 0,
+        "safety_certificate": false,
+        "controller_input": "measured_observation_only"
+      },
+      "spacing": {
+        "minimum_spacing_mm": 6.291081899918925,
+        "spacing_violation_pair_s": 0.0,
+        "spacing_violation_steps": 0,
+        "initial_spacing_violation": false,
+        "spacing_compliant": true,
+        "spacing_measurement": "accepted_substep_piecewise_linear"
+      }
+    }
+  ],
+  "reward": -0.5272161243854069,
+  "development_guard_hit": false,
+  "status": "completed",
+  "local_observation": true,
+  "sealed_test_used": false,
+  "resource_budget": "fixed_total",
+  "task_success": false,
+  "safe_success": false,
+  "collision_free": false,
+  "safe_collision_free": false,
+  "wall_contact_s": 7.9323320465564535,
+  "wall_contact_ratio": 0.014689503789918616,
+  "max_continuous_wall_contact_s": 0.1,
+  "timeout": true,
+  "removal": 0.5,
+  "elapsed_s": 180.0,
+  "termination_reason": "time_limit",
+  "minimum_spacing_mm": 6.291081899918925,
+  "spacing_violation_pair_s": 0.0,
+  "spacing_violation_steps": 0,
+  "initial_spacing_violation": false,
+  "spacing_compliant": true,
+  "spacing_measurement": "accepted_substep_piecewise_linear",
+  "cluster_safe_success": false,
+  "particle_contact_s": 0.0,
+  "particle_collision_events": 0,
+  "robot_pair_contact_s": 0.0,
+  "lost_clusters": 0,
+  "time_to_removal_s": {
+    "50": 12.499999999999972,
+    "90": null,
+    "100": null
+  },
+  "removal_auc_s": 86.6650890706447,
+  "removed_mass": 2.0,
+  "active_cluster_s": 540.0000000000554,
+  "mass_per_cluster_s": 0.003703703703703324,
+  "path_mm": 508.0620324549167,
+  "command_squared_s": 510.5670623708711,
+  "simulation_walltime_s": 6.112953572999686
+}

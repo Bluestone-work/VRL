@@ -1,0 +1,33 @@
+{
+  "audit_passed": true,
+  "issues": [],
+  "requested": 12,
+  "completed": 12,
+  "scenes": 12,
+  "phase": "posthoc_old_observer_ablation",
+  "confirmation_accessed": false,
+  "learning_superiority_established": false,
+  "arms": {
+    "old_tracker_memory_n3": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8680605657691455,
+        "removal_auc_180": 0.6771801734924415,
+        "wall_contact_s": 23.620153923558107,
+        "spacing_violation_pair_s": 0.15334210222076916,
+        "minimum_spacing_mm": 2.070957618883055,
+        "supervisor_infeasible_steps": 58.583333333333336
+      },
+      "spacing_violating_episodes": 5
+    }
+  },
+  "comparisons": [],
+  "untrained_equivalence": null
+}

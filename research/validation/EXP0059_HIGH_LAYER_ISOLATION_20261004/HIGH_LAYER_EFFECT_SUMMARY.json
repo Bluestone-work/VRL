@@ -1,0 +1,15 @@
+{
+  "fixed_low_r_mappo": {
+    "removal": 0.8020833333333333,
+    "removal_auc_180": 0.6309724790553548,
+    "wall_contact_s": 28.749567494049934,
+    "cluster_safe_success": 0.08333333333333333
+  },
+  "fixed_low_graph_ppo": {
+    "removal": 0.75,
+    "removal_auc_180": 0.6070409379688169,
+    "wall_contact_s": 24.454324313012968,
+    "cluster_safe_success": 0.0
+  },
+  "conclusion": "Removal follows low-level source; high-level replacement has negligible removal effect under this interface."
+}

@@ -1,0 +1,656 @@
+{
+  "audit": {
+    "passed": false,
+    "issues": [
+      "multi_unshielded_n3_d2_s42_fixed_total, seed 1302010005: process_exit",
+      "Runner reports an incomplete or failed cell"
+    ],
+    "requested": 260,
+    "recorded": 260,
+    "completed": 259,
+    "failed": 1,
+    "unique_scenes": 10,
+    "accepted_seeds": [
+      1302010000,
+      1302010001,
+      1302010002,
+      1302010003,
+      1302010004,
+      1302010005,
+      1302010006,
+      1302010007,
+      1302010008,
+      1302010009
+    ],
+    "raw_files": [
+      {
+        "path": "single_sequential_n1_d2_s42_fixed_total.jsonl",
+        "sha256": "d98b7b3b9909b20828b9c8927e4286143b9529697fe6c6b6721b6f9175c1fab4"
+      },
+      {
+        "path": "multi_parallel_n2_d1_s42_fixed_total.jsonl",
+        "sha256": "e65150fade01f24e2f871e58accb240c8cec69e819fb0caa87a4f94357793c73"
+      },
+      {
+        "path": "multi_parallel_n2_d2_s42_fixed_total.jsonl",
+        "sha256": "794e6d103bf7a86baba86cb660686a05c5922aaf8f1a3ac70eeae52d785b46e8"
+      },
+      {
+        "path": "multi_parallel_n2_d4_s42_fixed_total.jsonl",
+        "sha256": "dcf6b4ac255751c66b5caeb0cd296315a156d48449cda995ab846e9304752389"
+      },
+      {
+        "path": "multi_parallel_n3_d1_s42_fixed_total.jsonl",
+        "sha256": "2c78ef0bb08d477a5ea28e91e5faa5ef17b9b8b349a97562474d56dc59cb2312"
+      },
+      {
+        "path": "multi_parallel_n3_d2_s42_fixed_total.jsonl",
+        "sha256": "1bf2a65eaae6ef87948736361c181a74947d5929176af976fc4e6be90f7b5eb5"
+      },
+      {
+        "path": "multi_parallel_n3_d4_s42_fixed_total.jsonl",
+        "sha256": "a635e7a6c9027e1af882f34a78bc7cb1ac9bcb34df7861c425dfc6964081c24e"
+      },
+      {
+        "path": "single_sequential_n1_d2_s43_fixed_total.jsonl",
+        "sha256": "b91f5066358ecc7b20717a4c60fdc6b52086efda679852d7561d488d3506d44f"
+      },
+      {
+        "path": "multi_parallel_n2_d1_s43_fixed_total.jsonl",
+        "sha256": "0d540230b3c7d79129e86fdf00db0b019476ded167add137e7204c206d243a7e"
+      },
+      {
+        "path": "multi_parallel_n2_d2_s43_fixed_total.jsonl",
+        "sha256": "06b76ccc0827c2b0564d24365da18fb51c59b2b7b2fcf539534693966f1c7453"
+      },
+      {
+        "path": "multi_parallel_n2_d4_s43_fixed_total.jsonl",
+        "sha256": "1ca1d41f11aee47061dffad2949e920f665da1b9fedc76f07024e8e335141c9c"
+      },
+      {
+        "path": "multi_parallel_n3_d1_s43_fixed_total.jsonl",
+        "sha256": "b69cf1b49b2a53d5555174794eb26350da4cadad5bcedaac9da680b54fee32c3"
+      },
+      {
+        "path": "multi_parallel_n3_d2_s43_fixed_total.jsonl",
+        "sha256": "61deb47958d8a1b4fbdc6527d0d649f078c4ab056a4affba6620dc035ccbaa0d"
+      },
+      {
+        "path": "multi_parallel_n3_d4_s43_fixed_total.jsonl",
+        "sha256": "86b7aade648a51fdafd561c3cf393485ea9bff92e34742aa0ae82ef35cc2582f"
+      },
+      {
+        "path": "single_sequential_n1_d2_s44_fixed_total.jsonl",
+        "sha256": "add30b8d2ac8053c7f097323ea6e302c22738e200931f0927dcedf2949163822"
+      },
+      {
+        "path": "multi_parallel_n2_d1_s44_fixed_total.jsonl",
+        "sha256": "c7c20beff17a8b87da730bf08d195b96e9ef506eba977f1f37636861c02ecd7b"
+      },
+      {
+        "path": "multi_parallel_n2_d2_s44_fixed_total.jsonl",
+        "sha256": "9eb948d4d24656c5f9a7a20509702b7edcfb9ff99e2a5e938ff6fa5d72620908"
+      },
+      {
+        "path": "multi_parallel_n2_d4_s44_fixed_total.jsonl",
+        "sha256": "8544020d7fac202d8e0b9ae5a30d71386a0fda007a238c4b24f7d77eda265923"
+      },
+      {
+        "path": "multi_parallel_n3_d1_s44_fixed_total.jsonl",
+        "sha256": "b190cdabe8df7015374f5d1220a387a8b51eabb43a874b890c55720641a2609b"
+      },
+      {
+        "path": "multi_parallel_n3_d2_s44_fixed_total.jsonl",
+        "sha256": "745d9b6d287a30c6a938d5de19e6e77847b636a575ba16c9a8e2dc184df1fbd3"
+      },
+      {
+        "path": "multi_parallel_n3_d4_s44_fixed_total.jsonl",
+        "sha256": "0a6300ac2904f87ea61c32c5b2ca70f85e85370c28712da0fc215d1cf230c713"
+      },
+      {
+        "path": "single_route_n1_d2_s42_fixed_total.jsonl",
+        "sha256": "831a725a7159db30900f455c5d611e966cb26d35c0c54b43ceb3511cbc2a7fbc"
+      },
+      {
+        "path": "multi_unshielded_n2_d2_s42_fixed_total.jsonl",
+        "sha256": "3a6b8524b40af6063c0c172983c1009215a0e07752b85636a3c843e53e71d5df"
+      },
+      {
+        "path": "multi_parallel_n2_d2_s42_per_cluster.jsonl",
+        "sha256": "4fe478f6dd27abfd917f3e8096086433da0b9e6351d7b959f07829717fc072d1"
+      },
+      {
+        "path": "multi_unshielded_n3_d2_s42_fixed_total.jsonl",
+        "sha256": "d709f49b6304eacb3054837f40f501708a7c72b4e267e63a9d51a27bdd02e954"
+      },
+      {
+        "path": "multi_parallel_n3_d2_s42_per_cluster.jsonl",
+        "sha256": "f181adfeb4a6c069e2294433e90ecb493940e804b88c507e30584d57aac5c766"
+      }
+    ]
+  },
+  "descriptive_only": {
+    "single_sequential_n1_d2_fixed_total": {
+      "requested": 30,
+      "recorded": 30,
+      "completed": 30,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.16666666666666666,
+        0.16666666666666666
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.16666666666666666,
+        "safe_success": 0.16666666666666666,
+        "cluster_safe_success": 0.16666666666666666,
+        "removal": 0.3416666666666667,
+        "wall_contact_s": 0.6800265154849436,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.0,
+        "lost_clusters": 0.0,
+        "path_mm": 160.44417356187395,
+        "command_squared_s": 161.46634416745093,
+        "mass_per_cluster_s": 0.011475697125240407,
+        "active_cluster_s": 164.7800000000029,
+        "timeout": 0.8333333333333334,
+        "auc_180_fraction": 0.26463688178705996,
+        "spacing_violation_rate": 0.0,
+        "wall_unsafe_rate": 0.1,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.26666666666666666,
+        "t50_horizon_penalty_s": 140.96666666666673,
+        "t90_reached_rate": 0.16666666666666666,
+        "t90_horizon_penalty_s": 164.59666666666652,
+        "t100_reached_rate": 0.16666666666666666,
+        "t100_horizon_penalty_s": 164.77999999999986,
+        "yield_events": 0.0,
+        "yield_agent_steps": 0.0,
+        "persistent_yield_events": 0.0
+      }
+    },
+    "multi_parallel_n2_d1_fixed_total": {
+      "requested": 30,
+      "recorded": 30,
+      "completed": 30,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.36666666666666664,
+        "safe_success": 0.3333333333333333,
+        "cluster_safe_success": 0.3333333333333333,
+        "removal": 0.6166666666666667,
+        "wall_contact_s": 0.845491346667553,
+        "particle_contact_s": 0.014776480716328281,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.08043338224704619,
+        "lost_clusters": 0.0,
+        "path_mm": 264.42183937075805,
+        "command_squared_s": 263.4216026392727,
+        "mass_per_cluster_s": 0.014695731711045257,
+        "active_cluster_s": 284.90000000000475,
+        "timeout": 0.6333333333333333,
+        "auc_180_fraction": 0.49810475366344326,
+        "spacing_violation_rate": 0.13333333333333333,
+        "wall_unsafe_rate": 0.2,
+        "particle_contact_rate": 0.03333333333333333,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.7,
+        "t50_horizon_penalty_s": 77.68666666666665,
+        "t90_reached_rate": 0.36666666666666664,
+        "t90_horizon_penalty_s": 141.6399999999998,
+        "t100_reached_rate": 0.36666666666666664,
+        "t100_horizon_penalty_s": 142.44999999999976,
+        "yield_events": 134.6,
+        "yield_agent_steps": 213.96666666666667,
+        "persistent_yield_events": 0.7
+      }
+    },
+    "multi_parallel_n2_d2_fixed_total": {
+      "requested": 30,
+      "recorded": 30,
+      "completed": 30,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.3,
+        0.3
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.3,
+        "safe_success": 0.3,
+        "cluster_safe_success": 0.3,
+        "removal": 0.5666666666666667,
+        "wall_contact_s": 0.9008885439712728,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.07904158936183073,
+        "lost_clusters": 0.0,
+        "path_mm": 267.6594682454986,
+        "command_squared_s": 266.6383878572156,
+        "mass_per_cluster_s": 0.014026153639422839,
+        "active_cluster_s": 287.8266666666739,
+        "timeout": 0.7,
+        "auc_180_fraction": 0.48552652626012827,
+        "spacing_violation_rate": 0.13333333333333333,
+        "wall_unsafe_rate": 0.2,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.6666666666666666,
+        "t50_horizon_penalty_s": 77.80333333333344,
+        "t90_reached_rate": 0.3,
+        "t90_horizon_penalty_s": 143.25000000000009,
+        "t100_reached_rate": 0.3,
+        "t100_horizon_penalty_s": 143.9133333333334,
+        "yield_events": 185.6,
+        "yield_agent_steps": 260.8333333333333,
+        "persistent_yield_events": 0.5
+      }
+    },
+    "multi_parallel_n2_d4_fixed_total": {
+      "requested": 30,
+      "recorded": 30,
+      "completed": 30,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.3,
+        0.3
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.3333333333333333,
+        "safe_success": 0.3,
+        "cluster_safe_success": 0.3,
+        "removal": 0.5916666666666667,
+        "wall_contact_s": 2.734559147285435,
+        "particle_contact_s": 0.010000000000000002,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.0032302772547905256,
+        "lost_clusters": 0.0,
+        "path_mm": 264.8862304466132,
+        "command_squared_s": 264.16195614753764,
+        "mass_per_cluster_s": 0.014396360467310736,
+        "active_cluster_s": 284.6200000000008,
+        "timeout": 0.6666666666666666,
+        "auc_180_fraction": 0.49534192389502907,
+        "spacing_violation_rate": 0.03333333333333333,
+        "wall_unsafe_rate": 0.3333333333333333,
+        "particle_contact_rate": 0.03333333333333333,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.6333333333333333,
+        "t50_horizon_penalty_s": 81.42000000000007,
+        "t90_reached_rate": 0.3333333333333333,
+        "t90_horizon_penalty_s": 141.57000000000002,
+        "t100_reached_rate": 0.3333333333333333,
+        "t100_horizon_penalty_s": 142.30999999999997,
+        "yield_events": 154.06666666666666,
+        "yield_agent_steps": 228.93333333333334,
+        "persistent_yield_events": 0.16666666666666666
+      }
+    },
+    "multi_parallel_n3_d1_fixed_total": {
+      "requested": 30,
+      "recorded": 30,
+      "completed": 30,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.3,
+        0.3
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.6333333333333333,
+        "safe_success": 0.3333333333333333,
+        "cluster_safe_success": 0.3,
+        "removal": 0.825,
+        "wall_contact_s": 11.098225256769135,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.09272112747596072,
+        "lost_clusters": 0.0,
+        "path_mm": 308.0867655220869,
+        "command_squared_s": 304.63452334559565,
+        "mass_per_cluster_s": 0.013264152841964782,
+        "active_cluster_s": 358.12000000000984,
+        "timeout": 0.36666666666666664,
+        "auc_180_fraction": 0.6764793043359391,
+        "spacing_violation_rate": 0.2,
+        "wall_unsafe_rate": 0.6666666666666666,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.9,
+        "t50_horizon_penalty_s": 33.99333333333335,
+        "t90_reached_rate": 0.6333333333333333,
+        "t90_horizon_penalty_s": 115.15666666666624,
+        "t100_reached_rate": 0.6333333333333333,
+        "t100_horizon_penalty_s": 119.37333333333278,
+        "yield_events": 237.86666666666667,
+        "yield_agent_steps": 475.0,
+        "persistent_yield_events": 1.5333333333333334
+      }
+    },
+    "multi_parallel_n3_d2_fixed_total": {
+      "requested": 30,
+      "recorded": 30,
+      "completed": 30,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.16666666666666666,
+        0.16666666666666666
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.43333333333333335,
+        "safe_success": 0.3,
+        "cluster_safe_success": 0.16666666666666666,
+        "removal": 0.6986014502682962,
+        "wall_contact_s": 21.768488231527687,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.4575952385063778,
+        "lost_clusters": 0.0,
+        "path_mm": 336.9889661683121,
+        "command_squared_s": 340.4379198920514,
+        "mass_per_cluster_s": 0.011405713107709667,
+        "active_cluster_s": 395.19000000001773,
+        "timeout": 0.5666666666666667,
+        "auc_180_fraction": 0.5979924091616119,
+        "spacing_violation_rate": 0.3333333333333333,
+        "wall_unsafe_rate": 0.6333333333333333,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.8333333333333334,
+        "t50_horizon_penalty_s": 46.52999999999996,
+        "t90_reached_rate": 0.43333333333333335,
+        "t90_horizon_penalty_s": 128.62333333333333,
+        "t100_reached_rate": 0.43333333333333335,
+        "t100_horizon_penalty_s": 131.72999999999993,
+        "yield_events": 341.1666666666667,
+        "yield_agent_steps": 636.0666666666667,
+        "persistent_yield_events": 1.7333333333333334
+      }
+    },
+    "multi_parallel_n3_d4_fixed_total": {
+      "requested": 30,
+      "recorded": 30,
+      "completed": 30,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.13333333333333333,
+        0.13333333333333333
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.43333333333333335,
+        "safe_success": 0.13333333333333333,
+        "cluster_safe_success": 0.13333333333333333,
+        "removal": 0.7297948557433155,
+        "wall_contact_s": 24.462543602662887,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.248101828812597,
+        "lost_clusters": 0.0,
+        "path_mm": 357.8146977728966,
+        "command_squared_s": 358.376237634931,
+        "mass_per_cluster_s": 0.010004668177004128,
+        "active_cluster_s": 416.84000000001834,
+        "timeout": 0.5666666666666667,
+        "auc_180_fraction": 0.606468882486641,
+        "spacing_violation_rate": 0.5,
+        "wall_unsafe_rate": 0.8666666666666667,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.8666666666666667,
+        "t50_horizon_penalty_s": 42.239999999999995,
+        "t90_reached_rate": 0.4666666666666667,
+        "t90_horizon_penalty_s": 136.0333333333329,
+        "t100_reached_rate": 0.43333333333333335,
+        "t100_horizon_penalty_s": 138.9466666666663,
+        "yield_events": 362.0,
+        "yield_agent_steps": 647.9333333333333,
+        "persistent_yield_events": 0.7
+      }
+    },
+    "single_route_n1_d2_fixed_total": {
+      "requested": 10,
+      "recorded": 10,
+      "completed": 10,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.4,
+        0.4
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.4,
+        "safe_success": 0.4,
+        "cluster_safe_success": 0.4,
+        "removal": 0.5319396052076563,
+        "wall_contact_s": 0.13726123579217325,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.0,
+        "lost_clusters": 0.0,
+        "path_mm": 148.72504494281884,
+        "command_squared_s": 150.1935974704602,
+        "mass_per_cluster_s": 0.01871065630964731,
+        "active_cluster_s": 151.2700000000039,
+        "timeout": 0.6,
+        "auc_180_fraction": 0.35512123079597807,
+        "spacing_violation_rate": 0.0,
+        "wall_unsafe_rate": 0.0,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.4,
+        "t50_horizon_penalty_s": 118.86000000000004,
+        "t90_reached_rate": 0.4,
+        "t90_horizon_penalty_s": 150.81999999999928,
+        "t100_reached_rate": 0.4,
+        "t100_horizon_penalty_s": 151.26999999999924,
+        "yield_events": 0.0,
+        "yield_agent_steps": 0.0,
+        "persistent_yield_events": 0.0
+      }
+    },
+    "multi_unshielded_n2_d2_fixed_total": {
+      "requested": 10,
+      "recorded": 10,
+      "completed": 10,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.3,
+        0.3
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.5,
+        "safe_success": 0.4,
+        "cluster_safe_success": 0.3,
+        "removal": 0.675,
+        "wall_contact_s": 0.8200784358342073,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 41.222592517676546,
+        "spacing_violation_pair_s": 50.02595707778529,
+        "lost_clusters": 0.0,
+        "path_mm": 246.95112316424274,
+        "command_squared_s": 249.3279541215868,
+        "mass_per_cluster_s": 0.01757465801195971,
+        "active_cluster_s": 252.9599999999994,
+        "timeout": 0.5,
+        "auc_180_fraction": 0.5612527966020697,
+        "spacing_violation_rate": 0.5,
+        "wall_unsafe_rate": 0.2,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.5,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.8,
+        "t50_horizon_penalty_s": 56.25000000000009,
+        "t90_reached_rate": 0.5,
+        "t90_horizon_penalty_s": 125.48999999999992,
+        "t100_reached_rate": 0.5,
+        "t100_horizon_penalty_s": 126.47999999999988,
+        "yield_events": 0.0,
+        "yield_agent_steps": 0.0,
+        "persistent_yield_events": 0.0
+      }
+    },
+    "multi_parallel_n2_d2_per_cluster": {
+      "requested": 10,
+      "recorded": 10,
+      "completed": 10,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.3,
+        0.3
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.3,
+        "safe_success": 0.3,
+        "cluster_safe_success": 0.3,
+        "removal": 0.6,
+        "wall_contact_s": 1.5325139123002685,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.22695212301311346,
+        "lost_clusters": 0.0,
+        "path_mm": 266.48247519739937,
+        "command_squared_s": 265.9559797938233,
+        "mass_per_cluster_s": 0.01610367791524144,
+        "active_cluster_s": 283.4000000000061,
+        "timeout": 0.7,
+        "auc_180_fraction": 0.5030779666047419,
+        "spacing_violation_rate": 0.1,
+        "wall_unsafe_rate": 0.3,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.7,
+        "t50_horizon_penalty_s": 71.09000000000009,
+        "t90_reached_rate": 0.3,
+        "t90_horizon_penalty_s": 141.35000000000014,
+        "t100_reached_rate": 0.3,
+        "t100_horizon_penalty_s": 141.70000000000013,
+        "yield_events": 195.1,
+        "yield_agent_steps": 246.6,
+        "persistent_yield_events": 0.5
+      }
+    },
+    "multi_unshielded_n3_d2_fixed_total": {
+      "requested": 10,
+      "recorded": 10,
+      "completed": 9,
+      "failed": 1,
+      "missing": 1,
+      "cluster_safe_success_bounds": [
+        0.1,
+        0.2
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.6666666666666666,
+        "safe_success": 0.5555555555555556,
+        "cluster_safe_success": 0.1111111111111111,
+        "removal": 0.8333333333333334,
+        "wall_contact_s": 0.682609471051319,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 85.43785716528191,
+        "spacing_violation_pair_s": 100.92759543050384,
+        "lost_clusters": 0.0,
+        "path_mm": 303.4104449860107,
+        "command_squared_s": 307.7630721745743,
+        "mass_per_cluster_s": 0.016448523809859436,
+        "active_cluster_s": 309.5000000000118,
+        "timeout": 0.3333333333333333,
+        "auc_180_fraction": 0.7049423869712574,
+        "spacing_violation_rate": 0.8888888888888888,
+        "wall_unsafe_rate": 0.2222222222222222,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.7777777777777778,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.8888888888888888,
+        "t50_horizon_penalty_s": 35.25555555555557,
+        "t90_reached_rate": 0.6666666666666666,
+        "t90_horizon_penalty_s": 101.44444444444447,
+        "t100_reached_rate": 0.6666666666666666,
+        "t100_horizon_penalty_s": 103.16666666666667,
+        "yield_events": 0.0,
+        "yield_agent_steps": 0.0,
+        "persistent_yield_events": 0.0
+      }
+    },
+    "multi_parallel_n3_d2_per_cluster": {
+      "requested": 10,
+      "recorded": 10,
+      "completed": 10,
+      "failed": 0,
+      "missing": 0,
+      "cluster_safe_success_bounds": [
+        0.2,
+        0.2
+      ],
+      "conditional_completed_means": {
+        "task_success": 0.4,
+        "safe_success": 0.2,
+        "cluster_safe_success": 0.2,
+        "removal": 0.675,
+        "wall_contact_s": 11.272337955676782,
+        "particle_contact_s": 0.0,
+        "robot_pair_contact_s": 0.0,
+        "spacing_violation_pair_s": 0.7175060856682254,
+        "lost_clusters": 0.0,
+        "path_mm": 351.3857331881694,
+        "command_squared_s": 345.4851534903327,
+        "mass_per_cluster_s": 0.013906114191058975,
+        "active_cluster_s": 395.28000000001504,
+        "timeout": 0.6,
+        "auc_180_fraction": 0.6023016333113083,
+        "spacing_violation_rate": 0.2,
+        "wall_unsafe_rate": 0.7,
+        "particle_contact_rate": 0.0,
+        "pair_contact_rate": 0.0,
+        "lost_any_rate": 0.0,
+        "t50_reached_rate": 0.8,
+        "t50_horizon_penalty_s": 43.699999999999996,
+        "t90_reached_rate": 0.4,
+        "t90_horizon_penalty_s": 131.2999999999999,
+        "t100_reached_rate": 0.4,
+        "t100_horizon_penalty_s": 131.7599999999999,
+        "yield_events": 427.9,
+        "yield_agent_steps": 649.4,
+        "persistent_yield_events": 1.2
+      }
+    }
+  },
+  "comparisons_blocked": true,
+  "failed_attempts": [
+    {
+      "seed": 1302010005,
+      "method": "multi_unshielded",
+      "clusters": 3,
+      "control_seed": 42,
+      "resource_budget": "fixed_total",
+      "min_spacing_threshold_mm": 2.0,
+      "sealed_test_used": false,
+      "status": "process_exit",
+      "returncode": -11,
+      "stderr_path": "research/validation/EXP0046_V2_PAIRED_20261004/multi_unshielded_n3_d2_s42_fixed_total_parts/episode_0005.stderr.txt",
+      "process_walltime_s": 6.894025593996048,
+      "_arm": "multi_unshielded_n3_d2_fixed_total"
+    }
+  ],
+  "analysis_source_sha256": "4857d708ea76233644e5f506f5e3a70b28961e4a40b4708ba84b642b8c9aeacc"
+}

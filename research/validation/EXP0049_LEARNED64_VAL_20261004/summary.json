@@ -1,0 +1,60 @@
+{
+  "requested": 36,
+  "recorded": 36,
+  "completed": 36,
+  "failed_attempts": [],
+  "arms": {
+    "learned_s42_t65536_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.2360008108976166,
+        "removal_auc_180": 0.20126148341232675,
+        "wall_contact_s": 70.58012116948937,
+        "spacing_violation_pair_s": 6.087808395996419
+      }
+    },
+    "learned_s43_t65536_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.059892881389151324,
+        "removal_auc_180": 0.04463845973959312,
+        "wall_contact_s": 26.72167560550678,
+        "spacing_violation_pair_s": 0.013447666282129648
+      }
+    },
+    "learned_s44_t65536_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.09905978605492634,
+        "removal_auc_180": 0.0873718571236365,
+        "wall_contact_s": 39.19780591630295,
+        "spacing_violation_pair_s": 0.0
+      }
+    }
+  },
+  "numerical_gate_passed": true
+}

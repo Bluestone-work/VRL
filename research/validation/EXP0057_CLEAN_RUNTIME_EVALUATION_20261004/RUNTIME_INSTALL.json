@@ -1,0 +1,20 @@
+{
+  "isolated_prefix": "/home/wj/.cache/vascular-research/cpu312-clean-20261004",
+  "created_from": "/usr/bin/python3 (3.12.3)",
+  "system_site_packages": false,
+  "pip_indexes": [
+    "https://pypi.org/simple",
+    "https://download.pytorch.org/whl/cpu"
+  ],
+  "explicit_pins": [
+    "numpy==1.26.4",
+    "scipy==1.11.4",
+    "torch==2.3.0+cpu",
+    "gymnasium==1.2.3",
+    "pytest==8.3.4",
+    "matplotlib==3.9.4"
+  ],
+  "bootstrap": "System ensurepip unavailable; venv --without-pip then system pip --python isolated interpreter. Original conda and generic venv unmodified.",
+  "native_root_cause_fixed": false,
+  "locked_packages": "runtime_packages.txt"
+}

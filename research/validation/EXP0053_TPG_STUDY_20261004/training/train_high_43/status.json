@@ -1,0 +1,25 @@
+{
+  "phase": "completed",
+  "steps": 8192,
+  "episodes": 5,
+  "updates": 8,
+  "high": {
+    "samples": 7,
+    "loss": 1.2128183444341023,
+    "kl": 1.7029898676431305e-08,
+    "aux": 0.0
+  },
+  "low": {
+    "samples": 0
+  },
+  "wall_s": 55.18386880098842,
+  "fps": 148.4491775226205,
+  "checkpoint": "research/validation/EXP0053_TPG_STUDY_20261004/training/train_high_43/policy_8192.pt",
+  "checkpoint_sha256": "c7cd55dee87a0a487bea5e6f3d9b37263af43547313696b311442f28c0be206f",
+  "model_l2_change": {
+    "high": 0.5225982040779414,
+    "low": 0.0
+  },
+  "high_samples": 83,
+  "low_samples": 0
+}

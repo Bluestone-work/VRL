@@ -1,0 +1,26 @@
+{
+  "name": "memory_n1_1960000007",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_aligned_options",
+    "evaluate",
+    "--policy",
+    "memory",
+    "--variant",
+    "hierarchical",
+    "--decision-steps",
+    "10",
+    "--clusters",
+    "1",
+    "--scene-base",
+    "1960000007",
+    "--episodes",
+    "1",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/results/memory_n1_1960000007.jsonl"
+  ],
+  "requested_at": "2026-10-04T19:29:38.943879+08:00"
+}

@@ -1,0 +1,726 @@
+{
+  "groups": [
+    {
+      "key": [
+        "graph_ppo",
+        1960000000,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "r_mappo": 0,
+        "rule": 0,
+        "graph_ppo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000000,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 0,
+        "graph_anchor": 0,
+        "rule": 0,
+        "graph_ppo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000000,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 1,
+        "rule": 0,
+        "graph_anchor": 1,
+        "r_mappo": 1
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000001,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "graph_ppo": 0,
+        "rule": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000001,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "rule": 0,
+        "graph_ppo": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000001,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 14,
+        "graph_ppo": 14,
+        "rule": 0,
+        "r_mappo": 14
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000002,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 1,
+        "rule": 0,
+        "r_mappo": 1,
+        "graph_ppo": 2
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000002,
+        43
+      ],
+      "all_final_hash_equal": false,
+      "all_core_metrics_equal": false,
+      "high_nonrule": {
+        "rule": 0,
+        "graph_anchor": 15,
+        "graph_ppo": 2,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000002,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "graph_anchor": 3,
+        "r_mappo": 0,
+        "graph_ppo": 3
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000003,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "graph_anchor": 0,
+        "graph_ppo": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000003,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 0,
+        "graph_anchor": 0,
+        "rule": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000003,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 20,
+        "rule": 0,
+        "graph_anchor": 20,
+        "r_mappo": 20
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000004,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "graph_anchor": 0,
+        "graph_ppo": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000004,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "r_mappo": 0,
+        "graph_ppo": 0,
+        "graph_anchor": 1
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000004,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 0,
+        "rule": 0,
+        "graph_anchor": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000005,
+        42
+      ],
+      "all_final_hash_equal": false,
+      "all_core_metrics_equal": false,
+      "high_nonrule": {
+        "rule": 0,
+        "graph_ppo": 0,
+        "graph_anchor": 1,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000005,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 1,
+        "rule": 0,
+        "graph_ppo": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000005,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "r_mappo": 0,
+        "graph_ppo": 0,
+        "rule": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000006,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "r_mappo": 0,
+        "rule": 0,
+        "graph_ppo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000006,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 0,
+        "rule": 0,
+        "graph_anchor": 0,
+        "graph_ppo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000006,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 0,
+        "graph_anchor": 0,
+        "graph_ppo": 0,
+        "rule": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000007,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 0,
+        "graph_ppo": 0,
+        "rule": 0,
+        "graph_anchor": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000007,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "graph_ppo": 0,
+        "graph_anchor": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "graph_ppo",
+        1960000007,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 0,
+        "r_mappo": 0,
+        "rule": 0,
+        "graph_anchor": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000000,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 0,
+        "graph_ppo": 0,
+        "rule": 0,
+        "graph_anchor": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000000,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "rule": 0,
+        "graph_ppo": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000000,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 0,
+        "rule": 0,
+        "r_mappo": 0,
+        "graph_anchor": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000001,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 0,
+        "rule": 0,
+        "graph_anchor": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000001,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 0,
+        "rule": 0,
+        "graph_anchor": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000001,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "graph_anchor": 4,
+        "r_mappo": 4,
+        "graph_ppo": 4
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000002,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "r_mappo": 0,
+        "graph_ppo": 0,
+        "graph_anchor": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000002,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 1,
+        "graph_anchor": 1,
+        "rule": 0,
+        "graph_ppo": 1
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000002,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "graph_ppo": 0,
+        "rule": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000003,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 1,
+        "graph_anchor": 1,
+        "rule": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000003,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "graph_ppo": 0,
+        "rule": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000003,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 0,
+        "graph_anchor": 1,
+        "graph_ppo": 1,
+        "rule": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000004,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 0,
+        "r_mappo": 0,
+        "rule": 0,
+        "graph_anchor": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000004,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 0,
+        "graph_ppo": 0,
+        "graph_anchor": 0,
+        "rule": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000004,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 1,
+        "rule": 0,
+        "graph_anchor": 1,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000005,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "r_mappo": 0,
+        "rule": 0,
+        "graph_anchor": 1,
+        "graph_ppo": 1
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000005,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "graph_anchor": 0,
+        "graph_ppo": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000005,
+        44
+      ],
+      "all_final_hash_equal": false,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 1,
+        "rule": 0,
+        "r_mappo": 0,
+        "graph_ppo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000006,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_ppo": 0,
+        "r_mappo": 0,
+        "graph_anchor": 0,
+        "rule": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000006,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "rule": 0,
+        "r_mappo": 0,
+        "graph_ppo": 0,
+        "graph_anchor": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000006,
+        44
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "rule": 0,
+        "r_mappo": 0,
+        "graph_ppo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000007,
+        42
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "r_mappo": 0,
+        "rule": 0,
+        "graph_ppo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000007,
+        43
+      ],
+      "all_final_hash_equal": true,
+      "all_core_metrics_equal": true,
+      "high_nonrule": {
+        "graph_anchor": 0,
+        "rule": 0,
+        "graph_ppo": 0,
+        "r_mappo": 0
+      }
+    },
+    {
+      "key": [
+        "r_mappo",
+        1960000007,
+        44
+      ],
+      "all_final_hash_equal": false,
+      "all_core_metrics_equal": false,
+      "high_nonrule": {
+        "rule": 0,
+        "r_mappo": 0,
+        "graph_ppo": 1,
+        "graph_anchor": 0
+      }
+    }
+  ],
+  "all_groups_metrics_equal": false,
+  "interpretation": "High actors produced some different priority choices but fixed low trajectories and outcomes were identical within each scene/seed; graph high advantage is not expressed by current event/reservation interface."
+}

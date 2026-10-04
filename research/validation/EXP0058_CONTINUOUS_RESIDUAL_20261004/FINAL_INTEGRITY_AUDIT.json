@@ -1,0 +1,642 @@
+{
+  "passed": true,
+  "current_source_and_runtime_match": true,
+  "older_sources": {
+    "EXP0053_TPG_GENERIC_STUDY_20261004": {
+      "files": 35,
+      "unchanged": true
+    },
+    "EXP0054_MEASURED_MARL_STUDY_20261004": {
+      "files": 40,
+      "unchanged": true
+    },
+    "EXP0055_SAFETY_OBJECTIVE_STUDY_20261004": {
+      "files": 43,
+      "unchanged": true
+    }
+  },
+  "initial_snapshot_hashes_recomputed": [
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_graph_anchor_2070000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_graph_anchor_2070000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_graph_ppo_2070000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_graph_ppo_2070000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_mappo_anchor_2070000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_mappo_anchor_2070000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_r_mappo_2070000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_r_mappo_2070000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_tpg_2070000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/preflight/pre_tpg_2070000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/balanced_1s_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/balanced_1s_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/balanced_1s_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/balanced_1s_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/balanced_1s_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/balanced_1s_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/balanced_1s_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/balanced_1s_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_42_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_42_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_42_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_42_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_42_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_42_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_42_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_42_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_43_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_43_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_43_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_43_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_43_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_43_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_43_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_43_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_44_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_44_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_44_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_44_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_44_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_44_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_44_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_anchor_44_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_42_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_43_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_43_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_43_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_43_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_43_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_43_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_43_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_43_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_44_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_44_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_44_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_44_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_44_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_44_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_44_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/graph_ppo_44_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_42_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_43_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_43_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_43_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_43_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_43_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_43_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_43_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_43_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_44_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_44_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_44_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_44_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_44_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_44_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_44_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/mappo_anchor_44_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/memory_n1_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/memory_n1_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/memory_n1_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/memory_n1_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/memory_n1_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/memory_n1_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/memory_n1_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/memory_n1_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_42_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_42_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_42_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_42_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_42_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_42_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_42_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_42_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_43_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_43_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_43_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_43_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_43_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_43_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_43_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_43_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_44_16384_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_44_16384_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_44_16384_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_44_16384_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_44_16384_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_44_16384_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_44_16384_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/r_mappo_44_16384_1960000007.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000000.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000001.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000002.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000003.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000004.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000005.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000006.jsonl",
+      "matches": true
+    },
+    {
+      "file": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/results/tpg_1960000007.jsonl",
+      "matches": true
+    }
+  ],
+  "training": [
+    {
+      "variant": "r_mappo",
+      "seed": 42,
+      "passed": true,
+      "high_samples": 147,
+      "high_updates": 5,
+      "low_updates": 16
+    },
+    {
+      "variant": "mappo_anchor",
+      "seed": 42,
+      "passed": true,
+      "high_samples": 149,
+      "high_updates": 5,
+      "low_updates": 16
+    },
+    {
+      "variant": "graph_ppo",
+      "seed": 42,
+      "passed": true,
+      "high_samples": 169,
+      "high_updates": 6,
+      "low_updates": 16
+    },
+    {
+      "variant": "graph_anchor",
+      "seed": 42,
+      "passed": true,
+      "high_samples": 128,
+      "high_updates": 4,
+      "low_updates": 16
+    },
+    {
+      "variant": "r_mappo",
+      "seed": 43,
+      "passed": true,
+      "high_samples": 200,
+      "high_updates": 7,
+      "low_updates": 16
+    },
+    {
+      "variant": "mappo_anchor",
+      "seed": 43,
+      "passed": true,
+      "high_samples": 144,
+      "high_updates": 5,
+      "low_updates": 16
+    },
+    {
+      "variant": "graph_ppo",
+      "seed": 43,
+      "passed": true,
+      "high_samples": 173,
+      "high_updates": 6,
+      "low_updates": 16
+    },
+    {
+      "variant": "graph_anchor",
+      "seed": 43,
+      "passed": true,
+      "high_samples": 162,
+      "high_updates": 6,
+      "low_updates": 16
+    },
+    {
+      "variant": "r_mappo",
+      "seed": 44,
+      "passed": true,
+      "high_samples": 166,
+      "high_updates": 6,
+      "low_updates": 16
+    },
+    {
+      "variant": "mappo_anchor",
+      "seed": 44,
+      "passed": true,
+      "high_samples": 137,
+      "high_updates": 5,
+      "low_updates": 16
+    },
+    {
+      "variant": "graph_ppo",
+      "seed": 44,
+      "passed": true,
+      "high_samples": 155,
+      "high_updates": 5,
+      "low_updates": 16
+    },
+    {
+      "variant": "graph_anchor",
+      "seed": 44,
+      "passed": true,
+      "high_samples": 164,
+      "high_updates": 6,
+      "low_updates": 16
+    }
+  ],
+  "training_seed_fields_checked": 600,
+  "confirmation_accessed": false,
+  "parent_training_only": false,
+  "auditor_sha256": "feeba10ae9e588e091950d99b3b379e970e1d667da43bc2c0e13bad5f4520c7e"
+}

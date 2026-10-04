@@ -1,0 +1,962 @@
+{
+  "exploratory_posthoc": true,
+  "admission_passed": true,
+  "issues": [],
+  "contrast": "coupled alpha=0.1 minus alpha=0, same four layouts and exact checkpoints",
+  "independent_scenes": 4,
+  "hardware_calibrated": false,
+  "comparisons": {
+    "balanced_fast_n3": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 2.030839091103459,
+      "coupled_minimum_mm": 2.0534583670402724,
+      "metrics": {
+        "removal": {
+          "uncoupled": 1.0,
+          "coupled": 1.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.7658701031453781,
+          "coupled": 0.81595302036371,
+          "paired_difference": {
+            "mean": 0.05008291721833197,
+            "ci95": [
+              -0.04357152374825324,
+              0.18436641533456732
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 19.047594360476186,
+          "coupled": 14.480772085846414,
+          "paired_difference": {
+            "mean": -4.566822274629772,
+            "ci95": [
+              -13.070710259676822,
+              6.201893556417808
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.25,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": -0.25,
+            "ci95": [
+              -0.75,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "balanced_flat_n3": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 2.0534583670402724,
+      "metrics": {
+        "removal": {
+          "uncoupled": 0.9375,
+          "coupled": 0.9375,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.7118143052302679,
+          "coupled": 0.7607469440924057,
+          "paired_difference": {
+            "mean": 0.048932638862137834,
+            "ci95": [
+              -0.03175622454975477,
+              0.1478133964966676
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 31.033023360655164,
+          "coupled": 20.07932900817687,
+          "paired_difference": {
+            "mean": -10.953694352478294,
+            "ci95": [
+              -13.724369750621866,
+              -8.603843642780962
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "balanced_n3": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 1,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 1.4675404414987798,
+      "metrics": {
+        "removal": {
+          "uncoupled": 0.9079814838419612,
+          "coupled": 0.875,
+          "paired_difference": {
+            "mean": -0.03298148384196117,
+            "ci95": [
+              -0.33694479655181286,
+              0.18403703231607765
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.6484255983439905,
+          "coupled": 0.7054372515480573,
+          "paired_difference": {
+            "mean": 0.057011653204066634,
+            "ci95": [
+              -0.19786246087875914,
+              0.2109653980261882
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 37.80187435694562,
+          "coupled": 62.25609579147873,
+          "paired_difference": {
+            "mean": 24.454221434533117,
+            "ci95": [
+              -31.042784454415397,
+              113.58780581116602
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 15.382301019897596,
+          "paired_difference": {
+            "mean": 15.382301019897596,
+            "ci95": [
+              0.0,
+              46.14690305969279
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "flat_s42": {
+      "uncoupled_violating_scenes": 1,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 1.7649020944690268,
+      "coupled_minimum_mm": 2.0145396236970097,
+      "metrics": {
+        "removal": {
+          "uncoupled": 0.875,
+          "coupled": 0.9375,
+          "paired_difference": {
+            "mean": 0.0625,
+            "ci95": [
+              0.0,
+              0.1875
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.7123222297870192,
+          "coupled": 0.7410654675833206,
+          "paired_difference": {
+            "mean": 0.02874323779630128,
+            "ci95": [
+              -0.03175622454975477,
+              0.08865948464491902
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 38.671656632466934,
+          "coupled": 19.925190051581154,
+          "paired_difference": {
+            "mean": -18.74646658088578,
+            "ci95": [
+              -31.98216032800343,
+              -10.53286966403205
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.16667890165481872,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": -0.16667890165481872,
+            "ci95": [
+              -0.5000367049644562,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "flat_s43": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 2.047671773250655,
+      "metrics": {
+        "removal": {
+          "uncoupled": 0.9375,
+          "coupled": 0.8600252375551258,
+          "paired_difference": {
+            "mean": -0.07747476244487417,
+            "ci95": [
+              -0.4199242873346225,
+              0.1875
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.7273975695399411,
+          "coupled": 0.6478460781600968,
+          "paired_difference": {
+            "mean": -0.07955149137984444,
+            "ci95": [
+              -0.28052641441941895,
+              0.04578590286155802
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 35.814338467093805,
+          "coupled": 57.94142813588999,
+          "paired_difference": {
+            "mean": 22.127089668796188,
+            "ci95": [
+              -15.71886012458515,
+              79.64923958268731
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "flat_s44": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 2.0534583670402724,
+      "metrics": {
+        "removal": {
+          "uncoupled": 0.9375,
+          "coupled": 0.9375,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.7475925320709222,
+          "coupled": 0.7604518228342222,
+          "paired_difference": {
+            "mean": 0.01285929076330003,
+            "ci95": [
+              -0.034457874770650126,
+              0.05748183309528093
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 26.929499252248185,
+          "coupled": 18.740322805559025,
+          "paired_difference": {
+            "mean": -8.18917644668916,
+            "ci95": [
+              -16.99352998842389,
+              -0.41767152502960636
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "hierarchical_s42": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 2.0538715804494636,
+      "metrics": {
+        "removal": {
+          "uncoupled": 1.0,
+          "coupled": 0.869165073735841,
+          "paired_difference": {
+            "mean": -0.1308349262641591,
+            "ci95": [
+              -0.3925047787924773,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.8351039330935519,
+          "coupled": 0.687674312878012,
+          "paired_difference": {
+            "mean": -0.14742962021554,
+            "ci95": [
+              -0.2710922653228754,
+              -0.05053139490164832
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 9.54459244824248,
+          "coupled": 17.125822449641085,
+          "paired_difference": {
+            "mean": 7.581230001398607,
+            "ci95": [
+              -14.115688360850504,
+              26.901580569456584
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "hierarchical_s43": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 1,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 1.4675404414987798,
+      "metrics": {
+        "removal": {
+          "uncoupled": 1.0,
+          "coupled": 0.8125,
+          "paired_difference": {
+            "mean": -0.1875,
+            "ci95": [
+              -0.375,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.7926911645043407,
+          "coupled": 0.6302735006014936,
+          "paired_difference": {
+            "mean": -0.1624176639028473,
+            "ci95": [
+              -0.2627056594377573,
+              -0.064372283814773
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 13.596935580330378,
+          "coupled": 71.33472897170441,
+          "paired_difference": {
+            "mean": 57.737793391374026,
+            "ci95": [
+              6.952074793207776,
+              119.13634656582072
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 15.382301019897596,
+          "paired_difference": {
+            "mean": 15.382301019897596,
+            "ci95": [
+              0.0,
+              46.14690305969279
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "hierarchical_s44": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 2,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 1.4675404414987798,
+      "metrics": {
+        "removal": {
+          "uncoupled": 1.0,
+          "coupled": 0.875,
+          "paired_difference": {
+            "mean": -0.125,
+            "ci95": [
+              -0.375,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.8351039330935519,
+          "coupled": 0.6167443906775977,
+          "paired_difference": {
+            "mean": -0.21835954241595434,
+            "ci95": [
+              -0.2930318599615607,
+              -0.13632969653749524
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 9.54459244824248,
+          "coupled": 77.2298103090131,
+          "paired_difference": {
+            "mean": 67.68521786077062,
+            "ci95": [
+              26.846923732000967,
+              126.3383639365787
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 15.411271239832448,
+          "paired_difference": {
+            "mean": 15.411271239832448,
+            "ci95": [
+              0.0,
+              46.14690305969279
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "memory_n1": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": null,
+      "coupled_minimum_mm": null,
+      "metrics": {
+        "removal": {
+          "uncoupled": 0.4375,
+          "coupled": 0.4375,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.34335818072775764,
+          "coupled": 0.34335818072775764,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 10.796564438010575,
+          "coupled": 10.796564438010575,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.25,
+          "coupled": 0.25,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "memory_n3": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 2.0538715804494636,
+      "metrics": {
+        "removal": {
+          "uncoupled": 1.0,
+          "coupled": 0.869165073735841,
+          "paired_difference": {
+            "mean": -0.1308349262641591,
+            "ci95": [
+              -0.3925047787924773,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.8351039330935519,
+          "coupled": 0.687674312878012,
+          "paired_difference": {
+            "mean": -0.14742962021554,
+            "ci95": [
+              -0.2710922653228754,
+              -0.05053139490164832
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 9.54459244824248,
+          "coupled": 17.125822449641085,
+          "paired_difference": {
+            "mean": 7.581230001398607,
+            "ci95": [
+              -14.115688360850504,
+              26.901580569456584
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "priority_n3": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 2.109690377331986,
+      "coupled_minimum_mm": 2.25963940035785,
+      "metrics": {
+        "removal": {
+          "uncoupled": 1.0,
+          "coupled": 1.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.7501644613160632,
+          "coupled": 0.8294602961687387,
+          "paired_difference": {
+            "mean": 0.07929583485267547,
+            "ci95": [
+              0.010966396393879696,
+              0.19316156410471091
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 18.74456797382621,
+          "coupled": 10.662199521684968,
+          "paired_difference": {
+            "mean": -8.082368452141242,
+            "ci95": [
+              -21.32118918178625,
+              5.590305891133834
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.25,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": -0.25,
+            "ci95": [
+              -0.75,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "untrained_balanced_n3": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 1,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 1.4675404414987798,
+      "metrics": {
+        "removal": {
+          "uncoupled": 0.9079814838419612,
+          "coupled": 0.875,
+          "paired_difference": {
+            "mean": -0.03298148384196117,
+            "ci95": [
+              -0.33694479655181286,
+              0.18403703231607765
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.6484255983439905,
+          "coupled": 0.7054372515480573,
+          "paired_difference": {
+            "mean": 0.057011653204066634,
+            "ci95": [
+              -0.19786246087875914,
+              0.2109653980261882
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 37.80187435694562,
+          "coupled": 62.25609579147873,
+          "paired_difference": {
+            "mean": 24.454221434533117,
+            "ci95": [
+              -31.042784454415397,
+              113.58780581116602
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 15.382301019897596,
+          "paired_difference": {
+            "mean": 15.382301019897596,
+            "ci95": [
+              0.0,
+              46.14690305969279
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    },
+    "untrained_flat_n3": {
+      "uncoupled_violating_scenes": 0,
+      "coupled_violating_scenes": 0,
+      "uncoupled_minimum_mm": 2.0407198488394918,
+      "coupled_minimum_mm": 2.0534583670402724,
+      "metrics": {
+        "removal": {
+          "uncoupled": 0.9375,
+          "coupled": 0.9375,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "removal_auc_180": {
+          "uncoupled": 0.7118143052302679,
+          "coupled": 0.7607469440924057,
+          "paired_difference": {
+            "mean": 0.048932638862137834,
+            "ci95": [
+              -0.03175622454975477,
+              0.1478133964966676
+            ],
+            "scenes": 4
+          }
+        },
+        "wall_contact_s": {
+          "uncoupled": 31.033023360655164,
+          "coupled": 20.07932900817687,
+          "paired_difference": {
+            "mean": -10.953694352478294,
+            "ci95": [
+              -13.724369750621866,
+              -8.603843642780962
+            ],
+            "scenes": 4
+          }
+        },
+        "spacing_violation_pair_s": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        },
+        "cluster_safe_success": {
+          "uncoupled": 0.0,
+          "coupled": 0.0,
+          "paired_difference": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "scenes": 4
+          }
+        }
+      }
+    }
+  }
+}

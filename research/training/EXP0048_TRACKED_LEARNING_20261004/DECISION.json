@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-04",
+  "decision": "archive_feedforward_at_65536;proceed_to_EXP0049_mechanism_test",
+  "reason": "No cluster-safe success at 32k or 64k; aggregate 64k removal lower than 32k and strong memory baseline. More safety cost reduction alone is not efficacy.",
+  "confirmation_accessed": false,
+  "source_or_failed_attempts_changed": false,
+  "main_attempts": 132,
+  "audit_passed": true
+}

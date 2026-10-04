@@ -1,0 +1,5 @@
+{
+  "subtract_random_arrays": 20000,
+  "torch_numpy_gradient_interoperability": true,
+  "passed": true
+}

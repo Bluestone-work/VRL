@@ -1,0 +1,46 @@
+
+This GDB supports auto-downloading debuginfo from the following URLs:
+  <https://debuginfod.ubuntu.com>
+Enable debuginfod for this session? (y or [n]) [answered N; input not from terminal]
+Debuginfod has been disabled.
+To make this setting permanent, add 'set debuginfod enabled off' to .gdbinit.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+{"seed": 1300000000, "task_success": false, "safe_success": false, "removal": 0.25, "elapsed_s": 30.0, "wall_contact_s": 0.0, "yield_events": 0, "deadlock_events": 0, "spacing_violation_steps": 0}
+{"seed": 1300000001, "task_success": false, "safe_success": false, "removal": 0.25, "elapsed_s": 30.0, "wall_contact_s": 0.0, "yield_events": 0, "deadlock_events": 0, "spacing_violation_steps": 0}
+{"seed": 1300000002, "task_success": false, "safe_success": false, "removal": 0.0, "elapsed_s": 30.0, "wall_contact_s": 0.0, "yield_events": 0, "deadlock_events": 0, "spacing_violation_steps": 0}
+{
+  "method": "multi_parallel",
+  "clusters": 2,
+  "min_spacing_mm": 2.0,
+  "episodes": 3,
+  "aggregate": {
+    "episodes": 3,
+    "raw_success": 0.0,
+    "safe_success": 0.0,
+    "unsafe_success_gap": 0.0,
+    "collision_free": 0.0,
+    "safe_collision_free": 0.0,
+    "mean_wall_contact_s": 0.0,
+    "median_wall_contact_s": 0.0,
+    "wall_contact_ratio": 0.0,
+    "max_continuous_wall_contact_s": 0.0,
+    "timeout_rate": 1.0,
+    "removal": 0.16666666666666666,
+    "elapsed_s": 30.0
+  },
+  "mean_yield_events": 0.0,
+  "mean_deadlock_events": 0.0,
+  "mean_spacing_violation_steps": 0.0,
+  "min_observed_spacing_mm": 12.160379154923914,
+  "config": "/home/wj/桌面/vascular_marl_local.tar./configs/experiments/EXP_0029_MCA_ALL_RANDOM_DYNAMICS.json",
+  "anatomy": "mca_m1_lvo",
+  "duration_s": 30.0,
+  "max_steps": null,
+  "development_feasibility": true,
+  "local_observation": true,
+  "sealed_test_used": false
+}
+[Inferior 1 (process 3240251) exited normally]
+No stack.
+No registers.

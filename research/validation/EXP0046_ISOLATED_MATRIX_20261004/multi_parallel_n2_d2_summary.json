@@ -1,0 +1,29 @@
+{
+  "method": "multi_parallel",
+  "clusters": 2,
+  "min_spacing_mm": 2.0,
+  "requested_episodes": 5,
+  "completed_episodes": 5,
+  "crashed_episodes": 0,
+  "crashes": [],
+  "aggregate": {
+    "episodes": 5,
+    "raw_success": 0.0,
+    "safe_success": 0.0,
+    "unsafe_success_gap": 0.0,
+    "collision_free": 0.0,
+    "safe_collision_free": 0.0,
+    "mean_wall_contact_s": 0.2341824085253565,
+    "median_wall_contact_s": 0.0,
+    "wall_contact_ratio": 0.023418240852535653,
+    "max_continuous_wall_contact_s": 0.12,
+    "timeout_rate": 1.0,
+    "removal": 0.05554068049121941,
+    "elapsed_s": 4.999999999999998
+  },
+  "duration_s": 5.0,
+  "episode_isolated": true,
+  "development_feasibility": true,
+  "local_observation": true,
+  "sealed_test_used": false
+}

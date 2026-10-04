@@ -1,0 +1,24 @@
+{
+  "name": "low_44_1920000003",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_tpg_learning",
+    "evaluate",
+    "--scene",
+    "1920000003",
+    "--policy",
+    "learned",
+    "--variant",
+    "low",
+    "--clusters",
+    "3",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_TPG_GENERIC_STUDY_20261004/results/low_44_1920000003.jsonl",
+    "--checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_TPG_GENERIC_STUDY_20261004/training/train_low_44/policy_8192.pt"
+  ],
+  "started_at": "2026-10-04T17:15:29.168066+08:00"
+}

@@ -1,0 +1,203 @@
+{
+  "training_runs": [
+    {
+      "folder": "research/training/EXP0048_TRACKED_LEARNING_20261004/seed44_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 44
+    },
+    {
+      "folder": "research/training/EXP0048_TRACKED_LEARNING_20261004/seed42_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 42
+    },
+    {
+      "folder": "research/training/EXP0048_TRACKED_LEARNING_20261004/seed44_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 44
+    },
+    {
+      "folder": "research/training/EXP0048_TRACKED_LEARNING_20261004/seed43_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 43
+    },
+    {
+      "folder": "research/training/EXP0048_TRACKED_LEARNING_20261004/seed42_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 42
+    },
+    {
+      "folder": "research/training/EXP0048_TRACKED_LEARNING_20261004/seed43_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 43
+    },
+    {
+      "folder": "research/training/EXP0049_TEMPORAL_CANDIDATES_20261004/seed44_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 44
+    },
+    {
+      "folder": "research/training/EXP0049_TEMPORAL_CANDIDATES_20261004/seed42_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 42
+    },
+    {
+      "folder": "research/training/EXP0049_TEMPORAL_CANDIDATES_20261004/seed44_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 44
+    },
+    {
+      "folder": "research/training/EXP0049_TEMPORAL_CANDIDATES_20261004/seed43_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 43
+    },
+    {
+      "folder": "research/training/EXP0049_TEMPORAL_CANDIDATES_20261004/seed42_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 42
+    },
+    {
+      "folder": "research/training/EXP0049_TEMPORAL_CANDIDATES_20261004/seed43_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 43
+    },
+    {
+      "folder": "research/training/EXP0050_MEMORY_PRIOR_20261004/seed44_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 44
+    },
+    {
+      "folder": "research/training/EXP0050_MEMORY_PRIOR_20261004/seed42_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 42
+    },
+    {
+      "folder": "research/training/EXP0050_MEMORY_PRIOR_20261004/seed44_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 44
+    },
+    {
+      "folder": "research/training/EXP0050_MEMORY_PRIOR_20261004/seed43_32k",
+      "phase": "completed",
+      "steps": 32768,
+      "seed": 43
+    },
+    {
+      "folder": "research/training/EXP0050_MEMORY_PRIOR_20261004/seed42_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 42
+    },
+    {
+      "folder": "research/training/EXP0050_MEMORY_PRIOR_20261004/seed43_64k",
+      "phase": "completed",
+      "steps": 65536,
+      "seed": 43
+    }
+  ],
+  "source_mismatches": [],
+  "matrices": [
+    {
+      "folder": "research/validation/EXP0050_LEARNED64_VAL_20261004",
+      "requested": 36,
+      "recorded": 36,
+      "completed": 35,
+      "failures": 1
+    },
+    {
+      "folder": "research/validation/EXP0048_SINGLE_MEMORY_VAL_20261004",
+      "requested": 12,
+      "recorded": 12,
+      "completed": 12,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0048_LEARNED64_VAL_20261004",
+      "requested": 36,
+      "recorded": 36,
+      "completed": 36,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0049_BASELINES_VAL_20261004",
+      "requested": 48,
+      "recorded": 48,
+      "completed": 48,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0049_LEARNED64_VAL_20261004",
+      "requested": 36,
+      "recorded": 36,
+      "completed": 36,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0049_LEARNED32_VAL_20261004",
+      "requested": 36,
+      "recorded": 36,
+      "completed": 36,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0048_BASELINES_VAL_20261004",
+      "requested": 48,
+      "recorded": 48,
+      "completed": 48,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0049_SINGLE_MEMORY_VAL_20261004",
+      "requested": 12,
+      "recorded": 12,
+      "completed": 12,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0050_BASELINES_VAL_20261004",
+      "requested": 60,
+      "recorded": 60,
+      "completed": 60,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0050_LEARNED32_VAL_20261004",
+      "requested": 36,
+      "recorded": 36,
+      "completed": 36,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0048_LEARNED32_VAL_20261004",
+      "requested": 36,
+      "recorded": 36,
+      "completed": 36,
+      "failures": 0
+    },
+    {
+      "folder": "research/validation/EXP0049_FEEDFORWARD64_TRANSFER_VAL_20261004",
+      "requested": 36,
+      "recorded": 36,
+      "completed": 36,
+      "failures": 0
+    }
+  ],
+  "confirmation_seed_hits_in_requests_and_logged_resets": [],
+  "unique_requested_seeds": 393,
+  "all_training_completed": true,
+  "note": "Budgets are per-seed cumulative environment steps; 32k and 64k are continuation checkpoints, not independent training replicas. Failed evaluations remain in denominators."
+}

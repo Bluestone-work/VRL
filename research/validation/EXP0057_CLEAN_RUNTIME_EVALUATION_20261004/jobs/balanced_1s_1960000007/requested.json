@@ -1,0 +1,26 @@
+{
+  "name": "balanced_1s_1960000007",
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "scripts.run_aligned_options",
+    "evaluate",
+    "--policy",
+    "balanced",
+    "--variant",
+    "hierarchical",
+    "--decision-steps",
+    "10",
+    "--clusters",
+    "3",
+    "--scene-base",
+    "1960000007",
+    "--episodes",
+    "1",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000007.jsonl"
+  ],
+  "requested_at": "2026-10-04T19:46:04.862716+08:00"
+}

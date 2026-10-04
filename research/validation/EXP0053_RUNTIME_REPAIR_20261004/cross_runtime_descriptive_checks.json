@@ -1,0 +1,70 @@
+{
+  "comparisons": [
+    {
+      "scene": 1940000000,
+      "old_final_hash": "846d5034d0eb9124d0df06d0c2c42a3011df36f25082180cf632f6c8332f7fff",
+      "new_final_hash": "0bb77404136b1aad5d45c4481df03f8a9112b9713ef513c538c9e808767223af",
+      "same_final_hash": false,
+      "metrics": {
+        "removal": {
+          "old": 0.9178349503139622,
+          "new": 1.0
+        },
+        "wall_contact_s": {
+          "old": 40.01220187325375,
+          "new": 31.22844174607548
+        },
+        "spacing_violation_pair_s": {
+          "old": 0.0,
+          "new": 0.0
+        },
+        "minimum_spacing_mm": {
+          "old": 2.044611125324899,
+          "new": 2.1554225247832943
+        },
+        "scheduler_calls": {
+          "old": 31,
+          "new": 10
+        },
+        "target_reallocations": {
+          "old": 4,
+          "new": 5
+        }
+      }
+    },
+    {
+      "scene": 1940000001,
+      "old_final_hash": "e7be7afc00411984ac80fef81693c25aa63795cf89e39db840d0e5e7db42547d",
+      "new_final_hash": "8cf1eb76c44fbd68cf40fd487438e88fb42f94b59ef46b0eeea8ad6dcae28681",
+      "same_final_hash": false,
+      "metrics": {
+        "removal": {
+          "old": 0.75,
+          "new": 0.75
+        },
+        "wall_contact_s": {
+          "old": 33.83234702630499,
+          "new": 51.25654300537562
+        },
+        "spacing_violation_pair_s": {
+          "old": 0.0,
+          "new": 0.0
+        },
+        "minimum_spacing_mm": {
+          "old": 3.735144060998951,
+          "new": 3.9421353567717765
+        },
+        "scheduler_calls": {
+          "old": 17,
+          "new": 8
+        },
+        "target_reallocations": {
+          "old": 5,
+          "new": 5
+        }
+      }
+    }
+  ],
+  "diagnostic_only": true,
+  "not_replacement_for_failed_attempts": true
+}

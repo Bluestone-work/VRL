@@ -708,3 +708,368 @@ Primary metric from now on: SafeSuccess = task success AND total wall contact ov
 - 14 anatomies × 20 diagnostic layouts: residual + shield safe 95.6 → 97.7 (seeds 98.2 / 97.1 / 97.9), raw 98.1, wall contact 0.18 → 0.08 robot-s; teacher 96.1 → 97.1. MCA: shield 62 → 90, teacher 70 → 85. Held-out anatomies: shield 96.0 → 96.3 (already wall-free).
 - Remaining failures: sma_embolism 87 % and femoropopliteal 95 % are timeouts, not wall contact.
 - Still privileged information and an idealised simulator; not a sealed result.
+
+## 2026-10-04 — EXP0046 registered: parallel multi-cluster thrombus removal
+
+> Historical v1 entry. The causal crash attribution and controller descriptions
+> below are superseded by the revision-2 correction later in this log. V1 raw
+> results remain preserved and are not pooled with v2.
+
+The new research line treats one controlled entity as one magnetic cluster.
+Method 1 is the `N=1` sequential route+avoid+wait baseline; method 2 is
+`N=2,3` parallel local-observation control with a right-of-way spacing shield.
+The registered spacing sensitivity is `d_min={1,2,4} mm`, with Safe Success,
+raw success, removal, time, wall/particle contact, spacing violations, yield,
+and deadlock reported together. The protocol is in
+`research/experiments/EXP_0046_MULTICLUSTER_PROTOCOL.md`.
+
+The first implementation audit found that long reference-environment rollouts
+can hit a native boundary-exit crash. The evaluator now defaults to a 5 s
+development horizon and marks all outputs as feasibility diagnostics until the
+integrator gate passes. No formal or sealed result is claimed. The current
+spacing rule is an uncalibrated operational surrogate; the repository still
+needs a measured magnetic coupling model for a physical independence claim.
+The controller now also holds a robot briefly after repeated local junction
+edge returns or a prolonged single-edge stall; this is a numerical robustness
+guard, and the long-horizon gate remains open.
+An episode-isolated wrapper was added after a 5 s two-episode probe still
+observed a SIGILL in the second child process; the wrapper records that seed as
+a crash and preserves completed rows. This confirms the issue is an unresolved
+physical-integrator/runtime gate rather than a result of controller ranking.
+
+### EXP0046 short smoke (MCA, two episodes per cell, 5 s)
+
+The initial in-process development matrix completed, but the subsequent
+episode-isolated matrix exposed native crashes in several seeds even at 5 s.
+Among completed child processes, all cells had zero Safe Success because 5 s
+is a feasibility horizon, not a complete-treatment horizon. Mean removal was
+2.1% for the single-cluster baseline; for two clusters it was 16.7%, 5.6%,
+and 0% at `d_min=1,2,4 mm`, and for three clusters it was 7.9%, 16.7%, and
+12.5%. Crash counts were 2/5, 0/5, 2/5 for two clusters and 1/5, 2/5, 1/5
+for three clusters at `d_min=1,2,4 mm`. These values are diagnostic only;
+the crash rate is itself a numerical gate and no performance ranking is
+valid. Raw JSONL and per-cell summaries are in
+`research/validation/EXP0046_ISOLATED_MATRIX_20261004/`.
+
+## 2026-10-04 — EXP0046 revision 2: protocol and observation repair
+
+- Correction: earlier boundary-exit/junction explanations of SIGSEGV/SIGILL
+  were hypotheses stated too strongly. Native-debugger and isolated full-length
+  runs on unchanged source did not reproduce the failures; the native root
+  cause remains unknown. The edge-stall guard is removed, not credited as a fix.
+- The controller now takes only measured-observation arrays. True flow, edge
+  IDs, route and direct simulator positions are unavailable to the policy.
+  Imaging of local geometry/frames, tracked clot state and peers within 6 mm
+  remains an explicit unverified sensor assumption.
+- Method 1 is now the comparable local `single_sequential` baseline. The
+  privileged `single_route` baseline is separate. The old teacher prior double
+  application is fixed by disabling the environment prior.
+- Paired initial scenes, nested rotated start pools and fixed aggregate
+  catalytic-rate proxy (0.36/N per cluster) replace the confounded v1 protocol.
+  Per-cluster-rate sensitivity remains separate. Magnetic power/material
+  matching and calibrated coupling are not provided.
+- Measured substep spacing is separate from predictions. Every process attempt
+  remains in the denominator. Cluster-safe success requires all clearing,
+  <1 cluster-s wall contact, no particle/pair contact, retention of all clusters,
+  and no spacing violation. The filter has no safety certificate.
+- Broad regression: 92 passed. Latest multi-cluster plus analysis checks: 31
+  passed (includes the added reserved-seed gate and four analysis tests).
+- Three full preflight episodes: 3/3 complete, no native failure, but one
+  realized spacing violation; no cluster-safe success. See the repair report.
+- Frozen experiment: 260 requested 180 s episodes; 10 paired diagnostic scenes,
+  26 cells, controller/noise seeds 42/43/44. These are not RL training seeds.
+  Final paired analysis is written to
+  `research/validation/EXP0046_V2_PAIRED_20261004/REPORT.md` after completion.
+
+Repair evidence: `research/validation/EXP0046_REPAIR_20261004/REPORT.md`.
+V1 raw data remain intact; no sealed test or training run occurs in this batch.
+
+### EXP0046 v2 final outcome and retrospective diagnosis
+
+- All 260 requested attempts are recorded: **259 completed, one SIGSEGV** in
+  `multi_unshielded`, N=3, d=2 mm, fixed-total budget, scene 1302010005, seed 42.
+  The native trace ends in the NumPy path-length expression at
+  `environments/mca_physical_dynamics.py:307`; this is not a causal diagnosis.
+  The predeclared numerical gate failed. No ranking, paired superiority claim
+  or sealed result is reported. Scene, source and configuration audits found
+  no other mismatch.
+- One immediate gdb repeat and a separately recorded 16-attempt stress batch
+  (12 plain, four gdb, four workers) all completed; stress outputs share the
+  same final-state hash. The failure remains intermittent and unresolved. None
+  of these debug runs replaces the failed performance row.
+- Descriptive primary d=2 mm cases (30 episodes each, 10 independent scenes):
+  local N=1 has 5 raw / 5 cluster-safe completions; parallel N=2 has 9 / 9;
+  parallel N=3 has 13 / 5. These are diagnostics, not an admissible ranking.
+  Wall-threshold failures are 3 / 6 / 19; spacing violations 0 / 4 / 10.
+- Two retrospective N=3 replays preserve the original final-state hashes.
+  Scene 1302010003: 224 of 248 wall-contact agent-steps change from a nominal
+  outward component <=0.05 to >0.05 after the spacing filter. Scene 1302010005:
+  the spacing filter changes no commands and all 165 wall-contact agent-steps
+  already command outward. Joint wall/separation constraints and the shared
+  local navigation baseline both need attention; action/contact association
+  alone is not a causal improvement estimate.
+- Final targeted regression and analysis tests: **32 passed**. Failure-aware
+  statistics explicitly block comparisons and preserve all-request bounds.
+
+Reports: `research/validation/EXP0046_V2_PAIRED_20261004/REPORT.md`,
+`FAILURE_ANALYSIS.md` in that directory, and the repair report. Next gates:
+native fault capture; joint local wall/separation handling; stronger local N=1
+navigation; fresh paired conventional scheduling comparisons; measured magnetic
+coupling and sensing feasibility before physical or learning-contribution claims.
+
+## 2026-10-04 — EXP0047 learned local maneuvers, ideal-sensor diagnostics
+
+- Implemented parameter-shared PPO over ten common local maneuver candidates;
+  shared actor/critic receive 138 local features. Heuristics use the identical
+  candidate library and approximate joint wall/separation projection.
+- Three training seeds (42/43/44) completed 32,768 then 65,536 environment
+  steps each. The 32k validation contains 48 heuristic and 36 learned full
+  episodes on 12 paired scenes; all 84 attempts completed. 64k is retained
+  without evaluation because the sensing audit changed the research contract.
+- At 32k, cluster-safe success is 25% for each learned seed and the strong
+  joint baseline; the navigation-memory baseline is 16.67% with higher mean
+  removal (85.42%) than learning (75.03% across seeds). There is no demonstrated
+  learning advantage over the strongest common-filter heuristics.
+- Exact velocity, clot mass fraction, true Frenet frame and ideal geometry in
+  the common sensor are simulator privileges even when both arms share them.
+  EXP0047 is explicitly an ideal-sensor diagnostic, not sim-to-real evidence.
+- Results and paired uncertainty: `validation/EXP0047_ANALYSIS_VAL_20261004/`.
+  Checkpoints: `training/EXP0047_LOCAL_LEARNING_20261004/`. No confirmation
+  scenes were accessed and no negative result was discarded.
+
+## 2026-10-04 — EXP0048 shared measured tracking, active research
+
+- A renderer/processor boundary replaces exact velocities with historical
+  tracked motion, exact mass with binary local visual evidence, and true
+  Frenet axes with fixed calibrated camera/actuator coordinates. Every learned
+  and conventional controller consumes the same delayed, noisy packet.
+- Tracking stress settings are engineered assumptions, not measured hardware.
+  Synthetic geometry, ideal identity association, camera calibration, and
+  independent magnetic actuation remain explicit limitations.
+- Preflight 512-step PPO completed. Initial scene 1440000000: the joint process
+  exited 139 without a captured stack; its learned counterpart completed with
+  no removal. A separate gdb repeat completed with the same zero-removal outcome.
+  The original failure remains recorded and is not replaced by the repeat.
+  The intermittent native fault remains unresolved.
+- Before freezing the main run, stopped using simulator all-clear to terminate.
+  Rollouts now continue until measured absence confirmation, all physical exits,
+  or 180 s. Primary success requires both physical clearance and observed
+  completion; contacts include this confirmation period. Physical active time
+  is retained even when tracks are missing.
+- Regression: 46 tests passed. Three fresh 32k PPO runs and matched heuristic
+  validation are launched. No outcome claim is made while runs are pending.
+- Protocol: `experiments/EXP_0048_TRACKED_OBSERVATION_PROTOCOL.md`; training root:
+  `training/EXP0048_TRACKED_LEARNING_20261004/`. Frozen-source manifests and all
+  failed attempts must be retained; no mixing of EXP0047 and EXP0048 data.
+
+### EXP0048 completed 64k development and EXP0049 follow-up
+
+- Three tracked PPO seeds each completed 65,536 environment steps. The full
+  32k/64k comparison plus five conventional arms contains 132/132 completed
+  validation attempts on 12 paired scenes, with no numerical failure in this
+  matrix. The separate initial preflight exit 139 remains unresolved.
+- No tested learned or heuristic arm achieves primary cluster-safe success.
+  The strong N=3 memory heuristic removes 72.65% on average. Feedforward PPO
+  averages 23.88% at 32k and 13.75% at 64k. Reduced wall contact with lost
+  treatment efficacy is not a learning benefit; do not report it as superiority.
+- Added the same memory controller for the N=1 baseline so method 1 is not
+  represented solely by the weak joint-only navigation controller. Results:
+  `validation/EXP0048_FINAL_DEVELOPMENT_20261004/REPORT.md`.
+- Stop this feedforward architecture at 64k (registered 128k was a ceiling).
+  Preserve all checkpoints, source snapshots and negative results. No method
+  is selected for confirmation and no confirmation scene has been accessed.
+- EXP0049 implements a causal six-frame GRU and a shared scorer of actual
+  projected candidate commands. The hypothesis concerns history/action-outcome
+  alignment and candidate-index brittleness; it is not established novelty.
+  Reward, sensors, physics, conventional filters and completion rules stay fixed.
+- Full preflight: original tracked joint, temporal-wrapper joint, and learned
+  512-step pilot complete with bit-identical final-state hashes on scene
+  1540000000. Three fresh 32k training seeds are now running. Conventional
+  comparators and EXP0048 64k model transfer use the same fresh 1520000000 pool.
+  Cross-revision model hashes remain explicit; shared source hashes must match.
+
+### EXP0049 final development result and EXP0050 initialization test
+
+- Three temporal-candidate seeds each completed 65,536 environment steps.
+  Main comparison: 132/132 validation attempts completed, plus 36/36 explicit
+  old-feedforward transfer attempts on the same fresh scenes. Common source
+  and physical-scene audits pass. No primary safe success is observed.
+- Mean 64k temporal removal is 13.17%, versus 83.33% for the N=3 memory
+  heuristic. Adding short history and executable-candidate scoring does not
+  establish a useful advantage. Preserve the negative architecture comparison.
+- A truth-only diagnostic on separate scene 1540000000 records mean predicted
+  position error 0.0886 mm, mean velocity error 0.7502 mm/s and 687/1554 contact
+  agent-steps whose prior observed clearance exceeded the controller margin.
+  Instrumentation produces the identical original final-state hash; it never
+  feeds these true residuals to a policy. One scene is not a causal explanation.
+- Primary per-policy success intervals now retain boundary uncertainty. Zero
+  successes in 12 scenes has exact two-sided 95% interval [0, 26.46%]; a paired
+  all-zero bootstrap interval does not establish equivalence. Secondary
+  intervals remain exploratory, without multiplicity correction.
+- EXP0050 keeps the same sensing, reward and candidate projection but sets the
+  deterministic untrained actor equal to the strongest common memory control.
+  A learned scorer can intervene; initialization gains are not attributed to
+  learning. Three preflight runs (original memory, new memory, untrained actor)
+  are bit-identical on scene 1640000000. Three fresh 32k pilots and five
+  matched conventional arms are running, followed by registered 64k evaluation.
+
+### EXP0050 final result: recorded numerical failure, no superiority claim
+
+- All three memory-initialized PPO seeds completed 65,536 training steps.
+  Validation records 132 requested attempts: 131 completed and one SIGSEGV
+  (seed 44 / 64k / scene 1620000011). The combined numerical gate is blocked;
+  no failed row is replaced. A separate gdb replay completed without reproducing
+  the crash. The Python frame is the physical geodesic-contact callback, not a
+  proven native root cause and not a policy information channel.
+- At 32k, seed 43 shows higher clearing and less wall contact than memory, but
+  more spacing violation; this isolated signal does not repeat across seeds.
+  Seed 44's 12 final states exactly match the unchanged memory controller, so
+  its baseline-level outcome is not a learning contribution. Completed 64k
+  attempts again show efficacy collapse. No favorable seed is promoted.
+- Keep source/checkpoint snapshots and all negative/failed attempts. No
+  confirmation set has been opened and no sim-to-real or journal-success claim
+  is established. See `validation/EXP0050_FINAL_DEVELOPMENT_20261004/` and
+  its `FAILURE_ANALYSIS.md`.
+- The next justified gates are numerical fault capture, causal measurement
+  timing calibration, and reward/efficacy alignment under matched heuristic
+  inputs. Generic network enlargement and reduced treatment activity are not
+  substitutes for evidence of safe clearing.
+
+
+## 2026-10-04 — EXP0051 measured hierarchical options registered and training
+
+User requested hierarchical learning with fixed paired layouts, no heuristic navigation privileges, and physically evaluated separation. The old hierarchical allocator reads true routes/mass/stations and is not used. A new observation-only option scheduler uses measured target identity, memory navigation, drift-compensated hold, and retreat above a frozen 10 Hz controller. The joint supervisor is common to learned and strong conventional arms and has no safety certificate.
+
+Preflight: 12/12 processes completed across two paired development scenes, actual reset snapshots match within N, and untrained deterministic policy exactly reproduces memory trajectories. Spacing violations remain, so preflight audit PASS is provenance/numerical success, not a safety claim. Preflight source snapshot was preserved before documented training-only changes to actor identity encoding/exploration.
+
+Started six preregistered training runs: hierarchical and flat options, seeds 42/43/44, 16,384 physical control steps each; all use the same normalized reward. Planned main validation: 144 attempts on 12 fixed scenes. Planned synthetic coupling stress: 40 attempts on four additional fixed scenes. No source changes to EXP0048–50; no confirmation pool is opened. Primary sources checked: Option-Critic (1609.05140), HIRO (1805.08296), CPO (1705.10528); these algorithms are not claimed to be reproduced or novel.
+
+
+## 2026-10-04 — EXP0051 completed; EXP0052 registered and started
+
+EXP0051 completed six 16,384-step training runs (98,304 physical controls), 144/144 main evaluations and 40/40 synthetic coupling evaluations, in addition to 12/12 preflight evaluations. No new process failure in these matrices. All six learned deterministic policies exactly reproduced memory on all 12 main scenes; mean removal 73.745%, versus 83.333% for stronger measured balanced assignment. No learning gain. Original native failures remain unresolved, not erased.
+
+A new shadow estimator subtracts logged requested commands before estimating residual drift, then integrates commands over detection latency. Four replays over two preflight scenes (memory and priority controllers) preserved the exact reference final state. Mean position errors fell from about 0.074–0.076 mm to 0.041–0.043 mm; mean reported-velocity errors from 0.553–0.584 to 0.097–0.122 mm/s. Same images/commands, truth only for scoring. These are four trajectory repeats over TWO scenes, not four independent layouts or a learning/hardware result.
+
+EXP0052 gives this observer to every arm, extends hierarchical target commitment to 5 seconds, and initializes at measured balanced assignment while learning corrections. Baselines retain 0.1/1/5-second allocation, priority and N=1 memory. Preflight 16/16 completed with exact untrained/balanced equivalence; all multi-cluster arms cleared both preflight scenes with no spacing violation but nonzero wall contact, so no primary safe success. Six fixed-budget learning runs now train 32,768 controls each. Main fixed scene pool: 1820000000–1820000011; synthetic stress: 1850000000–1850000003; confirmation remains unopened.
+
+
+## 2026-10-04 — hierarchical studies and all supplementary diagnostics completed
+
+EXP0052: 6 × 32768 control steps, 168/168 main evaluations and 56/56 registered synthetic-stress evaluations completed. Main removal: hierarchical three-seed mean 83.5738%, flat 87.5253%, strongest-clearing 1-second allocation heuristic 89.6592%. Learned primary safe success is 0/12 in every seed; priority heuristic has 1/12. No learning superiority. All main learned spacing checks pass, but this does not generalize to the extra layouts.
+
+Post-hoc paired observer ablation: 12/12 old-tracker attempts on the same main layouts; mean spacing exposure 0.153342 -> 0 pair-seconds, clearing 86.8061% -> 86.3515%. Other sources/configurations matched; separate first-scene renewal-interval replay had the identical final state. This is shared engineering evidence, not learning.
+
+Post-hoc same-layout coupling control: 56/56 uncoupled attempts matched the original 56 stress attempts. Hierarchical seeds 43/44 have 0/4 spacing failures without coupling versus 1/4 and 2/4 with synthetic alpha=0.1; minimum 1.467540 mm. Flat seed 42 fails spacing on one uncoupled extra layout and zero coupled layouts, so the effect is not uniformly adverse. Four independent layouts only; no physical magnetic calibration.
+
+This continuation completed 12 training runs / 294912 physical steps; 408 registered main/stress + 28 preflight + 68 paired component controls + 6 diagnostic replays = 510 evaluations/replays, not 510 independent layouts. 81 targeted tests pass; all frozen source/checkpoint checks and confirmation-access audit pass. All scheduled jobs finished. Prior native faults are retained and not declared solved. Full results: research/STATUS_HIERARCHICAL_20261004.md.
+
+## 2026-10-04 — EXP0053 local TPG and upper/lower learning implemented; numerical gate failed
+
+User approved TPG with separate 3-D Euclidean interference checks and non-Euclidean vessel travel, and explicitly requested low-level learning as well. Implemented measured-crop Dijkstra with unknown-route sentinels and ambiguous branch attachment, continuous 3-D polyline separation, persistent acyclic local reservations, event-only high scheduling, graph priority PPO, and causal GRU residual control with a next-measured-velocity auxiliary loss. Unknown global travel is never replaced with a claimed true geodesic. This is a rolling local TPG prototype, not full globally feasible MAPF or a magnetic safety certificate. Shared graph/trigger/supervisor mechanics are not learning contributions.
+
+The direct graph-following nominal controller failed development preflight with severe wall exposure. Preserve V1 snapshots; V2 restores strong measured-memory nominal control, V3 supplies the classical controller with the same proactive retreat and reservation constraints. During the first pilot, a causal audit found image-level freshness was too weak for reservation release. Stop before any validation: three high runs completed 8192 steps each, and three low runs were interrupted at 2034/1180/1040 steps. Preserve all sources, checkpoints and interruption metadata. Repair release and auxiliary targets to require individual fresh detections.
+
+Corrected version: 46 targeted tests pass. Default V4 full preflight completed 3/4; one SIGILL (-4), retaining the failure. Corrected high/low training checks each completed 2048 steps with the other branch unchanged. Both completed a 1024-step update before SIGSEGV. Debugger evaluation replay finished normally but does not replace the failure; debugger training replay captured the native SIGSEGV in NumPy `_multiarray_umath`, with `__svml_dcbrt_cout_rare_internal` / `array_subtract` frames. Root cause is not proven, and a Python stack location alone does not establish its origin.
+
+Four preregistered CPU-dispatch diagnostic repetitions: default 1/2 completed, AVX2/FMA3 disabled 2/2 completed. A subsequent complete preflight with the disabled features still completed only 3/4 (another SIGSEGV), so this mitigation is rejected as a passed admission gate. Runtime flags apply only to child processes; packages/global environment unchanged. No 52-row main matrix is started, no efficacy ranking admitted, no failed row replaced, no best seed promoted. Main validation and confirmation pools remain unopened.
+
+Final machine audit confirms all 23/29 frozen source hashes of EXP0051/52 remain unchanged, all 40 new confirmation seeds are guarded, failed preflight blocks the runtime launcher, and no research processes remain running. See `research/STATUS_TPG_20261004.md`, `research/validation/EXP0053_FINAL_AUDIT_20261004/FINAL_AUDIT.json`, and the preserved native/runtime diagnostic directories. Next prerequisite is a minimal native reproduction and validated common runtime, not another favorable-seed search.
+
+## 2026-10-04 — Verification status and prospective ablation/comparison plan
+
+Rechecked the final EXP0053 audit, runners, paired scene factory, reward and metric definitions in response to the user's verification question. Added `research/experiments/VCTPG_EVALUATION_PLAN_20261004.md` and the prospective 52-row `VCTPG_PILOT_MATRIX_20261004.json`. These are planning artifacts only: no new training/evaluation ran, no reserved scene was reset, no performance advantage was established, and frozen executable/configuration files were not changed.
+
+The plan separates the implemented high/low 2x2 factorial from proposed history, auxiliary loss, graph encoder, timing and reservation ablations; distinguishes same-interface rule controls from legacy strong heuristics and N=1 resource-proxy comparisons; records missing current-interface flat/planning baselines and missing anatomy/N>3 support. It specifies paired layouts, seed/scene uncertainty, failed-attempt retention, censored completion times, source/runtime admission and confirmation freeze.
+
+Clarified two easily overstated claims: registered `cluster_safe_success` permits <1.0 cluster-second wall contact rather than requiring exact zero; deployment navigation excludes true outcomes, while simulator-truth training rewards and independent scoring remain. An observation-boundary counterfactual leakage audit, full confirmation statistics and hardware magnetic calibration are still prospective, not completed validations.
+
+## 2026-10-04 17:10 Asia/Shanghai — Isolated generic NumPy runtime admitted; paired pilot started
+
+User requested actual experiments and then asked how the two previously supplied Nature papers chose comparators. Read archived Medany full text and Turbo supplement, retrieved publisher Fig. 3/Fig. 2 pages and saved URL/hash provenance. Added `VCTPG_BASELINE_SELECTION_20261004.md`: Turbo compares GTrXL/GRU/MLP, domain-randomization/reward sensitivity and human tasks; Medany compares DreamerV3 with tuned PPO and reward/frame-skip/training-ratio settings. Proposed adapted recurrent/Transformer/multi-agent controls are not claimed implemented; frozen EXP0053 pilot stays unchanged.
+
+Checked installed NumPy/SciPy native files against RECORD: 20/116 files, no mismatch. An additional default-runtime gdb replay of the 2048-step dual-level check completed normally; debugger exit 1 was the post-exit thread query, not an inferior crash. This does not overwrite prior failures. Preregistered a same-version NumPy 1.26.4 source-build experiment without SVML/CPU optimization and external BLAS/LAPACK in an isolated system-site-packages venv. Original environment and frozen algorithm files remain unchanged. The first build invocation failed because ensurepip's pip lacked config-settings; preserved the log, updated pip only inside the isolated venv, and built with supported options. The setup failure is not counted as a successful experiment.
+
+Candidate passed 20,000 numerical checks, Torch/NumPy interoperation, a superset of 83 targeted tests, all 3 registered dual-level 2048-step regression runs, and 8/8 registered preflight evaluations in two batches. Untrained/rule and between-batch initial/final hashes match. Root cause of the original native failures remains unproven; this is a declared alternative-runtime admission, not erasure of old failures.
+
+Started the complete corrected-source 9-run / 73,728-control-step / 52-evaluation pilot at `research/validation/EXP0053_TPG_GENERIC_STUDY_20261004`. Coordinator `scripts/run_tpg_generic_runtime.py` preserves requests, return codes, source and runtime provenance and stops admission/ranking on any failed requested run. Confirmation remains guarded. No performance conclusion yet; current state is in `EXP0053_RUNTIME_REPAIR_20261004/generic_coordinator_status.json`.
+
+## 2026-10-04 17:16 Asia/Shanghai — EXP0053 full pilot completed; no learned behavioral gain
+
+All 9/9 corrected-source training runs and 52/52 evaluations completed under the declared generic NumPy runtime. Source, checkpoint, exact within-runtime initial pairing and untrained identity checks pass. Each learned checkpoint matches the rule controller's final-state hashes on all four development scenes. Learned/rule mean clearing is 87.50%, AUC 72.59%, wall exposure 31.797 cluster-s, versus balanced_1s 93.75%, 71.23%, 51.145 cluster-s. Every primary safe-success count is zero. Lower event scheduling frequency belongs to the shared rule mechanism, not learning. All seeds retained; 4 scenes remain 4 independent scenes.
+
+New plotting script produces the per-seed comparison figure only after an admitted complete matrix. Baseline selection note records why recurrent PPO, adapted Transformer-PPO and fair multi-agent controls should supplement this pilot, and why N=1 learned control is also needed for a clean learning-versus-parallelism claim. These extra baselines have not been run.
+
+Cross-runtime audit finds identical accepted seeds but tiny initial coordinate differences (max about 5.7e-9 / 2.1e-8 mm in two preflight scenes) and different long-run trajectories. Within-runtime repeated preflights are exact. New results are conditional on the declared build and cannot be pooled with old runtime results as identical replications. Original native failures are preserved and not declared fixed. A separate measured-state shadow audit has been started to distinguish weight updates from changed greedy decisions; it cannot replace registered results or select a favorable checkpoint.
+
+Post-hoc shadow audit completed on all four rule trajectories with exact initial/final replay agreement. Each of six low-level checkpoints chose the rule candidate on all 13,010 active measured states, including 12,596 with multiple valid actions. Score-head weights changed, but greedy choices did not. High-only seed44 differed at one of 50 priority events; other high checkpoints agreed. This does not alter the registered no-gain result. Actual high training sample counts are only 39–113 per run, despite 8192 physical controls. Added the diagnostic report and a final provenance/resource audit; N=1 shares the same scene/start subset and aggregate catalytic-rate proxy, with no material/power equivalence claim. Main matrix and diagnostic jobs have completed; confirmation remains unopened.
+
+## 2026-10-04 — User correction: cooperative MARL becomes the primary algorithm comparison
+
+The user correctly challenged prioritizing ordinary joint PPO/Transformer baselines over multi-agent methods. Revised `VCTPG_BASELINE_SELECTION_20261004.md` and `VCTPG_EVALUATION_PLAN_20261004.md`: prioritize measurement-only recurrent MAPPO and IPPO interface adaptation, then MAT as a strong joint-coordination comparator. Ordinary joint recurrent PPO and Turbo-inspired architectures are auxiliary structure controls. Keep strong measured coordination, N=1 sequential treatment, and the high/low 2x2 ablation. Verified primary MAPPO, IPPO and MAT papers; no claim that these are the latest algorithms or have been reproduced here.
+
+Added separate actor/critic and communication audits, the current nine discrete low-level candidates plus coordination-capability requirement, and distinct system-level versus common-TPG module comparisons. The current upper controller uses a team measurement graph and is not automatically decentralized MARL. If all agents receive full team histories, IPPO/MAPPO information conditions may collapse; do not manufacture a distinction by withholding observations from a baseline. A decentralized-information experiment must also restrict the proposed method. Training rewards and independent scoring still use simulator truth; no navigation-truth claim is broadened to whole-pipeline absence of truth.
+
+Synchronized stale evaluation-plan status with the already completed generic-runtime pilot. This correction changes documentation only: no new algorithm implementation, training, evaluation, performance result, frozen EXP0053 source/configuration edit or confirmation-scene access. The completed 52-evaluation pilot contains no MAPPO/IPPO/MAT and establishes no learning advantage.
+
+## 2026-10-04 — EXP0054 registered: measured MARL and action-conditioned learning
+
+Implemented communication-measured recurrent MAPPO/IPPO adaptations with per-agent PPO ratios, recurrent individual or pooled measured-history value estimates, and event-only learned bids for admissible priorities. Implemented V-CTPG graph priority with candidate-conditioned next-measured-velocity input to the low policy, and a no-action-condition ablation. All share target allocation, event triggers, TPG, candidates, reward, sensing and projection. These are common-TPG module comparisons, not yet independent end-to-end planner baselines; MAT remains prospective. The current team packet is shared by every actor; only own temporal history reaches each local action score. Central critics additionally pool measured histories. No navigation truth access is introduced; truth-based training reward and scoring remain.
+
+42 relevant tests passed, including possible priority orders, nonpreemption, MAPPO/IPPO identical actor initialization and distinct critic history access, masked per-agent updates, GAE duration/termination, action-conditioning ablation, controlled truth-container perturbation and confirmation guards. This boundary test is not a full sensor-to-hardware proof. Original 35 frozen EXP0053 source hashes are unchanged.
+
+Prospective study: four variants × three seeds × 32768 physical controls; all 8192 and 32768 checkpoints evaluated on the same eight development scenes 1960000000–1960000007, plus shared TPG rule, strong 1-second balanced heuristic and N=1. 216 main evaluations, 10 full-duration identity preflights and four 2048-step learning regressions; run admission blocks on any failed process or identity. Original and new confirmation pools remain guarded. No efficacy result yet; no best seed/checkpoint selection.
+
+## 2026-10-04 — EXP0055 conditional reward-control follow-up preregistered
+
+Before viewing the completed EXP0054 main matrix, registered a conditional follow-up if the proposed method has zero safe successes, spacing violations, or no AUC gain over the strongest classical comparator. The fixed original reward trades 27 cluster-seconds of wall contact for one percentage point of clearing; the safety objective tests a 1-second exchange, without changing evaluation thresholds. This is a training remedy, not algorithmic novelty or a physically certified tradeoff.
+
+All four algorithms and all three seeds get two matched fine-tuning regimes from their own fixed 32768-step parents: 16384 more controls under the original reward versus the same budget under the safety reward. Adam restarts in both arms; no exact-resume claim. Planned 24 fine-tunes / 393216 additional controls, 16 parent-policy identity evaluations and 192 main paired evaluations. Original and new reward settings both retain every seed; eight already-designated development scenes reused, all confirmation pools stay closed. Parent results must be complete and admitted before starting.
+
+Two new adapter tests plus the 16 measured-MARL tests passed (18 tests), including exact paired physical trajectory under reward-only changes and checked parent-weight initialization. The original 42-test suite remains passed; these are 44 unique relevant tests, not 60 independent tests. All frozen EXP0054 sources remain unchanged.
+
+A registry-only serialization attempt encountered an existing malformed legacy CSV row. Recovered the exact committed prefix and all eight previously read EXP0046–53 raw rows, then added only the new EXP0054 entry. Recovery artifact retained under EXP0054_REGISTRY_RECOVERY_20261004; subsequent registry edits are scoped to individual rows. No source, training or outcome artifact was affected.
+
+EXP0055 pre-run refinement: both reward regimes now separately clip actor/critic gradients at 0.5, with unclipped norms logged. This shared optimization correction avoids critic-scale-dependent policy clipping; it is not a claimed novel algorithm or proven sole cause of the old no-gain result. Added an exact actor-gradient invariance test; 19 adapter/MARL tests pass (45 unique relevant tests including the original 42-test set). No EXP0054 frozen source changed. Parent-to-child gains will not be attributed solely to the reward change.
+
+## 2026-10-04 — EXP0054 completed negative; preregistered EXP0055 triggered
+
+Completed 12/12 training runs (393216 physical controls), 216/216 main evaluations, 10 identity evaluations and four 2048-step regressions. All processes succeeded and source/runtime/actual-initial-state pairing gates pass. Independent safety-definition and N=1 catalytic-rate/start/particles/targets/mass audit also passes. All learning arms and TPG have zero measured spacing exposure in this development pool, but every registered safe-success count remains zero. Strong balanced_1s has one spacing failure in eight scenes.
+
+At the preregistered final32768 checkpoint: vctpg_ac clearing47.5984%, AUC40.0145%, wall96.689 cluster-s; no-ac72.9167%,60.1921%,97.758; MAPPO75.00%,61.8101%,63.376; IPPO73.9583%,62.3299%,27.534. RuleTPG78.125%,64.3099%,24.571; balanced79.0282%,63.0568%,34.044; N1 40.625%,25.7550%,20.134. No learning advantage. All earlier8192 checkpoints retained without substituting their better results. Proposed learner changes 17/24 final-state hashes versus rule; behavior changed, outcomes worsened. Figures include every seed; corrected wall-axis range to include the worst seed rather than clipping its point.
+
+EXP0055 automatically triggered by zero safe success and no AUC gain. Sixteen parent-policy identity evaluations pass, with identical physical trajectories across reward regimes. All 24 matched fine-tunes now run from their own final32768 parents under original/safety reward,16384 additional controls each, fresh Adam and separate actor/critic clipping shared by all algorithms. No confirmation access, no weakening baselines, no current follow-up efficacy claim.
+
+## 2026-10-04 — EXP0055 native gate failed; diagnostic repetitions retained separately
+
+All24 matched fine-tunes completed (393216 additional physical controls), and16/16 parent-policy identity evaluations passed. Main evaluation191/192 completed; the final safety_reward/vctpg_no_ac/seed44/scene1960000007 process exitedSIGSEGV(-11). The Python stack points to NumPy clip called by measured_tpg.segment_distance; it does not establish the native root cause. This is a new failure under the previously admitted generic same-version NumPy build. Root cause remains unresolved; do not continue calling this runtime a proven fix.
+
+All232 requested EXP0055 jobs have completion records. The191 completed rows have unique expected keys, exact paired initial/scenario hashes, and unchanged frozen sources. The original failed row and empty output remain. Wrote AUDIT.json with valid_comparison_gate=false and INCOMPLETE_MATRIX_AUDIT.json; no partial-data performance ranking or success claim is admitted. No confirmation pool opened.
+
+Preregistered exactly3 diagnostic replays in a separate folder after the failure: one gdb and two serial plain replays. All3 completed normally with exact matching initial/final hashes; gdb inferior exited normally. A separate20000-case seeded scalar clip / segment-distance symmetry stress passed (max symmetry error8.88e-16). None replaces the failed denominator or proves intermittent failure repaired. No further best-seed/best-retry selection performed. All research/diagnostic processes finished.
+
+This continuation completed36 planned training runs totaling786432 physical controls, plus4 admission regressions totaling8192 controls. Main evaluation totals:216/216 EXP0054 and191/192 EXP0055, plus26/26 initialization evaluations and3 post-hoc diagnostic replays. These are repeated evaluations on eight main development scenes, not hundreds of independent layouts. EXP0054 is an admitted negative algorithm result; EXP0055 is numerically incomplete and cannot rank the reward repair.
+
+## 2026-10-04 EXP0056 预登记
+
+根据用户要求更换失败方法。取消低层速度预测，增加共享有界残差和测量风险加权 KL；以图/竞价高层与有/无 KL 做四组匹配消融。从零训练三种子，32768步/组。协议见 experiments/EXP0056_CONSERVATIVE_RESIDUAL_PROTOCOL.md。25项相关测试通过；旧原生崩溃未解决，每项请求一次，失败不得补行或排名。
+
+### EXP0056 完成但数值准入失败
+
+12/12训练、119/120主评估；memory_n1_1960000007在environments/mca_physical_env.py:995–996接触回调SIGSEGV。全部请求只执行一次；不补行，不排名。47个源文件哈希不变。准备隔离系统Python3.12与官方CPU轮子验证；原生根因尚未确定，不把环境更换当作已经修复。
+
+## EXP0057 冻结策略清洁运行时部署对比预登记
+
+对全部12个EXP0056最终权重统一迁移至系统Python3.12隔离环境，官方NumPy1.26.4/SciPy1.11.4/Torch2.3.0+cpu。不是新训练，不改变动作/奖励/网络，不按旧不完整结果挑选策略。新运行时10个全时长身份预检、完整120行开发评估，实际初态在新运行时内匹配。原矩阵保持失败；不混用新旧浮点轨迹；单次完整预算，任何失败继续保留并阻止排名。清洁依赖不是原生根因修复证明。
+
+### EXP0057完整负结果；EXP0058连续动作预登记
+
+EXP0057 120/120通过，51测试、130重算初态哈希、12父训练溯源通过。graph_anchor清除71.875% vs MAPPO79.1667%，两个anchor组全部低层残差为0；不保留离散KL为有效贡献。连续残差高斯PPO现在实现为四组共享动作权限，小幅mean变化可直接执行；blocked状态只训练价值不训练无效动作，仍是测量输入。EXP0058固定12×16384控制步，120评估，三种子，先测试/预检再训练；比上一轮预算短，是独立开发试验而非直接学习曲线比较。
+
+### EXP0058 完整结果
+
+12/12训练、120/120评估、10/10身份预检、4/4回归通过。连续低层全部产生实际修正；graph_anchor清除73.8645%、AUC59.9728%、壁面22.5920集群秒、安全1/24；MAPPO80.2083%、63.0972%、28.7496、安全2/24。壁面均值降低21.4178%，但清除率低6.3438个百分点；开发重采样区间跨零，不是整体或稳定优势。传统基线24/24初末状态哈希及指标与EXP0057精确相同。继续保留全部负结果，不升级图/锚定模块为有效创新；后续应诊断高层学习权限/任务分配与拥塞恢复。所有本轮运行已结束。
+
+### EXP0059 高层隔离实验完成
+
+固定EXP0058连续低层，交叉部署规则/MAPPO bid/graph PPO/graph anchor高层，4×2×3×8=192条，全部通过。固定r_mappo低层时四类高层清除率均80.2083%；固定graph_ppo低层时前三者75.0%，graph anchor73.9583%。因此EXP0058图方法落后MAPPO主要跟随低层策略，而非高层图排序本身。高层只改变少数壁面/AUC，未改善清除或安全。交叉加载是接口诊断，不是端到端重新训练比较。

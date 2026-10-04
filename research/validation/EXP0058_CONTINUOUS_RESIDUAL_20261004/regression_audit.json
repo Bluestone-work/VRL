@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "variant": "r_mappo",
+      "completed": true,
+      "high_changed": true,
+      "low_changed": true,
+      "high_samples": 9
+    },
+    {
+      "variant": "mappo_anchor",
+      "completed": true,
+      "high_changed": true,
+      "low_changed": true,
+      "high_samples": 9
+    },
+    {
+      "variant": "graph_ppo",
+      "completed": true,
+      "high_changed": true,
+      "low_changed": true,
+      "high_samples": 31
+    },
+    {
+      "variant": "graph_anchor",
+      "completed": true,
+      "high_changed": true,
+      "low_changed": true,
+      "high_samples": 28
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "r_mappo_43_32768_1960000001",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_measured_marl",
+    "evaluate",
+    "--variant",
+    "r_mappo",
+    "--scene",
+    "1960000001",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/results/r_mappo_43_32768_1960000001.jsonl",
+    "--checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/training/train_r_mappo_43/policy_32768.pt"
+  ],
+  "requested_at": "2026-10-04T17:49:42.386050+08:00",
+  "returncode": 0,
+  "wall_s": 14.585079789161682,
+  "source_unchanged": true
+}

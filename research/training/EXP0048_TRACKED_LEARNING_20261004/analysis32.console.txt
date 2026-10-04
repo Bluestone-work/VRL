@@ -1,0 +1,489 @@
+{
+  "audit_passed": true,
+  "issues": [],
+  "arms": {
+    "v2_spacing_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.46503962232126467,
+        "removal_auc_180": 0.38236248867405287,
+        "wall_contact_s": 170.29611631913755,
+        "spacing_violation_pair_s": 8.251734314844505,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 493.89842413318166
+      }
+    },
+    "joint_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.48317635960531224,
+        "removal_auc_180": 0.3817001293054094,
+        "wall_contact_s": 157.3835750148769,
+        "spacing_violation_pair_s": 11.581908017800393,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 493.2909838963265
+      }
+    },
+    "memory_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.3333333333333333,
+        "removal": 0.7265314432039965,
+        "removal_auc_180": 0.5359026913418508,
+        "wall_contact_s": 25.962146211044026,
+        "spacing_violation_pair_s": 0.842012818519324,
+        "sensor_confirmed_all_cleared": 0.3333333333333333,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 157.44166666666598,
+        "elapsed_s": 159.26666666666586,
+        "command_squared_s": 405.9441883417512
+      }
+    },
+    "joint_n1": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.16666666666666666,
+        "removal_auc_180": 0.1415646586396375,
+        "wall_contact_s": 81.97198967014502,
+        "spacing_violation_pair_s": 0.0,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 179.45194490903336
+      }
+    },
+    "learned_s42_t32768_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.11586283378653932,
+        "removal_auc_180": 0.1006086226336287,
+        "wall_contact_s": 1.1769030731419672,
+        "spacing_violation_pair_s": 11.173611934850944,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 461.7569568872785
+      }
+    },
+    "learned_s43_t32768_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.4662990078265281,
+        "removal_auc_180": 0.37679780302923865,
+        "wall_contact_s": 100.34436491711698,
+        "spacing_violation_pair_s": 0.9858080513084065,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 377.73745230722506
+      }
+    },
+    "learned_s44_t32768_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "task_success": 0.0,
+        "removal": 0.13432051453965607,
+        "removal_auc_180": 0.1176079489729982,
+        "wall_contact_s": 29.5853482133998,
+        "spacing_violation_pair_s": 0.8150292510009723,
+        "sensor_confirmed_all_cleared": 0.0,
+        "false_visual_completion": 0.0,
+        "physical_cluster_safe_success": 0.0,
+        "T90_with_horizon_penalty": 180.0,
+        "elapsed_s": 180.0,
+        "command_squared_s": 477.7962887207811
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "training_steps": 32768,
+      "comparator": "joint_n3",
+      "direction": "learning minus heuristic",
+      "training_seeds": [
+        42,
+        43,
+        44
+      ],
+      "inference_unit": "scene; learning-seed repeats averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "task_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": -0.24434890755440442,
+          "ci95": [
+            -0.3337068218005315,
+            -0.1561950926614336
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.18336200442678754,
+          "ci95": [
+            -0.2506990814234563,
+            -0.11772367424200796
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": -113.68136961365731,
+          "ci95": [
+            -154.54814438394274,
+            -73.38954492284276
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": -7.257091605413618,
+          "ci95": [
+            -18.05519371964607,
+            1.8477690645781593
+          ],
+          "scenes": 12
+        },
+        "sensor_confirmed_all_cleared": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "false_visual_completion": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "physical_cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "T90_with_horizon_penalty": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "elapsed_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "command_squared_s": {
+          "mean": -54.19408459123162,
+          "ci95": [
+            -76.01362088425036,
+            -30.152074332470754
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "training_steps": 32768,
+      "comparator": "memory_n3",
+      "direction": "learning minus heuristic",
+      "training_seeds": [
+        42,
+        43,
+        44
+      ],
+      "inference_unit": "scene; learning-seed repeats averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "task_success": {
+          "mean": -0.3333333333333333,
+          "ci95": [
+            -0.5833333333333334,
+            -0.08333333333333333
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": -0.4877039911530887,
+          "ci95": [
+            -0.600516855132715,
+            -0.37054542514230016
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.3375645664632289,
+          "ci95": [
+            -0.42384379669505406,
+            -0.25456711591954845
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": 17.740059190175547,
+          "ci95": [
+            -7.293556877518866,
+            42.788671425038544
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 3.4828035938674504,
+          "ci95": [
+            -0.2957058809409789,
+            8.045802053023875
+          ],
+          "scenes": 12
+        },
+        "sensor_confirmed_all_cleared": {
+          "mean": -0.3333333333333333,
+          "ci95": [
+            -0.5833333333333334,
+            -0.08333333333333333
+          ],
+          "scenes": 12
+        },
+        "false_visual_completion": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "physical_cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "T90_with_horizon_penalty": {
+          "mean": 22.558333333334033,
+          "ci95": [
+            3.091666666666986,
+            45.31020833333372
+          ],
+          "scenes": 12
+        },
+        "elapsed_s": {
+          "mean": 20.733333333334137,
+          "ci95": [
+            2.7083333333336745,
+            42.11666666666725
+          ],
+          "scenes": 12
+        },
+        "command_squared_s": {
+          "mean": 33.152710963343644,
+          "ci95": [
+            -17.81319072560552,
+            83.4557403902246
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "training_steps": 32768,
+      "comparator": "v2_spacing_n3",
+      "direction": "learning minus heuristic",
+      "training_seeds": [
+        42,
+        43,
+        44
+      ],
+      "inference_unit": "scene; learning-seed repeats averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "task_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": -0.2262121702703568,
+          "ci95": [
+            -0.3152180528598894,
+            -0.1405225908433559
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.18402436379543097,
+          "ci95": [
+            -0.24482331935123566,
+            -0.12366071580627529
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": -126.59391091791794,
+          "ci95": [
+            -171.97119437242506,
+            -84.8594670146285
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": -3.9269179024577316,
+          "ci95": [
+            -10.155539358536533,
+            1.6954062480366414
+          ],
+          "scenes": 12
+        },
+        "sensor_confirmed_all_cleared": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "false_visual_completion": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "physical_cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "T90_with_horizon_penalty": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "elapsed_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "command_squared_s": {
+          "mean": -54.80152482808678,
+          "ci95": [
+            -81.56972460966581,
+            -26.150027884671783
+          ],
+          "scenes": 12
+        }
+      }
+    }
+  ]
+}

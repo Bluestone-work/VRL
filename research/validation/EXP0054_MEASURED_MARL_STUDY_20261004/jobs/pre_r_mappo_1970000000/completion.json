@@ -1,0 +1,21 @@
+{
+  "name": "pre_r_mappo_1970000000",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_measured_marl",
+    "evaluate",
+    "--variant",
+    "r_mappo",
+    "--scene",
+    "1970000000",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/preflight/pre_r_mappo_1970000000.jsonl"
+  ],
+  "requested_at": "2026-10-04T17:33:18.621184+08:00",
+  "returncode": 0,
+  "wall_s": 14.8496872310061,
+  "source_unchanged": true
+}

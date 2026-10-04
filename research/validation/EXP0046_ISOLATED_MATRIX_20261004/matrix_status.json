@@ -1,0 +1,41 @@
+{
+  "diagnostic_only": true,
+  "sealed_test_used": false,
+  "cases": [
+    {
+      "label": "single_sequential_n1",
+      "returncode": 0,
+      "output": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0046_ISOLATED_MATRIX_20261004/single_sequential_n1.jsonl"
+    },
+    {
+      "label": "multi_parallel_n2_d1",
+      "returncode": 0,
+      "output": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0046_ISOLATED_MATRIX_20261004/multi_parallel_n2_d1.jsonl"
+    },
+    {
+      "label": "multi_parallel_n2_d2",
+      "returncode": 0,
+      "output": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0046_ISOLATED_MATRIX_20261004/multi_parallel_n2_d2.jsonl"
+    },
+    {
+      "label": "multi_parallel_n2_d4",
+      "returncode": 0,
+      "output": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0046_ISOLATED_MATRIX_20261004/multi_parallel_n2_d4.jsonl"
+    },
+    {
+      "label": "multi_parallel_n3_d1",
+      "returncode": 0,
+      "output": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0046_ISOLATED_MATRIX_20261004/multi_parallel_n3_d1.jsonl"
+    },
+    {
+      "label": "multi_parallel_n3_d2",
+      "returncode": 0,
+      "output": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0046_ISOLATED_MATRIX_20261004/multi_parallel_n3_d2.jsonl"
+    },
+    {
+      "label": "multi_parallel_n3_d4",
+      "returncode": 0,
+      "output": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0046_ISOLATED_MATRIX_20261004/multi_parallel_n3_d4.jsonl"
+    }
+  ]
+}

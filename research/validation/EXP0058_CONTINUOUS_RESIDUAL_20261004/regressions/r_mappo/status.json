@@ -1,0 +1,34 @@
+{
+  "phase": "completed",
+  "steps": 2048,
+  "episodes": 1,
+  "high_samples": 9,
+  "high_updates": 1,
+  "low_updates": 2,
+  "pending_high_events": 9,
+  "low": {
+    "samples": 1024,
+    "active_samples": 2206,
+    "anchored": false,
+    "loss": 0.2246244727866724,
+    "kl": 0.0036540829666277565,
+    "entropy": 1.102390669286251,
+    "anchor": 0.0,
+    "actor_unclipped_grad_norm": 0.6082196701318026,
+    "critic_unclipped_grad_norm": 0.6780130825936794
+  },
+  "wall_s": 16.47724871407263,
+  "checkpoints": [
+    {
+      "path": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/regressions/r_mappo/policy_2048.pt",
+      "sha256": "de7baa433c55ca0553258e932d1118ed7fe1c9f0f2f3ed67ff4c2a37090a5b7a",
+      "steps": 2048
+    }
+  ],
+  "model_l2_change": {
+    "high_actor": 0.1603913323485463,
+    "low_actor": 1.0274857118131617,
+    "high_critic": 0.2746619686998169,
+    "low_critic": 2.185309352295125
+  }
+}

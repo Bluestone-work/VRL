@@ -1,0 +1,162 @@
+{
+  "valid_comparison_gate": true,
+  "checks": {
+    "source_matches": true,
+    "snapshot_sources": true,
+    "complete_unique_matrix": true,
+    "all_attempts_passed": true,
+    "paired": true,
+    "confirmation_accessed": true
+  },
+  "rows": 192,
+  "expected": 192,
+  "pairing": [
+    {
+      "scene": 1960000000,
+      "initial": true,
+      "scenario": true,
+      "rows": 24
+    },
+    {
+      "scene": 1960000001,
+      "initial": true,
+      "scenario": true,
+      "rows": 24
+    },
+    {
+      "scene": 1960000002,
+      "initial": true,
+      "scenario": true,
+      "rows": 24
+    },
+    {
+      "scene": 1960000003,
+      "initial": true,
+      "scenario": true,
+      "rows": 24
+    },
+    {
+      "scene": 1960000004,
+      "initial": true,
+      "scenario": true,
+      "rows": 24
+    },
+    {
+      "scene": 1960000005,
+      "initial": true,
+      "scenario": true,
+      "rows": 24
+    },
+    {
+      "scene": 1960000006,
+      "initial": true,
+      "scenario": true,
+      "rows": 24
+    },
+    {
+      "scene": 1960000007,
+      "initial": true,
+      "scenario": true,
+      "rows": 24
+    }
+  ],
+  "summaries": [
+    {
+      "high_variant": "graph_anchor",
+      "low_variant": "graph_ppo",
+      "rows": 24,
+      "independent_scenes": 8,
+      "removal": 0.7395833333333333,
+      "removal_auc_180": 0.6016903850713131,
+      "wall_contact_s": 25.324395384678585,
+      "spacing_violation_pair_s": 0.0,
+      "cluster_safe_success": 0.0,
+      "mean_requested_residual": 0.009823594045687478
+    },
+    {
+      "high_variant": "graph_anchor",
+      "low_variant": "r_mappo",
+      "rows": 24,
+      "independent_scenes": 8,
+      "removal": 0.8020833333333333,
+      "removal_auc_180": 0.6309724790553548,
+      "wall_contact_s": 28.749567494049934,
+      "spacing_violation_pair_s": 0.0,
+      "cluster_safe_success": 0.08333333333333333,
+      "mean_requested_residual": 0.012338891520519278
+    },
+    {
+      "high_variant": "graph_ppo",
+      "low_variant": "graph_ppo",
+      "rows": 24,
+      "independent_scenes": 8,
+      "removal": 0.75,
+      "removal_auc_180": 0.6070409379688169,
+      "wall_contact_s": 24.454324313012968,
+      "spacing_violation_pair_s": 0.0,
+      "cluster_safe_success": 0.0,
+      "mean_requested_residual": 0.010040493540733508
+    },
+    {
+      "high_variant": "graph_ppo",
+      "low_variant": "r_mappo",
+      "rows": 24,
+      "independent_scenes": 8,
+      "removal": 0.8020833333333333,
+      "removal_auc_180": 0.6342106145449271,
+      "wall_contact_s": 27.705722020713793,
+      "spacing_violation_pair_s": 0.0,
+      "cluster_safe_success": 0.08333333333333333,
+      "mean_requested_residual": 0.012331879971430594
+    },
+    {
+      "high_variant": "r_mappo",
+      "low_variant": "graph_ppo",
+      "rows": 24,
+      "independent_scenes": 8,
+      "removal": 0.75,
+      "removal_auc_180": 0.6070409379688169,
+      "wall_contact_s": 24.454324313012968,
+      "spacing_violation_pair_s": 0.0,
+      "cluster_safe_success": 0.0,
+      "mean_requested_residual": 0.010040493540733508
+    },
+    {
+      "high_variant": "r_mappo",
+      "low_variant": "r_mappo",
+      "rows": 24,
+      "independent_scenes": 8,
+      "removal": 0.8020833333333333,
+      "removal_auc_180": 0.6309724790553548,
+      "wall_contact_s": 28.749567494049934,
+      "spacing_violation_pair_s": 0.0,
+      "cluster_safe_success": 0.08333333333333333,
+      "mean_requested_residual": 0.012339928515144047
+    },
+    {
+      "high_variant": "rule",
+      "low_variant": "graph_ppo",
+      "rows": 24,
+      "independent_scenes": 8,
+      "removal": 0.75,
+      "removal_auc_180": 0.6070409379688169,
+      "wall_contact_s": 24.454324313012968,
+      "spacing_violation_pair_s": 0.0,
+      "cluster_safe_success": 0.0,
+      "mean_requested_residual": 0.010040493540733508
+    },
+    {
+      "high_variant": "rule",
+      "low_variant": "r_mappo",
+      "rows": 24,
+      "independent_scenes": 8,
+      "removal": 0.8020833333333333,
+      "removal_auc_180": 0.6309724790553548,
+      "wall_contact_s": 28.749567494049934,
+      "spacing_violation_pair_s": 0.0,
+      "cluster_safe_success": 0.08333333333333333,
+      "mean_requested_residual": 0.012339928515144047
+    }
+  ],
+  "confirmation_accessed": false
+}

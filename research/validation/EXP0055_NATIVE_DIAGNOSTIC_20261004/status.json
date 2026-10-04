@@ -1,0 +1,25 @@
+{
+  "phase": "completed",
+  "attempts": [
+    {
+      "name": "gdb_replay",
+      "returncode": 0,
+      "wall_s": 18.73951639002189,
+      "result_written": true
+    },
+    {
+      "name": "serial_replay_1",
+      "returncode": 0,
+      "wall_s": 17.527864687144756,
+      "result_written": true
+    },
+    {
+      "name": "serial_replay_2",
+      "returncode": 0,
+      "wall_s": 17.051160228904337,
+      "result_written": true
+    }
+  ],
+  "original_failed_row_replaced": false,
+  "ranking_admitted": false
+}

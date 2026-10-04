@@ -1,0 +1,15 @@
+{
+  "phase": "completed",
+  "checkpoint": "research/validation/EXP0052_STUDY_20261004/training/hierarchical_s42/policy_32768.pt",
+  "checkpoint_sha256": "1b5aac2b19cb906311d936c7bbd8c8dcca4717507fc44596e70be3b86f2324ec",
+  "model_l2_change": 2.499899515445681,
+  "control_steps": 32768,
+  "macro_samples": 23,
+  "episodes": 20,
+  "updates": 32,
+  "loss": 0.7619546800851822,
+  "kl": 9.230880823452026e-05,
+  "entropy": 2.8379528522491455,
+  "wall_s": 166.49455936602317,
+  "fps": 196.81123543980462
+}

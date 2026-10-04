@@ -1,0 +1,23 @@
+{
+  "name": "regression_r_mappo",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_measured_marl",
+    "train",
+    "--variant",
+    "r_mappo",
+    "--seed",
+    "42",
+    "--steps",
+    "2048",
+    "--scene-base",
+    "1970001000",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/regressions/r_mappo"
+  ],
+  "requested_at": "2026-10-04T17:33:48.538176+08:00",
+  "returncode": 0,
+  "wall_s": 16.353169133886695,
+  "source_unchanged": true
+}

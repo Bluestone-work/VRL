@@ -1,0 +1,21 @@
+{
+  "name": "graph_ppo_42_1960000006",
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "scripts.run_clean_residual_eval",
+    "--variant",
+    "graph_ppo",
+    "--seed",
+    "42",
+    "--scene",
+    "1960000006",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000006.jsonl",
+    "--trained"
+  ],
+  "requested_at": "2026-10-04T19:44:54.379586+08:00",
+  "returncode": 0,
+  "wall_s": 14.48834269400686,
+  "source_unchanged": true
+}

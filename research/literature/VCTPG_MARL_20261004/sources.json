@@ -1,0 +1,26 @@
+[
+  {
+    "name": "mappo",
+    "url": "https://arxiv.org/html/2103.01955v4",
+    "final_url": "https://arxiv.org/html/2103.01955v4",
+    "file": "research/literature/VCTPG_MARL_20261004/mappo.html",
+    "sha256": "580ce9cdcf934b97a5d53609fb7b5e478d78c25a301c23e9a3d382e39bb2d69a",
+    "bytes": 461131
+  },
+  {
+    "name": "ippo",
+    "url": "https://arxiv.org/abs/2011.09533",
+    "final_url": "https://arxiv.org/abs/2011.09533",
+    "file": "research/literature/VCTPG_MARL_20261004/ippo.html",
+    "sha256": "1d529147f498bf3266cb59d3c0fc7865b35fc6b31498d4b674ab071c5ef354ff",
+    "bytes": 41633
+  },
+  {
+    "name": "mat",
+    "url": "https://arxiv.org/abs/2205.14953",
+    "final_url": "https://arxiv.org/abs/2205.14953",
+    "file": "research/literature/VCTPG_MARL_20261004/mat.html",
+    "sha256": "4f471ca1ae1ba9c5d866d8aecf0f50509ffc99b8fc140fe203cbb5ef7b05c85a",
+    "bytes": 43798
+  }
+]

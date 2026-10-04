@@ -1,0 +1,10 @@
+{
+  "label": "flat_s43",
+  "variant": "flat",
+  "seed": 43,
+  "scene_base": 1810100000,
+  "status": "completed",
+  "returncode": 0,
+  "wall_s": 189.6889147858601,
+  "console": "research/validation/EXP0052_STUDY_20261004/training/flat_s43.console.txt"
+}

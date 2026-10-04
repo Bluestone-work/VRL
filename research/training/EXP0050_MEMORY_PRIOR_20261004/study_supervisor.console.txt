@@ -1,0 +1,11 @@
+{"phase": "awaiting_registered_pilot"}
+{"phase": "evaluate_32k_and_train_64k"}
+{"label": "learned32_validation", "returncode": 0, "wall_s": 83.39643687894568}
+{"label": "seed42_64k", "returncode": 0, "wall_s": 186.97554156696424}
+{"label": "seed43_64k", "returncode": 0, "wall_s": 204.22435001796111}
+{"label": "seed44_64k", "returncode": 0, "wall_s": 211.20580713404343}
+{"phase": "evaluate_registered_64k"}
+{"label": "learned64_validation", "returncode": 2, "wall_s": 64.93027603090741}
+{"phase": "audit_paired_results"}
+{"label": "final_analysis", "returncode": 0, "wall_s": 0.2399518070742488}
+{"phase": "completed_with_recorded_failures", "attempts": [{"label": "learned32_validation", "returncode": 0, "wall_s": 83.39643687894568}, {"label": "seed42_64k", "returncode": 0, "wall_s": 186.97554156696424}, {"label": "seed43_64k", "returncode": 0, "wall_s": 204.22435001796111}, {"label": "seed44_64k", "returncode": 0, "wall_s": 211.20580713404343}, {"label": "learned64_validation", "returncode": 2, "wall_s": 64.93027603090741}, {"label": "final_analysis", "returncode": 0, "wall_s": 0.2399518070742488}], "confirmation_accessed": false}

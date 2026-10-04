@@ -1,0 +1,173 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "arm": "tpg",
+      "scene": 1960000000,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "tpg",
+      "scene": 1960000001,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "tpg",
+      "scene": 1960000002,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "tpg",
+      "scene": 1960000003,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "tpg",
+      "scene": 1960000004,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "tpg",
+      "scene": 1960000005,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "tpg",
+      "scene": 1960000006,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "tpg",
+      "scene": 1960000007,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "balanced_1s",
+      "scene": 1960000000,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "balanced_1s",
+      "scene": 1960000001,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "balanced_1s",
+      "scene": 1960000002,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "balanced_1s",
+      "scene": 1960000003,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "balanced_1s",
+      "scene": 1960000004,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "balanced_1s",
+      "scene": 1960000005,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "balanced_1s",
+      "scene": 1960000006,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "balanced_1s",
+      "scene": 1960000007,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "memory_n1",
+      "scene": 1960000000,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "memory_n1",
+      "scene": 1960000001,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "memory_n1",
+      "scene": 1960000002,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "memory_n1",
+      "scene": 1960000003,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "memory_n1",
+      "scene": 1960000004,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "memory_n1",
+      "scene": 1960000005,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "memory_n1",
+      "scene": 1960000006,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    },
+    {
+      "arm": "memory_n1",
+      "scene": 1960000007,
+      "initial_equal": true,
+      "final_equal": true,
+      "metrics_equal": true
+    }
+  ]
+}

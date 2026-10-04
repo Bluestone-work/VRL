@@ -1,0 +1,22 @@
+{
+  "name": "original_reward_vctpg_no_ac_43",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_safety_marl",
+    "train",
+    "--regime",
+    "original_reward",
+    "--variant",
+    "vctpg_no_ac",
+    "--seed",
+    "43",
+    "--steps",
+    "16384",
+    "--scene-base",
+    "2010100000",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0055_SAFETY_OBJECTIVE_STUDY_20261004/training/original_reward_vctpg_no_ac_43"
+  ],
+  "requested_at": "2026-10-04T18:01:53.252811+08:00"
+}

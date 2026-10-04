@@ -1,0 +1,970 @@
+[
+  {
+    "package": "numpy",
+    "version": "1.26.4",
+    "native_files": 20,
+    "mismatches": [],
+    "entries": [
+      {
+        "file": "numpy.libs/libopenblas64_p-r0-0cf96a72.3.23.dev.so",
+        "matches_record": true,
+        "record": "klTQhU3XYV4R3ijXca5AiHjKgSOnrCBPIeTMejdswuU",
+        "actual": "klTQhU3XYV4R3ijXca5AiHjKgSOnrCBPIeTMejdswuU",
+        "bytes": 35123345
+      },
+      {
+        "file": "numpy/core/_multiarray_tests.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "DeRvVJb8JhcVcq3CAMpUrF7kcD_EzZ9hc-OOsu4hwgs",
+        "actual": "DeRvVJb8JhcVcq3CAMpUrF7kcD_EzZ9hc-OOsu4hwgs",
+        "bytes": 175912
+      },
+      {
+        "file": "numpy/core/_multiarray_umath.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "_l7-McVTJrByyPsjmiJYGSEYJstFzTx07QrwAw5w86E",
+        "actual": "_l7-McVTJrByyPsjmiJYGSEYJstFzTx07QrwAw5w86E",
+        "bytes": 7426841
+      },
+      {
+        "file": "numpy/core/_operand_flag_tests.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "fSsrco1Kut3UaGZZ5f-w9gOw6iil4v5es4h0jjsgM0c",
+        "actual": "fSsrco1Kut3UaGZZ5f-w9gOw6iil4v5es4h0jjsgM0c",
+        "bytes": 16856
+      },
+      {
+        "file": "numpy/core/_rational_tests.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "JhmDykdI9J_hx_swy42UxeFjFGDF-MEj6u3jKL32770",
+        "actual": "JhmDykdI9J_hx_swy42UxeFjFGDF-MEj6u3jKL32770",
+        "bytes": 59768
+      },
+      {
+        "file": "numpy/core/_simd.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "sslr7CDjx6Wfj3izDn_VFC0BXkLyy9JyI8PoYsU-QRM",
+        "actual": "sslr7CDjx6Wfj3izDn_VFC0BXkLyy9JyI8PoYsU-QRM",
+        "bytes": 3527040
+      },
+      {
+        "file": "numpy/core/_struct_ufunc_tests.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "CSlDZ5gi01I5v-N7jHvSfRLyOJSR9JMcIV2cIq5InGo",
+        "actual": "CSlDZ5gi01I5v-N7jHvSfRLyOJSR9JMcIV2cIq5InGo",
+        "bytes": 16960
+      },
+      {
+        "file": "numpy/core/_umath_tests.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "G_1pjqWX0wE-CBY1CeWdfvaHNGEfOREmgJkzFTNYX9Q",
+        "actual": "G_1pjqWX0wE-CBY1CeWdfvaHNGEfOREmgJkzFTNYX9Q",
+        "bytes": 42272
+      },
+      {
+        "file": "numpy/fft/_pocketfft_internal.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "XzaFDzxI6s8RqdHjtZV6NrK33T630h9owQF8-rT9AAY",
+        "actual": "XzaFDzxI6s8RqdHjtZV6NrK33T630h9owQF8-rT9AAY",
+        "bytes": 97008
+      },
+      {
+        "file": "numpy/linalg/_umath_linalg.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "BYffhO2XUQkIZ6ShRB0sOUw5c1QgqjiLi_aYtyVfJL0",
+        "actual": "BYffhO2XUQkIZ6ShRB0sOUw5c1QgqjiLi_aYtyVfJL0",
+        "bytes": 216793
+      },
+      {
+        "file": "numpy/linalg/lapack_lite.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "zWHsImcTCxEkZbyF2rgrclRTDzz5E7poiDOwhOKaVRs",
+        "actual": "zWHsImcTCxEkZbyF2rgrclRTDzz5E7poiDOwhOKaVRs",
+        "bytes": 29849
+      },
+      {
+        "file": "numpy/random/_bounded_integers.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "zACYhBZNDJi5rXbYmdgxjLJDbkyqoANLSLZge3Dvpa0",
+        "actual": "zACYhBZNDJi5rXbYmdgxjLJDbkyqoANLSLZge3Dvpa0",
+        "bytes": 379216
+      },
+      {
+        "file": "numpy/random/_common.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "MaClzR2DAUNmBHlArlpsVGbr4NZRXS5eIxElj3SNFwY",
+        "actual": "MaClzR2DAUNmBHlArlpsVGbr4NZRXS5eIxElj3SNFwY",
+        "bytes": 276192
+      },
+      {
+        "file": "numpy/random/_generator.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "YFpOzoKFPKyS6SDrmoptosTvc55vluPMG_Su1x_hTl8",
+        "actual": "YFpOzoKFPKyS6SDrmoptosTvc55vluPMG_Su1x_hTl8",
+        "bytes": 976328
+      },
+      {
+        "file": "numpy/random/_mt19937.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "0wvUt9mG_CmAC9WIxw0yIxQ5Mt3IAr3EbXIZf7wJbBE",
+        "actual": "0wvUt9mG_CmAC9WIxw0yIxQ5Mt3IAr3EbXIZf7wJbBE",
+        "bytes": 120224
+      },
+      {
+        "file": "numpy/random/_pcg64.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "ZG1KBr34YGbShTmKifH2EGAddV-ad0slxzFtuexATqs",
+        "actual": "ZG1KBr34YGbShTmKifH2EGAddV-ad0slxzFtuexATqs",
+        "bytes": 126400
+      },
+      {
+        "file": "numpy/random/_philox.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "J4Bwk58gF6ftGukYM63WUlHm9w5yudN5ZOswvDg_awU",
+        "actual": "J4Bwk58gF6ftGukYM63WUlHm9w5yudN5ZOswvDg_awU",
+        "bytes": 107384
+      },
+      {
+        "file": "numpy/random/_sfc64.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "M57C1mIUFNGr30RKzEPM8qG2g6pB_t7sPcYLTD4nHfM",
+        "actual": "M57C1mIUFNGr30RKzEPM8qG2g6pB_t7sPcYLTD4nHfM",
+        "bytes": 76712
+      },
+      {
+        "file": "numpy/random/bit_generator.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "1O49cg-e7gVBVIUH3H_i8yPqSBzcM-N5Bv54vC6YGg0",
+        "actual": "1O49cg-e7gVBVIUH3H_i8yPqSBzcM-N5Bv54vC6YGg0",
+        "bytes": 246536
+      },
+      {
+        "file": "numpy/random/mtrand.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "uRfi8K2i7wCwzFCbdvFNi85IFeNkOr1YSBgDu7a1hf4",
+        "actual": "uRfi8K2i7wCwzFCbdvFNi85IFeNkOr1YSBgDu7a1hf4",
+        "bytes": 783752
+      }
+    ]
+  },
+  {
+    "package": "scipy",
+    "version": "1.15.3",
+    "native_files": 116,
+    "mismatches": [],
+    "entries": [
+      {
+        "file": "scipy.libs/libscipy_openblas-68440149.so",
+        "matches_record": true,
+        "record": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y",
+        "actual": "PnOaJDWvSdLZOHSfMWqjOMZfQcmuZhVAbnz4P-tmL0Y",
+        "bytes": 22211841
+      },
+      {
+        "file": "scipy/_lib/_ccallback_c.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "cvW1nt3B5HFznbZ6ufuR8qk99dEs5SNXcTcbYGv-h2k",
+        "actual": "cvW1nt3B5HFznbZ6ufuR8qk99dEs5SNXcTcbYGv-h2k",
+        "bytes": 110176
+      },
+      {
+        "file": "scipy/_lib/_fpumode.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Kk1mpVY1lns4OpLjvNrW4B9W-nLAOgt6nH-0O5oSRTg",
+        "actual": "Kk1mpVY1lns4OpLjvNrW4B9W-nLAOgt6nH-0O5oSRTg",
+        "bytes": 16400
+      },
+      {
+        "file": "scipy/_lib/_test_ccallback.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "eVlhBo8MscWcnGS1WVQPtb6AsCXBqJhfY90wuHv2XTM",
+        "actual": "eVlhBo8MscWcnGS1WVQPtb6AsCXBqJhfY90wuHv2XTM",
+        "bytes": 23232
+      },
+      {
+        "file": "scipy/_lib/_test_deprecation_call.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "MGMi1imArTzYhEpgEOSaCD7Z9k-Y5Faq-U9ZJ6bId70",
+        "actual": "MGMi1imArTzYhEpgEOSaCD7Z9k-Y5Faq-U9ZJ6bId70",
+        "bytes": 49544
+      },
+      {
+        "file": "scipy/_lib/_test_deprecation_def.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "DbK0eJG5ZF9l8Tf_lfXNeh6TTgaman-fZlgcCIUjPws",
+        "actual": "DbK0eJG5ZF9l8Tf_lfXNeh6TTgaman-fZlgcCIUjPws",
+        "bytes": 34392
+      },
+      {
+        "file": "scipy/_lib/_uarray/_uarray.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Bwt4jbURprvVw-XXxLl6zvVJdxebsHphZjxuYXouT2Y",
+        "actual": "Bwt4jbURprvVw-XXxLl6zvVJdxebsHphZjxuYXouT2Y",
+        "bytes": 178176
+      },
+      {
+        "file": "scipy/_lib/messagestream.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "N8Xt4BSFY-yCqAY8CdqOsY0fWIZxglqRiLRI1CgEggQ",
+        "actual": "N8Xt4BSFY-yCqAY8CdqOsY0fWIZxglqRiLRI1CgEggQ",
+        "bytes": 85760
+      },
+      {
+        "file": "scipy/cluster/_hierarchy.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "QNqTQXWOfXeOfFMQIH0ye3aqiDYQH06n6U6QZ7OcOeU",
+        "actual": "QNqTQXWOfXeOfFMQIH0ye3aqiDYQH06n6U6QZ7OcOeU",
+        "bytes": 423504
+      },
+      {
+        "file": "scipy/cluster/_optimal_leaf_ordering.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "ERE2l6rmQGvubAjb5muqLBlxykc5-vnLQv9evC5Dbhg",
+        "actual": "ERE2l6rmQGvubAjb5muqLBlxykc5-vnLQv9evC5Dbhg",
+        "bytes": 355856
+      },
+      {
+        "file": "scipy/cluster/_vq.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "iS2u_uboSU58mHv5tKByRpu29o-rDx3qDZzHCIRFiiI",
+        "actual": "iS2u_uboSU58mHv5tKByRpu29o-rDx3qDZzHCIRFiiI",
+        "bytes": 127888
+      },
+      {
+        "file": "scipy/fft/_pocketfft/pypocketfft.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "DI9FFpkUASTBx2XuzINF8Eocryy8axT-0BjptenzFTk",
+        "actual": "DI9FFpkUASTBx2XuzINF8Eocryy8axT-0BjptenzFTk",
+        "bytes": 1201872
+      },
+      {
+        "file": "scipy/fftpack/convolve.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "G7blA59SEt72X2O7oK55lru04KhUxX63WK5qhzzSC6s",
+        "actual": "G7blA59SEt72X2O7oK55lru04KhUxX63WK5qhzzSC6s",
+        "bytes": 272968
+      },
+      {
+        "file": "scipy/integrate/_dop.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "667po3Y1B8nwYSLqptTJCwP_ua-z0VpvJ3tqqBXk6Jk",
+        "actual": "667po3Y1B8nwYSLqptTJCwP_ua-z0VpvJ3tqqBXk6Jk",
+        "bytes": 116993
+      },
+      {
+        "file": "scipy/integrate/_lsoda.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "CDho69YW3FTtYyKdDBK6ZdEcQYNPAlVIlaXzdQ5ncSw",
+        "actual": "CDho69YW3FTtYyKdDBK6ZdEcQYNPAlVIlaXzdQ5ncSw",
+        "bytes": 516881
+      },
+      {
+        "file": "scipy/integrate/_odepack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "QF45O36LtC3pAsd9mv-n6IFjFBruoYUy8gvXfvxhB20",
+        "actual": "QF45O36LtC3pAsd9mv-n6IFjFBruoYUy8gvXfvxhB20",
+        "bytes": 479121
+      },
+      {
+        "file": "scipy/integrate/_quadpack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "HdP6CaKBYe_0FDpRJubkfV-7Yn3I5cu649JJviwOgxc",
+        "actual": "HdP6CaKBYe_0FDpRJubkfV-7Yn3I5cu649JJviwOgxc",
+        "bytes": 112024
+      },
+      {
+        "file": "scipy/integrate/_test_multivariate.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "oCO9DKyKPy4ERYj4rP5sVzsJ2V1Goc521tLC5k-WlzE",
+        "actual": "oCO9DKyKPy4ERYj4rP5sVzsJ2V1Goc521tLC5k-WlzE",
+        "bytes": 16896
+      },
+      {
+        "file": "scipy/integrate/_test_odeint_banded.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "BS-7nShGNkmHz5LhkRFLM5-LIHTmq3nQVIobRKRNbeA",
+        "actual": "BS-7nShGNkmHz5LhkRFLM5-LIHTmq3nQVIobRKRNbeA",
+        "bytes": 516585
+      },
+      {
+        "file": "scipy/integrate/_vode.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "0IeD-Fu0oW3Nc-uTFwALl86BGpjgxD1EVmkSshQnv4I",
+        "actual": "0IeD-Fu0oW3Nc-uTFwALl86BGpjgxD1EVmkSshQnv4I",
+        "bytes": 565985
+      },
+      {
+        "file": "scipy/interpolate/_bspl.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "d0lMRdmlQ309Th3a94LqlV_43BJ3epZPYcoLCPfWLt8",
+        "actual": "d0lMRdmlQ309Th3a94LqlV_43BJ3epZPYcoLCPfWLt8",
+        "bytes": 406513
+      },
+      {
+        "file": "scipy/interpolate/_dfitpack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Va4mHz0nwj80-dTBMoViv19BGaD2LZqtQLN9sCgA6pI",
+        "actual": "Va4mHz0nwj80-dTBMoViv19BGaD2LZqtQLN9sCgA6pI",
+        "bytes": 346377
+      },
+      {
+        "file": "scipy/interpolate/_dierckx.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "tiVk1xQUh8KaMC5P7OJQuu8q9vtFnNET4k24d-s8GOQ",
+        "actual": "tiVk1xQUh8KaMC5P7OJQuu8q9vtFnNET4k24d-s8GOQ",
+        "bytes": 141921
+      },
+      {
+        "file": "scipy/interpolate/_fitpack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "D45mQB8AcwB5x9jnD3fXtnqHalYXELoZXbcVJV4la78",
+        "actual": "D45mQB8AcwB5x9jnD3fXtnqHalYXELoZXbcVJV4la78",
+        "bytes": 91409
+      },
+      {
+        "file": "scipy/interpolate/_interpnd.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "AHxyc_T01ifDGb0Zp74efCkb894h5i6eoUyxWdjdoAM",
+        "actual": "AHxyc_T01ifDGb0Zp74efCkb894h5i6eoUyxWdjdoAM",
+        "bytes": 458840
+      },
+      {
+        "file": "scipy/interpolate/_ppoly.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "shuuOAS0BmtNHlD0h2EmwB1p5ySGaJpybEEiR2t3TjM",
+        "actual": "shuuOAS0BmtNHlD0h2EmwB1p5ySGaJpybEEiR2t3TjM",
+        "bytes": 466256
+      },
+      {
+        "file": "scipy/interpolate/_rbfinterp_pythran.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "PKEUjybwiG29xTCK_DHxEPCRfE6-9ueB-uVknweteOU",
+        "actual": "PKEUjybwiG29xTCK_DHxEPCRfE6-9ueB-uVknweteOU",
+        "bytes": 256728
+      },
+      {
+        "file": "scipy/interpolate/_rgi_cython.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "wV1sfCKeSgqFSNR_6fFIOZK5WWzd1TaABGJboEjW4VI",
+        "actual": "wV1sfCKeSgqFSNR_6fFIOZK5WWzd1TaABGJboEjW4VI",
+        "bytes": 295704
+      },
+      {
+        "file": "scipy/io/_fast_matrix_market/_fmm_core.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "p92cyg4if3aX5yB82YBysrIS8KQbtbm-pN8ROZaQQa8",
+        "actual": "p92cyg4if3aX5yB82YBysrIS8KQbtbm-pN8ROZaQQa8",
+        "bytes": 3845792
+      },
+      {
+        "file": "scipy/io/_test_fortran.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "K8ZDVMJIiEhBv8-0hp_rdJDv1nlG9bgxcE8EKmS6gCs",
+        "actual": "K8ZDVMJIiEhBv8-0hp_rdJDv1nlG9bgxcE8EKmS6gCs",
+        "bytes": 63529
+      },
+      {
+        "file": "scipy/io/matlab/_mio5_utils.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "0w6ZSwnZ8w9-_rbcgfoFq0p74ytOeMK0j8O2IoGXv7E",
+        "actual": "0w6ZSwnZ8w9-_rbcgfoFq0p74ytOeMK0j8O2IoGXv7E",
+        "bytes": 264600
+      },
+      {
+        "file": "scipy/io/matlab/_mio_utils.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "0b2atzEfb2G13BotoWIRlcrlUHAPkxv1SKMlXIB0vio",
+        "actual": "0b2atzEfb2G13BotoWIRlcrlUHAPkxv1SKMlXIB0vio",
+        "bytes": 73280
+      },
+      {
+        "file": "scipy/io/matlab/_streams.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "B0zgN0dPcuL8mUUZXtTBb7VGF2ApT8-HlyQlcJTuGBA",
+        "actual": "B0zgN0dPcuL8mUUZXtTBb7VGF2ApT8-HlyQlcJTuGBA",
+        "bytes": 147488
+      },
+      {
+        "file": "scipy/linalg/_cythonized_array_utils.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "joOfLEYaOsUVrqsckTNq4BKHi2sDI-iPg-j99SlmqJc",
+        "actual": "joOfLEYaOsUVrqsckTNq4BKHi2sDI-iPg-j99SlmqJc",
+        "bytes": 629104
+      },
+      {
+        "file": "scipy/linalg/_decomp_interpolative.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "3XlSAl9FNjr4YedoRyzcyUwXEjejCTtlUlE715iEbb8",
+        "actual": "3XlSAl9FNjr4YedoRyzcyUwXEjejCTtlUlE715iEbb8",
+        "bytes": 1050264
+      },
+      {
+        "file": "scipy/linalg/_decomp_lu_cython.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "65GCx_cYWtvY1uLIy6IlJlw5hBxR9c50jc9sqqa0_ak",
+        "actual": "65GCx_cYWtvY1uLIy6IlJlw5hBxR9c50jc9sqqa0_ak",
+        "bytes": 270816
+      },
+      {
+        "file": "scipy/linalg/_decomp_update.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "bGRFGj3WHGa2IKoOCgcA3wQezbZAkHAXbqmd_QdevuM",
+        "actual": "bGRFGj3WHGa2IKoOCgcA3wQezbZAkHAXbqmd_QdevuM",
+        "bytes": 368608
+      },
+      {
+        "file": "scipy/linalg/_fblas.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "0rwLgSerFM8d866P5CQoKYMO9UzADOr9cg5o735n9JU",
+        "actual": "0rwLgSerFM8d866P5CQoKYMO9UzADOr9cg5o735n9JU",
+        "bytes": 1032545
+      },
+      {
+        "file": "scipy/linalg/_flapack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "EXQvPzCHMzIjad6O-Gevaq-MOwAdYQBWMt_zezpBYe4",
+        "actual": "EXQvPzCHMzIjad6O-Gevaq-MOwAdYQBWMt_zezpBYe4",
+        "bytes": 2478641
+      },
+      {
+        "file": "scipy/linalg/_linalg_pythran.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "W0Io5kRSjQGV2NJ4WXNje-XEFAgWbh4ulBeQKzRnIPc",
+        "actual": "W0Io5kRSjQGV2NJ4WXNje-XEFAgWbh4ulBeQKzRnIPc",
+        "bytes": 140520
+      },
+      {
+        "file": "scipy/linalg/_matfuncs_expm.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "mIhSUmPqv4w6ZzhugeldXAtJLtqNm3YP3Lm38R7vTg8",
+        "actual": "mIhSUmPqv4w6ZzhugeldXAtJLtqNm3YP3Lm38R7vTg8",
+        "bytes": 511433
+      },
+      {
+        "file": "scipy/linalg/_matfuncs_sqrtm_triu.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "L2JmNSlFlqzKBsNxoTEkYrEebNkZZ46z4kTWHU4KLbU",
+        "actual": "L2JmNSlFlqzKBsNxoTEkYrEebNkZZ46z4kTWHU4KLbU",
+        "bytes": 280968
+      },
+      {
+        "file": "scipy/linalg/_solve_toeplitz.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "AKFt92yyul1kPCU2_6OmNzXaUozBAcv9P4fsVTrjfv4",
+        "actual": "AKFt92yyul1kPCU2_6OmNzXaUozBAcv9P4fsVTrjfv4",
+        "bytes": 300512
+      },
+      {
+        "file": "scipy/linalg/cython_blas.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "y-7hIQhUdUhJFjF5JQOFj3BxgTEAYdbWKYGEf7h94so",
+        "actual": "y-7hIQhUdUhJFjF5JQOFj3BxgTEAYdbWKYGEf7h94so",
+        "bytes": 353945
+      },
+      {
+        "file": "scipy/linalg/cython_lapack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "gQ8N_Du6tekhgNGUYZevW1HpVr2f8nok1aKIGwyrPtI",
+        "actual": "gQ8N_Du6tekhgNGUYZevW1HpVr2f8nok1aKIGwyrPtI",
+        "bytes": 879585
+      },
+      {
+        "file": "scipy/ndimage/_ctest.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "h98uh-F0_Ywmq7sQkE-zVgPCuj5JX3uZqeFVBgpYS0A",
+        "actual": "h98uh-F0_Ywmq7sQkE-zVgPCuj5JX3uZqeFVBgpYS0A",
+        "bytes": 17008
+      },
+      {
+        "file": "scipy/ndimage/_cytest.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "wB-D9XbVebncwjrfQS5e-HMWx7OcO7UwZM185epaM-0",
+        "actual": "wB-D9XbVebncwjrfQS5e-HMWx7OcO7UwZM185epaM-0",
+        "bytes": 90984
+      },
+      {
+        "file": "scipy/ndimage/_nd_image.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74",
+        "actual": "VtZ0C4AFg_pUrbpllO-FYoMvhtFWQ1UnxKHKhYRlO74",
+        "bytes": 147184
+      },
+      {
+        "file": "scipy/ndimage/_ni_label.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "jPRwg_3Y0xv6TWkGcWCenb5ui-DR5vrWvNGaq_0cE5M",
+        "actual": "jPRwg_3Y0xv6TWkGcWCenb5ui-DR5vrWvNGaq_0cE5M",
+        "bytes": 424104
+      },
+      {
+        "file": "scipy/ndimage/_rank_filter_1d.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "4DPKpmKSwLiGd1zUqn9UTE7RoV25It7bFb_VApB142Q",
+        "actual": "4DPKpmKSwLiGd1zUqn9UTE7RoV25It7bFb_VApB142Q",
+        "bytes": 27448
+      },
+      {
+        "file": "scipy/odr/__odrpack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "W3IjGj754ZlWFdSyz1kl31i6b48Q0Lio6qaSJw-4yMQ",
+        "actual": "W3IjGj754ZlWFdSyz1kl31i6b48Q0Lio6qaSJw-4yMQ",
+        "bytes": 622553
+      },
+      {
+        "file": "scipy/optimize/_bglu_dense.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Mp8ZHT3V5u1rxmQR0jvRP44vLVvJ2Yp_Wqd6r3QkmrA",
+        "actual": "Mp8ZHT3V5u1rxmQR0jvRP44vLVvJ2Yp_Wqd6r3QkmrA",
+        "bytes": 364392
+      },
+      {
+        "file": "scipy/optimize/_cobyla.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "8452mghEbdmbpM4f2l46D7XQAN0bLl9pzQ7xk5YP4nw",
+        "actual": "8452mghEbdmbpM4f2l46D7XQAN0bLl9pzQ7xk5YP4nw",
+        "bytes": 104657
+      },
+      {
+        "file": "scipy/optimize/_cython_nnls.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "_ZrWp8MHR_wnEEiiJH31CH2Uv0b10Xus4ND3UHfyVmk",
+        "actual": "_ZrWp8MHR_wnEEiiJH31CH2Uv0b10Xus4ND3UHfyVmk",
+        "bytes": 121024
+      },
+      {
+        "file": "scipy/optimize/_direct.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "XlQzuhCEy5MJeeNQQVyge8JRdPQiRjKS8Gak_tKkSSs",
+        "actual": "XlQzuhCEy5MJeeNQQVyge8JRdPQiRjKS8Gak_tKkSSs",
+        "bytes": 43480
+      },
+      {
+        "file": "scipy/optimize/_group_columns.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "P2875GIfqzh5MPrn-8G3wzwte-C8HuX7MBE9dllikGc",
+        "actual": "P2875GIfqzh5MPrn-8G3wzwte-C8HuX7MBE9dllikGc",
+        "bytes": 99840
+      },
+      {
+        "file": "scipy/optimize/_highspy/_core.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "8iaECAmfHG__kXbAf2t5bl_dTgAAFazz8yoBuWbb7ck",
+        "actual": "8iaECAmfHG__kXbAf2t5bl_dTgAAFazz8yoBuWbb7ck",
+        "bytes": 5775816
+      },
+      {
+        "file": "scipy/optimize/_highspy/_highs_options.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "jdefOJSmsC_TUEyCKIm151RWjvAsuhizZJ-pJxlGKZc",
+        "actual": "jdefOJSmsC_TUEyCKIm151RWjvAsuhizZJ-pJxlGKZc",
+        "bytes": 407344
+      },
+      {
+        "file": "scipy/optimize/_lbfgsb.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "vglZDNvaMcnIz092PRaZ_b1vR4f7wHR9NNRn2x0KFfw",
+        "actual": "vglZDNvaMcnIz092PRaZ_b1vR4f7wHR9NNRn2x0KFfw",
+        "bytes": 462225
+      },
+      {
+        "file": "scipy/optimize/_lsap.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "IpuNFqa2w4GPgtsLTjIwphOO1AGD05YEleMBt_oPpgw",
+        "actual": "IpuNFqa2w4GPgtsLTjIwphOO1AGD05YEleMBt_oPpgw",
+        "bytes": 27072
+      },
+      {
+        "file": "scipy/optimize/_lsq/givens_elimination.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "RJrGkIpf-mRnCxvdDBdCcp05braTI0QKU3YFoPGjlO8",
+        "actual": "RJrGkIpf-mRnCxvdDBdCcp05braTI0QKU3YFoPGjlO8",
+        "bytes": 231792
+      },
+      {
+        "file": "scipy/optimize/_minpack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "crBQfJtaez4Wnx81ryfxYOiwMHJHpoo1mnXtc_ZWBUE",
+        "actual": "crBQfJtaez4Wnx81ryfxYOiwMHJHpoo1mnXtc_ZWBUE",
+        "bytes": 98312
+      },
+      {
+        "file": "scipy/optimize/_moduleTNC.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "9flNO26sg_nbrAR8rZEDclNUxE2SqaL948bn-KXW8PI",
+        "actual": "9flNO26sg_nbrAR8rZEDclNUxE2SqaL948bn-KXW8PI",
+        "bytes": 152168
+      },
+      {
+        "file": "scipy/optimize/_pava_pybind.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "hSavFSsnm9MiEdjK6nOgroF5kX6rbrZqJY6tpFoYWvQ",
+        "actual": "hSavFSsnm9MiEdjK6nOgroF5kX6rbrZqJY6tpFoYWvQ",
+        "bytes": 223984
+      },
+      {
+        "file": "scipy/optimize/_slsqp.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "exN7FO1DV3_BFBEHVPHmdcA4jaGNAMZyIj7nuoKXRfc",
+        "actual": "exN7FO1DV3_BFBEHVPHmdcA4jaGNAMZyIj7nuoKXRfc",
+        "bytes": 86704
+      },
+      {
+        "file": "scipy/optimize/_trlib/_trlib.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "c-TVzL4aIpzho2u8A5jKjI2S8kUNtjdGG0YMGLXbxN4",
+        "actual": "c-TVzL4aIpzho2u8A5jKjI2S8kUNtjdGG0YMGLXbxN4",
+        "bytes": 380985
+      },
+      {
+        "file": "scipy/optimize/_zeros.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "8wEb0RyMpKpbOPVfUTFDfN-vRonegrTDLDToQjlta0Y",
+        "actual": "8wEb0RyMpKpbOPVfUTFDfN-vRonegrTDLDToQjlta0Y",
+        "bytes": 21648
+      },
+      {
+        "file": "scipy/optimize/cython_optimize/_zeros.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "5okZmS_eJyVFGkImsyu0ZAEj7x--azO4uu63BoEHwv4",
+        "actual": "5okZmS_eJyVFGkImsyu0ZAEj7x--azO4uu63BoEHwv4",
+        "bytes": 115552
+      },
+      {
+        "file": "scipy/signal/_max_len_seq_inner.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "y_rqTps6JMSgWUvo4jzcC7B2QWPEdW7-ZZJQ8ki4JE8",
+        "actual": "y_rqTps6JMSgWUvo4jzcC7B2QWPEdW7-ZZJQ8ki4JE8",
+        "bytes": 77496
+      },
+      {
+        "file": "scipy/signal/_peak_finding_utils.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "8eQ6z5f_v3WZjbZ8j14f2b4fBeBEXns6o_kcQsFPsnQ",
+        "actual": "8eQ6z5f_v3WZjbZ8j14f2b4fBeBEXns6o_kcQsFPsnQ",
+        "bytes": 305816
+      },
+      {
+        "file": "scipy/signal/_sigtools.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "z7jl1gVbI2P1K-KkAK8yGyNiH4t5u7yrgMcwePUHEXQ",
+        "actual": "z7jl1gVbI2P1K-KkAK8yGyNiH4t5u7yrgMcwePUHEXQ",
+        "bytes": 99576
+      },
+      {
+        "file": "scipy/signal/_sosfilt.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "p1LbI8WWFaDchArtZEH-7ECuofkiRAnqiPkEhoDBIMw",
+        "actual": "p1LbI8WWFaDchArtZEH-7ECuofkiRAnqiPkEhoDBIMw",
+        "bytes": 303408
+      },
+      {
+        "file": "scipy/signal/_spline.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "M5hEE6CwKVJlJhuh-yXHXZn40DtRw6Ehs3GnuAb7pk4",
+        "actual": "M5hEE6CwKVJlJhuh-yXHXZn40DtRw6Ehs3GnuAb7pk4",
+        "bytes": 55864
+      },
+      {
+        "file": "scipy/signal/_upfirdn_apply.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "n6gCvUZWSEbuHSLl7nr6VdpB13S1XOPYV1kXH4128r0",
+        "actual": "n6gCvUZWSEbuHSLl7nr6VdpB13S1XOPYV1kXH4128r0",
+        "bytes": 395696
+      },
+      {
+        "file": "scipy/sparse/_csparsetools.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "gJv-44-C_mMZzVtXqOrEjhhyviQsNpdvQOaNSOoCypg",
+        "actual": "gJv-44-C_mMZzVtXqOrEjhhyviQsNpdvQOaNSOoCypg",
+        "bytes": 839504
+      },
+      {
+        "file": "scipy/sparse/_sparsetools.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "3eTvyXYx_7OzSCYKYrVgHkjFYlfMO2pDhBxcpdePi9c",
+        "actual": "3eTvyXYx_7OzSCYKYrVgHkjFYlfMO2pDhBxcpdePi9c",
+        "bytes": 4560912
+      },
+      {
+        "file": "scipy/sparse/csgraph/_flow.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Qjnelnc6N-KHT9OL7K_ugZCXAuWPBuuckypoPUemlGo",
+        "actual": "Qjnelnc6N-KHT9OL7K_ugZCXAuWPBuuckypoPUemlGo",
+        "bytes": 354320
+      },
+      {
+        "file": "scipy/sparse/csgraph/_matching.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "E9ANn8NsiYuKBW6i_FNwqxDtxfGIKK7u4qJItyitT0s",
+        "actual": "E9ANn8NsiYuKBW6i_FNwqxDtxfGIKK7u4qJItyitT0s",
+        "bytes": 357288
+      },
+      {
+        "file": "scipy/sparse/csgraph/_min_spanning_tree.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "vhhU2Xq94ok9mMgbXVvc5RCxJDb2YC_oAoEo9oj0JvE",
+        "actual": "vhhU2Xq94ok9mMgbXVvc5RCxJDb2YC_oAoEo9oj0JvE",
+        "bytes": 268568
+      },
+      {
+        "file": "scipy/sparse/csgraph/_reordering.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "c_tqMa2-ngtNY88Jgfv7x85TsDB1HPR9Ejw0-fk214c",
+        "actual": "c_tqMa2-ngtNY88Jgfv7x85TsDB1HPR9Ejw0-fk214c",
+        "bytes": 331928
+      },
+      {
+        "file": "scipy/sparse/csgraph/_shortest_path.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "ntS0Nz3OY26tAnrR20U7pHiNTbDmq3848Ymz6r5oELw",
+        "actual": "ntS0Nz3OY26tAnrR20U7pHiNTbDmq3848Ymz6r5oELw",
+        "bytes": 576328
+      },
+      {
+        "file": "scipy/sparse/csgraph/_tools.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "sxsvyTyWiKayt6NQcyXCBjX4K4TMvowtv39HTd8PA2I",
+        "actual": "sxsvyTyWiKayt6NQcyXCBjX4K4TMvowtv39HTd8PA2I",
+        "bytes": 218744
+      },
+      {
+        "file": "scipy/sparse/csgraph/_traversal.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "I992Lwpsbg_vHk-_97SOcW19qRLbNl3cqTxek6ou4vg",
+        "actual": "I992Lwpsbg_vHk-_97SOcW19qRLbNl3cqTxek6ou4vg",
+        "bytes": 658864
+      },
+      {
+        "file": "scipy/sparse/linalg/_dsolve/_superlu.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Q1g3TFmUJ7CHRiQcYpSjNmHa8PxcQhpsr7adDEt7M1Q",
+        "actual": "Q1g3TFmUJ7CHRiQcYpSjNmHa8PxcQhpsr7adDEt7M1Q",
+        "bytes": 811113
+      },
+      {
+        "file": "scipy/sparse/linalg/_eigen/arpack/_arpack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Jos5YvNDLyn3FK-6Z8LBQngnJgElme59UuLkTPDaqkA",
+        "actual": "Jos5YvNDLyn3FK-6Z8LBQngnJgElme59UuLkTPDaqkA",
+        "bytes": 877177
+      },
+      {
+        "file": "scipy/sparse/linalg/_propack/_cpropack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "uqohzs8yZb81jZg6AG074r_HWAWSXMzIFCamcoankk4",
+        "actual": "uqohzs8yZb81jZg6AG074r_HWAWSXMzIFCamcoankk4",
+        "bytes": 566049
+      },
+      {
+        "file": "scipy/sparse/linalg/_propack/_dpropack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "2Q5LnSCbpO8VurKqYJrKaS8eGG1pkn3p7yhnwDtn4tc",
+        "actual": "2Q5LnSCbpO8VurKqYJrKaS8eGG1pkn3p7yhnwDtn4tc",
+        "bytes": 533201
+      },
+      {
+        "file": "scipy/sparse/linalg/_propack/_spropack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "POE_iknO4juFIh1iAsBPKsx_Xr9BS4rttLcCpGHaGGo",
+        "actual": "POE_iknO4juFIh1iAsBPKsx_Xr9BS4rttLcCpGHaGGo",
+        "bytes": 533201
+      },
+      {
+        "file": "scipy/sparse/linalg/_propack/_zpropack.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "-cnbmbD3RxVqa4ScEpdv_kD2oUIPNWZPE5ByPNfpznA",
+        "actual": "-cnbmbD3RxVqa4ScEpdv_kD2oUIPNWZPE5ByPNfpznA",
+        "bytes": 557857
+      },
+      {
+        "file": "scipy/spatial/_ckdtree.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "vZT7vT2rapv5w-MAUr0j_OzZvJEB0x8skusrpMIRXfU",
+        "actual": "vZT7vT2rapv5w-MAUr0j_OzZvJEB0x8skusrpMIRXfU",
+        "bytes": 1023728
+      },
+      {
+        "file": "scipy/spatial/_distance_pybind.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "I60VxWMIjhnCGN08uOTCJUjiBCJIC1CM7eiwrMp7wic",
+        "actual": "I60VxWMIjhnCGN08uOTCJUjiBCJIC1CM7eiwrMp7wic",
+        "bytes": 641424
+      },
+      {
+        "file": "scipy/spatial/_distance_wrap.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "zFDOr_48j82zBmMQRWpMd2VfgJ-icgPe3VH8AS4igqU",
+        "actual": "zFDOr_48j82zBmMQRWpMd2VfgJ-icgPe3VH8AS4igqU",
+        "bytes": 113256
+      },
+      {
+        "file": "scipy/spatial/_hausdorff.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "5EQATVqxmje9E00238hn2ekefZ2sF21BXyalFYT-ViQ",
+        "actual": "5EQATVqxmje9E00238hn2ekefZ2sF21BXyalFYT-ViQ",
+        "bytes": 250248
+      },
+      {
+        "file": "scipy/spatial/_qhull.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Tev5kfcsAb93_xxBNaH7XvwYx0NTjcZJdNObkc1bmzo",
+        "actual": "Tev5kfcsAb93_xxBNaH7XvwYx0NTjcZJdNObkc1bmzo",
+        "bytes": 1189720
+      },
+      {
+        "file": "scipy/spatial/_voronoi.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "IMu9RJX52Qr7G-vdRMxQ4zGcEGgSTjjeTiiBzCBvVj8",
+        "actual": "IMu9RJX52Qr7G-vdRMxQ4zGcEGgSTjjeTiiBzCBvVj8",
+        "bytes": 240968
+      },
+      {
+        "file": "scipy/spatial/transform/_rotation.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "JShHnvEDBbu2SyY91E-FUwAoVUxBRR1TIxg54vCpq0w",
+        "actual": "JShHnvEDBbu2SyY91E-FUwAoVUxBRR1TIxg54vCpq0w",
+        "bytes": 1043312
+      },
+      {
+        "file": "scipy/special/_comb.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "jNnZfbktymXBJhXVh_en7V-J07S1uuPVqNQmOq01lR4",
+        "actual": "jNnZfbktymXBJhXVh_en7V-J07S1uuPVqNQmOq01lR4",
+        "bytes": 63456
+      },
+      {
+        "file": "scipy/special/_ellip_harm_2.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "1sWe-uit0fuqQGoQB-ygPfWKw55lexddfLgmgs43Np8",
+        "actual": "1sWe-uit0fuqQGoQB-ygPfWKw55lexddfLgmgs43Np8",
+        "bytes": 138273
+      },
+      {
+        "file": "scipy/special/_gufuncs.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "sNy4XBfh81pGARjeM-4DXtKIiZ8qmC-extWpyWUl_UA",
+        "actual": "sNy4XBfh81pGARjeM-4DXtKIiZ8qmC-extWpyWUl_UA",
+        "bytes": 753248
+      },
+      {
+        "file": "scipy/special/_specfun.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "XdRJHGyOiropEKd57VOma1Lj3NUnMHgzuOB8fP_2Nxs",
+        "actual": "XdRJHGyOiropEKd57VOma1Lj3NUnMHgzuOB8fP_2Nxs",
+        "bytes": 296576
+      },
+      {
+        "file": "scipy/special/_special_ufuncs.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "1Fvmv1ksiKbNJJELsuo_JUu9rFHp7c_Ro-OkM3DYs8U",
+        "actual": "1Fvmv1ksiKbNJJELsuo_JUu9rFHp7c_Ro-OkM3DYs8U",
+        "bytes": 1464544
+      },
+      {
+        "file": "scipy/special/_test_internal.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "DnmYHXbQ2Klvk4xJeg7Fy3nbonh4vvmiHtxuwNGdIPc",
+        "actual": "DnmYHXbQ2Klvk4xJeg7Fy3nbonh4vvmiHtxuwNGdIPc",
+        "bytes": 259384
+      },
+      {
+        "file": "scipy/special/_ufuncs.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "0e_iM71NN3tiKtCfZQNb-J4t_L7FoLBETC4jXFdzrNc",
+        "actual": "0e_iM71NN3tiKtCfZQNb-J4t_L7FoLBETC4jXFdzrNc",
+        "bytes": 1626249
+      },
+      {
+        "file": "scipy/special/_ufuncs_cxx.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "244b7ML2tftjlcUgHpZYgzQFyj59oTRR9Z4CTZU7qGk",
+        "actual": "244b7ML2tftjlcUgHpZYgzQFyj59oTRR9Z4CTZU7qGk",
+        "bytes": 1855408
+      },
+      {
+        "file": "scipy/special/cython_special.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "mMFaE5GPSrGRjaSA1nVnAo3G08fadOI8r97HBuVMnFc",
+        "actual": "mMFaE5GPSrGRjaSA1nVnAo3G08fadOI8r97HBuVMnFc",
+        "bytes": 3516056
+      },
+      {
+        "file": "scipy/special/libsf_error_state.so",
+        "matches_record": true,
+        "record": "fVQGVM3MTo7ZzqzfniAyEPgPkCzbLJj6uQI0-X-TisA",
+        "actual": "fVQGVM3MTo7ZzqzfniAyEPgPkCzbLJj6uQI0-X-TisA",
+        "bytes": 15840
+      },
+      {
+        "file": "scipy/stats/_ansari_swilk_statistics.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "PLoaVEfMtU6UMzZ25rSUEj94yFyovr56-0dgRCgd6ls",
+        "actual": "PLoaVEfMtU6UMzZ25rSUEj94yFyovr56-0dgRCgd6ls",
+        "bytes": 278232
+      },
+      {
+        "file": "scipy/stats/_biasedurn.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "WAr4bXWYjow_osqrQ1IwTKgKJ22kFFiGxlR6fdkpqRA",
+        "actual": "WAr4bXWYjow_osqrQ1IwTKgKJ22kFFiGxlR6fdkpqRA",
+        "bytes": 323168
+      },
+      {
+        "file": "scipy/stats/_levy_stable/levyst.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "SEGI0gwuUV9AFdksbORE8qKHFnPCkMBHUIpIgGBV6Bg",
+        "actual": "SEGI0gwuUV9AFdksbORE8qKHFnPCkMBHUIpIgGBV6Bg",
+        "bytes": 66512
+      },
+      {
+        "file": "scipy/stats/_mvn.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "xT3_oTQjlchCcXQvYLnBf8sDq2zWeSpugwVv5nKH-NQ",
+        "actual": "xT3_oTQjlchCcXQvYLnBf8sDq2zWeSpugwVv5nKH-NQ",
+        "bytes": 84992
+      },
+      {
+        "file": "scipy/stats/_qmc_cy.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "T2KUSO37-wMwfz_DYXxdhKH46LmAtQ2VnVOYhHFoPTA",
+        "actual": "T2KUSO37-wMwfz_DYXxdhKH46LmAtQ2VnVOYhHFoPTA",
+        "bytes": 291104
+      },
+      {
+        "file": "scipy/stats/_rcont/rcont.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "zi6uEPl8-H55I74iLHJ9FeEZAOIDWrwG_00yeHBUQvc",
+        "actual": "zi6uEPl8-H55I74iLHJ9FeEZAOIDWrwG_00yeHBUQvc",
+        "bytes": 263128
+      },
+      {
+        "file": "scipy/stats/_sobol.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "To_aHUUI64LsSR2sRHLfsHFIfT-WZtVEhEgz61fWY-U",
+        "actual": "To_aHUUI64LsSR2sRHLfsHFIfT-WZtVEhEgz61fWY-U",
+        "bytes": 404048
+      },
+      {
+        "file": "scipy/stats/_stats.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Rwwu5dHnIZ-QgZPQNpP2QvrkwB0z88fhwRSRugk9mMg",
+        "actual": "Rwwu5dHnIZ-QgZPQNpP2QvrkwB0z88fhwRSRugk9mMg",
+        "bytes": 766544
+      },
+      {
+        "file": "scipy/stats/_stats_pythran.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "Qz3zaZ08pWEGl-7qPS_Lrda3DMxvIwnmW__J4zuXqlY",
+        "actual": "Qz3zaZ08pWEGl-7qPS_Lrda3DMxvIwnmW__J4zuXqlY",
+        "bytes": 182128
+      },
+      {
+        "file": "scipy/stats/_unuran/unuran_wrapper.cpython-310-x86_64-linux-gnu.so",
+        "matches_record": true,
+        "record": "AbIMI-nKfIaLhra9EJ4VP04hvWruyIUi75OXbG9MLn0",
+        "actual": "AbIMI-nKfIaLhra9EJ4VP04hvWruyIUi75OXbG9MLn0",
+        "bytes": 1589832
+      }
+    ]
+  }
+]

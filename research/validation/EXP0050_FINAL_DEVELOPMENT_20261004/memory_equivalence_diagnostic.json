@@ -1,0 +1,32 @@
+{
+  "seed42_32k": {
+    "completed": 12,
+    "same_final_state_as_memory": 0,
+    "qualification": "Final-state equality alone does not prove every action was identical."
+  },
+  "seed43_32k": {
+    "completed": 12,
+    "same_final_state_as_memory": 0,
+    "qualification": "Final-state equality alone does not prove every action was identical."
+  },
+  "seed44_32k": {
+    "completed": 12,
+    "same_final_state_as_memory": 12,
+    "qualification": "Final-state equality alone does not prove every action was identical."
+  },
+  "seed42_64k": {
+    "completed": 12,
+    "same_final_state_as_memory": 0,
+    "qualification": "Final-state equality alone does not prove every action was identical."
+  },
+  "seed43_64k": {
+    "completed": 12,
+    "same_final_state_as_memory": 0,
+    "qualification": "Final-state equality alone does not prove every action was identical."
+  },
+  "seed44_64k": {
+    "completed": 11,
+    "same_final_state_as_memory": 0,
+    "qualification": "Final-state equality alone does not prove every action was identical."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "phase": "interrupted_for_measurement_audit",
+  "steps": 1024,
+  "episodes": 0,
+  "updates": 1,
+  "high": {
+    "samples": 0
+  },
+  "low": {
+    "samples": 1024,
+    "loss": 0.09687661558079223,
+    "kl": 1.3827734316388765e-05,
+    "aux": 0.08689517776171367
+  },
+  "wall_s": 9.248745881952345,
+  "fps": 110.71770987222048,
+  "actual_logged_steps": 1040,
+  "not_a_completed_budget": true
+}

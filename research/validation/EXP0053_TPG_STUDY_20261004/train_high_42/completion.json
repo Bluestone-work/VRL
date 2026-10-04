@@ -1,0 +1,23 @@
+{
+  "name": "train_high_42",
+  "command": [
+    "/home/wj/miniconda3/envs/v/bin/python",
+    "-m",
+    "scripts.run_tpg_learning",
+    "train",
+    "--variant",
+    "high",
+    "--seed",
+    "42",
+    "--steps",
+    "8192",
+    "--scene-base",
+    "1910000000",
+    "--out",
+    "research/validation/EXP0053_TPG_STUDY_20261004/training/train_high_42"
+  ],
+  "started_at": "2026-10-04T16:37:43.452688+08:00",
+  "returncode": 0,
+  "wall_s": 60.61309782997705,
+  "source_unchanged": true
+}

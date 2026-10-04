@@ -1,0 +1,136 @@
+{
+  "finished_cells": 26,
+  "total_cells": 26,
+  "results": [
+    {
+      "label": "single_sequential_n1_d2_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d2_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d1_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d4_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "single_sequential_n1_d2_s43_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d1_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d2_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d4_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d1_s43_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d2_s43_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d4_s43_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d1_s43_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d2_s43_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "single_sequential_n1_d2_s44_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d1_s44_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d4_s43_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d2_s44_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d4_s44_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d1_s44_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d2_s44_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "single_route_n1_d2_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_unshielded_n2_d2_s42_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n3_d4_s44_fixed_total",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_parallel_n2_d2_s42_per_cluster",
+      "completed": 10,
+      "failed": 0
+    },
+    {
+      "label": "multi_unshielded_n3_d2_s42_fixed_total",
+      "completed": 9,
+      "failed": 1
+    },
+    {
+      "label": "multi_parallel_n3_d2_s42_per_cluster",
+      "completed": 10,
+      "failed": 0
+    }
+  ]
+}

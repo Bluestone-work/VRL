@@ -1,0 +1,23 @@
+{
+  "name": "train_r_mappo_44",
+  "command": [
+    "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+    "-m",
+    "scripts.run_continuous_marl",
+    "train",
+    "--variant",
+    "r_mappo",
+    "--seed",
+    "44",
+    "--steps",
+    "16384",
+    "--scene-base",
+    "2060200000",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004/training/train_r_mappo_44"
+  ],
+  "requested_at": "2026-10-04T19:54:13.475728+08:00",
+  "returncode": 0,
+  "wall_s": 138.8928088748362,
+  "source_unchanged": true
+}

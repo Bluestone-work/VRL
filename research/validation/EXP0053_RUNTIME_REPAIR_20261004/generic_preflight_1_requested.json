@@ -1,0 +1,15 @@
+{
+  "name": "generic_preflight_1",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_tpg_study",
+    "--phase",
+    "preflight",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_RUNTIME_REPAIR_20261004/generic_preflight_1",
+    "--workers",
+    "3"
+  ],
+  "requested_at": "2026-10-04T17:09:48.160826+08:00"
+}

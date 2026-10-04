@@ -1,0 +1,94 @@
+{
+  "requested": 60,
+  "recorded": 60,
+  "completed": 60,
+  "failed_attempts": [],
+  "arms": {
+    "v2_spacing_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.16666666666666666,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.5157781546784048,
+        "removal_auc_180": 0.43633844865215043,
+        "wall_contact_s": 172.02176064686003,
+        "spacing_violation_pair_s": 14.561835986346253
+      }
+    },
+    "joint_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.08333333333333333,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.5436323684690275,
+        "removal_auc_180": 0.4234945267399364,
+        "wall_contact_s": 134.77246409705887,
+        "spacing_violation_pair_s": 29.832104296442207
+      }
+    },
+    "memory_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.3333333333333333,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.752957718524424,
+        "removal_auc_180": 0.5281529072666982,
+        "wall_contact_s": 32.02240036005257,
+        "spacing_violation_pair_s": 0.8788193804858463
+      }
+    },
+    "joint_n1": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.125,
+        "removal_auc_180": 0.11677574111480571,
+        "wall_contact_s": 91.96151777330567,
+        "spacing_violation_pair_s": 0.0
+      }
+    },
+    "memory_n1": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.08333333333333333,
+        0.08333333333333333
+      ],
+      "conditional_means": {
+        "task_success": 0.16666666666666666,
+        "safe_success": 0.08333333333333333,
+        "cluster_safe_success": 0.08333333333333333,
+        "removal": 0.375,
+        "removal_auc_180": 0.2966455814488604,
+        "wall_contact_s": 20.661648347514788,
+        "spacing_violation_pair_s": 0.0
+      }
+    }
+  },
+  "numerical_gate_passed": true
+}

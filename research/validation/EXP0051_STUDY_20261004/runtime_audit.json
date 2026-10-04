@@ -1,0 +1,10 @@
+{
+  "python": "3.10.20 (main, Jun 11 2026, 15:17:37) [GCC 14.3.0]",
+  "numpy": "1.26.4",
+  "torch": "2.3.0+cu121",
+  "scipy": "1.15.3",
+  "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+  "device": "cpu",
+  "source_mismatches_during_validation": [],
+  "note": "Subprocess launcher fixes OPENBLAS/OMP/MKL threads to 1; neural runners explicitly set Torch threads to 1."
+}

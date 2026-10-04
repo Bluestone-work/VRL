@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_measured_tpg.py",
+    "tests/test_aligned_option_learning.py",
+    "tests/test_command_aligned_tracking.py",
+    "tests/test_measured_options.py",
+    "tests/test_tracked_sensors.py",
+    "tests/test_multicluster.py",
+    "tests/test_memory_prior_learning.py"
+  ],
+  "returncode": 0,
+  "passed": 83,
+  "log": "generic_test_gate.log"
+}

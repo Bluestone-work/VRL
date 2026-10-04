@@ -1,0 +1,77 @@
+{
+  "audit_passed": true,
+  "issues": [],
+  "training_steps": {
+    "feedforward": [
+      65536
+    ],
+    "temporal": [
+      65536
+    ]
+  },
+  "training_seeds": {
+    "feedforward": [
+      42,
+      43,
+      44
+    ],
+    "temporal": [
+      42,
+      43,
+      44
+    ]
+  },
+  "equal_training_budget": true,
+  "direction": "temporal minus feedforward; training-seed repeats averaged within scene",
+  "metrics": {
+    "cluster_safe_success": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "scenes": 12
+    },
+    "task_success": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "scenes": 12
+    },
+    "removal": {
+      "mean": -0.01311873455768914,
+      "ci95": [
+        -0.1240788064627009,
+        0.08619911070677945
+      ],
+      "scenes": 12
+    },
+    "removal_auc_180": {
+      "mean": -0.010472970244944119,
+      "ci95": [
+        -0.11167899520132618,
+        0.07970650733335552
+      ],
+      "scenes": 12
+    },
+    "wall_contact_s": {
+      "mean": 31.873232726319642,
+      "ci95": [
+        11.316562568991575,
+        54.32568391717494
+      ],
+      "scenes": 12
+    },
+    "spacing_violation_pair_s": {
+      "mean": -9.840623618863116,
+      "ci95": [
+        -16.513344062350395,
+        -3.8698943496924967
+      ],
+      "scenes": 12
+    }
+  },
+  "diagnostic_only": true
+}

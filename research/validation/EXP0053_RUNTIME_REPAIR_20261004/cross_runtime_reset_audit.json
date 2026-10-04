@@ -1,0 +1,602 @@
+[
+  {
+    "scene": 1940000000,
+    "old_accepted": 1940000000,
+    "new_accepted": 1940000000,
+    "same_initial_hash": false,
+    "different_reset_leaves": 48,
+    "maximum_numeric_difference": 5.6884204013840645e-09,
+    "differences": [
+      {
+        "path": "reset_info.scenario_hash",
+        "old": "2c36650d5dd6dbb9a246e809fbbbbb15b94f8359ea301926b629cb20f1a0a4ac",
+        "new": "72390b29752aedd20df68b6d9505c6107b3667a131c6964d70614257d230554c"
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[0][0]",
+        "old": 37.232202975164824,
+        "new": 37.23220297586868,
+        "abs_delta": 7.038565286165976e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[0][1]",
+        "old": 34.65923981851187,
+        "new": 34.65923981951163,
+        "abs_delta": 9.997620509238914e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[0][2]",
+        "old": 42.093411977940185,
+        "new": 42.09341197730092,
+        "abs_delta": 6.392681939360045e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[2][0]",
+        "old": 29.512251923945694,
+        "new": 29.51225192415235,
+        "abs_delta": 2.0665424926846754e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[2][1]",
+        "old": 44.361784723933816,
+        "new": 44.361784724440014,
+        "abs_delta": 5.06197750382853e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[2][2]",
+        "old": 31.613989467402025,
+        "new": 31.613989467573575,
+        "abs_delta": 1.715498854082398e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[3][0]",
+        "old": 29.453159435758945,
+        "new": 29.453159435759574,
+        "abs_delta": 6.288303211476887e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[3][1]",
+        "old": 40.100941480882526,
+        "new": 40.100941480882106,
+        "abs_delta": 4.192202140984591e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[4][0]",
+        "old": 36.79968015390357,
+        "new": 36.79968015009046,
+        "abs_delta": 3.8131133806018624e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[4][1]",
+        "old": 33.381779281469804,
+        "new": 33.38177927578138,
+        "abs_delta": 5.6884204013840645e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[4][2]",
+        "old": 42.245162231981304,
+        "new": 42.24516223037429,
+        "abs_delta": 1.6070131891865458e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[6][0]",
+        "old": 34.568285814768245,
+        "new": 34.568285811002674,
+        "abs_delta": 3.765570966152154e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[6][1]",
+        "old": 41.311367530159536,
+        "new": 41.31136753569695,
+        "abs_delta": 5.537415859180328e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[6][2]",
+        "old": 42.20415088778546,
+        "new": 42.20415088717393,
+        "abs_delta": 6.115286055319302e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[8][0]",
+        "old": 29.156545463440455,
+        "new": 29.156545459020553,
+        "abs_delta": 4.419902666086273e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[8][1]",
+        "old": 44.70497056843041,
+        "new": 44.70497057070875,
+        "abs_delta": 2.278341071360046e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[8][2]",
+        "old": 30.821172214684765,
+        "new": 30.821172217297025,
+        "abs_delta": 2.612260630030505e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[12][0]",
+        "old": 29.989406669151847,
+        "new": 29.989406672955617,
+        "abs_delta": 3.803769743626617e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[12][1]",
+        "old": 43.65320162237085,
+        "new": 43.653201620578855,
+        "abs_delta": 1.7919958850143303e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[12][2]",
+        "old": 32.7977173103652,
+        "new": 32.797717308402376,
+        "abs_delta": 1.9628245695457736e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[13][0]",
+        "old": 29.87548062843498,
+        "new": 29.87548062843497,
+        "abs_delta": 7.105427357601002e-15
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[13][1]",
+        "old": 40.43316480516098,
+        "new": 40.43316480516094,
+        "abs_delta": 3.552713678800501e-14
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[13][2]",
+        "old": 40.042223611457395,
+        "new": 40.04222361145737,
+        "abs_delta": 2.1316282072803006e-14
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[14][0]",
+        "old": 48.88708491357294,
+        "new": 48.88708491356295,
+        "abs_delta": 9.990230864787009e-12
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[14][1]",
+        "old": 31.74331107810364,
+        "new": 31.743311078056824,
+        "abs_delta": 4.6817660859233e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[14][2]",
+        "old": 42.54598218932906,
+        "new": 42.545982189283194,
+        "abs_delta": 4.586553359331447e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[15][0]",
+        "old": 29.642325536370464,
+        "new": 29.642325536370578,
+        "abs_delta": 1.1368683772161603e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[15][1]",
+        "old": 40.058441146980215,
+        "new": 40.05844114698034,
+        "abs_delta": 1.2789769243681803e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[15][2]",
+        "old": 39.89020084146492,
+        "new": 39.89020084146502,
+        "abs_delta": 9.947598300641403e-14
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[17][0]",
+        "old": 46.23722091190901,
+        "new": 46.2372209119393,
+        "abs_delta": 3.029043682545307e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[17][1]",
+        "old": 32.32007835110532,
+        "new": 32.320078351048046,
+        "abs_delta": 5.7276849929621676e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[17][2]",
+        "old": 42.29626827086861,
+        "new": 42.29626826958007,
+        "abs_delta": 1.2885408295915113e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[20][0]",
+        "old": 25.612934003533812,
+        "new": 25.612934001879175,
+        "abs_delta": 1.6546373160508665e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[20][1]",
+        "old": 39.06508671119335,
+        "new": 39.06508671452967,
+        "abs_delta": 3.3363178886247624e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[20][2]",
+        "old": 38.89449244941869,
+        "new": 38.89449244904592,
+        "abs_delta": 3.7277203546182136e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[24][0]",
+        "old": 26.943912011228438,
+        "new": 26.94391201152943,
+        "abs_delta": 3.0099300829533604e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[24][1]",
+        "old": 39.46327405484702,
+        "new": 39.463274054604746,
+        "abs_delta": 2.4227375661212136e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[24][2]",
+        "old": 33.37367709158393,
+        "new": 33.373677091572056,
+        "abs_delta": 1.1873169114551274e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[28][0]",
+        "old": 26.59105000828924,
+        "new": 26.591050008290765,
+        "abs_delta": 1.5241141682054149e-12
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[28][1]",
+        "old": 40.10795030423083,
+        "new": 40.10795030423752,
+        "abs_delta": 6.686207143502543e-12
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[28][2]",
+        "old": 29.65513927735704,
+        "new": 29.65513927735746,
+        "abs_delta": 4.192202140984591e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[31][0]",
+        "old": 26.598171857518665,
+        "new": 26.598171857519368,
+        "abs_delta": 7.034373084024992e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[31][1]",
+        "old": 40.0734098433179,
+        "new": 40.07340984332281,
+        "abs_delta": 4.909850304102292e-12
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[31][2]",
+        "old": 29.83976493886029,
+        "new": 29.83976493886066,
+        "abs_delta": 3.694822225952521e-13
+      },
+      {
+        "path": "reset_info.shared_scene.start_pool_mm[0][0]",
+        "old": 46.26267039793085,
+        "new": 46.262670397935096,
+        "abs_delta": 4.249045559845399e-12
+      },
+      {
+        "path": "reset_info.shared_scene.start_pool_mm[0][1]",
+        "old": 32.07639063713446,
+        "new": 32.0763906362717,
+        "abs_delta": 8.627623060419864e-10
+      },
+      {
+        "path": "reset_info.shared_scene.start_pool_mm[0][2]",
+        "old": 42.43825735329282,
+        "new": 42.438257352557514,
+        "abs_delta": 7.353051501013397e-10
+      }
+    ]
+  },
+  {
+    "scene": 1940000001,
+    "old_accepted": 1940000001,
+    "new_accepted": 1940000001,
+    "same_initial_hash": false,
+    "different_reset_leaves": 49,
+    "maximum_numeric_difference": 2.0624128183044377e-08,
+    "differences": [
+      {
+        "path": "reset_info.scenario_hash",
+        "old": "ec5f1a0544463da46f6c0934fd0b075e02d2e39e10bb1ef65c094c40397bffa5",
+        "new": "43fc3ac64b910fbb119d4aacb61c1f43b4c7736ece191bfc45f92719f8263b77"
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[1][0]",
+        "old": 20.470906220630358,
+        "new": 20.470906220385835,
+        "abs_delta": 2.445226243708021e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[1][1]",
+        "old": 38.00443371265846,
+        "new": 38.00443372013364,
+        "abs_delta": 7.475179586435843e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[1][2]",
+        "old": 40.90577221137378,
+        "new": 40.905772219880994,
+        "abs_delta": 8.507214488417958e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[2][0]",
+        "old": 21.704260632559198,
+        "new": 21.70426063200327,
+        "abs_delta": 5.559286364587024e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[2][1]",
+        "old": 38.77539312409258,
+        "new": 38.77539311345802,
+        "abs_delta": 1.0634558123001625e-08
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[2][2]",
+        "old": 41.310833626675155,
+        "new": 41.310833640337826,
+        "abs_delta": 1.3662670994563086e-08
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[4][0]",
+        "old": 53.53938350540286,
+        "new": 53.53938350543717,
+        "abs_delta": 3.431210870985524e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[4][1]",
+        "old": 30.02946328728345,
+        "new": 30.029463287314332,
+        "abs_delta": 3.0883740009812755e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[4][2]",
+        "old": 42.60858873175832,
+        "new": 42.60858873174082,
+        "abs_delta": 1.7500667581771268e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[8][0]",
+        "old": 54.20909044792726,
+        "new": 54.20909044792812,
+        "abs_delta": 8.597567102697212e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[8][1]",
+        "old": 28.491531734957007,
+        "new": 28.491531734957327,
+        "abs_delta": 3.197442310920451e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[8][2]",
+        "old": 42.398015816286716,
+        "new": 42.39801581628581,
+        "abs_delta": 9.023892744153272e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[11][0]",
+        "old": 24.401773145813014,
+        "new": 24.401773138901827,
+        "abs_delta": 6.911186289926263e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[11][1]",
+        "old": 38.715526947624234,
+        "new": 38.71552694773533,
+        "abs_delta": 1.1109335673609166e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[11][2]",
+        "old": 41.378310444497814,
+        "new": 41.37831044121951,
+        "abs_delta": 3.2783020742499502e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[12][0]",
+        "old": 50.49550734519889,
+        "new": 50.4955073451987,
+        "abs_delta": 1.8474111129762605e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[12][1]",
+        "old": 19.71345976826319,
+        "new": 19.71345976826294,
+        "abs_delta": 2.4868995751603507e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[12][2]",
+        "old": 40.26189167165393,
+        "new": 40.26189167165447,
+        "abs_delta": 5.400124791776761e-13
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[14][0]",
+        "old": 19.02825984457242,
+        "new": 19.02825984457672,
+        "abs_delta": 4.298783551348606e-12
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[14][1]",
+        "old": 39.07321576125133,
+        "new": 39.073215762019885,
+        "abs_delta": 7.685514447075548e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[14][2]",
+        "old": 41.799513499824336,
+        "new": 41.79951350037276,
+        "abs_delta": 5.484253051690757e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[18][0]",
+        "old": 24.98302118766857,
+        "new": 24.983021187691982,
+        "abs_delta": 2.34123831432953e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[18][1]",
+        "old": 38.568782921992394,
+        "new": 38.56878292856288,
+        "abs_delta": 6.570488153556653e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[18][2]",
+        "old": 42.11940404561513,
+        "new": 42.119404032006386,
+        "abs_delta": 1.3608740800918895e-08
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[23][0]",
+        "old": 23.641228424952885,
+        "new": 23.641228425957422,
+        "abs_delta": 1.0045368981081992e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[23][1]",
+        "old": 38.364336866498974,
+        "new": 38.364336845874845,
+        "abs_delta": 2.0624128183044377e-08
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[23][2]",
+        "old": 41.828379087874154,
+        "new": 41.82837909839554,
+        "abs_delta": 1.0521382876049756e-08
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[24][0]",
+        "old": 18.622654149019752,
+        "new": 18.622654148936405,
+        "abs_delta": 8.334666290465975e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[24][1]",
+        "old": 38.00617702896878,
+        "new": 38.00617702750763,
+        "abs_delta": 1.4611458709623548e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[24][2]",
+        "old": 41.64831335388239,
+        "new": 41.648313354364376,
+        "abs_delta": 4.819824539481488e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[25][0]",
+        "old": 28.598096228483772,
+        "new": 28.598096228559292,
+        "abs_delta": 7.552003467026225e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[25][1]",
+        "old": 39.30525694517701,
+        "new": 39.3052569448896,
+        "abs_delta": 2.874074311876029e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[25][2]",
+        "old": 42.02596187191362,
+        "new": 42.02596187150009,
+        "abs_delta": 4.135358722123783e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[26][0]",
+        "old": 52.65861060046509,
+        "new": 52.65861060070877,
+        "abs_delta": 2.4368063122892636e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[26][1]",
+        "old": 30.436794165665727,
+        "new": 30.436794165891317,
+        "abs_delta": 2.255902131764742e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[26][2]",
+        "old": 42.875824218571616,
+        "new": 42.87582421860237,
+        "abs_delta": 3.0752289603697136e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[29][0]",
+        "old": 51.03739793733304,
+        "new": 51.03739793719469,
+        "abs_delta": 1.383497760798491e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[29][1]",
+        "old": 17.077133773723133,
+        "new": 17.077133773702865,
+        "abs_delta": 2.0268231537556858e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[29][2]",
+        "old": 39.27553295239431,
+        "new": 39.27553295232324,
+        "abs_delta": 7.106848443072522e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[30][0]",
+        "old": 53.642824953841014,
+        "new": 53.64282494077796,
+        "abs_delta": 1.3063051085282495e-08
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[30][1]",
+        "old": 9.975936512824953,
+        "new": 9.97593651834897,
+        "abs_delta": 5.524016799540732e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[30][2]",
+        "old": 36.54527149280778,
+        "new": 36.5452714859378,
+        "abs_delta": 6.8699748112521775e-09
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[31][0]",
+        "old": 18.67538872581473,
+        "new": 18.67538872578573,
+        "abs_delta": 2.900080176004849e-11
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[31][1]",
+        "old": 38.46394292248953,
+        "new": 38.46394292213266,
+        "abs_delta": 3.568700890355103e-10
+      },
+      {
+        "path": "reset_info.shared_scene.particles_mm[31][2]",
+        "old": 41.57378721746617,
+        "new": 41.5737872177592,
+        "abs_delta": 2.930278242274653e-10
+      },
+      {
+        "path": "reset_info.shared_scene.start_pool_mm[1][0]",
+        "old": 21.74539055093022,
+        "new": 21.74539055191254,
+        "abs_delta": 9.82318226760981e-10
+      },
+      {
+        "path": "reset_info.shared_scene.start_pool_mm[1][1]",
+        "old": 38.565635579005395,
+        "new": 38.56563557838142,
+        "abs_delta": 6.239773142624472e-10
+      },
+      {
+        "path": "reset_info.shared_scene.start_pool_mm[1][2]",
+        "old": 41.96425539876738,
+        "new": 41.96425537909108,
+        "abs_delta": 1.967629970067719e-08
+      }
+    ]
+  }
+]

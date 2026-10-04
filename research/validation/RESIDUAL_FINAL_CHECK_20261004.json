@@ -1,0 +1,40 @@
+{
+  "source_checks": {
+    "EXP0053_TPG_GENERIC_STUDY_20261004": {
+      "frozen_files": 35,
+      "unchanged": true
+    },
+    "EXP0054_MEASURED_MARL_STUDY_20261004": {
+      "frozen_files": 40,
+      "unchanged": true
+    },
+    "EXP0055_SAFETY_OBJECTIVE_STUDY_20261004": {
+      "frozen_files": 43,
+      "unchanged": true
+    },
+    "EXP0056_CONSERVATIVE_RESIDUAL_20261004": {
+      "frozen_files": 47,
+      "unchanged": true
+    },
+    "EXP0057_CLEAN_RUNTIME_EVALUATION_20261004": {
+      "frozen_files": 51,
+      "unchanged": true
+    },
+    "EXP0058_CONTINUOUS_RESIDUAL_20261004": {
+      "frozen_files": 56,
+      "unchanged": true
+    }
+  },
+  "EXP0056_valid_comparison": false,
+  "EXP0057_valid_comparison": true,
+  "EXP0058_valid_comparison": true,
+  "EXP0058_final_integrity": true,
+  "EXP0058_classical_identity": true,
+  "confirmation_accessed": false,
+  "native_root_cause_fixed": false,
+  "new_main_training_controls": 589824,
+  "new_regression_controls": 16384,
+  "complete_admitted_evaluation_matrices": 2,
+  "admitted_main_evaluations": 240,
+  "EXP0056_partial_evaluations_retained": 119
+}

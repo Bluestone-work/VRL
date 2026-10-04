@@ -1,0 +1,12 @@
+{"recorded": 1, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 2, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 3, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 4, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 5, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 6, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 7, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 8, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 9, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 10, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 11, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}
+{"recorded": 12, "requested": 12, "failed": 0, "last_arm": "memory_n1", "last_status": "completed"}

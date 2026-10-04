@@ -1,0 +1,8 @@
+{
+  "debugger_returncode": 0,
+  "diagnostic_only": true,
+  "replaces_failed_training": false,
+  "inferior_exited_normally": false,
+  "inferior_native_signal": true,
+  "native_cause_proven": false
+}

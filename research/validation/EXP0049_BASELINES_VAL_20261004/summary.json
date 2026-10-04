@@ -1,0 +1,77 @@
+{
+  "requested": 48,
+  "recorded": 48,
+  "completed": 48,
+  "failed_attempts": [],
+  "arms": {
+    "v2_spacing_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.16666666666666666,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.546105657816058,
+        "removal_auc_180": 0.44762461995250497,
+        "wall_contact_s": 150.50560572733426,
+        "spacing_violation_pair_s": 19.143225249954604
+      }
+    },
+    "joint_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.3333333333333333,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.5952927418225674,
+        "removal_auc_180": 0.48388359332618597,
+        "wall_contact_s": 120.72041593318447,
+        "spacing_violation_pair_s": 11.907189509812468
+      }
+    },
+    "memory_n3": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.5833333333333334,
+        "safe_success": 0.08333333333333333,
+        "cluster_safe_success": 0.0,
+        "removal": 0.8333333333333334,
+        "removal_auc_180": 0.6330681268635704,
+        "wall_contact_s": 30.316239422267618,
+        "spacing_violation_pair_s": 1.3671793638423655
+      }
+    },
+    "joint_n1": {
+      "completed": 12,
+      "requested": 12,
+      "success_missing_bounds": [
+        0.0,
+        0.0
+      ],
+      "conditional_means": {
+        "task_success": 0.0,
+        "safe_success": 0.0,
+        "cluster_safe_success": 0.0,
+        "removal": 0.2708333333333333,
+        "removal_auc_180": 0.20420001567024748,
+        "wall_contact_s": 121.91642330177599,
+        "spacing_violation_pair_s": 0.0
+      }
+    }
+  },
+  "numerical_gate_passed": true
+}

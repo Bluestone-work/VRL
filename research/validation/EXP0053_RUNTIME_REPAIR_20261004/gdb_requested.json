@@ -1,0 +1,25 @@
+{
+  "command": [
+    "gdb",
+    "-batch",
+    "-x",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_RUNTIME_REPAIR_20261004/diagnostic.gdb",
+    "--args",
+    "/home/wj/miniconda3/envs/v/bin/python",
+    "-m",
+    "scripts.run_tpg_learning",
+    "train",
+    "--variant",
+    "both",
+    "--seed",
+    "42",
+    "--steps",
+    "2048",
+    "--scene-base",
+    "1940000400",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_RUNTIME_REPAIR_20261004/gdb_train"
+  ],
+  "diagnostic_only": true,
+  "replaces_prior_failure": false
+}

@@ -1,0 +1,20 @@
+{
+  "experiment": "EXP_0059_HIGH_LAYER_ISOLATION",
+  "date": "2026-10-04",
+  "stage": "prospective_high_layer_isolation_deployment_not_confirmation",
+  "scope": "Post-training factorial isolation of high-level scheduling under the shared continuous residual low controller; no new training and no claim of end-to-end algorithm superiority.",
+  "parent_study": "research/validation/EXP0058_CONTINUOUS_RESIDUAL_20261004",
+  "runtime_study": "research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004",
+  "high_variants": ["rule", "r_mappo", "graph_ppo", "graph_anchor"],
+  "low_variants": ["r_mappo", "graph_ppo"],
+  "training_seeds": [42, 43, 44],
+  "validation_scene_base": 1960000000,
+  "validation_scenes": 8,
+  "preflight_scene_base": 2080000000,
+  "preflight_scenes": 2,
+  "training_steps": 16384,
+  "isolation": "For every seed, load only high_actor from the selected high checkpoint and only low_actor from the selected low checkpoint. Critics are never used for deployment. Rule has no high checkpoint. All combinations use the same measured observer, assignment, event triggers, safety projection and continuous residual transform.",
+  "primary_question": "Does the graph high-level scheduler improve outcomes when the low-level controller is held fixed?",
+  "selection": "All 4x2x3x8=192 fixed development evaluations are requested exactly once. No checkpoint selection from outcomes, no confirmation pool, no new training. Any failure blocks the matrix.",
+  "caveat": "Cross-loading policies is a diagnostic intervention; it tests interface compatibility, not a separately trained end-to-end agent. EXP0058 remains the primary matched training study."
+}

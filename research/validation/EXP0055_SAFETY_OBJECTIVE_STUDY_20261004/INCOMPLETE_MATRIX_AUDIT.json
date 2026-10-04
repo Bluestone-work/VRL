@@ -1,0 +1,19 @@
+{
+  "completed_rows": 191,
+  "requested_rows": 192,
+  "missing": [
+    [
+      "safety_reward",
+      "vctpg_no_ac",
+      44,
+      1960000007
+    ]
+  ],
+  "duplicate_rows": 0,
+  "completed_initial_pair_checks_pass": true,
+  "source_unchanged": true,
+  "trained_runs": 24,
+  "main_matrix_admitted": false,
+  "negative_process_record_replaced": false,
+  "confirmation_accessed": false
+}

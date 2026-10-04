@@ -1,0 +1,24 @@
+{
+  "phase": "aborted_for_measurement_freshness_correction",
+  "reason": "Reservation release used image-level freshness rather than per-agent fresh detections. No source modification while jobs were running. Preserve requested runs and partial progress; not valid efficacy evidence.",
+  "interrupted_jobs": [
+    {
+      "pid": 170195,
+      "command": "/home/wj/miniconda3/envs/v/bin/python -m scripts.run_tpg_learning train --variant low --seed 42 --steps 8192 --scene-base 1910000000 --out research/validation/EXP0053_TPG_STUDY_20261004/training/train_low_42",
+      "status": "operator_interrupted_for_design_correction"
+    },
+    {
+      "pid": 170558,
+      "command": "/home/wj/miniconda3/envs/v/bin/python -m scripts.run_tpg_learning train --variant low --seed 43 --steps 8192 --scene-base 1910100000 --out research/validation/EXP0053_TPG_STUDY_20261004/training/train_low_43",
+      "status": "operator_interrupted_for_design_correction"
+    },
+    {
+      "pid": 170637,
+      "command": "/home/wj/miniconda3/envs/v/bin/python -m scripts.run_tpg_learning train --variant low --seed 44 --steps 8192 --scene-base 1910200000 --out research/validation/EXP0053_TPG_STUDY_20261004/training/train_low_44",
+      "status": "operator_interrupted_for_design_correction"
+    }
+  ],
+  "ranking_admitted": false,
+  "confirmation_accessed": false,
+  "validation_started": false
+}

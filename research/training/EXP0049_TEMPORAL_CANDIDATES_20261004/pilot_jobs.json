@@ -1,0 +1,11 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "steps": 32768,
+  "observation_contract": "tracked_local_v1",
+  "architecture": "temporal_candidate_scorer",
+  "preflight_baseline_identical": true
+}

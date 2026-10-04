@@ -1,0 +1,20 @@
+{
+  "name": "graph_anchor_44_32768_1960000001",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_residual_marl",
+    "evaluate",
+    "--variant",
+    "graph_anchor",
+    "--scene",
+    "1960000001",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/results/graph_anchor_44_32768_1960000001.jsonl",
+    "--checkpoint",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0056_CONSERVATIVE_RESIDUAL_20261004/training/train_graph_anchor_44/policy_32768.pt"
+  ],
+  "requested_at": "2026-10-04T19:25:20.826201+08:00"
+}

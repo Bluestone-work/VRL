@@ -1,0 +1,25 @@
+{
+  "phase": "completed",
+  "steps": 8192,
+  "episodes": 6,
+  "updates": 8,
+  "high": {
+    "samples": 6,
+    "loss": 2.3029579321543374,
+    "kl": 2.221928715092266e-06,
+    "aux": 0.0
+  },
+  "low": {
+    "samples": 0
+  },
+  "wall_s": 59.9043718338944,
+  "fps": 136.75128670700235,
+  "checkpoint": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0053_TPG_GENERIC_STUDY_20261004/training/train_high_44/policy_8192.pt",
+  "checkpoint_sha256": "e5f2bd28e02b13254aa5f7b259033b4c787d73c4dcc7031ee9fffe84e648c2c0",
+  "model_l2_change": {
+    "high": 0.8557301424147499,
+    "low": 0.0
+  },
+  "high_samples": 75,
+  "low_samples": 0
+}

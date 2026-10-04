@@ -1,0 +1,29 @@
+{
+  "name": "balanced_1s_1960000000",
+  "command": [
+    "/home/wj/.cache/vascular-research/np1264-generic-20261004/bin/python",
+    "-m",
+    "scripts.run_aligned_options",
+    "evaluate",
+    "--policy",
+    "balanced",
+    "--variant",
+    "hierarchical",
+    "--decision-steps",
+    "10",
+    "--clusters",
+    "3",
+    "--scene-base",
+    "1960000000",
+    "--episodes",
+    "1",
+    "--duration",
+    "180.0",
+    "--out",
+    "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0054_MEASURED_MARL_STUDY_20261004/results/balanced_1s_1960000000.jsonl"
+  ],
+  "requested_at": "2026-10-04T17:49:31.732716+08:00",
+  "returncode": 0,
+  "wall_s": 10.65167966298759,
+  "source_unchanged": true
+}

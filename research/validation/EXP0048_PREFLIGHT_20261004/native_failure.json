@@ -1,0 +1,9 @@
+{
+  "stage": "initial_preflight",
+  "policy": "joint",
+  "scene_seed": 1440000000,
+  "status": "process_exit",
+  "returncode": 139,
+  "stderr_available": false,
+  "performance_row_replaced": false
+}

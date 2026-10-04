@@ -1,0 +1,10 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "steps": 32768,
+  "architecture": "temporal_candidate_memory_prior",
+  "untrained_equals_memory": true
+}

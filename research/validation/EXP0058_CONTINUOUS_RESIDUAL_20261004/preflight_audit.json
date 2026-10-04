@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "scene": 2070000000,
+      "variant": "r_mappo",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 2070000000,
+      "variant": "mappo_anchor",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 2070000000,
+      "variant": "graph_ppo",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 2070000000,
+      "variant": "graph_anchor",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 2070000001,
+      "variant": "r_mappo",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 2070000001,
+      "variant": "mappo_anchor",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 2070000001,
+      "variant": "graph_ppo",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    },
+    {
+      "scene": 2070000001,
+      "variant": "graph_anchor",
+      "initial": true,
+      "scenario": true,
+      "final": true
+    }
+  ]
+}

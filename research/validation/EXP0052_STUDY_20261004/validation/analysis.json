@@ -1,0 +1,974 @@
+{
+  "audit_passed": true,
+  "issues": [],
+  "requested": 168,
+  "completed": 168,
+  "scenes": 12,
+  "phase": "paired_validation",
+  "confirmation_accessed": false,
+  "learning_superiority_established": false,
+  "arms": {
+    "memory_n3": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8635153051546656,
+        "removal_auc_180": 0.6742221049297866,
+        "wall_contact_s": 18.557683347251558,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.6271536593717877,
+        "supervisor_infeasible_steps": 0.08333333333333333
+      },
+      "spacing_violating_episodes": 0
+    },
+    "balanced_n3": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8340915107424833,
+        "removal_auc_180": 0.6773350769176919,
+        "wall_contact_s": 27.267841785654415,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.6935643679990586,
+        "supervisor_infeasible_steps": 0.5833333333333334
+      },
+      "spacing_violating_episodes": 0
+    },
+    "balanced_fast_n3": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8965915107424833,
+        "removal_auc_180": 0.7176465526292343,
+        "wall_contact_s": 20.823616527199462,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.65677951596426,
+        "supervisor_infeasible_steps": 1.3333333333333333
+      },
+      "spacing_violating_episodes": 0
+    },
+    "balanced_flat_n3": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.87575817740915,
+        "removal_auc_180": 0.7133808691388746,
+        "wall_contact_s": 19.96909993959363,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.7157738010126677,
+        "supervisor_infeasible_steps": 0.08333333333333333
+      },
+      "spacing_violating_episodes": 0
+    },
+    "priority_n3": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 1,
+      "safe_rate_ci95_missing_envelope": [
+        0.0021075932318602264,
+        0.38479616515094406
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.08333333333333333,
+        "removal": 0.81325817740915,
+        "removal_auc_180": 0.6751053544596243,
+        "wall_contact_s": 30.252167230702568,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.7209293610392233,
+        "supervisor_infeasible_steps": 1.0
+      },
+      "spacing_violating_episodes": 0
+    },
+    "memory_n1": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.2708333333333333,
+        "removal_auc_180": 0.20366214475747288,
+        "wall_contact_s": 6.078741224968327,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": null,
+        "supervisor_infeasible_steps": 0.0
+      },
+      "spacing_violating_episodes": 0
+    },
+    "untrained_balanced_n3": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8340915107424833,
+        "removal_auc_180": 0.6773350769176919,
+        "wall_contact_s": 27.267841785654415,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.6935643679990586,
+        "supervisor_infeasible_steps": 0.5833333333333334
+      },
+      "spacing_violating_episodes": 0
+    },
+    "untrained_flat_n3": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.87575817740915,
+        "removal_auc_180": 0.7133808691388746,
+        "wall_contact_s": 19.969099939593633,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.7157738010126677,
+        "supervisor_infeasible_steps": 0.08333333333333333
+      },
+      "spacing_violating_episodes": 0
+    },
+    "hierarchical_s42": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8635153051546656,
+        "removal_auc_180": 0.6742221049297868,
+        "wall_contact_s": 18.557683347251558,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.6271536593717877,
+        "supervisor_infeasible_steps": 0.08333333333333333
+      },
+      "spacing_violating_episodes": 0
+    },
+    "hierarchical_s43": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8218486384879989,
+        "removal_auc_180": 0.6536717246728789,
+        "wall_contact_s": 23.37697686565579,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.5589993506171607,
+        "supervisor_infeasible_steps": 0.16666666666666666
+      },
+      "spacing_violating_episodes": 0
+    },
+    "hierarchical_s44": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8218486384879989,
+        "removal_auc_180": 0.6497080929816808,
+        "wall_contact_s": 23.0908908067176,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.6158850654009016,
+        "supervisor_infeasible_steps": 0.16666666666666666
+      },
+      "spacing_violating_episodes": 0
+    },
+    "flat_s42": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8541666666666666,
+        "removal_auc_180": 0.6950884931431914,
+        "wall_contact_s": 20.475359340529096,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.7125664179511375,
+        "supervisor_infeasible_steps": 0.25
+      },
+      "spacing_violating_episodes": 0
+    },
+    "flat_s43": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.8958333333333334,
+        "removal_auc_180": 0.6981470894631517,
+        "wall_contact_s": 25.493988261790406,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 3.0640059790822165,
+        "supervisor_infeasible_steps": 1.75
+      },
+      "spacing_violating_episodes": 0
+    },
+    "flat_s44": {
+      "completed": 12,
+      "requested": 12,
+      "safe_successes": 0,
+      "safe_rate_ci95_missing_envelope": [
+        0.0,
+        0.26464846939705117
+      ],
+      "conditional_means": {
+        "cluster_safe_success": 0.0,
+        "removal": 0.87575817740915,
+        "removal_auc_180": 0.7086664140965975,
+        "wall_contact_s": 24.14089662568078,
+        "spacing_violation_pair_s": 0.0,
+        "minimum_spacing_mm": 2.7173745607970887,
+        "supervisor_infeasible_steps": 0.08333333333333333
+      },
+      "spacing_violating_episodes": 0
+    }
+  },
+  "comparisons": [
+    {
+      "learning": "hierarchical",
+      "baseline": "memory_n3",
+      "inference_unit": "scene; all three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": -0.027777777777777776,
+          "ci95": [
+            -0.09027777777777779,
+            0.0138888888888889
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.015021464068337945,
+          "ci95": [
+            -0.04733167700090529,
+            0.006403883341957998
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": 3.1175003259567595,
+          "ci95": [
+            -0.15089213617203723,
+            8.957150592079673
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": -0.026474300908504295,
+          "ci95": [
+            -0.22768027515439407,
+            0.15576976840947174
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": 0.05555555555555556,
+          "ci95": [
+            0.0,
+            0.16666666666666666
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "hierarchical",
+      "baseline": "balanced_n3",
+      "inference_unit": "scene; all three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": 0.0016460166344045059,
+          "ci95": [
+            -0.03685827857955771,
+            0.0418152829179997
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.018134436056243066,
+          "ci95": [
+            -0.06759255118130161,
+            0.029448033850812565
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": -5.592658112446103,
+          "ci95": [
+            -12.405641685576617,
+            0.07376226622728294
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": -0.09288500953577532,
+          "ci95": [
+            -0.5570467438807862,
+            0.3098548430505339
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": -0.4444444444444444,
+          "ci95": [
+            -1.5,
+            0.16666666666666666
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "hierarchical",
+      "baseline": "priority_n3",
+      "inference_unit": "scene; all three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": -0.08333333333333333,
+          "ci95": [
+            -0.25,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": 0.02247934996773784,
+          "ci95": [
+            -0.07022157628882317,
+            0.1088365788836612
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.01590471359817563,
+          "ci95": [
+            -0.08005390939187455,
+            0.04373132104724531
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": -8.57698355749425,
+          "ci95": [
+            -17.42957517161387,
+            -0.13579576879736224
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": -0.12025000257593972,
+          "ci95": [
+            -0.6070593280759006,
+            0.3827188280967943
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": -0.8611111111111112,
+          "ci95": [
+            -2.75,
+            0.16666666666666666
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "flat",
+      "baseline": "memory_n3",
+      "inference_unit": "scene; all three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": 0.0117374206483844,
+          "ci95": [
+            -0.030181971821332244,
+            0.05390953892115103
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": 0.02641189397119356,
+          "ci95": [
+            -0.021120966048130616,
+            0.07519456279656614
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": 4.812398062081869,
+          "ci95": [
+            0.7154060015976551,
+            9.832551598829141
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": 0.20416199323835985,
+          "ci95": [
+            -0.12030892378652998,
+            0.6903962333755009
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": 0.6111111111111112,
+          "ci95": [
+            0.0,
+            1.5013888888888687
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "flat",
+      "baseline": "balanced_n3",
+      "inference_unit": "scene; all three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": 0.041161215060566685,
+          "ci95": [
+            0.0,
+            0.11010020789891113
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": 0.023298921983288437,
+          "ci95": [
+            -0.0031884832838743114,
+            0.054073244314427595
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": -3.8977603763209934,
+          "ci95": [
+            -13.201431887084341,
+            3.697434803589278
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": 0.13775128461108885,
+          "ci95": [
+            -0.02918538808420902,
+            0.4258892097821085
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": 0.11111111111111112,
+          "ci95": [
+            -1.277777777777778,
+            1.388888888888889
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "flat",
+      "baseline": "priority_n3",
+      "inference_unit": "scene; all three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": -0.08333333333333333,
+          "ci95": [
+            -0.25,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": 0.06199454839390001,
+          "ci95": [
+            -0.028283229383877766,
+            0.15126142295947784
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": 0.02552864444135587,
+          "ci95": [
+            -0.024141587899390762,
+            0.07511487591397077
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": -6.8820858213691425,
+          "ci95": [
+            -14.456245953116872,
+            0.5313679168127957
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": 0.11038629157092443,
+          "ci95": [
+            -0.11470446930327716,
+            0.5003635998749075
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": -0.3055555555555555,
+          "ci95": [
+            -2.6687499999999993,
+            1.388888888888889
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "hierarchical",
+      "baseline": "balanced_fast_n3",
+      "inference_unit": "scene; three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": -0.0608539833655955,
+          "ci95": [
+            -0.13888888888888892,
+            0.006186267035294475
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.05844591176778543,
+          "ci95": [
+            -0.11909004620425179,
+            -0.006131717377919934
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": 0.8515671460088545,
+          "ci95": [
+            -5.3083377805710645,
+            8.32999245069806
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": -0.05610015750097604,
+          "ci95": [
+            -0.5570082285403982,
+            0.4528503818405895
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": -1.1944444444444444,
+          "ci95": [
+            -3.5833333333333335,
+            0.0
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "hierarchical",
+      "baseline": "balanced_flat_n3",
+      "inference_unit": "scene; three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": -0.04002065003226216,
+          "ci95": [
+            -0.10492484407581665,
+            0.006186267035294475
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.05418022827742585,
+          "ci95": [
+            -0.10863547582949806,
+            -0.0073086519474104454
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": 1.7060837336146844,
+          "ci95": [
+            -5.197691523233879,
+            10.672335445855998
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": -0.11509444254938368,
+          "ci95": [
+            -0.5682638346991707,
+            0.2686339957264562
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": 0.05555555555555556,
+          "ci95": [
+            0.0,
+            0.16666666666666666
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "flat",
+      "baseline": "balanced_fast_n3",
+      "inference_unit": "scene; three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": -0.02133878493943332,
+          "ci95": [
+            -0.07689434049498887,
+            0.026766874565577803
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.01701255372825393,
+          "ci95": [
+            -0.05004113049641089,
+            0.011582759996613567
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": 2.546464882133965,
+          "ci95": [
+            -2.4596317232554963,
+            8.149396546581652
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": 0.1745361366458881,
+          "ci95": [
+            -0.04027546960022914,
+            0.5640548656485076
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": -0.638888888888889,
+          "ci95": [
+            -3.0833333333333335,
+            1.1666666666666667
+          ],
+          "scenes": 12
+        }
+      }
+    },
+    {
+      "learning": "flat",
+      "baseline": "balanced_flat_n3",
+      "inference_unit": "scene; three training seeds averaged within scene",
+      "metrics": {
+        "cluster_safe_success": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "removal": {
+          "mean": -0.0005054516060999844,
+          "ci95": [
+            -0.04166666666666666,
+            0.040150311848366704
+          ],
+          "scenes": 12
+        },
+        "removal_auc_180": {
+          "mean": -0.012746870237894345,
+          "ci95": [
+            -0.0488816811889373,
+            0.014722082041852012
+          ],
+          "scenes": 12
+        },
+        "wall_contact_s": {
+          "mean": 3.4009814697397953,
+          "ci95": [
+            -2.343958517669906,
+            10.166268351049268
+          ],
+          "scenes": 12
+        },
+        "spacing_violation_pair_s": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "scenes": 12
+        },
+        "minimum_spacing_mm": {
+          "mean": 0.11554185159748047,
+          "ci95": [
+            -0.03945422984305036,
+            0.38477988557657367
+          ],
+          "scenes": 12
+        },
+        "supervisor_infeasible_steps": {
+          "mean": 0.6111111111111112,
+          "ci95": [
+            0.0,
+            1.5013888888888687
+          ],
+          "scenes": 12
+        }
+      }
+    }
+  ],
+  "untrained_equivalence": null,
+  "hierarchy_vs_flat": {
+    "cluster_safe_success": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "scenes": 12
+    },
+    "removal": {
+      "mean": -0.039515198426162176,
+      "ci95": [
+        -0.07637347700571989,
+        -0.007197170247494426
+      ],
+      "scenes": 12
+    },
+    "removal_auc_180": {
+      "mean": -0.0414333580395315,
+      "ci95": [
+        -0.08697444084025559,
+        -5.906795768272187e-05
+      ],
+      "scenes": 12
+    },
+    "wall_contact_s": {
+      "mean": -1.6948977361251103,
+      "ci95": [
+        -5.8962170279599055,
+        2.0796941952682966
+      ],
+      "scenes": 12
+    },
+    "spacing_violation_pair_s": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "scenes": 12
+    },
+    "minimum_spacing_mm": {
+      "mean": -0.23063629414686415,
+      "ci95": [
+        -0.5773852354747747,
+        -0.009529603967376857
+      ],
+      "scenes": 12
+    },
+    "supervisor_infeasible_steps": {
+      "mean": -0.5555555555555556,
+      "ci95": [
+        -1.3361111111111101,
+        0.0
+      ],
+      "scenes": 12
+    }
+  },
+  "untrained_allocation_equivalence": {
+    "untrained_balanced_n3": true,
+    "untrained_flat_n3": true
+  },
+  "experiment": "EXP0052"
+}

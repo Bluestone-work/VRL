@@ -1,0 +1,27 @@
+{
+  "diagnostic_attempts": [
+    {
+      "name": "gdb_replay",
+      "returncode": 0,
+      "wall_s": 18.73951639002189,
+      "result_written": true
+    },
+    {
+      "name": "serial_replay_1",
+      "returncode": 0,
+      "wall_s": 17.527864687144756,
+      "result_written": true
+    },
+    {
+      "name": "serial_replay_2",
+      "returncode": 0,
+      "wall_s": 17.051160228904337,
+      "result_written": true
+    }
+  ],
+  "all_same_initial": true,
+  "all_same_final": true,
+  "original_failure_retained": true,
+  "main_ranking_admitted": false,
+  "interpretation": "Three successful post-hoc replays do not erase an intermittent native failure or establish root-cause repair."
+}

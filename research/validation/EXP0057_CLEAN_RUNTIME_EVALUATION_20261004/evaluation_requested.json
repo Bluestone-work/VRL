@@ -1,0 +1,2170 @@
+[
+  {
+    "name": "r_mappo_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_42_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_43_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_44_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_42_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_44_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_43_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_44_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_42_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_42_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_43_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_43_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_44_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_44_1960000000.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "tpg_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000000",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/tpg_1960000000.jsonl",
+      "--rule"
+    ]
+  },
+  {
+    "name": "balanced_1s_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "balanced",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "3",
+      "--scene-base",
+      "1960000000",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "memory_n1_1960000000",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "memory",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "1",
+      "--scene-base",
+      "1960000000",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/memory_n1_1960000000.jsonl"
+    ]
+  },
+  {
+    "name": "r_mappo_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_42_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_43_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_44_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_42_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_44_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_43_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_44_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_42_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_42_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_43_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_43_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_44_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_44_1960000001.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "tpg_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000001",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/tpg_1960000001.jsonl",
+      "--rule"
+    ]
+  },
+  {
+    "name": "balanced_1s_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "balanced",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "3",
+      "--scene-base",
+      "1960000001",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "memory_n1_1960000001",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "memory",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "1",
+      "--scene-base",
+      "1960000001",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/memory_n1_1960000001.jsonl"
+    ]
+  },
+  {
+    "name": "r_mappo_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_42_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_43_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_44_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_42_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_44_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_43_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_44_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_42_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_42_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_43_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_43_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_44_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_44_1960000002.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "tpg_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000002",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/tpg_1960000002.jsonl",
+      "--rule"
+    ]
+  },
+  {
+    "name": "balanced_1s_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "balanced",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "3",
+      "--scene-base",
+      "1960000002",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "memory_n1_1960000002",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "memory",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "1",
+      "--scene-base",
+      "1960000002",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/memory_n1_1960000002.jsonl"
+    ]
+  },
+  {
+    "name": "r_mappo_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_42_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_43_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_44_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_42_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_44_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_43_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_44_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_42_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_42_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_43_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_43_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_44_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_44_1960000003.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "tpg_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000003",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/tpg_1960000003.jsonl",
+      "--rule"
+    ]
+  },
+  {
+    "name": "balanced_1s_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "balanced",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "3",
+      "--scene-base",
+      "1960000003",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "memory_n1_1960000003",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "memory",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "1",
+      "--scene-base",
+      "1960000003",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/memory_n1_1960000003.jsonl"
+    ]
+  },
+  {
+    "name": "r_mappo_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_42_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_43_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_44_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_42_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_44_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_43_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_44_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_42_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_42_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_43_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_43_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_44_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_44_1960000004.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "tpg_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000004",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/tpg_1960000004.jsonl",
+      "--rule"
+    ]
+  },
+  {
+    "name": "balanced_1s_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "balanced",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "3",
+      "--scene-base",
+      "1960000004",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "memory_n1_1960000004",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "memory",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "1",
+      "--scene-base",
+      "1960000004",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/memory_n1_1960000004.jsonl"
+    ]
+  },
+  {
+    "name": "r_mappo_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_42_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_43_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_44_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_42_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_44_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_43_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_44_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_42_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_42_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_43_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_43_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_44_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_44_1960000005.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "tpg_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000005",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/tpg_1960000005.jsonl",
+      "--rule"
+    ]
+  },
+  {
+    "name": "balanced_1s_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "balanced",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "3",
+      "--scene-base",
+      "1960000005",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "memory_n1_1960000005",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "memory",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "1",
+      "--scene-base",
+      "1960000005",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/memory_n1_1960000005.jsonl"
+    ]
+  },
+  {
+    "name": "r_mappo_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_42_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_43_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_44_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_42_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_44_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_43_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_44_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_42_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_42_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_43_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_43_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_44_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_44_1960000006.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "tpg_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000006",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/tpg_1960000006.jsonl",
+      "--rule"
+    ]
+  },
+  {
+    "name": "balanced_1s_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "balanced",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "3",
+      "--scene-base",
+      "1960000006",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "memory_n1_1960000006",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "memory",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "1",
+      "--scene-base",
+      "1960000006",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/memory_n1_1960000006.jsonl"
+    ]
+  },
+  {
+    "name": "r_mappo_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_42_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_43_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "r_mappo_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/r_mappo_44_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_42_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_43_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "mappo_anchor_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "mappo_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/mappo_anchor_44_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_42_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_43_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_ppo_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_ppo",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_ppo_44_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_42_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_42_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_43_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "43",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_43_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "graph_anchor_44_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "graph_anchor",
+      "--seed",
+      "44",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/graph_anchor_44_1960000007.jsonl",
+      "--trained"
+    ]
+  },
+  {
+    "name": "tpg_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_clean_residual_eval",
+      "--variant",
+      "r_mappo",
+      "--seed",
+      "42",
+      "--scene",
+      "1960000007",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/tpg_1960000007.jsonl",
+      "--rule"
+    ]
+  },
+  {
+    "name": "balanced_1s_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "balanced",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "3",
+      "--scene-base",
+      "1960000007",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/balanced_1s_1960000007.jsonl"
+    ]
+  },
+  {
+    "name": "memory_n1_1960000007",
+    "command": [
+      "/home/wj/.cache/vascular-research/cpu312-clean-20261004/bin/python",
+      "-m",
+      "scripts.run_aligned_options",
+      "evaluate",
+      "--policy",
+      "memory",
+      "--variant",
+      "hierarchical",
+      "--decision-steps",
+      "10",
+      "--clusters",
+      "1",
+      "--scene-base",
+      "1960000007",
+      "--episodes",
+      "1",
+      "--duration",
+      "180.0",
+      "--out",
+      "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0057_CLEAN_RUNTIME_EVALUATION_20261004/results/memory_n1_1960000007.jsonl"
+    ]
+  }
+]

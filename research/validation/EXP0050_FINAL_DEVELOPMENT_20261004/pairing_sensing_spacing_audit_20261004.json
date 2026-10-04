@@ -1,0 +1,296 @@
+{
+  "audit_date": "2026-10-04",
+  "scope": "EXP0050 existing development records; no new policy evaluation or confirmation access",
+  "raw_hash_checks": [
+    {
+      "path": "research/validation/EXP0050_BASELINES_VAL_20261004/attempts.jsonl",
+      "expected_sha256": "373ed3e5a368529ea1485177682845d3a8836fa7c5b299598f1f33cf6d068e49",
+      "actual_sha256": "373ed3e5a368529ea1485177682845d3a8836fa7c5b299598f1f33cf6d068e49",
+      "matches": true
+    },
+    {
+      "path": "research/validation/EXP0050_LEARNED32_VAL_20261004/attempts.jsonl",
+      "expected_sha256": "b945e6a964d793a5746c41d781ab3877c9237c32a242ea86e88cafa2aa3d0a79",
+      "actual_sha256": "b945e6a964d793a5746c41d781ab3877c9237c32a242ea86e88cafa2aa3d0a79",
+      "matches": true
+    },
+    {
+      "path": "research/validation/EXP0050_LEARNED64_VAL_20261004/attempts.jsonl",
+      "expected_sha256": "85154b1496f5ad8176828323e76aef7957d94e6ed04966a10ed51450afabd191",
+      "actual_sha256": "85154b1496f5ad8176828323e76aef7957d94e6ed04966a10ed51450afabd191",
+      "matches": true
+    }
+  ],
+  "current_source_mismatches": [],
+  "requested_attempts": 132,
+  "completed_attempts": 131,
+  "failed_attempts": [
+    {
+      "arm": "learned_s44_t65536_n3",
+      "scene_seed": 1620000011,
+      "status": "process_exit",
+      "returncode": -11
+    }
+  ],
+  "paired_scenes": [
+    {
+      "scene_seed": 1620000000,
+      "completed_rows": 11,
+      "accepted_seed": 1620000000,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000001,
+      "completed_rows": 11,
+      "accepted_seed": 1620000001,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000002,
+      "completed_rows": 11,
+      "accepted_seed": 1620000002,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000003,
+      "completed_rows": 11,
+      "accepted_seed": 1620000003,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000004,
+      "completed_rows": 11,
+      "accepted_seed": 1620000004,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000005,
+      "completed_rows": 11,
+      "accepted_seed": 1620000005,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000006,
+      "completed_rows": 11,
+      "accepted_seed": 1620000006,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000007,
+      "completed_rows": 11,
+      "accepted_seed": 1620000007,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000008,
+      "completed_rows": 11,
+      "accepted_seed": 1620000008,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000009,
+      "completed_rows": 11,
+      "accepted_seed": 1620000009,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000010,
+      "completed_rows": 11,
+      "accepted_seed": 1620000010,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    },
+    {
+      "scene_seed": 1620000011,
+      "completed_rows": 10,
+      "accepted_seed": 1620000011,
+      "rejected_count": 0,
+      "checks": {
+        "scenario_hash": true,
+        "shared_scene": true,
+        "accepted_seed": true,
+        "rejected_attempts": true,
+        "shared_scene_digest_valid": true,
+        "sensor_settings_equal": true,
+        "control_seed_equal": true,
+        "n1_selected_start_indices_equal": true,
+        "n1_actual_config_equal": true,
+        "n3_selected_start_indices_equal": true,
+        "n3_actual_config_equal": true
+      }
+    }
+  ],
+  "all_recorded_pairing_checks_pass": true,
+  "spacing_threshold_mm": 2.0,
+  "spawn_clearance_mm": 4.0,
+  "spacing_evidence": {
+    "memory_n3": {
+      "episodes": 12,
+      "episodes_with_spacing_violations": 9,
+      "minimum_spacing_mm": 1.7376656581298566,
+      "mean_spacing_violation_pair_s": 0.8788193804858463
+    },
+    "learned_s43_t32768_n3": {
+      "episodes": 12,
+      "episodes_with_spacing_violations": 8,
+      "minimum_spacing_mm": 1.6234858644422836,
+      "mean_spacing_violation_pair_s": 2.8132547991252554
+    }
+  },
+  "tests": {
+    "focused_observation_learning_analysis": 26,
+    "focused_pairing_spacing": 5,
+    "total_passed": 31
+  },
+  "limitations": [
+    "Manifest equality verifies logged common initial scene and reset configuration, not a saved complete native-state snapshot.",
+    "Same sensing RNG seed and model do not guarantee identical time-indexed noise after policy trajectories diverge.",
+    "Synthetic segmentation, ideal identity association, complete preoperative target inventory and calibrated axes remain assumptions.",
+    "Navigation shortcuts identified in tested tracked observation paths are removed; this is not a universal proof against every possible information leak.",
+    "Per-cluster independent velocity actuation is assumed; no calibrated coil-current mapping or magnetic coupling model is validated.",
+    "Approximate projected actions do not guarantee continuous physical separation.",
+    "Original SIGSEGV remains; full batch inference is blocked."
+  ]
+}
