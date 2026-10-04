@@ -166,7 +166,11 @@ class RouteFollower:
 class LocalFollower:
     """[fair] junction-group path inside the local view only, towards the end that best points at the
     clot's straight-line direction; explored dead ends remembered (own odometry); choice held 2 s."""
-    def __init__(self, env, view_mm=4., commit_s=2., memory=False, tabu_s=0.):
+    FEATURES = ('cos_goal', 'view_dist', 'euclid_progress', 'leaf', 'dead', 'tabu', 'radius_ratio', 'log_goal_mm',
+                'n_frontier', 'turn_cos', 'is_current')
+
+    def __init__(self, env, view_mm=4., commit_s=2., memory=False, tabu_s=0., scorer=None, recorder=None):
+        self.scorer, self.recorder = scorer, recorder
         self.env, self.graph, self.view, self.commit, self.memory = env, GroupGraph(env), view_mm, commit_s, memory
         self.tabu_s = tabu_s
         self.tabu = [dict() for _ in range(env.num_robots)]   # abandoned frontier group -> time it was abandoned
@@ -216,6 +220,19 @@ class LocalFollower:
                 if self.end[i] is None or self.end[i] not in dist or env.elapsed_s >= self.until[i] or dist[self.end[i]] < .3:
                     frontier = [u for u in dist if (dist[u] >= self.view-1e-9 or len(g.adj.get(u, [])) == 1) and u not in src]
                     frontier = frontier or [u for u in dist if u not in src]
+                    def feats(u):
+                        v = g.point[u]-pos; nv = float(np.linalg.norm(v)); v = v/max(nv, 1e-9)
+                        leaf = len(g.adj.get(u, [])) == 1 and dist[u] < self.view
+                        tabu = any(np.linalg.norm(g.point[u]-g.point[q]) < 1.5 and env.elapsed_s-tq < max(self.tabu_s, 30.)
+                                   for q, tq in self.tabu[i].items())
+                        r_here = float(env.solution['radius_mm'][int(env.robot_stations[i])])
+                        heading = env.velocity_mm_s[i]; hn = float(np.linalg.norm(heading))
+                        return np.array([float(v@gdir), dist[u]/self.view,
+                                         (np.linalg.norm(clot-pos)-np.linalg.norm(clot-g.point[u]))/max(dist[u], 1e-3),
+                                         float(leaf), float(u in self.dead[i]), float(tabu),
+                                         float(env.solution['radius_mm'][u])/max(r_here, 1e-6), np.log(max(np.linalg.norm(clot-pos), 1e-3)),
+                                         len(frontier)/4., float(v@heading)/hn if hn > 1e-6 else 0., float(u == self.end[i])])
+
                     def score(u):
                         v = g.point[u]-pos; v /= max(np.linalg.norm(v), 1e-9)
                         leaf = len(g.adj.get(u, [])) == 1 and dist[u] < self.view
@@ -232,7 +249,14 @@ class LocalFollower:
                                 rep += self.visits[i].get(q, 0); q = prev[q]
                             sc -= .75*rep
                         return sc
-                    new_end = max(frontier, key=score) if frontier else None
+                    if frontier and (self.scorer is not None or self.recorder is not None):
+                        F = np.stack([feats(u) for u in frontier])
+                        if self.recorder is not None:
+                            self.recorder(env, i, t, frontier, F)
+                    if frontier and self.scorer is not None:
+                        new_end = frontier[int(np.argmax(self.scorer(F)))]
+                    else:
+                        new_end = max(frontier, key=score) if frontier else None
                     if self.tabu_s > 0 and self.end[i] is not None and new_end != self.end[i] and dist.get(self.end[i], 0.) >= .3:
                         self.tabu[i][self.end[i]] = env.elapsed_s       # abandoned before reaching it
                     self.end[i] = new_end

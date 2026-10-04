@@ -40,7 +40,7 @@ from scripts.safe_metrics import WallTracker, episode_metrics
 INFORMATION = {'plan_route': 'privileged', 'plan_reactive': 'fair', 'nearest_reactive': 'fair',
                'route_pursuit': 'privileged', 'local_pursuit': 'fair',
                'route_follow': 'privileged', 'local_follow': 'fair',
-               'bc_graph': 'privileged', 'bc_local': 'fair', 'local_memory': 'fair', 'local_tabu': 'fair'}
+               'bc_graph': 'privileged', 'bc_local': 'fair', 'local_memory': 'fair', 'local_tabu': 'fair', 'local_learned': 'fair'}
 STUDENT = {}   # checkpoint path per learned method, set from --checkpoint
 
 
@@ -213,7 +213,8 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
     from marl.edge_follower import LocalFollower, RouteFollower
     pursuit = {'route_pursuit': RoutePursuit, 'local_pursuit': LocalPursuit, 'route_follow': RouteFollower,
                'local_follow': LocalFollower, 'local_memory': lambda e: LocalFollower(e, memory=True),
-               'local_tabu': lambda e: LocalFollower(e, tabu_s=30.)}.get(method, lambda e: None)(env)
+               'local_tabu': lambda e: LocalFollower(e, tabu_s=30.),
+               'local_learned': lambda e: LocalFollower(e, tabu_s=30., scorer=__import__('marl.frontier_selector', fromlist=['x']).make_scorer(STUDENT['local_learned']))}.get(method, lambda e: None)(env)
     if method == 'bc_graph':
         from marl.graph_transformer_student import load_student, student_local_action
         from marl.scene_graph import extract_scene
@@ -245,7 +246,7 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
                 local = local_student_action(lmodel, packet.navigation, slots_for(packet, tgt))
             elif method in ('route_pursuit', 'route_follow'):
                 local = pursuit.act(tgt)
-            elif method in ('local_pursuit', 'local_follow', 'local_memory', 'local_tabu'):
+            elif method in ('local_pursuit', 'local_follow', 'local_memory', 'local_tabu', 'local_learned'):
                 local = pursuit.act(tgt, packet.navigation)
             elif method == 'plan_reactive':
                 local = fair_reactive_action(packet.navigation, 'path', PartialObsConfig(), target_slots=slots_for(packet, tgt))
