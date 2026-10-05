@@ -14,7 +14,7 @@ from docx import Document
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
-from docx.shared import Pt, RGBColor
+from docx.shared import Inches, Pt, RGBColor
 
 CJK = '微软雅黑'
 MONO = 'Consolas'
@@ -68,7 +68,7 @@ def add_table(doc, rows):
     return t
 
 
-def convert(md: str, out: Path, title=None):
+def convert(md: str, out: Path, title=None, src_dir=Path('.')):
     doc = Document()
     st = doc.styles['Normal']; st.font.name = CJK; st.font.size = Pt(10.5)
     st.element.rPr.rFonts.set(qn('w:eastAsia'), CJK)
@@ -82,6 +82,19 @@ def convert(md: str, out: Path, title=None):
             i += 1; continue
         if line.startswith('---') and set(line.strip()) == {'-'}:
             doc.add_paragraph(); i += 1; continue
+        m = re.match(r'^!\[([^\]]*)\]\(([^)]+)\)\s*$', line.strip())
+        if m:                                           # figure: image + italic caption
+            path = Path(m.group(2))
+            if not path.is_absolute():
+                path = src_dir/path
+            if path.exists():
+                doc.add_picture(str(path), width=Inches(6.3))
+                doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            cap = doc.add_paragraph(); cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            add_rich(cap, m.group(1))
+            for r in cap.runs:
+                r.italic = True; r.font.size = Pt(9)
+            i += 1; continue
         m = re.match(r'^(#{1,4})\s+(.*)$', line)
         if m:
             h = doc.add_heading('', min(len(m.group(1)), 4))
@@ -117,7 +130,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('src', type=Path); ap.add_argument('dst', type=Path); ap.add_argument('--title')
     a = ap.parse_args()
-    convert(a.src.read_text(), a.dst, a.title)
+    convert(a.src.read_text(), a.dst, a.title, a.src.parent)
     print('wrote', a.dst)
 
 
