@@ -1105,3 +1105,12 @@ Report: research/validation/BENCHMARK_V1_REPORT_20261005.md (development split o
 - New DynamicsConfig.junction_model='union' (default 'graph' keeps every earlier result reproducible). The accessible region near a body is the union of the capsules of every edge within two junction hops; feasibility depends only on 3-D position; side branches open where their tube pierces the parent wall; the membership edge is the containing capsule with the smallest radial/radius ratio. Implemented identically in the reference and compiled backends (tests/test_union_junction.py: backend agreement on two anatomies; an axis-following body enters the MCA perforator only under 'union').
 - Stopped the 150-min PPO runs at ~60 min (physics superseded); partial logs kept.
 - Deployable classical pursuit (pre-operative route + imaging estimates only) under 'union', MCA 10 dev scenes: N=1 4/10 safe (9/10 cleared), N=3 3/10 safe (10/10 cleared) with the TPG spacing coordinator (0 spacing violations; without TPG 2/10 with 2 violations). Remaining failures are wall contact of 1–3 robot-s, i.e. just above the 1 s threshold, in perforators whose clearance (~0.06 mm) is comparable to the 0.05 mm localisation error. A clearance-proportional slow-down variant was much worse (stalls against the flow): negative, recorded.
+
+## 2026-10-05 16:30 — Benchmark v2 (union junction model), 14 anatomies × 30 dev scenes, 7,980 episodes
+
+Safe success N=1/2/3 (all anatomies):
+- Ours, deployable (imaging estimates + pre-operative map): pursuit 81.0 / 77.1 / 61.7; + TPG spacing schedule 81.0 / 81.2 / 80.2.
+- Privileged references (simulator truth): original traditional plan_route 56.9 / 66.9 / 63.6; previous I0 route_follow 41.7 / 49.3 / 58.8 (its junction tricks were tuned to the old graph rule and now hurt).
+- Codex HRL (measured sensors, checkpoints trained under the old physics): 4.0–4.8 % at N=3, rule TPG 4.0 % at N=2; ~26–30 s wall contact.
+Paired (two-level bootstrap): ours+TPG − plan_route +14.3 pp [+0.2, +28.6] (N=2), +16.7 pp [+4.8, +29.3] (N=3); pursuit − plan_route N=1 +24.0 pp [+6.7, +42.4]. TPG − no TPG: +4.0 [+0.7, +7.6] (N=2), +18.6 [+11.9, +25.5] (N=3).
+Failure attribution (ours): particle contact 7.9 / 10.7 / 11.4 %, timeouts 9.8 / 4.5 / 3.3 %, wall ≥1 s 1.4 / 3.3 / 3.8 % (almost all MCA), lost cluster 1.2 % at N=3.

@@ -1,0 +1,10 @@
+pursuit_dep N=1 {'safe': '81.0%', 'timeout': '9.8%', 'particle': '7.9%', 'wall 1-3s': '1.4%'} | wall failures by anatomy {'mca_m1_lvo': 6}
+pursuit_tpg_dep N=2 {'safe': '81.2%', 'particle': '10.7%', 'timeout': '4.5%', 'wall 1-3s': '2.6%', 'wall>=3s': '0.7%', 'spacing': '0.2%'} | wall failures by anatomy {'mca_m1_lvo': 14}
+pursuit_tpg_dep N=3 {'safe': '80.2%', 'particle': '11.4%', 'timeout': '3.3%', 'wall 1-3s': '3.3%', 'lost': '1.2%', 'wall>=3s': '0.5%'} | wall failures by anatomy {'mca_m1_lvo': 16}
+N=1 all      pursuit_dep - plan_route_priv cluster_safe_success: +0.240 [+0.067, +0.424]  scenes 420 better 137 worse 36
+N=2 all      pursuit_dep - plan_route_priv cluster_safe_success: +0.102 [-0.031, +0.240]  scenes 420 better 91 worse 48
+N=3 all      pursuit_dep - plan_route_priv cluster_safe_success: -0.019 [-0.129, +0.098]  scenes 420 better 61 worse 69
+N=2 all      pursuit_tpg_dep - plan_route_priv cluster_safe_success: +0.143 [+0.002, +0.286]  scenes 420 better 99 worse 39
+N=3 all      pursuit_tpg_dep - plan_route_priv cluster_safe_success: +0.167 [+0.048, +0.293]  scenes 420 better 113 worse 43
+N=2 all      pursuit_tpg_dep - pursuit_dep cluster_safe_success: +0.040 [+0.007, +0.076]  scenes 420 better 23 worse 6
+N=3 all      pursuit_tpg_dep - pursuit_dep cluster_safe_success: +0.186 [+0.119, +0.255]  scenes 420 better 82 worse 4
