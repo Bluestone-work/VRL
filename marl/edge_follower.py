@@ -24,6 +24,7 @@ import numpy as np
 
 AT_JUNCTION_MM = .25
 CENTRING = 1.5
+EARLY_MM = .8
 
 
 class GroupGraph:
@@ -96,7 +97,7 @@ def follow_command(graph, env, i, path, goal_point):
                     c = toward_g+CENTRING*centre                    # come back along the axis first
                     return c/max(np.linalg.norm(c), 1e-9)
                 if float(d_next@toward_g) > 0:
-                    return d_next                                   # return crossing selects the next edge
+                    return crossing_direction(graph, g, nxt, e, toward_g)   # return crossing selects the next edge
                 return toward_g
         d = graph.point[path[0]]-pos
         return d/max(np.linalg.norm(d), 1e-9)
@@ -109,12 +110,56 @@ def follow_command(graph, env, i, path, goal_point):
     nxt = graph.edge_between(G, path[k+2])
     d_next = graph.away(nxt, G)
     if dist_G > AT_JUNCTION_MM:
+        # Near-parallel daughters: a straight approach would cross G selecting whichever daughter is
+        # marginally better aligned with the parent. Start the selecting manoeuvre early in that case.
+        comps = [graph.away(x, G) for _, _, x in graph.adj.get(G, []) if x not in (nxt, e)]
+        wrong = any(float(toward@c) > float(toward@d_next)-.05 for c in comps)
+        if wrong and dist_G < EARLY_MM and float(d_next@toward) > .05:
+            return crossing_direction(graph, G, nxt, e, toward)
         c = toward+CENTRING*centre
         return c/max(np.linalg.norm(c), 1e-9)
     if float(d_next@toward) > .05:
-        return d_next                                              # obtuse turn: cross along the next edge
+        return crossing_direction(graph, G, nxt, e, toward)        # obtuse turn: cross along the next edge
     return toward                                                  # acute turn: overshoot straight through
 
+
+CROSS_MARGIN = .15
+
+
+_SPHERE = None
+
+
+def _sphere():
+    global _SPHERE
+    if _SPHERE is None:
+        k = np.arange(4000)+.5
+        phi = np.arccos(1-2*k/4000); th = np.pi*(1+5**.5)*k
+        _SPHERE = np.stack((np.cos(th)*np.sin(phi), np.sin(th)*np.sin(phi), np.cos(phi)), 1)
+    return _SPHERE
+
+
+def crossing_direction(graph, G, nxt, cur, toward):
+    """Step direction whose crossing of junction G makes the transport pick edge `nxt`.
+
+    The transport picks, among the edges incident to G other than the current one, the edge whose
+    outward direction has the largest dot product with the step. Daughters that leave G almost in
+    parallel make that choice nearly random for a step along the daughter. Search unit directions
+    with a positive component along `toward` (so the crossing happens) for the largest winning
+    margin over every competitor; among near-best margins prefer the one closest to the daughter."""
+    d_next = graph.away(nxt, G)
+    comps = [graph.away(e, G) for _, _, e in graph.adj.get(G, []) if e not in (nxt, cur)]
+    if not comps:
+        crossing_direction.last_margin = 1. if toward is None or float(d_next@toward) > .05 else -1.
+        return d_next
+    S = _sphere()
+    ok = S@toward > .15 if toward is not None else np.ones(len(S), bool)
+    margin = np.min(np.stack([S@(d_next-c) for c in comps]), axis=0)
+    margin[~ok] = -np.inf
+    best = margin.max()
+    cand = np.flatnonzero(margin >= best-.2*abs(best))
+    d = S[cand[np.argmax(S[cand]@d_next)]]
+    crossing_direction.last_margin = float(best)
+    return d
 
 AVOID_GAIN, WAIT_CLEAR, WAIT_HORIZON, DEADZONE = 6., .3, .5, .35
 
@@ -143,8 +188,23 @@ def _sources(graph, env, i):
 
 class RouteFollower:
     """[privileged] global junction-group shortest path on the known vessel map to the planned clot."""
-    def __init__(self, env):
-        self.env, self.graph = env, GroupGraph(env)
+    def __init__(self, env, commit=True):
+        self.env, self.graph, self.commit = env, GroupGraph(env), commit
+        self.paths = [None]*env.num_robots; self.path_goal = [None]*env.num_robots
+
+    def _path(self, i, goal_g):
+        """Shortest group path, held per target. Venous trees contain near-equal alternative routes;
+        re-planning every step from the current edge flips between them at the shared junction."""
+        g, env = self.graph, self.env
+        e = int(env.edges[i]); a, b = int(g.eg[e, 0]), int(g.eg[e, 1])
+        p = self.paths[i]
+        if self.commit and p is not None and self.path_goal[i] == goal_g:
+            on = any({p[j], p[j+1]} == {a, b} for j in range(len(p)-1)) or a in p or b in p
+            if on:
+                return p
+        p = g.shortest(_sources(g, env, i), goal_g)
+        self.paths[i], self.path_goal[i] = p, goal_g
+        return p
 
     def act(self, targets):
         env = self.env; n = env.num_robots
@@ -155,7 +215,7 @@ class RouteFollower:
             if t < 0 or not env.active[i]:
                 continue
             goal_g = int(self.graph.g[int(env.clot_stations[t])])
-            path = self.graph.shortest(_sources(self.graph, env, i), goal_g)
+            path = self._path(i, goal_g)
             w = follow_command(self.graph, env, i, path, env.clot_positions_mm[t].astype(np.float64))
             parts = [(nodes[i, 36+10*k:39+10*k]*1.5, nodes[i, 39+10*k:42+10*k]*env.config.robot_speed_mm_s)
                      for k in range(4) if nodes[i, 45+10*k] > 0]
@@ -272,3 +332,6 @@ class LocalFollower:
             w = follow_command(g, env, i, path, point)
             out[i] = _safety(frames[i]@w, _particles(obs[i], PartialObsConfig()))
         return out
+
+
+crossing_direction.last_margin = 0.
