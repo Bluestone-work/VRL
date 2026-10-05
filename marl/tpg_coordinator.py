@@ -123,17 +123,18 @@ class TPGCoordinator:
             timelines[i] = self._timeline(i, self.waits[i]); done.append(i)
         self.timelines = timelines
 
-    def update_progress(self):
-        P = self.env.positions_mm
+    def update_progress(self, positions=None):
+        P = self.env.positions_mm if positions is None else positions
         for i in range(self.n):
             path = self.paths[i]; k = self.progress[i]
             w = path[k:k+int(3./self.step)]
             if len(w):
                 self.progress[i] = k+int(np.argmin(np.linalg.norm(w-P[i], axis=1)))
 
-    def gate(self):
-        """Boolean [n]: True = this cluster must hold position now."""
-        self.update_progress()
+    def gate(self, positions=None, active=None):
+        """Boolean [n]: True = this cluster must hold position now (estimated positions if given)."""
+        self.update_progress(positions)
+        act = self.env.active if active is None else active
         hold = np.zeros(self.n, bool)
         margin = int(round(self.stop_margin/self.step))+1
         for zi, z in enumerate(self.zones):
@@ -143,7 +144,7 @@ class TPGCoordinator:
             second = z['j'] if first == z['i'] else z['i']
             f0, f1 = (z['s0'], z['s1']) if first == z['i'] else (z['u0'], z['u1'])
             s0, s1 = (z['s0'], z['s1']) if second == z['i'] else (z['u0'], z['u1'])
-            first_done = self.progress[first] > f1 or not self.env.active[first]
+            first_done = self.progress[first] > f1 or not act[first]
             ps = self.progress[second]
             if not first_done and s0-margin-int(1./self.step) <= ps < s0:   # approaching the zone entry
                 hold[second] = True

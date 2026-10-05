@@ -70,13 +70,21 @@ class GroupGraph:
         return d if int(self.eg[e, 0]) == g else -d
 
 
-def follow_command(graph, env, i, path, goal_point):
-    """World-frame unit command for body i following group `path` (ends at the goal's group)."""
+def follow_command(graph, env, i, path, goal_point, est=None, sensor=None):
+    """World-frame unit command for body i following group `path` (ends at the goal's group).
+    With `est`/`sensor` (marl.deployable_sensing) only the estimated position, the map-matched edge and
+    the pre-operative map are used; otherwise simulator truth (privileged)."""
     t = graph.t
-    pos = env.positions_mm[i].astype(np.float64)
-    e = int(env.edges[i]); a, b = int(graph.eg[e, 0]), int(graph.eg[e, 1])
-    axis, lumen, radial, _ = t.coordinates(pos[None], np.array([e]), env.solution)
-    centre = (axis[0]-pos)/max(float(lumen[0]), 1e-9)
+    if est is not None:
+        pos = est.pos[i].astype(np.float64); e = int(est.edge[i])
+        ax, lumen0, _ = sensor.map_coordinates(est, i)
+        centre = (ax-pos)/max(float(lumen0), 1e-9)
+    else:
+        pos = env.positions_mm[i].astype(np.float64)
+        e = int(env.edges[i])
+        axis, lumen, radial, _ = t.coordinates(pos[None], np.array([e]), env.solution)
+        centre = (axis[0]-pos)/max(float(lumen[0]), 1e-9)
+    a, b = int(graph.eg[e, 0]), int(graph.eg[e, 1])
     if path is None or len(path) < 2:
         d = goal_point-pos
         return d/max(np.linalg.norm(d), 1e-9)
@@ -136,8 +144,9 @@ def _frames(env):
     return np.stack((env.tree.tangents[s], env.tree.normals[s], env.tree.binormals[s]), axis=1).astype(np.float64)
 
 
-def _sources(graph, env, i):
-    pos = env.positions_mm[i]; e = int(env.edges[i]); a, b = int(graph.eg[e, 0]), int(graph.eg[e, 1])
+def _sources(graph, env, i, est=None):
+    pos = env.positions_mm[i] if est is None else est.pos[i]
+    e = int(env.edges[i] if est is None else est.edge[i]); a, b = int(graph.eg[e, 0]), int(graph.eg[e, 1])
     return {a: float(np.linalg.norm(graph.point[a]-pos)), b: float(np.linalg.norm(graph.point[b]-pos))}
 
 
@@ -272,3 +281,44 @@ class LocalFollower:
             w = follow_command(g, env, i, path, point)
             out[i] = _safety(frames[i]@w, _particles(obs[i], PartialObsConfig()))
         return out
+
+
+class DeployableRouteFollower:
+    """I0 under the deployable information model: pre-operative map + imaging estimates only."""
+    STALL_STEPS, STALL_SPEED = 8, .25
+
+    def __init__(self, env, sensor):
+        self.env, self.sensor, self.graph = env, sensor, GroupGraph(env)
+        self.stall = np.zeros(env.num_robots, int); self.last_cmd = np.zeros((env.num_robots, 3))
+
+    def frames(self, est):
+        tr = self.env.tree; s = est.station
+        return np.stack((tr.tangents[s], tr.normals[s], tr.binormals[s]), axis=1).astype(np.float64)
+
+    def act(self, targets, est):
+        env, n = self.env, self.env.num_robots
+        F = self.frames(est); out = np.zeros((n, 3))
+        for i in range(n):
+            t = int(targets[i])
+            if t < 0 or not est.active[i]:
+                continue
+            goal_g = int(self.graph.g[int(env.clot_stations[t])])        # clot station: pre-operative map
+            path = self.graph.shortest(_sources(self.graph, env, i, est), goal_g)
+            w = follow_command(self.graph, env, i, path, env.clot_positions_mm[t].astype(np.float64), est, self.sensor)
+            parts = [(F[i]@r, F[i]@v) for r, v in est.particles[i]]
+            out[i] = _safety(F[i]@w, parts)
+            # stall detection from imaging: commanded but not moving -> wrong edge hypothesis
+            # inconsistency from imaging: the cluster does not move the way it was commanded last step
+            moving_cmd = np.linalg.norm(self.last_cmd[i]) > .5
+            v = est.vel[i]; nv = float(np.linalg.norm(v))
+            agree = float(v@self.last_cmd[i])/max(nv*np.linalg.norm(self.last_cmd[i]), 1e-9) if nv > 1e-6 else 0.
+            bad = moving_cmd and (nv < self.STALL_SPEED or agree < .3)
+            self.stall[i] = self.stall[i]+1 if bad else 0
+            if self.stall[i] >= self.STALL_STEPS:
+                self.sensor.report_stall(i, int(est.edge[i])); self.stall[i] = 0
+        return out
+
+    def to_world(self, local, est):
+        w = np.einsum('nji,nj->ni', self.frames(est), local)*est.active[:, None]
+        self.last_cmd = w.copy()
+        return w
