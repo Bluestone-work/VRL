@@ -1,0 +1,23 @@
+N=1 all      route_follow - plan_route cluster_safe_success: +0.066 [-0.100, +0.256]  scenes 1400 better 261 worse 168
+N=1 held_out route_follow - plan_route cluster_safe_success: +0.168 [-0.120, +0.500]  scenes 500 better 134 worse 50
+N=2 all      route_follow - plan_route cluster_safe_success: +0.088 [-0.007, +0.199]  scenes 1400 better 204 worse 81
+N=2 held_out route_follow - plan_route cluster_safe_success: +0.176 [-0.012, +0.422]  scenes 500 better 112 worse 24
+N=3 all      route_follow - plan_route cluster_safe_success: +0.065 [-0.006, +0.138]  scenes 1400 better 195 worse 104
+N=3 held_out route_follow - plan_route cluster_safe_success: +0.126 [-0.016, +0.276]  scenes 500 better 90 worse 27
+N=1 all      route_follow - plan_route t100_s: -15.086 [-46.116, +11.067]  scenes 1400 better 214 worse 1069
+N=1 held_out route_follow - plan_route t100_s: -16.075 [-54.432, +21.110]  scenes 500 better 53 worse 384
+N=2 all      route_follow - plan_route t100_s: -25.542 [-46.497, -7.893]  scenes 1400 better 203 worse 1163
+N=2 held_out route_follow - plan_route t100_s: -38.977 [-82.459, -5.246]  scenes 500 better 52 worse 432
+N=3 all      route_follow - plan_route t100_s: -20.805 [-34.681, -7.582]  scenes 1400 better 249 worse 1115
+N=3 held_out route_follow - plan_route t100_s: -29.187 [-50.063, -9.272]  scenes 500 better 70 worse 421
+N=1 all      route_follow - plan_route path_mm: -14.344 [-45.605, +12.237]  scenes 1400 better 291 worse 1109
+N=1 held_out route_follow - plan_route path_mm: -14.537 [-53.084, +23.646]  scenes 500 better 104 worse 396
+N=2 all      route_follow - plan_route path_mm: -48.478 [-88.315, -14.391]  scenes 1400 better 230 worse 1170
+N=2 held_out route_follow - plan_route path_mm: -74.869 [-157.906, -7.676]  scenes 500 better 58 worse 442
+N=3 all      route_follow - plan_route path_mm: -50.845 [-83.858, -18.538]  scenes 1400 better 310 worse 1090
+N=3 held_out route_follow - plan_route path_mm: -74.172 [-129.835, -20.654]  scenes 500 better 88 worse 412
+
+Scene-level exact sign test (discordant pairs), and anatomies where I0 >= plan_route (Safe):
+N=1: better 261 worse 168  sign-test p=8.3e-06  anatomies with I0 >= old: 9/14
+N=2: better 204 worse 81  sign-test p=2.1e-13  anatomies with I0 >= old: 11/14
+N=3: better 195 worse 104  sign-test p=1.6e-07  anatomies with I0 >= old: 11/14

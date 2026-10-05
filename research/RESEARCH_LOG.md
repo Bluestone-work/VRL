@@ -1091,3 +1091,4 @@ Report: research/validation/BENCHMARK_V1_REPORT_20261005.md (development split o
 - I0 edge-level junction-aware follower: 78.1/87.1/79.5; paired +7.1/+9.5/+8.3 pp (N=3 CI excludes 0), T100 −27 s (N=2) / −20 s (N=3), path −51/−53 mm (CIs exclude 0).
 - I1/I2 with local-only information match plan_route (which has the roadmap): +1.0/+4.5 pp at N=2/3, −5 to −6 at N=1, CIs cross 0.
 - Follower v2 (committed path + max-margin crossing) fixed 27/56 offline stuck cases but lost 15–20 pp in the full benchmark: reverted, recorded as negative.
+- TEST SET (one evaluation, frozen b2e6dcf, 1,400 scenes per N): I0 Safe 78.6/88.9/77.9 vs previous strongest traditional 71.9/80.1/71.4; held-out anatomies 78.0/91.6/81.2 vs 61.2/74.0/68.6. Scene-level sign test p = 8e-6 / 2e-13 / 2e-7; anatomy-clustered bootstrap +6.6/+8.8/+6.5 pp (lower bounds −10.0/−0.7/−0.6). T100 −26 s (N=2) / −21 s (N=3), path −48 / −51 mm, CIs exclude 0.
