@@ -73,6 +73,14 @@ class ImageSensor(DeployableSensor):
         self.track_vel = np.zeros((n, 3))
         self.lost = np.zeros(n, int)
         self.frames_buf = []
+        # Appearance calibration (what a cluster looks like under this camera, as a detector trained on
+        # cluster images would know): expected integrated intensity of a cluster and of a particle, and the
+        # geometric-mean threshold between them. amp and sigma mirror the renderer.
+        def flux(radius, amp):
+            sig2 = (radius/cam.pixel_mm/1.5)**2+cam.psf_px**2
+            return amp*2*np.pi*sig2*cam.pixel_mm**2
+        rb, rp = float(env.config.robot_radius_mm), float(env.config.particle_radius_mm)
+        self.flux_thresh = float(np.sqrt(flux(rb, 1.)*flux(rp, (rp/rb)**2*4.)))
         self.err_log = []                                   # (true - est) for evaluation only, never fed back
 
     # ---------- rendering (simulator side) ----------
@@ -114,8 +122,13 @@ class ImageSensor(DeployableSensor):
             ii = ii+sl[0].start; jj = jj+sl[1].start
             u = float((ii*w).sum()/w.sum()); v = float((jj*w).sum()/w.sum())
             if len(ii) >= c.min_area_px:
-                out.append((origin+np.array([u, v])*c.pixel_mm, len(ii)))
+                # integrated intensity in physical units: nearly resolution-invariant, unlike pixel count,
+                # so cluster/particle classification survives a coarse camera
+                out.append((origin+np.array([u, v])*c.pixel_mm, len(ii), float(w.sum())*c.pixel_mm**2))
         return out
+
+    def _is_cluster(self, area, flux):
+        return flux >= self.flux_thresh
 
     def _detections(self, centre, prev_pos, pos):
         top, o1 = self._render(centre[[0, 1]], [0, 1], prev_pos, pos)
@@ -124,17 +137,17 @@ class ImageSensor(DeployableSensor):
         # Epipolar pairing on the shared x axis. Two bodies far apart in depth can overlap in one view
         # (merged blob), so a blob may pair with several blobs of the other view; the resulting ghost
         # hypotheses are rejected later by the gated track assignment.
-        big = self.cam.cluster_min_area_px
         pts = []
-        for xy, area in A:
-            for xz, area2 in B:
-                if (area >= big) != (area2 >= big):
+        for xy, area, fa in A:
+            for xz, area2, fb in B:
+                big = self._is_cluster(area, fa)
+                if big != self._is_cluster(area2, fb):
                     continue
-                tol = self.cam.pair_tol_mm*(2. if area >= big else 1.)
+                tol = self.cam.pair_tol_mm*(2. if big else 1.)
                 if abs(xy[0]-xz[0]) < tol:
                     p = np.array([(xy[0]+xz[0])/2, xy[1], xz[1]])
-                    if all(np.linalg.norm(p-q) > .02 for q, _ in pts):
-                        pts.append((p, max(area, area2)))
+                    if all(np.linalg.norm(p-q) > .02 for q, _, _ in pts):
+                        pts.append((p, max(area, area2), max(fa, fb)))
         return pts
 
     def observe(self):
@@ -148,15 +161,14 @@ class ImageSensor(DeployableSensor):
         pred = self.track+self.track_vel*self.dt
         cl_est = pred.copy(); parts_world = [[] for _ in range(n)]
         live = [i for i in range(n) if env.active[i]]
-        big = self.cam.cluster_min_area_px
         views = (((0, 1), [0, 1]), ((0, 2), [0, 2]))         # (world axes, render axes): top x/y, side x/z
         per_view = []
         for axes, rax in views:
             blobs, small = [], []
             for i in live:
                 img, o = self._render(pred[i][list(axes)], rax, self._prev_truth, truth)
-                for q, a in self._detect(img, o):
-                    (blobs if a >= big else small).append(q)
+                for q, a, fl in self._detect(img, o):
+                    (blobs if self._is_cluster(a, fl) else small).append(q)
             # tracking windows overlap: merge duplicate detections of the same blob
             uniq = []
             for q in blobs:

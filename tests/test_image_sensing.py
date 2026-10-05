@@ -18,8 +18,8 @@ def test_detection_localises_cluster_from_pixels():
     s = ImageSensor(env, seed=0)
     p = env.positions_mm.astype(np.float64)
     dets = s._detections(p[0], p, p)
-    big = [q for q, a in dets if a >= s.cam.cluster_min_area_px]
-    assert len(big) == 1
+    big = [q for q, a, f in dets if s._is_cluster(a, f)]
+    assert len(big) == 1, len(dets)
     assert np.linalg.norm(big[0]-p[0]) < .02          # one pixel
     env.close()
 

@@ -16,7 +16,7 @@ def job(a):
         r = dict(anatomy=an, seed_k=k, clusters=n, camera_setting=cam, error=repr(e))
     return json.dumps(r, default=str)
 if __name__ == '__main__':
-    jobs = [(an, k, n, c) for k in range(5) for an in ANAT for n in (1, 3) for c in ('0.04', '0.06', 'random')]
+    jobs = [(an, k, n, c) for k in range(5) for an in ANAT for n in (1, 3) for c in ('0.02', '0.04', '0.06', 'random')]
     with Pool(22) as p, open(OUT, 'a') as f:
         for row in p.imap_unordered(job, jobs):
             f.write(row+'\n'); f.flush()
