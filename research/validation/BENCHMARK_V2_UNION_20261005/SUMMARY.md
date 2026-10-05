@@ -44,3 +44,16 @@
  3 | pursuit_dep | deployable | 150 | 60.7 | 94.0 | 98.9 | 31 | 73 | 77 | 84.7 | 72.6 | 14.2 | 0.2 | 1.6 | 0.0 | 6.0 
  3 | pursuit_tpg_dep | deployable | 150 | 80.0 | 92.7 | 97.8 | 31 | 69 | 74 | 84.2 | 66.7 | 14.5 | 0.6 | 0.0 | 0.0 | 7.3 
  3 | route_follow_priv | privileged | 150 | 67.3 | 78.0 | 93.8 | 28 | 128 | 131 | 78.9 | 120.0 | 4.2 | 0.0 | 0.3 | 4.5 | 22.0 
+
+## Pure RL baseline (PPO, deployable obs, union physics) — 2026-10-05 evening
+3 seeds x 150 min (12-15 M agent steps), parameter-shared PPO on the 111-d deployable observation.
+Training success plateaued at 0-5.5 % and decayed late. Evaluation on the same 14 x 30 dev scenes (rl_dep.jsonl):
+
+| N | seed | Safe | Task | removal | wall >= 1 s | lost |
+|---|---|---:|---:|---:|---:|---:|
+| 1 | s0/s1/s2 | 0.0/0.0/0.0 | 0.0/0.2/0.0 | 0.15/0.12/0.05 | 30/11/41 % | 4/1/23 % |
+| 2 | s0/s1/s2 | 0.0/0.5/0.0 | 0.0/1.7/0.0 | 0.26/0.23/0.10 | 53/27/61 % | 7/4/45 % |
+| 3 | s0/s1/s2 | 0.0/0.7/0.0 | 0.0/3.8/0.0 | 0.34/0.31/0.14 | 64/45/73 % | 8/5/59 % |
+
+Pure RL under the same information is far below the deployable rule pipeline (81/81/80 safe); recorded as
+the learning-family lower bound (budget-limited, not tuned on test).

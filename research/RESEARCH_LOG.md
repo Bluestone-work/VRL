@@ -1114,3 +1114,12 @@ Safe success N=1/2/3 (all anatomies):
 - Codex HRL (measured sensors, checkpoints trained under the old physics): 4.0–4.8 % at N=3, rule TPG 4.0 % at N=2; ~26–30 s wall contact.
 Paired (two-level bootstrap): ours+TPG − plan_route +14.3 pp [+0.2, +28.6] (N=2), +16.7 pp [+4.8, +29.3] (N=3); pursuit − plan_route N=1 +24.0 pp [+6.7, +42.4]. TPG − no TPG: +4.0 [+0.7, +7.6] (N=2), +18.6 [+11.9, +25.5] (N=3).
 Failure attribution (ours): particle contact 7.9 / 10.7 / 11.4 %, timeouts 9.8 / 4.5 / 3.3 %, wall ≥1 s 1.4 / 3.3 / 3.8 % (almost all MCA), lost cluster 1.2 % at N=3.
+
+## 2026-10-05 evening: image-based perception, pure RL result
+- marl/image_sensing.py: biplane synthetic camera rendering + pixel detector + joint track assignment;
+  benchmark_deployable --sensing image --camera default|random|<pixel_mm>. Matches how both NMI references
+  simulate perception (synthetic images / noisy detections; their real images came from their own rigs).
+- Probe v3 (14 anat x 5 dev seeds): image vs noise Safe +5.7 pp (N=1), -2.9 pp (N=3), both CIs span 0;
+  N=3 particle events +0.39 (CI excludes 0) -> particle occlusion is the next target.
+- PPO pure RL (deployable obs): Safe <= 0.7 % at all N, 3 seeds. Lower bound of the learning family.
+- Camera sensitivity sweep (20/40/60 um, randomised camera) launched: research/validation/IMAGE_CAMERA_SWEEP_20261005.
