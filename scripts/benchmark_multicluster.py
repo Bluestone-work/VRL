@@ -156,6 +156,7 @@ def slots_for(packet, targets):
 
 SHIELD_MODE = {'mode': 'project'}
 BACKOFF_SPEED = .5
+JUNCTION = {'model': 'graph'}
 TAG = {'tag': None}   # 'project' (baseline) | 'tube' (longitudinal-only conflict resolution)
 
 
@@ -203,7 +204,8 @@ class Shield(MultiClusterController):
 
 def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=42):
     t0 = time.monotonic()
-    base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon_s)
+    base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon_s,
+                   junction_model=JUNCTION['model'])
     env, manifest = paired_environment(base, clusters, seed)
     mc = MultiClusterConfig(method='multi_parallel' if clusters > 1 else 'single_sequential', clusters=clusters,
                             min_spacing_mm=d_min if clusters > 1 else 0., control_seed=control_seed)
@@ -296,7 +298,7 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
     safe = bool(m['safe_collision_free'] and sp['spacing_compliant'] and pair <= 1e-12)
     tag = method + ('' if SHIELD_MODE['mode'] == 'project' else '+'+SHIELD_MODE['mode']) + ('' if FALLBACK['mode'] == 'help' else '+hold') \
           + ('' if ALLOCATION['mode'] == 'makespan' else f"+conflict{ALLOCATION['lambda']:g}")
-    row = dict(method=TAG['tag'] or tag, shield=SHIELD_MODE['mode'], fallback=FALLBACK['mode'], information=INFORMATION[method], checkpoint=STUDENT.get(method), clusters=clusters, anatomy=anatomy, seed=seed,
+    row = dict(method=TAG['tag'] or tag, junction_model=JUNCTION['model'], shield=SHIELD_MODE['mode'], fallback=FALLBACK['mode'], information=INFORMATION[method], checkpoint=STUDENT.get(method), clusters=clusters, anatomy=anatomy, seed=seed,
                horizon_s=horizon_s, d_min_mm=d_min, scenario_hash=manifest['scenario_hash'],
                plan=plan, plan_makespan_mm=plan_info['makespan_mm'], plan_total_mm=plan_info['total_mm'],
                cluster_safe_success=safe, **m, robot_pair_contact_s=pair,
@@ -319,6 +321,7 @@ def main():
     p.add_argument('--out', required=True, type=Path)
     p.add_argument('--checkpoint', help='learned methods')
     p.add_argument('--tag', help='method label in the output rows')
+    p.add_argument('--junction', default='graph', choices=('graph', 'union'))
     p.add_argument('--shield', default='project', choices=('project', 'tube', 'backoff'))
     p.add_argument('--fallback', default='help', choices=('help', 'hold', 'park'))
     p.add_argument('--allocation', default='makespan', choices=('makespan', 'conflict'))
@@ -328,7 +331,7 @@ def main():
         STUDENT[a.method] = a.checkpoint
     SHIELD_MODE['mode'] = a.shield; FALLBACK['mode'] = a.fallback
     ALLOCATION['mode'] = a.allocation; ALLOCATION['lambda'] = a.conflict_lambda
-    TAG['tag'] = a.tag
+    TAG['tag'] = a.tag; JUNCTION['model'] = a.junction
     s0, s1 = map(int, a.seeds.split(':'))
     with a.out.open('a') as f:
         for seed in range(s0, s1+1):

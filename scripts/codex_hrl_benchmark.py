@@ -29,6 +29,7 @@ def main():
     p.add_argument('--clusters', type=int, default=3); p.add_argument('--anatomy', required=True)
     p.add_argument('--seeds', required=True); p.add_argument('--horizon-s', type=float, default=300.)
     p.add_argument('--tag'); p.add_argument('--out', type=Path, required=True)
+    p.add_argument('--junction', default='graph', choices=('graph', 'union'))
     a = p.parse_args()
     torch.set_num_threads(1); torch.manual_seed(42)
     import scripts.run_continuous_marl as rc
@@ -43,7 +44,7 @@ def main():
     class _Cfg:
         @staticmethod
         def from_json(_):
-            return replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=a.anatomy)
+            return replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=a.anatomy, junction_model=a.junction)
     lle.DynamicsConfig = _Cfg
     net = None; ck_sha = None
     if a.variant != 'tpg':
@@ -74,7 +75,7 @@ def main():
                     ep.step_control(ch)
                 r = ep.result(a.tag or a.variant)
                 ms = r['time_to_removal_s']
-                row = dict(method=a.tag or f'codex_{a.variant}', information='measured (Codex tracked sensors)',
+                row = dict(method=a.tag or f'codex_{a.variant}', information='measured (Codex tracked sensors)', junction_model=a.junction,
                            clusters=a.clusters, anatomy=a.anatomy, seed=seed, horizon_s=a.horizon_s,
                            cluster_safe_success=r['cluster_safe_success'], task_success=r['task_success'],
                            safe_success=r['safe_success'], removal=r['removal'], elapsed_s=r['elapsed_s'],
