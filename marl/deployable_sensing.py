@@ -241,3 +241,58 @@ class DeployablePursuit:
 
     def to_world(self, local, est):
         return np.einsum('nji,nj->ni', self.frames(est), local)*est.active[:, None]
+
+
+class DeployableObserver:
+    """The 111-d fair observation layout (marl.partial_obs) built from DeployableSensor estimates and the
+    pre-operative map only, for learned policies. Frenet frames come from the map station matched to the
+    estimate; lumen offset/clearance use the healthy map radius; velocity, particles and peers are imaging
+    estimates; clots are pre-operative positions with observed cleared status."""
+    def __init__(self, env, sensor):
+        from marl.partial_obs import PartialObsConfig, PartialObserver
+        self.env, self.sensor = env, sensor
+        self.base = PartialObserver(env, PartialObsConfig(noise=0.))
+        self.prev = np.zeros((env.num_robots, 3))
+
+    def frames(self, est):
+        tr = self.env.tree; s = est.station
+        return np.stack((tr.tangents[s], tr.normals[s], tr.binormals[s]), axis=1).astype(np.float64)
+
+    def observe(self, est):
+        from marl.partial_obs import CLOT0, CLOT_SLOTS, MATE0, MATE_SLOTS, OBS_DIM, PART0, PARTICLE_SLOTS, PATH0, PATH_SLOTS
+        env = self.env; n = env.num_robots; F = self.frames(est); R = self.base.cfg.sensing_radius_mm
+        obs = np.zeros((n, OBS_DIM), np.float32); ids = np.full((n, CLOT_SLOTS), -1, np.int32)
+        _, pts = self.base._graph()
+        for i in range(n):
+            if not est.active[i]:
+                continue
+            o = obs[i]; pos = est.pos[i]; loc = lambda v: F[i]@v
+            o[0:3] = self.prev[i]; o[3:6] = loc(est.vel[i])/env.config.robot_speed_mm_s
+            ax, r, rad = self.sensor.map_coordinates(est, i)
+            o[6:9] = loc((pos-ax)/max(r, 1e-9)); o[9] = (r-rad-env.config.robot_radius_mm)/max(r, 1e-9)
+            o[10] = max(0., 1-env.elapsed_s/env.config.episode_duration_s)
+            rel = env.clot_positions_mm-pos; d = np.linalg.norm(rel, axis=1); alive = est.clot_alive
+            for k, j in enumerate(np.argsort(np.where(alive, d, np.inf))[:CLOT_SLOTS]):
+                if not alive[j]:
+                    continue
+                s = CLOT0+6*k; ids[i, k] = j
+                o[s] = 1.; o[s+1] = d[j]/10.; o[s+2:s+5] = loc(rel[j]/max(d[j], 1e-9)); o[s+5] = 1.
+            info = []
+            for e, steer, far, dead in self.base._local_paths(int(est.station[i]), pos):
+                sd = loc(pts[steer]-pos); fd = loc(pts[e]-pos)
+                info.append((sd/max(np.linalg.norm(sd), 1e-9), fd/max(np.linalg.norm(fd), 1e-9), far, dead,
+                             np.log(max(float(self.sensor.healthy[e]), 1e-6))))
+            info.sort(key=lambda x: -x[0][0])
+            for k, (sd, fd, far, dead, lr) in enumerate(info[:PATH_SLOTS]):
+                s = PATH0+10*k; o[s] = 1.; o[s+1:s+4] = sd; o[s+4:s+7] = fd; o[s+7] = far; o[s+8] = float(dead); o[s+9] = lr
+            parts = sorted(est.particles[i], key=lambda x: np.linalg.norm(x[0]))[:PARTICLE_SLOTS]
+            for k, (rp, rv) in enumerate(parts):
+                s = PART0+7*k; o[s] = 1.; o[s+1:s+4] = loc(rp)/R; o[s+4:s+7] = loc(rv)/env.config.robot_speed_mm_s
+            vis = np.flatnonzero(est.peers_vis[i] & (np.linalg.norm(est.peers_rel[i], axis=1) < R))
+            vis = vis[np.argsort(np.linalg.norm(est.peers_rel[i, vis], axis=1))][:MATE_SLOTS]
+            for k, j in enumerate(vis):
+                s = MATE0+4*k; o[s] = 1.; o[s+1:s+4] = loc(est.peers_rel[i, j])/R
+        return obs, ids
+
+    def record(self, local):
+        self.prev = np.asarray(local, np.float64).copy()

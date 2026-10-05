@@ -53,6 +53,9 @@ def execute(a):
     return a
 
 
+MODE = {'obs': 'fair', 'junction': 'graph'}
+
+
 def worker(wid, conn, seed0):
     os.environ['OMP_NUM_THREADS'] = '1'; torch.set_num_threads(1)
     from environments.mca_physical_env import DynamicsConfig
@@ -68,14 +71,19 @@ def worker(wid, conn, seed0):
             seed = seed0+episode; episode += 1
             a = train[rng.integers(len(train))]; n = int(rng.integers(1, 4))
             try:
-                env, _ = bm.paired_environment(replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=a, episode_duration_s=300.), n, seed)
+                env, _ = bm.paired_environment(replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=a, episode_duration_s=300.,
+                                                       junction_model=MODE['junction']), n, seed)
                 break
             except (ValueError, RuntimeError):
                 continue
         mc = MultiClusterConfig(method='multi_parallel' if n > 1 else 'single_sequential', clusters=n, min_spacing_mm=2. if n > 1 else 0.)
         sensor = ClusterSensorAdapter(env, mc); sensor.reset(seed)
         plan, _ = bm.preoperative_plan(env)
-        return dict(env=env, n=n, sensor=sensor, targets=bm.PlanTargets(plan), ret=0., anatomy=a)
+        ep = dict(env=env, n=n, sensor=sensor, targets=bm.PlanTargets(plan), ret=0., anatomy=a)
+        if MODE['obs'] == 'deployable':
+            from marl.deployable_sensing import DeployableObserver, DeployableSensor
+            ds = DeployableSensor(env, seed=seed); ep['dsensor'] = ds; ep['dobs'] = DeployableObserver(env, ds)
+        return ep
     ep = new_episode(); finished = []
     while True:
         msg = conn.recv()
@@ -85,8 +93,7 @@ def worker(wid, conn, seed0):
         buf = dict(nav=[], slot=[], act=[], logp=[], val=[], rew=[], done=[], agent=[], stream=[])
         for _ in range(ROLLOUT):
             env, n = ep['env'], ep['n']
-            pk = ep['sensor'].observe(); tgt = ep['targets'].targets(env, env.positions_mm[:n])
-            slot = bm.slots_for(pk, tgt); nav = pk.navigation.astype(np.float32)
+            nav, slot, tgt, est = observe(ep)
             with torch.no_grad():
                 d, v = policy.dist(torch.as_tensor(nav), torch.as_tensor(slot, dtype=torch.long))
                 a = d.sample(); lp = d.log_prob(a).sum(-1)
@@ -94,7 +101,7 @@ def worker(wid, conn, seed0):
             mass0 = float(env.masses.sum()); P0 = env.positions_mm[:n].copy()
             d0 = np.array([np.linalg.norm(env.clot_positions_mm[t]-P0[i]) if t >= 0 else 0. for i, t in enumerate(tgt)])
             active = env.active[:n].copy()
-            _, _, term, trunc, info = env.step(ep['sensor'].execute(act))
+            _, _, term, trunc, info = env.step(execute_cmd(ep, act, est))
             P1 = env.positions_mm[:n]
             d1 = np.array([np.linalg.norm(env.clot_positions_mm[t]-P1[i]) if t >= 0 else 0. for i, t in enumerate(tgt)])
             team = 10.*(mass0-float(env.masses.sum()))/float(env.initial_mass.sum())
@@ -117,10 +124,31 @@ def worker(wid, conn, seed0):
                 env.close(); ep = new_episode()
         # bootstrap values for unfinished streams
         env, n = ep['env'], ep['n']
-        pk = ep['sensor'].observe(); tgt = ep['targets'].targets(env, env.positions_mm[:n]); slot = bm.slots_for(pk, tgt)
+        nav, slot, _, _ = observe(ep)
         with torch.no_grad():
-            _, vb = policy.dist(torch.as_tensor(pk.navigation.astype(np.float32)), torch.as_tensor(slot, dtype=torch.long))
+            _, vb = policy.dist(torch.as_tensor(nav), torch.as_tensor(slot, dtype=torch.long))
         conn.send(dict(buf=buf, boot={(wid, episode, i): float(vb[i]) for i in range(n)}, finished=finished)); finished = []
+
+
+def observe(ep):
+    """(nav [n,111], target slot [n], targets [n], estimate or None) for the configured information model."""
+    import scripts.benchmark_multicluster as bm
+    env, n = ep['env'], ep['n']
+    if 'dobs' in ep:
+        est = ep['dsensor'].observe()
+        tgt = ep['targets'].targets(env, est.pos)
+        nav, ids = ep['dobs'].observe(est)
+        slot = np.array([int(np.flatnonzero(ids[i] == t)[0]) if t >= 0 and (ids[i] == t).any() else -1 for i, t in enumerate(tgt)])
+        return nav.astype(np.float32), slot, tgt, est
+    pk = ep['sensor'].observe(); tgt = ep['targets'].targets(env, env.positions_mm[:n])
+    return pk.navigation.astype(np.float32), bm.slots_for(pk, tgt), tgt, None
+
+
+def execute_cmd(ep, act, est):
+    if est is None:
+        return ep['sensor'].execute(act)
+    ep['dobs'].record(act)
+    return np.einsum('nji,nj->ni', ep['dobs'].frames(est), act)*est.active[:, None]
 
 
 def gae(buf, boot, gamma=.99, lam=.95):
@@ -142,7 +170,10 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--out', type=Path, required=True); p.add_argument('--minutes', type=float, default=60)
     p.add_argument('--workers', type=int, default=16); p.add_argument('--seed', type=int, default=0); p.add_argument('--device', default='cuda:0')
+    p.add_argument('--obs', default='fair', choices=('fair', 'deployable')); p.add_argument('--junction', default='graph', choices=('graph', 'union'))
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.manual_seed(a.seed)
+    MODE['obs'], MODE['junction'] = a.obs, a.junction
+    (a.out/'config.json').write_text(json.dumps(vars(a), default=str))
     ctx = mp.get_context('fork'); pipes, procs = [], []
     for w in range(a.workers):
         parent, child = ctx.Pipe(); pr = ctx.Process(target=worker, args=(w, child, 1112000000+a.seed*1000000+w*20000)); pr.start()
