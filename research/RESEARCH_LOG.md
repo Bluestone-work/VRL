@@ -1085,3 +1085,9 @@ Report: research/validation/BENCHMARK_V1_REPORT_20261005.md (development split o
 - Negative: tube/backoff/hold shields, conflict-aware allocation, visit-count memory. All kept.
 - Pure RL (parameter-shared PPO from scratch, same fair observation + target slot, 60 min / 26.8 M agent steps, 1 seed): Safe 0 % at every N, removal 16.6 / 23.3 / 29.9 %. Training removal still rising (~45 %), so this is a budget-limited result.
 - I2 three selector seeds, Safe N=1/2/3: 66.2/67.6/68.3, 78.6/78.6/78.3, 75.7/76.4/75.2 (I1: 65.0, 78.6, 75.2).
+
+## 2026-10-05 noon — final comparison vs the previous strongest traditional controller
+- plan_route (allocation A + previous station-level route+avoid+wait teacher) on the unified benchmark: Safe 71.0/77.6/71.2.
+- I0 edge-level junction-aware follower: 78.1/87.1/79.5; paired +7.1/+9.5/+8.3 pp (N=3 CI excludes 0), T100 −27 s (N=2) / −20 s (N=3), path −51/−53 mm (CIs exclude 0).
+- I1/I2 with local-only information match plan_route (which has the roadmap): +1.0/+4.5 pp at N=2/3, −5 to −6 at N=1, CIs cross 0.
+- Follower v2 (committed path + max-margin crossing) fixed 27/56 offline stuck cases but lost 15–20 pp in the full benchmark: reverted, recorded as negative.
