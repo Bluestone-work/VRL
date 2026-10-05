@@ -40,7 +40,8 @@ from scripts.safe_metrics import WallTracker, episode_metrics
 INFORMATION = {'plan_route': 'privileged', 'plan_reactive': 'fair', 'nearest_reactive': 'fair',
                'route_pursuit': 'privileged', 'local_pursuit': 'fair',
                'route_follow': 'privileged', 'local_follow': 'fair',
-               'bc_graph': 'privileged', 'bc_local': 'fair', 'local_memory': 'fair', 'local_tabu': 'fair', 'local_learned': 'fair', 'rl_local': 'fair'}
+               'bc_graph': 'privileged', 'bc_local': 'fair', 'local_memory': 'fair', 'local_tabu': 'fair', 'local_learned': 'fair', 'rl_local': 'fair',
+               'route_tpg': 'privileged', 'route_tpg_noshield': 'privileged'}
 STUDENT = {}   # checkpoint path per learned method, set from --checkpoint
 
 
@@ -137,6 +138,8 @@ class PlanTargets:
             nxt = [j for j in seq if alive[j]]
             if nxt:
                 out[i] = nxt[0]
+            elif seq and FALLBACK['mode'] == 'park' and alive.any():
+                out[i] = seq[-1]              # station-keep at its last (cleared) clot: the schedule parks it there
             elif alive.any() and FALLBACK['mode'] == 'help':
                 d = np.linalg.norm(env.clot_positions_mm-positions[i], axis=1)
                 out[i] = int(np.argmin(np.where(alive, d, np.inf)))
@@ -219,6 +222,14 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
         from marl.graph_transformer_student import load_student, student_local_action
         from marl.scene_graph import extract_scene
         gmodel = load_student(STUDENT[method])
+    coord = None
+    if method in ('route_tpg', 'route_tpg_noshield'):
+        from marl.edge_follower import RouteFollower
+        from marl.tpg_coordinator import TPGCoordinator
+        pursuit = RouteFollower(env)
+        _, spath = _station_paths(env)
+        coord = TPGCoordinator(env, plan, spath, d_min_mm=d_min) if clusters > 1 else None
+        FALLBACK['mode'] = 'park'      # the schedule parks finished clusters; re-targeting would break it
     if method == 'rl_local':
         import torch
         from scripts.train_cluster_ppo import Policy, execute as rl_execute
@@ -253,15 +264,18 @@ def run_episode(method, clusters, anatomy, seed, horizon_s, d_min, control_seed=
                 local = rl_execute(d.mean.numpy().astype(np.float64)); local[sl < 0] = 0.
             elif method == 'bc_local':
                 local = local_student_action(lmodel, packet.navigation, slots_for(packet, tgt))
-            elif method in ('route_pursuit', 'route_follow'):
+            elif method in ('route_pursuit', 'route_follow', 'route_tpg', 'route_tpg_noshield'):
                 local = pursuit.act(tgt)
+                if coord is not None:
+                    local[coord.gate()] = 0.
             elif method in ('local_pursuit', 'local_follow', 'local_memory', 'local_tabu', 'local_learned'):
                 local = pursuit.act(tgt, packet.navigation)
             elif method == 'plan_reactive':
                 local = fair_reactive_action(packet.navigation, 'path', PartialObsConfig(), target_slots=slots_for(packet, tgt))
             else:
                 raise ValueError(method)
-            local = shield.filtered(local, packet)
+            if method != 'route_tpg_noshield':
+                local = shield.filtered(local, packet)
         before = 1-float(env.masses.sum())/initial
         active = env.active[:clusters].copy()
         spacing.begin_step()
@@ -306,7 +320,7 @@ def main():
     p.add_argument('--checkpoint', help='learned methods')
     p.add_argument('--tag', help='method label in the output rows')
     p.add_argument('--shield', default='project', choices=('project', 'tube', 'backoff'))
-    p.add_argument('--fallback', default='help', choices=('help', 'hold'))
+    p.add_argument('--fallback', default='help', choices=('help', 'hold', 'park'))
     p.add_argument('--allocation', default='makespan', choices=('makespan', 'conflict'))
     p.add_argument('--conflict-lambda', type=float, default=1.)
     a = p.parse_args()
