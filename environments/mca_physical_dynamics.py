@@ -39,7 +39,10 @@ class PhysicalTubeTransport:
     """
 
     def __init__(self, flow_model, *, spatial_fraction=.1, max_substeps=100000,
-                 lubrication_floor=1.0):
+                 lubrication_floor=1.0, junction_model='graph'):
+        if junction_model not in ('graph', 'union'):
+            raise ValueError('junction_model must be graph or union')
+        self.junction_model = junction_model
         self.model = flow_model
         self.tree = flow_model.tree
         self.scale = flow_model.mm_per_unit
@@ -97,6 +100,16 @@ class PhysicalTubeTransport:
             self.candidates[e, :len(choices)] = choices
             self.candidate_valid[e, :len(choices)] = True
             self.gates[e, :len(choices)] = gates[e]
+        if self.junction_model == 'union':
+            # Take-off segments can be shorter than a body diameter, so the tubes a body can be inside
+            # are those within two junction hops of its edge, not only the edges sharing its ends.
+            hop = [set(c[v].tolist()) for c, v in zip(self.candidates, self.candidate_valid)]
+            two = [sorted(set().union(*(hop[o] for o in hop[e]))) for e in range(len(hop))]
+            width = max(map(len, two))
+            self.candidates = np.zeros((len(two), width), np.int32)
+            self.candidate_valid = np.zeros((len(two), width), bool)
+            for e, c in enumerate(two):
+                self.candidates[e, :len(c)] = c; self.candidate_valid[e, :len(c)] = True
         self.root_group = int(self.groups[flow_model.root])
         self.terminal_groups = set(self.groups[n] for n in flow_model.order
                                    if not flow_model.children[n])
@@ -133,7 +146,40 @@ class PhysicalTubeTransport:
             surface_gap / np.maximum(4 * radius, 1e-12), 0, 1)
         return self.velocity_mm_s(positions, edge, solution) + commands * factor[:, None]
 
+    def _project_union(self, proposed, previous, edge, body_radius, solution):
+        """Union-of-tubes lumen (junction_model='union').
+
+        The accessible region near a body is the union of the capsules (segment + hemispherical caps,
+        radius = local lumen radius minus body radius) of its current edge and every edge sharing one of
+        its junctions. Feasibility depends only on the 3-D position: a side branch opens where its tube
+        pierces the parent wall, and a body can enter any daughter by moving into it. The membership edge
+        (used for the local flow field and the next neighbourhood) is the containing capsule with the
+        smallest radial/radius ratio. Outside every capsule the body is projected onto the nearest one
+        (wall contact); if no capsule admits the body at all, it keeps its previous position (blocked)."""
+        n = len(proposed)
+        fixed = proposed.copy(); new_edge = edge.copy()
+        wall = np.zeros(n, bool); blocked = np.zeros(n, bool)
+        for i in range(n):
+            choices = self.candidates[edge[i]][self.candidate_valid[edge[i]]]
+            axis, radius, radial, _ = self.coordinates(np.repeat(proposed[i:i+1], len(choices), 0), choices, solution)
+            limit = radius-body_radius[i]
+            ok = limit >= 0
+            inside = ok & (radial <= limit)
+            if inside.any():
+                k = np.flatnonzero(inside)[np.argmin((radial/np.maximum(radius, 1e-12))[inside])]
+                new_edge[i] = choices[k]
+                continue
+            if ok.any():
+                viol = np.where(ok, radial-limit, np.inf); k = int(np.argmin(viol))
+                fixed[i] = axis[k]+(proposed[i]-axis[k])*(limit[k]/max(radial[k], 1e-30))
+                new_edge[i] = choices[k]; wall[i] = True
+                continue
+            fixed[i] = previous[i]; blocked[i] = True
+        return fixed, new_edge, wall, blocked
+
     def _project(self, proposed, previous, edge, body_radius, solution):
+        if self.junction_model == 'union':
+            return self._project_union(proposed, previous, edge, body_radius, solution)
         # Stay on the current edge until the proposed point crosses one of its
         # endpoints. Nearest-edge projection around a junction allows a large
         # Euler step to teleport into a daughter branch; that produced 20--30 mm

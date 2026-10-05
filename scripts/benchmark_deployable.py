@@ -16,7 +16,7 @@ from pathlib import Path
 import numpy as np
 
 from environments.mca_physical_env import DynamicsConfig
-from marl.deployable_sensing import DeployableConfig, DeployableSensor
+from marl.deployable_sensing import DeployableConfig, DeployablePursuit, DeployableSensor
 from marl.edge_follower import DeployableRouteFollower
 from marl.multicluster import ClusterObservation, MultiClusterConfig
 from marl.teacher import TEACHER_CONFIG
@@ -36,20 +36,22 @@ def packet_from(est, F, prev_local):
     return ClusterObservation(nav, np.full((n, 4), -1, np.int32), rel, relv, est.peers_vis, est.active)
 
 
-def run(method, n, anatomy, seed, horizon, d_min, cfg):
+def run(method, n, anatomy, seed, horizon, d_min, cfg, junction='union'):
     t0 = time.monotonic()
-    base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon)
+    base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon, junction_model=junction)
     env, manifest = paired_environment(base, n, seed)
     sensor = DeployableSensor(env, cfg, seed=seed)
     mc = MultiClusterConfig(method='multi_parallel' if n > 1 else 'single_sequential', clusters=n,
                             min_spacing_mm=d_min if n > 1 else 0.)
     shield = bm.Shield(mc, robot_speed_mm_s=env.config.robot_speed_mm_s, control_dt_s=env.config.control_dt_s)
     plan, info_plan = bm.preoperative_plan(env)
-    bm.FALLBACK['mode'] = 'park' if method == 'route_tpg_dep' else 'help'
+    tpg = method.endswith('tpg_dep')
+    bm.FALLBACK['mode'] = 'park' if tpg else 'help'
     targets = bm.PlanTargets(plan)
-    ctl = DeployableRouteFollower(env, sensor)
+    ctl = (DeployablePursuit(env, sensor, slow='slow' in method) if method.startswith('pursuit')
+           else DeployableRouteFollower(env, sensor))
     coord = None
-    if method == 'route_tpg_dep' and n > 1:
+    if tpg and n > 1:
         from marl.tpg_coordinator import TPGCoordinator
         _, sp = bm._station_paths(env)
         coord = TPGCoordinator(env, plan, sp, d_min_mm=d_min)
@@ -81,7 +83,7 @@ def run(method, n, anatomy, seed, horizon, d_min, cfg):
         if term or trunc:
             break
     m = episode_metrics(info, walls, initial); sp = spacing.summary()
-    row = dict(method=method, information='deployable', clusters=n, anatomy=anatomy, seed=seed, horizon_s=horizon,
+    row = dict(method=method, information='deployable', junction_model=junction, clusters=n, anatomy=anatomy, seed=seed, horizon_s=horizon,
                d_min_mm=d_min, sensing=asdict(cfg), scenario_hash=manifest['scenario_hash'], plan=plan,
                plan_makespan_mm=info_plan['makespan_mm'],
                cluster_safe_success=bool(m['safe_collision_free'] and sp['spacing_compliant'] and pair <= 1e-12), **m,
@@ -96,7 +98,8 @@ def run(method, n, anatomy, seed, horizon, d_min, cfg):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--method', required=True, choices=('route_follow_dep', 'route_tpg_dep'))
+    p.add_argument('--method', required=True, choices=('route_follow_dep', 'route_tpg_dep', 'pursuit_dep', 'pursuit_tpg_dep', 'pursuit_slow_dep', 'pursuit_slow_tpg_dep'))
+    p.add_argument('--junction', default='union', choices=('union', 'graph'))
     p.add_argument('--clusters', type=int, required=True); p.add_argument('--anatomy', required=True)
     p.add_argument('--seeds', required=True); p.add_argument('--horizon-s', type=float, default=300.)
     p.add_argument('--d-min-mm', type=float, default=2.); p.add_argument('--sigma', type=float, default=.05)
@@ -107,7 +110,7 @@ def main():
     s0, s1 = map(int, a.seeds.split(':'))
     with a.out.open('a') as f:
         for seed in range(s0, s1+1):
-            r = run(a.method, a.clusters, a.anatomy, seed, a.horizon_s, a.d_min_mm, cfg)
+            r = run(a.method, a.clusters, a.anatomy, seed, a.horizon_s, a.d_min_mm, cfg, a.junction)
             if a.tag:
                 r['method'] = a.tag
             f.write(json.dumps(r, default=str)+'\n'); f.flush()

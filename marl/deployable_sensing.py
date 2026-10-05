@@ -162,3 +162,82 @@ class DeployableSensor:
         axis = self.a[e]+t*self.ab[e]
         r = (1-t)*self.healthy[self.ends[e, 0]]+t*self.healthy[self.ends[e, 1]]
         return axis, r, float(np.linalg.norm(p-axis))
+
+
+class DeployablePursuit:
+    """Classical pure pursuit along the pre-operative route, from imaging estimates only.
+
+    Route = shortest station path on the pre-operative centreline from the station nearest the
+    estimated position to the target clot's station, re-planned when the target changes or the estimate
+    leaves the route by > 1 mm. A carrot `lookahead_mm` ahead on the route (shorter near junctions so the
+    body follows the daughter axis through a take-off) gives the direction; particles detected nearby add
+    repulsion and the forecast wait rule; commands shorter than 0.35 stop. Valid for the union-of-tubes
+    lumen (junction_model='union'): no knowledge of the simulator's edge or switching rule is used."""
+    LOOK, LOOK_NEAR, ZONE = .4, .1, 1.
+    CENTRE, SLOW_MM = 1., .3
+
+    def __init__(self, env, sensor, slow=False):
+        self.slow = slow; self.body = float(env.config.robot_radius_mm)
+        from scipy.sparse import csr_matrix
+        from scipy.sparse.csgraph import shortest_path
+        tr = env.tree; n = tr.n_stations; sc = float(tr.physical_mm_per_unit)
+        r, c, w = zip(*[(i, j, d*sc) for i, nb in enumerate(tr.station_graph) for j, d in nb])
+        _, self.pred = shortest_path(csr_matrix((w, (r, c)), shape=(n, n)), directed=False, return_predecessors=True)
+        self.env, self.sensor = env, sensor
+        self.pts = env.transport.points.astype(np.float64)
+        self.deg = np.array([len(x) for x in tr.station_graph])
+        k = env.num_robots
+        self.route = [None]*k; self.goal = np.full(k, -1); self.prog = np.zeros(k, int)
+        self.station = np.zeros(k, int)
+
+    def _plan(self, i, pos, target):
+        a = int(np.argmin(np.linalg.norm(self.pts-pos, axis=1))); b = int(self.env.clot_stations[target])
+        path = [b]
+        while path[-1] != a and self.pred[a, path[-1]] >= 0:
+            path.append(int(self.pred[a, path[-1]]))
+        self.route[i] = np.array(path[::-1]); self.goal[i] = target; self.prog[i] = 0
+
+    def frames(self, est):
+        tr = self.env.tree; s = self.station
+        return np.stack((tr.tangents[s], tr.normals[s], tr.binormals[s]), axis=1).astype(np.float64)
+
+    def act(self, targets, est):
+        from marl.edge_follower import _safety
+        n = self.env.num_robots; out = np.zeros((n, 3))
+        for i in range(n):
+            t = int(targets[i]); pos = est.pos[i]
+            if t < 0 or not est.active[i]:
+                self.station[i] = int(np.argmin(np.linalg.norm(self.pts-pos, axis=1)))
+                continue
+            if self.goal[i] != t or self.route[i] is None:
+                self._plan(i, pos, t)
+            R = self.route[i]; P = self.pts[R]
+            w = P[self.prog[i]:self.prog[i]+15]
+            k = self.prog[i]+int(np.argmin(np.linalg.norm(w-pos, axis=1)))
+            if np.linalg.norm(P[k]-pos) > 1.:
+                self._plan(i, pos, t); R = self.route[i]; P = self.pts[R]; k = 0
+            self.prog[i] = k; self.station[i] = int(R[k])
+            junction = np.any(self.deg[R[max(k-3, 0):k+6]] >= 3)
+            look = self.LOOK_NEAR if junction else self.LOOK
+            acc, j = 0., k
+            while j+1 < len(P) and acc < look:
+                acc += float(np.linalg.norm(P[j+1]-P[j])); j += 1
+            carrot = self.env.clot_positions_mm[t] if j == len(P)-1 and np.linalg.norm(self.env.clot_positions_mm[t]-pos) < .7 else P[j]
+            d = carrot-pos; d = d/max(np.linalg.norm(d), 1e-9)
+            F = self.frames(est)[i]
+            if self.slow:
+                # Narrow lumen: clearance between body and healthy wall is comparable to the localisation
+                # error. Steer back to the map axis and slow down so a position error is corrected before
+                # it becomes contact (clearance-proportional speed, floor 40 %, above the 0.35 stop deadzone).
+                ax, r, rad = self.sensor.map_coordinates(est, i) if est.edge is not None else (pos, 1., 0.)
+                clearance = r-self.body
+                if rad > 1e-9:
+                    d = d+self.CENTRE*max(rad/max(clearance, 1e-6)-.3, 0.)*(ax-pos)/rad
+                    d = d/max(np.linalg.norm(d), 1e-9)
+                d = d*float(np.clip(clearance/self.SLOW_MM, .4, 1.))
+            parts = [(F@r_, F@v) for r_, v in est.particles[i]]
+            out[i] = _safety(F@d, parts)
+        return out
+
+    def to_world(self, local, est):
+        return np.einsum('nji,nj->ni', self.frames(est), local)*est.active[:, None]

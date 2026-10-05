@@ -111,6 +111,7 @@ class DynamicsConfig:
     action_shield_horizon_s: float = 0.
     action_wall_gain: float = 0.
     action_wall_margin: float = 1.
+    junction_model: str = 'graph'
     anatomy: str = 'mca_m1_lvo'
     particle_collision_event_penalty: float = 0.
     particle_near_penalty_per_s: float = 0.
@@ -134,6 +135,9 @@ class DynamicsConfig:
             elif name == 'particle_initialization':
                 if value not in ('length_uniform', 'mixed_branch_density'):
                     raise ValueError('Invalid particle_initialization')
+            elif name == 'junction_model':
+                if value not in ('graph', 'union'):
+                    raise ValueError('Invalid junction_model')
             elif name == 'anatomy':
                 from environments.vessel_anatomy import TERRITORIES
                 if value not in TERRITORIES:
@@ -181,7 +185,7 @@ class DynamicsConfig:
                       'robot_initialization', 'contact_model', 'progress_reward_scale', 'reward_discount',
                       'particle_contact_penalty_per_s', 'particle_initialization',
                       'inlet_flow_multiplier_min', 'inlet_flow_multiplier_max', 'clot_initialization',
-                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain', 'action_stop_deadzone', 'action_wait_clearance', 'action_wait_horizon_s', 'action_shield_clearance', 'action_shield_horizon_s', 'action_wall_gain', 'action_wall_margin', 'anatomy',
+                      'obstacle_observation', 'target_observation', 'progress_potential', 'command_speed', 'action_prior', 'action_residual_scale', 'action_avoid_gain', 'action_stop_deadzone', 'action_wait_clearance', 'action_wait_horizon_s', 'action_shield_clearance', 'action_shield_horizon_s', 'action_wall_gain', 'action_wall_margin', 'junction_model', 'anatomy',
                       'particle_collision_event_penalty',
                       'particle_near_penalty_per_s', 'particle_safety_margin_mm', 'particle_prediction_horizon_s')
                       else data[f.name] for f in fields(cls)})
@@ -495,7 +499,8 @@ class MCAPhysicalEnv(gym.Env):
                                                  self.config.distal_resistance_ratio)
         self._base_driving_pressure = self.flow_model.driving_pressure
         self._sample_episode_flow()
-        self.transport = PhysicalTubeTransport(self.flow_model, spatial_fraction=self.config.spatial_fraction,
+        self.transport = PhysicalTubeTransport(self.flow_model, junction_model=self.config.junction_model,
+                        spatial_fraction=self.config.spatial_fraction,
                         max_substeps=self.config.max_substeps_per_control,
                         lubrication_floor=self.config.lubrication_floor)
         self._reset_clots()

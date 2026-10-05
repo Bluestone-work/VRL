@@ -71,6 +71,38 @@ def project(p,previous,e,body,geom,radii):
 
 
 @njit(cache=True, inline='always')
+def project_union(p,previous,e,body,geom,radii):
+    """Union-of-tubes lumen; identical rule to PhysicalTubeTransport._project_union."""
+    points,ends,a,ab,length,direction,groups,candidates,valid,boundaries=geom
+    best_in=-1;best_ratio=np.inf;best_out=-1;best_viol=np.inf
+    for j in range(candidates.shape[1]):
+        if not valid[e,j]: continue
+        c=candidates[e,j]
+        axis,r,radial,_=coord(p,c,geom,radii)
+        limit=r-body
+        if limit<0: continue
+        if radial<=limit:
+            ratio=radial/max(r,1e-12)
+            if ratio<best_ratio: best_ratio=ratio;best_in=c
+        else:
+            if radial-limit<best_viol: best_viol=radial-limit;best_out=c
+    if best_in>=0:
+        return p.copy(),best_in,False,False
+    if best_out>=0:
+        axis,r,radial,_=coord(p,best_out,geom,radii)
+        limit=r-body
+        fixed=axis+(p-axis)*(limit/max(radial,1e-30))
+        return fixed,best_out,True,False
+    return previous.copy(),e,False,True
+
+
+@njit(cache=True, inline='always')
+def project_any(p,previous,e,body,geom,radii,union):
+    if union: return project_union(p,previous,e,body,geom,radii)
+    return project(p,previous,e,body,geom,radii)
+
+
+@njit(cache=True, inline='always')
 def boundary(previous,p,e,body,geom,radii):
     points,ends,a,ab,length,direction,groups,candidates,valid,boundaries=geom
     node=-1;fraction=1.;point=p.copy()
@@ -118,7 +150,7 @@ def solve_flow(radii,hyd):
 def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,initial_mass,
               healthy,bump,radius_fraction,routes,clot_positions,nrobots,contact_distance,
               lysis_rate,saturation,spatial_fraction,lubrication,max_substeps,trace_dt,surface_contact,
-              particle_overlaps,safety_margin):
+              particle_overlaps,safety_margin,union=False):
     points,ends,a,ab,length,direction,groups,candidates,valid,boundaries=geom
     n=len(pos);path=np.zeros(n);walls=np.zeros(n);blocks=np.zeros(n)
     exit_time=np.full(n,np.nan);exit_node=np.full(n,-1,np.int32)
@@ -156,11 +188,11 @@ def integrate(pos,edge,active,body,command,duration,geom,hyd,radii,flux,masses,i
         for i in range(n):
             if not active[i]: continue
             e=edge[i];current=pos[i].copy()
-            midpoint,me,_,_=project(current+.5*dt*v0[i],current,e,body[i],geom,radii)
+            midpoint,me,_,_=project_any(current+.5*dt*v0[i],current,e,body[i],geom,radii,union)
             vmid=velocity(midpoint,me,body[i],command[i],geom,radii,flux,lubrication)
             euler=current+dt*v0[i];axial=np.sum((euler-a[e])*direction[e])/length[e]
             proposal=current+dt*(vmid if 0<=axial<=1 and me==e else v0[i])
-            fixed,ne,wall,blocked=project(proposal,current,e,body[i],geom,radii)
+            fixed,ne,wall,blocked=project_any(proposal,current,e,body[i],geom,radii,union)
             node,alpha,bpoint=boundary(current,fixed,e,body[i],geom,radii)
             if node>=0:
                 fixed=bpoint;wall=False;blocked=False;active[i]=False
@@ -305,7 +337,7 @@ class CompiledMCAPhysicalEnv(MCAPhysicalEnv):
             np.asarray(self.routes).reshape(self.num_clots, -1) if self.num_clots else np.empty((0, len(self.transport.points))),
             self.clot_positions_mm, 0, c.contact_distance_mm, 0., c.lysis_saturation,
             c.spatial_fraction, c.lubrication_floor, c.max_substeps_per_control, 0., False,
-            np.zeros((0, len(positions)), dtype=np.bool_), c.particle_safety_margin_mm)
+            np.zeros((0, len(positions)), dtype=np.bool_), c.particle_safety_margin_mm, c.junction_model == 'union')
         return TransportResult(*values[:9], float(duration))
 
     def step(self, action):
@@ -326,7 +358,8 @@ class CompiledMCAPhysicalEnv(MCAPhysicalEnv):
                          c.initial_radius_fraction,np.asarray(self.routes).reshape(self.num_clots,-1) if self.num_clots else np.empty((0,len(self.transport.points))),
                          self.clot_positions_mm,n,c.contact_distance_mm,c.lysis_mass_per_s,c.lysis_saturation,
                          c.spatial_fraction,c.lubrication_floor,c.max_substeps_per_control,float(getattr(self,"trace_dt_s",0.)),
-                         c.contact_model == 'stenosis_surface',self._particle_overlaps.copy(),c.particle_safety_margin_mm)
+                         c.contact_model == 'stenosis_surface',self._particle_overlaps.copy(),c.particle_safety_margin_mm,
+                         c.junction_model == 'union')
         pos,edges,active,path,walls,blocks,exit_time,exit_node,count,masses,radii,flux,agent_removed,contact_s,particle_contact_s,pair_contact_s,trace_pos,trace_active,trace_mass,trace_time,particle_near_s,particle_events,particle_overlaps=values
         self.last_trace = dict(positions_mm=trace_pos, active=trace_active, masses=trace_mass, time_s=trace_time+self.elapsed_s)
         result=TransportResult(pos,edges,active,path,walls,blocks,exit_time,exit_node,count,duration)
