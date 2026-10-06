@@ -49,6 +49,8 @@ class CameraConfig:
     cluster_min_area_px: int = 80    # clusters ~200 px; overlapping particles reach ~30 px
     min_area_px: int = 4             # smaller blobs are pixel noise
     pair_tol_mm: float = .06         # x-agreement for pairing the two views
+    fps: float = 10.                 # frame rate; below the 10 Hz control rate frames are held (zero-order hold)
+    latency_steps: int = -1          # -1: use the sensor's argument
 
 
 def scaled_camera(pixel_mm=.02, **kw):
@@ -66,11 +68,33 @@ def random_camera(rng):
                          background=float(rng.uniform(.05, .3)), exposure_steps=int(rng.integers(1, 5)))
 
 
+def bench_camera(rng):
+    """In-vitro bench imaging, the set-up of both NMI references and of our team's phantom experiments:
+    overhead camera / digital microscope (Medany: DSLR on an inverted microscope, 6-18 fps; Turbo: overhead
+    camera + digital microscope). Resolution 20-60 um/px, 6-18 fps, 1-2 control steps of latency, plus the
+    optics/noise/contrast/exposure randomisation of random_camera."""
+    return scaled_camera(pixel_mm=float(rng.uniform(.02, .06)), psf_px=float(rng.uniform(.8, 2.)),
+                         read_noise=float(rng.uniform(.02, .07)), shot_noise=float(rng.uniform(.01, .05)),
+                         background=float(rng.uniform(.05, .3)), exposure_steps=int(rng.integers(1, 5)),
+                         fps=float(rng.uniform(6., 18.)), latency_steps=int(rng.integers(1, 3)))
+
+
+def ultrasound_camera(rng):
+    """Clinical-imaging stress test (ultrasound-class: 100-1000 um spatial, ms-level temporal resolution;
+    Medical Imaging Technology for Micro/Nanorobots, Nanomaterials 2023, Table 1). We use the best end,
+    100-200 um/px: a cluster (160 um) spans ~1-2 px and debris particles (40 um) are not resolvable."""
+    return scaled_camera(pixel_mm=float(rng.uniform(.1, .2)), psf_px=float(rng.uniform(1.2, 2.2)),
+                         read_noise=float(rng.uniform(.05, .1)), shot_noise=float(rng.uniform(.02, .05)),
+                         background=float(rng.uniform(.1, .3)), exposure_steps=1, fps=10., latency_steps=1)
+
+
 class ImageSensor(DeployableSensor):
     def __init__(self, env, cam=CameraConfig(), seed=0, latency_steps=1):
         from marl.deployable_sensing import DeployableConfig
+        latency_steps = cam.latency_steps if cam.latency_steps >= 0 else latency_steps
         super().__init__(env, DeployableConfig(latency_steps=latency_steps), seed)
         self.cam = cam
+        self._gap, self.frame_age, self._last_est = 1, 0, None
         n = env.num_robots
         self.track = None                                   # [n, 3] last estimates
         self.track_vel = np.zeros((n, 3))
@@ -164,14 +188,27 @@ class ImageSensor(DeployableSensor):
         return pts
 
     def observe(self):
-        env = self.env; n = env.num_robots
+        """Zero-order hold between camera frames: below the control rate the controller receives the last
+        frame's estimate again (frame_age counts the control steps since that frame)."""
+        if self._last_est is not None and self.rng.uniform() >= min(1., self.cam.fps*self.dt):
+            self.frame_age += 1; self._gap += 1
+            n = self.env.num_robots
+            self.err_log.append(np.linalg.norm(self._last_est.pos-self.env.positions_mm[:n], axis=1)[self.env.active[:n]])
+            self._last_est.active = self.env.active[:n].copy()
+            return self._last_est
+        est = self._observe_frame()
+        self.frame_age, self._gap, self._last_est = 0, 1, est
+        return est
+
+    def _observe_frame(self):
+        env = self.env; n = env.num_robots; g = self._gap        # g = control steps since the previous frame
         truth = env.positions_mm.astype(np.float64).copy()
         if not hasattr(self, '_prev_truth'):
             self._prev_truth = truth.copy()
         if self.track is None:
             # acquisition: the operator marks each cluster once at the start (initial detection window)
             self.track = truth[:n]+self.rng.normal(0., .02, (n, 3))
-        pred = self.track+self.track_vel*self.dt
+        pred = self.track+self.track_vel*self.dt*g
         cl_est = pred.copy(); parts_world = [[] for _ in range(n)]
         live = [i for i in range(n) if env.active[i]]
         views = (((0, 1), [0, 1]), ((0, 2), [0, 2]))         # (world axes, render axes): top x/y, side x/z
@@ -270,8 +307,8 @@ class ImageSensor(DeployableSensor):
         # coast on the velocity from before the merge (motion continuity resolves identity at the split).
         seen = np.stack((hit.any(1), hit[:, 0], hit[:, 1]), 1) & ~frozen
         # unmeasured coordinates coast on a decaying velocity (no unbounded dead reckoning)
-        self.track_vel = np.where(seen, (cl_est-self.track)/self.dt, np.where(frozen, self.track_vel, .5*self.track_vel))
-        cl_est = np.where(seen, cl_est, self.track+self.track_vel*self.dt)
+        self.track_vel = np.where(seen, (cl_est-self.track)/(self.dt*g), np.where(frozen, self.track_vel, .5*self.track_vel))
+        cl_est = np.where(seen, cl_est, self.track+self.track_vel*self.dt*g)
         self.track = cl_est.copy()
         # latency: the controller sees the previous frame's estimate
         self.frames_buf.append((cl_est.copy(), parts_world, crops))
@@ -280,7 +317,7 @@ class ImageSensor(DeployableSensor):
             self.frames_buf.pop(0)
         self.err_log.append(np.linalg.norm(meas-truth[:n], axis=1)[env.active[:n]])
         pos = meas.copy(); active = env.active[:n].copy()
-        vel = np.zeros_like(pos) if self.prev_pos is None else (pos-self.prev_pos)/self.dt
+        vel = np.zeros_like(pos) if self.prev_pos is None else (pos-self.prev_pos)/(self.dt*g)
         edge = []
         for i in range(n):
             self._who = i
@@ -295,7 +332,7 @@ class ImageSensor(DeployableSensor):
             for q in P:
                 if len(prev):
                     k = int(np.argmin(np.linalg.norm(prev-q, axis=1)))
-                    v = (q-prev[k])/self.dt if np.linalg.norm(prev[k]-q) < .3 else np.zeros(3)
+                    v = (q-prev[k])/(self.dt*g) if np.linalg.norm(prev[k]-q) < .3*g else np.zeros(3)
                 else:
                     v = np.zeros(3)
                 out.append((q-pos[i], v-vel[i]))

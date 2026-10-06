@@ -443,6 +443,50 @@ def fig7(out):
 FIGS['fig7'] = fig7
 
 
+def fig9(out):
+    """T-IRPPO: hierarchical pipeline + temporal Transformer residual policy (benchmark v3)."""
+    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+    from marl.obstacle_control import K_OBS, TOKEN_DIM, WINDOW
+    fig = plt.figure(figsize=(7.4, 5.0)); ax = fig.add_axes([0, 0, 1, 1]); ax.set_xlim(0, 100); ax.set_ylim(0, 68); ax.axis('off')
+
+    def box(x, y, w, h, text, fc, fs=6.6, bold=False, ec='#334155'):
+        ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle='round,pad=0.25,rounding_size=1.2', fc=fc, ec=ec, lw=.7))
+        ax.text(x+w/2, y+h/2, text, ha='center', va='center', fontsize=fs, weight='bold' if bold else 'normal', linespacing=1.25)
+
+    def arrow(x0, y0, x1, y1, c='#334155'):
+        ax.add_patch(FancyArrowPatch((x0, y0), (x1, y1), arrowstyle='-|>', mutation_scale=7, lw=.8, color=c))
+    ax.text(1, 66, 'a  分层框架：全局靠术前地图，局部未知障碍靠时序 DRL', fontsize=8, weight='bold')
+    box(1, 54, 15, 9, '术前 CTA 地图\n中心线 · 健康半径\n血栓位置', '#e8eef5')
+    box(20, 54, 15, 9, '分配 A\n测地完工时间最优', '#dbe7f3')
+    box(39, 54, 15, 9, 'TPG 时序协调\n集群间安全距离\n（硬约束）', '#d4ece1')
+    box(58, 54, 19, 9, '路线追踪 + APF  u_rule\n⊕ T-IRPPO 残差 Δu\n（本文 DRL）', '#fde2e1', bold=True)
+    box(81, 54, 17, 9, '间距盾 · 死区\n→ 磁场指令 10 Hz\n（增益/噪声随机化）', '#eee8f5')
+    for x in (16, 35, 54, 77):
+        arrow(x+.3, 58.5, x+3.7, 58.5)
+    box(30, 43, 56, 7.5, '双视角数字显微镜 → 集群跟踪（位置/速度）+ 障碍检测框（静态斑块 / 漂移碎片）\n延迟 1–2 帧 · 位置噪声 · 丢帧 · 2.5 % 尺寸噪声（多层域随机化）', '#f3f4f6', fs=6.1)
+    arrow(60, 50.5, 66, 53.7); arrow(50, 50.5, 46, 53.7)
+    ax.text(1, 39, f'b  T-IRPPO 网络（参数共享，集群分散执行；记忆窗口 {WINDOW} 步 = 1.6 s）', fontsize=8, weight='bold')
+    for k in range(4):
+        box(1+k*1.2, 22-k*1.6, 15, 12, '', '#f1f5f9')
+    box(5.0, 17.2, 15, 12, f't 时刻 token（{TOKEN_DIM} 维）\n路线方向 · APF 指令\n速度 · 上一动作 · 目标距离\n管腔间隙 · 分叉 · TPG\n{K_OBS} 个障碍（相对位置/尺寸/\n相对速度/表面间隙）· 2 同伴', '#f1f5f9', fs=5.7)
+    ax.text(9, 31.5, 't−15 … t', fontsize=6.2, color='#475569')
+    box(24, 18, 13, 10, '线性嵌入 128\nLN · GELU\n+ 时间位置编码\n（起始前用 pad token）', '#dbeafe', fs=6.0)
+    box(41, 15, 17, 16, 'Transformer 编码器 ×2\n因果自注意力（时间维）\n4 头 · d=128 · FFN 256\nPre-LN', '#e0e7ff', fs=6.3, bold=True)
+    box(62, 24, 14, 8.5, 'Actor 头\nMLP 256-256\nμ(Δu) 零初始化', '#fde2e1', fs=6.1)
+    box(62, 12, 14, 8.5, 'Critic 头\nMLP 256-256\nV(s)', '#e2f0e8', fs=6.1)
+    box(80, 18, 18, 14, 'u = clip(u_rule + Δu)\n\n初始化时 u ≡ u_rule\n（从经典方法出发，\nPPO 只学修正）', '#fff7d6', fs=6.2)
+    arrow(20.2, 23, 24, 23); arrow(37, 23, 41, 23); arrow(58, 25, 62, 28); arrow(58, 21, 62, 16.5); arrow(76, 28, 80, 26)
+    ax.text(50, 6.5, 'PPO：AdamW (β=0.9/0.98, wd 0.01)；学习率 3e-4→5e-5、clip 0.2→0.05、熵系数 3e-3→0 余弦退火；γ=0.995，λ=0.95，3 轮，批 2048',
+            fontsize=6.0, ha='center', color='#475569')
+    ax.text(50, 3.0, '奖励：清除增量 + 接近目标 − 壁接触 − 障碍近碰 − 间距违规 − |Δu|²；撞障碍 −20 并终止（同 Turbo 的安全违规）；集群丢失 −10；安全完成 +20',
+            fontsize=6.0, ha='center', color='#475569')
+    fig.savefig(out/'fig9_tirppo_framework.png', bbox_inches='tight', dpi=300); plt.close(fig)
+    return 'fig9_tirppo_framework.png'
+
+
+FIGS['fig9'] = fig9
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--out', type=Path, default=Path('research/figures/MS_20261006'))
