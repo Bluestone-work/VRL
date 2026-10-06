@@ -33,6 +33,9 @@ from scipy import ndimage
 from marl.deployable_sensing import DeployableSensor, Estimate
 
 
+CROP_PX, CROP_HALF_MM = 32, .8       # learned-controller image input: 1.6 mm field, 50 um/px
+
+
 @dataclass(frozen=True)
 class CameraConfig:
     pixel_mm: float = .02            # 20 um/px (microscope-class in-vitro imaging)
@@ -73,6 +76,7 @@ class ImageSensor(DeployableSensor):
         self.track_vel = np.zeros((n, 3))
         self.lost = np.zeros(n, int)
         self.frames_buf = []
+        self.crops = np.zeros((env.num_robots, 2, CROP_PX, CROP_PX), np.float32)
         # Appearance calibration (what a cluster looks like under this camera, as a detector trained on
         # cluster images would know): expected integrated intensity of a cluster and of a particle, and the
         # geometric-mean threshold between them. amp and sigma mirror the renderer.
@@ -108,6 +112,15 @@ class ImageSensor(DeployableSensor):
         img += c.background
         img += self.rng.normal(0., c.read_noise, img.shape)+self.rng.normal(0., 1., img.shape)*np.sqrt(np.maximum(img, 0))*c.shot_noise
         return img, origin
+
+    def _crop(self, img, origin, centre):
+        """Fixed physical field of view (2*CROP_HALF_MM) around the tracking centre, resampled to CROP_PX,
+        background-subtracted: the image input of the learned controller, independent of pixel size."""
+        g = np.linspace(-CROP_HALF_MM, CROP_HALF_MM, CROP_PX)
+        uu = (centre[0]+g-origin[0])/self.cam.pixel_mm; vv = (centre[1]+g-origin[1])/self.cam.pixel_mm
+        U, V = np.meshgrid(uu, vv, indexing='ij')
+        out = ndimage.map_coordinates(img, [U, V], order=1, mode='constant', cval=self.cam.background)
+        return (out-self.cam.background).astype(np.float32)
 
     # ---------- detection (controller side: pixels only) ----------
     def _detect(self, img, origin):
@@ -163,10 +176,12 @@ class ImageSensor(DeployableSensor):
         live = [i for i in range(n) if env.active[i]]
         views = (((0, 1), [0, 1]), ((0, 2), [0, 2]))         # (world axes, render axes): top x/y, side x/z
         per_view = []
-        for axes, rax in views:
+        crops = np.zeros((n, 2, CROP_PX, CROP_PX), np.float32)
+        for v, (axes, rax) in enumerate(views):
             blobs, small = [], []
             for i in live:
                 img, o = self._render(pred[i][list(axes)], rax, self._prev_truth, truth)
+                crops[i, v] = self._crop(img, o, pred[i][list(axes)])
                 for q, a, fl in self._detect(img, o):
                     (blobs if self._is_cluster(a, fl) else small).append(q)
             # tracking windows overlap: merge duplicate detections of the same blob
@@ -259,8 +274,8 @@ class ImageSensor(DeployableSensor):
         cl_est = np.where(seen, cl_est, self.track+self.track_vel*self.dt)
         self.track = cl_est.copy()
         # latency: the controller sees the previous frame's estimate
-        self.frames_buf.append((cl_est.copy(), parts_world))
-        meas, parts_world = self.frames_buf[max(len(self.frames_buf)-1-self.cfg.latency_steps, 0)]
+        self.frames_buf.append((cl_est.copy(), parts_world, crops))
+        meas, parts_world, self.crops = self.frames_buf[max(len(self.frames_buf)-1-self.cfg.latency_steps, 0)]
         if len(self.frames_buf) > self.cfg.latency_steps+2:
             self.frames_buf.pop(0)
         self.err_log.append(np.linalg.norm(meas-truth[:n], axis=1)[env.active[:n]])

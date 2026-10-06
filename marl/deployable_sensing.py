@@ -189,6 +189,7 @@ class DeployablePursuit:
         k = env.num_robots
         self.route = [None]*k; self.goal = np.full(k, -1); self.prog = np.zeros(k, int)
         self.station = np.zeros(k, int)
+        self.nominal = np.zeros((k, 3))
 
     def _plan(self, i, pos, target):
         a = int(np.argmin(np.linalg.norm(self.pts-pos, axis=1))); b = int(self.env.clot_stations[target])
@@ -208,6 +209,7 @@ class DeployablePursuit:
             t = int(targets[i]); pos = est.pos[i]
             if t < 0 or not est.active[i]:
                 self.station[i] = int(np.argmin(np.linalg.norm(self.pts-pos, axis=1)))
+                self.nominal[i] = 0.
                 continue
             if self.goal[i] != t or self.route[i] is None:
                 self._plan(i, pos, t)
@@ -236,6 +238,7 @@ class DeployablePursuit:
                     d = d/max(np.linalg.norm(d), 1e-9)
                 d = d*float(np.clip(clearance/self.SLOW_MM, .4, 1.))
             parts = [(F@r_, F@v) for r_, v in est.particles[i]]
+            self.nominal[i] = F@d                  # route direction before the safety layer (for learners)
             out[i] = _safety(F@d, parts)
         return out
 

@@ -392,6 +392,57 @@ def fig6(out):
 FIGS = dict(fig1=fig1, fig2=fig2, fig3=fig3, fig4=fig4, fig5=fig5, fig6=fig6)
 
 
+
+def fig7(out):
+    """Framework and network diagram of the hierarchical pipeline with the IR-PPO residual controller."""
+    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+    from marl.drl_local import VEC_DIM
+    fig = plt.figure(figsize=(7.4, 4.6)); ax = fig.add_axes([0, 0, 1, 1]); ax.set_xlim(0, 100); ax.set_ylim(0, 62)
+    ax.axis('off')
+
+    def box(x, y, w, h, text, fc, ec='#334155', fs=6.8, bold=False):
+        ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle='round,pad=0.25,rounding_size=1.2', fc=fc, ec=ec, lw=.7))
+        ax.text(x+w/2, y+h/2, text, ha='center', va='center', fontsize=fs, weight='bold' if bold else 'normal',
+                linespacing=1.25)
+
+    def arrow(x0, y0, x1, y1, c='#334155', ls='-'):
+        ax.add_patch(FancyArrowPatch((x0, y0), (x1, y1), arrowstyle='-|>', mutation_scale=7, lw=.8, color=c, ls=ls))
+    # top band: hierarchy
+    ax.text(1, 60, 'a  分层框架（全部为可部署信息）', fontsize=8, weight='bold')
+    box(1, 49, 15, 8, '术前 CTA 地图\n中心线 · 健康半径\n血栓位置', '#e8eef5')
+    box(20, 49, 15, 8, '分配 A\n测地完工时间最优\n（术前一次）', '#dbe7f3')
+    box(39, 49, 15, 8, 'TPG 时序协调\n冲突区 + 优先级\n区前等待（硬约束）', '#d4ece1')
+    box(58, 49, 18, 8, '纯追踪规则 u_rule\n+ IR-PPO 残差 Δu\n（本文 DRL）', '#fde2e1', bold=True)
+    box(80, 49, 18, 8, '间距盾 + 死区\n→ 磁场指令\n（10 Hz）', '#eee8f5')
+    for x in (16, 35, 54, 76):
+        arrow(x+.3, 53, x+3.7, 53)
+    box(39, 39.5, 37, 6.5, '双视角相机（俯视 x–y / 侧视 x–z）\n检测 · 三维融合 · 联合跟踪 → 位置、粒子、同伴',
+        '#f3f4f6', fs=6.3)
+    arrow(57, 45.5, 64, 48.7); arrow(50, 45.5, 46, 48.7)
+    # bottom: network
+    ax.text(1, 35.5, 'b  IR-PPO 网络（参数共享，每个集群独立执行）', fontsize=8, weight='bold')
+    box(1, 22, 13, 10, '图像输入\n2×32×32\n俯视/侧视裁剪\n1.6 mm 视野', '#f1f5f9', fs=6.3)
+    box(17, 22, 15, 10, 'CNN 编码器\nConv5×5/2 16\nConv3×3/2 32\nConv3×3/2 32\nFC 128 · LN', '#dbeafe', fs=6.1)
+    box(1, 7, 13, 11, f'向量输入 {VEC_DIM} 维\n路线方向 · 规则指令\n速度 · 4 粒子 · 2 同伴\n地图间隙 · 分叉 · TPG', '#f1f5f9', fs=6.0)
+    box(17, 9, 15, 7, 'MLP 编码器\nFC 128 · LN · GELU', '#dbeafe', fs=6.3)
+    box(36, 13, 11, 13, '拼接\n256', '#e0e7ff')
+    box(51, 20, 16, 9, 'Actor 主干\nFC256·LN·GELU\nFC256·GELU', '#fde2e1', fs=6.2)
+    box(51, 7, 16, 9, 'Critic 主干\nFC256·LN·GELU\nFC256·GELU', '#e2f0e8', fs=6.2)
+    box(71, 20, 12, 9, 'μ(Δu) ∈ R³\n零初始化\nσ 可学习', '#fde2e1', fs=6.2)
+    box(71, 7, 12, 9, 'V(s)\nGAE λ=0.95\nγ=0.995', '#e2f0e8', fs=6.2)
+    box(86, 17, 13, 15, 'u = clip(u_rule\n + 0.6·Δu)\n\n初始化时\nu ≡ u_rule', '#fff7d6', fs=6.2, bold=False)
+    arrow(14, 27, 17, 27); arrow(14, 12.5, 17, 12.5); arrow(32, 27, 36, 22); arrow(32, 12.5, 36, 17)
+    arrow(47, 21, 51, 24.5); arrow(47, 17, 51, 11.5); arrow(67, 24.5, 71, 24.5); arrow(67, 11.5, 71, 11.5)
+    arrow(83, 24.5, 86, 24.5)
+    ax.text(50, 2.2, 'PPO（clip 0.2，4 轮，批 2048）；奖励：清除增量 −壁接触 −粒子碰撞/接触 −间距违规 −|Δu|²；'
+            '终局 +20 安全完成 / −10 集群丢失', fontsize=6.2, ha='center', color='#475569')
+    fig.savefig(out/'fig7_framework.png', bbox_inches='tight', dpi=300); plt.close(fig)
+    return 'fig7_framework.png'
+
+
+FIGS['fig7'] = fig7
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--out', type=Path, default=Path('research/figures/MS_20261006'))

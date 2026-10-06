@@ -66,7 +66,7 @@ class RLController:
         return np.einsum('nji,nj->ni', self.frames(est), local)*est.active[:, None]
 
 
-def run(method, n, anatomy, seed, horizon, d_min, cfg, junction='union', sensing='noise', camera='default'):
+def run(method, n, anatomy, seed, horizon, d_min, cfg, junction='union', sensing='noise', camera='default', drl=None):
     t0 = time.monotonic()
     base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon, junction_model=junction)
     env, manifest = paired_environment(base, n, seed)
@@ -92,6 +92,11 @@ def run(method, n, anatomy, seed, horizon, d_min, cfg, junction='union', sensing
         from marl.tpg_coordinator import TPGCoordinator
         _, sp = bm._station_paths(env)
         coord = TPGCoordinator(env, plan, sp, d_min_mm=d_min)
+    irc = None
+    if drl is not None:
+        assert sensing == 'image', 'the IR-PPO controller takes camera crops'
+        from marl.drl_local import IRController
+        irc = IRController(env, sensor, ctl, drl)
     walls = WallTracker(n)
     spacing = SpacingTracker(env.positions_mm[:n], env.active[:n], mc.min_spacing_mm if n > 1 else 0.)
     attach_spacing_monitor(env, spacing)
@@ -101,8 +106,10 @@ def run(method, n, anatomy, seed, horizon, d_min, cfg, junction='union', sensing
         est = sensor.observe()
         tgt = targets.targets(env, est.pos)
         local = ctl.act(tgt, est)
-        if coord is not None:
-            local[coord.gate(est.pos, est.active)] = 0.
+        hold = coord.gate(est.pos, est.active) if coord is not None else np.zeros(n, bool)
+        if drl is not None:              # learned residual on the rule (marl.drl_local), image perception only
+            local = irc.act(est, local, hold, tgt)
+        local[hold] = 0.
         F = ctl.frames(est)
         if n > 1:
             local = shield.filtered(local, packet_from(est, F, prev_local))
@@ -140,7 +147,7 @@ def run(method, n, anatomy, seed, horizon, d_min, cfg, junction='union', sensing
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--method', required=True, choices=('route_follow_dep', 'route_tpg_dep', 'pursuit_dep', 'pursuit_tpg_dep', 'pursuit_slow_dep', 'pursuit_slow_tpg_dep', 'rl_dep', 'rl_tpg_dep'))
-    p.add_argument('--checkpoint')
+    p.add_argument('--checkpoint'); p.add_argument('--drl', help='IR-PPO checkpoint (requires --sensing image)')
     p.add_argument('--junction', default='union', choices=('union', 'graph'))
     p.add_argument('--clusters', type=int, required=True); p.add_argument('--anatomy', required=True)
     p.add_argument('--seeds', required=True); p.add_argument('--horizon-s', type=float, default=300.)
@@ -155,7 +162,7 @@ def main():
     s0, s1 = map(int, a.seeds.split(':'))
     with a.out.open('a') as f:
         for seed in range(s0, s1+1):
-            r = run(a.method, a.clusters, a.anatomy, seed, a.horizon_s, a.d_min_mm, cfg, a.junction, a.sensing, a.camera)
+            r = run(a.method, a.clusters, a.anatomy, seed, a.horizon_s, a.d_min_mm, cfg, a.junction, a.sensing, a.camera, a.drl)
             if a.tag:
                 r['method'] = a.tag
             f.write(json.dumps(r, default=str)+'\n'); f.flush()
