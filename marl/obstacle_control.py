@@ -175,6 +175,22 @@ class History:
         return self.seq.copy(), self.mask.copy()
 
 
+def compose_lateral(rule_w, a, d, lat=.8):
+    """v3.5 constrained residual: a[0:2] steer in the plane perpendicular to the route direction d, a[2] scales
+    the rule command to 0.5-1.0 of its magnitude. The forward progress the rule makes can be slowed but never
+    cancelled or reversed, so the policy cannot trade task progress for shaping reward (the v3.2 and v3.4
+    exploits); what remains to learn is how to pass obstacles: sideways, and how fast."""
+    a = np.clip(a, -1, 1); u = np.zeros_like(rule_w)
+    for i in range(len(a)):
+        di = d[i]/max(np.linalg.norm(d[i]), 1e-9)
+        h = np.eye(3)[int(np.argmin(np.abs(di)))]
+        e1 = np.cross(di, h); e1 /= max(np.linalg.norm(e1), 1e-9); e2 = np.cross(di, e1)
+        u[i] = (.75+.25*a[i, 2])*rule_w[i]+lat*(a[i, 0]*e1+a[i, 1]*e2)
+    u = u/np.maximum(np.linalg.norm(u, axis=-1, keepdims=True), 1.)
+    u[np.linalg.norm(u, axis=-1) < DEADZONE] = 0.
+    return u
+
+
 def compose(rule_w, a, residual=True, scale=1.):
     u = rule_w+scale*np.clip(a, -1, 1) if residual else np.clip(a, -1, 1)
     u = u/np.maximum(np.linalg.norm(u, axis=-1, keepdims=True), 1.)
@@ -198,6 +214,7 @@ class DRLController:
         with torch.no_grad():
             a = self.net.pi(self.net.backbone(torch.as_tensor(seq), torch.as_tensor(mask))).numpy().astype(np.float64)
         live = (np.asarray(targets) >= 0) & est.active
-        u = compose(rule_w, a, self.cfg['residual'], self.cfg['scale']); u[~live] = 0.
+        u = (compose_lateral(rule_w, a, T[:, 0:3]) if self.cfg.get('action') == 'lateral'
+             else compose(rule_w, a, self.cfg['residual'], self.cfg['scale'])); u[~live] = 0.
         self.prev = u.copy()
         return np.einsum('nij,nj->ni', self.ctl.frames(est), u)

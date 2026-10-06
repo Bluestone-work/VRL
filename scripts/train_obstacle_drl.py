@@ -23,6 +23,9 @@ Reward per cluster and step (simulator outcomes; never a policy input)
   --reward team restores v3.1.
   v3.4: obstacle slots as Turbo (relative position, size, gap; no velocity, --obs-vel restores it as an
   ablation) and +0.05 safe-distance step reward (no wall contact, all obstacles beyond the margin).
+  v3.5 (default): the safe-distance bonus was exploited by not progressing (off; --safe-bonus restores it);
+  the residual is constrained (--action lateral, marl.obstacle_control.compose_lateral): sideways steering
+  plus 0.5-1.0 scaling of the rule command, so progress can be slowed but never cancelled.
   -0.005; terminal: obstacle collision -20 and the episode ends (safety violation, as Turbo);
   cluster lost -10; safe completion +20 to every cluster
 Training anatomies only (anatomy_holdout_v1.train), N ~ U{1,2,3}, seeds disjoint from the benchmark pools.
@@ -49,7 +52,7 @@ CFG = {}
 def worker(wid, conn, seed0, cfg):
     os.environ['OMP_NUM_THREADS'] = '1'; torch.set_num_threads(1)
     from marl.deployable_sensing import DeployableConfig
-    from marl.obstacle_control import History, TemporalPolicy, compose, token, token_dim
+    from marl.obstacle_control import History, TemporalPolicy, compose, compose_lateral, token, token_dim
     from scripts.benchmark_obstacles import Episode
     train = json.load(open('configs/evaluation_splits.json'))['anatomy_holdout_v1']['train']
     rng = np.random.default_rng(seed0); dim = token_dim(cfg['obs_vel']); policy = TemporalPolicy(cfg['arch'], dim=dim); count = 0
@@ -76,6 +79,7 @@ def worker(wid, conn, seed0, cfg):
         T, rule_w = token(ep.env, ep.sensor, est, ep.ctl, rule, hold, tgt, ep.prev, cfg['obs_vel'])
         seq, mask = ep.hist.push(T)
         live = (np.asarray(tgt) >= 0) & est.active
+        ep.route_dir = T[:, 0:3].astype(np.float64)
         ep.cur = (est, tgt, rule, hold, rule_w, seq, mask, live)
 
     ep = new_episode(); obs(ep); finished = []
@@ -92,7 +96,8 @@ def worker(wid, conn, seed0, cfg):
                 d, v = policy.dist(torch.as_tensor(seq), torch.as_tensor(mask))
                 a = d.sample(); lp = d.log_prob(a).sum(-1)
             a_np = a.numpy().astype(np.float64)
-            u = compose(rule_w, a_np, cfg['residual'], cfg['scale']); u[~live] = 0.
+            u = (compose_lateral(rule_w, a_np, ep.route_dir) if cfg['action'] == 'lateral'
+                 else compose(rule_w, a_np, cfg['residual'], cfg['scale'])); u[~live] = 0.
             ep.prev = u.copy()
             F = ep.ctl.frames(est); local = np.einsum('nij,nj->ni', F, u)
             if cfg['dr']:                                       # actuation-level randomisation
@@ -126,7 +131,8 @@ def worker(wid, conn, seed0, cfg):
                 r -= 10.*out['obs_events']+20.*out['obs_contact']+10.*out['lost']
                 # v3.4: positive safe-distance step reward (Turbo: +0.5 safe distance, scaled): no wall contact and
                 # every obstacle outside the 0.15 mm safety margin
-                r += .05*((out['wall'] <= 0) & (out['obs_near'] <= 0) & (np.asarray(tgt) >= 0))
+                if cfg['safe_bonus']:
+                    r += .05*((out['wall'] <= 0) & (out['obs_near'] <= 0) & (np.asarray(tgt) >= 0))
             else:
                 r -= 20.*collided+10.*out['lost']
                 done = done or bool(collided.any())
@@ -189,8 +195,11 @@ def main():
     p.add_argument('--reward', default='local', choices=('local', 'team')); p.add_argument('--lr', type=float, default=2e-4)
     p.add_argument('--init-std', type=float, default=-1.2)
     p.add_argument('--obs-vel', action='store_true', help='ablation: give finite-difference obstacle velocities')
+    p.add_argument('--action', default='lateral', choices=('lateral', 'free'))
+    p.add_argument('--safe-bonus', action='store_true', help='v3.4 +0.05 safe-distance step reward (exploited; off by default)')
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.manual_seed(a.seed)
-    cfg = dict(arch=a.arch, residual=not a.direct, scale=a.scale, dr=not a.no_dr, reward=a.reward, obs_vel=a.obs_vel)
+    cfg = dict(arch=a.arch, residual=not a.direct, scale=a.scale, dr=not a.no_dr, reward=a.reward, obs_vel=a.obs_vel,
+               action='free' if a.direct else a.action, safe_bonus=a.safe_bonus)
     (a.out/'config.json').write_text(json.dumps(dict(vars(a), **cfg), default=str))
     ctx = mp.get_context('fork'); pipes, procs = [], []
     for w in range(a.workers):

@@ -1,0 +1,7 @@
+v3.4 round 1 stopped at ~50 min (2026-10-06 20:20). Mid-check, tres_s0 at 41 min vs rule_apf, 84 dev episodes:
+Safe 0.0 vs 40.5 %, task 0.0 vs 69.0 %, obstacle-hit 29.8 vs 11.9 %, wall>=1 s 86.9 vs 44.0 %.
+Training: return rose (mlp -218 -> +27, tvel -252 -> +71) while training safe fell (0.3 -> 0.01-0.14) and
+collisions rose (0.15 -> 0.3-0.47). Diagnosis: the +0.05 safe-distance step reward is collected by NOT
+progressing (75 % of obstacles lie on the treatment routes; staying away from the route earns the bonus for
+300 s). Together with v3.2 (terminal collision -> early-collision exploit) this is the second time a shaping
+term was exploited: the unconstrained residual can trade task progress for shaping reward.
