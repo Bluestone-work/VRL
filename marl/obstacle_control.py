@@ -7,7 +7,8 @@ nearest-neighbour association (detectors give no identities). Nothing here reads
   APFPursuit      classical baseline: pure pursuit on the pre-operative route + artificial potential field
                   (closest-approach repulsion, wait for an approaching moving obstacle, stop dead-zone)
   token()         per-step observation token (world frame), the analogue of Turbo's state (S19): route
-                  target direction/distance, own velocity and previous action, map clearance features, the
+                  target direction/distance, own velocity and previous action, map clearance features and the
+                  radial offset vector to the map axis (wall direction, v3.1), the
                   K_OBS nearest obstacles (relative position, size, relative velocity, surface gap) and peers
   TemporalPolicy  shared backbone over a memory window of tokens: 'mlp' (current token only), 'gru', or
                   'transformer' (causal self-attention over time, as Turbo); actor / critic heads
@@ -23,7 +24,7 @@ from marl.deployable_sensing import DeployablePursuit
 from marl.obstacle_field import detect_obstacles
 
 K_OBS, K_PEER, WINDOW = 6, 2, 16
-TOKEN_DIM = 3+3+3+3+1+5+9*K_OBS+4*K_PEER
+TOKEN_DIM = 3+3+3+3+1+5+3+9*K_OBS+4*K_PEER
 # APF tuned on training anatomies with tuning seeds 1414000000+ (2 grids, 27 settings x 54 episodes):
 # gain 10, range 0.7 mm: Safe 40.7 %, obstacle-collision episodes 20.4 %, wall >= 1 s 44.4 % (stronger
 # repulsion trades obstacle hits for wall contact: the classical APF dilemma inside a lumen).
@@ -101,7 +102,8 @@ def token(env, sensor, est, ctl, rule_local, hold, targets, prev_cmd):
         o[13] = rad/max(r, 1e-9); o[14] = (r-rad-body)/max(r, 1e-9)
         o[15] = float(R is not None and np.any(ctl.deg[R[max(pk-3, 0):pk+6]] >= 3))
         o[16] = float(hold[i]); o[17] = max(0., 1-env.elapsed_s/env.config.episode_duration_s)
-        k = 18
+        o[18:21] = (est.pos[i]-ax)/max(r, 1e-9)       # wall direction: radial offset from the map axis (v3.1)
+        k = 21
         obs = sorted(est.obstacles[i], key=lambda x: np.linalg.norm(x[0])-x[2])[:K_OBS]
         for j, (rel, relv, ro) in enumerate(obs):
             s = k+9*j; o[s:s+3] = rel/3.; o[s+3] = ro/.5; o[s+4:s+7] = np.clip(relv/spd, -3, 3)

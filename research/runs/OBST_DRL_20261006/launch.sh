@@ -3,7 +3,7 @@
 cd /home/wj/桌面/vascular_marl_local.tar.
 R=research/runs/OBST_DRL_20261006
 run() { name=$1; cores=$2; dev=$3; shift 3
-  PYTHONPATH=. taskset -c $cores ~/miniconda3/envs/v/bin/python scripts/train_obstacle_drl.py --out $R/$name --minutes 120 --workers 4 --device cuda:$dev "$@" > $R/$name.log 2>&1; }
+  PYTHONPATH=. taskset -c $cores ~/miniconda3/envs/v/bin/python scripts/train_obstacle_drl.py --out $R/$name --minutes 110 --workers 4 --device cuda:$dev "$@" > $R/$name.log 2>&1; }
 round() {
   run $1 0-3 0 ${A1[@]} & run $2 4-5,8-9 1 ${A2[@]} & run $3 10-13 0 ${A3[@]} & run $4 14-17 1 ${A4[@]} & run $5 18-21 0 ${A5[@]} & wait; }
 A1=(--arch transformer --seed 0); A2=(--arch transformer --seed 1); A3=(--arch transformer --seed 2); A4=(--arch gru --seed 0); A5=(--arch mlp --seed 0)

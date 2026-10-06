@@ -1,0 +1,8 @@
+Round 1 (v3.0 token/reward), 120 min, 4 workers each. Quick paired check of tres_s0 (100 min) vs rule_apf on 84 dev
+episodes (14 anatomies x 3 seeds x N=1/3): Safe 39.3 vs 40.5 % (diff -1.2 [-4.8, +2.4]), obstacle-hit 10.7 vs 11.9 %,
+wall>=1 s 44.0 vs 44.0 %. The learned residual stayed near zero (|mu| p50 0.039, also within 0.3 mm of obstacles);
+training return improved -225 -> -63 but mostly through fewer early collisions under DR. Diagnosis: the dominant
+failure (wall contact >= 1 s, 41-44 % of episodes) was not addressable (no wall-direction input) and weakly
+penalised (-5/s) relative to its weight in Safe Success; most samples were uninformative dwell steps.
+-> v3.1 (scripts/train_obstacle_drl.py, marl/obstacle_control.py token v3.1). Tokens differ (80 vs 83 dims),
+these checkpoints load only with the v3.0 code (git 35d3c7e).

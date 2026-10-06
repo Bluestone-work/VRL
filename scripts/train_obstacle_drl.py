@@ -11,8 +11,10 @@ Multi-level domain randomisation (cf. Turbo, Supplementary Table 4), per episode
   perception   cluster position noise U[0.02,0.08] mm, latency U{1,2} steps, dropout U[0,0.05]
   actuation    command gain U[0.75,1.25] per cluster, execution noise N(0, 0.025)
 Reward per cluster and step (simulator outcomes; never a policy input)
-  +3 x team removal fraction  +0.3 x decrease of distance to own target (mm)  -5 x wall-contact s
-  -2 x obstacle near-miss s (0.15 mm margin)  -0.5 if closer than d_min to a peer  -0.02 |a|^2 (residual)
+  +3 x team removal fraction  +0.3 x decrease of distance to own target (mm)  -10 x wall-contact s
+  -5 x obstacle near-miss s (0.15 mm margin)  -0.5 if closer than d_min to a peer  -0.01 |a|^2 (residual)
+  (v3.1, after round 1 learned a near-zero residual: wall direction added to the token, wall / near-miss
+  weights raised, dwell steps without nearby obstacles skipped, learning-rate floor 1e-4)
   -0.005; terminal: obstacle collision -20 and the episode ends (safety violation, as Turbo);
   cluster lost -10; safe completion +20 to every cluster
 Training anatomies only (anatomy_holdout_v1.train), N ~ U{1,2,3}, seeds disjoint from the benchmark pools.
@@ -92,9 +94,9 @@ def worker(wid, conn, seed0, cfg):
             done, out = ep.step(est, local, hold)
             P1 = env.positions_mm[:n]
             d1 = np.array([np.linalg.norm(env.clot_positions_mm[t]-P1[i]) if t >= 0 else 0. for i, t in enumerate(tgt)])
-            r = (3.*out['removed']+.3*(d0-d1)*(np.asarray(tgt) >= 0)-5.*out['wall']-2.*out['obs_near']-.005)
+            r = (3.*out['removed']+.3*(d0-d1)*(np.asarray(tgt) >= 0)-10.*out['wall']-5.*out['obs_near']-.005)
             if cfg['residual']:
-                r -= .02*(np.clip(a_np, -1, 1)**2).sum(1)
+                r -= .01*(np.clip(a_np, -1, 1)**2).sum(1)
             if n > 1:
                 D = np.linalg.norm(P1[:, None]-P1[None], axis=-1)+np.eye(n)*99
                 r -= .5*((D < 2.).any(1))
@@ -104,8 +106,12 @@ def worker(wid, conn, seed0, cfg):
             safe = done and not collided.any() and ep.info['success'] and ep.safe()
             if safe:
                 r += 20.
+            # informative samples only: dwelling on its own clot with no obstacle within 1 mm carries no
+            # decision (the rule stops there); those steps are skipped instead of diluting the batch (v3.1)
+            busy = np.array([tgt[i] < 0 or d0[i] > .15 or any(np.linalg.norm(rel)-rr < 1. for rel, _, rr in est.obstacles[i])
+                             for i in range(n)])
             for i in range(n):
-                if out['active_before'][i] and live[i]:
+                if out['active_before'][i] and live[i] and (busy[i] or done or not env.active[i]):
                     buf['seq'].append(seq[i]); buf['mask'].append(mask[i]); buf['act'].append(a[i].numpy())
                     buf['logp'].append(float(lp[i])); buf['val'].append(float(v[i])); buf['rew'].append(float(r[i]))
                     buf['done'].append(bool(done or not env.active[i])); buf['stream'].append((wid, ep.id, i))
@@ -162,7 +168,7 @@ def main():
         frac = min((time.time()-t0)/(a.minutes*60), 1.)
         cos = .5*(1+math.cos(math.pi*frac))                       # cosine schedules (Turbo)
         for g in opt.param_groups:
-            g['lr'] = 5e-5+(3e-4-5e-5)*cos
+            g['lr'] = 1e-4+(3e-4-1e-4)*cos
         clip = .05+(.2-.05)*cos; ent = 3e-3*cos
         sd = {k: v.detach().cpu() for k, v in policy.state_dict().items()}
         for c in pipes:
