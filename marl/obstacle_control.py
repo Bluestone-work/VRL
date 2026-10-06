@@ -24,7 +24,12 @@ from marl.deployable_sensing import DeployablePursuit
 from marl.obstacle_field import detect_obstacles
 
 K_OBS, K_PEER, WINDOW = 6, 2, 16
-TOKEN_DIM = 3+3+3+3+1+5+3+9*K_OBS+4*K_PEER
+BASE_DIM = 3+3+3+3+1+5+3
+# obstacle slot (v3.4, aligned with Turbo S19: relative position, size, no velocity): rel pos (3), radius,
+# surface gap, mask = 6; with obs_vel (ablation) the finite-difference relative velocity is appended = 9
+SLOT = {False: 6, True: 9}
+token_dim = lambda obs_vel=False: BASE_DIM+SLOT[obs_vel]*K_OBS+4*K_PEER
+TOKEN_DIM = token_dim(False)
 # APF tuned on training anatomies with tuning seeds 1414000000+ (2 grids, 27 settings x 54 episodes):
 # gain 10, range 0.7 mm: Safe 40.7 %, obstacle-collision episodes 20.4 %, wall >= 1 s 44.4 % (stronger
 # repulsion trades obstacle hits for wall contact: the classical APF dilemma inside a lumen).
@@ -87,10 +92,12 @@ class APFPursuit(DeployablePursuit):
         return local
 
 
-def token(env, sensor, est, ctl, rule_local, hold, targets, prev_cmd):
-    """[n, TOKEN_DIM] world-frame tokens and the rule command in world coordinates."""
+def token(env, sensor, est, ctl, rule_local, hold, targets, prev_cmd, obs_vel=False):
+    """[n, token_dim(obs_vel)] world-frame tokens and the rule command in world coordinates.
+    Default (obs_vel=False) gives obstacles as Turbo does: where and how large, not how fast; motion has to be
+    inferred from the memory window."""
     n = env.num_robots; F = ctl.frames(est); spd = env.config.robot_speed_mm_s; body = float(env.config.robot_radius_mm)
-    T = np.zeros((n, TOKEN_DIM), np.float32); rule_w = np.zeros((n, 3))
+    T = np.zeros((n, token_dim(obs_vel)), np.float32); rule_w = np.zeros((n, 3)); W = SLOT[obs_vel]
     for i in range(n):
         if not est.active[i] or targets[i] < 0:
             continue
@@ -106,9 +113,10 @@ def token(env, sensor, est, ctl, rule_local, hold, targets, prev_cmd):
         k = 21
         obs = sorted(est.obstacles[i], key=lambda x: np.linalg.norm(x[0])-x[2])[:K_OBS]
         for j, (rel, relv, ro) in enumerate(obs):
-            s = k+9*j; o[s:s+3] = rel/3.; o[s+3] = ro/.5; o[s+4:s+7] = np.clip(relv/spd, -3, 3)
-            o[s+7] = (np.linalg.norm(rel)-body-ro); o[s+8] = 1.
-        k += 9*K_OBS
+            s = k+W*j; o[s:s+3] = rel/3.; o[s+3] = ro/.5; o[s+4] = np.linalg.norm(rel)-body-ro; o[s+5] = 1.
+            if obs_vel:
+                o[s+6:s+9] = np.clip(relv/spd, -3, 3)
+        k += W*K_OBS
         vis = np.flatnonzero(est.peers_vis[i]); vis = vis[np.argsort(np.linalg.norm(est.peers_rel[i, vis], axis=1))][:K_PEER]
         for j, q in enumerate(vis):
             s = k+4*j; o[s:s+3] = est.peers_rel[i, q]/6.; o[s+3] = 1.
@@ -116,10 +124,10 @@ def token(env, sensor, est, ctl, rule_local, hold, targets, prev_cmd):
 
 
 class TemporalPolicy(nn.Module):
-    def __init__(self, arch='transformer', d=128, layers=2, heads=4, window=WINDOW):
+    def __init__(self, arch='transformer', d=128, layers=2, heads=4, window=WINDOW, dim=TOKEN_DIM):
         super().__init__()
         self.arch, self.window = arch, window
-        self.embed = nn.Sequential(nn.Linear(TOKEN_DIM, d), nn.LayerNorm(d), nn.GELU())
+        self.embed = nn.Sequential(nn.Linear(dim, d), nn.LayerNorm(d), nn.GELU())
         if arch == 'transformer':
             self.pos = nn.Parameter(torch.zeros(window, d)); nn.init.normal_(self.pos, std=.02)
             self.pad = nn.Parameter(torch.zeros(1, 1, d))
@@ -158,8 +166,8 @@ class TemporalPolicy(nn.Module):
 
 
 class History:
-    def __init__(self, n, window=WINDOW):
-        self.seq = np.zeros((n, window, TOKEN_DIM), np.float32); self.mask = np.ones((n, window), bool)
+    def __init__(self, n, window=WINDOW, dim=TOKEN_DIM):
+        self.seq = np.zeros((n, window, dim), np.float32); self.mask = np.ones((n, window), bool)
 
     def push(self, T):
         self.seq = np.roll(self.seq, -1, 1); self.mask = np.roll(self.mask, -1, 1)
@@ -179,12 +187,13 @@ class DRLController:
     def __init__(self, env, sensor, ctl, ckpt):
         torch.set_num_threads(1)
         c = torch.load(ckpt, map_location='cpu', weights_only=False)
-        self.cfg = c['cfg']; self.net = TemporalPolicy(self.cfg['arch']); self.net.load_state_dict(c['state']); self.net.eval()
+        self.cfg = c['cfg']; self.vel = bool(self.cfg.get('obs_vel', False)); dim = token_dim(self.vel)
+        self.net = TemporalPolicy(self.cfg['arch'], dim=dim); self.net.load_state_dict(c['state']); self.net.eval()
         self.env, self.sensor, self.ctl = env, sensor, ctl
-        n = env.num_robots; self.hist = History(n); self.prev = np.zeros((n, 3))
+        n = env.num_robots; self.hist = History(n, dim=dim); self.prev = np.zeros((n, 3))
 
     def act(self, est, rule_local, hold, targets):
-        T, rule_w = token(self.env, self.sensor, est, self.ctl, rule_local, hold, targets, self.prev)
+        T, rule_w = token(self.env, self.sensor, est, self.ctl, rule_local, hold, targets, self.prev, self.vel)
         seq, mask = self.hist.push(T)
         with torch.no_grad():
             a = self.net.pi(self.net.backbone(torch.as_tensor(seq), torch.as_tensor(mask))).numpy().astype(np.float64)

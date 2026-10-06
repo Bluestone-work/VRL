@@ -1,0 +1,7 @@
+v3.1 round 1 (110 min) + round 2 stopped at 6 min (17:51, 2026-10-06).
+Quick paired check, tres_s0 at 44 min vs rule_apf, 84 dev episodes: Safe 34.5 vs 40.5 % (diff -6.0 [-11.9, -1.2]),
+obstacle-hit 11.9 vs 11.9 %, wall>=1 s 48.8 vs 44.0 %, task 60.7 vs 69.0 %. tres_s1 collapsed at the end of
+round 1 (training-stream safe 0.00, return -1242). Diagnosis: the reward is dominated by long-horizon,
+high-variance team terms (removal, +20 safe completion over ~2000-step episodes, gamma 0.995) while the
+decision the policy can influence is local (passing an obstacle without touching the wall). -> v3.2.
+round 3 runs (gru_s2, mlp_s2, tdir_s2, tnodr_s1, tnodr_s2, tres? ) were auto-started for <1 min by the launcher while stopping and are void

@@ -1,0 +1,1 @@
+v3.2 pilot 40 min: return -280 -> -65 while training collisions 14 -> 36 % and safe 0.30 -> 0.07 (tres_s0): the policy learned to end episodes by colliding (terminal collision + negative-only step rewards). -> v3.3: no termination, per-event and per-second collision costs.

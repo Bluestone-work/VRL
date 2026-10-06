@@ -2,7 +2,7 @@
 
 usage: analyze_obstacles.py [--out research/figures/V3_20261006] [--table research/validation/OBST_BENCH_20261006/SUMMARY.md]
 Reads research/runs/OBST_DRL_20261006/*/log.jsonl and research/validation/OBST_BENCH_20261006/*.jsonl.
-Method tags in the benchmark files: rule_noavoid, rule_apf, <variant>_s<k> (variant = tres, gru, mlp, tdir, tnodr).
+Method tags in the benchmark files: rule_noavoid, rule_apf, <variant>_s<k> (variant = tres, gru, mlp, tvel, tdir, tnodr).
 """
 from __future__ import annotations
 
@@ -23,10 +23,10 @@ from scripts.make_manuscript_figures import C  # noqa: E402  (shared palette and
 RUNS = Path('research/runs/OBST_DRL_20261006'); BENCH = Path('research/validation/OBST_BENCH_20261006')
 NAMES = {'rule_noavoid': '路线追踪（无避障）', 'rule_apf': '路线追踪 + APF', 'mlp': 'MLP 残差 PPO',
          'gru': 'GRU 残差 PPO', 'tres': 'T-IRPPO（本文）', 'tdir': 'Transformer PPO（无规则先验）',
-         'tnodr': 'T-IRPPO 无域随机化'}
-ORDER = ['rule_noavoid', 'rule_apf', 'tdir', 'mlp', 'gru', 'tnodr', 'tres']
+         'tnodr': 'T-IRPPO 无域随机化', 'tvel': 'T-IRPPO + 障碍速度输入'}
+ORDER = ['rule_noavoid', 'rule_apf', 'tdir', 'mlp', 'gru', 'tvel', 'tnodr', 'tres']
 COLS = {'rule_noavoid': '#cdd4db', 'rule_apf': C['priv'], 'tdir': C['rl'], 'mlp': '#e0a33c', 'gru': '#8a5fa8',
-        'tnodr': '#7fb3c8', 'tres': C['ours']}
+        'tnodr': '#7fb3c8', 'tvel': '#2f8f6b', 'tres': C['ours']}
 
 
 def variant(tag):
