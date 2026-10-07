@@ -150,6 +150,7 @@ class DetectorConfig:
     pos_sigma_mm: float = .02             # plus 2.5 % of the obstacle size (Turbo's observation noise)
     size_sigma_frac: float = .025
     miss_prob: float = .03
+    pos_size_frac: float = .025           # position noise proportional to obstacle diameter
 
 
 def detect_obstacles(field, est_pos, active, rng, cfg=DetectorConfig()):
@@ -162,6 +163,6 @@ def detect_obstacles(field, est_pos, active, rng, cfg=DetectorConfig()):
             out.append([]); continue
         d = np.linalg.norm(P-est_pos[i], axis=1)
         idx = np.flatnonzero((d-r < cfg.fov_radius_mm) & (rng.uniform(size=len(r)) >= cfg.miss_prob))
-        out.append([(P[k]+rng.normal(0., cfg.pos_sigma_mm+.025*2*r[k], 3),
+        out.append([(P[k]+rng.normal(0., cfg.pos_sigma_mm+cfg.pos_size_frac*2*r[k], 3),
                      max(r[k]*(1+rng.normal(0., cfg.size_sigma_frac)), .01)) for k in idx])
     return out

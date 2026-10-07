@@ -16,6 +16,8 @@ nearest-neighbour association (detectors give no identities). Nothing here reads
 """
 from __future__ import annotations
 
+import json
+from pathlib import Path
 import numpy as np
 import torch
 from torch import nn
@@ -34,16 +36,22 @@ TOKEN_DIM = token_dim(False)
 # gain 10, range 0.7 mm: Safe 40.7 %, obstacle-collision episodes 20.4 %, wall >= 1 s 44.4 % (stronger
 # repulsion trades obstacle hits for wall contact: the classical APF dilemma inside a lumen).
 APF_GAIN, APF_RANGE, APF_HORIZON, WAIT_GAP, WAIT_T, DEADZONE = 10., .7, 1., .04, .6, .35
+# Wall potential (v3.6): axis direction (towards the map centreline) and clearance from the map
+# lumen edge, both from the sensor's map match. WALL_GAIN is in units of the APF push so the two
+# terms are comparable; WALL_RANGE activates the term only within 0.35 mm of the wall.
+WALL_GAIN, WALL_RANGE = 1.2, .35
 
 
 class ObstacleTracker:
     """Per-cluster obstacle detections with latency and finite-difference velocities."""
-    def __init__(self, field, n, rng, latency, dt):
+    def __init__(self, field, n, rng, latency, dt, cfg=None):
+        from marl.obstacle_field import DetectorConfig
         self.field, self.rng, self.lat, self.dt = field, rng, latency, dt
+        self.cfg = cfg if cfg is not None else DetectorConfig()
         self.buf, self.prev = [], [np.zeros((0, 3)) for _ in range(n)]
 
     def observe(self, est):
-        self.buf.append(detect_obstacles(self.field, est.pos, est.active, self.rng))
+        self.buf.append(detect_obstacles(self.field, est.pos, est.active, self.rng, self.cfg))
         dets = self.buf[max(len(self.buf)-1-self.lat, 0)]
         if len(self.buf) > self.lat+2:
             self.buf.pop(0)
@@ -62,8 +70,16 @@ class ObstacleTracker:
         return est
 
 
-def apf(local, obstacles_local, body):
-    """Artificial potential field in the Frenet frame on top of the route direction."""
+def apf(local, obstacles_local, body, wall_dir=None, wall_gap=None):
+    """Artificial potential field in the Frenet frame on top of the route direction.
+
+    v3.6: wall term. The APF's obstacle repulsion points from the obstacle to the cluster; for a
+    wall-adherent static obstacle that direction points INTO the wall, and the pursuit term keeps
+    pushing along the route, so the cluster gets pinned against the wall for seconds (485 / 535
+    wall failures of the tuned APF on the v3 dev set are avoidance-induced; the same scenes
+    without avoidance have wall < 1 s). The wall is on the pre-operative map, so the fix stays
+    deployable: an axis-attracting potential from the map's radial offset, scaled like the
+    obstacle term and only active near the wall (inside WALL_RANGE of the lumen edge)."""
     push = np.zeros(3); wait = False
     for rel, relv, r in obstacles_local:
         t = float(np.clip(-(rel@relv)/max(relv@relv, 1e-12), 0, APF_HORIZON))
@@ -72,6 +88,8 @@ def apf(local, obstacles_local, body):
         push += np.clip(1-gap/APF_RANGE, 0, 1)**2*(-closest/max(np.linalg.norm(closest), 1e-9))
         moving = np.linalg.norm(relv) > .15
         wait |= moving and gap < WAIT_GAP and t < WAIT_T and t > 0
+    if wall_dir is not None and wall_gap is not None and np.isfinite(wall_gap):
+        push += WALL_GAIN*np.clip(1-wall_gap/WALL_RANGE, 0, 1)**2*wall_dir
     u = np.clip(local+APF_GAIN*push, -1, 1); u /= max(np.linalg.norm(u), 1.)
     return np.zeros(3) if wait or np.linalg.norm(u) < DEADZONE else u
 
@@ -88,7 +106,12 @@ class APFPursuit(DeployablePursuit):
         for i in range(len(local)):
             if local[i].any() and est.obstacles[i]:
                 obs = [(F[i]@rel, F[i]@relv, r) for rel, relv, r in est.obstacles[i]]
-                local[i] = apf(self.nominal[i], obs, self.body)
+                # wall term from the pre-operative map: axis point, healthy radius, radial offset
+                ax, r_map, rad = self.sensor.map_coordinates(est, i)
+                off = ax-est.pos[i]; d = float(np.linalg.norm(off))
+                wall_dir = off/d if d > 1e-9 else np.zeros(3)
+                wall_gap = r_map-rad-self.body
+                local[i] = apf(self.nominal[i], obs, self.body, F[i]@wall_dir, wall_gap)
         return local
 
 
@@ -218,3 +241,39 @@ class DRLController:
              else compose(rule_w, a, self.cfg['residual'], self.cfg['scale'])); u[~live] = 0.
         self.prev = u.copy()
         return np.einsum('nij,nj->ni', self.ctl.frames(est), u)
+
+class DiscreteTemporalPolicy(TemporalPolicy):
+    """Temporal deployable policy whose head selects among local teacher options."""
+    def __init__(self, arch='transformer', d=128, layers=2, heads=4, window=WINDOW,
+                 dim=TOKEN_DIM, actions=8):
+        super().__init__(arch=arch, d=d, layers=layers, heads=heads, window=window, dim=dim)
+        self.actions = int(actions)
+        self.pi = nn.Sequential(nn.Linear(d, 256), nn.GELU(), nn.Linear(256, 256), nn.GELU(), nn.Linear(256, self.actions))
+        self.value = nn.Sequential(nn.Linear(d, 256), nn.GELU(), nn.Linear(256, 1))
+        nn.init.zeros_(self.pi[-1].weight); nn.init.zeros_(self.pi[-1].bias)
+
+    def logits(self, seq, mask):
+        return self.pi(self.backbone(seq, mask))
+
+    def dist(self, seq, mask):
+        h = self.backbone(seq, mask)
+        return torch.distributions.Categorical(logits=self.pi(h)), self.value(h).squeeze(-1)
+
+
+def save_discrete_checkpoint(path, policy, cfg):
+    """Write a tensor-only checkpoint; configuration belongs in the JSON sidecar."""
+    torch.save({k: v.detach().cpu() for k, v in policy.state_dict().items()}, path)
+    Path(str(path) + '.json').write_text(json.dumps(dict(cfg), sort_keys=True))
+
+
+def load_discrete_checkpoint(path, cfg):
+    """Load a tensor-only checkpoint with explicit architecture and dimension checks."""
+    state = torch.load(path, map_location='cpu', weights_only=True)
+    if not isinstance(state, dict) or not state or not all(torch.is_tensor(v) for v in state.values()):
+        raise ValueError('discrete checkpoint must contain tensors only')
+    expected = dict(arch=cfg['arch'], dim=int(cfg['dim']), actions=int(cfg.get('actions', 8)))
+    if any(k not in cfg for k in ('arch', 'dim')) or expected['actions'] not in (8, 9):
+        raise ValueError(f'invalid discrete policy config: {cfg}')
+    net = DiscreteTemporalPolicy(cfg['arch'], dim=int(cfg['dim']), actions=expected['actions'])
+    net.load_state_dict(state, strict=True); net.eval()
+    return net

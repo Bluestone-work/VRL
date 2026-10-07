@@ -134,6 +134,19 @@ class ImageSensor(DeployableSensor):
                 du = np.arange(a0, a1)-uv[k, 0]; dv = np.arange(b0, b1)-uv[k, 1]
                 img[a0:a1, b0:b1] += amp/c.exposure_steps*np.exp(-du[:, None]**2/(2*sig**2))*np.exp(-dv[None, :]**2/(2*sig**2))
         img += c.background
+        field = getattr(self, 'obstacle_field', None)
+        if field is not None:      # obstacles absorb light under brightfield: dark disks (v3 benchmark)
+            OP, OR, _ = field.positions()
+            if len(OR):
+                uvo = (OP[:, axes]-origin)/px; ro = OR/px
+                near = (uvo[:, 0] > -ro-2) & (uvo[:, 0] < W+ro+2) & (uvo[:, 1] > -ro-2) & (uvo[:, 1] < W+ro+2)
+                if near.any():
+                    ii = np.arange(W)[:, None]; jj = np.arange(W)[None, :]
+                    for (u0, v0), rr in zip(uvo[near], ro[near]):
+                        a0, a1 = max(int(u0-rr-1), 0), min(int(u0+rr+2), W); b0, b1 = max(int(v0-rr-1), 0), min(int(v0+rr+2), W)
+                        if a0 < a1 and b0 < b1:
+                            d2 = ((ii[a0:a1]-u0)**2+(jj[:, b0:b1]-v0)**2)/max(rr*rr, 1e-9)
+                            img[a0:a1, b0:b1] -= .12*np.sqrt(np.clip(1-d2, 0, 1))
         img += self.rng.normal(0., c.read_noise, img.shape)+self.rng.normal(0., 1., img.shape)*np.sqrt(np.maximum(img, 0))*c.shot_noise
         return img, origin
 

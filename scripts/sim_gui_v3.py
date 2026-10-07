@@ -77,6 +77,16 @@ def _camera(ep, cax, axes_, rax, focus, name):
         if abs(q[0]-centre[axes_[0]]) < HW-r*.5 and abs(q[1]-centre[axes_[1]]) < HX-r*.5:
             cax.add_patch(Rectangle((q[1]-r, q[0]-r), 2*r, 2*r, fill=False, lw=1., ec=DYN if dy else STATIC))
             cax.text(q[1]-r, q[0]-r-.02, 'moving' if dy else 'static', color=DYN if dy else STATIC, fontsize=6.5)
+    est = getattr(ep, 'est', None)      # what the policy actually receives: detector boxes (noise, misses, latency)
+    if est is not None and est.active[focus]:
+        for rel, _, r in est.obstacles[focus]:
+            q = (rel+est.pos[focus])[list(axes_)]
+            if abs(q[0]-centre[axes_[0]]) < HW and abs(q[1]-centre[axes_[1]]) < HX:
+                cax.add_patch(Rectangle((q[1]-r, q[0]-r), 2*r, 2*r, fill=False, lw=1.3, ls='--', ec='#00e5ff'))
+        q = est.pos[focus][list(axes_)]
+        cax.plot(q[1], q[0], '+', color='#00e5ff', ms=7, mew=1.2)
+    cax.text(.99, .02, 'solid: true obstacle   dashed cyan: detector box (policy input)   +: estimated cluster',
+             transform=cax.transAxes, color=FG, fontsize=6, ha='right', va='bottom')
     if np.linalg.norm(ep.corr[focus]) > .05:
         d = ep.corr[focus][list(axes_)]
         cax.annotate('', xy=(centre[axes_[1]]+.6*d[1], centre[axes_[0]]+.6*d[0]), xytext=(centre[axes_[1]], centre[axes_[0]]),
@@ -161,6 +171,7 @@ def main():
     ap.add_argument('--seed', type=int, default=2600100000); ap.add_argument('--ckpt')
     ap.add_argument('--frames', default=''); ap.add_argument('--gif'); ap.add_argument('--every', type=int, default=4)
     ap.add_argument('--max-steps', type=int, default=3000)
+    ap.add_argument('--auto-near', type=int, default=0, help='save up to K frames where a detected obstacle is within 0.4 mm')
     ap.add_argument('--out', type=Path, default=Path('research/figures/GUI_V3_20261006')); ap.add_argument('--show', action='store_true')
     a = ap.parse_args()
     if not a.show:
@@ -169,9 +180,12 @@ def main():
     a.out.mkdir(parents=True, exist_ok=True)
     ep = build(a.anatomy, a.clusters, a.seed, a.ckpt)
     want = {int(x) for x in a.frames.split(',') if x}; tag = 'drl' if a.ckpt else 'apf'
-    fig = plt.figure(figsize=(12.8, 7.2), facecolor=BG); frames = []
+    fig = plt.figure(figsize=(12.8, 7.2), facecolor=BG); frames = []; saved = []
     for k in range(1, a.max_steps+1):
         done = step(ep)
+        near = a.auto_near and ep.est.active[0] and any(np.linalg.norm(rel)-ep.ctl.body-r < .4 for i in range(ep.n) for rel, _, r in ep.est.obstacles[i])
+        if near and len(saved) < a.auto_near and (not saved or k-saved[-1] >= 120):
+            saved.append(k); want.add(k)
         if k in want:
             draw(ep, fig); fig.savefig(a.out/f'gui_{tag}_{a.anatomy}_N{a.clusters}_s{k:04d}.png', dpi=150, facecolor=BG)
         if a.gif and k % a.every == 0:
@@ -179,7 +193,7 @@ def main():
             frames.append(np.asarray(fig.canvas.buffer_rgba())[..., :3].copy())
         if a.show and k % 5 == 0:
             draw(ep, fig); plt.pause(.001)
-        if done or (want and not a.gif and not a.show and k >= max(want)):
+        if done or (want and not a.auto_near and not a.gif and not a.show and k >= max(want)) or (a.auto_near and len(saved) >= a.auto_near and k > saved[-1]):
             break
     if a.gif and frames:
         from PIL import Image

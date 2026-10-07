@@ -1123,3 +1123,96 @@ Failure attribution (ours): particle contact 7.9 / 10.7 / 11.4 %, timeouts 9.8 /
   N=3 particle events +0.39 (CI excludes 0) -> particle occlusion is the next target.
 - PPO pure RL (deployable obs): Safe <= 0.7 % at all N, 3 seeds. Lower bound of the learning family.
 - Camera sensitivity sweep (20/40/60 um, randomised camera) launched: research/validation/IMAGE_CAMERA_SWEEP_20261005.
+
+## 2026-10-06 EXP0060: DRL on the latest Claude union/deployable pipeline
+- Audited 0bdc01e and the 20261006 Chinese DOCX: strongest current controller is classical pursuit + TPG; pure PPO and old transferred HRL do not establish a fair new-physics MARL comparison.
+- Added measured-only preoperative controller proxy, first-image start mapping, fixed scheduled dwell, and 66-feature / 8-frame / 64-hidden GRU categorical feedback-option PPO. Shared MAPPO critic pools observed embeddings only; FF-MAPPO and memory-IPPO use the same options and safety permissions.
+- Local decisions every 0.5 s; feedback and sensing 10 Hz. This does not reassign clots every second, and the high-level TPG remains classical. Candidate name V-MORL; no established novelty/publication claim.
+- Corrected new-study early-stop removal AUC by completing the integration to the common 300 s horizon. Protocol differs from Claude's table; all main baselines are rerun. Recorded that binary clot clearance, perfect registered preoperative map and 2 mm magnetic proxy remain unvalidated assumptions.
+- Admission: 7 relevant tests passed, both additional MARL variants completed a PPO update. Unrestricted-affinity runs crashed in both runtimes; subsequent runs use the repository's documented exclusion of CPU 6/7. Runtime exclusion is not a hardware root-cause proof.
+- Completed 40-update pilot: 268450 agent control steps, 12 fixed dev scenes, exact initial-state hashes match. Traditional = DRL = 5/12 Safe, both 100% removal, effectively equal AUC; no demonstrated improvement. Full pilot and failures retained.
+- Actual network PNG/SVG and 3D trajectory replay GUI screenshots generated. GUI fixes only affect rendering; physical scene and evaluation unchanged. New Word report includes both figures; original manuscript preserved.
+- Finite overnight queue launched: 3 arms x 3 seeds x 480 updates, immutable 367-file source snapshot, then 9 fixed-option controls, N=1, no-TPG and image-transfer probes. Deadline 2026-10-06 08:35 Asia/Shanghai, media finalization by 08:45. This entry records launch, not completed formal results. Live status/raw data/report: research/validation/EXP0060_VASCULAR_OPTION_RL_20261006/.
+
+## 2026-10-06 03:03 — EXP0061 adaptive DRL / observation-world-model research
+- Full EXP0060 memory-MAPPO seed0 (480 updates) regressed on 12 paired development scenes: Safe 5/12, removal 97.92%, wall contact 22.54 s; fixed pursuit Safe 5/12, removal 100%, wall contact 0.502 s. This negative result motivates further work, not a superiority claim.
+- Implemented GRU PPO with three action-conditioned one-step measured-state/reward/hazard predictors and a learned prediction gate. No simulator lookahead is supplied to the actor. This is not a Dreamer/RSSM implementation. Matched continued-PPO arm shares parent, reward, rollout/update budget and scenario stream; active agent interaction counts can differ.
+- Seven admission tests passed, including warm-start parity, predictor gradient isolation, per-agent terminal GAE, unchanged instrumented physics, paired actual initialization hashes and rejection of safety regressions. A two-update active-world PPO admission and checkpoint reload also completed.
+- Round 00: both arms completed 120 updates. Continued PPO and world PPO both Safe 5/12 and removal 97.92%; wall contact 22.637 / 22.590 s, AUC 0.897906 / 0.897958 versus fixed pursuit 0.502 s and 0.915685. All 12 actual scene initialization hashes match. Neither candidate accepted. All raw results retained.
+- Independent fixed-behavior development prediction audit (720 agent transitions): state MSE 0.278618 vs persistence 0.279945; reward MSE 0.014461 vs zero-reward 0.012254. Wall/particle/spacing positives 12/4/0. Useful calibrated risk prediction is not established.
+- Verified automatic transition to round 01: both arms train with wall/particle weights 18/16, gamma 0.997, 120 updates, same parent. No edits to the frozen running source. Negative results trigger registered recipe changes; promising results trigger more development scenes, seeds and gate interventions. Gate removal at inference is not a retraining ablation.
+- Actual detached supervisor and report publisher are running. Registered limit 24 rounds; 09:00 is a report snapshot, not an automatic stop. This is an automated registered experiment loop, not unlimited autonomous invention of new architectures. Three consecutive infrastructure/budget failures stop explicitly. Original EXP0060 queue remains separate.
+- Evidence/report: research/validation/EXP0061_ADAPTIVE_WORLD_RL_20261006/. Reused screens and expanded scenes remain development data; sealed tests are not consumed. Euclidean 2 mm spacing remains an uncalibrated proxy for magnetic interaction.
+
+- 2026-10-07: Added deployable 8-option discrete Transformer student, tensor-only checkpoint loading, benchmark teacher/student adapters, G1 paired gate and BC pipeline. Smoke BC loss fell 2.048→1.605 over 3 epochs on 3,897 samples; this is pipeline evidence only, not a benchmark claim.
+
+- 2026-10-07: user authorized autonomous continuation and requested fallback to deployable-observation RL if privileged teacher/student fails. Dynamic-obstacle question: retain dynamic avoidance in training/benchmark as robustness; for real thrombus lysis, residual mural thrombus/plaque is static, while embolized fragments can be dynamic and safety-critical near the catheter. A static-only ablation is scientifically valid only as a separate controlled experiment, not as the primary claim.
+
+## 2026-10-07 PL-TS G1 complete
+- The 84-scene privileged lookahead teacher gate completed with no errors. Cluster Safe Success was 31/84 (36.90%) versus APF 16/84 (19.05%), paired +17.86 pp, bootstrap 95% CI [+5.95, +29.76] pp; this clears the pre-registered +15 pp G1 threshold.
+- Teacher wall contact was 0.089 s versus 6.528 s for APF (paired -6.439 s, CI [-12.323, -2.148]); obstacle events increased to 0.524 versus 0.060 per scene (paired +0.464, CI [+0.333, +0.607]). AUC difference +0.00853 had CI [-0.02521, +0.04246], so no AUC superiority claim is made.
+- Decision: proceed to deployable student G2, with obstacle-event regression explicitly retained as a safety gate. This is not yet evidence that a deployable learning student beats APF.
+
+## 2026-10-07 PL-TS G2 round 0 failed; DAgger round 1
+- Offline-distilled students (Transformer/GRU/MLP) failed G2 in closed loop: 6-8 obstacle events per scene vs APF ~0.1 (partial 62/45/30-scene records kept; FAILURE_LOG EXP_PLTS_G2_R0).
+- Added `scripts/collect_obstacle_dagger.py` (parallel teacher labelling with stored 8-option cost vectors; student executes with prob 1-beta), `scripts/train_obstacle_distill.py` (soft-target + expected-teacher-regret loss, episode-level validation split, regret-based checkpoint selection), `scripts/run_obstacle_student_gate.py` / `scripts/analyze_obstacle_gate.py` (G2 on the G1 scenes, pairing checked by scenario_hash).
+- Cost-sensitive loss (weight 4, tau 2) on teacher data: offline regret 1.18 vs 1.69, catastrophic choices 1.1 % vs 1.6 % (different validation split; indicative).
+- DAgger r1: 72 training-seed episodes (seeds 2612000000+), Transformer r0 student executing 70 % of decisions, 138,916 teacher-labelled student-state samples; in those mixed rollouts 2.94 obstacle events / episode, Safe 5.6 %. Retraining Transformer and GRU on all 159 labelled episodes (257k train samples) with cost weight 4, then G2.
+
+## 2026-10-07 G1b: teacher v2 (committed options + 2.5 s deployable continuation)
+- 84/84 paired dev scenes, 0 errors, scenario hashes checked. Privileged, NOT deployable; it is the label source only.
+- Safe Success 59.5 % vs rule_switch(0.3) 38.1 % (+21.4 pp, CI [+9.5, +33.3]), rule_switch(0.5) 36.9 % (+22.6 pp, CI [+11.9, +33.3]), APF 19.0 % (+40.5 pp, CI [+27.4, +52.4]), teacher v1 36.9 % (+22.6 pp, CI [+9.5, +34.5]).
+- Task success 83.3 % (vs switch0.3 +11.9 pp, CI [+6.0, +19.0]); wall contact 0.53 s (vs switch0.3 -10.1 s); obstacle events 1.55 per scene, heavy-tailed: 27 % of scenes have any hit, median 0; AUC not different from rule_switch.
+- Decision: v2 replaces v1 as label source. Student G2 target is now rule_switch (strongest deployable heuristic), not only APF. v2 BC data collection (66 train-seed episodes, seeds 2613000000+) launched.
+
+## 2026-10-07 WM-OPPO: world-model-guided option PPO from the reactive prior (design, launched)
+- Motivation: imitation students (4 rounds) never matched rule_switch Safe; the two NMI references train RL on noisy structured / synthetic observations with simulator truth used only for reward and success. Our obstacle detector (truth + 3-D Gaussian noise + misses + latency) follows the same convention; this is stated as a limitation (no pixel-level obstacle detection).
+- Actor: deployable 9-option GRU over 16 tokens, decides at 2 Hz; output bias initialised so argmax = 'switch' (= rule_switch). PPO learns only deviations, so learning starts from the strongest deployable heuristic. Representation warm-started from the v2 DAgger student.
+- Asymmetric critic with privileged truth (nearest obstacles' true positions/velocities/gaps, wall gap, route, mass) — training only.
+- World-model head (training only, aux loss 0.5): from the actor latent predict the 3 currently nearest obstacles' relative positions 1 s ahead, min true gap and collision in the next 1 s.
+- Reward: progress, removal, -30/obstacle event, -10/contact s, -10/wall s, -30 lost, +50 Safe Success; collisions do not terminate. DR on perception noise/latency/dropout and actuation gain. Train anatomies, seeds 2615000000+.
+- Runs: wm_s0 (full) and noaux_s0 (world-model ablation), 200 iterations x 30 episodes. Sanity check: iter000 must reproduce rule_switch on G2.
+
+## 2026-10-07 perception ablation and WM-OPPO iteration 50 (84 paired dev scenes)
+- Perception 'truth' (exact local obstacle boxes, no misses, no latency): rule_switch Safe 38.1 -> 46.4 %, obstacle events 5.69 -> 0.58 (static 4.94 -> 0.14); GRU v2 DAgger student unchanged (Safe 4.8 %, events 5.58 -> 5.26). Heuristic collisions are perception-induced; the imitation student's are decision-level. Main protocol keeps the noisy detector for every method.
+- iter000 of WM-OPPO reproduces rule_switch on 84/84 scenes (sanity check of the prior).
+- iter050, with world-model head: obstacle events 0.30 vs rule_switch 5.69 (CI [-9.9, -2.0]; static 0.012 vs 4.94), but task success 41.7 vs 71.4 % (58 % time-outs: over-cautious), Safe 21.4 vs 38.1 %.
+- iter050, no world-model head: Safe 36.9 vs 38.1 % (n.s.), events 0.96 vs 5.69 (CI [-9.2, -1.2]), task 64.3 vs 71.4 %, wall 14.0 vs 10.7 s.
+- Interim: RL from the reactive prior removes most collisions (learned, significant) but trades them for time-outs and wall contact. Reward v2 (first-collision and wall-1 s penalties, Safe bonus +100) launched as wm_r2_s0 from the same start.
+- iter100 (84 dev scenes): WM run Safe 23.8 vs rule_switch 38.1 %, obstacle events 0.13 vs 5.69 (CI [-10.1, -2.1]), wall 5.6 vs 10.7 s, task 41.7 vs 71.4 % (58 % time-outs); no-WM run Safe 20.2 %, events 0.26, task 31.0 %. Both converged to 'wall_apf' (63 % / 77 % of decisions): safe but stalls (APF dead zone). no-WM ablation stopped at iteration ~115 (iter100 checkpoint is the matched ablation point).
+- Reward v3 (v2 + progress x4 + -100 time-out) launched as wm_r3_s0 to remove the stalling optimum.
+
+## 2026-10-07 13:00 VP-PPO: biplane images + partial ground truth, temporal history, motion primitives (user-directed)
+- User decision: drop the mixed controller-selection option set; actions are 7 same-level motion primitives in the
+  local geometry (advance, pass_left/right around the nearest detected obstacle, away, center (map axis), slow =
+  50 % duty cycle, stop); no embedded avoidance algorithm, no dead zone (marl/lookahead_teacher.PRIMITIVE_NAMES).
+- Observation: biplane crops (top x-y, side x-z, 32x32 px over 1.6 mm, obstacles rendered as absorbers; 4 frames
+  over 0.6 s) + 16-step token history (partial truth: noisy local obstacle boxes, route direction, own state);
+  the heuristic command is removed from the token. Cluster position from the image chain (sensing='image').
+- Training-only: privileged critic, world-model head (1 s ahead: nearest-obstacle positions, own displacement,
+  min gap, collision). Standard PPO practice: return-std reward scaling, value clipping, advantage
+  normalisation, linear lr / entropy decay, grad-norm 0.5. Prior: output bias toward 'advance' only.
+- Budget 3M environment steps per model, single seed (method exploration): vp_wm_s0 (full), vp_noaux_s0.
+- Baselines re-run under the same image sensing (84 dev scenes): APF Safe 16.7 %, task 32.1 %, events 0.11,
+  wall 9.5 s; rule_switch Safe 17.9 %, task 66.7 %, events 6.19, wall 12.5 s (image tracking error makes
+  rule_switch worse than with the noise sensor: 38.1 %).
+- 13:40 Diagnosis: under image sensing, plain route following (no avoidance) has 4.7 s wall contact per scene (59/84 scenes so far) while primitive policies reach 10-29 s: lateral primitives steer into the wall. vp_bc_s0 (teacher BC tau 0.1 + PPO, KL 0.5) degraded during fine-tuning (training wall 0.3 -> 10.7 s, events 2.6 -> 3.9); stopped at 1.0M steps (step01002k evaluated). Pure BC student (iter000): Safe 0 %, task 22.6 %, events 5.5.
+- New action definition: wall-aware primitives (marl.lookahead_teacher.primitive_local_wa): within 0.35 mm map clearance the outward lateral component is removed and an axis pull added. Same learning method (VP-PPO, from scratch, wall weight 20). Run vpwa_s0, 3M steps; frozen script copy in the run directory.
+
+## 2026-10-07 15:20 VP-PPO results (84 paired dev scenes, image sensing for every method)
+| method | Safe | task | obstacle events | wall s | AUC |
+|---|---|---|---|---|---|
+| route following, no avoidance | 1.2 % | 85.7 % | 6.87 | 8.4 | 0.278 |
+| APF | 16.7 % | 32.1 % | 0.11 | 9.5 | 0.264 |
+| rule_switch | 17.9 % | 66.7 % | 6.19 | 12.5 | 0.309 |
+| teacher-BC student (iter000) | 0 % | 22.6 % | 5.50 | 5.7 | 0.287 |
+| teacher-BC + PPO 1.0M (stopped) | 0 % | 44.0 % | 4.05 | 5.5 | 0.262 |
+| VP-PPO 1.05M | 19.0 % | 70.2 % | 0.69 | 28.9 | 0.306 |
+| VP-PPO 2.03M (resumed) | 11.9 % | 52.4 % | 0.73 | 27.5 | 0.318 |
+| VP-PPO 3.00M (resumed) | 16.7 % | 70.2 % | 0.70 | 32.5 | 0.306 |
+| VP-PPO wall-aware 1.03M | 16.7 % | 67.9 % | 1.10 | 29.4 | 0.300 |
+| VP-PPO wall-aware 2.04M | 17.9 % | 45.2 % | 1.20 | 22.4 | 0.319 |
+| VP-PPO wall-aware 3.03M | 6.0 % | 34.5 % | 1.57 | 13.8 | 0.262 |
+- Established (paired CI excludes 0): VP-PPO 1.05M vs rule_switch obstacle events -5.5 [-8.9, -2.6]; vs APF task +38.1 pp [+27.4, +48.8], AUC +0.042 [+0.012, +0.074]. Not established: Safe vs rule_switch (+1.2 pp [-7.1, +9.5]). Worse: wall contact vs rule_switch +16.4 s [+5.3, +29.9].
+- Under image sensing even the no-avoidance route follower has 8.4 s wall contact; the wall < 1 s criterion dominates Safe for every method. Wall-aware primitives lowered wall contact late in training (13.8 s at 3M) but the policy became slower (task 34.5 %).
+- Learning curves are not monotone (single seed, high variance); the best checkpoint is the earliest (1M). No checkpoint selection on dev is claimed as a result; selection would need a validation split.
