@@ -1,0 +1,90 @@
+{
+  "A": {
+    "sha256": "bd498ed55b28bbb0849585d2b0a1732f25bc1ef6593af02476bd0203ff7d391e",
+    "cfg": {
+      "mode": "route",
+      "arch": "transformer",
+      "layers": 3,
+      "window": 32,
+      "s_max": 1.25,
+      "speed_prior": true,
+      "prior_residual_scale": 1.0,
+      "s_min": 0.0,
+      "hard_w": 1.0,
+      "ecg": false,
+      "adaptive_history": false,
+      "abcd": "A",
+      "training_seed": 6201,
+      "updates": 120,
+      "scene_seed_base": 2100000000
+    },
+    "updates": 120,
+    "agent_steps": 262039
+  },
+  "B": {
+    "sha256": "a36155b451b4fff924e06cd2b116efca44df8169e5fbc4a5e38f5840c7fdfd13",
+    "cfg": {
+      "mode": "route",
+      "arch": "transformer",
+      "layers": 3,
+      "window": 32,
+      "s_max": 1.25,
+      "speed_prior": true,
+      "prior_residual_scale": 1.0,
+      "s_min": 0.0,
+      "hard_w": 1.0,
+      "ecg": false,
+      "adaptive_history": false,
+      "abcd": "B",
+      "training_seed": 6201,
+      "updates": 120,
+      "scene_seed_base": 2100000000
+    },
+    "updates": 120,
+    "agent_steps": 260746
+  },
+  "C": {
+    "sha256": "5158b485575925e32bda99549d27f20f7df207898348d52b0200b37bbc2e9baf",
+    "cfg": {
+      "mode": "route",
+      "arch": "transformer",
+      "layers": 3,
+      "window": 32,
+      "s_max": 1.25,
+      "speed_prior": true,
+      "prior_residual_scale": 1.0,
+      "s_min": 0.0,
+      "hard_w": 1.0,
+      "ecg": false,
+      "adaptive_history": false,
+      "abcd": "C",
+      "training_seed": 6201,
+      "updates": 120,
+      "scene_seed_base": 2100000000
+    },
+    "updates": 120,
+    "agent_steps": 261562
+  },
+  "D": {
+    "sha256": "72e6ea4c767797274a16eac46c6e619acb7c5bad98568cf97fad61585ef9af81",
+    "cfg": {
+      "mode": "route",
+      "arch": "transformer",
+      "layers": 3,
+      "window": 32,
+      "s_max": 1.25,
+      "speed_prior": true,
+      "prior_residual_scale": 1.0,
+      "s_min": 0.0,
+      "hard_w": 1.0,
+      "ecg": false,
+      "adaptive_history": false,
+      "abcd": "D",
+      "training_seed": 6201,
+      "updates": 120,
+      "scene_seed_base": 2100000000
+    },
+    "updates": 120,
+    "agent_steps": 258845
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "source_commit": "2776f07",
+  "source": "research/validation/EXP0062_paired_v2",
+  "purpose": "retroactive disclosure of accidental sealed-test access",
+  "records": 1470,
+  "smoke_records": 4,
+  "action": "offset 11 permanently reclassified development, no replacement",
+  "scenes": [
+    {
+      "anatomy": "basilar_vertebral",
+      "seed": 2700900011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "carotid_bifurcation",
+      "seed": 2700800011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "cerebral_venous_sinus",
+      "seed": 2701000011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "coronary_lm_bifurcation",
+      "seed": 2700200011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "coronary_rca",
+      "seed": 2700300011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "femoropopliteal_pad",
+      "seed": 2701200011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "ica_siphon",
+      "seed": 2700600011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "ica_terminus_t",
+      "seed": 2700700011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "iliac_may_thurner",
+      "seed": 2700400011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "mca_m1_lvo",
+      "seed": 2700000011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "popliteal_calf_dvt",
+      "seed": 2700500011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "pulmonary_saddle",
+      "seed": 2700100011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "renal_artery",
+      "seed": 2701300011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    },
+    {
+      "anatomy": "sma_embolism",
+      "seed": 2701100011,
+      "offset": 11,
+      "all_N_and_conditions_development": true
+    }
+  ]
+}

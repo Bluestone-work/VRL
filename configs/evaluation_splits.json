@@ -291,7 +291,10 @@
   "test": {
    "seed_base": 2700000000,
    "stride_per_anatomy": 100000,
-   "count": 100
+   "count": 100,
+   "excluded_development_offsets": [11],
+   "access_ledger": "research/validation/FLOW_DELAY_AUDIT/access_ledger.json",
+   "revision": "EXP0062 accessed offset 11 for all 14 anatomies. Permanently development; no replacements. Remaining 99 offsets are provisional sealed candidates pending historical access audit and method freeze."
   },
   "rule": "Anatomy k = index in anatomy_order; seeds base + k*stride + i. Development: baselines, failure analysis, method design and selection. Test: evaluated once per final method. Scenes from scripts/multicluster_protocol.paired_environment."
  }

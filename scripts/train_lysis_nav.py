@@ -213,7 +213,7 @@ class NavController:
         live = (np.asarray(tgt) >= 0) & est.active & ~hold
         a = np.clip(a, -1, 1); a[~live] = 0.; self.prev = a.copy()
         sp = 1.+self.prior(ep, est, tgt, self.prev_world)[:, 0] if self.prior is not None else None
-        out = self.guard(ep, est, tgt, command(ep, est, a, live, sp, self.cfg.get('prior_residual_scale', 1.0)), hold)
+        out = self.guard(ep, est, tgt, command(ep, est, a, live, sp, self.cfg.get('prior_residual_scale', .5)), hold)
         self.prev_world = ep.ctl.to_world(out, est)
         return out
 

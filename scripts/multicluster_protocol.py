@@ -14,6 +14,11 @@ REVISION = 'EXP0046_v2_observation_paired'
 
 def reserved_seed(seed):
     splits=json.loads((Path(__file__).resolve().parents[1]/'configs/evaluation_splits.json').read_text())
+    multi = splits.get('multicluster_benchmark_v1', {}).get('test', {})
+    for k in range(len(splits.get('anatomy_order', []))):
+        offset = seed-multi.get('seed_base', -1)-k*multi.get('stride_per_anatomy', 100000)
+        if 0 <= offset < multi.get('count', 0) and offset not in multi.get('excluded_development_offsets', []):
+            return True
     return any(v['seed_base'] <= seed < v['seed_base']+v['count']
                for a in splits['anatomies'].values() for v in a.values()
                if isinstance(v,dict) and 'seed_base' in v)
