@@ -203,10 +203,8 @@ class NavController:
 
     def __call__(self, ep, est, tgt, rule, hold):
         if self.cfg.get('abcd'):
-            # Match the training token: last safety-filtered command, in world coordinates.
-            if hasattr(self, 'previous_frames'):
-                self.prev = np.einsum('nji,nj->ni', self.previous_frames, ep.prev_local)
-            self.previous_frames = ep.ctl.frames(est).copy()
+            # Match the training token: last safety-filtered local command.
+            self.prev = ep.prev_local.copy()
         seq, mask = self.hist.push(token(ep, est, tgt, hold, self.prev, self.ecg))
         with torch.no_grad():
             a = self.net.pi(self.net.backbone(torch.as_tensor(seq), torch.as_tensor(mask))).numpy().astype(np.float64)
@@ -289,7 +287,10 @@ def worker(wid, conn, seed0, cfg):
                 r -= .5*((D < ep.d_min).any(1))
             ep.prev = a_np.copy()
             if cfg.get('abcd'):
-                ep.prev = ep.ctl.to_world(ep.prev_local, est).copy()
+                # Token column 23:26 is the actual command in the controller
+                # local frame; keep this coordinate system across reset,
+                # training and evaluation.
+                ep.prev = ep.prev_local.copy()
             # Exactly one sensor observation per step, including the terminal state.
             obs(ep)
             next_motion = ep.cur[3][:, -1, 19:22].copy()

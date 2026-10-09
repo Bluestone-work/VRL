@@ -38,3 +38,13 @@ def test_previous_command_uses_execution_frame():
     world=np.array([[.3,.4,.5]])
     local=np.einsum('nij,nj->ni',old,world)
     assert np.allclose(np.einsum('nji,nj->ni',old,local),world)
+
+
+def test_history_previous_command_contract_is_local_frame():
+    # The policy token stores the executed local command, while the plant
+    # receives its world transform. The two representations must not be mixed.
+    local = np.array([[.2, -.4, .7]])
+    F = np.array([[[0., 1., 0.], [-1., 0., 0.], [0., 0., 1.]]])
+    world = np.einsum('nji,nj->ni', F, local)
+    assert not np.allclose(local, world)
+    assert np.allclose(np.einsum('nij,nj->ni', F, world), local)
