@@ -1,0 +1,40 @@
+{
+  "source_hashes": {
+    "marl/paper_navigation.py": "c3dcbbfc07ab0a8cdd2eb7298f63c5a4f37064dd556a280ef571fc9f664ee127",
+    "marl/hierarchical_navigation.py": "a46f8cc6a623be8473a914422fb5153f3c451db047430515821b9e60dd473742",
+    "marl/vessel_sdf.py": "2be1728ea5a17038943d2312af7bb09f52653f3714b221b0b4d983359872bce9",
+    "marl/deployable_sensing.py": "f9752c086667b8ca9491fc04ec4c03bbbca20131ad5fee4ea717439e74e3bd33",
+    "marl/lookahead_teacher.py": "0f6fad4a75c916f1cba98fb4bc3bba8ff106a1b7a80194b86a7b8706a1134807",
+    "scripts/benchmark_obstacles.py": "f2feb3f1b9c4310c39ad42c2ea5181c2fae93997f51728323017b0894d2ad5d5",
+    "scripts/evaluate_paper_navigation.py": "ffb95cef0a2a73a9a7964c9fc1a80c6c070165b300efd7232f684cd22fd421c5",
+    "marl/evaluation_watchdog.py": "26f26f863bbe3be3e353efff601520ab0994e507ca5e0031f0d9e24a2ef1d80a"
+  },
+  "configurations": {
+    "cbf_qp": {
+      "speed_mm_s": 1.0,
+      "wall_margin_mm": 0.08,
+      "obstacle_margin_mm": 0.08,
+      "alpha": 0.5,
+      "max_obstacles": 6,
+      "active_gap_mm": 1.5,
+      "projection_iterations": 8
+    },
+    "mppi": {
+      "speed_mm_s": 1.0,
+      "horizon_steps": 8,
+      "samples": 64,
+      "noise_sigma": 0.35,
+      "temperature": 1.0,
+      "wall_margin_mm": 0.08,
+      "obstacle_margin_mm": 0.08,
+      "wall_weight": 120.0,
+      "obstacle_weight": 80.0,
+      "progress_weight": 1.0,
+      "control_weight": 0.1,
+      "seed": 20261007
+    }
+  },
+  "horizon_s": 300.0,
+  "sensing": "image",
+  "privileged_inputs": false
+}

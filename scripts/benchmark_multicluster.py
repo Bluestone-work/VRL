@@ -131,9 +131,9 @@ class PlanTargets:
     def __init__(self, plan):
         self.plan = plan
 
-    def targets(self, env, positions):
+    def targets(self, env, positions, clot_alive=None):
         out = np.full(len(self.plan), -1, np.int64)
-        alive = env.masses > 0
+        alive = np.asarray(env.masses > 0 if clot_alive is None else clot_alive, bool)
         for i, seq in enumerate(self.plan):
             nxt = [j for j in seq if alive[j]]
             if nxt:

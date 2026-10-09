@@ -1216,3 +1216,160 @@ Failure attribution (ours): particle contact 7.9 / 10.7 / 11.4 %, timeouts 9.8 /
 - Established (paired CI excludes 0): VP-PPO 1.05M vs rule_switch obstacle events -5.5 [-8.9, -2.6]; vs APF task +38.1 pp [+27.4, +48.8], AUC +0.042 [+0.012, +0.074]. Not established: Safe vs rule_switch (+1.2 pp [-7.1, +9.5]). Worse: wall contact vs rule_switch +16.4 s [+5.3, +29.9].
 - Under image sensing even the no-avoidance route follower has 8.4 s wall contact; the wall < 1 s criterion dominates Safe for every method. Wall-aware primitives lowered wall contact late in training (13.8 s at 3M) but the policy became slower (task 34.5 %).
 - Learning curves are not monotone (single seed, high variance); the best checkpoint is the earliest (1M). No checkpoint selection on dev is claimed as a result; selection would need a validation split.
+
+## 2026-10-07 wall-contact attribution (scripts/diagnose_wall_contact.py, 84 dev scenes, N=1)
+| controller / sensing | wall s per scene | scenes with wall >= 1 s | est. error at contact (mm) |
+|---|---|---|---|
+| route pursuit, perfect sensing | 5.38 | 2 % | 0 |
+| route pursuit, noise sensor | 5.34 | 2 % | 0.13 |
+| route pursuit, image | 8.43 | 4 % | 1.93 |
+| rule_switch, perfect | 11.52 | 20 % | 0 |
+| rule_switch, noise | 10.66 | 17 % | 0.12 |
+| rule_switch, image | 12.54 | 24 % | 0.43 |
+| VP-PPO 1.05M, image | 28.90 | 57 % | 0.36 |
+- 94-100 % of wall-seconds happen in transit (not while clearing or dwelling at the clot) and with the command pointing into the wall (outward component > 0.2).
+- Sensing is not the main source: perfect sensing leaves route pursuit and rule_switch at the same wall contact as the noise sensor; image sensing adds ~3 s / scene (and its estimate is far off, ~1.9 mm, during the contacts of route pursuit). The mean is driven by a few scenes with long contact (route pursuit: 2-4 % of scenes reach 1 s).
+- Junctions: 0 % for route pursuit / VP-PPO, ~30 % for rule_switch under noise/perfect sensing.
+- Conclusion: wall contact is commanded (controller / action geometry), concentrated in transit; for VP-PPO 57 % of scenes reach the 1 s Safe threshold versus 24 % for rule_switch.
+- Running: primitive oracle (privileged per-step rollout over the 7 primitives, tail=hold) with/without SDF projection; route-frame ablation (carrot / route / velocity / fused) on frozen VP-PPO and on advance-only; SDF wall-safety projection on frozen VP-PPO and rule_switch.
+
+## 2026-10-07 wall-contact root causes (follow-up)
+- Mean wall contact is dominated by a few long pinning episodes (VP-PPO: 13 % of scenes >= 60 s, each 200-290 s); in them the command points straight into the wall (outward component ~1.0) while the estimate error is ~0.001-0.04 mm.
+- Cause B (most long pinnings, route pursuit and VP-PPO alike): DeployablePursuit snaps route progress / re-planning to the Euclidean-nearest station. A branch that passes close in space but is not connected through the lumen captured the progress; the carrot lay across the wall. In all 7 inspected long-contact runs, 100 % of contact steps had the route station on an edge not adjacent to the body's physical edge. Fix (opt-in `topo_pursuit`): progress and re-planning restricted to the matched edge and its junction neighbours. basilar_vertebral 2600000000 / 2600000005 route pursuit: wall 234.7 -> 0.0 s, 195.0 -> 0.0 s.
+- Cause A (rarer): image tracking loss (pulmonary_saddle 2600000004: estimate 12.8 mm off for the whole contact); not fixed by the map.
+- First SDF projection was ineffective (vp: 28.9 -> 27.6 s) because the global union counted tubes of unconnected branches overlapping in space (D reported 1.1-3.9 mm while the body was in contact). SDF now restricted to the matched edge's junction neighbourhood (as the simulator lumen). Earlier global-SDF results kept as *_globalSDF.jsonl.
+- Frame ablation: carrot is the only usable primitive frame (route / velocity / fused: task 0 %, wall 18-130 s, with and without the policy).
+- topo fix v1 (progress window restricted to stations of the matched edge's junction neighbourhood) removed the pinning but caused 40 time-out regressions in route pursuit (task 85.7 -> 38.1 %): when the map match lags at a junction the carrot flips back and forth. v2 (restrict only the re-plan start) left the basilar pinning. v3 (shipped as topo_pursuit=True): progress may advance along the route only by the body's distance from its current route station + 1.5 mm, so it cannot jump to a later route part that passes close in space. Spot check (6 scenes incl. all regressions and pinnings): wall 0.0 s and task success in all 6. Full 84-scene re-evaluation of route pursuit / APF / rule_switch / frozen VP-PPO running (files *_topoV3.jsonl); v1 results kept as *_topoV1.jsonl.
+- topo v3 full re-evaluation (84 dev scenes, image sensing): route pursuit wall 8.4 -> 3.3 s (task 85.7 -> 89.3 %); rule_switch wall 12.5 -> 7.8 s, events 6.19 -> 4.25, Safe 17.9 % unchanged; frozen VP-PPO wall 28.9 -> 18.7 s (CI [-19.8, -2.8]), Safe 19.0 -> 17.9 %, scenes with wall >= 1 s 57 -> 56 %. The fix removes the long pinnings; Safe is limited by short scrapes.
+- Fixed-primitive control: VP-PPO chooses 'away' in 80-92 % of decisions. 'Always away' vs VP-PPO (paired, topo v3): Safe 17.9 vs 17.9 %, task 77.4 vs 72.6 %, events 1.20 vs 0.98 (VP -0.23 [-0.46, -0.02]), wall 19.1 vs 18.7 s. Without the fix the same picture. Conclusion: the VP-PPO policy has collapsed to (almost) a single fixed primitive; its collision advantage over rule_switch comes from the 'away' primitive, not from learned decisions. This invalidates "learned avoidance beats rule_switch" as a learning claim.
+- Primitive oracle (privileged per-step rollout, 50/84 scenes): Safe 60 %, wall 0.0 s, events 0.26 with a mix of primitives: the action set suffices; the failure is learning (policy collapse).
+
+## 2026-10-07 Oracle -> BC -> DAgger (user decision: no repeat-primitive penalty; PPO with KL only after this chain is verified)
+- Oracle: per decision, each primitive rolled out on a simulator copy (0.5 s committed + 1.5 s held, no heuristic), lowest teacher cost wins (privileged, training only). Topology-fixed pursuit (topo v3), image sensing.
+- Student: VP observation (biplane frames + token history), VisionStatePolicy, loss 0.3 CE(label) + 0.7 soft CE (tau 0.1) + 4 x expected oracle regret, episode-level validation split, selection on validation regret only.
+- Rounds: r0 = 44 oracle-driven episodes (seeds 2630000000+); r1 = 44 DAgger episodes, beta 0.5, student r0; r2 = 44 DAgger episodes, beta 0.2, student r1; retrain on all data each round. Every student evaluated on the 84 dev scenes (topo v3). Comparators: rule_switch topoV3 (Safe 17.9 %), always-away topoV3 (17.9 %), VP-PPO topoV3 (17.9 %), oracle on dev.
+- Scripts frozen for the run in research/runs/OBST_ORACLE_DAGGER_20261007/.
+- r0 (44 oracle-driven train episodes; oracle on train seeds: Safe 76 %, task 84 %, 0.14 events, wall 0 s; labels advance 61 %, stop 26 %, others 1-5 %). First student selection on validation regret picked an always-'stop' policy (the oracle's 2 s cost barely penalises lost progress); selection switched to validation loss. Students overfit after 2-4 epochs (train 37 episodes) and never predict the rare steering primitives. Final r0 setting: lr 1e-4, 10 epochs, regret weight 0, val-loss selection (epoch 4). Dev (84 scenes, topo v3): Safe 0 %, task 2.4 %, 95 % 'stop' decisions -> BC alone fails by freezing (covariate shift). Class-balanced variant also selected an all-stop epoch. Kept: *_aborted files.
+- Continuing with DAgger r1 (beta 0.5, student r0), r2/r3 (beta 0.2); retrain on all data each round; dev evaluation after every round (chain2.sh).
+
+## 2026-10-07 18:06 PRE-REGISTRATION (user-approved): relaxed primary metric, 4-action space, stall re-planning
+Registered before any result of the runs below (vp_topo_s0 has no evaluation yet).
+- Primary metric "Relaxed Safe" (RSafe): all clots cleared AND no cluster lost AND zero collisions with STATIC obstacles
+  (mural residue) AND cumulative wall contact < 5 s. Rationale (user): blood flow, wall-adherent structures and image
+  noise make zero-contact navigation unrealistically strict in this environment.
+- Secondary (reported, not in the primary criterion): dynamic-fragment collisions, wall-contact seconds, strict Safe
+  (old definition), task success, removal AUC, T50/T90/T100.
+- Comparators: route pursuit, APF, rule_switch, always-'avoid' fixed primitive, oracle; all with the same planner
+  (topology fix v3 and the stall re-planning below) and image sensing; 84 paired dev scenes; sealed pool untouched.
+- Action space v4: advance, avoid (lateral away from the nearest detected obstacle with the outward wall-normal component
+  removed near the wall, local map SDF), center (toward the map axis), wait.
+- Global planner: re-plan on stall (commanded but < 0.15 mm displacement for 2 s), start station restricted to the
+  matched edge's junction neighbourhood (topo v3 keeps progress continuous).
+
+## 2026-10-07 EXP0062: event-triggered local navigation and interface audit
+- Isolated from the active PPO/DAgger runs: no changes to their weights, reward, actions or original source files.
+- Audit confirms existing teacher and student both execute the same seven primitives through `primitive_local`;
+  there is no demonstrated continuous-oracle/discrete-student projection mismatch. r2 has 69.1% cost margins<0.05;
+  stopping has mean oracle regret1.648 vs advance18.040. r3 closed-loop strict Safe remains1/84, task63/84.
+- Healthy-map SDF is not the online stenotic lumen; the current image renderer adds uniform background, not a
+  segmentable lumen boundary. The physical command gain depends on lubrication clearance. Naive flow+command
+  prediction and whole-command wall projection failed pilot; all negative versions retained.
+- Complete 84-scene paired comparisons for seven classical control variants (588 rows), plus48 pilot rows.
+  Best balanced candidate `hybrid_replan`: strict Safe15/84→28/84; RSafe54/84→54/84; task59/84→61/84;
+  wall7.795→6.901s; mean longest continuous wall4.562→0.610s; dynamic events1.286→0.560/episode.
+- Static events249→257: fails the predeclared all-metric acceptance gate, so no automatic replacement and no
+  claim that RL/DAgger has learned better. Strict Safe paired-scene bootstrap delta+15.48pp [5.95,25.00]; development
+  data used repeatedly, not unseen-anatomy or sealed-test evidence. Wall improvement CI includes zero.
+- One infrastructure-only native-futex hang recovered by identical fresh-process replay; its task failure and
+  54static events retained. Future evaluation has a120s silence watchdog and optional command/route audit.
+- Full results: `research/validation/EXP0062_EVENT_LOCAL_20261007/FINAL_REPORT.md`; registration and failure
+  analysis: `research/experiments/EXP0062_EVENT_LOCAL_NAVIGATION_20261007.md` and `EXP0062_INTERFACE_FINDINGS_20261007.md`.
+
+## 2026-10-07 EXP0063: route-progress recovery and semantic obstacle ablations
+- Custom route-progress large-obstacle bypass repeatedly regenerated the same short subgoal and failed the pilot;
+  retained as a negative result, not promoted to full evaluation.
+- `all_semantic` uses the existing measured semantic pass for every forward detected obstacle, then applies the
+  lateral wall guard. Full 84-scene paired result vs EXP0062 switch: strict Safe 15/84→25/84 (+11.90pp,
+  paired bootstrap 95% [+3.57,+21.43]); task 59/84→69/84; static events 2.964→1.357/episode; dynamic
+  events 1.286→0.631/episode. RSafe 54/84→47/84 and wall contact 7.795→10.864s regress, so the candidate
+  is not accepted as a replacement or deployment default. It is a diagnostic trade-off only.
+- Increasing the wall guard to recovery margin .35mm and gain .8mm improved the 3-scene pilot wall contact;
+  full result still failed the RSafe/wall acceptance gate. A .3mm healthy-map clearance gate pilot failed 0/3
+  with 89.13s wall contact and was not run full; healthy-map clearance is not a reliable mode switch.
+- Next iteration should estimate a deployable short-horizon wall-contact risk residual with hysteresis, not a
+  hard map-clearance gate; train/fit only from measured position, velocity, map offset and commands, never
+  simulator wall truth. Keep semantic passing as a separate obstacle branch and test narrow anatomies first.
+
+## 2026-10-07 EXP0064: deployable wall-risk residual with hysteresis
+- Added isolated `risk_hysteresis` controller using image-estimated position/velocity, map-matched axis offset, current command and short-term offset growth; no simulator wall truth or obstacle labels enter the controller.
+- Pilot protocol: four narrow/regression anatomies (`mca_m1_lvo`, `pulmonary_saddle`, `basilar_vertebral`, `popliteal_calf_dvt`), seeds `2600000000–2600000005`, paired against `all_semantic`; all rounds retain JSONL, source manifest and audit logs.
+- Initial residual caused self-sustaining risk guard: v1 Task 33.3 %, Strict Safe 0 %, wall 66.69 s/episode. Static-map offset was too influential and guard stall fed back into risk.
+- Dynamic-residual and semantic-priority fixes reduced v5 wall contact 42.371→26.676 s/episode, Task 45.83→50.00 %, RSafe remained 25.00 %, but Strict Safe fell 12.50→4.17 %; `popliteal_calf_dvt` Strict Safe fell 3/6→0/6 and Task 5/6→2/6.
+- Decision: retain as a negative/diagnostic result; do not run 84-scene expansion, change deployment defaults, or claim RL/DAgger improvement. Next work should bind any risk guard to route-progress recovery and enforce a short action commitment rather than further threshold-only tuning.
+- Full-suite pytest collection remains blocked by pre-existing duplicate snapshot test module names; the changed navigation suite passes 36 tests.
+- v6 fixed the pure-outward command fallback so risk guard retains a tangent/heading component; paired four-anatomy result was Task 12/24, Strict Safe 1/24, RSafe 6/24, wall 26.415 s/episode. The Safe regression remains, so the candidate is still rejected.
+
+## 2026-10-07 EXP0065: progress-bound risk and clearance-gate attribution
+- Added `ProgressBoundRiskNavigator`: risk + route-frontier stall + no forward obstacle, with 2 s maximum commitment and progress-based release.
+- Four-anatomy pilot improved Task from 11/24 to 17/24 without changing Strict Safe/RSafe; full 84-scene current-control comparison improved Task 60/84→68/84, Strict Safe 22/84→24/84, RSafe 46/84→47/84, wall 14.472→11.126 s/episode.
+- Added `semantic_no_gate` attribution control. It reproduced the historical best: Task 69/84 (82.14%), Strict Safe 25/84 (29.76%), RSafe 47/84 (55.95%), wall 10.864 s/episode.
+- `progress_bound_risk` versus `semantic_no_gate` regressed Task 69→68, Strict Safe 25→24 and wall 10.864→11.126 s/episode. Therefore the apparent progress-bound gain came from removing the unreliable healthy-map clearance gate, not from the risk residual.
+- Current best Task method remains `semantic_no_gate`/historical `all_semantic + wallguard` at 69/84. Do not promote the risk controller or claim RL/DAgger improvement. Next focus is the teacher/student action interface and learned local primitive policy.
+
+## 2026-10-07 EXP0066: reference wallguard with reduced recovery gain
+- EXP0065 logs showed long wall contact while no forward obstacle was detected and the controller stayed on `reference`. Added isolated `semantic_reference_guard`: semantic obstacle passing remains unchanged, while the same deployable `WallRecoveryExecutor` also guards the reference command.
+- Pilot margin/gain ablation retained all negative results. The selected setting is `recovery_margin_mm=0.20`, `recovery_gain=0.4`; it improved the 24-scene pilot from Task 17/24 to 18/24, Strict Safe 3/24 to 4/24, RSafe 8/24 to 10/24, and wall contact 41.221 to 21.770 s/episode.
+- Full 84-scene paired result against same-configuration `semantic_no_gate`: Task 68/84→69/84, Strict Safe 22/84→24/84, RSafe 47/84→49/84, wall contact 12.354→6.728 s/episode, maximum continuous wall contact 4.973→0.796 s/episode. Wall reductions have paired bootstrap 95% intervals excluding zero; task/safety intervals include zero.
+- Accepted as a safety-priority research candidate, not as a learned RL/DAgger improvement and not as a replacement for the frozen benchmark default. Historical highest Strict Safe remains `hybrid_replan` 28/84; historical highest Task remains 69/84.
+- Static obstacle events increase slightly (1.095→1.155/episode), so the next iteration should audit guard/obstacle-pass interaction rather than tune risk thresholds further.
+
+## 2026-10-07 EXP0067: predictive local-navigation negative control
+- Re-evaluated the existing `LocalNavigator`/`trajectory_cost` controller on the same 84 development scenes as a less heuristic alternative. `local` and `local_replan` both achieved Task 27/84, Strict Safe 13/84 and RSafe 22/84; wall contact was 20.910 and 17.414 s/episode respectively.
+- The controller repeatedly selected `wait` for thousands of steps in difficult MCA/pulmonary episodes, causing severe task loss. This is a feasibility/terminal-cost interaction, not evidence that more threshold rules should be added.
+- Do not integrate the predictive controller into the current mainline. Keep `semantic_reference_guard` as the best current safety-priority candidate: Task 69/84, Strict Safe 24/84, RSafe 49/84, wall contact 6.728 s/episode.
+
+## 2026-10-07 EXP0068: same-observation advanced-method comparison
+- Frozen comparison only; no algorithm changes. All main-table methods use image sensing, the same 84 paired development scenes and the same Task/Strict Safe/RSafe/wall/obstacle metrics. Noise-observation DAgger results are excluded until rerun under image sensing.
+- Current `semantic_reference_guard`: Task 69/84, Strict Safe 24/84, RSafe 49/84, wall 6.728 s/episode, max continuous wall 0.796 s/episode.
+- Same-protocol existing results: rule_noavoid 72/84 Task but 1/84 Strict Safe; APF 27/84 and 14/84; rule_switch 56/84 and 15/84; visual BC 37/84 and 0/84; visual PPO 38/84 and 15/84; visual world-model PPO 59/84 and 16/84; predictive LocalNavigator 27/84 and 13/84.
+- No learning method in the same image protocol exceeds the current classical candidate on the combined safety/task table. The next paper-derived method worth a controlled migration is a CBF-QP safety filter; MPPI is second, but only after fixing the existing predictor's wait/terminal-cost failure. No training or deployment default was changed.
+- Retrospective privilege audit: the historical evaluator's target selector read `env.masses`; EXP0068 and EXP0066 remain historical records until clean no-privilege reruns are available. EXP0069 clean pilot uses observed `clot_alive` instead.
+
+## 2026-10-07 EXP0069: deployable CBF-QP and MPPI pilot
+- Evaluated paper-derived CBF-QP and MPPI controllers on the same image observation protocol and 24 paired development episodes. After audit, the target selector was changed from simulator `env.masses` to the image estimate's observed `clot_alive`; the clean pilot was rerun with this boundary.
+- CBF-QP: Task 1/24, Strict Safe 0/24, RSafe 0/24, wall contact 58.190 s/episode and maximum continuous wall contact 40.766 s/episode. Reject; do not expand to the full 84-scene benchmark.
+- Clean `semantic_reference_guard` control: Task 17/24, Strict Safe 3/24, RSafe 8/24, wall contact 27.746 s/episode and maximum continuous wall contact 1.924 s/episode. MPPI: Task 12/24, Strict Safe 3/24, RSafe 9/24, wall contact 22.050 s/episode and maximum continuous wall contact 12.338 s/episode. MPPI is a trade-off, not a dominant improvement; reject as a mainline replacement.
+- Clean output: `research/validation/EXP0069_PAPER_METHODS_20261007_DEPLOYABLE_PILOT/clean_pilot.jsonl`; all 48 records completed without errors, with image sensing, deployable observation hashes, and no truth-derived initial-state hashes.
+- Removed the truth-derived initial-state hash from future paper-method evaluation output and replaced it with a first-frame deployable-observation hash. Added a static forbidden-input audit, observed clot-status target selection, and independent per-method configuration regression test. Targeted tests pass 6/6.
+- The paper-method pilot remains a negative transfer result. Current best remains `semantic_reference_guard`; no RL/DAgger or paper-method improvement is claimed.
+
+## 2026-10-08 Benchmark v4 (thrombolysis efficiency + wall safety; user decision: no dynamic-obstacle avoidance, the method must be learning-based)
+- Harness scripts/benchmark_lysis.py (image sensing, no obstacles/tracers, 14 anatomies x 10 dev scenes x N=1/2/3); metrics: efficiency (T50/T90/T100, AUC), completeness, interference (spacing pair-s, dipole coupling proxy), wall contact. Report: research/validation/V4_LYSIS_20261008/REPORT.md, tables TABLES.md.
+- Strongest classical (A + TPG + topo pursuit + wall guard + new dwell settling): cleared 89.3/95.7/94.3 %, T90 166/102/78 s; on cleared scenes T100 = 1.00/1.03/1.02 x an idealised bound (full-speed travel on A + pure lysis time); dwell-aware optimal allocation lowers the bound by only ~1.5 s. Remaining headroom = ~5 % failing feasible scenes, 12/22 in coronary_rca (settling cannot overcome the flow).
+- Baselines (2025-26, adapted, deployable inputs): STPG/IGSES objective (AAAI 2025) = classical (N=2 T90 -1.8 s); PAC-NMPC-style (CASE 2025) cleared -4 to -5 pp, T90 +7-11 s, lowest N=1 wall; Turbo-style direct Transformer PPO (NMI 2026), 110 min single seed: cleared 1/19/30 % (budget-limited lower bound).
+- Learning pilots (single seed): MAPPO allocator ~= A (deviates 3-4 %, no gain); residual Transformer PPO on the settle prior: negative (-2.9 pp, T90 +6-13 s); residual from the guard-only prior: N=3 cleared +3.6 pp [+0.7, +7.1] vs classical, solves coronary_rca 10/10, but T90 +8-20 s and more brief wall scrapes.
+- Clean TPG ablation (park fallback): no TPG benefit once settling + spacing shield are present. 'help' after finishing: interference-free 99 -> 92/76 %, no efficiency gain (fixed total catalytic budget).
+
+## 2026-10-08 13:xx Benchmark v5: known geometry, patient-specific / time-varying dynamics
+- User direction: robustness across patients' vessels; navigation must be learning-based and must not degrade.
+- marl/physio_variation.py (registered before any v5 result): pulsatile flow (HR 50-120, two-harmonic waveform, amplitude U[0,0.8s], venous x0.3), patient mean flow logU[1/(1+s),1+s], cluster response gain/drift/direction bias/lag, shape-change slow-down in narrow lumens, near-wall drag (lubrication floor), wall adhesion, lysis-rate x logU; strength s scales everything (0 = v4). Hooked into scripts/benchmark_lysis.LysisEpisode(variation=s).
+- Classical settle reference (14 anat x 10 x N=1/2/3): s=1 cleared 85.7/90.7/95.0 %, T90 188/124/87 s, wall>=1 s 8/12/11 %; s=1.5 cleared 80.7/88.6/87.1 %, T90 203/141/114 s, wall>=1 s 21/21/22 % (v4: 89.3/95.7/94.3, 166/102/78, 3/2/1 %).
+- New strongest classical baseline classical_adaptive (settling released when the measured approach stalls; radius scaled by measured response): fixes the coronary_rca settle failures in a spot check.
+- Ours v5: route-frame Transformer PPO navigation (scripts/train_lysis_nav.py; actions = speed along the pre-operative route + lateral aim point; no rule command added; shared wall guard + shield), trained on s ~ {0 (p .2), U[0,1.25]}, 120 min, 12 workers. Turbo baseline retrained with the same v5 DR (120 min, 8 workers). Evaluation queue research/runs/V5_20261008/queue.sh (s = 1, 1.5, 0).
+- 13:5x nav v1 COLLAPSED (kept as nav_tf_s0_COLLAPSED): success 0.73 -> 0.0 in 30 min, mean speed 0.09 (learned to stop). Cause: gamma 0.98 (5 s horizon) puts removal out of reach while moving costs wall penalty under v5. v2: gamma 0.995, wall weight 3, -0.03 per live step, control-prior regularisation toward the adaptive classical speed (beta 1 -> 0.05). Restarted 120 min.
+- 16:0x nav v2 (route-frame PPO, prior only as a loss term) evaluated at s=1: cleared 48.6/56.4/52.1 % vs classical settle 85.7/90.7/95.0 % (negative; file s1_nav_tf_v2.jsonl). Diagnosis: the policy mean stayed ~0 (full speed, no settling): the a=0 action itself (pursuit without settling) fails under v5 flow (e.g. pulmonary_saddle 2600100008: 6 % removal vs 100 % with settling); the loss-only prior pull was too weak against PPO noise.
+- v3: speed action is relative to the adaptive classical speed (speed = clip(s_prior + 0.5 a0, 0, 1); lateral aim as before), so a = 0 reproduces classical_adaptive (spot check 9 scenes: same outcomes, T90 within a few s); regulariser pulls the residual toward 0 (beta 0.5 -> 0.02). Trained 120 min, 20 workers (run nav_tf_v3_s0). Eval queue paused; v2 removed from the main table.
+- 16:1x classical_adaptive at s=1 is WORSE than plain settle (cleared 74.3/73.6/67.9 vs 85.7/90.7/95.0): the stall-release fires under pulsatile flow. v3 prior switched to plain settling speed; v3 restarted 16:15.
+- 18:1x nav v3 (route-frame PPO, speed relative to plain settling, 120 min) at s=1 vs classical settle, paired: cleared N=1 +0.0 pp [-2.9,+2.9], N=2 +2.1 [0.0,+5.0], N=3 -2.1 [-5.0,0.0]; T90 +0.9 / +0.1 / +7.8 s; wall -1.1 / -1.2 / +2.9 s. First learned navigation that does not degrade the classical stack under v5; no gain yet. Turbo-v5 (direct PPO, same DR, 120 min): 0 / 0 / 1 % cleared.
+- v5 failure attribution (classical and nav alike, 20-21 new failures vs v4): mostly no-wall time-outs in cerebral/coronary arteries; failed scenes have higher patient flow (1.3 vs 1.07) and pulsatility (0.47 vs 0.37); e.g. mca_m1_lvo 2600000009: opposing flow up to ~1 mm/s at the clot, the cluster hovers 0.2-1.3 mm from it for the last 60 s.
+- nav v4: warm start from v3, harder curriculum (s ~ U[0.5,1.5], hard train anatomies x2), lr 1e-4, beta 0.1 -> 0.02, 120 min, 12 workers.
+- 19:3x v5 results (REPORT research/validation/V5_PHYSIO_20261008/REPORT.md): nav v3 ties the strongest classical at s = 0 / 1 / 1.5 (no degradation, no gain); STPG = classical; PAC-NMPC lowest wall >= 1 s at s=1.5 (4-9 % vs ~22 %) but cleared -6 to -10 pp; Turbo-v5 fails (0-2 %); hand-written adaptive settling (release on stall) misfires under pulsatile flow (-11 to -27 pp). nav v4 (hard curriculum fine-tune) training, eval queue3.
+- 20:3x nav v4 (v3 warm start, s ~ U[0.5,1.5], hard anatomies x2, lr 1e-4, beta 0.1 -> 0.02) at s=1: NEGATIVE, cleared 65.0/73.6/79.3 % vs v3 85.7/92.9/92.9 %, T90 +20 to +45 s, wall >= 1 s 21-23 %. The harder curriculum with a weaker prior pull drifted away from the prior (training success never rose above v3's). Remaining v4 evals cancelled; v3 stays the reference learned navigator.
+- nav ECG: same recipe as v3 plus the ECG cardiac phase (sin, cos) in the token (ECG is monitored in every endovascular procedure; deployable). Motivation: the remaining failures are pulsatile-flow time-outs in cerebral/coronary arteries; without the phase the policy must infer it from 3.2 s of noisy image velocity. 120 min, 20 workers.
+- 22:4x nav ECG (v3 recipe + cardiac phase, 120 min, 15.7 M agent steps) at s=1 vs classical settle: cleared -7.9 / -1.4 / -0.7 pp, T90 +13 / +14 / +11 s, wall -1.5 / -1.3 / -0.2 s. Not better than v3 (training success 0.82 vs 0.79 did not transfer). The phase input made the policy slower rather than better timed. s=1.5 / s=0 evals running (queue4).
+- 23:xx Feasibility bound (scripts/benchmark_lysis.FlowOracle, PRIVILEGED: exact state, instantaneous flow at the cluster, true response inverted, near-wall low-flow approach; no guard) at s=1: cleared 89.3/97.1/96.4 % vs classical settle 85.7/90.7/95.0 % (paired +3.6 [0.0,+7.1] / +6.4 [+2.1,+10.7] / +1.4 [-2.1,+5.0] pp), T90 -9 / -16 / -8 s, wall >= 1 s 4/3/2 % vs 8/12/11 %. Ablation of the bound: without flow knowledge 66/75/74 % (flow compensation is the dominant factor), without response knowledge 86/95/96 %, sensing only 68/76/76 %. So the v5 headroom is real but modest, and it is mainly about estimating / compensating the instantaneous flow.
+- Flow model note: PressureDrivenTreeFlow (quasi-steady Poiseuille resistance tree, R ~ int ds/r^4, fixed driving pressure, distal resistance ratio 1, parabolic profile per segment, re-solved as clots lyse). Inlet flow 0.01 mL/min x U[1.5,2.5] per episode for EVERY anatomy (not scaled by vessel size): inlet mean speed 0.0003-0.03 mm/s, centreline peaks 0.01-0.46 mm/s (in stenoses) — in-vitro scale, orders of magnitude below physiological flow.
+
+## 2026-10-09 v6 flow calibration probe (per-anatomy inlet speed; user chose option 1 = in-vitro scale, scaled by anatomy)
+- flow_inlet_mm_s = 0.1 (healthy inlet mean 0.1 mm/s x scene multiplier/2; stenosis centreline peaks ~0.6-2 mm/s): too strong for a 1 mm/s cluster. Classical settle cleared 3.6/4.3/3.6 % at s=0, 16/13/14 % at s=1 steady, 18/18/18 % at s=1 pulsatile; even the privileged flow-aware bound only 46-49 % (s=0) and 42-45 % (s=1). Bound - classical: +42 to +45 pp (s=0), +27 to +31 (steady), +24 to +26 (pulsatile). The clot sits in the stenosis where the flow accelerates, so at this speed many clots are physically unreachable.
+- Sweep 0.025 / 0.05 mm/s launched (research/runs/V5_20261008/queue_v6sweep.sh). For reference, v4's MCA had an inlet mean of ~0.027 mm/s, where the classical stack worked.

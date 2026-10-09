@@ -1,0 +1,148 @@
+{
+  "anatomy": "iliac_may_thurner",
+  "seed": 2600000000,
+  "method": "hybrid_replan",
+  "config": {
+    "horizon_s": 0.5,
+    "samples": 5,
+    "obstacle_margin_mm": 0.08,
+    "wall_margin_mm": 0.08,
+    "obstacle_weight": 80.0,
+    "wall_weight": 120.0,
+    "progress_weight": 1.0,
+    "switching_weight": 0.08,
+    "reference_weight": 0.5,
+    "maximum_wait_s": 1.0,
+    "commitment_s": 0.5,
+    "stall_window_s": 2.0,
+    "stall_displacement_mm": 0.15,
+    "replan_cooldown_s": 3.0,
+    "drift_alpha": 0.1,
+    "recovery_margin_mm": 0.12,
+    "recovery_gain": 0.4,
+    "recovery_duration_s": 0.5,
+    "avoidance_trigger_mm": 0.7,
+    "small_obstacle_max_radius_mm": 0.24
+  },
+  "error": null,
+  "row": {
+    "method": "hybrid_replan",
+    "benchmark": "v3_obstacles",
+    "clusters": 1,
+    "anatomy": "iliac_may_thurner",
+    "seed": 2600000000,
+    "scenario_hash": "175c18dfaa729488ea1013887883b7a79d0d41ad4cf6133518efa6b4c7cb0c28",
+    "cluster_safe_success": false,
+    "task_success": false,
+    "safe_success": false,
+    "collision_free": false,
+    "safe_collision_free": false,
+    "wall_contact_s": 0.0,
+    "wall_contact_ratio": 0.0,
+    "max_continuous_wall_contact_s": 0.0,
+    "timeout": true,
+    "removal": 0.0,
+    "elapsed_s": 299.9999999999997,
+    "termination_reason": "time_limit",
+    "obstacle_count": 12,
+    "obstacle_static": 9,
+    "obstacle_events": 85,
+    "obstacle_events_static": 85,
+    "obstacle_events_dynamic": 0,
+    "obstacle_contact_s": 12.89999999999997,
+    "obstacle_min_clearance_mm": -0.21334726523059588,
+    "robot_pair_contact_s": 0.0,
+    "lost": 0,
+    "t50_s": null,
+    "t90_s": null,
+    "t100_s": null,
+    "removal_auc": 0.0,
+    "path_mm": 296.2016533250623,
+    "spacing": {
+      "minimum_spacing_mm": null,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "initial_spacing_violation": false,
+      "spacing_compliant": true,
+      "spacing_measurement": "accepted_substep_piecewise_linear"
+    },
+    "walltime_s": 10.159446722827852,
+    "relaxed_safe_success": false,
+    "removal_auc_observed": 0.0,
+    "initial_state_hash": "3b66eda1f619f76dd15bd998bfcbbbdd660204de70c366beaea81f4ee9979792",
+    "sensing_model": "image",
+    "primitive_counts": {
+      "reference": 2939,
+      "recover": 61
+    },
+    "replan_count": 11,
+    "replan_events": [
+      {
+        "time_s": 41.50000000000032,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 73.20000000000012,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 115.19999999999773,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 126.39999999999709,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 167.39999999999478,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 188.69999999999357,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 200.2999999999929,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 264.6999999999917,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 273.39999999999367,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 276.39999999999435,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      },
+      {
+        "time_s": 282.7999999999958,
+        "robot": 0,
+        "reason": "commanded_stall",
+        "target": 3
+      }
+    ]
+  }
+}

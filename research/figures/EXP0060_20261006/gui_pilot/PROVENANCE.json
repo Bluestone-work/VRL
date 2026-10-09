@@ -1,0 +1,34 @@
+[
+  {
+    "file": "gui_start.png",
+    "frame": 0,
+    "time_s": 0.0,
+    "scene_hash": "76627d28619208f7dcb210f7c2f57c0e0476a43d745312c86033593cfaa3c7db",
+    "checkpoint_sha256": "a9578e2ad700030b167487e274f062e7931148cac7220134317c5aff27ca7cfc",
+    "source_trace": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0060_VASCULAR_OPTION_RL_20261006/pilot_replay_mca_m1_lvo_2810000000.trace.json"
+  },
+  {
+    "file": "gui_10s.png",
+    "frame": 100,
+    "time_s": 9.99999999999998,
+    "scene_hash": "76627d28619208f7dcb210f7c2f57c0e0476a43d745312c86033593cfaa3c7db",
+    "checkpoint_sha256": "a9578e2ad700030b167487e274f062e7931148cac7220134317c5aff27ca7cfc",
+    "source_trace": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0060_VASCULAR_OPTION_RL_20261006/pilot_replay_mca_m1_lvo_2810000000.trace.json"
+  },
+  {
+    "file": "gui_30s.png",
+    "frame": 300,
+    "time_s": 30.000000000000156,
+    "scene_hash": "76627d28619208f7dcb210f7c2f57c0e0476a43d745312c86033593cfaa3c7db",
+    "checkpoint_sha256": "a9578e2ad700030b167487e274f062e7931148cac7220134317c5aff27ca7cfc",
+    "source_trace": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0060_VASCULAR_OPTION_RL_20261006/pilot_replay_mca_m1_lvo_2810000000.trace.json"
+  },
+  {
+    "file": "gui_last.png",
+    "frame": 393,
+    "time_s": 39.30000000000029,
+    "scene_hash": "76627d28619208f7dcb210f7c2f57c0e0476a43d745312c86033593cfaa3c7db",
+    "checkpoint_sha256": "a9578e2ad700030b167487e274f062e7931148cac7220134317c5aff27ca7cfc",
+    "source_trace": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/validation/EXP0060_VASCULAR_OPTION_RL_20261006/pilot_replay_mca_m1_lvo_2810000000.trace.json"
+  }
+]

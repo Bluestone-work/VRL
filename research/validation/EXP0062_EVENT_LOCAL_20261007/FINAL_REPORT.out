@@ -1,0 +1,93 @@
+{
+  "switch": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.7023809523809523,
+    "cluster_safe_success": 0.17857142857142858,
+    "relaxed_safe_success": 0.6428571428571429,
+    "wall_contact_s": 7.795297864882243,
+    "max_continuous_wall_contact_s": 4.561591683859196,
+    "obstacle_events_static": 2.9642857142857144,
+    "obstacle_events_dynamic": 1.2857142857142858,
+    "removal_auc": 0.5573006305294526,
+    "replan_count": 0.0
+  },
+  "guard": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.6904761904761905,
+    "cluster_safe_success": 0.16666666666666666,
+    "relaxed_safe_success": 0.6071428571428571,
+    "wall_contact_s": 9.16173000960521,
+    "max_continuous_wall_contact_s": 4.827757982843703,
+    "obstacle_events_static": 3.357142857142857,
+    "obstacle_events_dynamic": 1.2976190476190477,
+    "removal_auc": 0.5461026339557596,
+    "replan_count": 0.0
+  },
+  "guard_replan": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.6785714285714286,
+    "cluster_safe_success": 0.14285714285714285,
+    "relaxed_safe_success": 0.6071428571428571,
+    "wall_contact_s": 6.494133470576803,
+    "max_continuous_wall_contact_s": 0.38024565150673534,
+    "obstacle_events_static": 3.642857142857143,
+    "obstacle_events_dynamic": 1.4047619047619047,
+    "removal_auc": 0.5456854137126982,
+    "replan_count": 2.369047619047619
+  },
+  "semantic": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.8095238095238095,
+    "cluster_safe_success": 0.2857142857142857,
+    "relaxed_safe_success": 0.5357142857142857,
+    "wall_contact_s": 20.08988234463973,
+    "max_continuous_wall_contact_s": 18.359309258117953,
+    "obstacle_events_static": 0.5833333333333334,
+    "obstacle_events_dynamic": 0.5833333333333334,
+    "removal_auc": 0.6084183245499294,
+    "replan_count": 0.0
+  },
+  "semantic_replan": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.8214285714285714,
+    "cluster_safe_success": 0.30952380952380953,
+    "relaxed_safe_success": 0.5357142857142857,
+    "wall_contact_s": 8.456087298011216,
+    "max_continuous_wall_contact_s": 0.9543834751530486,
+    "obstacle_events_static": 0.8095238095238095,
+    "obstacle_events_dynamic": 0.5,
+    "removal_auc": 0.6146482022462282,
+    "replan_count": 3.0595238095238093
+  },
+  "hybrid": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.7142857142857143,
+    "cluster_safe_success": 0.34523809523809523,
+    "relaxed_safe_success": 0.6309523809523809,
+    "wall_contact_s": 11.032825892280906,
+    "max_continuous_wall_contact_s": 5.617006101548012,
+    "obstacle_events_static": 2.8214285714285716,
+    "obstacle_events_dynamic": 0.5595238095238095,
+    "removal_auc": 0.5720172985467112,
+    "replan_count": 0.0
+  },
+  "hybrid_replan": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.7261904761904762,
+    "cluster_safe_success": 0.3333333333333333,
+    "relaxed_safe_success": 0.6428571428571429,
+    "wall_contact_s": 6.901307700340435,
+    "max_continuous_wall_contact_s": 0.610173168091783,
+    "obstacle_events_static": 3.0595238095238093,
+    "obstacle_events_dynamic": 0.5595238095238095,
+    "removal_auc": 0.5736595230835589,
+    "replan_count": 2.392857142857143
+  }
+}

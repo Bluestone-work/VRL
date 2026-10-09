@@ -1,0 +1,28 @@
+{
+  "all_semantic": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.7142857142857143,
+    "cluster_safe_success": 0.2619047619047619,
+    "relaxed_safe_success": 0.5476190476190477,
+    "wall_contact_s": 14.472305423512855,
+    "max_continuous_wall_contact_s": 4.86219585757681,
+    "obstacle_events_static": 1.4404761904761905,
+    "obstacle_events_dynamic": 0.6428571428571429,
+    "removal_auc": 0.5773306707292335,
+    "replan_count": 4.238095238095238
+  },
+  "progress_bound_risk": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.8095238095238095,
+    "cluster_safe_success": 0.2857142857142857,
+    "relaxed_safe_success": 0.5595238095238095,
+    "wall_contact_s": 11.125771586472636,
+    "max_continuous_wall_contact_s": 4.636799206976384,
+    "obstacle_events_static": 1.4285714285714286,
+    "obstacle_events_dynamic": 0.6190476190476191,
+    "removal_auc": 0.6122844480536509,
+    "replan_count": 3.369047619047619
+  }
+}

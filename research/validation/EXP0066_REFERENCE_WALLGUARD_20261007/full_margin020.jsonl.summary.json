@@ -1,0 +1,28 @@
+{
+  "semantic_no_gate": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.8333333333333334,
+    "cluster_safe_success": 0.25,
+    "relaxed_safe_success": 0.5595238095238095,
+    "wall_contact_s": 9.459931645012514,
+    "max_continuous_wall_contact_s": 4.054284756339476,
+    "obstacle_events_static": 1.2023809523809523,
+    "obstacle_events_dynamic": 0.6071428571428571,
+    "removal_auc": 0.612955090123734,
+    "replan_count": 2.8452380952380953
+  },
+  "semantic_reference_guard": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.8214285714285714,
+    "cluster_safe_success": 0.27380952380952384,
+    "relaxed_safe_success": 0.5833333333333334,
+    "wall_contact_s": 6.403739490937191,
+    "max_continuous_wall_contact_s": 0.7717173869547264,
+    "obstacle_events_static": 1.2380952380952381,
+    "obstacle_events_dynamic": 0.6547619047619048,
+    "removal_auc": 0.6073158908958328,
+    "replan_count": 2.25
+  }
+}

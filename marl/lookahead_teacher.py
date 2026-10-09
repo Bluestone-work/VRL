@@ -129,14 +129,48 @@ def _nearest(ep, est, i):
     return best
 
 
+def _direction(ep, est, i, frame):
+    """Primitive reference direction d (local frame). 'carrot' (default): toward the pure-pursuit carrot from
+    the estimated position (route direction + cross-track correction); 'route': route tangent at the matched
+    map station (no cross-track term); 'velocity': estimated own velocity; 'fused': 0.6 route + 0.4 velocity."""
+    nom = np.asarray(ep.ctl.nominal[i], float)
+    if frame == 'carrot' or not np.any(nom):
+        return nom
+    tan = np.array([1., 0., 0.])*(1. if nom[0] >= 0 else -1.)
+    F = ep.ctl.frames(est)[i]; v = F@np.asarray(est.vel[i], float); nv = np.linalg.norm(v)
+    vel = v/nv if nv > .1*float(ep.env.config.robot_speed_mm_s) else tan
+    if frame == 'route':
+        return tan
+    if frame == 'velocity':
+        return vel
+    f = .6*tan+.4*vel
+    return f/max(np.linalg.norm(f), 1e-9)
+
+
 def primitive_local(ep, est, rule, action):
-    """Local-frame command of a primitive; reads only deployable estimates (detections, map, own estimate)."""
+    """Local-frame command of a primitive; reads only deployable estimates (detections, map, own estimate).
+    Optional ep.prim_cfg = dict(frame='carrot'|'route'|'velocity'|'fused', safety=None|'sdf') (ablations)."""
+    cfg = getattr(ep, 'prim_cfg', None) or {}
+    u = _primitive_raw(ep, est, action, cfg.get('frame', 'carrot'))
+    if cfg.get('safety') == 'sdf':
+        from marl.vessel_sdf import VesselSDF, wall_safe_projection
+        if getattr(ep, '_sdf', None) is None:
+            ep._sdf = VesselSDF(ep.sensor)
+        F = ep.ctl.frames(est)
+        for i in range(ep.n):
+            if est.active[i] and np.any(u[i]):
+                w = wall_safe_projection(F[i].T@u[i], est.pos[i], ep._sdf, float(ep.ctl.body), cfg.get('margin', .25), edge=int(est.edge[i]) if cfg.get('local', True) else None)
+                u[i] = F[i]@w
+    return u
+
+
+def _primitive_raw(ep, est, action, frame='carrot'):
     u = np.zeros((ep.n, 3)); F = ep.ctl.frames(est)
     step = int(round(ep.env.elapsed_s/ep.env.config.control_dt_s))
     for i in range(ep.n):
         if not est.active[i]:
             continue
-        d = np.asarray(ep.ctl.nominal[i], float); nd = np.linalg.norm(d)
+        d = _direction(ep, est, i, frame); nd = np.linalg.norm(d)
         if nd < 1e-9:
             continue
         d = d/nd; name = PRIMITIVE_NAMES[action]; lat = np.zeros(3)
@@ -158,7 +192,7 @@ def primitive_local(ep, est, rule, action):
     return u
 
 
-def label_primitives(ep, est, rule, hold, hold_steps=5, tail=25):
+def label_primitives(ep, est, rule, hold, hold_steps=5, tail=25, tail_policy='switch'):
     """Teacher v2 over the primitive set: each primitive committed for hold_steps, then the copied episode
     continues under the deployable rule_switch for tail steps (value estimate only)."""
     before = ep.env.positions_mm[:ep.n].copy(); costs = np.full(len(PRIMITIVE_NAMES), np.inf)
@@ -166,7 +200,12 @@ def label_primitives(ep, est, rule, hold, hold_steps=5, tail=25):
         trial = copy.deepcopy(ep); trial.prev_local = ep.prev_local.copy(); total = 0.
         for step in range(hold_steps+tail):
             t_est, _, t_rule, t_hold = trial.observe()
-            loc = primitive_local(trial, t_est, t_rule, a) if step < hold_steps else option_local(trial, t_est, t_rule, 8)
+            if step < hold_steps:
+                loc = primitive_local(trial, t_est, t_rule, a)
+            elif tail_policy == 'switch':
+                loc = option_local(trial, t_est, t_rule, 8)
+            else:              # 'hold': keep the same primitive (pure primitive evaluation, no heuristic)
+                loc = primitive_local(trial, t_est, t_rule, a)
             done, out = trial.step(t_est, loc, t_hold)
             total += _score(trial, before, out, trial.env.positions_mm[:trial.n])
             if done: break

@@ -1,0 +1,99 @@
+{"anatomy": "mca_m1_lvo", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000005, "method": "all_semantic", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000001, "method": "all_semantic", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000002, "method": "all_semantic", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000003, "method": "all_semantic", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000004, "method": "all_semantic", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000005, "method": "all_semantic", "error": null}
+{
+  "all_semantic": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.8214285714285714,
+    "cluster_safe_success": 0.2976190476190476,
+    "relaxed_safe_success": 0.5595238095238095,
+    "wall_contact_s": 10.863920414227485,
+    "max_continuous_wall_contact_s": 4.565079927303853,
+    "obstacle_events_static": 1.3571428571428572,
+    "obstacle_events_dynamic": 0.6309523809523809,
+    "removal_auc": 0.6119003209781516,
+    "replan_count": 3.3095238095238093
+  }
+}

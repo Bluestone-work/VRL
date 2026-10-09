@@ -1,0 +1,15 @@
+{
+  "all_semantic": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.8214285714285714,
+    "cluster_safe_success": 0.2976190476190476,
+    "relaxed_safe_success": 0.5595238095238095,
+    "wall_contact_s": 10.863920414227485,
+    "max_continuous_wall_contact_s": 4.565079927303853,
+    "obstacle_events_static": 1.3571428571428572,
+    "obstacle_events_dynamic": 0.6309523809523809,
+    "removal_auc": 0.6119003209781516,
+    "replan_count": 3.3095238095238093
+  }
+}

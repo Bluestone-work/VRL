@@ -1,0 +1,22 @@
+{
+  "initial_recipe": {
+    "lr": 0.0001,
+    "gamma": 0.995,
+    "entropy": 0.01,
+    "world_weight": 0.1,
+    "model_warmup": 8,
+    "wall_weight": 12.0,
+    "particle_weight": 12.0,
+    "updates": 120,
+    "parent_kind": "final"
+  },
+  "max_rounds": 24,
+  "screen_anatomies": "mca_m1_lvo,ica_terminus_t,renal_artery",
+  "screen_scenes": 4,
+  "workers": 2,
+  "rollout": 128,
+  "minutes_per_run": 45,
+  "advancement": "safe/efficiency improvement with no removal/wall/particle/spacing regression; development only",
+  "morning": "09:00 stage snapshot, not a stop",
+  "formal_EXP0060_unchanged": true
+}

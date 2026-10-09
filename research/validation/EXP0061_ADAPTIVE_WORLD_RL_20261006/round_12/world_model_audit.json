@@ -1,0 +1,53 @@
+{
+  "checkpoint_sha256": "33c728ed0d2f93e0df2a6cd77526d02bc94b9865fa34df39bea80af7337ff95e",
+  "protocol": "fixed_behavior_80_percent_pursuit_20_percent_uniform",
+  "inference_uses_simulator_lookahead": false,
+  "development_scenes": [
+    {
+      "anatomy": "mca_m1_lvo",
+      "seed": 2810000200,
+      "initial_state_hash": "b1bd14dc158a66d4296516186361fe7fb9178cd75d863c1bff9dc243d6bae8fe"
+    },
+    {
+      "anatomy": "ica_terminus_t",
+      "seed": 2810070200,
+      "initial_state_hash": "dac1663c6b5cb8f78a2eb5bbe4b73b068e2754e86bc5aaa7f58126e9531e602d"
+    },
+    {
+      "anatomy": "renal_artery",
+      "seed": 2810130200,
+      "initial_state_hash": "c75d5f4750ad87b4ad57684e1d442114860339cf0c8d2b3c4be7cae53e72bda9"
+    }
+  ],
+  "agent_transitions": 720,
+  "next_state_mse": 0.27905421902347977,
+  "persistence_mse": 0.27994535222468486,
+  "reward_mse": 0.04283763338917043,
+  "zero_reward_mse": 0.04496313459729914,
+  "hazard_names": [
+    "wall",
+    "particle",
+    "spacing"
+  ],
+  "hazard_brier": [
+    0.01753638950146488,
+    0.008880037434946362,
+    0.0037939363423242964
+  ],
+  "zero_risk_brier": [
+    0.016666666666666666,
+    0.005555555555555556,
+    0.0
+  ],
+  "positive_counts": [
+    12.0,
+    4.0,
+    0.0
+  ],
+  "predicted_risk_mean": [
+    0.059132082786204083,
+    0.06173924456040065,
+    0.05980229392751223
+  ],
+  "interpretation": "Development prediction diagnostic only; zero-positive hazards do not demonstrate useful avoidance prediction."
+}

@@ -1,0 +1,604 @@
+{
+  "protocol": {
+    "reference": "research/validation/EXP0066_REFERENCE_WALLGUARD_20261007/full_margin020_gain040.jsonl",
+    "reference_method": "semantic_reference_guard",
+    "candidates": [
+      "research/validation/OBST_BENCH_20261006/gates/G3img_rule_noavoid.jsonl",
+      "research/validation/OBST_BENCH_20261006/gates/G3img_rule_apf.jsonl",
+      "research/validation/OBST_BENCH_20261006/gates/G3img_rule_switch.jsonl",
+      "research/validation/OBST_BENCH_20261006/gates/G3_vp_bc_s0_step01002k.jsonl",
+      "research/validation/OBST_BENCH_20261006/gates/G3_vpwa_s0_step02044k.jsonl",
+      "research/validation/OBST_BENCH_20261006/gates/G3_vp_wm_s0_step01049k.jsonl",
+      "research/validation/EXP0067_PREDICTIVE_LOCAL_20261007/full.jsonl"
+    ],
+    "candidate_methods": [
+      "rule_noavoid",
+      "rule_apf",
+      "rule_switch",
+      "-",
+      "-",
+      "-",
+      "local_replan"
+    ]
+  },
+  "reference": {
+    "episodes": 84,
+    "task_success": 0.8214285714285714,
+    "cluster_safe_success": 0.2857142857142857,
+    "relaxed_safe_success": 0.5833333333333334,
+    "wall_contact_s": 6.728096467918594,
+    "max_continuous_wall_contact_s": 0.7955587907057163,
+    "obstacle_events_static": 1.1547619047619047,
+    "obstacle_events_dynamic": 0.5476190476190477
+  },
+  "reference_errors": [],
+  "candidates": {
+    "rule_noavoid": {
+      "summary": {
+        "episodes": 84,
+        "task_success": 0.8571428571428571,
+        "cluster_safe_success": 0.011904761904761904,
+        "relaxed_safe_success": 0.07142857142857142,
+        "wall_contact_s": 8.433278096691295,
+        "max_continuous_wall_contact_s": 8.42798807599829,
+        "obstacle_events_static": 3.6666666666666665,
+        "obstacle_events_dynamic": 3.2023809523809526
+      },
+      "errors": [],
+      "paired_vs_reference": {
+        "episodes": 84,
+        "metrics": {
+          "task_success": {
+            "reference": 0.8214285714285714,
+            "candidate": 0.8571428571428571,
+            "delta": 0.03571428571428571,
+            "bootstrap_95": [
+              -0.011904761904761904,
+              0.09523809523809523
+            ]
+          },
+          "cluster_safe_success": {
+            "reference": 0.2857142857142857,
+            "candidate": 0.011904761904761904,
+            "delta": -0.27380952380952384,
+            "bootstrap_95": [
+              -0.36904761904761907,
+              -0.17857142857142858
+            ]
+          },
+          "relaxed_safe_success": {
+            "reference": 0.5833333333333334,
+            "candidate": 0.07142857142857142,
+            "delta": -0.5119047619047619,
+            "bootstrap_95": [
+              -0.6309523809523809,
+              -0.39285714285714285
+            ]
+          },
+          "wall_contact_s": {
+            "reference": 6.728096467918595,
+            "candidate": 8.433278096691295,
+            "delta": 1.7051816287727004,
+            "bootstrap_95": [
+              -4.268276640718293,
+              8.921239798009898
+            ]
+          },
+          "max_continuous_wall_contact_s": {
+            "reference": 0.7955587907057164,
+            "candidate": 8.42798807599829,
+            "delta": 7.632429285292574,
+            "bootstrap_95": [
+              -0.5749809140665778,
+              18.58314721219667
+            ]
+          },
+          "obstacle_events_static": {
+            "reference": 1.1547619047619047,
+            "candidate": 3.6666666666666665,
+            "delta": 2.511904761904762,
+            "bootstrap_95": [
+              1.4642857142857142,
+              3.4047619047619047
+            ]
+          },
+          "obstacle_events_dynamic": {
+            "reference": 0.5476190476190477,
+            "candidate": 3.2023809523809526,
+            "delta": 2.6547619047619047,
+            "bootstrap_95": [
+              1.9880952380952381,
+              3.4047619047619047
+            ]
+          }
+        }
+      }
+    },
+    "rule_apf": {
+      "summary": {
+        "episodes": 84,
+        "task_success": 0.32142857142857145,
+        "cluster_safe_success": 0.16666666666666666,
+        "relaxed_safe_success": 0.27380952380952384,
+        "wall_contact_s": 9.522020018213814,
+        "max_continuous_wall_contact_s": 2.763303301494461,
+        "obstacle_events_static": 0.011904761904761904,
+        "obstacle_events_dynamic": 0.09523809523809523
+      },
+      "errors": [],
+      "paired_vs_reference": {
+        "episodes": 84,
+        "metrics": {
+          "task_success": {
+            "reference": 0.8214285714285714,
+            "candidate": 0.32142857142857145,
+            "delta": -0.5,
+            "bootstrap_95": [
+              -0.6071428571428571,
+              -0.39285714285714285
+            ]
+          },
+          "cluster_safe_success": {
+            "reference": 0.2857142857142857,
+            "candidate": 0.16666666666666666,
+            "delta": -0.11904761904761904,
+            "bootstrap_95": [
+              -0.2261904761904762,
+              -0.023809523809523808
+            ]
+          },
+          "relaxed_safe_success": {
+            "reference": 0.5833333333333334,
+            "candidate": 0.27380952380952384,
+            "delta": -0.30952380952380953,
+            "bootstrap_95": [
+              -0.4166666666666667,
+              -0.20238095238095238
+            ]
+          },
+          "wall_contact_s": {
+            "reference": 6.728096467918595,
+            "candidate": 9.522020018213812,
+            "delta": 2.7939235502952187,
+            "bootstrap_95": [
+              -2.297277494515755,
+              8.556743192359527
+            ]
+          },
+          "max_continuous_wall_contact_s": {
+            "reference": 0.7955587907057164,
+            "candidate": 2.7633033014944606,
+            "delta": 1.9677445107887446,
+            "bootstrap_95": [
+              -0.14106016173016403,
+              5.917490706038277
+            ]
+          },
+          "obstacle_events_static": {
+            "reference": 1.1547619047619047,
+            "candidate": 0.011904761904761904,
+            "delta": -1.1428571428571428,
+            "bootstrap_95": [
+              -2.119047619047619,
+              -0.44047619047619047
+            ]
+          },
+          "obstacle_events_dynamic": {
+            "reference": 0.5476190476190477,
+            "candidate": 0.09523809523809523,
+            "delta": -0.4523809523809524,
+            "bootstrap_95": [
+              -0.6788690476190474,
+              -0.25
+            ]
+          }
+        }
+      }
+    },
+    "rule_switch": {
+      "summary": {
+        "episodes": 84,
+        "task_success": 0.6666666666666666,
+        "cluster_safe_success": 0.17857142857142858,
+        "relaxed_safe_success": 0.6190476190476191,
+        "wall_contact_s": 12.539641672983164,
+        "max_continuous_wall_contact_s": 9.15251033046014,
+        "obstacle_events_static": 4.904761904761905,
+        "obstacle_events_dynamic": 1.2857142857142858
+      },
+      "errors": [],
+      "paired_vs_reference": {
+        "episodes": 84,
+        "metrics": {
+          "task_success": {
+            "reference": 0.8214285714285714,
+            "candidate": 0.6666666666666666,
+            "delta": -0.15476190476190477,
+            "bootstrap_95": [
+              -0.23809523809523808,
+              -0.07142857142857142
+            ]
+          },
+          "cluster_safe_success": {
+            "reference": 0.2857142857142857,
+            "candidate": 0.17857142857142858,
+            "delta": -0.10714285714285714,
+            "bootstrap_95": [
+              -0.19047619047619047,
+              -0.023809523809523808
+            ]
+          },
+          "relaxed_safe_success": {
+            "reference": 0.5833333333333334,
+            "candidate": 0.6190476190476191,
+            "delta": 0.03571428571428571,
+            "bootstrap_95": [
+              -0.05952380952380952,
+              0.11904761904761904
+            ]
+          },
+          "wall_contact_s": {
+            "reference": 6.728096467918595,
+            "candidate": 12.539641672983164,
+            "delta": 5.8115452050645695,
+            "bootstrap_95": [
+              -0.4581771711197628,
+              13.29323361509483
+            ]
+          },
+          "max_continuous_wall_contact_s": {
+            "reference": 0.7955587907057164,
+            "candidate": 9.15251033046014,
+            "delta": 8.356951539754423,
+            "bootstrap_95": [
+              0.6869761424444308,
+              18.858796204392867
+            ]
+          },
+          "obstacle_events_static": {
+            "reference": 1.1547619047619047,
+            "candidate": 4.904761904761905,
+            "delta": 3.75,
+            "bootstrap_95": [
+              1.0476190476190477,
+              6.9288690476190435
+            ]
+          },
+          "obstacle_events_dynamic": {
+            "reference": 0.5476190476190477,
+            "candidate": 1.2857142857142858,
+            "delta": 0.7380952380952381,
+            "bootstrap_95": [
+              0.40476190476190477,
+              1.0952380952380953
+            ]
+          }
+        }
+      }
+    },
+    "G3_vp_bc_s0_step01002k": {
+      "summary": {
+        "episodes": 84,
+        "task_success": 0.44047619047619047,
+        "cluster_safe_success": 0.0,
+        "relaxed_safe_success": 0.07142857142857142,
+        "wall_contact_s": 5.500647392966512,
+        "max_continuous_wall_contact_s": 5.464887875565677,
+        "obstacle_events_static": 1.7261904761904763,
+        "obstacle_events_dynamic": 2.3214285714285716
+      },
+      "errors": [],
+      "paired_vs_reference": {
+        "episodes": 84,
+        "metrics": {
+          "task_success": {
+            "reference": 0.8214285714285714,
+            "candidate": 0.44047619047619047,
+            "delta": -0.38095238095238093,
+            "bootstrap_95": [
+              -0.5,
+              -0.2619047619047619
+            ]
+          },
+          "cluster_safe_success": {
+            "reference": 0.2857142857142857,
+            "candidate": 0.0,
+            "delta": -0.2857142857142857,
+            "bootstrap_95": [
+              -0.38095238095238093,
+              -0.19047619047619047
+            ]
+          },
+          "relaxed_safe_success": {
+            "reference": 0.5833333333333334,
+            "candidate": 0.07142857142857142,
+            "delta": -0.5119047619047619,
+            "bootstrap_95": [
+              -0.6309523809523809,
+              -0.39285714285714285
+            ]
+          },
+          "wall_contact_s": {
+            "reference": 6.728096467918595,
+            "candidate": 5.5006473929665125,
+            "delta": -1.2274490749520812,
+            "bootstrap_95": [
+              -8.800518002071776,
+              5.853134882965674
+            ]
+          },
+          "max_continuous_wall_contact_s": {
+            "reference": 0.7955587907057164,
+            "candidate": 5.464887875565677,
+            "delta": 4.66932908485996,
+            "bootstrap_95": [
+              -0.22949512853000414,
+              13.004408747670743
+            ]
+          },
+          "obstacle_events_static": {
+            "reference": 1.1547619047619047,
+            "candidate": 1.7261904761904763,
+            "delta": 0.5714285714285714,
+            "bootstrap_95": [
+              -0.42857142857142855,
+              1.3452380952380953
+            ]
+          },
+          "obstacle_events_dynamic": {
+            "reference": 0.5476190476190477,
+            "candidate": 2.3214285714285716,
+            "delta": 1.7738095238095237,
+            "bootstrap_95": [
+              1.2857142857142858,
+              2.3095238095238093
+            ]
+          }
+        }
+      }
+    },
+    "G3_vpwa_s0_step02044k": {
+      "summary": {
+        "episodes": 84,
+        "task_success": 0.4523809523809524,
+        "cluster_safe_success": 0.17857142857142858,
+        "relaxed_safe_success": 0.34523809523809523,
+        "wall_contact_s": 22.38993053188949,
+        "max_continuous_wall_contact_s": 22.0726433085267,
+        "obstacle_events_static": 0.5833333333333334,
+        "obstacle_events_dynamic": 0.6190476190476191
+      },
+      "errors": [],
+      "paired_vs_reference": {
+        "episodes": 84,
+        "metrics": {
+          "task_success": {
+            "reference": 0.8214285714285714,
+            "candidate": 0.4523809523809524,
+            "delta": -0.36904761904761907,
+            "bootstrap_95": [
+              -0.47619047619047616,
+              -0.2619047619047619
+            ]
+          },
+          "cluster_safe_success": {
+            "reference": 0.2857142857142857,
+            "candidate": 0.17857142857142858,
+            "delta": -0.10714285714285714,
+            "bootstrap_95": [
+              -0.21428571428571427,
+              0.0
+            ]
+          },
+          "relaxed_safe_success": {
+            "reference": 0.5833333333333334,
+            "candidate": 0.34523809523809523,
+            "delta": -0.23809523809523808,
+            "bootstrap_95": [
+              -0.34523809523809523,
+              -0.13095238095238096
+            ]
+          },
+          "wall_contact_s": {
+            "reference": 6.728096467918595,
+            "candidate": 22.389930531889487,
+            "delta": 15.661834063970895,
+            "bootstrap_95": [
+              6.308360576410515,
+              26.98076694739293
+            ]
+          },
+          "max_continuous_wall_contact_s": {
+            "reference": 0.7955587907057164,
+            "candidate": 22.0726433085267,
+            "delta": 21.277084517820988,
+            "bootstrap_95": [
+              8.94852510343801,
+              35.931266842621795
+            ]
+          },
+          "obstacle_events_static": {
+            "reference": 1.1547619047619047,
+            "candidate": 0.5833333333333334,
+            "delta": -0.5714285714285714,
+            "bootstrap_95": [
+              -1.5119047619047619,
+              0.08333333333333333
+            ]
+          },
+          "obstacle_events_dynamic": {
+            "reference": 0.5476190476190477,
+            "candidate": 0.6190476190476191,
+            "delta": 0.07142857142857142,
+            "bootstrap_95": [
+              -0.11904761904761904,
+              0.27380952380952384
+            ]
+          }
+        }
+      }
+    },
+    "G3_vp_wm_s0_step01049k": {
+      "summary": {
+        "episodes": 84,
+        "task_success": 0.7023809523809523,
+        "cluster_safe_success": 0.19047619047619047,
+        "relaxed_safe_success": 0.4523809523809524,
+        "wall_contact_s": 28.89669577798889,
+        "max_continuous_wall_contact_s": 26.71507727024885,
+        "obstacle_events_static": 0.38095238095238093,
+        "obstacle_events_dynamic": 0.30952380952380953
+      },
+      "errors": [],
+      "paired_vs_reference": {
+        "episodes": 84,
+        "metrics": {
+          "task_success": {
+            "reference": 0.8214285714285714,
+            "candidate": 0.7023809523809523,
+            "delta": -0.11904761904761904,
+            "bootstrap_95": [
+              -0.20238095238095238,
+              -0.047619047619047616
+            ]
+          },
+          "cluster_safe_success": {
+            "reference": 0.2857142857142857,
+            "candidate": 0.19047619047619047,
+            "delta": -0.09523809523809523,
+            "bootstrap_95": [
+              -0.17857142857142858,
+              -0.011904761904761904
+            ]
+          },
+          "relaxed_safe_success": {
+            "reference": 0.5833333333333334,
+            "candidate": 0.4523809523809524,
+            "delta": -0.13095238095238096,
+            "bootstrap_95": [
+              -0.21428571428571427,
+              -0.047619047619047616
+            ]
+          },
+          "wall_contact_s": {
+            "reference": 6.728096467918595,
+            "candidate": 28.896695777988892,
+            "delta": 22.168599310070295,
+            "bootstrap_95": [
+              11.019973481257963,
+              34.94743535435863
+            ]
+          },
+          "max_continuous_wall_contact_s": {
+            "reference": 0.7955587907057164,
+            "candidate": 26.71507727024885,
+            "delta": 25.919518479543132,
+            "bootstrap_95": [
+              12.242287898518025,
+              41.53297970852941
+            ]
+          },
+          "obstacle_events_static": {
+            "reference": 1.1547619047619047,
+            "candidate": 0.38095238095238093,
+            "delta": -0.7738095238095238,
+            "bootstrap_95": [
+              -1.6312499999999996,
+              -0.14285714285714285
+            ]
+          },
+          "obstacle_events_dynamic": {
+            "reference": 0.5476190476190477,
+            "candidate": 0.30952380952380953,
+            "delta": -0.23809523809523808,
+            "bootstrap_95": [
+              -0.4523809523809524,
+              -0.047619047619047616
+            ]
+          }
+        }
+      }
+    },
+    "local_replan": {
+      "summary": {
+        "episodes": 84,
+        "task_success": 0.32142857142857145,
+        "cluster_safe_success": 0.15476190476190477,
+        "relaxed_safe_success": 0.2619047619047619,
+        "wall_contact_s": 17.413534288962666,
+        "max_continuous_wall_contact_s": 6.970323363460433,
+        "obstacle_events_static": 1.8452380952380953,
+        "obstacle_events_dynamic": 0.75
+      },
+      "errors": [],
+      "paired_vs_reference": {
+        "episodes": 84,
+        "metrics": {
+          "task_success": {
+            "reference": 0.8214285714285714,
+            "candidate": 0.32142857142857145,
+            "delta": -0.5,
+            "bootstrap_95": [
+              -0.6071428571428571,
+              -0.39285714285714285
+            ]
+          },
+          "cluster_safe_success": {
+            "reference": 0.2857142857142857,
+            "candidate": 0.15476190476190477,
+            "delta": -0.13095238095238096,
+            "bootstrap_95": [
+              -0.2261904761904762,
+              -0.03571428571428571
+            ]
+          },
+          "relaxed_safe_success": {
+            "reference": 0.5833333333333334,
+            "candidate": 0.2619047619047619,
+            "delta": -0.32142857142857145,
+            "bootstrap_95": [
+              -0.44047619047619047,
+              -0.20238095238095238
+            ]
+          },
+          "wall_contact_s": {
+            "reference": 6.728096467918595,
+            "candidate": 17.413534288962662,
+            "delta": 10.685437821044067,
+            "bootstrap_95": [
+              2.114274827064663,
+              20.598000724287942
+            ]
+          },
+          "max_continuous_wall_contact_s": {
+            "reference": 0.7955587907057164,
+            "candidate": 6.970323363460432,
+            "delta": 6.174764572754715,
+            "bootstrap_95": [
+              1.2138931200452145,
+              14.158126203757273
+            ]
+          },
+          "obstacle_events_static": {
+            "reference": 1.1547619047619047,
+            "candidate": 1.8452380952380953,
+            "delta": 0.6904761904761905,
+            "bootstrap_95": [
+              -1.130952380952381,
+              3.0476190476190474
+            ]
+          },
+          "obstacle_events_dynamic": {
+            "reference": 0.5476190476190477,
+            "candidate": 0.75,
+            "delta": 0.20238095238095238,
+            "bootstrap_95": [
+              -0.023809523809523808,
+              0.42857142857142855
+            ]
+          }
+        }
+      }
+    }
+  }
+}

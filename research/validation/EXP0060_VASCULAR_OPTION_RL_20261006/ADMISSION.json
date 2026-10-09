@@ -1,0 +1,28 @@
+{
+  "tests": "tests/test_vascular_option_rl.py + tests/test_union_junction.py",
+  "passed": 7,
+  "training_smokes": [
+    "memory_mappo original short 2 updates",
+    "ff_mappo clean admitted affinity 1 update",
+    "memory_ippo clean admitted affinity 1 update"
+  ],
+  "pilot_updates": 40,
+  "pilot_agent_control_steps": 268450,
+  "paired_pilot_scenes": 12,
+  "pilot_baseline_safe": 5,
+  "pilot_rl_safe": 5,
+  "initial_state_hashes_match": true,
+  "runtime": "cpu312-clean-20261004",
+  "excluded_cpus": [
+    6,
+    7
+  ],
+  "affinity_reason": "Existing repository record in scripts/run_scaling_smokes.sh and research/RESEARCH_LOG.md; not a hardware root cause proof",
+  "unrestricted_affinity_failures": [
+    "original runtime baseline SIGILL exit132",
+    "original runtime baseline SIGSEGV in dynamics.coordinates",
+    "clean runtime baseline SIGSEGV in numpy.linalg.norm",
+    "clean runtime pilot worker SIGSEGV, parent EOFError after 3 updates"
+  ],
+  "deadline_local": "2026-10-06 08:35 Asia/Shanghai"
+}

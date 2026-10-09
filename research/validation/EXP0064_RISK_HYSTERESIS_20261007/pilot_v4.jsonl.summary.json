@@ -1,0 +1,28 @@
+{
+  "all_semantic": {
+    "episodes": 24,
+    "errors": 0,
+    "task_success": 0.4583333333333333,
+    "cluster_safe_success": 0.125,
+    "relaxed_safe_success": 0.25,
+    "wall_contact_s": 42.371312129746876,
+    "max_continuous_wall_contact_s": 15.708892579950641,
+    "obstacle_events_static": 3.8333333333333335,
+    "obstacle_events_dynamic": 1.2083333333333333,
+    "removal_auc": 0.5003758272048113,
+    "replan_count": 12.208333333333334
+  },
+  "risk_hysteresis": {
+    "episodes": 24,
+    "errors": 0,
+    "task_success": 0.5,
+    "cluster_safe_success": 0.041666666666666664,
+    "relaxed_safe_success": 0.25,
+    "wall_contact_s": 26.55513439545994,
+    "max_continuous_wall_contact_s": 10.857733996386072,
+    "obstacle_events_static": 2.2083333333333335,
+    "obstacle_events_dynamic": 1.2083333333333333,
+    "removal_auc": 0.5139947316034151,
+    "replan_count": 7.833333333333333
+  }
+}

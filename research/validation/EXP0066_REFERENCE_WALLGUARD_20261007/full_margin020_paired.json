@@ -1,0 +1,75 @@
+{
+  "datasets": [],
+  "paired": {
+    "paired": 84,
+    "reference_only": 0,
+    "candidate_only": 0,
+    "reference_errors": [],
+    "candidate_errors": [],
+    "metrics": {
+      "cluster_safe_success": {
+        "reference": 0.25,
+        "candidate": 0.27380952380952384,
+        "delta": 0.023809523809523808,
+        "paired_bootstrap_95": [
+          0.0,
+          0.05952380952380952
+        ]
+      },
+      "relaxed_safe_success": {
+        "reference": 0.5595238095238095,
+        "candidate": 0.5833333333333334,
+        "delta": 0.023809523809523808,
+        "paired_bootstrap_95": [
+          -0.023809523809523808,
+          0.07142857142857142
+        ]
+      },
+      "task_success": {
+        "reference": 0.8333333333333334,
+        "candidate": 0.8214285714285714,
+        "delta": -0.011904761904761904,
+        "paired_bootstrap_95": [
+          -0.03571428571428571,
+          0.0
+        ]
+      },
+      "wall_contact_s": {
+        "reference": 9.459931645012517,
+        "candidate": 6.403739490937193,
+        "delta": -3.056192154075323,
+        "paired_bootstrap_95": [
+          -7.614792084519648,
+          -0.16113687071447325
+        ]
+      },
+      "max_continuous_wall_contact_s": {
+        "reference": 4.054284756339477,
+        "candidate": 0.7717173869547265,
+        "delta": -3.2825673693847506,
+        "paired_bootstrap_95": [
+          -8.191097003231876,
+          -0.0424489467567154
+        ]
+      },
+      "obstacle_events_static": {
+        "reference": 1.2023809523809523,
+        "candidate": 1.2380952380952381,
+        "delta": 0.03571428571428571,
+        "paired_bootstrap_95": [
+          -0.23809523809523808,
+          0.3574404761904773
+        ]
+      },
+      "obstacle_events_dynamic": {
+        "reference": 0.6071428571428571,
+        "candidate": 0.6547619047619048,
+        "delta": 0.047619047619047616,
+        "paired_bootstrap_95": [
+          -0.07142857142857142,
+          0.20238095238095238
+        ]
+      }
+    }
+  }
+}

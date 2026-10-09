@@ -1,0 +1,17 @@
+{
+  "round": 16,
+  "recipe": {
+    "lr": 1e-05,
+    "gamma": 0.9995,
+    "entropy": 0.025,
+    "world_weight": 0.025,
+    "model_warmup": 24,
+    "wall_weight": 32.0,
+    "particle_weight": 24.0,
+    "updates": 240,
+    "parent_kind": "initial"
+  },
+  "parent": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP0060_VASCULAR_OPTION_RL_20261006/memory_mappo_s0/initial.pt",
+  "parent_sha256": "7dcd5a3ac0ba9663c368da149da87db036680d0e73b7336f3c685f7e7a49cef1",
+  "comparisons": {}
+}

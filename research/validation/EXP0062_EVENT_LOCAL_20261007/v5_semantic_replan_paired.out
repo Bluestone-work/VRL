@@ -1,0 +1,75 @@
+{
+  "datasets": [],
+  "paired": {
+    "paired": 84,
+    "reference_only": 0,
+    "candidate_only": 0,
+    "reference_errors": [],
+    "candidate_errors": [],
+    "metrics": {
+      "cluster_safe_success": {
+        "reference": 0.17857142857142858,
+        "candidate": 0.30952380952380953,
+        "delta": 0.13095238095238096,
+        "paired_bootstrap_95": [
+          0.03571428571428571,
+          0.23809523809523808
+        ]
+      },
+      "relaxed_safe_success": {
+        "reference": 0.6428571428571429,
+        "candidate": 0.5357142857142857,
+        "delta": -0.10714285714285714,
+        "paired_bootstrap_95": [
+          -0.20238095238095238,
+          -0.011904761904761904
+        ]
+      },
+      "task_success": {
+        "reference": 0.7023809523809523,
+        "candidate": 0.8214285714285714,
+        "delta": 0.11904761904761904,
+        "paired_bootstrap_95": [
+          0.023809523809523808,
+          0.21428571428571427
+        ]
+      },
+      "wall_contact_s": {
+        "reference": 7.795297864882245,
+        "candidate": 8.456087298011216,
+        "delta": 0.6607894331289728,
+        "paired_bootstrap_95": [
+          -5.257073305230236,
+          7.205714969244017
+        ]
+      },
+      "max_continuous_wall_contact_s": {
+        "reference": 4.561591683859196,
+        "candidate": 0.9543834751530488,
+        "delta": -3.607208208706147,
+        "paired_bootstrap_95": [
+          -11.786375230541902,
+          0.6982359942519563
+        ]
+      },
+      "obstacle_events_static": {
+        "reference": 2.9642857142857144,
+        "candidate": 0.8095238095238095,
+        "delta": -2.1547619047619047,
+        "paired_bootstrap_95": [
+          -4.702678571428572,
+          -0.17857142857142858
+        ]
+      },
+      "obstacle_events_dynamic": {
+        "reference": 1.2857142857142858,
+        "candidate": 0.5,
+        "delta": -0.7857142857142857,
+        "paired_bootstrap_95": [
+          -1.2142857142857142,
+          -0.40476190476190477
+        ]
+      }
+    }
+  }
+}

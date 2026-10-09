@@ -95,8 +95,8 @@ def apf(local, obstacles_local, body, wall_dir=None, wall_gap=None):
 
 
 class APFPursuit(DeployablePursuit):
-    def __init__(self, env, sensor, avoid=True):
-        super().__init__(env, sensor); self.avoid = avoid
+    def __init__(self, env, sensor, avoid=True, topo=False):
+        super().__init__(env, sensor, topo=topo); self.avoid = avoid
 
     def act(self, targets, est):
         local = super().act(targets, est)                 # route direction (no debris: particles empty)

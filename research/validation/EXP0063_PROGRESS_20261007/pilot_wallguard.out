@@ -1,0 +1,18 @@
+{"anatomy": "pulmonary_saddle", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000000, "method": "all_semantic", "error": null}
+{
+  "all_semantic": {
+    "episodes": 3,
+    "errors": 0,
+    "task_success": 0.6666666666666666,
+    "cluster_safe_success": 0.0,
+    "relaxed_safe_success": 0.0,
+    "wall_contact_s": 2.733333333333329,
+    "max_continuous_wall_contact_s": 0.2333333333333333,
+    "obstacle_events_static": 14.666666666666666,
+    "obstacle_events_dynamic": 0.0,
+    "removal_auc": 0.4788786206931071,
+    "replan_count": 0.0
+  }
+}

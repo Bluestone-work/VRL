@@ -1,0 +1,197 @@
+{
+  "round": 11,
+  "recipe": {
+    "lr": 5e-05,
+    "gamma": 0.9995,
+    "entropy": 0.025,
+    "world_weight": 0.025,
+    "model_warmup": 24,
+    "wall_weight": 32.0,
+    "particle_weight": 24.0,
+    "updates": 240,
+    "parent_kind": "final"
+  },
+  "parent": "/home/wj/\u684c\u9762/vascular_marl_local.tar./research/runs/EXP0060_VASCULAR_OPTION_RL_20261006/memory_mappo_s0/final.pt",
+  "parent_sha256": "fbc9f11add869f799909fe1b979ff3373338b712a006a408b0db0dc3ef821b47",
+  "comparisons": {
+    "continued_ppo": {
+      "n": 12,
+      "scene_hashes_match": true,
+      "cluster_safe_success": {
+        "candidate": 0.4166666666666667,
+        "baseline": 0.5833333333333334,
+        "delta": -0.16666666666666666,
+        "ci95": [
+          -0.4166666666666667,
+          0.0
+        ]
+      },
+      "removal": {
+        "candidate": 0.9791666666666666,
+        "baseline": 1.0,
+        "delta": -0.020833333333333332,
+        "ci95": [
+          -0.0625,
+          0.0
+        ]
+      },
+      "removal_auc": {
+        "candidate": 0.8979253656918936,
+        "baseline": 0.907514169648923,
+        "delta": -0.009588803957029471,
+        "ci95": [
+          -0.046079145415329995,
+          0.011137040675149978
+        ]
+      },
+      "wall_contact_s": {
+        "candidate": 22.609071171038682,
+        "baseline": 0.3921680169829054,
+        "delta": 22.216903154055775,
+        "ci95": [
+          0.013498821498108882,
+          66.57925386443286
+        ]
+      },
+      "particle_events": {
+        "candidate": 0.8333333333333334,
+        "baseline": 0.5833333333333334,
+        "delta": 0.25,
+        "ci95": [
+          -0.5,
+          1.0833333333333333
+        ]
+      },
+      "spacing_violation_pair_s": 0.0,
+      "baseline_spacing_violation_pair_s": 0.0,
+      "promising": false,
+      "label": "not_accepted_continue_research"
+    },
+    "world_ppo": {
+      "n": 12,
+      "scene_hashes_match": true,
+      "cluster_safe_success": {
+        "candidate": 0.4166666666666667,
+        "baseline": 0.5833333333333334,
+        "delta": -0.16666666666666666,
+        "ci95": [
+          -0.4166666666666667,
+          0.0
+        ]
+      },
+      "removal": {
+        "candidate": 0.9791666666666666,
+        "baseline": 1.0,
+        "delta": -0.020833333333333332,
+        "ci95": [
+          -0.0625,
+          0.0
+        ]
+      },
+      "removal_auc": {
+        "candidate": 0.8978900997733303,
+        "baseline": 0.907514169648923,
+        "delta": -0.009624069875592806,
+        "ci95": [
+          -0.04611799041159073,
+          0.011110599450377652
+        ]
+      },
+      "wall_contact_s": {
+        "candidate": 22.598302188914115,
+        "baseline": 0.3921680169829054,
+        "delta": 22.206134171931208,
+        "ci95": [
+          0.012458994495323283,
+          66.55006639906749
+        ]
+      },
+      "particle_events": {
+        "candidate": 0.9166666666666666,
+        "baseline": 0.5833333333333334,
+        "delta": 0.3333333333333333,
+        "ci95": [
+          -0.5,
+          1.1666666666666667
+        ]
+      },
+      "spacing_violation_pair_s": 0.0,
+      "baseline_spacing_violation_pair_s": 0.0,
+      "promising": false,
+      "label": "not_accepted_continue_research"
+    }
+  },
+  "fixed_reference": 2,
+  "world_vs_continued_ppo": {
+    "n": 12,
+    "scene_hashes_match": true,
+    "cluster_safe_success": {
+      "candidate": 0.4166666666666667,
+      "baseline": 0.4166666666666667,
+      "delta": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "removal": {
+      "candidate": 0.9791666666666666,
+      "baseline": 0.9791666666666666,
+      "delta": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "removal_auc": {
+      "candidate": 0.8978900997733303,
+      "baseline": 0.8979253656918936,
+      "delta": -3.5265918563333796e-05,
+      "ci95": [
+        -8.99585261410036e-05,
+        2.999952361325224e-07
+      ]
+    },
+    "wall_contact_s": {
+      "candidate": 22.598302188914115,
+      "baseline": 22.609071171038682,
+      "delta": -0.010768982124570151,
+      "ci95": [
+        -0.031267119370924856,
+        0.0
+      ]
+    },
+    "particle_events": {
+      "candidate": 0.9166666666666666,
+      "baseline": 0.8333333333333334,
+      "delta": 0.08333333333333333,
+      "ci95": [
+        0.0,
+        0.25
+      ]
+    },
+    "spacing_violation_pair_s": 0.0,
+    "baseline_spacing_violation_pair_s": 0.0,
+    "promising": false,
+    "label": "not_accepted_continue_research"
+  },
+  "status": "screen_complete",
+  "next_reasons": [
+    "wall contact regression: increase safety cost equally in both arms",
+    "particle events: strengthen contact cost in both arms",
+    "incomplete clearance: longer reward horizon",
+    "reduce update size after bounded safety coefficients stop changing"
+  ],
+  "next_recipe": {
+    "lr": 2.5e-05,
+    "gamma": 0.9995,
+    "entropy": 0.025,
+    "world_weight": 0.025,
+    "model_warmup": 24,
+    "wall_weight": 32.0,
+    "particle_weight": 24.0,
+    "updates": 240,
+    "parent_kind": "final"
+  },
+  "decision": "continue_next_registered_DRL_round"
+}

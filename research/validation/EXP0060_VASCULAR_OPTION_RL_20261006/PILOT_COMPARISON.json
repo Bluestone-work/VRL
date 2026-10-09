@@ -1,0 +1,19 @@
+{
+  "paired_scenes": 12,
+  "identical_initial_states": true,
+  "baseline_safe": 5,
+  "rl_safe": 5,
+  "auc_delta": -1.4669707962267076e-07,
+  "option_counts": [
+    3437,
+    0,
+    0,
+    40,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "max_spacing_violation": 0.0
+}

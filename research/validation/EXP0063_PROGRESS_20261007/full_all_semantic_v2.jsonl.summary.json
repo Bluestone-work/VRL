@@ -1,0 +1,15 @@
+{
+  "all_semantic": {
+    "episodes": 0,
+    "errors": 84,
+    "task_success": null,
+    "cluster_safe_success": null,
+    "relaxed_safe_success": null,
+    "wall_contact_s": null,
+    "max_continuous_wall_contact_s": null,
+    "obstacle_events_static": null,
+    "obstacle_events_dynamic": null,
+    "removal_auc": null,
+    "replan_count": null
+  }
+}

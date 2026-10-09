@@ -1,0 +1,160 @@
+{
+  "datasets": [
+    {
+      "directory": "research/runs/OBST_ORACLE_DAGGER_20261007/r0_oracle",
+      "episodes": 44,
+      "samples": 15747,
+      "primitive_names": [
+        "advance",
+        "pass_left",
+        "pass_right",
+        "away",
+        "center",
+        "slow",
+        "stop"
+      ],
+      "label_counts": [
+        9367,
+        177,
+        212,
+        653,
+        179,
+        785,
+        4374
+      ],
+      "label_argmin_consistent": true,
+      "median_cost_margin": 0.026066899299621582,
+      "margin_below_005": 0.5821426303422874,
+      "always_stop_mean_regret": 1.3091351985931396,
+      "always_advance_mean_regret": 26.613359451293945,
+      "detected_gap_below_02": {
+        "samples": 1202,
+        "label_share": [
+          0.3627287853577371,
+          0.015806988352745424,
+          0.013311148086522463,
+          0.050748752079866885,
+          0.0,
+          0.018302828618968387,
+          0.5391014975041597
+        ]
+      },
+      "detected_gap_at_least_02": {
+        "samples": 14545,
+        "label_share": [
+          0.6140254382949467,
+          0.010862839463733242,
+          0.01347542110690959,
+          0.04070127191474734,
+          0.012306634582330698,
+          0.052457889309040905,
+          0.2561705053282915
+        ]
+      }
+    },
+    {
+      "directory": "research/runs/OBST_ORACLE_DAGGER_20261007/r1_dagger",
+      "episodes": 44,
+      "samples": 17053,
+      "primitive_names": [
+        "advance",
+        "pass_left",
+        "pass_right",
+        "away",
+        "center",
+        "slow",
+        "stop"
+      ],
+      "label_counts": [
+        10852,
+        234,
+        264,
+        974,
+        122,
+        935,
+        3672
+      ],
+      "label_argmin_consistent": true,
+      "median_cost_margin": 0.023345351219177246,
+      "margin_below_005": 0.6135577317773999,
+      "always_stop_mean_regret": 1.6347764730453491,
+      "always_advance_mean_regret": 36.29969024658203,
+      "detected_gap_below_02": {
+        "samples": 1923,
+        "label_share": [
+          0.3967758710348414,
+          0.018200728029121163,
+          0.0171606864274571,
+          0.07540301612064483,
+          0.0010400416016640667,
+          0.014560582423296931,
+          0.47685907436297453
+        ]
+      },
+      "detected_gap_at_least_02": {
+        "samples": 15130,
+        "label_share": [
+          0.6668208856576339,
+          0.013152676801057502,
+          0.015267680105750166,
+          0.054791804362194316,
+          0.007931262392597489,
+          0.05994712491738268,
+          0.182088565763384
+        ]
+      }
+    },
+    {
+      "directory": "research/runs/OBST_ORACLE_DAGGER_20261007/r2_dagger",
+      "episodes": 44,
+      "samples": 15113,
+      "primitive_names": [
+        "advance",
+        "pass_left",
+        "pass_right",
+        "away",
+        "center",
+        "slow",
+        "stop"
+      ],
+      "label_counts": [
+        10970,
+        306,
+        259,
+        1124,
+        202,
+        961,
+        1291
+      ],
+      "label_argmin_consistent": true,
+      "median_cost_margin": 0.014034032821655273,
+      "margin_below_005": 0.6908621716403097,
+      "always_stop_mean_regret": 1.6478631496429443,
+      "always_advance_mean_regret": 18.040470123291016,
+      "detected_gap_below_02": {
+        "samples": 2005,
+        "label_share": [
+          0.5241895261845386,
+          0.030423940149625937,
+          0.023940149625935162,
+          0.11620947630922693,
+          0.0029925187032418953,
+          0.02144638403990025,
+          0.28079800498753116
+        ]
+      },
+      "detected_gap_at_least_02": {
+        "samples": 13108,
+        "label_share": [
+          0.7567134574305767,
+          0.018690875801037534,
+          0.016097039975587427,
+          0.06797375648458956,
+          0.014952700640830027,
+          0.07003356728715289,
+          0.055538602380225816
+        ]
+      }
+    }
+  ]
+}

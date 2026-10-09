@@ -1,0 +1,1695 @@
+{
+  "pid": 2644543,
+  "stage": "complete",
+  "time": "2026-10-06T05:38:45.317208",
+  "deadline": "2026-10-06 08:35 Asia/Shanghai",
+  "jobs": [
+    {
+      "name": "memory_mappo_s0",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 2779.661720275879
+    },
+    {
+      "name": "ff_mappo_s0",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 4526.822012424469
+    },
+    {
+      "name": "memory_ippo_s0",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 4669.940848827362
+    },
+    {
+      "name": "memory_mappo_s1",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 3323.1868302822113
+    },
+    {
+      "name": "ff_mappo_s1",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 4464.459245920181
+    },
+    {
+      "name": "memory_ippo_s1",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 4467.11212015152
+    },
+    {
+      "name": "memory_mappo_s2",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 3226.813444852829
+    },
+    {
+      "name": "memory_ippo_s2",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 4324.324181318283
+    },
+    {
+      "name": "ff_mappo_s2",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 4360.848497629166
+    },
+    {
+      "name": "fixed_0_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 24.905049085617065
+    },
+    {
+      "name": "fixed_0_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 27.27080249786377
+    },
+    {
+      "name": "fixed_0_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.26565384864807
+    },
+    {
+      "name": "fixed_1_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.021099090576172
+    },
+    {
+      "name": "fixed_0_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.38656783103943
+    },
+    {
+      "name": "fixed_0_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.689021825790405
+    },
+    {
+      "name": "fixed_0_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.03720664978027
+    },
+    {
+      "name": "fixed_0_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 40.94375729560852
+    },
+    {
+      "name": "fixed_1_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 49.699472427368164
+    },
+    {
+      "name": "fixed_1_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 25.810163974761963
+    },
+    {
+      "name": "fixed_0_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 58.021382093429565
+    },
+    {
+      "name": "fixed_0_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 58.621325969696045
+    },
+    {
+      "name": "fixed_1_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 23.40668225288391
+    },
+    {
+      "name": "fixed_1_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.320497751235962
+    },
+    {
+      "name": "fixed_2_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.671199798583984
+    },
+    {
+      "name": "fixed_1_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 46.09442687034607
+    },
+    {
+      "name": "fixed_1_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 46.05300784111023
+    },
+    {
+      "name": "fixed_2_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.323026180267334
+    },
+    {
+      "name": "fixed_2_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 42.79145812988281
+    },
+    {
+      "name": "fixed_1_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 63.086671590805054
+    },
+    {
+      "name": "fixed_2_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.218469619750977
+    },
+    {
+      "name": "fixed_2_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.624655961990356
+    },
+    {
+      "name": "fixed_2_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 24.70761251449585
+    },
+    {
+      "name": "fixed_3_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 26.766123056411743
+    },
+    {
+      "name": "fixed_2_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.24082946777344
+    },
+    {
+      "name": "fixed_2_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 42.14159440994263
+    },
+    {
+      "name": "fixed_1_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 104.45834589004517
+    },
+    {
+      "name": "fixed_2_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 50.155681848526
+    },
+    {
+      "name": "fixed_3_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 38.47872185707092
+    },
+    {
+      "name": "fixed_3_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.732337951660156
+    },
+    {
+      "name": "fixed_3_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.93113708496094
+    },
+    {
+      "name": "fixed_3_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.59298610687256
+    },
+    {
+      "name": "fixed_3_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 34.28034806251526
+    },
+    {
+      "name": "fixed_3_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 58.470574378967285
+    },
+    {
+      "name": "fixed_3_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.93237519264221
+    },
+    {
+      "name": "fixed_4_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 34.321815967559814
+    },
+    {
+      "name": "fixed_3_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.79086232185364
+    },
+    {
+      "name": "fixed_4_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 40.59730768203735
+    },
+    {
+      "name": "fixed_4_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.15322971343994
+    },
+    {
+      "name": "fixed_4_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.07652711868286
+    },
+    {
+      "name": "fixed_4_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.12746787071228
+    },
+    {
+      "name": "fixed_4_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 55.66286325454712
+    },
+    {
+      "name": "fixed_5_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 26.06208109855652
+    },
+    {
+      "name": "fixed_4_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.633015155792236
+    },
+    {
+      "name": "fixed_4_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.02084136009216
+    },
+    {
+      "name": "fixed_5_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.820464849472046
+    },
+    {
+      "name": "fixed_5_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.315641403198242
+    },
+    {
+      "name": "fixed_5_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.471367835998535
+    },
+    {
+      "name": "fixed_4_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 65.69112038612366
+    },
+    {
+      "name": "fixed_5_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 38.386523723602295
+    },
+    {
+      "name": "fixed_5_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.82887506484985
+    },
+    {
+      "name": "fixed_5_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 48.34833121299744
+    },
+    {
+      "name": "fixed_5_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.13858222961426
+    },
+    {
+      "name": "fixed_6_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.62875247001648
+    },
+    {
+      "name": "fixed_6_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 38.893359422683716
+    },
+    {
+      "name": "fixed_6_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.57447528839111
+    },
+    {
+      "name": "fixed_6_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.122289896011353
+    },
+    {
+      "name": "fixed_6_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 25.56026530265808
+    },
+    {
+      "name": "fixed_6_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 38.142109632492065
+    },
+    {
+      "name": "fixed_6_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 56.575063705444336
+    },
+    {
+      "name": "fixed_6_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.526231288909912
+    },
+    {
+      "name": "fixed_5_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 88.01673722267151
+    },
+    {
+      "name": "fixed_7_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.32871150970459
+    },
+    {
+      "name": "fixed_6_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.75796723365784
+    },
+    {
+      "name": "fixed_7_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 36.08613038063049
+    },
+    {
+      "name": "fixed_7_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 46.24758243560791
+    },
+    {
+      "name": "fixed_7_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.30163550376892
+    },
+    {
+      "name": "fixed_7_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.45842885971069
+    },
+    {
+      "name": "fixed_7_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.73049783706665
+    },
+    {
+      "name": "fixed_7_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 36.9804949760437
+    },
+    {
+      "name": "fixed_7_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 46.75881004333496
+    },
+    {
+      "name": "fixed_7_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.74595761299133
+    },
+    {
+      "name": "fixed_8_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 63.49604153633118
+    },
+    {
+      "name": "fixed_8_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 52.524285078048706
+    },
+    {
+      "name": "fixed_8_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 59.336681604385376
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.4786057472229
+    },
+    {
+      "name": "fixed_8_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 80.47121238708496
+    },
+    {
+      "name": "fixed_8_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 58.11639642715454
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.59313678741455
+    },
+    {
+      "name": "fixed_8_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 83.61981701850891
+    },
+    {
+      "name": "fixed_8_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 77.90077233314514
+    },
+    {
+      "name": "fixed_8_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 66.83716249465942
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.16917085647583
+    },
+    {
+      "name": "fixed_8_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 78.61221313476562
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 49.095988750457764
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 43.19123363494873
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 25.861756801605225
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.146212100982666
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 88.78106689453125
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.12625288963318
+    },
+    {
+      "name": "memory_mappo_s0_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.789156913757324
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 41.59219551086426
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.49295091629028
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 26.263497591018677
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 24.266879081726074
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.80425477027893
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 48.85827326774597
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.18568801879883
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 36.93458557128906
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.27888345718384
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.03449630737305
+    },
+    {
+      "name": "ff_mappo_s0_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 58.414085149765015
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.527982473373413
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 41.1878445148468
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 25.114123582839966
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 40.290308237075806
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 47.602618932724
+    },
+    {
+      "name": "memory_ippo_s0_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 41.43430995941162
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.221288442611694
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.89205265045166
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 34.07926535606384
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.473222017288208
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.841779470443726
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.113642692565918
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 25.56449317932129
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 40.792855739593506
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 59.127495765686035
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.42144417762756
+    },
+    {
+      "name": "memory_mappo_s1_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 58.56528925895691
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 26.362561225891113
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.171440601348877
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.443724393844604
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.316954135894775
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 43.29896831512451
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 59.37836813926697
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 48.902103424072266
+    },
+    {
+      "name": "ff_mappo_s1_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.23689842224121
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 34.61494183540344
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 46.1969838142395
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.794554471969604
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 41.34452486038208
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.665769815444946
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 36.58212852478027
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.72685623168945
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.22724628448486
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 46.09972953796387
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.38874268531799
+    },
+    {
+      "name": "memory_ippo_s1_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.998642683029175
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 43.0868775844574
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.114447355270386
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.68560767173767
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 41.74178099632263
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 24.910029649734497
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.1370587348938
+    },
+    {
+      "name": "memory_mappo_s2_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 56.86031675338745
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 38.84063005447388
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.987749338150024
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 40.13221454620361
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 42.99667549133301
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.86948847770691
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.50487279891968
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 40.350117206573486
+    },
+    {
+      "name": "ff_mappo_s2_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 37.19188857078552
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.118523836135864
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.68617868423462
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.19553804397583
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.17354416847229
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.37297821044922
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 49.10274791717529
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 36.38086128234863
+    },
+    {
+      "name": "fixed_0_N1_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.95857286453247
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 36.281437397003174
+    },
+    {
+      "name": "fixed_0_N1_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 23.20705509185791
+    },
+    {
+      "name": "memory_ippo_s2_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 58.67363429069519
+    },
+    {
+      "name": "fixed_0_N1_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 42.09872889518738
+    },
+    {
+      "name": "fixed_0_N1_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 34.43491244316101
+    },
+    {
+      "name": "fixed_0_N1_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.02702856063843
+    },
+    {
+      "name": "fixed_0_N1_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 27.109097719192505
+    },
+    {
+      "name": "fixed_0_N1_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 52.398701429367065
+    },
+    {
+      "name": "fixed_0_N1_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 60.327507972717285
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.881640672683716
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 38.98537039756775
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 43.941688776016235
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.73531699180603
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 25.517197847366333
+    },
+    {
+      "name": "fixed_0_N1_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 68.80255556106567
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 27.714804649353027
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.65148425102234
+    },
+    {
+      "name": "fixed_0_N3_image_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.22550678253174
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 34.58751368522644
+    },
+    {
+      "name": "fixed_0_no_tpg_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 48.26023459434509
+    },
+    {
+      "name": "fixed_0_N3_image_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 24.513792514801025
+    },
+    {
+      "name": "fixed_0_N3_image_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.376140832901
+    },
+    {
+      "name": "fixed_0_N3_image_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.188546895980835
+    },
+    {
+      "name": "fixed_0_N3_image_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 24.112488508224487
+    },
+    {
+      "name": "fixed_0_N3_image_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.82840943336487
+    },
+    {
+      "name": "fixed_0_N3_image_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.97509217262268
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.269315004348755
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.48006200790405
+    },
+    {
+      "name": "fixed_0_N3_image_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.30003833770752
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.27406191825867
+    },
+    {
+      "name": "fixed_0_N3_image_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 69.35262417793274
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 46.89408302307129
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 34.378278732299805
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 57.92829775810242
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 62.136969566345215
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 43.09513974189758
+    },
+    {
+      "name": "memory_mappo_s0_N1_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.299708127975464
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 29.514046907424927
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.524495124816895
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 25.172334909439087
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 60.977208614349365
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.27557396888733
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 25.206763744354248
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 23.615594387054443
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 49.11142373085022
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 27.068352460861206
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 40.04431629180908
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 34.27579736709595
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.07488751411438
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 21.60292673110962
+    },
+    {
+      "name": "memory_mappo_no_tpg_s0_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 53.66775321960449
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.626367807388306
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 24.914965391159058
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 55.62491965293884
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.2007098197937
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 43.498831272125244
+    },
+    {
+      "name": "memory_mappo_s0_N3_image_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 49.661240100860596
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 35.53099036216736
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 47.55222964286804
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 44.956063985824585
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 40.496336698532104
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 39.58858847618103
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.94692254066467
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 31.571423053741455
+    },
+    {
+      "name": "memory_mappo_s1_N1_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 62.029576539993286
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.01111626625061
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 26.21351170539856
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 18.34972906112671
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.220133543014526
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.35661005973816
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.72514843940735
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.45649552345276
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.47237777709961
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 49.06627178192139
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.37229108810425
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.1219379901886
+    },
+    {
+      "name": "memory_mappo_no_tpg_s1_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 58.31640410423279
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 18.900443077087402
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 24.05853796005249
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 32.528395891189575
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 47.75715756416321
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 26.610881805419922
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 26.512636184692383
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 43.14705419540405
+    },
+    {
+      "name": "memory_mappo_s1_N3_image_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 53.71172785758972
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 48.04826211929321
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 46.55201053619385
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 26.903156042099
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 42.45045328140259
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 57.283851623535156
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 43.19155931472778
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.419594049453735
+    },
+    {
+      "name": "memory_mappo_s2_N1_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 62.47819924354553
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 50.01596164703369
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_mca_m1_lvo",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 17.0453143119812
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 30.427289724349976
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_pulmonary_saddle",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 20.00502371788025
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_coronary_lm_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 19.002110242843628
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.912710428237915
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_iliac_may_thurner",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 18.701822757720947
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 33.93346929550171
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_ica_terminus_t",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 15.245546817779541
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 45.11416029930115
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_popliteal_calf_dvt",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 23.857135772705078
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 42.29269194602966
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_renal_artery",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 14.445691108703613
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 18.305514574050903
+    },
+    {
+      "name": "memory_mappo_no_tpg_s2_N3_noise_carotid_bifurcation",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 41.20715594291687
+    },
+    {
+      "name": "memory_mappo_s2_N3_image_ica_siphon",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 28.236395359039307
+    },
+    {
+      "name": "final_replay",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 7.241225004196167
+    },
+    {
+      "name": "final_gui",
+      "status": "complete",
+      "returncode": 0,
+      "seconds": 2.8722329139709473
+    }
+  ],
+  "failures": []
+}

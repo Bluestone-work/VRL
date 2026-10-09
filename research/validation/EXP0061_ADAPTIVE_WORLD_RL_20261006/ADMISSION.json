@@ -1,0 +1,11 @@
+{
+  "tests_passed": 7,
+  "tests": [
+    "test_vascular_predictive_rl.py",
+    "test_vascular_adaptive_research.py"
+  ],
+  "actual_PPO_updates_with_world_active": 2,
+  "model_targets": "terminal measured observations, not reset observations",
+  "same_physics_instrumentation_test_passed": true,
+  "new_round_configuration_required": true
+}

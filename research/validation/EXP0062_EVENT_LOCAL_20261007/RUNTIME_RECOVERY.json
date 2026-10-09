@@ -1,0 +1,12 @@
+{
+  "infrastructure": "One pool worker stuck in native futex wait; debugger attachment denied",
+  "method": [
+    "cerebral_venous_sinus",
+    2600000003,
+    "hybrid_replan"
+  ],
+  "resolution": "Interrupt only our evaluation parent; repeat identical scene and configuration in fresh process",
+  "retry_error": null,
+  "retry_task_success": false,
+  "excluded_or_replaced_method_failures": false
+}

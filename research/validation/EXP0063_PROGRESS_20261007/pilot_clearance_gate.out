@@ -1,0 +1,18 @@
+{"anatomy": "pulmonary_saddle", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000000, "method": "all_semantic", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000000, "method": "all_semantic", "error": null}
+{
+  "all_semantic": {
+    "episodes": 3,
+    "errors": 0,
+    "task_success": 0.0,
+    "cluster_safe_success": 0.0,
+    "relaxed_safe_success": 0.0,
+    "wall_contact_s": 89.12887558082384,
+    "max_continuous_wall_contact_s": 27.000000000000004,
+    "obstacle_events_static": 2.3333333333333335,
+    "obstacle_events_dynamic": 0.3333333333333333,
+    "removal_auc": 0.30052812428870107,
+    "replan_count": 26.666666666666668
+  }
+}

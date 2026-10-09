@@ -1,0 +1,17 @@
+[
+  {
+    "anatomy": "mca_m1_lvo",
+    "seed": 1515000000,
+    "samples": 1331
+  },
+  {
+    "anatomy": "pulmonary_saddle",
+    "seed": 1515000001,
+    "samples": 2566
+  },
+  {
+    "anatomy": "coronary_lm_bifurcation",
+    "seed": 1515000002,
+    "samples": 1331
+  }
+]

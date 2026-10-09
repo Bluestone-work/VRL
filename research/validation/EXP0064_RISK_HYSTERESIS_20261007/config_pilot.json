@@ -1,0 +1,18 @@
+{
+  "recovery_margin_mm": 0.35,
+  "recovery_gain": 0.8,
+  "commitment_s": 0.5,
+  "avoidance_trigger_mm": 0.7,
+  "risk_enter_score": 0.55,
+  "risk_exit_score": 0.30,
+  "risk_enter_offset_fraction": 0.70,
+  "risk_offset_full_fraction": 1.00,
+  "risk_outward_velocity_mm_s": 0.15,
+  "risk_outward_command": 0.20,
+  "risk_stall_speed_mm_s": 0.20,
+  "risk_filter_alpha": 0.25,
+  "risk_enter_confirm_steps": 3,
+  "risk_exit_confirm_steps": 5,
+  "risk_min_hold_s": 1.0,
+  "risk_guard_gain": 0.65
+}

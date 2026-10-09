@@ -1,0 +1,1302 @@
+{
+  "checked_at": "2026-10-06T10:52:34.270750",
+  "formal_status": "complete",
+  "adaptive_status": "registered_24_round_budget_completed",
+  "adaptive_completed_at": "2026-10-06T09:28:09.273936",
+  "formal": {
+    "fixed_0": {
+      "episodes": 54,
+      "safe": 0.7777777777777778,
+      "removal": 1.0,
+      "wall_contact_s": 0.14289018215174737,
+      "auc": 0.880509211389395,
+      "option_selection_fractions": {
+        "pursuit": 1.0,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.0,
+        "repulsion_half": 0.0,
+        "repulsion_150": 0.0,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "fixed_2": {
+      "episodes": 54,
+      "safe": 0.8333333333333334,
+      "removal": 1.0,
+      "wall_contact_s": 0.10409853365295298,
+      "auc": 0.8634859772299894,
+      "option_selection_fractions": {
+        "pursuit": 0.0,
+        "speed_055": 0.0,
+        "speed_080": 1.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.0,
+        "repulsion_half": 0.0,
+        "repulsion_150": 0.0,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "memory_mappo_s0": {
+      "episodes": 54,
+      "safe": 0.7592592592592593,
+      "removal": 0.9953703703703703,
+      "wall_contact_s": 5.041055314122619,
+      "auc": 0.8768755783431168,
+      "option_selection_fractions": {
+        "pursuit": 0.00491,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.61015,
+        "repulsion_half": 0.0,
+        "repulsion_150": 0.38494,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "memory_mappo_s1": {
+      "episodes": 54,
+      "safe": 0.7222222222222222,
+      "removal": 1.0,
+      "wall_contact_s": 0.1941287074966578,
+      "auc": 0.8807373363585711,
+      "option_selection_fractions": {
+        "pursuit": 0.0,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.78531,
+        "repulsion_half": 0.21469,
+        "repulsion_150": 0.0,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "memory_mappo_s2": {
+      "episodes": 54,
+      "safe": 0.8148148148148148,
+      "removal": 1.0,
+      "wall_contact_s": 0.10178734052358517,
+      "auc": 0.8831522200512196,
+      "option_selection_fractions": {
+        "pursuit": 0.31795,
+        "speed_055": 0.0,
+        "speed_080": 0.16683,
+        "short_turn": 0.00028,
+        "careful_turn": 0.0,
+        "long_look": 0.0,
+        "repulsion_half": 0.24457,
+        "repulsion_150": 0.27036,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "ff_mappo_s0": {
+      "episodes": 54,
+      "safe": 0.7592592592592593,
+      "removal": 1.0,
+      "wall_contact_s": 0.14322666198302908,
+      "auc": 0.8804405897153568,
+      "option_selection_fractions": {
+        "pursuit": 0.10537,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.4775,
+        "careful_turn": 0.0,
+        "long_look": 0.20413,
+        "repulsion_half": 0.1236,
+        "repulsion_150": 0.08939,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "ff_mappo_s1": {
+      "episodes": 54,
+      "safe": 0.7777777777777778,
+      "removal": 1.0,
+      "wall_contact_s": 0.14289018215174737,
+      "auc": 0.8805092185553256,
+      "option_selection_fractions": {
+        "pursuit": 0.99995,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.0,
+        "repulsion_half": 0.0,
+        "repulsion_150": 5e-05,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "ff_mappo_s2": {
+      "episodes": 54,
+      "safe": 0.7777777777777778,
+      "removal": 1.0,
+      "wall_contact_s": 0.1708115067069188,
+      "auc": 0.8804235895465536,
+      "option_selection_fractions": {
+        "pursuit": 0.00413,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.1499,
+        "repulsion_half": 0.0,
+        "repulsion_150": 0.84597,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "memory_ippo_s0": {
+      "episodes": 54,
+      "safe": 0.7777777777777778,
+      "removal": 1.0,
+      "wall_contact_s": 0.14289018215174737,
+      "auc": 0.880509211389395,
+      "option_selection_fractions": {
+        "pursuit": 1.0,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.0,
+        "repulsion_half": 0.0,
+        "repulsion_150": 0.0,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "memory_ippo_s1": {
+      "episodes": 54,
+      "safe": 0.7777777777777778,
+      "removal": 1.0,
+      "wall_contact_s": 0.14289018215174737,
+      "auc": 0.880509211389395,
+      "option_selection_fractions": {
+        "pursuit": 1.0,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.0,
+        "repulsion_half": 0.0,
+        "repulsion_150": 0.0,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    },
+    "memory_ippo_s2": {
+      "episodes": 54,
+      "safe": 0.7222222222222222,
+      "removal": 1.0,
+      "wall_contact_s": 0.11143199913858376,
+      "auc": 0.8802252891222108,
+      "option_selection_fractions": {
+        "pursuit": 0.0005,
+        "speed_055": 0.0,
+        "speed_080": 0.0,
+        "short_turn": 0.0,
+        "careful_turn": 0.0,
+        "long_look": 0.0,
+        "repulsion_half": 0.9995,
+        "repulsion_150": 0.0,
+        "wait": 0.0
+      },
+      "spacing_pair_s_mean": 0.0
+    }
+  },
+  "adaptive_rounds": [
+    {
+      "round": 0,
+      "parent_kind": "final",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.6370071202729,
+          "auc": 0.8979061133321788,
+          "option_selection_fractions": {
+            "pursuit": 0.10836,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.37254,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.5191,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.589807738531512,
+          "auc": 0.897957715865329,
+          "option_selection_fractions": {
+            "pursuit": 0.14828,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.45429,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.39743,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 1,
+      "parent_kind": "final",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.585476566353172,
+          "auc": 0.8978076433426601,
+          "option_selection_fractions": {
+            "pursuit": 0.12844,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.32129,
+            "repulsion_half": 0.0002,
+            "repulsion_150": 0.55007,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.6370071202729,
+          "auc": 0.8978806568716972,
+          "option_selection_fractions": {
+            "pursuit": 0.1085,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.32992,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.56158,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 2,
+      "parent_kind": "initial",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 3,
+      "parent_kind": "initial",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.5833333333333334,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 21.771776866906137,
+          "auc": 0.87765975717639,
+          "option_selection_fractions": {
+            "pursuit": 0.00781,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.99219,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 4,
+      "parent_kind": "initial",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 5,
+      "parent_kind": "final",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.597878784652128,
+          "auc": 0.8979348362467141,
+          "option_selection_fractions": {
+            "pursuit": 0.15702,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0002,
+            "long_look": 0.38179,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.461,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.598306007436836,
+          "auc": 0.8978850859716541,
+          "option_selection_fractions": {
+            "pursuit": 0.1511,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.36026,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.48865,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 6,
+      "parent_kind": "final",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979108010997211,
+          "option_selection_fractions": {
+            "pursuit": 0.15051,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.45354,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.39595,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.584385937655707,
+          "auc": 0.8979509929123011,
+          "option_selection_fractions": {
+            "pursuit": 0.1511,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.47177,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.37713,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 7,
+      "parent_kind": "final",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.609071171038686,
+          "auc": 0.8979609902603036,
+          "option_selection_fractions": {
+            "pursuit": 0.1519,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.43601,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.4121,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58836333812503,
+          "auc": 0.8979541111785676,
+          "option_selection_fractions": {
+            "pursuit": 0.15089,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.46434,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.38477,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 8,
+      "parent_kind": "initial",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 9,
+      "parent_kind": "initial",
+      "fixed_reference": 0,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 10,
+      "parent_kind": "initial",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 11,
+      "parent_kind": "final",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.609071171038686,
+          "auc": 0.8979253656918937,
+          "option_selection_fractions": {
+            "pursuit": 0.1508,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.41064,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.43855,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.598302188914115,
+          "auc": 0.8978900997733303,
+          "option_selection_fractions": {
+            "pursuit": 0.15089,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.39743,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.45168,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 12,
+      "parent_kind": "final",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979558599860895,
+          "option_selection_fractions": {
+            "pursuit": 0.1511,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.4563,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.39261,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.609071171038686,
+          "auc": 0.8979252834156086,
+          "option_selection_fractions": {
+            "pursuit": 0.15091,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.42023,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.42886,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 13,
+      "parent_kind": "final",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.607607939773914,
+          "auc": 0.8979647645040039,
+          "option_selection_fractions": {
+            "pursuit": 0.14828,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.42596,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.42576,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979542675061585,
+          "option_selection_fractions": {
+            "pursuit": 0.14909,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.44886,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.40205,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 14,
+      "parent_kind": "initial",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 15,
+      "parent_kind": "initial",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 16,
+      "parent_kind": "initial",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 17,
+      "parent_kind": "final",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.897961482374175,
+          "option_selection_fractions": {
+            "pursuit": 0.15029,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.43902,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.41069,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.607607939773914,
+          "auc": 0.8979243751892785,
+          "option_selection_fractions": {
+            "pursuit": 0.15091,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.42364,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.42545,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 18,
+      "parent_kind": "final",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979542675061585,
+          "option_selection_fractions": {
+            "pursuit": 0.14366,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.4571,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.39924,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979558597845715,
+          "option_selection_fractions": {
+            "pursuit": 0.14868,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.44485,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.40647,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 19,
+      "parent_kind": "final",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979542675061585,
+          "option_selection_fractions": {
+            "pursuit": 0.14949,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.4575,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.39301,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979558597865885,
+          "option_selection_fractions": {
+            "pursuit": 0.14868,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.4555,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.39582,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 20,
+      "parent_kind": "initial",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 21,
+      "parent_kind": "initial",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 22,
+      "parent_kind": "initial",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 1.0,
+          "wall_contact_s": 0.5023624334511765,
+          "auc": 0.915684782252213,
+          "option_selection_fractions": {
+            "pursuit": 1.0,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.0,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.0,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    },
+    {
+      "round": 23,
+      "parent_kind": "final",
+      "fixed_reference": 2,
+      "arms": {
+        "continued_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979546700282677,
+          "option_selection_fractions": {
+            "pursuit": 0.14989,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.43942,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.41069,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        },
+        "world_ppo": {
+          "episodes": 12,
+          "safe": 0.4166666666666667,
+          "removal": 0.9791666666666666,
+          "wall_contact_s": 22.58834450726674,
+          "auc": 0.8979558597845715,
+          "option_selection_fractions": {
+            "pursuit": 0.14868,
+            "speed_055": 0.0,
+            "speed_080": 0.0,
+            "short_turn": 0.0,
+            "careful_turn": 0.0,
+            "long_look": 0.44485,
+            "repulsion_half": 0.0,
+            "repulsion_150": 0.40647,
+            "wait": 0.0
+          },
+          "spacing_pair_s_mean": 0.0
+        }
+      }
+    }
+  ],
+  "all_48_pairings_hash_match": true,
+  "accepted_candidates": 0,
+  "note": "Development data reused across model selection; option counts include requested selections while held or inactive, not necessarily effective actuator changes. No completed new training is claimed."
+}

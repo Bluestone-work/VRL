@@ -1,0 +1,31 @@
+{
+  "arms": [
+    "memory_mappo",
+    "ff_mappo",
+    "memory_ippo"
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "workers": 6,
+  "updates": 480,
+  "rollout": 128,
+  "epochs": 4,
+  "joint_control_steps_budget": 1843200,
+  "max_minutes_per_run": 140,
+  "evaluation_anatomies": [
+    "mca_m1_lvo",
+    "pulmonary_saddle",
+    "coronary_lm_bifurcation",
+    "iliac_may_thurner",
+    "popliteal_calf_dvt",
+    "ica_siphon",
+    "ica_terminus_t",
+    "carotid_bifurcation",
+    "renal_artery"
+  ],
+  "scenes_per_anatomy": 6,
+  "deadline": "2026-10-06 08:35 +08:00"
+}

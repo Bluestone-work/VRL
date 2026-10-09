@@ -1,0 +1,41 @@
+{
+  "guard": {
+    "episodes": 4,
+    "errors": 0,
+    "task_success": 0.5,
+    "cluster_safe_success": 0.5,
+    "relaxed_safe_success": 0.5,
+    "wall_contact_s": 67.72425050817037,
+    "max_continuous_wall_contact_s": 42.86766782633066,
+    "obstacle_events_static": 0.25,
+    "obstacle_events_dynamic": 0.0,
+    "removal_auc": 0.5987166523668359,
+    "replan_count": 0.0
+  },
+  "guard_replan": {
+    "episodes": 4,
+    "errors": 0,
+    "task_success": 0.5,
+    "cluster_safe_success": 0.5,
+    "relaxed_safe_success": 0.5,
+    "wall_contact_s": 9.971615052684925,
+    "max_continuous_wall_contact_s": 1.3240910042054825,
+    "obstacle_events_static": 0.25,
+    "obstacle_events_dynamic": 0.25,
+    "removal_auc": 0.5986208721365758,
+    "replan_count": 3.0
+  },
+  "switch": {
+    "episodes": 4,
+    "errors": 0,
+    "task_success": 1.0,
+    "cluster_safe_success": 0.5,
+    "relaxed_safe_success": 0.5,
+    "wall_contact_s": 2.660195175539412,
+    "max_continuous_wall_contact_s": 1.6720219047717377,
+    "obstacle_events_static": 0.25,
+    "obstacle_events_dynamic": 0.0,
+    "removal_auc": 0.728143596005381,
+    "replan_count": 0.0
+  }
+}

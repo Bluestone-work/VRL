@@ -38,7 +38,7 @@ from scripts.safe_metrics import WallTracker, episode_metrics
 class Episode:
     """One episode of the v3 pipeline. `policy(ep, est, rule_local, hold, tgt) -> local` may replace the rule."""
     def __init__(self, n, anatomy, seed, horizon=300., d_min=2., sensing='noise', sense_cfg=DeployableConfig(),
-                 avoid=True, camera=None, obstacle_seed=None, perception='detector'):
+                 avoid=True, camera=None, obstacle_seed=None, perception='detector', topo_pursuit=False):
         base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon,
                        junction_model='union', particle_count=0)
         self.env, self.manifest = paired_environment(base, n, seed)
@@ -68,7 +68,7 @@ class Episode:
         self.plan, self.plan_info = bm.preoperative_plan(env)
         self.fallback = 'park' if n > 1 else 'help'; bm.FALLBACK['mode'] = self.fallback
         self.targets = bm.PlanTargets(self.plan)
-        self.ctl = APFPursuit(env, self.sensor, avoid=avoid)
+        self.ctl = APFPursuit(env, self.sensor, avoid=avoid, topo=topo_pursuit)
         self.coord = None
         if n > 1:
             from marl.tpg_coordinator import TPGCoordinator
@@ -83,7 +83,7 @@ class Episode:
     def observe(self):
         bm.FALLBACK['mode'] = self.fallback
         est = self.tracker.observe(self.sensor.observe())
-        tgt = self.targets.targets(self.env, est.pos)
+        tgt = self.targets.targets(self.env, est.pos, est.clot_alive)
         rule = self.ctl.act(tgt, est)
         hold = self.coord.gate(est.pos, est.active) if self.coord is not None else np.zeros(self.n, bool)
         return est, tgt, rule, hold

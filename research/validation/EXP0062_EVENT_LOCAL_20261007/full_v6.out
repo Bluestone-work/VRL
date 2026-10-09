@@ -1,0 +1,188 @@
+{"anatomy": "mca_m1_lvo", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "mca_m1_lvo", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "pulmonary_saddle", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "coronary_lm_bifurcation", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "iliac_may_thurner", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "popliteal_calf_dvt", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "ica_siphon", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "ica_terminus_t", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "carotid_bifurcation", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "renal_artery", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "coronary_rca", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "basilar_vertebral", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "cerebral_venous_sinus", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "sma_embolism", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000000, "method": "hybrid", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000000, "method": "hybrid_replan", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000001, "method": "hybrid", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000001, "method": "hybrid_replan", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000002, "method": "hybrid", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000002, "method": "hybrid_replan", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000003, "method": "hybrid", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000003, "method": "hybrid_replan", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000004, "method": "hybrid", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000004, "method": "hybrid_replan", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000005, "method": "hybrid", "error": null}
+{"anatomy": "femoropopliteal_pad", "seed": 2600000005, "method": "hybrid_replan", "error": null}
+Traceback (most recent call last):
+  File "/home/wj/miniconda3/envs/v/lib/python3.10/multiprocessing/pool.py", line 856, in next
+    item = self._items.popleft()
+IndexError: pop from an empty deque
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/wj/miniconda3/envs/v/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/wj/miniconda3/envs/v/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/wj/桌面/vascular_marl_local.tar./scripts/evaluate_hybrid_navigation.py", line 107, in <module>
+    main()
+  File "/home/wj/桌面/vascular_marl_local.tar./scripts/evaluate_hybrid_navigation.py", line 96, in main
+    for result in pool.imap_unordered(evaluate, jobs):
+  File "/home/wj/miniconda3/envs/v/lib/python3.10/multiprocessing/pool.py", line 861, in next
+    self._cond.wait(timeout)
+  File "/home/wj/miniconda3/envs/v/lib/python3.10/threading.py", line 320, in wait
+    waiter.acquire()
+KeyboardInterrupt

@@ -71,8 +71,10 @@ def run(method, n, anatomy, seed, horizon, d_min, cfg, junction='union', sensing
     base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon, junction_model=junction)
     env, manifest = paired_environment(base, n, seed)
     if sensing == 'image':
-        from marl.image_sensing import CameraConfig, ImageSensor, random_camera, scaled_camera
+        from marl.image_sensing import CameraConfig, ImageSensor, bench_camera, random_camera, scaled_camera, ultrasound_camera
         cam = (random_camera(np.random.default_rng(seed+7)) if camera == 'random' else
+               bench_camera(np.random.default_rng(seed+7)) if camera == 'bench' else
+               ultrasound_camera(np.random.default_rng(seed+7)) if camera == 'ultrasound' else
                CameraConfig() if camera == 'default' else scaled_camera(float(camera)))   # numeric = pixel size (mm)
         sensor = ImageSensor(env, cam, seed=seed, latency_steps=cfg.latency_steps)
     else:
@@ -154,7 +156,7 @@ def main():
     p.add_argument('--d-min-mm', type=float, default=2.); p.add_argument('--sigma', type=float, default=.05)
     p.add_argument('--latency', type=int, default=1); p.add_argument('--tag')
     p.add_argument('--sensing', default='noise', choices=('noise', 'image'))
-    p.add_argument('--camera', default='default', help="'default', 'random' or a pixel size in mm")
+    p.add_argument('--camera', default='default', help="'default', 'random', 'bench', 'ultrasound' or a pixel size in mm")
     p.add_argument('--out', type=Path, required=True)
     a = p.parse_args()
     cfg = DeployableConfig(position_sigma_mm=a.sigma, latency_steps=a.latency)

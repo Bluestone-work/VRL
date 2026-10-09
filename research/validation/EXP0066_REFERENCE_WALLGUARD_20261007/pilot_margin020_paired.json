@@ -1,0 +1,75 @@
+{
+  "datasets": [],
+  "paired": {
+    "paired": 24,
+    "reference_only": 0,
+    "candidate_only": 0,
+    "reference_errors": [],
+    "candidate_errors": [],
+    "metrics": {
+      "cluster_safe_success": {
+        "reference": 0.125,
+        "candidate": 0.125,
+        "delta": 0.0,
+        "paired_bootstrap_95": [
+          0.0,
+          0.0
+        ]
+      },
+      "relaxed_safe_success": {
+        "reference": 0.3333333333333333,
+        "candidate": 0.375,
+        "delta": 0.041666666666666664,
+        "paired_bootstrap_95": [
+          0.0,
+          0.125
+        ]
+      },
+      "task_success": {
+        "reference": 0.7916666666666666,
+        "candidate": 0.75,
+        "delta": -0.041666666666666664,
+        "paired_bootstrap_95": [
+          -0.125,
+          0.0
+        ]
+      },
+      "wall_contact_s": {
+        "reference": 31.017650990547793,
+        "candidate": 20.71620874674657,
+        "delta": -10.301442243801219,
+        "paired_bootstrap_95": [
+          -24.803518131658436,
+          -0.1459025655042117
+        ]
+      },
+      "max_continuous_wall_contact_s": {
+        "reference": 12.9321903230125,
+        "candidate": 1.5939965287176836,
+        "delta": -11.338193794294817,
+        "paired_bootstrap_95": [
+          -27.089873569909376,
+          -0.009533302370978405
+        ]
+      },
+      "obstacle_events_static": {
+        "reference": 1.9583333333333333,
+        "candidate": 2.25,
+        "delta": 0.2916666666666667,
+        "paired_bootstrap_95": [
+          -0.6666666666666666,
+          1.3333333333333333
+        ]
+      },
+      "obstacle_events_dynamic": {
+        "reference": 1.0833333333333333,
+        "candidate": 1.2916666666666667,
+        "delta": 0.20833333333333334,
+        "paired_bootstrap_95": [
+          -0.125,
+          0.6666666666666666
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "steps": 3000,
+  "static_events": 85,
+  "contact_events_by_mode": {
+    "recover": 0,
+    "reference": 85
+  },
+  "steps_by_mode": {
+    "recover": 61,
+    "reference": 2939
+  },
+  "targets": [
+    3
+  ],
+  "route_stations": 12,
+  "median_event_spacing_s": 1.9499999999998892,
+  "trace_reproduces_frozen_result": true
+}

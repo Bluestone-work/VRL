@@ -175,9 +175,18 @@ class DeployablePursuit:
     lumen (junction_model='union'): no knowledge of the simulator's edge or switching rule is used."""
     LOOK, LOOK_NEAR, ZONE = .4, .1, 1.
     CENTRE, SLOW_MM = 1., .3
+    ARC_JUMP = 1.5
 
-    def __init__(self, env, sensor, slow=False):
+    def __init__(self, env, sensor, slow=False, topo=False):
         self.slow = slow; self.body = float(env.config.robot_radius_mm)
+        # topo=True (2026-10-07 fix, opt-in): route progress and re-planning only consider stations on the
+        # matched map edge and the edges sharing one of its junctions. With Euclidean snapping, a branch that
+        # passes close by in space (but is not connected through the lumen) captured the route progress, the
+        # carrot then lay across the vessel wall and the cluster was pinned against it for minutes (all wall
+        # contacts of the long-contact scenes, for route pursuit and for learned policies alike).
+        # topo=True / 'plan': only the start station of a (re-)plan is restricted (consecutive route stations
+        # are connected anyway); topo='progress' (v1) also restricts the progress window.
+        self.topo = topo
         from scipy.sparse import csr_matrix
         from scipy.sparse.csgraph import shortest_path
         tr = env.tree; n = tr.n_stations; sc = float(tr.physical_mm_per_unit)
@@ -190,9 +199,28 @@ class DeployablePursuit:
         self.route = [None]*k; self.goal = np.full(k, -1); self.prog = np.zeros(k, int)
         self.station = np.zeros(k, int)
         self.nominal = np.zeros((k, 3))
+        self.carrot = np.zeros((k, 3))          # last carrot point (world), for route-frame learned actions
+        if topo:
+            tp = env.transport; self._edge_st = [set() for _ in range(len(self.pts))]
+            for e, (a_, b_) in enumerate(tp.ends):
+                self._edge_st[a_].add(e); self._edge_st[b_].add(e)
+            self._reach = [set(tp.candidates[e][tp.candidate_valid[e]].tolist()) | {e} for e in range(len(tp.ends))]
+            self._ends = tp.ends
+        self._edge_now = [None]*k
+
+    def _allowed(self, i):
+        e = self._edge_now[i] if self.topo else None
+        if e is None:
+            return None
+        return np.array(sorted({int(x) for f in self._reach[e] for x in self._ends[f]}))
 
     def _plan(self, i, pos, target):
-        a = int(np.argmin(np.linalg.norm(self.pts-pos, axis=1))); b = int(self.env.clot_stations[target])
+        allowed = self._allowed(i)
+        if allowed is not None and len(allowed):
+            a = int(allowed[np.argmin(np.linalg.norm(self.pts[allowed]-pos, axis=1))])
+        else:
+            a = int(np.argmin(np.linalg.norm(self.pts-pos, axis=1)))
+        b = int(self.env.clot_stations[target])
         path = [b]
         while path[-1] != a and self.pred[a, path[-1]] >= 0:
             path.append(int(self.pred[a, path[-1]]))
@@ -211,12 +239,27 @@ class DeployablePursuit:
                 self.station[i] = int(np.argmin(np.linalg.norm(self.pts-pos, axis=1)))
                 self.nominal[i] = 0.
                 continue
+            if self.topo and est.edge is not None:
+                self._edge_now[i] = int(est.edge[i])
             if self.goal[i] != t or self.route[i] is None:
                 self._plan(i, pos, t)
             R = self.route[i]; P = self.pts[R]
             w = P[self.prog[i]:self.prog[i]+15]
-            k = self.prog[i]+int(np.argmin(np.linalg.norm(w-pos, axis=1)))
-            if np.linalg.norm(P[k]-pos) > 1.:
+            dist = np.linalg.norm(w-pos, axis=1)
+            if self.topo and self.topo != 'progress':
+                # v3: progress may only advance along the route by the distance the body is from its current
+                # route station plus ARC_JUMP (about one station spacing): it cannot jump to a later part of the
+                # route that merely passes close by in space (the carrot would then lie across the wall)
+                seg = np.linalg.norm(np.diff(P[self.prog[i]:self.prog[i]+15], axis=0), axis=1)
+                arc = np.concatenate([[0.], np.cumsum(seg)])[:len(dist)]
+                reach = float(np.linalg.norm(pos-P[self.prog[i]]))+self.ARC_JUMP
+                dist = np.where(arc <= reach, dist, np.inf)
+            allowed = self._allowed(i) if self.topo == 'progress' else None
+            if allowed is not None:            # v1 (topo='progress'): also restricts progress along the route;
+                ok = np.isin(R[self.prog[i]:self.prog[i]+15], allowed)   # oscillates at junctions when the
+                dist = np.where(ok, dist, np.inf)                         # map match lags (40 regressions)
+            k = self.prog[i]+int(np.argmin(dist)) if np.isfinite(dist).any() else self.prog[i]
+            if not np.isfinite(dist).any() or np.linalg.norm(P[k]-pos) > 1.:
                 self._plan(i, pos, t); R = self.route[i]; P = self.pts[R]; k = 0
             self.prog[i] = k; self.station[i] = int(R[k])
             junction = np.any(self.deg[R[max(k-3, 0):k+6]] >= 3)
@@ -225,6 +268,7 @@ class DeployablePursuit:
             while j+1 < len(P) and acc < look:
                 acc += float(np.linalg.norm(P[j+1]-P[j])); j += 1
             carrot = self.env.clot_positions_mm[t] if j == len(P)-1 and np.linalg.norm(self.env.clot_positions_mm[t]-pos) < .7 else P[j]
+            self.carrot[i] = carrot
             d = carrot-pos; d = d/max(np.linalg.norm(d), 1e-9)
             F = self.frames(est)[i]
             if self.slow:

@@ -1,0 +1,28 @@
+{
+  "local": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.32142857142857145,
+    "cluster_safe_success": 0.15476190476190477,
+    "relaxed_safe_success": 0.2619047619047619,
+    "wall_contact_s": 20.909503968945362,
+    "max_continuous_wall_contact_s": 8.022704315841397,
+    "obstacle_events_static": 1.8452380952380953,
+    "obstacle_events_dynamic": 0.75,
+    "removal_auc": 0.4320916223689559,
+    "replan_count": 0.0
+  },
+  "local_replan": {
+    "episodes": 84,
+    "errors": 0,
+    "task_success": 0.32142857142857145,
+    "cluster_safe_success": 0.15476190476190477,
+    "relaxed_safe_success": 0.2619047619047619,
+    "wall_contact_s": 17.413534288962666,
+    "max_continuous_wall_contact_s": 6.970323363460433,
+    "obstacle_events_static": 1.8452380952380953,
+    "obstacle_events_dynamic": 0.75,
+    "removal_auc": 0.4320916223689559,
+    "replan_count": 2.5595238095238093
+  }
+}

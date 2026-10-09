@@ -1,0 +1,22 @@
+{
+  "recovery_margin_mm": 0.20,
+  "recovery_gain": 0.4,
+  "commitment_s": 0.5,
+  "avoidance_trigger_mm": 0.7,
+  "risk_enter_score": 0.60,
+  "risk_exit_score": 0.25,
+  "risk_enter_offset_fraction": 0.90,
+  "risk_offset_full_fraction": 1.05,
+  "risk_outward_velocity_mm_s": 0.20,
+  "risk_outward_command": 0.30,
+  "risk_stall_speed_mm_s": 0.15,
+  "risk_filter_alpha": 0.20,
+  "risk_enter_confirm_steps": 4,
+  "risk_exit_confirm_steps": 8,
+  "risk_min_hold_s": 0.5,
+  "risk_rearm_offset_fraction": 0.80,
+  "risk_guard_gain": 0.35,
+  "progress_stall_s": 2.0,
+  "progress_commit_s": 2.0,
+  "progress_release_mm": 0.3
+}

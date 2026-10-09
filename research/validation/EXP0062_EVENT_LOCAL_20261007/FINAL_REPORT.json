@@ -1,0 +1,548 @@
+{
+  "summary": {
+    "switch": {
+      "episodes": 84,
+      "errors": 0,
+      "task_success": 0.7023809523809523,
+      "cluster_safe_success": 0.17857142857142858,
+      "relaxed_safe_success": 0.6428571428571429,
+      "wall_contact_s": 7.795297864882243,
+      "max_continuous_wall_contact_s": 4.561591683859196,
+      "obstacle_events_static": 2.9642857142857144,
+      "obstacle_events_dynamic": 1.2857142857142858,
+      "removal_auc": 0.5573006305294526,
+      "replan_count": 0.0
+    },
+    "guard": {
+      "episodes": 84,
+      "errors": 0,
+      "task_success": 0.6904761904761905,
+      "cluster_safe_success": 0.16666666666666666,
+      "relaxed_safe_success": 0.6071428571428571,
+      "wall_contact_s": 9.16173000960521,
+      "max_continuous_wall_contact_s": 4.827757982843703,
+      "obstacle_events_static": 3.357142857142857,
+      "obstacle_events_dynamic": 1.2976190476190477,
+      "removal_auc": 0.5461026339557596,
+      "replan_count": 0.0
+    },
+    "guard_replan": {
+      "episodes": 84,
+      "errors": 0,
+      "task_success": 0.6785714285714286,
+      "cluster_safe_success": 0.14285714285714285,
+      "relaxed_safe_success": 0.6071428571428571,
+      "wall_contact_s": 6.494133470576803,
+      "max_continuous_wall_contact_s": 0.38024565150673534,
+      "obstacle_events_static": 3.642857142857143,
+      "obstacle_events_dynamic": 1.4047619047619047,
+      "removal_auc": 0.5456854137126982,
+      "replan_count": 2.369047619047619
+    },
+    "semantic": {
+      "episodes": 84,
+      "errors": 0,
+      "task_success": 0.8095238095238095,
+      "cluster_safe_success": 0.2857142857142857,
+      "relaxed_safe_success": 0.5357142857142857,
+      "wall_contact_s": 20.08988234463973,
+      "max_continuous_wall_contact_s": 18.359309258117953,
+      "obstacle_events_static": 0.5833333333333334,
+      "obstacle_events_dynamic": 0.5833333333333334,
+      "removal_auc": 0.6084183245499294,
+      "replan_count": 0.0
+    },
+    "semantic_replan": {
+      "episodes": 84,
+      "errors": 0,
+      "task_success": 0.8214285714285714,
+      "cluster_safe_success": 0.30952380952380953,
+      "relaxed_safe_success": 0.5357142857142857,
+      "wall_contact_s": 8.456087298011216,
+      "max_continuous_wall_contact_s": 0.9543834751530486,
+      "obstacle_events_static": 0.8095238095238095,
+      "obstacle_events_dynamic": 0.5,
+      "removal_auc": 0.6146482022462282,
+      "replan_count": 3.0595238095238093
+    },
+    "hybrid": {
+      "episodes": 84,
+      "errors": 0,
+      "task_success": 0.7142857142857143,
+      "cluster_safe_success": 0.34523809523809523,
+      "relaxed_safe_success": 0.6309523809523809,
+      "wall_contact_s": 11.032825892280906,
+      "max_continuous_wall_contact_s": 5.617006101548012,
+      "obstacle_events_static": 2.8214285714285716,
+      "obstacle_events_dynamic": 0.5595238095238095,
+      "removal_auc": 0.5720172985467112,
+      "replan_count": 0.0
+    },
+    "hybrid_replan": {
+      "episodes": 84,
+      "errors": 0,
+      "task_success": 0.7261904761904762,
+      "cluster_safe_success": 0.3333333333333333,
+      "relaxed_safe_success": 0.6428571428571429,
+      "wall_contact_s": 6.901307700340435,
+      "max_continuous_wall_contact_s": 0.610173168091783,
+      "obstacle_events_static": 3.0595238095238093,
+      "obstacle_events_dynamic": 0.5595238095238095,
+      "removal_auc": 0.5736595230835589,
+      "replan_count": 2.392857142857143
+    }
+  },
+  "comparisons": {
+    "guard": {
+      "paired": 84,
+      "reference_only": 0,
+      "candidate_only": 0,
+      "reference_errors": [],
+      "candidate_errors": [],
+      "metrics": {
+        "cluster_safe_success": {
+          "reference": 0.17857142857142858,
+          "candidate": 0.16666666666666666,
+          "delta": -0.011904761904761904,
+          "paired_bootstrap_95": [
+            -0.03571428571428571,
+            0.0
+          ]
+        },
+        "relaxed_safe_success": {
+          "reference": 0.6428571428571429,
+          "candidate": 0.6071428571428571,
+          "delta": -0.03571428571428571,
+          "paired_bootstrap_95": [
+            -0.08333333333333333,
+            0.0
+          ]
+        },
+        "task_success": {
+          "reference": 0.7023809523809523,
+          "candidate": 0.6904761904761905,
+          "delta": -0.011904761904761904,
+          "paired_bootstrap_95": [
+            -0.05952380952380952,
+            0.023809523809523808
+          ]
+        },
+        "wall_contact_s": {
+          "reference": 7.795297864882245,
+          "candidate": 9.161730009605211,
+          "delta": 1.3664321447229657,
+          "paired_bootstrap_95": [
+            -0.06581951960472758,
+            4.050552374853821
+          ]
+        },
+        "max_continuous_wall_contact_s": {
+          "reference": 4.561591683859196,
+          "candidate": 4.827757982843704,
+          "delta": 0.2661662989845083,
+          "paired_bootstrap_95": [
+            -0.0689427089531093,
+            0.8645492562601553
+          ]
+        },
+        "obstacle_events_static": {
+          "reference": 2.9642857142857144,
+          "candidate": 3.357142857142857,
+          "delta": 0.39285714285714285,
+          "paired_bootstrap_95": [
+            -0.5952380952380952,
+            1.5952380952380953
+          ]
+        },
+        "obstacle_events_dynamic": {
+          "reference": 1.2857142857142858,
+          "candidate": 1.2976190476190477,
+          "delta": 0.011904761904761904,
+          "paired_bootstrap_95": [
+            -0.27380952380952384,
+            0.30952380952380953
+          ]
+        }
+      },
+      "passes_descriptive_gate": false
+    },
+    "guard_replan": {
+      "paired": 84,
+      "reference_only": 0,
+      "candidate_only": 0,
+      "reference_errors": [],
+      "candidate_errors": [],
+      "metrics": {
+        "cluster_safe_success": {
+          "reference": 0.17857142857142858,
+          "candidate": 0.14285714285714285,
+          "delta": -0.03571428571428571,
+          "paired_bootstrap_95": [
+            -0.08333333333333333,
+            0.0
+          ]
+        },
+        "relaxed_safe_success": {
+          "reference": 0.6428571428571429,
+          "candidate": 0.6071428571428571,
+          "delta": -0.03571428571428571,
+          "paired_bootstrap_95": [
+            -0.08333333333333333,
+            0.0
+          ]
+        },
+        "task_success": {
+          "reference": 0.7023809523809523,
+          "candidate": 0.6785714285714286,
+          "delta": -0.023809523809523808,
+          "paired_bootstrap_95": [
+            -0.07142857142857142,
+            0.023809523809523808
+          ]
+        },
+        "wall_contact_s": {
+          "reference": 7.795297864882245,
+          "candidate": 6.494133470576804,
+          "delta": -1.3011643943054398,
+          "paired_bootstrap_95": [
+            -3.6884834518266616,
+            0.2196553851377751
+          ]
+        },
+        "max_continuous_wall_contact_s": {
+          "reference": 4.561591683859196,
+          "candidate": 0.3802456515067353,
+          "delta": -4.181346032352459,
+          "paired_bootstrap_95": [
+            -12.533463331960164,
+            0.04911172284103723
+          ]
+        },
+        "obstacle_events_static": {
+          "reference": 2.9642857142857144,
+          "candidate": 3.642857142857143,
+          "delta": 0.6785714285714286,
+          "paired_bootstrap_95": [
+            -0.488392857142857,
+            2.1547619047619047
+          ]
+        },
+        "obstacle_events_dynamic": {
+          "reference": 1.2857142857142858,
+          "candidate": 1.4047619047619047,
+          "delta": 0.11904761904761904,
+          "paired_bootstrap_95": [
+            -0.16666666666666666,
+            0.42857142857142855
+          ]
+        }
+      },
+      "passes_descriptive_gate": false
+    },
+    "semantic": {
+      "paired": 84,
+      "reference_only": 0,
+      "candidate_only": 0,
+      "reference_errors": [],
+      "candidate_errors": [],
+      "metrics": {
+        "cluster_safe_success": {
+          "reference": 0.17857142857142858,
+          "candidate": 0.2857142857142857,
+          "delta": 0.10714285714285714,
+          "paired_bootstrap_95": [
+            0.011904761904761904,
+            0.20238095238095238
+          ]
+        },
+        "relaxed_safe_success": {
+          "reference": 0.6428571428571429,
+          "candidate": 0.5357142857142857,
+          "delta": -0.10714285714285714,
+          "paired_bootstrap_95": [
+            -0.20238095238095238,
+            -0.011904761904761904
+          ]
+        },
+        "task_success": {
+          "reference": 0.7023809523809523,
+          "candidate": 0.8095238095238095,
+          "delta": 0.10714285714285714,
+          "paired_bootstrap_95": [
+            0.011904761904761904,
+            0.20238095238095238
+          ]
+        },
+        "wall_contact_s": {
+          "reference": 7.795297864882245,
+          "candidate": 20.08988234463973,
+          "delta": 12.294584479757484,
+          "paired_bootstrap_95": [
+            0.3906487201411406,
+            25.895818812924386
+          ]
+        },
+        "max_continuous_wall_contact_s": {
+          "reference": 4.561591683859196,
+          "candidate": 18.359309258117953,
+          "delta": 13.797717574258755,
+          "paired_bootstrap_95": [
+            3.8489469818629276,
+            26.001528077451567
+          ]
+        },
+        "obstacle_events_static": {
+          "reference": 2.9642857142857144,
+          "candidate": 0.5833333333333334,
+          "delta": -2.380952380952381,
+          "paired_bootstrap_95": [
+            -4.893154761904762,
+            -0.36904761904761907
+          ]
+        },
+        "obstacle_events_dynamic": {
+          "reference": 1.2857142857142858,
+          "candidate": 0.5833333333333334,
+          "delta": -0.7023809523809523,
+          "paired_bootstrap_95": [
+            -1.0595238095238095,
+            -0.35714285714285715
+          ]
+        }
+      },
+      "passes_descriptive_gate": false
+    },
+    "semantic_replan": {
+      "paired": 84,
+      "reference_only": 0,
+      "candidate_only": 0,
+      "reference_errors": [],
+      "candidate_errors": [],
+      "metrics": {
+        "cluster_safe_success": {
+          "reference": 0.17857142857142858,
+          "candidate": 0.30952380952380953,
+          "delta": 0.13095238095238096,
+          "paired_bootstrap_95": [
+            0.03571428571428571,
+            0.23809523809523808
+          ]
+        },
+        "relaxed_safe_success": {
+          "reference": 0.6428571428571429,
+          "candidate": 0.5357142857142857,
+          "delta": -0.10714285714285714,
+          "paired_bootstrap_95": [
+            -0.20238095238095238,
+            -0.011904761904761904
+          ]
+        },
+        "task_success": {
+          "reference": 0.7023809523809523,
+          "candidate": 0.8214285714285714,
+          "delta": 0.11904761904761904,
+          "paired_bootstrap_95": [
+            0.023809523809523808,
+            0.21428571428571427
+          ]
+        },
+        "wall_contact_s": {
+          "reference": 7.795297864882245,
+          "candidate": 8.456087298011216,
+          "delta": 0.6607894331289728,
+          "paired_bootstrap_95": [
+            -5.257073305230236,
+            7.205714969244017
+          ]
+        },
+        "max_continuous_wall_contact_s": {
+          "reference": 4.561591683859196,
+          "candidate": 0.9543834751530488,
+          "delta": -3.607208208706147,
+          "paired_bootstrap_95": [
+            -11.786375230541902,
+            0.6982359942519563
+          ]
+        },
+        "obstacle_events_static": {
+          "reference": 2.9642857142857144,
+          "candidate": 0.8095238095238095,
+          "delta": -2.1547619047619047,
+          "paired_bootstrap_95": [
+            -4.702678571428572,
+            -0.17857142857142858
+          ]
+        },
+        "obstacle_events_dynamic": {
+          "reference": 1.2857142857142858,
+          "candidate": 0.5,
+          "delta": -0.7857142857142857,
+          "paired_bootstrap_95": [
+            -1.2142857142857142,
+            -0.40476190476190477
+          ]
+        }
+      },
+      "passes_descriptive_gate": false
+    },
+    "hybrid": {
+      "paired": 84,
+      "reference_only": 0,
+      "candidate_only": 0,
+      "reference_errors": [],
+      "candidate_errors": [],
+      "metrics": {
+        "cluster_safe_success": {
+          "reference": 0.17857142857142858,
+          "candidate": 0.34523809523809523,
+          "delta": 0.16666666666666666,
+          "paired_bootstrap_95": [
+            0.08333333333333333,
+            0.2619047619047619
+          ]
+        },
+        "relaxed_safe_success": {
+          "reference": 0.6428571428571429,
+          "candidate": 0.6309523809523809,
+          "delta": -0.011904761904761904,
+          "paired_bootstrap_95": [
+            -0.07142857142857142,
+            0.047619047619047616
+          ]
+        },
+        "task_success": {
+          "reference": 0.7023809523809523,
+          "candidate": 0.7142857142857143,
+          "delta": 0.011904761904761904,
+          "paired_bootstrap_95": [
+            -0.047619047619047616,
+            0.07142857142857142
+          ]
+        },
+        "wall_contact_s": {
+          "reference": 7.795297864882245,
+          "candidate": 11.032825892280906,
+          "delta": 3.2375280273986635,
+          "paired_bootstrap_95": [
+            -2.3021306465650473,
+            11.344052426167718
+          ]
+        },
+        "max_continuous_wall_contact_s": {
+          "reference": 4.561591683859196,
+          "candidate": 5.617006101548012,
+          "delta": 1.0554144176888158,
+          "paired_bootstrap_95": [
+            -0.6587066969353015,
+            3.310131879885876
+          ]
+        },
+        "obstacle_events_static": {
+          "reference": 2.9642857142857144,
+          "candidate": 2.8214285714285716,
+          "delta": -0.14285714285714285,
+          "paired_bootstrap_95": [
+            -0.5238095238095238,
+            0.16666666666666666
+          ]
+        },
+        "obstacle_events_dynamic": {
+          "reference": 1.2857142857142858,
+          "candidate": 0.5595238095238095,
+          "delta": -0.7261904761904762,
+          "paired_bootstrap_95": [
+            -1.130952380952381,
+            -0.36904761904761907
+          ]
+        }
+      },
+      "passes_descriptive_gate": false
+    },
+    "hybrid_replan": {
+      "paired": 84,
+      "reference_only": 0,
+      "candidate_only": 0,
+      "reference_errors": [],
+      "candidate_errors": [],
+      "metrics": {
+        "cluster_safe_success": {
+          "reference": 0.17857142857142858,
+          "candidate": 0.3333333333333333,
+          "delta": 0.15476190476190477,
+          "paired_bootstrap_95": [
+            0.05952380952380952,
+            0.25
+          ]
+        },
+        "relaxed_safe_success": {
+          "reference": 0.6428571428571429,
+          "candidate": 0.6428571428571429,
+          "delta": 0.0,
+          "paired_bootstrap_95": [
+            -0.05952380952380952,
+            0.07142857142857142
+          ]
+        },
+        "task_success": {
+          "reference": 0.7023809523809523,
+          "candidate": 0.7261904761904762,
+          "delta": 0.023809523809523808,
+          "paired_bootstrap_95": [
+            -0.023809523809523808,
+            0.07142857142857142
+          ]
+        },
+        "wall_contact_s": {
+          "reference": 7.795297864882245,
+          "candidate": 6.901307700340433,
+          "delta": -0.8939901645418089,
+          "paired_bootstrap_95": [
+            -6.811555556207982,
+            4.7921552319412575
+          ]
+        },
+        "max_continuous_wall_contact_s": {
+          "reference": 4.561591683859196,
+          "candidate": 0.610173168091783,
+          "delta": -3.951418515767412,
+          "paired_bootstrap_95": [
+            -12.257469154517318,
+            0.3150711978213555
+          ]
+        },
+        "obstacle_events_static": {
+          "reference": 2.9642857142857144,
+          "candidate": 3.0595238095238093,
+          "delta": 0.09523809523809523,
+          "paired_bootstrap_95": [
+            -0.27380952380952384,
+            0.4880952380952381
+          ]
+        },
+        "obstacle_events_dynamic": {
+          "reference": 1.2857142857142858,
+          "candidate": 0.5595238095238095,
+          "delta": -0.7261904761904762,
+          "paired_bootstrap_95": [
+            -1.1071428571428572,
+            -0.38095238095238093
+          ]
+        }
+      },
+      "passes_descriptive_gate": false
+    }
+  },
+  "runtime_recovery": {
+    "infrastructure": "One pool worker stuck in native futex wait; debugger attachment denied",
+    "method": [
+      "cerebral_venous_sinus",
+      2600000003,
+      "hybrid_replan"
+    ],
+    "resolution": "Interrupt only our evaluation parent; repeat identical scene and configuration in fresh process",
+    "retry_error": null,
+    "retry_task_success": false,
+    "excluded_or_replaced_method_failures": false
+  },
+  "interpretation": "Repeatedly used development scenes; no sealed or unseen-anatomy claim. Gates are descriptive, not clinical safety certification. Bootstrap resamples paired scenes, not independent anatomies."
+}
