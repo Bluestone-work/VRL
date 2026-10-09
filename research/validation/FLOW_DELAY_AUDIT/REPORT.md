@@ -72,3 +72,10 @@ env PYTHONPATH=. /home/wj/miniconda3/envs/v/bin/python -m scripts.diagnose_lysis
 The next candidate, if pursued, is one causal delay-aware feedback method
 selected on training anatomies only. No GRU/auxiliary stacking or closed-test
 selection is justified by this negative mechanism result.
+
+The follow-up training repair is now implemented after this audit: TPG-held
+rows remain in each per-agent GAE stream with zero PPO learn weight, so they
+preserve temporal continuity; time-limit truncation bootstraps from the final
+observation, while task termination and robot exit cut bootstrap. This repair
+changes the training problem, so all previous A/B/C/D checkpoints remain
+pre-repair evidence and must not be mixed with repaired runs.

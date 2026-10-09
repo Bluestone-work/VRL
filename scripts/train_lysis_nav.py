@@ -263,7 +263,8 @@ def worker(wid, conn, seed0, cfg):
         if msg is None:
             break
         policy.load_state_dict(msg)
-        buf = dict(seq=[], mask=[], act=[], logp=[], val=[], rew=[], done=[], stream=[], prior=[], motion=[], executed=[], motion_valid=[])
+        buf = dict(seq=[], mask=[], act=[], logp=[], val=[], rew=[], done=[], learn=[], stream=[], prior=[], motion=[], executed=[], motion_valid=[])
+        trunc_boot = {}
         for _ in range(ROLLOUT):
             env, n = ep.env, ep.n
             est, tgt, hold, seq, mask, live, a_prior = ep.cur
@@ -295,16 +296,29 @@ def worker(wid, conn, seed0, cfg):
             obs(ep)
             next_motion = ep.cur[3][:, -1, 19:22].copy()
             for i in range(n):
-                if out['active_before'][i] and live[i]:
+                if out['active_before'][i]:
                     buf['seq'].append(seq[i]); buf['mask'].append(mask[i]); buf['act'].append(a[i].numpy())
                     buf['logp'].append(float(lp[i])); buf['val'].append(float(v[i])); buf['rew'].append(float(r[i]))
-                    buf['done'].append(bool(done or not env.active[i])); buf['stream'].append((wid, ep.id, i))
+                    # Time-limit truncation bootstraps; task termination or
+                    # robot exit cuts the stream. Held/TPG-gated rows remain in
+                    # the stream for GAE continuity but are excluded from PPO.
+                    buf['done'].append(bool(out['terminated'] or not env.active[i])); buf['learn'].append(bool(live[i]))
+                    buf['stream'].append((wid, ep.id, i))
                     buf['prior'].append(a_prior[i])
                     buf['motion'].append(next_motion[i])
                     buf['executed'].append(ep.ctl.to_world(ep.prev_local, est)[i])
                     buf['motion_valid'].append(bool(env.active[i]))
             ep.ret += float(r.sum())
             if done:
+                if out.get('truncated', False) and not out.get('terminated', False):
+                    # Evaluate the final deployable observation before reset so
+                    # a time-limit transition can bootstrap correctly.
+                    obs(ep)
+                    with torch.no_grad():
+                        _, vb = policy.dist(torch.as_tensor(ep.cur[3]), torch.as_tensor(ep.cur[4]))
+                    for i in range(n):
+                        if out['active_before'][i] and env.active[i]:
+                            trunc_boot[(wid, ep.id, i)] = float(vb[i])
                 row = ep.row('train')
                 finished.append(dict(anatomy=ep.anatomy, n=n, s=ep.s, success=bool(row['task_success']), removal=row['removal'],
                                      wall=row['wall_contact_s'], t90=row['t90_s'] or 300., ret=ep.ret,
@@ -314,7 +328,9 @@ def worker(wid, conn, seed0, cfg):
         _, _, _, seq, mask, _, _ = ep.cur
         with torch.no_grad():
             _, vb = policy.dist(torch.as_tensor(seq), torch.as_tensor(mask))
-        conn.send(dict(buf=buf, boot={(wid, ep.id, i): float(vb[i]) for i in range(ep.n)}, finished=finished)); finished = []
+        final_boot={(wid, ep.id, i): float(vb[i]) for i in range(ep.n)}
+        final_boot.update(trunc_boot)
+        conn.send(dict(buf=buf, boot=final_boot, finished=finished)); finished = []
 
 
 def main():
@@ -379,13 +395,15 @@ def main():
         seq, mask, act, lp0 = T(buf['seq']), T(buf['mask'], torch.bool), T(buf['act']), T(buf['logp'])
         PRI = T(buf['prior'])*(0. if cfg.get('speed_prior') else 1.)
         motion, executed, motion_valid = T(buf['motion']), T(buf['executed']), T(buf['motion_valid'])
+        learn = T(buf['learn'])
         aux_records = []
         A, R = T(adv), T(ret); A = (A-A.mean())/(A.std()+1e-8)
         for _ in range(3):
             for b in torch.randperm(len(A), device=a.device).split(2048):
                 d, v = policy.dist(seq[b], mask[b]); lp = d.log_prob(act[b]).sum(-1); ratio = (lp-lp0[b]).exp()
-                l_pi = -torch.min(ratio*A[b], ratio.clamp(1-clip, 1+clip)*A[b]).mean()
-                l = l_pi+.5*((v-R[b])**2).mean()-ent*d.entropy().sum(-1).mean()+beta*((d.mean-PRI[b])**2).sum(-1).mean()
+                w = learn[b]; denom=w.sum().clamp(min=1)
+                l_pi = (-torch.min(ratio*A[b], ratio.clamp(1-clip, 1+clip)*A[b])*w).sum()/denom
+                l = l_pi+.5*(((v-R[b])**2)*w).sum()/denom-ent*(d.entropy().sum(-1)*w).sum()/denom+beta*(((d.mean-PRI[b])**2).sum(-1)*w[:,None]).sum()/denom
                 if a.abcd == 'D':
                     pred = policy.predict_motion(seq[b], mask[b], executed[b])
                     aux = (nn.functional.smooth_l1_loss(pred, motion[b], reduction='none').mean(-1)*motion_valid[b]).sum()/motion_valid[b].sum().clamp(min=1)
