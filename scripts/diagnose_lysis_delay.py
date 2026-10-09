@@ -20,7 +20,7 @@ def one(spec):
             local=controller(ep,est,tgt,rule,hold)
             if method=='damped':
                 # Causal, deployable velocity feedback; no truth or flow labels.
-                vlocal=np.einsum('nji,nj->ni',ep.ctl.frames(est),est.vel)
+                vlocal=np.einsum('nij,nj->ni',ep.ctl.frames(est),est.vel)
                 local=np.clip(local-0.35*vlocal/max(ep.env.config.robot_speed_mm_s,1e-9),-1,1)
                 local[~est.active]=0.
             for i,t in enumerate(tgt):
@@ -40,11 +40,13 @@ def one(spec):
                              lost=int(info.get('lost_robots',0))))
             prev_targets=tgt.copy()
             if done:break
-        row=dict(anatomy=an,n=n,seed=seed,latency_steps=lat,flow=flow,method=method,steps=len(rows),
+        row=dict(ep.row(method),n=n,latency_steps=lat,flow=flow,steps=len(rows),
                  termination=ep.info.get('termination_reason') if ep.info else None,
                  first_entry={f'{i}:{t}':min(v) for (i,t),v in entered.items() if v},
                  target_entries={f'{i}:{t}':len(v) for (i,t),v in entered.items()},
                  departures=left,targets_cleared=int(np.sum(ep.env.masses<=0)),lost=int(ep.info.get('lost_robots',0) if ep.info else 0))
+        row['T90_300']=row['t90_s'] if row['t90_s'] is not None else 300.
+        row['t90_reached']=row['t90_s'] is not None
         ep.close();return dict(summary=row,trace=rows)
     except Exception:return dict(error=traceback.format_exc(),anatomy=an,n=n,seed=seed,latency_steps=lat)
 

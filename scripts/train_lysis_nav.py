@@ -243,7 +243,7 @@ def worker(wid, conn, seed0, cfg):
                 flow = .025 if cfg['abcd'] == 'A' else float(draw)
                 s = 0.
             try:
-                ep = LysisEpisode(n, an, seed, sense_cfg=DeployableConfig(latency_steps=int(rng.integers(1, 3))),
+                ep = LysisEpisode(n, an, seed, sense_cfg=DeployableConfig(latency_steps=int(rng.integers(1, cfg.get('latency_max', 2)+1))),
                                   variation=s if s > 0 else None, flow_inlet_mm_s=flow)
                 if cfg.get('abcd'):
                     # Fixed response; retain the existing spatial field and waveform.
@@ -354,11 +354,13 @@ def main():
     p.add_argument('--abcd', choices=('A', 'B', 'C', 'D'))
     p.add_argument('--updates', type=int, default=0, help='fixed rollout budget, overrides minutes')
     p.add_argument('--scene-seed-base', type=int, default=2100000000)
+    p.add_argument('--latency-max', type=int, choices=(2,3), default=2)
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.manual_seed(a.seed)
     if a.adaptive_history:
         a.arch, a.window = 'gru', 8
     cfg = dict(mode='route', arch=a.arch, layers=a.layers, window=a.window, s_max=a.s_max, speed_prior=a.speed_prior, prior_residual_scale=a.prior_residual_scale, s_min=a.s_min, hard_w=a.hard_w, ecg=a.ecg, adaptive_history=a.adaptive_history)
     cfg.update(abcd=a.abcd, training_seed=a.seed, updates=a.updates, scene_seed_base=a.scene_seed_base)
+    cfg.update(latency_max=a.latency_max, training_revision='prior_truncation_hold_fixed_local_history')
     (a.out/'config.json').write_text(json.dumps(dict(vars(a), **cfg), default=str))
     ctx = mp.get_context('fork'); pipes, procs = [], []
     for w in range(a.workers):
