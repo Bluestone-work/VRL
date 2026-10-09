@@ -202,6 +202,11 @@ class NavController:
         self.prior = PriorSpeed(ep.n) if self.cfg.get('speed_prior') else None; self.prev_world = np.zeros((ep.n, 3))
 
     def __call__(self, ep, est, tgt, rule, hold):
+        if self.cfg.get('abcd'):
+            # Match the training token: last safety-filtered command, in world coordinates.
+            if hasattr(self, 'previous_frames'):
+                self.prev = np.einsum('nji,nj->ni', self.previous_frames, ep.prev_local)
+            self.previous_frames = ep.ctl.frames(est).copy()
         seq, mask = self.hist.push(token(ep, est, tgt, hold, self.prev, self.ecg))
         with torch.no_grad():
             a = self.net.pi(self.net.backbone(torch.as_tensor(seq), torch.as_tensor(mask))).numpy().astype(np.float64)
