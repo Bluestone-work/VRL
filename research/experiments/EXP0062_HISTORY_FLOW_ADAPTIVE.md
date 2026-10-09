@@ -13,10 +13,11 @@ mechanism ablation. The default mapping uses full residual authority and still
 clips to the legal [0,1] speed range. All principal comparisons must use the
 new mapping and report the mapping delta separately.
 
-The auxiliary head predicts the next observed velocity change (token columns
-19:22), normalized by the configured scale. Its default weight is 0.05 and
-the module reports weighted and unweighted losses. This target is observable at
-deployment and does not use hidden position or flow truth.
+The trained auxiliary head predicts the next observed velocity token (columns
+19:22). Its PPO loss weight is 0.01 and the run records weighted and unweighted
+losses. This target is observable at deployment and does not use hidden
+position or flow truth. The standalone helper module also contains a delta
+target utility, but it was not used by these checkpoints.
 
 Short gate commands:
 
