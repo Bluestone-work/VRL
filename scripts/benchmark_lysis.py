@@ -163,7 +163,8 @@ class LysisEpisode:
         out = dict(removed=(float(mass0.sum())-float(env.masses.sum()))/self.initial,
                    removed_each=(mass0-env.masses.astype(float))/self.initial,
                    wall=np.asarray(info['wall_contact_s'], float), lost=active & ~env.active[:n],
-                   active_before=active, agent_removed=np.asarray(info.get('agent_removed_mass', np.zeros(n)), float))
+                   active_before=active, agent_removed=np.asarray(info.get('agent_removed_mass', np.zeros(n)), float),
+                   terminated=bool(term), truncated=bool(trunc))
         return bool(term or trunc), out
 
     def row(self, method, **extra):
