@@ -2,6 +2,7 @@ import numpy as np
 import torch
 from marl.lysis_abcd import FlowPolicy
 from scripts.train_lysis_nav import History
+from scripts.train_lysis_nav import weighted_prior_loss
 
 
 def test_reset_windows_and_batch_independence():
@@ -48,3 +49,26 @@ def test_history_previous_command_contract_is_local_frame():
     world = np.einsum('nji,nj->ni', F, local)
     assert not np.allclose(local, world)
     assert np.allclose(np.einsum('nij,nj->ni', F, world), local)
+
+
+def test_prior_regularizer_is_sample_weighted_not_broadcast_matrix():
+    mean=torch.tensor([[1.,0.,0.],[2.,0.,0.],[3.,0.,0.]])
+    prior=torch.zeros_like(mean); w=torch.ones(3)
+    # squared errors are 1, 4, 9; correct mean is 14/3.
+    assert torch.allclose(weighted_prior_loss(mean,prior,w),torch.tensor(14/3))
+    masked=weighted_prior_loss(mean,prior,torch.tensor([1.,0.,1.]))
+    assert torch.allclose(masked,torch.tensor(5.))
+
+
+def test_gae_preserves_wait_span_and_separate_truncated_episode():
+    from scripts.train_lysis_local import gae
+    first=(0,1,0); second=(0,2,0)
+    # Includes a waiting transition between decision and reward. At truncation
+    # value 8 bootstraps; the next episode's reward 100 must never leak back.
+    buf=dict(stream=[first,first,first,second],rew=[0.,0.,4.,100.],
+             val=[0.,0.,0.,0.],done=[False,False,False,True])
+    adv,ret=gae(buf,{first:8.},gamma=.5,lam=1.)
+    assert np.allclose(ret,[2.,4.,8.,100.])
+    buf['done'][2]=True
+    _,ret=gae(buf,{first:8.},gamma=.5,lam=1.)
+    assert np.allclose(ret,[1.,2.,4.,100.])

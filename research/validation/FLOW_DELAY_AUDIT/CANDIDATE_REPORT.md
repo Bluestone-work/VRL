@@ -30,6 +30,12 @@ history is unnecessary in general. It does show that a simple kinematic
 extrapolation is insufficient under the current route allocator and image
 latency model.
 
+The corrected rerun uses persistent Settle state and corrected entry/departure
+bookkeeping. Its fixed Settle strict-success counts are 16/42, 20/42, and
+21/42 for delays 1/2/3 in the candidate screen; the candidate remains
+negative and these corrected baseline counts supersede the earlier
+reconstructed-controller numbers.
+
 Reproduction:
 
 ```bash

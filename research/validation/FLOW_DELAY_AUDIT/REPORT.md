@@ -46,10 +46,13 @@ For no-settle cruising:
 | 2 | 0/42 | 0.00 | 122.9 |
 | 3 | 0/42 | 0.00 | 279.7 |
 
-Fixed Settle gives 11/42, 15/42, and 23/42 full clear for delays 1/2/3;
-adaptive Settle is identical because response randomization is disabled.
-The simple velocity damping candidate gives 6/42, 0/42, and 0/42 and is
-rejected. It over-damps approach and does not solve delayed target switching.
+The corrected persistent-controller rerun gives fixed Settle 16/42, 27/42,
+and 30/42 full clear for delays 1/2/3. Adaptive Settle gives 38/42, 3/42,
+and 0/42; its stateful response estimate matters even with fixed environment
+response. The earlier identical Settle/adaptive result was an implementation
+artifact from reconstructing the controller every step and is withdrawn. The
+corrected velocity damping candidate gives 6/42, 0/42, and 0/42 and is
+rejected.
 The failure is therefore both delayed route/target tracking and inadequate
 near-target residence; “entered any 0.3 mm neighborhood” is not a clearance
 criterion. The trace uses 0.3 mm only as a diagnostic neighborhood.
@@ -79,3 +82,8 @@ preserve temporal continuity; time-limit truncation bootstraps from the final
 observation, while task termination and robot exit cut bootstrap. This repair
 changes the training problem, so all previous A/B/C/D checkpoints remain
 pre-repair evidence and must not be mixed with repaired runs.
+
+The repair also fixes the prior regularizer broadcast (`[B] * [B,1]`), uses a
+per-sample weighted mean, and bootstraps from the already acquired final
+observation without calling the sensing/history update twice. It has only been
+smoke-tested; no repaired long run is used as a result.

@@ -11,14 +11,14 @@ def one(spec):
         from scripts.benchmark_lysis import LysisEpisode,WallGuard,SettleGuard,AdaptiveSettleGuard
         from marl.deployable_sensing import DeployableConfig
         ep=LysisEpisode(n,an,seed,flow_inlet_mm_s=flow,sense_cfg=DeployableConfig(latency_steps=lat))
-        ctl=WallGuard(ep); rows=[]; entered={}; left=0; cleared=set(); prev_targets=None
+        ctl=WallGuard(ep); settle=SettleGuard(ep) if method=='settle' else None; adaptive=AdaptiveSettleGuard(ep) if method=='adaptive_settle' else None
+        rows=[]; entered={}; left=0; cleared=set(); prev_targets=None; prev_near={}
         while True:
             est=ep.observe(); tgt=ep.plan_targets_now(est); rule=ep.ctl.act(tgt,est); hold=ep.hold(est)
             before=ep.prev_local.copy()
-            local=ctl(ep,est,tgt,rule,hold)
-            if method=='settle': local=SettleGuard(ep)(ep,est,tgt,rule,hold)
-            elif method=='adaptive_settle': local=AdaptiveSettleGuard(ep)(ep,est,tgt,rule,hold)
-            elif method=='damped':
+            controller = settle if settle is not None else adaptive if adaptive is not None else ctl
+            local=controller(ep,est,tgt,rule,hold)
+            if method=='damped':
                 # Causal, deployable velocity feedback; no truth or flow labels.
                 vlocal=np.einsum('nji,nj->ni',ep.ctl.frames(est),est.vel)
                 local=np.clip(local-0.35*vlocal/max(ep.env.config.robot_speed_mm_s,1e-9),-1,1)
@@ -28,7 +28,8 @@ def one(spec):
                 d=float(np.linalg.norm(ep.env.clot_positions_mm[t]-est.pos[i])); near=d<.3
                 key=(i,int(t)); entered.setdefault(key,[])
                 if near: entered[key].append(float(ep.env.elapsed_s))
-                if key in entered and entered[key] and not near and prev_targets is not None: left+=1
+                if prev_near.get(key, False) and not near: left+=1
+                prev_near[key]=bool(near)
             done,info=ep.step(est,local,hold)
             rows.append(dict(anatomy=an,n=n,seed=seed,latency_steps=lat,flow=flow,method=method,t=float(ep.env.elapsed_s),
                              positions=est.pos.tolist(),estimated_velocity=est.vel.tolist(),targets=np.asarray(tgt).tolist(),
@@ -48,14 +49,16 @@ def one(spec):
     except Exception:return dict(error=traceback.format_exc(),anatomy=an,n=n,seed=seed,latency_steps=lat)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--workers',type=int,default=8);p.add_argument('--flow',type=float,default=.05);p.add_argument('--methods',default='no_settle,settle,adaptive_settle,damped');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--workers',type=int,default=8);p.add_argument('--flow',type=float,default=.05);p.add_argument('--methods',default='no_settle,settle,adaptive_settle,damped');p.add_argument('--no-traces',action='store_true');a=p.parse_args()
     # Development-only seeds, disjoint from the accidentally accessed 2700M offset 11.
     jobs=[(an,n,2600000000+ANATOMIES.index(an)*100000+20,lat,a.flow,m) for an in ANATOMIES for n in (1,2,3) for lat in (1,2,3) for m in a.methods.split(',')]
     a.out.mkdir(parents=True,exist_ok=False);(a.out/'manifest.json').write_text(json.dumps(dict(jobs=jobs,scene_seed_offset=20,flow=a.flow,purpose='delay mechanism development diagnostic'),indent=2))
     with mp.get_context('spawn').Pool(a.workers) as pool,(a.out/'summaries.jsonl').open('w') as sf,(a.out/'traces.jsonl').open('w') as tf:
       for i,x in enumerate(pool.imap_unordered(one,jobs),1):
         sf.write(json.dumps(x.get('summary',x)));sf.write('\n');sf.flush()
-        for t in x.get('trace',[]):tf.write(json.dumps(t)+'\n')
-        tf.flush();print(f'{i}/{len(jobs)}',flush=True)
+        if not a.no_traces:
+          for t in x.get('trace',[]):tf.write(json.dumps(t)+'\n')
+          tf.flush()
+        print(f'{i}/{len(jobs)}',flush=True)
     print('complete')
 if __name__=='__main__':main()

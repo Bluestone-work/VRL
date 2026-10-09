@@ -48,6 +48,12 @@ from scripts.train_lysis_local import gae as _gae, route_remaining
 def gae(buf, boot):
     return _gae(buf, boot, gamma=.995, lam=.95)
 
+
+def weighted_prior_loss(action_mean, prior, learn_weight):
+    """Per-sample prior regularization; avoids [B] x [B,1] broadcasting."""
+    error=((action_mean-prior)**2).sum(-1)
+    return (error*learn_weight).sum()/learn_weight.sum().clamp(min=1)
+
 ROLLOUT = 256
 ECG_DIM = 2      # v5-ECG: sin / cos of the cardiac phase (ECG is routinely monitored during endovascular procedures)
 # training anatomies with the most v4/v5 failures of the classical stack (train split only; held-out ones such as
@@ -295,6 +301,7 @@ def worker(wid, conn, seed0, cfg):
             # Exactly one sensor observation per step, including the terminal state.
             obs(ep)
             next_motion = ep.cur[3][:, -1, 19:22].copy()
+            final_seq, final_mask = ep.cur[3], ep.cur[4]
             for i in range(n):
                 if out['active_before'][i]:
                     buf['seq'].append(seq[i]); buf['mask'].append(mask[i]); buf['act'].append(a[i].numpy())
@@ -311,11 +318,8 @@ def worker(wid, conn, seed0, cfg):
             ep.ret += float(r.sum())
             if done:
                 if out.get('truncated', False) and not out.get('terminated', False):
-                    # Evaluate the final deployable observation before reset so
-                    # a time-limit transition can bootstrap correctly.
-                    obs(ep)
                     with torch.no_grad():
-                        _, vb = policy.dist(torch.as_tensor(ep.cur[3]), torch.as_tensor(ep.cur[4]))
+                        _, vb = policy.dist(torch.as_tensor(final_seq), torch.as_tensor(final_mask))
                     for i in range(n):
                         if out['active_before'][i] and env.active[i]:
                             trunc_boot[(wid, ep.id, i)] = float(vb[i])
@@ -403,7 +407,8 @@ def main():
                 d, v = policy.dist(seq[b], mask[b]); lp = d.log_prob(act[b]).sum(-1); ratio = (lp-lp0[b]).exp()
                 w = learn[b]; denom=w.sum().clamp(min=1)
                 l_pi = (-torch.min(ratio*A[b], ratio.clamp(1-clip, 1+clip)*A[b])*w).sum()/denom
-                l = l_pi+.5*(((v-R[b])**2)*w).sum()/denom-ent*(d.entropy().sum(-1)*w).sum()/denom+beta*(((d.mean-PRI[b])**2).sum(-1)*w[:,None]).sum()/denom
+                prior_loss = weighted_prior_loss(d.mean, PRI[b], w)
+                l = l_pi+.5*(((v-R[b])**2)*w).sum()/denom-ent*(d.entropy().sum(-1)*w).sum()/denom+beta*prior_loss
                 if a.abcd == 'D':
                     pred = policy.predict_motion(seq[b], mask[b], executed[b])
                     aux = (nn.functional.smooth_l1_loss(pred, motion[b], reduction='none').mean(-1)*motion_valid[b]).sum()/motion_valid[b].sum().clamp(min=1)

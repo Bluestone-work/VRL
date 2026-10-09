@@ -19,7 +19,7 @@ def run(spec):
         from marl.deployable_sensing import DeployableConfig, Estimate
         ep=LysisEpisode(n, anatomy, seed, flow_inlet_mm_s=flow,
                         sense_cfg=DeployableConfig(latency_steps=lat))
-        guard=WallGuard(ep); entries={}; departures=0; prev_near={}; near_time=0.; eligible=0.
+        guard=WallGuard(ep); settle=SettleGuard(ep) if method=='settle' else None; entries={}; departures=0; prev_near={}; near_time=0.; eligible=0.
         while True:
             sensed=ep.observe()
             control_est=sensed
@@ -32,13 +32,13 @@ def run(spec):
                                      active=sensed.active,particles=sensed.particles,peers_rel=sensed.peers_rel,
                                      peers_vis=sensed.peers_vis,clot_alive=sensed.clot_alive)
             tgt=ep.plan_targets_now(control_est); rule=ep.ctl.act(tgt,control_est); hold=ep.hold(control_est)
-            local=SettleGuard(ep)(ep,control_est,tgt,rule,hold) if method=='settle' else guard(ep,control_est,tgt,rule,hold)
+            local=settle(ep,control_est,tgt,rule,hold) if settle is not None else guard(ep,control_est,tgt,rule,hold)
             now=float(ep.env.elapsed_s); near=np.zeros(n,bool)
             for i,t in enumerate(tgt):
                 if t<0 or not sensed.active[i]: continue
                 d=float(np.linalg.norm(ep.env.clot_positions_mm[t]-sensed.pos[i])); near[i]=d<.3
-                key=(i,int(t)); entries.setdefault(key,0)
-                if near[i]: entries[key]+=1
+                key=(i,int(t)); entries.setdefault(key,None)
+                if near[i] and entries[key] is None: entries[key]=float(ep.env.elapsed_s)
                 if prev_near.get(key,False) and not near[i]: departures+=1
                 prev_near[key]=bool(near[i])
             done,info=ep.step(sensed,local,hold)
@@ -46,7 +46,7 @@ def run(spec):
             if done: break
         row=ep.row(method)
         row.update(anatomy_split='train',latency_steps=lat,flow_inlet_mm_s=flow,
-                   first_neighborhood_entry_s=None if not entries else min((k for k,v in entries.items() if v),default=(None,None))[0] if any(entries.values()) else None,
+                   first_neighborhood_entry_s=min((v for v in entries.values() if v is not None),default=None),
                    neighborhood_residence_ratio=near_time/max(eligible,1e-9),departures_after_entry=departures,
                    targets_cleared=int(np.sum(ep.env.masses<=0)),failure_stage='success' if row['strict_success'] else 'incomplete')
         ep.close(); return row
