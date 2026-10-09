@@ -81,10 +81,14 @@ def cardiac_phase(ep):
     return (2*np.pi*v.hr/60.*t+v.phase0) if v is not None else 2*np.pi*75./60.*t
 
 
-def token(ep, est, tgt, hold, prev, ecg=False):
+def token(ep, est, tgt, hold, prev, ecg=False, observable_history=False):
     env, ctl, n = ep.env, ep.ctl, ep.n
     spd = env.config.robot_speed_mm_s; body = float(env.config.robot_radius_mm)
-    T = np.zeros((n, DIM+(ECG_DIM if ecg else 0)), np.float32)
+    T = np.zeros((n, DIM+(ECG_DIM if ecg else 0)+int(observable_history)), np.float32)
+    if observable_history:
+        if not hasattr(est, 'frame_time_s'):
+            raise ValueError('Observable-history policy requires camera acquisition timestamps')
+        T[:, -1] = max(0., float(env.elapsed_s)-est.frame_time_s)  # age in seconds
     if ecg:
         ph = cardiac_phase(ep); T[:, DIM] = np.sin(ph); T[:, DIM+1] = np.cos(ph)
     for i in range(n):
@@ -131,7 +135,17 @@ def speed_from_prior(action0, prior, residual_scale=1.0):
     return float(np.clip(prior + residual_scale * float(np.clip(action0, -1, 1)), 0., 1.))
 
 
-def command(ep, est, a, live, s_prior=None, prior_residual_scale=1.0):
+def lateral_scale_for_targets(ep, est, tgt, cfg):
+    scale = float(cfg.get('lateral_residual_scale', 1.))
+    radius = cfg.get('lateral_near_radius')
+    if radius is None:
+        return np.full(ep.n, scale)
+    # Registered target positions and image estimates only; no physical truth.
+    return np.array([scale if t >= 0 and np.linalg.norm(ep.env.clot_positions_mm[t]-est.pos[i]) < radius
+                     else 1. for i, t in enumerate(tgt)])
+
+
+def command(ep, est, a, live, s_prior=None, prior_residual_scale=1.0, lateral_residual_scale=1.0):
     """Action mapping with full legal residual authority around a speed prior.
 
     ``command_legacy`` is retained for the mechanism ablation.  With the new
@@ -139,12 +153,13 @@ def command(ep, est, a, live, s_prior=None, prior_residual_scale=1.0):
     including a non-zero flow-compensation command.
     """
     ctl = ep.ctl; F = ctl.frames(est); a = np.clip(a, -1, 1); out = np.zeros((ep.n, 3))
+    lateral_scales = np.broadcast_to(lateral_residual_scale, (ep.n,))
     for i in range(ep.n):
         if not live[i]: continue
         st = int(np.argmin(np.linalg.norm(ctl.pts-ctl.carrot[i], axis=1)))
         nrm, bin_ = ep.env.tree.normals[st].astype(float), ep.env.tree.binormals[st].astype(float)
         lat = .7*max(float(ep.sensor.healthy[st])-float(ep.env.config.robot_radius_mm), 0.)
-        aim = ctl.carrot[i]+lat*(a[i,1]*nrm+a[i,2]*bin_)
+        aim = ctl.carrot[i]+lateral_scales[i]*lat*(a[i,1]*nrm+a[i,2]*bin_)
         d = aim-est.pos[i]; d /= max(np.linalg.norm(d), 1e-9)
         sp = float(np.clip(1+a[i, 0], 0, 1)) if s_prior is None else speed_from_prior(a[i, 0], s_prior[i], prior_residual_scale)
         out[i] = F[i]@(sp*d)
@@ -189,11 +204,15 @@ class History:
 
 
 def make_policy(cfg):
+    dim = DIM+(ECG_DIM if cfg.get('ecg') else 0)+int(cfg.get('observable_history', False))
+    if cfg.get('matrix_arm'):
+        from marl.lysis_matrix import MatrixPolicy
+        return MatrixPolicy(cfg['matrix_arm'], arch=cfg['arch'], layers=cfg['layers'], window=cfg['window'], dim=dim)
     if cfg.get('abcd'):
         from marl.lysis_abcd import FlowPolicy
-        return FlowPolicy(history=cfg['abcd'] in ('C', 'D'), arch=cfg['arch'], layers=cfg['layers'], window=cfg['window'], dim=DIM)
+        return FlowPolicy(history=cfg['abcd'] in ('C', 'D'), arch=cfg['arch'], layers=cfg['layers'], window=cfg['window'], dim=dim)
     from marl.obstacle_control import TemporalPolicy
-    return TemporalPolicy(cfg['arch'], layers=cfg['layers'], window=cfg['window'], dim=DIM+(ECG_DIM if cfg.get('ecg') else 0))
+    return TemporalPolicy(cfg['arch'], layers=cfg['layers'], window=cfg['window'], dim=dim)
 
 
 class NavController:
@@ -204,20 +223,27 @@ class NavController:
         c = torch.load(ckpt, map_location='cpu', weights_only=False); self.cfg = c['cfg']
         self.net = make_policy(self.cfg); self.net.load_state_dict(c['state']); self.net.eval()
         self.ecg = bool(self.cfg.get('ecg'))
-        self.hist = History(ep.n, self.cfg['window'], DIM+(ECG_DIM if self.ecg else 0)); self.prev = np.zeros((ep.n, 3)); self.guard = WallGuard(ep)
+        self.observable_history = bool(self.cfg.get('observable_history'))
+        self.hist = History(ep.n, self.cfg['window'], DIM+(ECG_DIM if self.ecg else 0)+int(self.observable_history)); self.prev = np.zeros((ep.n, 3)); self.guard = WallGuard(ep)
         self.prior = PriorSpeed(ep.n) if self.cfg.get('speed_prior') else None; self.prev_world = np.zeros((ep.n, 3))
 
     def __call__(self, ep, est, tgt, rule, hold):
-        if self.cfg.get('abcd'):
+        if self.observable_history:
+            self.prev = ep.sent_world.copy()
+            self.prev_world = ep.sent_world.copy()
+        elif self.cfg.get('abcd'):
             # Match the training token: last safety-filtered local command.
             self.prev = ep.prev_local.copy()
-        seq, mask = self.hist.push(token(ep, est, tgt, hold, self.prev, self.ecg))
+        seq, mask = self.hist.push(token(ep, est, tgt, hold, self.prev, self.ecg, self.observable_history))
         with torch.no_grad():
-            a = self.net.pi(self.net.backbone(torch.as_tensor(seq), torch.as_tensor(mask))).numpy().astype(np.float64)
+            # Use the same actor path as training.  In particular, MatrixPolicy
+            # applies its uncertainty gate in dist(); calling pi(backbone)
+            # directly would silently disable that gate at evaluation time.
+            a = self.net.dist(torch.as_tensor(seq), torch.as_tensor(mask))[0].loc.numpy().astype(np.float64)
         live = (np.asarray(tgt) >= 0) & est.active & ~hold
         a = np.clip(a, -1, 1); a[~live] = 0.; self.prev = a.copy()
         sp = 1.+self.prior(ep, est, tgt, self.prev_world)[:, 0] if self.prior is not None else None
-        out = self.guard(ep, est, tgt, command(ep, est, a, live, sp, self.cfg.get('prior_residual_scale', .5)), hold)
+        out = self.guard(ep, est, tgt, command(ep, est, a, live, sp, self.cfg.get('prior_residual_scale', .5), lateral_scale_for_targets(ep, est, tgt, self.cfg)), hold)
         self.prev_world = ep.ctl.to_world(out, est)
         return out
 
@@ -237,7 +263,9 @@ def worker(wid, conn, seed0, cfg):
             w = np.array([cfg.get('hard_w', 1.) if a_ in HARD else 1. for a_ in train]); an = train[rng.choice(len(train), p=w/w.sum())]
             n = int(rng.integers(1, 4))
             s = 0. if rng.random() < .2 else float(rng.uniform(cfg.get('s_min', 0.), cfg['s_max']))
-            flow = None
+            # Flow is part of the training domain randomisation.  It is never
+            # exposed to the policy; only the delayed image/history is used.
+            flow = float(rng.choice(cfg.get('flow_levels', (0.05,))))
             if cfg.get('abcd'):
                 draw = np.random.default_rng([seed, 620]).choice([.025, .05])
                 flow = .025 if cfg['abcd'] == 'A' else float(draw)
@@ -253,13 +281,23 @@ def worker(wid, conn, seed0, cfg):
                 break
             except (ValueError, RuntimeError):
                 continue
-        ep.hist = History(n, cfg['window'], DIM+(ECG_DIM if cfg.get('ecg') else 0)); ep.prev = np.zeros((n, 3)); ep.prev_raw = np.zeros((n, 3)); ep.id = count; ep.ret = 0.; ep.anatomy = an
+        ep.hist = History(n, cfg['window'], DIM+(ECG_DIM if cfg.get('ecg') else 0)+int(cfg.get('observable_history', False))); ep.prev = np.zeros((n, 3)); ep.prev_raw = np.zeros((n, 3)); ep.id = count; ep.ret = 0.; ep.anatomy = an
+        if cfg.get('matrix_arm') == 'belief_rolling_tpg' and n > 1:
+            from marl.lysis_baselines import SwitchableTPG
+            ep.rolling_tpg = SwitchableTPG(ep.coord, period_s=2.)
         ep.guard = WallGuard(ep); ep.s = s; ep.prior = PriorSpeed(n); ep.prev_world = np.zeros((n, 3)); ep.flow = flow; ep.scene_seed = seed
         return ep
 
     def obs(ep):
-        est = ep.observe(); tgt = ep.plan_targets_now(est); ep.ctl.act(tgt, est); hold = ep.hold(est)
-        seq, mask = ep.hist.push(token(ep, est, tgt, hold, ep.prev, cfg.get('ecg', False)))
+        est = ep.observe(); tgt = ep.plan_targets_now(est); ep.ctl.act(tgt, est)
+        if hasattr(ep, 'rolling_tpg'):
+            ep.rolling_tpg.update(ep.env.elapsed_s); hold = ep.rolling_tpg.c.gate(est.pos, est.active)
+        else:
+            hold = ep.hold(est)
+        if cfg.get('observable_history'):
+            ep.prev = ep.sent_world.copy()
+            ep.prev_world = ep.sent_world.copy()
+        seq, mask = ep.hist.push(token(ep, est, tgt, hold, ep.prev, cfg.get('ecg', False), cfg.get('observable_history', False)))
         live = (np.asarray(tgt) >= 0) & est.active & ~hold
         ep.cur = (est, tgt, hold, seq, mask, live, ep.prior(ep, est, tgt, ep.prev_world))
 
@@ -269,7 +307,7 @@ def worker(wid, conn, seed0, cfg):
         if msg is None:
             break
         policy.load_state_dict(msg)
-        buf = dict(seq=[], mask=[], act=[], logp=[], val=[], rew=[], done=[], learn=[], stream=[], prior=[], motion=[], executed=[], motion_valid=[])
+        buf = dict(seq=[], mask=[], act=[], logp=[], val=[], rew=[], done=[], learn=[], stream=[], prior=[], motion=[], executed=[], motion_valid=[], dynamics=[], dynamics_valid=[])
         trunc_boot = {}
         for _ in range(ROLLOUT):
             env, n = ep.env, ep.n
@@ -279,7 +317,7 @@ def worker(wid, conn, seed0, cfg):
                 a = d.sample(); lp = d.log_prob(a).sum(-1)
             a_np = np.clip(a.numpy().astype(np.float64), -1, 1); a_np[~live] = 0.
             sp = 1.+a_prior[:, 0] if cfg.get('speed_prior') else None
-            local = ep.guard(ep, est, tgt, command(ep, est, a_np, live, sp, cfg.get('prior_residual_scale', 1.0)), hold)
+            local = ep.guard(ep, est, tgt, command(ep, est, a_np, live, sp, cfg.get('prior_residual_scale', 1.0), lateral_scale_for_targets(ep, est, tgt, cfg)), hold)
             ep.prev_world = ep.ctl.to_world(local, est)
             P0 = env.positions_mm[:n].copy()
             g0 = np.array([route_remaining(ep.ctl, i, P0[i]) if tgt[i] >= 0 else 0. for i in range(n)])
@@ -301,6 +339,10 @@ def worker(wid, conn, seed0, cfg):
             # Exactly one sensor observation per step, including the terminal state.
             obs(ep)
             next_motion = ep.cur[3][:, -1, 19:22].copy()
+            dyn_label = None
+            if cfg.get('matrix_arm') and cfg.get('matrix_arm') != 'nav_tf_v3' and cfg.get('aux_weight', .01) > 0:
+                from marl.lysis_matrix import training_dynamics_labels
+                dyn_label = training_dynamics_labels(ep)
             final_seq, final_mask = ep.cur[3], ep.cur[4]
             for i in range(n):
                 if out['active_before'][i]:
@@ -315,6 +357,8 @@ def worker(wid, conn, seed0, cfg):
                     buf['motion'].append(next_motion[i])
                     buf['executed'].append(ep.ctl.to_world(ep.prev_local, est)[i])
                     buf['motion_valid'].append(bool(env.active[i]))
+                    if dyn_label is not None:
+                        buf['dynamics'].append(dyn_label[i]); buf['dynamics_valid'].append(bool(env.active[i]))
             ep.ret += float(r.sum())
             if done:
                 if out.get('truncated', False) and not out.get('terminated', False):
@@ -347,25 +391,54 @@ def main():
     p.add_argument('--lr', type=float, default=2e-4); p.add_argument('--init', type=Path, help='warm start checkpoint')
     p.add_argument('--speed-prior', action='store_true', help='v3: speed action relative to the adaptive classical speed')
     p.add_argument('--prior-residual-scale', type=float, default=1.0)
+    p.add_argument('--lateral-residual-scale', type=float, default=1.0,
+                   help='route lateral aim offset multiplier; old checkpoints default to 1')
+    p.add_argument('--lateral-near-radius', type=float, default=None,
+                   help='apply lateral scaling only inside this observed target distance (mm)')
+    p.add_argument('--aux-weight', type=float, default=.01,
+                   help='matrix auxiliary weight; 0 avoids collecting privileged labels')
+    p.add_argument('--observable-history', action='store_true',
+                   help='history uses final world-frame commands and camera frame age (40 tokens)')
+    p.add_argument('--no-privileged-supervision', action='store_true',
+                   help='reject pretrained initialization and privileged matrix auxiliary targets')
     p.add_argument('--beta0', type=float, default=1.); p.add_argument('--beta-end', type=float, default=.05)
     p.add_argument('--s-min', type=float, default=0.); p.add_argument('--hard-w', type=float, default=1.)
     p.add_argument('--ecg', action='store_true', help='add the ECG cardiac phase (sin, cos) to the observation')
     p.add_argument('--adaptive-history', action='store_true', help='default deployable adaptation recipe: GRU, 8 control steps')
     p.add_argument('--abcd', choices=('A', 'B', 'C', 'D'))
     p.add_argument('--updates', type=int, default=0, help='fixed rollout budget, overrides minutes')
+    p.add_argument('--agent-steps', type=int, default=0, help='retained active-agent transition budget; overrides updates/minutes')
     p.add_argument('--scene-seed-base', type=int, default=2100000000)
-    p.add_argument('--latency-max', type=int, choices=(2,3), default=2)
-    a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.manual_seed(a.seed)
+    p.add_argument('--latency-max', type=int, choices=(2,3), default=3)
+    p.add_argument('--flow-levels', default='0.025,0.05,0.1',
+                   help='comma-separated nominal inlet flow levels used for domain randomisation')
+    p.add_argument('--matrix-arm', choices=('nav_tf_v3','flow_aux','belief','belief_rolling_tpg'), default='nav_tf_v3')
+    a = p.parse_args()
+    if a.no_privileged_supervision and (a.init is not None or a.ecg or a.abcd is not None or
+            (a.matrix_arm != 'nav_tf_v3' and a.aux_weight > 0)):
+        p.error('No-privileged-supervision requires fresh initialization, no ECG/legacy ABCD, and no privileged matrix auxiliary')
+    a.out.mkdir(parents=True, exist_ok=False); torch.manual_seed(a.seed)
     if a.adaptive_history:
         a.arch, a.window = 'gru', 8
-    cfg = dict(mode='route', arch=a.arch, layers=a.layers, window=a.window, s_max=a.s_max, speed_prior=a.speed_prior, prior_residual_scale=a.prior_residual_scale, s_min=a.s_min, hard_w=a.hard_w, ecg=a.ecg, adaptive_history=a.adaptive_history)
-    cfg.update(abcd=a.abcd, training_seed=a.seed, updates=a.updates, scene_seed_base=a.scene_seed_base)
+    flow_levels = tuple(float(x) for x in a.flow_levels.split(',') if x.strip())
+    if not flow_levels or any(x <= 0 for x in flow_levels):
+        raise ValueError('--flow-levels must contain positive comma-separated values')
+    cfg = dict(mode='route', arch=a.arch, layers=a.layers, window=a.window, s_max=a.s_max, speed_prior=a.speed_prior, prior_residual_scale=a.prior_residual_scale, s_min=a.s_min, hard_w=a.hard_w, ecg=a.ecg, adaptive_history=a.adaptive_history, matrix_arm=a.matrix_arm, flow_levels=flow_levels)
+    cfg.update(abcd=a.abcd, training_seed=a.seed, updates=a.updates, agent_step_budget=a.agent_steps, scene_seed_base=a.scene_seed_base)
     cfg.update(latency_max=a.latency_max, training_revision='prior_truncation_hold_fixed_local_history')
+    cfg['lateral_residual_scale'] = a.lateral_residual_scale
+    cfg['lateral_near_radius'] = a.lateral_near_radius
+    cfg['aux_weight'] = a.aux_weight
+    cfg.update(observable_history=a.observable_history, no_privileged_supervision=a.no_privileged_supervision)
     (a.out/'config.json').write_text(json.dumps(dict(vars(a), **cfg), default=str))
     ctx = mp.get_context('fork'); pipes, procs = [], []
     for w in range(a.workers):
         parent, child = ctx.Pipe()
-        pr = ctx.Process(target=worker, args=(w, child, a.scene_seed_base+w*200000 if a.abcd else 1818000000+a.seed*10000000+w*200000, cfg)); pr.start()
+        # Keep the training scene registry explicit.  Earlier runs used a
+        # hidden seed formula for non-ABCD arms, which made seen/unseen audits
+        # harder to reproduce.
+        seed_base = a.scene_seed_base + a.seed*10000000
+        pr = ctx.Process(target=worker, args=(w, child, seed_base+w*200000, cfg)); pr.start()
         pipes.append(parent); procs.append(pr)
     policy = make_policy(cfg)
     if a.init:
@@ -376,10 +449,11 @@ def main():
     policy = policy.to(a.device)
     opt = torch.optim.AdamW(policy.parameters(), 3e-4, betas=(.9, .98), weight_decay=.01)
     t0, it, steps, log = time.time(), 0, 0, (a.out/'log.jsonl').open('a'); recent = []
-    save = lambda path: torch.save(dict(state=policy.state_dict(), it=it, agent_steps=steps, cfg=cfg), path)
+    save = lambda path: torch.save(dict(state=policy.state_dict(), optimizer=opt.state_dict(), it=it, agent_steps=steps, environment_steps=it*a.workers*ROLLOUT, cfg=cfg), path)
+    milestones_saved = set()
     episodes_log = (a.out/'episodes.jsonl').open('a')
-    while (it < a.updates) if a.updates else (time.time()-t0 < a.minutes*60):
-        frac = it/a.updates if a.updates else min((time.time()-t0)/(a.minutes*60), 1.)
+    while (steps < a.agent_steps) if a.agent_steps else ((it < a.updates) if a.updates else (time.time()-t0 < a.minutes*60)):
+        frac = steps/a.agent_steps if a.agent_steps else (it/a.updates if a.updates else min((time.time()-t0)/(a.minutes*60), 1.))
         cos = .5*(1+math.cos(math.pi*frac))
         for g in opt.param_groups:
             g['lr'] = 5e-5+(a.lr-5e-5)*cos
@@ -417,12 +491,17 @@ def main():
                     mse = ((pred-motion[b]).square().mean(-1)*motion_valid[b]).sum()/motion_valid[b].sum().clamp(min=1)
                     aux_records.append((float(aux.detach()), float(mse.detach()), float(l.detach())))
                     l = l+.01*aux
+                elif cfg.get('matrix_arm') and cfg.get('matrix_arm') != 'nav_tf_v3' and cfg['aux_weight'] > 0:
+                    labels = T(buf['dynamics'])[b]; valid = T(buf['dynamics_valid'])[b]
+                    aux, mse = policy.auxiliary(seq[b], mask[b], labels, valid)
+                    aux_records.append((float(aux.detach()), float(mse.detach()), float(l.detach())))
+                    l = l + cfg['aux_weight']*aux
                 if not torch.isfinite(l):
                     raise FloatingPointError('nonfinite PPO loss')
                 opt.zero_grad(); l.backward(); nn.utils.clip_grad_norm_(policy.parameters(), 1.); opt.step()
         it += 1; steps += len(A); recent = recent[-300:]
         m = lambda k, sel=None: (float(np.mean([e[k] for e in recent if sel is None or sel(e)])) if recent else None)
-        row = dict(it=it, agent_steps=steps, minutes=round((time.time()-t0)/60, 2), episodes=len(recent),
+        row = dict(it=it, agent_steps=steps, environment_steps=it*a.workers*ROLLOUT, learning_rows=int(learn.sum().item()), minutes=round((time.time()-t0)/60, 2), episodes=len(recent),
                    success=m('success'), removal=m('removal'), wall=m('wall'), t90=m('t90'), ret=m('ret'),
                    success_s0=m('success', lambda e: e['s'] == 0) if any(e['s'] == 0 for e in recent) else None,
                    lr=opt.param_groups[0]['lr'], beta=beta, mean_a0=float(act[:, 0].mean()), log_std=policy.log_std.tolist())
@@ -435,6 +514,10 @@ def main():
             save(a.out/'policy.pt')
         if it % 100 == 0 or it == 1:
             save(a.out/f'policy_it{it}.pt')
+        for milestone in (250000, 500000, 1000000, 2000000):
+            if steps >= milestone and milestone not in milestones_saved:
+                save(a.out/f'policy_steps{milestone}.pt')
+                milestones_saved.add(milestone)
     save(a.out/'policy.pt')
     for c in pipes:
         c.send(None)

@@ -101,6 +101,7 @@ class LysisEpisode:
         self.initial = float(env.initial_mass.sum()); self.initial_each = env.initial_mass.astype(float).copy()
         self.ms = {50: None, 90: None, 100: None}
         self.auc = 0.; self.pair = 0.; self.prev_local = np.zeros((n, 3)); self.info = None
+        self.sent_world = np.zeros((n, 3))  # final command before unknown plant response
         self.coupling = 0.; self.hold_s = 0.; self.t0 = time.monotonic(); self.steps = 0
         # benchmark v5: patient-specific / time-varying dynamics (marl.physio_variation); installed after every
         # controller component was built from the nominal (pre-operative) model
@@ -132,6 +133,7 @@ class LysisEpisode:
             local = self.shield.filtered(local, packet_from(est, self.ctl.frames(est), self.prev_local))
         self.prev_local = local.copy()
         world = self.ctl.to_world(local, est)
+        self.sent_world = world.copy()
         if self.actuation is not None:
             world = world*self.gain[:, None]+self.rng.normal(0., self.actuation['noise'], world.shape)*(np.linalg.norm(world, axis=1, keepdims=True) > 0)
         if self.var is not None:

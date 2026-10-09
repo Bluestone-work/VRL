@@ -33,3 +33,18 @@ def test_track_survives_motion_without_drift():
     assert s.lost[0] == 0
     assert np.linalg.norm(est.pos[0]-env.positions_mm[0]) < .05
     env.close()
+
+
+def test_frame_timestamp_tracks_delayed_acquisition_and_held_frame():
+    env = _env(); sensor = ImageSensor(env, seed=0, latency_steps=2)
+    try:
+        dt = env.config.control_dt_s
+        stamps = []
+        for _ in range(5):
+            stamps.append(sensor.observe().frame_time_s)
+            env.step(np.zeros((1, 3)))
+        assert np.allclose(stamps, [0., 0., 0., dt, 2*dt])
+        sensor.cam = replace(sensor.cam, fps=0.)
+        assert sensor.observe().frame_time_s == stamps[-1]
+    finally:
+        env.close()

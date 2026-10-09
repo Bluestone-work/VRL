@@ -72,3 +72,56 @@ def test_gae_preserves_wait_span_and_separate_truncated_episode():
     buf['done'][2]=True
     _,ret=gae(buf,{first:8.},gamma=.5,lam=1.)
     assert np.allclose(ret,[1.,2.,4.,100.])
+
+
+def test_lateral_intervention_preserves_speed_and_legacy_default():
+    from types import SimpleNamespace
+    from scripts.train_lysis_nav import command
+    frames = np.eye(3)[None]
+    ctl = SimpleNamespace(pts=np.array([[1.,0.,0.]]), carrot=np.array([[1.,0.,0.]]),
+                          frames=lambda est: frames)
+    ep = SimpleNamespace(n=1, ctl=ctl, sensor=SimpleNamespace(healthy=np.array([1.])),
+                         env=SimpleNamespace(config=SimpleNamespace(robot_radius_mm=.1),
+                         tree=SimpleNamespace(normals=np.array([[0.,1.,0.]]),
+                                              binormals=np.array([[0.,0.,1.]]))))
+    est=SimpleNamespace(pos=np.zeros((1,3))); action=np.array([[.6,.8,-.5]])
+    default=command(ep,est,action,np.array([True]),np.array([0.]))
+    explicit=command(ep,est,action,np.array([True]),np.array([0.]),1.,1.)
+    reduced=command(ep,est,action,np.array([True]),np.array([0.]),1.,.25)
+    assert np.array_equal(default,explicit)
+    assert np.allclose(np.linalg.norm(default,axis=1),np.linalg.norm(reduced,axis=1))
+    assert np.allclose(np.linalg.norm(reduced,axis=1),.6)
+    assert np.allclose(reduced[0,1:]/reduced[0,0],.25*default[0,1:]/default[0,0])
+    assert not command(ep,est,action,np.array([False]),np.array([0.]),1.,.25).any()
+
+
+def test_lateral_gate_is_per_robot_and_leaves_approach_unchanged():
+    from types import SimpleNamespace
+    from scripts.train_lysis_nav import lateral_scale_for_targets
+    ep=SimpleNamespace(n=3,env=SimpleNamespace(clot_positions_mm=np.zeros((1,3))))
+    est=SimpleNamespace(pos=np.array([[.1,0.,0.],[2.,0.,0.],[0.,0.,0.]]))
+    cfg=dict(lateral_residual_scale=.25,lateral_near_radius=.6)
+    assert np.array_equal(lateral_scale_for_targets(ep,est,[0,0,-1],cfg),[.25,1.,1.])
+    assert np.array_equal(lateral_scale_for_targets(ep,est,[0,0,-1],{}),[1.,1.,1.])
+
+
+def test_observable_history_uses_final_command_and_acquisition_age():
+    from scripts.benchmark_lysis import LysisEpisode
+    from scripts.train_lysis_nav import token, make_policy
+    from marl.deployable_sensing import DeployableConfig
+    ep=LysisEpisode(1,'mca_m1_lvo',2600000021,sense_cfg=DeployableConfig(latency_steps=2))
+    try:
+        est=ep.observe();targets=ep.plan_targets_now(est);ep.ctl.act(targets,est)
+        # A held robot must record zero actually-sent command, not the proposed command.
+        ep.step(est,np.ones((1,3)),np.ones(1,dtype=bool))
+        assert not ep.sent_world.any()
+        est=ep.observe();targets=ep.plan_targets_now(est);ep.ctl.act(targets,est)
+        t=token(ep,est,targets,ep.hold(est),ep.sent_world,observable_history=True)
+        assert t.shape==(1,40) and not t[:,23:26].any()
+        assert np.allclose(t[:,-1],ep.env.elapsed_s-est.frame_time_s)
+        cfg=dict(arch='transformer',layers=1,window=8,matrix_arm='nav_tf_v3',observable_history=True)
+        p=make_policy(cfg);seq=torch.tensor(np.repeat(t[:,None,:],8,axis=1))
+        d,v=p.dist(seq,torch.zeros((1,8),dtype=torch.bool))
+        assert d.mean.shape==(1,3) and torch.isfinite(v).all()
+    finally:
+        ep.close()

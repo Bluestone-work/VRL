@@ -324,8 +324,8 @@ class ImageSensor(DeployableSensor):
         cl_est = np.where(seen, cl_est, self.track+self.track_vel*self.dt*g)
         self.track = cl_est.copy()
         # latency: the controller sees the previous frame's estimate
-        self.frames_buf.append((cl_est.copy(), parts_world, crops))
-        meas, parts_world, self.crops = self.frames_buf[max(len(self.frames_buf)-1-self.cfg.latency_steps, 0)]
+        self.frames_buf.append((cl_est.copy(), parts_world, crops, float(env.elapsed_s)))
+        meas, parts_world, self.crops, frame_time = self.frames_buf[max(len(self.frames_buf)-1-self.cfg.latency_steps, 0)]
         if len(self.frames_buf) > self.cfg.latency_steps+2:
             self.frames_buf.pop(0)
         self.err_log.append(np.linalg.norm(meas-truth[:n], axis=1)[env.active[:n]])
@@ -354,5 +354,7 @@ class ImageSensor(DeployableSensor):
         vis = (np.linalg.norm(rel, axis=2) <= self.cfg.peer_radius_mm) & active[:, None] & active[None, :]
         np.fill_diagonal(vis, False)
         self.prev_pos, self.prev_edge = pos.copy(), edge.copy()
-        return Estimate(pos=pos, vel=vel, edge=edge, station=station, active=active, particles=parts,
-                        peers_rel=np.where(vis[..., None], rel, 0.), peers_vis=vis, clot_alive=env.masses > 0)
+        estimate = Estimate(pos=pos, vel=vel, edge=edge, station=station, active=active, particles=parts,
+                            peers_rel=np.where(vis[..., None], rel, 0.), peers_vis=vis, clot_alive=env.masses > 0)
+        estimate.frame_time_s = frame_time  # camera acquisition clock; held frames retain this timestamp
+        return estimate
