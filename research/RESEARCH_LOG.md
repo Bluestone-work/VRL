@@ -1373,3 +1373,8 @@ Registered before any result of the runs below (vp_topo_s0 has no evaluation yet
 ## 2026-10-09 v6 flow calibration probe (per-anatomy inlet speed; user chose option 1 = in-vitro scale, scaled by anatomy)
 - flow_inlet_mm_s = 0.1 (healthy inlet mean 0.1 mm/s x scene multiplier/2; stenosis centreline peaks ~0.6-2 mm/s): too strong for a 1 mm/s cluster. Classical settle cleared 3.6/4.3/3.6 % at s=0, 16/13/14 % at s=1 steady, 18/18/18 % at s=1 pulsatile; even the privileged flow-aware bound only 46-49 % (s=0) and 42-45 % (s=1). Bound - classical: +42 to +45 pp (s=0), +27 to +31 (steady), +24 to +26 (pulsatile). The clot sits in the stenosis where the flow accelerates, so at this speed many clots are physically unreachable.
 - Sweep 0.025 / 0.05 mm/s launched (research/runs/V5_20261008/queue_v6sweep.sh). For reference, v4's MCA had an inlet mean of ~0.027 mm/s, where the classical stack worked.
+- 2026-10-09 10:2x v6 sweep done (classical settle -> privileged FlowOracle, cleared %, N=1/2/3):
+  0.025 mm/s: s=0 88.6/94.3/95.7 -> 90.0/97.1/97.1 (feasible, small gap); s=1 steady 82.1/89.3/89.3 -> 89.3/96.4/97.1; s=1 pulsatile 84.3/90.0/92.9 -> 89.3/96.4/97.1; wall >= 1 s 8-13 % -> 2-4 %.
+  0.05 mm/s: s=0 41.4/45.0/44.3 -> 86.4/95.0/95.7 (classical collapses although the task is feasible); s=1 steady 52.1/55.0/55.0 -> 80.7/87.9/86.4; s=1 pulsatile 57.9/61.4/60.7 -> 80.7/88.6/86.4.
+  0.1 mm/s: largely infeasible (bound 42-49 %).
+  Steady vs pulsatile give similar gaps: the flow MAGNITUDE relative to the 1 mm/s actuator, not the pulsatility, creates the difficulty.
