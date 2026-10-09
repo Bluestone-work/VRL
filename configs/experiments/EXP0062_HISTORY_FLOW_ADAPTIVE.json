@@ -1,0 +1,15 @@
+{
+  "id": "EXP0062_HISTORY_FLOW_ADAPTIVE",
+  "description": "Short first-stage history adaptation: reset-sampled flow, 8 control-step GRU, deployable velocity auxiliary target",
+  "branch": "research/lysis-v4-v6-20261009",
+  "flow_range_mm_s": [0.025, 0.05],
+  "out_of_range_test_mm_s": 0.1,
+  "history_steps": 8,
+  "control_dt_s": 0.1,
+  "prior_residual_scale": 1.0,
+  "auxiliary_target": "delta_observed_velocity_columns_19_22",
+  "auxiliary_weight": 0.05,
+  "groups": {"A":"fixed-flow original", "B":"reset-randomized original", "C":"reset-randomized GRU", "D":"reset-randomized GRU+aux"},
+  "training_seeds": [6201, 6202, 6203],
+  "scenario_seeds": "separate from training seeds; paired evaluation scenes"
+}

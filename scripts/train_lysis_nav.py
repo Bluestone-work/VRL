@@ -103,7 +103,7 @@ def token(ep, est, tgt, hold, prev, ecg=False):
     return T
 
 
-def command(ep, est, a, live, s_prior=None):
+def command_legacy(ep, est, a, live, s_prior=None):
     """Route-frame action -> local-frame command for ep.step (world -> controller frame).
     v3: speed = clip(s_prior + 0.5 a0, 0, 1) when a prior speed is given (adaptive classical settling speed)."""
     ctl = ep.ctl; body = float(ep.env.config.robot_radius_mm); F = ctl.frames(est)
@@ -117,6 +117,30 @@ def command(ep, est, a, live, s_prior=None):
         aim = ctl.carrot[i]+lat*(a[i, 1]*nrm+a[i, 2]*bin_)
         d = aim-est.pos[i]; d = d/max(np.linalg.norm(d), 1e-9)
         sp = float(np.clip(1+a[i, 0], 0, 1)) if s_prior is None else float(np.clip(s_prior[i]+.5*a[i, 0], 0, 1))
+        out[i] = F[i]@(sp*d)
+    return out
+
+
+def speed_from_prior(action0, prior, residual_scale=1.0):
+    return float(np.clip(prior + residual_scale * float(np.clip(action0, -1, 1)), 0., 1.))
+
+
+def command(ep, est, a, live, s_prior=None, prior_residual_scale=1.0):
+    """Action mapping with full legal residual authority around a speed prior.
+
+    ``command_legacy`` is retained for the mechanism ablation.  With the new
+    mapping a near-target prior of zero can still produce any speed in [0,1],
+    including a non-zero flow-compensation command.
+    """
+    ctl = ep.ctl; F = ctl.frames(est); a = np.clip(a, -1, 1); out = np.zeros((ep.n, 3))
+    for i in range(ep.n):
+        if not live[i]: continue
+        st = int(np.argmin(np.linalg.norm(ctl.pts-ctl.carrot[i], axis=1)))
+        nrm, bin_ = ep.env.tree.normals[st].astype(float), ep.env.tree.binormals[st].astype(float)
+        lat = .7*max(float(ep.sensor.healthy[st])-float(ep.env.config.robot_radius_mm), 0.)
+        aim = ctl.carrot[i]+lat*(a[i,1]*nrm+a[i,2]*bin_)
+        d = aim-est.pos[i]; d /= max(np.linalg.norm(d), 1e-9)
+        sp = float(np.clip(1+a[i, 0], 0, 1)) if s_prior is None else speed_from_prior(a[i, 0], s_prior[i], prior_residual_scale)
         out[i] = F[i]@(sp*d)
     return out
 
@@ -181,7 +205,7 @@ class NavController:
         live = (np.asarray(tgt) >= 0) & est.active & ~hold
         a = np.clip(a, -1, 1); a[~live] = 0.; self.prev = a.copy()
         sp = 1.+self.prior(ep, est, tgt, self.prev_world)[:, 0] if self.prior is not None else None
-        out = self.guard(ep, est, tgt, command(ep, est, a, live, sp), hold)
+        out = self.guard(ep, est, tgt, command(ep, est, a, live, sp, self.cfg.get('prior_residual_scale', 1.0)), hold)
         self.prev_world = ep.ctl.to_world(out, est)
         return out
 
@@ -231,7 +255,7 @@ def worker(wid, conn, seed0, cfg):
                 a = d.sample(); lp = d.log_prob(a).sum(-1)
             a_np = np.clip(a.numpy().astype(np.float64), -1, 1); a_np[~live] = 0.
             sp = 1.+a_prior[:, 0] if cfg.get('speed_prior') else None
-            local = ep.guard(ep, est, tgt, command(ep, est, a_np, live, sp), hold)
+            local = ep.guard(ep, est, tgt, command(ep, est, a_np, live, sp, cfg.get('prior_residual_scale', 1.0)), hold)
             ep.prev_world = ep.ctl.to_world(local, est)
             P0 = env.positions_mm[:n].copy()
             g0 = np.array([route_remaining(ep.ctl, i, P0[i]) if tgt[i] >= 0 else 0. for i in range(n)])
@@ -272,11 +296,15 @@ def main():
     p.add_argument('--s-max', type=float, default=1.25); p.add_argument('--device', default='cuda:0')
     p.add_argument('--lr', type=float, default=2e-4); p.add_argument('--init', type=Path, help='warm start checkpoint')
     p.add_argument('--speed-prior', action='store_true', help='v3: speed action relative to the adaptive classical speed')
+    p.add_argument('--prior-residual-scale', type=float, default=1.0)
     p.add_argument('--beta0', type=float, default=1.); p.add_argument('--beta-end', type=float, default=.05)
     p.add_argument('--s-min', type=float, default=0.); p.add_argument('--hard-w', type=float, default=1.)
     p.add_argument('--ecg', action='store_true', help='add the ECG cardiac phase (sin, cos) to the observation')
+    p.add_argument('--adaptive-history', action='store_true', help='default deployable adaptation recipe: GRU, 8 control steps')
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.manual_seed(a.seed)
-    cfg = dict(mode='route', arch=a.arch, layers=a.layers, window=a.window, s_max=a.s_max, speed_prior=a.speed_prior, s_min=a.s_min, hard_w=a.hard_w, ecg=a.ecg)
+    if a.adaptive_history:
+        a.arch, a.window = 'gru', 8
+    cfg = dict(mode='route', arch=a.arch, layers=a.layers, window=a.window, s_max=a.s_max, speed_prior=a.speed_prior, prior_residual_scale=a.prior_residual_scale, s_min=a.s_min, hard_w=a.hard_w, ecg=a.ecg, adaptive_history=a.adaptive_history)
     (a.out/'config.json').write_text(json.dumps(dict(vars(a), **cfg), default=str))
     ctx = mp.get_context('fork'); pipes, procs = [], []
     for w in range(a.workers):

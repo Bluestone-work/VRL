@@ -1,6 +1,9 @@
 import copy
 import pytest
 from scripts.run_vascular_adaptive_research import paired,next_recipe,seed_scene_interval
+from marl.lysis_history_adaptive import HistoryAdaptivePolicy, observable_motion_target, auxiliary_loss
+from scripts.train_lysis_nav import speed_from_prior
+import torch
 
 
 def row(i,safe):
@@ -30,3 +33,20 @@ def test_negative_round_changes_next_recipe_and_seed_ci_keeps_pairing():
     assert new['wall_weight']>recipe['wall_weight'] and reasons
     interval=seed_scene_interval([b,b,b],b)
     assert interval['hierarchical_ci95']==[0.,0.] and interval['scenes_per_seed']==2
+
+
+def test_history_policy_uses_observation_action_and_bounded_auxiliary():
+    torch.manual_seed(0)
+    p=HistoryAdaptivePolicy(obs_dim=6, action_dim=3, history=8)
+    obs=torch.randn(4,8,6); act=torch.randn(4,8,3); cur=obs[:,-1]
+    mean,value,pred=p(obs,act,cur)
+    assert mean.shape==(4,3) and value.shape==(4,) and pred.shape==(4,3)
+    target=observable_motion_target(torch.randn(4,22),torch.randn(4,22))
+    loss,meta=auxiliary_loss(pred,target,weight=.05)
+    assert torch.isfinite(loss) and meta['aux_weighted'] <= meta['aux_loss']
+
+
+def test_settle_prior_does_not_zero_near_target_compensation():
+    assert speed_from_prior(-1., 0.) == 0.
+    assert speed_from_prior(1., 0.) == 1.
+    assert speed_from_prior(.4, 0.) == .4
