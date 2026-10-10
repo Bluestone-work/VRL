@@ -401,6 +401,24 @@ class AdaptiveSettleGuard(WallGuard):
         return out
 
 
+class SwitchSettle:
+    """Deployable rule baseline (2026-10-10): Fixed Settle when the camera frame age exceeds tau, Adaptive Settle
+    otherwise. Both controllers are stepped every control period (their internal states stay current); the output
+    of the selected one is executed. Frame age is directly observable (image acquisition timestamp).
+    v1 (gate-only: Adaptive with the stall-release disabled) kept Adaptive's response-scaled radius and failed at
+    3-step latency (7 % vs Fixed 69 %): the latency-corrupted response estimate, not the release, breaks Adaptive."""
+    def __init__(self, ep, tau=.15):
+        self.adaptive, self.fixed, self.tau = AdaptiveSettleGuard(ep), SettleGuard(ep), float(tau)
+        self.mode_log = []
+
+    def __call__(self, ep, est, tgt, rule, hold):
+        a = self.adaptive(ep, est, tgt, rule, hold); f = self.fixed(ep, est, tgt, rule, hold)
+        use_fixed = ep.env.elapsed_s-float(getattr(est, 'frame_time_s', ep.env.elapsed_s)) > self.tau
+        out = f if use_fixed else a
+        self.adaptive.prev_cmd = out.copy()            # Adaptive's response estimate uses the executed command
+        self.mode_log.append(int(use_fixed))
+        return out
+
 @method('classical_adaptive')
 def m_classical_adaptive(n, anatomy, seed, **kw):
     """Adaptive classical (v5 baseline): A + TPG + pursuit + wall guard + adaptive settling."""

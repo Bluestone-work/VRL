@@ -217,9 +217,14 @@ def make_policy(cfg):
 
 class NavController:
     """Evaluation wrapper (deterministic mean action) + shared wall guard; `low` for benchmark_lysis.rollout."""
-    def __init__(self, ep, ckpt):
+    def __init__(self, ep, ckpt, zero_residual=False, diagnostics=False):
+        """zero_residual=True: learner-off control (EXP0090) - identical history, prior, action mapping, WallGuard,
+        TPG and shield, with the network output replaced by a = 0. diagnostics=True records per step the raw
+        policy action, prior speed, mapped command, WallGuard output and hold flags (shield output is read from
+        ep.prev_local after the step by the evaluation loop)."""
         from scripts.benchmark_lysis import WallGuard
         torch.set_num_threads(1)
+        self.zero_residual, self.diagnostics = bool(zero_residual), bool(diagnostics); self.diag = []
         c = torch.load(ckpt, map_location='cpu', weights_only=False); self.cfg = c['cfg']
         self.net = make_policy(self.cfg); self.net.load_state_dict(c['state']); self.net.eval()
         self.ecg = bool(self.cfg.get('ecg'))
@@ -241,9 +246,19 @@ class NavController:
             # directly would silently disable that gate at evaluation time.
             a = self.net.dist(torch.as_tensor(seq), torch.as_tensor(mask))[0].loc.numpy().astype(np.float64)
         live = (np.asarray(tgt) >= 0) & est.active & ~hold
+        a_raw = np.clip(a, -1, 1)
+        if self.zero_residual:
+            a = np.zeros_like(a_raw)
         a = np.clip(a, -1, 1); a[~live] = 0.; self.prev = a.copy()
         sp = 1.+self.prior(ep, est, tgt, self.prev_world)[:, 0] if self.prior is not None else None
-        out = self.guard(ep, est, tgt, command(ep, est, a, live, sp, self.cfg.get('prior_residual_scale', .5), lateral_scale_for_targets(ep, est, tgt, self.cfg)), hold)
+        mapped = command(ep, est, a, live, sp, self.cfg.get('prior_residual_scale', .5), lateral_scale_for_targets(ep, est, tgt, self.cfg))
+        out = self.guard(ep, est, tgt, mapped, hold)
+        if self.diagnostics:
+            zero = command(ep, est, np.zeros_like(a), live, sp, self.cfg.get('prior_residual_scale', .5), lateral_scale_for_targets(ep, est, tgt, self.cfg))
+            self.diag.append(dict(t=float(ep.env.elapsed_s), a_raw=a_raw.tolist(), live=live.tolist(), hold=np.asarray(hold).tolist(),
+                                  prior_speed=(sp.tolist() if sp is not None else None),
+                                  zero_cmd=ep.ctl.to_world(zero, est).tolist(), mapped=ep.ctl.to_world(mapped, est).tolist(),
+                                  guarded=ep.ctl.to_world(out, est).tolist()))
         self.prev_world = ep.ctl.to_world(out, est)
         return out
 

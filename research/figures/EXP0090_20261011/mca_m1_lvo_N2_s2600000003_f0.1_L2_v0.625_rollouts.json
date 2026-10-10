@@ -1,0 +1,44 @@
+{
+  "sel_learned_inv": {
+    "metrics": {
+      "task_success": false,
+      "strict_success": false,
+      "removal": 0.508291435854515,
+      "t50_s": 86.59999999999935,
+      "t90_s": null,
+      "t100_s": null,
+      "wall_contact_s": 0.0,
+      "removal_auc": 0.4090252805703305,
+      "spacing_violation_pair_s": 0.0
+    },
+    "t": 299.9999999999997
+  },
+  "switch_settle": {
+    "metrics": {
+      "task_success": false,
+      "strict_success": false,
+      "removal": 0.2908488556595127,
+      "t50_s": null,
+      "t90_s": null,
+      "t100_s": null,
+      "wall_contact_s": 0.0,
+      "removal_auc": 0.2432202495836316,
+      "spacing_violation_pair_s": 0.0
+    },
+    "t": 299.9999999999997
+  },
+  "nav_off=research/runs/EXP0073_LONG1M_20261009/nav_tf_v3_s7101/policy.pt": {
+    "metrics": {
+      "task_success": false,
+      "strict_success": false,
+      "removal": 0.3132807853406079,
+      "t50_s": null,
+      "t90_s": null,
+      "t100_s": null,
+      "wall_contact_s": 0.0,
+      "removal_auc": 0.24554530810424438,
+      "spacing_violation_pair_s": 0.0
+    },
+    "t": 299.9999999999997
+  }
+}
