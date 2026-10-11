@@ -1,0 +1,314 @@
+{
+  "stats": [
+    {
+      "panel": "high_delay",
+      "method": "Ours original",
+      "n": 27,
+      "metrics": {
+        "task_success": 0.6666666666666666,
+        "strict_success": 0.6666666666666666,
+        "removal": 0.8586215089873479,
+        "removal_auc": 0.6606874447237215,
+        "T90_300": 176.23333333333156,
+        "wall_contact_s": 0.04686180137131261,
+        "lost": 0.037037037037037035,
+        "spacing_violation_pair_s": 0.0
+      }
+    },
+    {
+      "panel": "high_delay",
+      "method": "Candidate",
+      "n": 27,
+      "metrics": {
+        "task_success": 0.7777777777777778,
+        "strict_success": 0.7407407407407407,
+        "removal": 0.962516669438448,
+        "removal_auc": 0.713451235473022,
+        "T90_300": 170.83703703703412,
+        "wall_contact_s": 4.253600283318382,
+        "lost": 0.037037037037037035,
+        "spacing_violation_pair_s": 0.0
+      }
+    },
+    {
+      "panel": "low_delay",
+      "method": "Ours original",
+      "n": 27,
+      "metrics": {
+        "task_success": 0.8148148148148148,
+        "strict_success": 0.7407407407407407,
+        "removal": 0.935962962962963,
+        "removal_auc": 0.752169908661086,
+        "T90_300": 141.68148148147972,
+        "wall_contact_s": 3.5903030814937917,
+        "lost": 0.037037037037037035,
+        "spacing_violation_pair_s": 0.0
+      }
+    },
+    {
+      "panel": "low_delay",
+      "method": "Candidate",
+      "n": 27,
+      "metrics": {
+        "task_success": 0.8148148148148148,
+        "strict_success": 0.7407407407407407,
+        "removal": 0.9273780341110311,
+        "removal_auc": 0.752210973258502,
+        "T90_300": 137.81481481481327,
+        "wall_contact_s": 2.068037787342082,
+        "lost": 0.037037037037037035,
+        "spacing_violation_pair_s": 0.0
+      }
+    },
+    {
+      "panel": "strong_flow",
+      "method": "Ours original",
+      "n": 27,
+      "metrics": {
+        "task_success": 0.25925925925925924,
+        "strict_success": 0.2222222222222222,
+        "removal": 0.522329227367148,
+        "removal_auc": 0.40988986045755604,
+        "T90_300": 254.80740740740663,
+        "wall_contact_s": 6.876813571417597,
+        "lost": 0.037037037037037035,
+        "spacing_violation_pair_s": 0.05181205365114731
+      }
+    },
+    {
+      "panel": "strong_flow",
+      "method": "Candidate",
+      "n": 27,
+      "metrics": {
+        "task_success": 0.25925925925925924,
+        "strict_success": 0.2222222222222222,
+        "removal": 0.522630553911104,
+        "removal_auc": 0.4127537085866053,
+        "T90_300": 254.25925925925853,
+        "wall_contact_s": 6.911108716077207,
+        "lost": 0.037037037037037035,
+        "spacing_violation_pair_s": 0.13002502715734135
+      }
+    },
+    {
+      "panel": "variable_response",
+      "method": "Ours original",
+      "n": 27,
+      "metrics": {
+        "task_success": 0.48148148148148145,
+        "strict_success": 0.2962962962962963,
+        "removal": 0.6258920125747929,
+        "removal_auc": 0.4515860749641919,
+        "T90_300": 229.04814814814623,
+        "wall_contact_s": 7.463233603445785,
+        "lost": 0.07407407407407407,
+        "spacing_violation_pair_s": 0.046628834800909194
+      }
+    },
+    {
+      "panel": "variable_response",
+      "method": "Candidate",
+      "n": 27,
+      "metrics": {
+        "task_success": 0.48148148148148145,
+        "strict_success": 0.2962962962962963,
+        "removal": 0.6346345840490527,
+        "removal_auc": 0.45619041452114606,
+        "T90_300": 231.15555555555352,
+        "wall_contact_s": 7.47465420897603,
+        "lost": 0.07407407407407407,
+        "spacing_violation_pair_s": 0.06553995258746569
+      }
+    }
+  ],
+  "contrasts": [
+    {
+      "panel": "high_delay",
+      "difference": {
+        "task_success": 0.1111111111111111,
+        "strict_success": 0.07407407407407407,
+        "removal": 0.10389516045110006,
+        "removal_auc": 0.05276379074930069,
+        "T90_300": -5.396296296297411,
+        "wall_contact_s": 4.2067384819470695,
+        "lost": 0.0,
+        "spacing_violation_pair_s": 0.0
+      },
+      "anatomy_block_ci95": {
+        "task_success": [
+          -0.18518518518518517,
+          0.4444444444444444
+        ],
+        "strict_success": [
+          -0.18518518518518517,
+          0.37037037037037035
+        ],
+        "removal": [
+          0.01050465541641574,
+          0.2116744925961429
+        ],
+        "removal_auc": [
+          -0.012026373638077755,
+          0.12548619184743517
+        ],
+        "T90_300": [
+          -32.88925925926091,
+          20.640740740740164
+        ],
+        "wall_contact_s": [
+          -0.013117887491882474,
+          12.63333333333309
+        ],
+        "lost": [
+          0.0,
+          0.0
+        ],
+        "spacing_violation_pair_s": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "panel": "low_delay",
+      "difference": {
+        "task_success": 0.0,
+        "strict_success": 0.0,
+        "removal": -0.008584928851931826,
+        "removal_auc": 4.106459741600362e-05,
+        "T90_300": -3.866666666666449,
+        "wall_contact_s": -1.5222652941517094,
+        "lost": 0.0,
+        "spacing_violation_pair_s": 0.0
+      },
+      "anatomy_block_ci95": {
+        "task_success": [
+          -0.1111111111111111,
+          0.1111111111111111
+        ],
+        "strict_success": [
+          -0.1111111111111111,
+          0.1111111111111111
+        ],
+        "removal": [
+          -0.05453256433357326,
+          0.028777777777777777
+        ],
+        "removal_auc": [
+          -0.02743834447283584,
+          0.02373269112738983
+        ],
+        "T90_300": [
+          -23.525925925926007,
+          13.263240740741399
+        ],
+        "wall_contact_s": [
+          -4.566795882454667,
+          0.0
+        ],
+        "lost": [
+          0.0,
+          0.0
+        ],
+        "spacing_violation_pair_s": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "panel": "strong_flow",
+      "difference": {
+        "task_success": 0.0,
+        "strict_success": 0.0,
+        "removal": 0.00030132654395588336,
+        "removal_auc": 0.002863848129049221,
+        "T90_300": -0.5481481481481202,
+        "wall_contact_s": 0.03429514465960965,
+        "lost": 0.0,
+        "spacing_violation_pair_s": 0.07821297350619405
+      },
+      "anatomy_block_ci95": {
+        "task_success": [
+          0.0,
+          0.0
+        ],
+        "strict_success": [
+          0.0,
+          0.0
+        ],
+        "removal": [
+          -0.0005045825379032387,
+          0.0012430962113251789
+        ],
+        "removal_auc": [
+          0.0002810055879648959,
+          0.005697016471945683
+        ],
+        "T90_300": [
+          -1.6593518518517574,
+          0.42592592592589223
+        ],
+        "wall_contact_s": [
+          -0.023100314126119063,
+          0.10699180930752508
+        ],
+        "lost": [
+          0.0,
+          0.0
+        ],
+        "spacing_violation_pair_s": [
+          0.0,
+          0.23463892051858212
+        ]
+      }
+    },
+    {
+      "panel": "variable_response",
+      "difference": {
+        "task_success": 0.0,
+        "strict_success": 0.0,
+        "removal": 0.008742571474259777,
+        "removal_auc": 0.004604339556954208,
+        "T90_300": 2.10740740740729,
+        "wall_contact_s": 0.011420605530246267,
+        "lost": 0.0,
+        "spacing_violation_pair_s": 0.01891111778655649
+      },
+      "anatomy_block_ci95": {
+        "task_success": [
+          0.0,
+          0.0
+        ],
+        "strict_success": [
+          0.0,
+          0.0
+        ],
+        "removal": [
+          0.0003529556143570965,
+          0.018193863389786676
+        ],
+        "removal_auc": [
+          -0.003906516227964501,
+          0.01397327468616477
+        ],
+        "T90_300": [
+          -0.6259259259258935,
+          7.144444444444037
+        ],
+        "wall_contact_s": [
+          -0.02429747028480034,
+          0.04812736031128349
+        ],
+        "lost": [
+          0.0,
+          0.0
+        ],
+        "spacing_violation_pair_s": [
+          0.0,
+          0.056733353359669475
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1636 @@
+{
+ "hard": {
+  "arms": [
+   "A_TPG+cbf",
+   "A_TPG+mppi",
+   "A_TPG+online",
+   "A_TPG+ours",
+   "A_TPG+pac",
+   "A_TPG+pursuit",
+   "A_TPG+turbo",
+   "NONE+ours",
+   "NONE+pursuit",
+   "OT+cbf",
+   "OT+mppi",
+   "OT+online",
+   "OT+ours",
+   "OT+pac",
+   "OT+pursuit",
+   "OT+turbo",
+   "STPG+cbf",
+   "STPG+mppi",
+   "STPG+online",
+   "STPG+ours",
+   "STPG+pac",
+   "STPG+pursuit",
+   "STPG+turbo"
+  ],
+  "n_keys": 13,
+  "cells": [
+   "low_delay"
+  ],
+  "table": {
+   "A_TPG+cbf": {
+    "ALL": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.36642307692307696,
+     "removal_auc": 0.3320849678271853,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 57.518587084451056,
+     "wall_ge_1s": 0.46153846153846156,
+     "spacing_violation_pair_s": 0.34041700848223233,
+     "coupling_exposure": 10.884582565815897,
+     "path_mm": 259.9105287220404,
+     "tpg_hold_s": 2.7846153846154036,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.36642307692307696,
+     "removal_auc": 0.3320849678271853,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 57.518587084451056,
+     "wall_ge_1s": 0.46153846153846156,
+     "spacing_violation_pair_s": 0.34041700848223233,
+     "coupling_exposure": 10.884582565815897,
+     "path_mm": 259.9105287220404,
+     "tpg_hold_s": 2.7846153846154036,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.36642307692307696,
+     "removal_auc": 0.3320849678271853,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 57.518587084451056,
+     "wall_ge_1s": 0.46153846153846156,
+     "spacing_violation_pair_s": 0.34041700848223233,
+     "coupling_exposure": 10.884582565815897,
+     "path_mm": 259.9105287220404,
+     "tpg_hold_s": 2.7846153846154036,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "A_TPG+mppi": {
+    "ALL": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.6951923076923078,
+     "removal_auc": 0.560458922808262,
+     "t90_300": 196.1923076923065,
+     "wall_contact_s": 3.7284782275762356,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 148.83605579028233,
+     "tpg_hold_s": 0.899999999999998,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.6951923076923078,
+     "removal_auc": 0.560458922808262,
+     "t90_300": 196.1923076923065,
+     "wall_contact_s": 3.7284782275762356,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 148.83605579028233,
+     "tpg_hold_s": 0.899999999999998,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.6951923076923078,
+     "removal_auc": 0.560458922808262,
+     "t90_300": 196.1923076923065,
+     "wall_contact_s": 3.7284782275762356,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 148.83605579028233,
+     "tpg_hold_s": 0.899999999999998,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "A_TPG+online": {
+    "ALL": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7418516597463416,
+     "t90_300": 126.58461538461309,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.96729512118834,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7418516597463416,
+     "t90_300": 126.58461538461309,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.96729512118834,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7418516597463416,
+     "t90_300": 126.58461538461309,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.96729512118834,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "A_TPG+ours": {
+    "ALL": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7370064798381742,
+     "t90_300": 129.65384615384366,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.03729078393441,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7370064798381742,
+     "t90_300": 129.65384615384366,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.03729078393441,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7370064798381742,
+     "t90_300": 129.65384615384366,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.03729078393441,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "A_TPG+pac": {
+    "ALL": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7316153846153847,
+     "removal_auc": 0.5822311603978304,
+     "t90_300": 201.62307692307616,
+     "wall_contact_s": 0.044132389050301084,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 155.17208547741728,
+     "tpg_hold_s": 0.41538461538461513,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7316153846153847,
+     "removal_auc": 0.5822311603978304,
+     "t90_300": 201.62307692307616,
+     "wall_contact_s": 0.044132389050301084,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 155.17208547741728,
+     "tpg_hold_s": 0.41538461538461513,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7316153846153847,
+     "removal_auc": 0.5822311603978304,
+     "t90_300": 201.62307692307616,
+     "wall_contact_s": 0.044132389050301084,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 155.17208547741728,
+     "tpg_hold_s": 0.41538461538461513,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "A_TPG+pursuit": {
+    "ALL": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.5849877158893164,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.81692414714442,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.5849877158893164,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.81692414714442,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.5849877158893164,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.81692414714442,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "A_TPG+turbo": {
+    "ALL": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.15384615384615385,
+     "removal_auc": 0.11689687681846027,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.13576698936293,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.15384615384615385,
+     "removal_auc": 0.11689687681846027,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.13576698936293,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.15384615384615385,
+     "removal_auc": 0.11689687681846027,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.13576698936293,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "NONE+ours": {
+    "ALL": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7372520952227896,
+     "t90_300": 129.4846153846129,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.1209707035045,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7372520952227896,
+     "t90_300": 129.4846153846129,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.1209707035045,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7372520952227896,
+     "t90_300": 129.4846153846129,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.1209707035045,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "NONE+pursuit": {
+    "ALL": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.585305818453419,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.8659826357162,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.585305818453419,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.8659826357162,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.585305818453419,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.8659826357162,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "OT+cbf": {
+    "ALL": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.4625769230769231,
+     "removal_auc": 0.41402005841408485,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 42.39202895385109,
+     "wall_ge_1s": 0.38461538461538464,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 260.02985795564706,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.4625769230769231,
+     "removal_auc": 0.41402005841408485,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 42.39202895385109,
+     "wall_ge_1s": 0.38461538461538464,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 260.02985795564706,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.4625769230769231,
+     "removal_auc": 0.41402005841408485,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 42.39202895385109,
+     "wall_ge_1s": 0.38461538461538464,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 260.02985795564706,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "OT+mppi": {
+    "ALL": {
+     "strict_success": 0.38461538461538464,
+     "task_success": 0.46153846153846156,
+     "removal": 0.6949615384615384,
+     "removal_auc": 0.5831824676887638,
+     "t90_300": 202.23076923076877,
+     "wall_contact_s": 3.6982517355840434,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.40056662951838,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.38461538461538464,
+     "task_success": 0.46153846153846156,
+     "removal": 0.6949615384615384,
+     "removal_auc": 0.5831824676887638,
+     "t90_300": 202.23076923076877,
+     "wall_contact_s": 3.6982517355840434,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.40056662951838,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.38461538461538464,
+     "task_success": 0.46153846153846156,
+     "removal": 0.6949615384615384,
+     "removal_auc": 0.5831824676887638,
+     "t90_300": 202.23076923076877,
+     "wall_contact_s": 3.6982517355840434,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.40056662951838,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "OT+online": {
+    "ALL": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.962923076923077,
+     "removal_auc": 0.7625684149689073,
+     "t90_300": 133.14615384615126,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 123.44973881161822,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.962923076923077,
+     "removal_auc": 0.7625684149689073,
+     "t90_300": 133.14615384615126,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 123.44973881161822,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.962923076923077,
+     "removal_auc": 0.7625684149689073,
+     "t90_300": 133.14615384615126,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 123.44973881161822,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "OT+ours": {
+    "ALL": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.962923076923077,
+     "removal_auc": 0.7622157677886953,
+     "t90_300": 133.71538461538202,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 122.18211004463106,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.962923076923077,
+     "removal_auc": 0.7622157677886953,
+     "t90_300": 133.71538461538202,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 122.18211004463106,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.962923076923077,
+     "removal_auc": 0.7622157677886953,
+     "t90_300": 133.71538461538202,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 122.18211004463106,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "OT+pac": {
+    "ALL": {
+     "strict_success": 0.38461538461538464,
+     "task_success": 0.46153846153846156,
+     "removal": 0.762,
+     "removal_auc": 0.6198288390351585,
+     "t90_300": 204.12307692307624,
+     "wall_contact_s": 0.03592034881763662,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 157.40122281955013,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.38461538461538464,
+     "task_success": 0.46153846153846156,
+     "removal": 0.762,
+     "removal_auc": 0.6198288390351585,
+     "t90_300": 204.12307692307624,
+     "wall_contact_s": 0.03592034881763662,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 157.40122281955013,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.38461538461538464,
+     "task_success": 0.46153846153846156,
+     "removal": 0.762,
+     "removal_auc": 0.6198288390351585,
+     "t90_300": 204.12307692307624,
+     "wall_contact_s": 0.03592034881763662,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 157.40122281955013,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "OT+pursuit": {
+    "ALL": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7728076923076923,
+     "removal_auc": 0.6315327146110629,
+     "t90_300": 193.43076923076836,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 146.01413215111583,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7728076923076923,
+     "removal_auc": 0.6315327146110629,
+     "t90_300": 193.43076923076836,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 146.01413215111583,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7728076923076923,
+     "removal_auc": 0.6315327146110629,
+     "t90_300": 193.43076923076836,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 146.01413215111583,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "OT+turbo": {
+    "ALL": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.19008888422462247,
+     "removal_auc": 0.13366536611415192,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.3391082245434,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.19008888422462247,
+     "removal_auc": 0.13366536611415192,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.3391082245434,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.19008888422462247,
+     "removal_auc": 0.13366536611415192,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.3391082245434,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "STPG+cbf": {
+    "ALL": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.36642307692307696,
+     "removal_auc": 0.3320849678271853,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 57.518587084451056,
+     "wall_ge_1s": 0.46153846153846156,
+     "spacing_violation_pair_s": 0.34041700848223233,
+     "coupling_exposure": 10.884582565815897,
+     "path_mm": 259.9105287220404,
+     "tpg_hold_s": 2.7846153846154036,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.36642307692307696,
+     "removal_auc": 0.3320849678271853,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 57.518587084451056,
+     "wall_ge_1s": 0.46153846153846156,
+     "spacing_violation_pair_s": 0.34041700848223233,
+     "coupling_exposure": 10.884582565815897,
+     "path_mm": 259.9105287220404,
+     "tpg_hold_s": 2.7846153846154036,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.07692307692307693,
+     "task_success": 0.07692307692307693,
+     "removal": 0.36642307692307696,
+     "removal_auc": 0.3320849678271853,
+     "t90_300": 281.92307692307696,
+     "wall_contact_s": 57.518587084451056,
+     "wall_ge_1s": 0.46153846153846156,
+     "spacing_violation_pair_s": 0.34041700848223233,
+     "coupling_exposure": 10.884582565815897,
+     "path_mm": 259.9105287220404,
+     "tpg_hold_s": 2.7846153846154036,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "STPG+mppi": {
+    "ALL": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.6951923076923078,
+     "removal_auc": 0.560458922808262,
+     "t90_300": 196.1923076923065,
+     "wall_contact_s": 3.7284782275762356,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 148.83605579028233,
+     "tpg_hold_s": 0.899999999999998,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.6951923076923078,
+     "removal_auc": 0.560458922808262,
+     "t90_300": 196.1923076923065,
+     "wall_contact_s": 3.7284782275762356,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 148.83605579028233,
+     "tpg_hold_s": 0.899999999999998,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.6951923076923078,
+     "removal_auc": 0.560458922808262,
+     "t90_300": 196.1923076923065,
+     "wall_contact_s": 3.7284782275762356,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 148.83605579028233,
+     "tpg_hold_s": 0.899999999999998,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "STPG+online": {
+    "ALL": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7418516597463416,
+     "t90_300": 126.58461538461309,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.96729512118834,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7418516597463416,
+     "t90_300": 126.58461538461309,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.96729512118834,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7418516597463416,
+     "t90_300": 126.58461538461309,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.96729512118834,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "STPG+ours": {
+    "ALL": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7370064798381742,
+     "t90_300": 129.65384615384366,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.03729078393441,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7370064798381742,
+     "t90_300": 129.65384615384366,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.03729078393441,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.8461538461538461,
+     "task_success": 0.9230769230769231,
+     "removal": 0.9436923076923077,
+     "removal_auc": 0.7370064798381742,
+     "t90_300": 129.65384615384366,
+     "wall_contact_s": 0.007692307692307693,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 125.03729078393441,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "STPG+pac": {
+    "ALL": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7316153846153847,
+     "removal_auc": 0.5822311603978304,
+     "t90_300": 201.62307692307616,
+     "wall_contact_s": 0.044132389050301084,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 155.17208547741728,
+     "tpg_hold_s": 0.41538461538461513,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7316153846153847,
+     "removal_auc": 0.5822311603978304,
+     "t90_300": 201.62307692307616,
+     "wall_contact_s": 0.044132389050301084,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 155.17208547741728,
+     "tpg_hold_s": 0.41538461538461513,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7316153846153847,
+     "removal_auc": 0.5822311603978304,
+     "t90_300": 201.62307692307616,
+     "wall_contact_s": 0.044132389050301084,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 155.17208547741728,
+     "tpg_hold_s": 0.41538461538461513,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "STPG+pursuit": {
+    "ALL": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.5849877158893164,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.81692414714442,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.5849877158893164,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.81692414714442,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.46153846153846156,
+     "task_success": 0.5384615384615384,
+     "removal": 0.7144389939229195,
+     "removal_auc": 0.5849877158893164,
+     "t90_300": 189.83076923076823,
+     "wall_contact_s": 0.0,
+     "wall_ge_1s": 0.0,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 143.81692414714442,
+     "tpg_hold_s": 0.3769230769230768,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   },
+   "STPG+turbo": {
+    "ALL": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.15384615384615385,
+     "removal_auc": 0.11689687681846027,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.13576698936293,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "low_delay": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.15384615384615385,
+     "removal_auc": 0.11689687681846027,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.13576698936293,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "seen_topology": {
+     "strict_success": 0.0,
+     "task_success": 0.0,
+     "removal": 0.15384615384615385,
+     "removal_auc": 0.11689687681846027,
+     "t90_300": 300.0,
+     "wall_contact_s": 6.425575244838206,
+     "wall_ge_1s": 0.07692307692307693,
+     "spacing_violation_pair_s": 0.0,
+     "coupling_exposure": 0.0,
+     "path_mm": 498.13576698936293,
+     "tpg_hold_s": 0.0,
+     "n": 13
+    },
+    "unseen_topology": {
+     "strict_success": NaN,
+     "task_success": NaN,
+     "removal": NaN,
+     "removal_auc": NaN,
+     "t90_300": NaN,
+     "wall_contact_s": NaN,
+     "wall_ge_1s": NaN,
+     "spacing_violation_pair_s": NaN,
+     "coupling_exposure": NaN,
+     "path_mm": NaN,
+     "tpg_hold_s": NaN,
+     "n": 0
+    }
+   }
+  },
+  "ours_minus": {
+   "A_TPG+cbf": {
+    "ALL": [
+     0.7692307692307693,
+     0.5384615384615384,
+     1.0
+    ],
+    "low_delay": [
+     0.7692307692307693,
+     0.5384615384615384,
+     1.0
+    ]
+   },
+   "A_TPG+mppi": {
+    "ALL": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ],
+    "low_delay": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ]
+   },
+   "A_TPG+online": {
+    "ALL": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "low_delay": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "A_TPG+pac": {
+    "ALL": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ],
+    "low_delay": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ]
+   },
+   "A_TPG+pursuit": {
+    "ALL": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ],
+    "low_delay": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ]
+   },
+   "A_TPG+turbo": {
+    "ALL": [
+     0.8461538461538461,
+     0.6153846153846154,
+     1.0
+    ],
+    "low_delay": [
+     0.8461538461538461,
+     0.6153846153846154,
+     1.0
+    ]
+   },
+   "NONE+ours": {
+    "ALL": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "low_delay": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "NONE+pursuit": {
+    "ALL": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ],
+    "low_delay": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ]
+   },
+   "OT+cbf": {
+    "ALL": [
+     0.7692307692307693,
+     0.5384615384615384,
+     1.0
+    ],
+    "low_delay": [
+     0.7692307692307693,
+     0.5384615384615384,
+     1.0
+    ]
+   },
+   "OT+mppi": {
+    "ALL": [
+     0.46153846153846156,
+     0.23076923076923078,
+     0.6923076923076923
+    ],
+    "low_delay": [
+     0.46153846153846156,
+     0.23076923076923078,
+     0.6923076923076923
+    ]
+   },
+   "OT+online": {
+    "ALL": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "low_delay": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "OT+ours": {
+    "ALL": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "low_delay": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "OT+pac": {
+    "ALL": [
+     0.46153846153846156,
+     0.23076923076923078,
+     0.6923076923076923
+    ],
+    "low_delay": [
+     0.46153846153846156,
+     0.23076923076923078,
+     0.6923076923076923
+    ]
+   },
+   "OT+pursuit": {
+    "ALL": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ],
+    "low_delay": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ]
+   },
+   "OT+turbo": {
+    "ALL": [
+     0.8461538461538461,
+     0.6153846153846154,
+     1.0
+    ],
+    "low_delay": [
+     0.8461538461538461,
+     0.6153846153846154,
+     1.0
+    ]
+   },
+   "STPG+cbf": {
+    "ALL": [
+     0.7692307692307693,
+     0.5384615384615384,
+     1.0
+    ],
+    "low_delay": [
+     0.7692307692307693,
+     0.5384615384615384,
+     1.0
+    ]
+   },
+   "STPG+mppi": {
+    "ALL": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ],
+    "low_delay": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ]
+   },
+   "STPG+online": {
+    "ALL": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "low_delay": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "STPG+ours": {
+    "ALL": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "low_delay": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "STPG+pac": {
+    "ALL": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ],
+    "low_delay": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ]
+   },
+   "STPG+pursuit": {
+    "ALL": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ],
+    "low_delay": [
+     0.38461538461538464,
+     0.15384615384615385,
+     0.6153846153846154
+    ]
+   },
+   "STPG+turbo": {
+    "ALL": [
+     0.8461538461538461,
+     0.6153846153846154,
+     1.0
+    ],
+    "low_delay": [
+     0.8461538461538461,
+     0.6153846153846154,
+     1.0
+    ]
+   }
+  },
+  "hash_mismatch": 0
+ }
+}

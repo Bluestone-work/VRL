@@ -1,0 +1,5 @@
+{
+  "main": "research/MANUSCRIPT_DRAFT_20261006.md",
+  "hard": "research/validation/EXP0073_HARD_BASELINES_20261009/aggregate.json",
+  "sched": "research/figures/SCHED_AUTO_20261010/flowres_s5/aggregate.json"
+}

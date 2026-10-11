@@ -19,7 +19,7 @@ from pathlib import Path
 
 import numpy as np
 
-LABEL = {'nav_off': 'nav_tf_v3 learner-off', 'sel_learned': 'Ours (prediction-assisted)', 'sel_learned_fb': 'Ours (+ fallback)',
+LABEL = {'nav_off': 'nav_tf_v3 learner-off', 'sel_learned': 'Ours (prediction-assisted)', 'sel_learned_fb': 'Ours',
          'sel_learned_inv': 'Ours (belief inversion)', 'sel_learned_fb_inv': 'Ours (belief inversion + fallback)',
          'sel_online': 'Online estimator + selector', 'switch_settle': 'SwitchSettle', 'fixed_settle': 'Fixed Settle',
          'adaptive_settle': 'Adaptive Settle', 'settle': 'Fixed Settle', 'no_settle': 'Pursuit + wall guard',

@@ -145,10 +145,11 @@ def worker(wid, conn, seed0, cfg):
         while True:
             seed = seed0+count; count += 1
             an = train[rng.integers(len(train))]; n = int(rng.integers(1, 4))
-            sc = DeployableConfig(latency_steps=int(rng.integers(1, 3))) if cfg['dr'] else None
+            sc = DeployableConfig(latency_steps=int(rng.integers(1, cfg.get('latency_max', 2)+1))) if cfg['dr'] else None
+            flow = float(rng.choice(cfg['flow_levels'])) if cfg.get('flow_levels') else None
             try:
                 sv = 0. if (cfg.get('s_max', 0.) <= 0 or rng.random() < .2) else float(rng.uniform(0, cfg['s_max']))
-                ep = LysisEpisode(n, an, seed, sense_cfg=sc, rng=rng, variation=sv if sv > 0 else None,
+                ep = LysisEpisode(n, an, seed, sense_cfg=sc, rng=rng, variation=sv if sv > 0 else None, flow_inlet_mm_s=flow,
                                   actuation=dict(gain=(.75, 1.25), noise=.025) if (cfg['dr'] and sv == 0) else None)
                 break
             except (ValueError, RuntimeError):
@@ -238,9 +239,12 @@ def main():
     p.add_argument('--no-dr', action='store_true'); p.add_argument('--device', default='cuda:0')
     p.add_argument('--lr', type=float, default=2e-4)
     p.add_argument('--s-max', type=float, default=0., help='v5 physiological variation DR (marl.physio_variation)')
+    p.add_argument('--flow-levels', default='', help='EXP0093: per-anatomy inlet speeds, e.g. 0.025,0.05,0.1')
+    p.add_argument('--latency-max', type=int, default=2)
     p.add_argument('--prior', default='settle', choices=('guard', 'settle'), help='residual mode: classical prior')
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.manual_seed(a.seed)
-    cfg = dict(mode=a.mode, arch=a.arch, layers=a.layers, window=a.window, dr=not a.no_dr, prior=a.prior, s_max=a.s_max)
+    cfg = dict(mode=a.mode, arch=a.arch, layers=a.layers, window=a.window, dr=not a.no_dr, prior=a.prior, s_max=a.s_max,
+               flow_levels=[float(x) for x in a.flow_levels.split(',')] if a.flow_levels else None, latency_max=a.latency_max)
     (a.out/'config.json').write_text(json.dumps(dict(vars(a), **cfg), default=str))
     ctx = mp.get_context('fork'); pipes, procs = [], []
     for w in range(a.workers):

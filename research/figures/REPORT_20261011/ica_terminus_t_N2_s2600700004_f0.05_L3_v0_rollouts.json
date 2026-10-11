@@ -1,0 +1,44 @@
+{
+  "sel_learned_fb": {
+    "metrics": {
+      "task_success": true,
+      "strict_success": true,
+      "removal": 1.0,
+      "t50_s": 25.30000000000009,
+      "t90_s": 61.600000000000605,
+      "t100_s": 63.80000000000064,
+      "wall_contact_s": 0.0,
+      "removal_auc": 0.883190788998798,
+      "spacing_violation_pair_s": 0.0
+    },
+    "t": 63.80000000000064
+  },
+  "switch_settle": {
+    "metrics": {
+      "task_success": true,
+      "strict_success": true,
+      "removal": 1.0,
+      "t50_s": 26.300000000000104,
+      "t90_s": 62.40000000000062,
+      "t100_s": 64.6000000000006,
+      "wall_contact_s": 0.0,
+      "removal_auc": 0.8805065311587519,
+      "spacing_violation_pair_s": 0.0
+    },
+    "t": 64.6000000000006
+  },
+  "pac_nmpc": {
+    "metrics": {
+      "task_success": true,
+      "strict_success": true,
+      "removal": 1.0,
+      "t50_s": 27.000000000000114,
+      "t90_s": 67.00000000000047,
+      "t100_s": 69.9000000000003,
+      "wall_contact_s": 0.0,
+      "removal_auc": 0.8645673078941383,
+      "spacing_violation_pair_s": 0.0
+    },
+    "t": 69.9000000000003
+  }
+}

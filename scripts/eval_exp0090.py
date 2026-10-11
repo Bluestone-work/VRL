@@ -89,7 +89,29 @@ def child(spec, conn):
         os.environ['OMP_NUM_THREADS'] = '1'
         import torch; torch.set_num_threads(1)
         method, cell, job, opts = spec
-        if method in ('stpg',):
+        if method.startswith('fac='):
+            from marl import factorial as FA
+            from marl.deployable_sensing import DeployableConfig
+            FA.PRED.update(ensemble=opts['predictors'].split(','), fallback_std=opts.get('fallback_std'),
+                           weights=opts.get('weights'), turbo=opts.get('turbo'))
+            g, l = method.split('=')[1].split('+')
+            anatomy, n, seed, flow, latency, variation = job
+            kw = dict(sense_cfg=DeployableConfig(latency_steps=latency), variation=variation if variation > 0 else None)
+            if flow is not None:
+                kw['flow_inlet_mm_s'] = flow
+            ep = FA.make(g, n, anatomy, seed, **kw); ctl = FA.local(l, ep); t0 = time.perf_counter(); k = 0
+            while True:
+                est = ep.observe(); tgt = ep.plan_targets_now(est)
+                if ep.stpg is not None:
+                    ep.stpg.update(ep.env.elapsed_s)
+                rule = ep.ctl.act(tgt, est); hold = ep.hold(est)
+                done, _ = ep.step(est, ctl(ep, est, tgt, rule, hold), hold); k += 1
+                if done:
+                    break
+            row = ep.row(method); extra = dict(ctrl_ms_per_step=1000*(time.perf_counter()-t0)/max(k, 1), global_layer=g, local_layer=l)
+            if hasattr(ctl, 'summary'):
+                extra.update(ctl.summary())
+        elif method in ('stpg',):
             from scripts.benchmark_lysis import METHODS
             from marl.deployable_sensing import DeployableConfig
             anatomy, n, seed, flow, latency, variation = job
@@ -200,11 +222,12 @@ def main():
     ap.add_argument('--methods', required=True); ap.add_argument('--predictors'); ap.add_argument('--fallback-std', type=float)
     ap.add_argument('--weights', default='{}'); ap.add_argument('--no-tpg', action='store_true')
     ap.add_argument('--ablation', choices=('no_guard', 'no_shield', 'no_safety'))
+    ap.add_argument('--turbo')
     ap.add_argument('--train-only', action='store_true'); ap.add_argument('--workers', type=int, default=20)
     ap.add_argument('--timeout', type=float, default=1200); ap.add_argument('--limit', type=int, default=0)
     a = ap.parse_args(); a.out.mkdir(parents=True, exist_ok=True)
     opts = dict(predictors=a.predictors, fallback_std=a.fallback_std, weights=json.loads(a.weights), no_tpg=a.no_tpg,
-                ablation=a.ablation)
+                ablation=a.ablation, turbo=a.turbo)
     J = jobs_for(a)
     if a.limit:
         seen = {}; J = [x for x in J if seen.setdefault(x[0], 0) < a.limit and not seen.__setitem__(x[0], seen[x[0]]+1)]
@@ -219,9 +242,11 @@ def main():
                'marl/dyn_predictor.py', 'marl/lysis_baselines.py']}
     ck = {}
     for m in a.methods.split(','):
-        if '=' in m:
+        if '=' in m and not m.startswith('fac='):
             for q in m.split('=')[1].split(';'):
                 ck[q] = hashlib.sha256(Path(q).read_bytes()).hexdigest()
+    if a.turbo:
+        ck[a.turbo] = hashlib.sha256(Path(a.turbo).read_bytes()).hexdigest()
     for p in (a.predictors or '').split(','):
         if p:
             ck[p] = hashlib.sha256(Path(p).read_bytes()).hexdigest()
