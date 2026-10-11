@@ -117,6 +117,7 @@ def main():
     p.add_argument('--device',default='cuda:0');p.add_argument('--lr',type=float,default=1e-4);p.add_argument('--alpha',type=float,default=.002)
     p.add_argument('--scene-seed-base',type=int,default=2191000000)
     p.add_argument('--dynamic-obstacles',action='store_true');p.add_argument('--dynamic-obstacle-count',type=int,default=8)
+    p.add_argument('--obstacle-features',action='store_true')
     p.add_argument('--critic-warmup-iterations',type=int,default=32)
     p.add_argument('--controller-json',type=Path);a=p.parse_args();os.chdir(ROOT);a.out.mkdir(parents=True,exist_ok=False)
     torch.set_num_threads(1);torch.manual_seed(a.seed);rng=np.random.default_rng(a.seed)
@@ -132,6 +133,7 @@ def main():
     controller['zero_reference_policy']='preserve original stationary command'
     controller['action_parameterization']='scalar bounded log-odds speed shift along the original reference direction'
     cfg={k:v for k,v in vars(a).items() if k not in ('out','controller_json')};cfg['dynamic_obstacle_count']=a.dynamic_obstacle_count if a.dynamic_obstacles else 0
+    controller['obstacle_features']=bool(a.obstacle_features)
     cfg.update(controller=controller,action_mode='speed_relative_logit',
         terminal_boundary='finite benchmark episode, including the 300-second deadline',
         algorithm='Finite-horizon critic-warmed one-dimensional distance-enveloped SAC with small transit adaptation, stronger contact control, original TPG/parking and biplane history',gamma=.9995,tau=.005,
