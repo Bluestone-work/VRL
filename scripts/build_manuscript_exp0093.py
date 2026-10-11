@@ -224,7 +224,7 @@ def build(out):
     fac = D['fac'].get('hard', {}); FT = fac.get('table', {})
     def F(arm, cell='ALL', m='strict_success', p=True):
         v = FT.get(arm, {}).get(cell, {}).get(m)
-        return '—' if v is None else (pct(v) if p else f'{v:.1f}')
+        return '—' if v is None else (pct(v) if p else (f'{v:.3f}' if abs(v) < .1 else f'{v:.2f}' if abs(v) < 10 else f'{v:.0f}'))
     best_ext = max([a for a in FT if not a.endswith(('+ours', '+online')) and not a.startswith('A_TPG+pursuit')],
                    key=lambda a: FT[a]['ALL']['strict_success'], default=None)
     pf = D['pair']['sel_online']; ps = D['pair']['switch_settle']
@@ -463,7 +463,8 @@ def build(out):
         ext = [a for a in arms if a.split('+')[1] not in ('ours', 'online')]
         be = max(ext, key=lambda a: FT[a]['ALL']['strict_success'])
         rk = sorted(arms, key=lambda a: -FT[a]['ALL']['strict_success']); r0 = rk.index('A_TPG+ours')+1
-        rank_s = '在全部组合中最高' if r0 == 1 else f'在全部 {len(arms)} 个组合中排第 {r0}（领先者为 {G_LAB[rk[0].split("+")[0]]} / {L_LAB[rk[0].split("+")[1]]}，{F(rk[0])}%）'
+        tie = [a for a in arms if a != 'A_TPG+ours' and abs(FT[a]['ALL']['strict_success']-FT['A_TPG+ours']['ALL']['strict_success']) < 1e-9]
+        rank_s = ('在全部组合中最高' + (f'（与{"、".join(G_LAB[a.split("+")[0]]+" / "+L_LAB[a.split("+")[1]] for a in tie)}并列）' if tie else '')) if r0 == 1 else f'在全部 {len(arms)} 个组合中排第 {r0}（领先者为 {G_LAB[rk[0].split("+")[0]]} / {L_LAB[rk[0].split("+")[1]]}，{F(rk[0])}%）'
         W.p(f'表3给出全部组合的结果。本文组合的 Strict 为 {F("A_TPG+ours")}%，{rank_s}；'
             f'最好的非本文局部层组合为"{G_LAB[be.split("+")[0]]} / {L_LAB[be.split("+")[1]]}"（{F(be)}%）。'
             f'在局部层方面，固定全局层为测地分配+TPG 时，本文 {F("A_TPG+ours")}%、PAC-NMPC {F("A_TPG+pac")}%、MPPI {F("A_TPG+mppi")}%、'
@@ -471,7 +472,12 @@ def build(out):
             f'在全局层方面，固定局部层为本文选择器时，测地分配+TPG {F("A_TPG+ours")}%、STPG {F("STPG+ours")}%、OT 分配 {F("OT+ours")}%、无协调 {F("NONE+ours")}%；'
             f'全局层之间的差别远小于局部层之间的差别，说明困难条件下的性能主要由局部层决定。'
             f'TPG 与间距护盾的作用主要体现在集群互不影响指标上：无协调时间距违规为 {F("NONE+ours", m="spacing_violation_pair_s", p=False)} pair·s，'
-            f'耦合暴露为 {F("NONE+ours", m="coupling_exposure", p=False)}，而测地分配+TPG 下分别为 {F("A_TPG+ours", m="spacing_violation_pair_s", p=False)} 和 {F("A_TPG+ours", m="coupling_exposure", p=False)}。')
+            f'耦合暴露为 {F("NONE+ours", m="coupling_exposure", p=False)}，而测地分配+TPG 下分别为 {F("A_TPG+ours", m="spacing_violation_pair_s", p=False)} 和 {F("A_TPG+ours", m="coupling_exposure", p=False)}。'
+            f'OT 分配倾向于让各集群就近负责血栓，集群路线重叠少，耦合暴露最低（{F("OT+ours", m="coupling_exposure", p=False)}），'
+            f'但按总运输代价而非完工时间分配会拉长最慢集群的任务，T90_300 由 {F("A_TPG+ours", m="t90_300", p=False)} s 增至 {F("OT+ours", m="t90_300", p=False)} s，Strict 降至 {F("OT+ours")}%。'
+            f'STPG 与固定 TPG 的结果几乎相同，原因是在 N ≤ 3 的场景中冲突区交换顺序的机会很少。'
+            f'Turbo 在本任务训练域内重新训练（100 min，多层域随机化）后，仍未能在 300 s 内完成任何场景（清除率 {F("A_TPG+turbo", m="removal")}%）：'
+            f'直接速度策略需要同时学会长程路线跟随、到达减速和停留溶栓，在同等预算下难以收敛，这与 An 等报告的单目标导航任务有本质区别。')
         W.fig(FIG/'fig_factorial_hard.png', '困难矩阵上各"全局层 × 局部层"组合的 Strict 成功率热图。行为全局层，列为局部层。', 15.)
         W.fig(FIG/'fig_panels_hard.png', '各条件面板下代表性组合的 Strict 成功率。本文在中延迟、高延迟、强流和分布外面板中领先最明显，低延迟面板与规则相当。', 16.)
     else:
@@ -551,7 +557,7 @@ def build(out):
         return 100*np.mean([D['v5'][s_][a]['strict_success'] for s_ in ('v5_s0', 'v5_s1', 'v5_s1.5')])
     gf, gs_, gw = _v5('fixed_settle')-_v5('ours_A'), _v5('stpg')-_v5('ours_A'), _v5('switch_settle')-_v5('ours_A')
     W.p(f'在弱流、1 步延迟的 V5 设定下（三档 s 平均），本文框架（种子 A）落后于 Fixed Settle {gf:.1f} 个百分点、STPG（局部层同为追踪减速）{gs_:.1f} 个百分点，'
-        f'与 SwitchSettle 相差 {-gw:+.1f} 个百分点。'
+        f'但高于 SwitchSettle {-gw:.1f} 个百分点（SwitchSettle 在 1 步延迟下处于 Adaptive 模式，强扰动时会误触发释放）。'
         '原因有二：一是此时经典规则已接近最优，选择器的额外动作只会引入扰动；二是选择器的权重是在流速标定后的困难条件下调出的，'
         '在 V5 独立调参集上调整不确定性锚定系数也未能消除这一差距。这一结果界定了本文方法的适用范围：'
         '它针对血流和延迟显著干扰经典规则的情形，在规则已足够好的简单情形中反而不如规则。')
