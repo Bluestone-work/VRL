@@ -73,6 +73,15 @@ class RLNavigator(PredictiveSelector):
 
     def _features(self,ep,est,tgt,i,F,C,mu,var,epi,clr,prog,cost,proposal):
         hist,hmask=self.feat.history(ep,est,i,F);ctx=self.feat.context(ep,est,tgt,i,F)
+        # Deduplicate only the learned candidate action set.  The parent
+        # selector keeps its historical proposal ordering and behavior.
+        keep=[]; remap={}
+        for j,cmd in enumerate(C):
+            hit=next((q for q,k in enumerate(keep) if np.allclose(cmd,C[k],rtol=0.,atol=1e-8)),None)
+            if hit is None: remap[j]=len(keep); keep.append(j)
+            else: remap[j]=hit
+        C=np.asarray(C)[keep]; mu=mu[keep]; var=var[keep]; epi=epi[keep]; clr=clr[keep]
+        prog=np.asarray(prog)[keep]; cost=np.asarray(cost)[keep]; proposal=remap[int(proposal)]
         K=len(C)
         if K>MAX_CANDIDATES:raise ValueError('Increase candidate padding bound')
         Pw=est.pos[i][None,None]+np.einsum('ab,kha->khb',F,mu)
@@ -106,7 +115,7 @@ class RLNavigator(PredictiveSelector):
             valid[:K]&=np.sqrt(epi[:,-1].sum(-1))<=float(self.fallback_std)
         valid[0]=True
         if not valid[proposal]:proposal=0;cand[:,-1]=0;cand[0,-1]=1
-        return dict(hist=hist,hmask=hmask,ctx=ctx,cand=cand,valid=valid,proposal=int(proposal))
+        return dict(hist=hist,hmask=hmask,ctx=ctx,cand=cand,valid=valid,proposal=int(proposal),source_indices=np.asarray(keep,dtype=int))
 
     def _choose(self,ep,est,tgt,i,F,C,mu,var,epi,clr,prog,cost,proposal):
         obs=self._features(ep,est,tgt,i,F,C,mu,var,epi,clr,prog,cost,proposal)
@@ -117,13 +126,14 @@ class RLNavigator(PredictiveSelector):
             a=int(action[0]);lp=float(d.log_prob(action)[0])
         self.rl_stats['rl_decisions']+=1
         changed=a!=obs['proposal'];self.rl_stats['rl_changed_decisions']+=int(changed)
-        deviation=float(np.linalg.norm(C[a]-C[obs['proposal']]))
+        source=obs['source_indices']
+        deviation=float(np.linalg.norm(C[source[a]]-C[source[obs['proposal']]]))
         self.rl_stats['rl_command_deviation_sum']+=deviation;self.rl_stats['rl_command_changed_decisions']+=int(deviation>1e-5)
         initial_score=-40.*obs['cand'][:,-2]+self.net.initial_proposal_bias*obs['cand'][:,-1]
         initial_score[~obs['valid']]=-1e9
         initial_action=int(np.argmax(initial_score))
-        self.rl_stats['rl_update_command_changes']+=int(np.linalg.norm(C[a]-C[initial_action])>1e-5)
-        self.records.append(dict(obs,agent=i,action=a,logp=lp,value=float(v[0]),learn=True,proposed_command=C[obs['proposal']].copy(),selected_command=C[a].copy()))
+        self.rl_stats['rl_update_command_changes']+=int(np.linalg.norm(C[source[a]]-C[source[initial_action]])>1e-5)
+        self.records.append(dict(obs,agent=i,action=a,logp=lp,value=float(v[0]),learn=True,proposed_command=C[source[obs['proposal']]].copy(),selected_command=C[source[a]].copy()))
         return a
 
     def __call__(self,*args):

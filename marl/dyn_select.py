@@ -89,16 +89,7 @@ def candidates(ep, est, tgt, i, rule_world, zero_world):
         if 1e-6 < L < 1.5:
             dirs.append(dc/L)
     C = [rule_world, zero_world, np.zeros(3)]+[sp*d for d in dirs for sp in SPEEDS]
-    # Several semantic proposals can collapse to the same physical command
-    # (for example a zero settle command and the explicit zero action).  Keep
-    # the first occurrence so the rule proposal remains index 0, while
-    # preventing duplicate actions from receiving separate probability mass.
-    unique=[]
-    for cmd in C:
-        cmd=np.asarray(cmd,float)
-        if not any(np.allclose(cmd, old, rtol=0., atol=1e-8) for old in unique):
-            unique.append(cmd)
-    return np.asarray(unique, float)
+    return np.asarray(C, float)
 
 
 def route_arclength(ep, i, X):
