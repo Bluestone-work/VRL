@@ -23,7 +23,10 @@ def worker(wid,pipe,cfg,folder):
     from marl.deployable_sensing import DeployableConfig
     from scripts.train_lysis_local import route_remaining
     from scripts.export_vrl_v3_all_gifs import geometry
-    rng=np.random.default_rng([9500,cfg['seed'],wid]);actor=ImageActor();serial=0
+    from marl.td3_local import TD3SpeedActor
+    from marl.sac_speed_control import SpeedCritic
+    from marl.sac_speed_control import SpeedCritic
+    rng=np.random.default_rng([9500,cfg['seed'],wid]);actor=(TD3SpeedActor() if cfg.get('algorithm_kind')=='td3' else ImageActor());serial=0
     train=json.load(open(ROOT/'configs/evaluation_splits.json'))['anatomy_holdout_v1']['train']
     def prepare(ep,ctl):
         est=ep.observe();target=ep.plan_targets_now(est);rule=ep.ctl.act(target,est);hold=ep.hold(est)
@@ -33,11 +36,15 @@ def worker(wid,pipe,cfg,folder):
         while True:
             seed=cfg['scene_seed_base']+cfg['seed']*1000000+wid*10000+serial;serial+=1
             an=str(rng.choice(train));n=int(rng.integers(1,4));flow=float(rng.choice([.025,.05,.1]))
-            delay=int(rng.integers(1,4));s=0. if rng.random()<.2 else float(rng.uniform(.25,1.25))
+            delay=int(rng.integers(1,3));s=0.
             try:ep=ControlEpisode(n,an,seed,flow_inlet_mm_s=flow,sense_cfg=DeployableConfig(latency_steps=delay),variation=s or None,
                                   dynamic_obstacle_count=cfg.get('dynamic_obstacle_count',0));break
             except (ValueError,RuntimeError):continue
-        ctl=ImageFlowController(ep,actor=actor,stochastic=True,config=cfg['controller'])
+        if cfg.get('algorithm_kind')=='td3':
+            from marl.sac_speed_control import SpeedOnlySAC
+            ctl=SpeedOnlySAC(ep,actor=actor,stochastic=True,config=cfg['controller'])
+        else:
+            ctl=ImageFlowController(ep,actor=actor,stochastic=True,config=cfg['controller'])
         ep.meta=dict(anatomy=an,n=n,seed=seed,flow=flow,latency=delay,s=s,training_seed=cfg['seed'])
         ep.trace=dict(t=[0.],pos=[ep.env.positions_mm[:n].copy()],mass=[ep.env.masses.copy()],wall=[0.],removal=[0.],sent=[ep.sent_world.copy()])
         ep.images=[];ep.geo=geometry(ep);ep.versions=set();ep.reward_sum=0.;ep.prepared=prepare(ep,ctl)
@@ -66,15 +73,23 @@ def worker(wid,pipe,cfg,folder):
                 if ep.n>1:
                     D=np.linalg.norm(ep.env.positions_mm[:ep.n,None]-ep.env.positions_mm[None,:ep.n],axis=-1)+np.eye(ep.n)*99
                     reward-=2.*(D<ep.d_min).any(1)
+                if cfg.get('team_reward'):
+                    spacing=float(ep.spacing.summary()['spacing_violation_pair_s'])
+                    ds=spacing-getattr(ep,'reward_spacing',0.);ep.reward_spacing=spacing
+                    shared=(10.*out['removed']-2.*float(np.sum(out['wall']))-2.*ds
+                            -10.*float(np.sum(out['lost']))-.01*float(ep.info['step_duration_s'])
+                            -cfg['obstacle_penalty']*float(np.sum(ep.info['particle_contact_s'])))
+                    reward=np.full(ep.n,shared)
                 row=None
                 if done:
                     row=ep.row('image_SAC_training',**ctl.summary(),**ep.authority)
-                    reward+=10.*float(row['strict_success'])
-                    if not row['task_success']:reward-=3.
+                    reward+=(20. if cfg.get('team_reward') else 10.)*float(row['strict_success'])
+                    if not cfg.get('team_reward') and not row['task_success']:reward-=3.
                 next_prepared=prepare(ep,ctl);next_obs=next_prepared[3]
                 for i in range(ep.n):
                     if not out['active_before'][i]:continue
                     transitions.append(dict(obs=obs[i],next=next_obs[i],action=action[i],reward=float(reward[i]),
+                        learn=bool(target[i]>=0 and not hold[i]),
                         terminal=bool(done or not ep.env.active[i]),
                         observed_velocity=ctl.F[i]@next_prepared[0].vel[i]))
                 ep.reward_sum+=float(reward.sum());ep.versions.add(iteration)
@@ -118,10 +133,18 @@ def main():
     p.add_argument('--scene-seed-base',type=int,default=2191000000)
     p.add_argument('--dynamic-obstacles',action='store_true');p.add_argument('--dynamic-obstacle-count',type=int,default=8)
     p.add_argument('--obstacle-features',action='store_true')
+    p.add_argument('--algorithm-kind',choices=['sac','td3'],default='sac')
+    p.add_argument('--team-reward',action='store_true')
+    p.add_argument('--obstacle-penalty',type=float,default=2.)
+    p.add_argument('--forecast-horizon',type=float,default=1.)
     p.add_argument('--critic-warmup-iterations',type=int,default=32)
     p.add_argument('--controller-json',type=Path);a=p.parse_args();os.chdir(ROOT);a.out.mkdir(parents=True,exist_ok=False)
     torch.set_num_threads(1);torch.manual_seed(a.seed);rng=np.random.default_rng(a.seed)
-    actor=ImageActor().to(a.device);critic=ImageCritic().to(a.device);target=copy.deepcopy(critic).eval()
+    from marl.td3_local import TD3SpeedActor
+    from marl.sac_speed_control import SpeedCritic
+    actor=(TD3SpeedActor() if a.algorithm_kind=='td3' else ImageActor()).to(a.device)
+    critic=(SpeedCritic() if a.algorithm_kind=='td3' else ImageCritic()).to(a.device)
+    target=copy.deepcopy(critic).eval();target_actor=copy.deepcopy(actor).eval()
     ao=torch.optim.Adam(actor.parameters(),lr=a.lr);qo=torch.optim.Adam(critic.parameters(),lr=a.lr)
     controller=json.load(open(a.controller_json)) if a.controller_json else {}
     controller['station_keeping']=False
@@ -134,12 +157,15 @@ def main():
     controller['action_parameterization']='scalar bounded log-odds speed shift along the original reference direction'
     cfg={k:v for k,v in vars(a).items() if k not in ('out','controller_json')};cfg['dynamic_obstacle_count']=a.dynamic_obstacle_count if a.dynamic_obstacles else 0
     controller['obstacle_features']=bool(a.obstacle_features)
+    controller['forecast_horizon']=a.forecast_horizon
     cfg.update(controller=controller,action_mode='speed_relative_logit',
         terminal_boundary='finite benchmark episode, including the 300-second deadline',
         algorithm='Finite-horizon critic-warmed one-dimensional distance-enveloped SAC with small transit adaptation, stronger contact control, original TPG/parking and biplane history',gamma=.9995,tau=.005,
         image_input='current and previous delayed 32x32 biplane crops',
         cardiac_input='frequency/phase inferred from timestamp-aligned image motion; no true cardiac phase',
         training_anatomies=json.load(open('configs/evaluation_splits.json'))['anatomy_holdout_v1']['train'])
+    cfg['algorithm']=a.algorithm_kind.upper()+' scalar speed, same action envelope; not full-vector navigation'
+    cfg['reward_protocol']='shared clearance/cost increments; shaping disabled' if a.team_reward else 'legacy scalar SAC'
     cfg['source_sha256']={f:hashlib.sha256((ROOT/f).read_bytes()).hexdigest() for f in
         ('marl/image_flow_sac.py','marl/sac_safe_local.py','marl/sac_speed_control.py','marl/sac_local_envelope.py','scripts/train_finite_image_flow_sac.py','marl/image_sensing.py','scripts/benchmark_lysis.py')}
     (a.out/'config.json').write_text(json.dumps(cfg,ensure_ascii=False,indent=2))
@@ -173,20 +199,31 @@ def main():
                         actions=torch.as_tensor(np.stack([r['action'] for r in rows]),device=a.device)
                         reward=torch.tensor([r['reward'] for r in rows],device=a.device);terminal=torch.tensor([r['terminal'] for r in rows],device=a.device)
                         with torch.no_grad():
-                            na,nlp=actor.sample(*nxt);q1,q2=target(*nxt,na)
+                            if a.algorithm_kind=='td3':
+                                na,_=target_actor.sample(*nxt,deterministic=True)
+                                na=(na+(.2*torch.randn_like(na)).clamp(-.5,.5)).clamp(-1.,1.)
+                                nlp=torch.zeros_like(reward)
+                            else:na,nlp=actor.sample(*nxt)
+                            q1,q2=target(*nxt,na)
                             y=reward+cfg['gamma']*(~terminal)*(torch.minimum(q1,q2)-a.alpha*nlp)
                         q1,q2=critic(*obs,actions);qloss=nn_loss(q1,y)+nn_loss(q2,y)
                         if not torch.isfinite(qloss):raise FloatingPointError('Nonfinite SAC critic loss')
                         qo.zero_grad();qloss.backward();torch.nn.utils.clip_grad_norm_(critic.parameters(),5.);qo.step()
                         for param in critic.parameters():param.requires_grad_(False)
-                        act,lp=actor.sample(*obs);q1,q2=critic(*obs,act);aloss=(a.alpha*lp-torch.minimum(q1,q2)).mean()
+                        act,lp=actor.sample(*obs,deterministic=a.algorithm_kind=='td3');q1,q2=critic(*obs,act)
+                        learn=torch.tensor([r['learn'] for r in rows],device=a.device,dtype=torch.float32)
+                        loss_per=a.alpha*lp-torch.minimum(q1,q2) if a.algorithm_kind=='sac' else -q1
+                        aloss=(loss_per*learn).sum()/learn.sum().clamp(min=1)
                         if not torch.isfinite(aloss):raise FloatingPointError('Nonfinite SAC actor loss')
-                        if iteration>=a.critic_warmup_iterations:
+                        update_actor=iteration>=a.critic_warmup_iterations and (a.algorithm_kind=='sac' or gradients%2==0)
+                        if update_actor:
                             ao.zero_grad();aloss.backward();torch.nn.utils.clip_grad_norm_(actor.parameters(),1.);ao.step();actor_gradients+=1
                         for param in critic.parameters():param.requires_grad_(True)
                         if not torch.isfinite(qloss+aloss):raise FloatingPointError('Nonfinite SAC loss')
                         with torch.no_grad():
-                            for t,c in zip(target.parameters(),critic.parameters()):t.lerp_(c,cfg['tau'])
+                            if a.algorithm_kind=='sac' or update_actor:
+                                for t,c in zip(target.parameters(),critic.parameters()):t.lerp_(c,cfg['tau'])
+                                for t,c in zip(target_actor.parameters(),actor.parameters()):t.lerp_(c,cfg['tau'])
                         losses.append([float(qloss.detach()),float(aloss.detach()),float(lp.detach().mean())]);gradients+=1
                 iteration+=1
                 distance=sum(float((v.detach().cpu()-init[k]).square().sum()) for k,v in actor.state_dict().items())**.5

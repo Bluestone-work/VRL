@@ -8,6 +8,17 @@ privileged state or simulator access.
 import torch
 from torch import nn
 from marl.image_flow_sac import Encoder
+from marl.sac_speed_control import SpeedActor
+
+
+class TD3SpeedActor(SpeedActor):
+    """Same scalar speed interface as the existing SAC ablation."""
+    def sample(self, hist, mask, ctx, image, deterministic=False):
+        mean = self.head(self.encoder(hist, mask, ctx, image))[:, :1]
+        action = torch.tanh(mean)
+        if not deterministic:
+            action = (action + .1 * torch.randn_like(action)).clamp(-1., 1.)
+        return action, torch.zeros(action.shape[0], device=action.device)
 
 
 class TD3Actor(nn.Module):
