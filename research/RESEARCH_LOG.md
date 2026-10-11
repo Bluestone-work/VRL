@@ -1395,3 +1395,10 @@ Registered before any result of the runs below (vp_topo_s0 has no evaluation yet
 - nav_tf_v3 PPO residual (3 seeds) 31.6 +- 4.4 % < learner-off 40.1 %; belief aux 36.1 %.
 - V5 (legacy flow, latency 1): Ours worse than Fixed/learner-off by 6-13 pp at all strengths (generalisation gap of the tuned selector); better than SwitchSettle at s >= 1.
 - Safety ablations: removing WallGuard doubles wall contact (5.7 -> 10.9 robot-s) for +2 pp Strict; TPG/shield matter for spacing / coupling.
+
+## 2026-10-11 EXP0091/0092 (registered gate; PROTOCOL.md in research/validation/EXP0091_20261011, EXP0092_20261011)
+- Three fully independent predictor seeds (own data + own 3-member ensemble): hard matrix Strict 63.1 / 61.1 / 59.5 % (mean 61.2) vs SwitchSettle 47.6 %, online-estimator selector F 62.3 %.
+- Uncertainty-aware anchoring: kappa grid {0,1,2,4} selected kappa = 0 for both predictors on the tuning sets (no benefit). Dual anchor (EXP0092): no change on the tuning sets, not adopted.
+- V5 dev (mean over N): s=0 86.6 vs best baseline 95.5 (SwitchSettle); s=1 78.2 vs 84.0 (STPG); s=1.5 65.2 vs 71.4 (STPG).
+- Ours - F, hard + V5 pooled: -1.52 pp [-2.56, -0.51].
+- GATE FAIL (criteria 1 on V5 and 2). Per protocol: no sealed-test access (ledger empty), no superiority manuscript.

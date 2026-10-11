@@ -1,0 +1,6 @@
+hard matrix ALL: n=252 ours=61.2 (seeds 63.1, 61.1, 59.5) best baseline switch_settle=47.6 F=62.3 -> ok; fixed_settle=40.1 nav_off=40.1 nav_tf_v3=33.4 pac_nmpc=29.4 stpg=40.1 switch_settle=47.6
+V5 v5_s0 (mean over N): n=420 ours=86.6 (seeds 87.6, 86.0, 86.2) best baseline switch_settle=95.5 F=88.3 -> FAIL; fixed_settle=92.9 nav_off=92.9 nav_tf_v3=86.9 pac_nmpc=81.4 stpg=93.1 switch_settle=95.5
+V5 v5_s1 (mean over N): n=420 ours=78.2 (seeds 79.5, 77.4, 77.6) best baseline stpg=84.0 F=81.4 -> FAIL; fixed_settle=83.8 nav_off=83.8 nav_tf_v3=76.7 pac_nmpc=78.8 stpg=84.0 switch_settle=66.4
+V5 v5_s1.5 (mean over N): n=420 ours=65.2 (seeds 65.0, 65.5, 65.0) best baseline stpg=71.4 F=65.0 -> FAIL; fixed_settle=71.0 nav_off=71.0 nav_tf_v3=59.5 pac_nmpc=68.8 stpg=71.4 switch_settle=38.3
+Ours - F (hard + V5 pooled, n=1512): -1.52 pp [-2.56, -0.51] -> FAIL
+GATE FAIL

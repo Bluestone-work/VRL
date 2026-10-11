@@ -30,7 +30,15 @@ WALL_MARGIN, WALL_K, CONTACT_MM = .05, 1., .12
 # selector chose 'stop' in 50-90 % of live steps (moving candidates looked risky in narrow lumens because the
 # predicted sigma was added to the wall term). Rule-anchored selection: the rule command is kept unless another
 # candidate improves the predicted cost by DELTA; wall term on mean prediction + WALL_K sigma (tuned set W0-W2).
-DEFAULT = dict(prog=1., appr=2., dwell=1., wall=2., space=2., sigma=.2, delta=.2, wall_k=.5, wall_margin=.03, idle=.3)
+DEFAULT = dict(prog=1., appr=2., dwell=1., wall=2., space=2., sigma=.2, delta=.2, wall_k=.5, wall_margin=.03, idle=.3,
+               kappa=0., dual_anchor=0.)
+# v5 (EXP0092): dual anchor. The anchor is the better-predicted of the two deployable rules (SwitchSettle output and
+# Fixed Settle = learner-off command); other candidates must beat THAT anchor by delta. The predictor therefore decides
+# between the Adaptive and the Fixed settling behaviour from the observed history, instead of the frame-age switch.
+# v4 (EXP0091, 2026-10-11): uncertainty-aware anchoring. The rule command is replaced only when the predicted cost
+# improvement exceeds delta + kappa * W_PROG * sqrt(sigma_rule^2 + sigma_cand^2) (predicted position std at 1.2 s, mm):
+# with a calibrated predictor the selector defers to the rule exactly where its forecast cannot resolve the difference
+# (e.g. weak flow, where the rule is near-optimal). kappa = 0 reproduces v3.
 SPEEDS = (.25, .5, .75, 1.)
 TILT = np.tan(np.radians(25.))
 
@@ -178,8 +186,10 @@ class PredictiveSelector:
                 cost += self.w['space']*np.maximum(ep.d_min+.3-dist, 0.).sum(1)/ep.d_min
             cost += self.w['sigma']*sig[:, -1]
             k = int(np.argmin(cost))
-            if cost[0]-cost[k] < self.w['delta']:            # rule-anchored: keep the rule unless clearly better
-                k = 0
+            anchor = 1 if (self.w['dual_anchor'] and cost[1] < cost[0]) else 0
+            margin = self.w['delta']+self.w['kappa']*self.w['prog']*float(np.sqrt(sig[anchor, -1]**2+sig[k, -1]**2))
+            if cost[anchor]-cost[k] < margin:                # rule-anchored: keep the anchor unless clearly better
+                k = anchor
             e = float(np.sqrt(epi[k, -1].sum()))
             self.stats['epi_std'].append(e)
             if self.fallback_std is not None and e > self.fallback_std:

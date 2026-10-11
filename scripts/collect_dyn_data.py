@@ -18,12 +18,13 @@ from pathlib import Path
 import numpy as np
 
 SEED_BASE = {'train': 2121000000, 'val_train': 2122000000, 'val_heldout': 2123000000}
+OFFSET = {'v': 0}     # independent predictor seeds: train-split scene seeds shifted by --seed-offset (B: 5e6, C: 1e7)
 
 
 def run(job):
     os.environ['OMP_NUM_THREADS'] = '1'
     import torch; torch.set_num_threads(1)
-    split, k, out = job
+    split, k, out, offset = job
     from marl.deployable_sensing import DeployableConfig
     from marl.dyn_predictor import DynFeatures
     from marl.dyn_select import Behaviour
@@ -31,9 +32,10 @@ def run(job):
     from scripts.benchmark_lysis import LysisEpisode
     sp = json.load(open('configs/evaluation_splits.json'))['anatomy_holdout_v1']
     anats = sp['held_out'] if split == 'val_heldout' else sp['train']
-    rng = np.random.default_rng(SEED_BASE[split]+k)
+    base = SEED_BASE[split]+offset
+    rng = np.random.default_rng(base+k)
     for attempt in range(20):
-        seed = SEED_BASE[split]+1000*k+attempt
+        seed = base+1000*k+attempt
         an = anats[rng.integers(len(anats))]; n = int(rng.integers(1, 4))
         s = 0. if rng.random() < .3 else float(rng.uniform(0, 1.25)); flow = float(rng.choice([.025, .05, .1]))
         lat = int(rng.integers(1, 4))
@@ -78,8 +80,9 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--out', type=Path, required=True); ap.add_argument('--split', required=True, choices=list(SEED_BASE))
     ap.add_argument('--episodes', type=int, default=360); ap.add_argument('--workers', type=int, default=20)
+    ap.add_argument('--seed-offset', type=int, default=0)
     a = ap.parse_args(); a.out.mkdir(parents=True, exist_ok=True)
-    jobs = [(a.split, k, str(a.out)) for k in range(a.episodes) if not (a.out/f'{a.split}_{k:04d}.npz').exists()]
+    jobs = [(a.split, k, str(a.out), a.seed_offset) for k in range(a.episodes) if not (a.out/f'{a.split}_{k:04d}.npz').exists()]
     metas = []
     with mp.get_context('spawn').Pool(a.workers, maxtasksperchild=4) as pool:
         for j, m in enumerate(pool.imap_unordered(run, jobs)):

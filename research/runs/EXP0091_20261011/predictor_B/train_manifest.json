@@ -1,0 +1,13 @@
+{
+  "paths": [
+    "research/runs/EXP0091_20261011/predictor_B/predictor_s10.pt",
+    "research/runs/EXP0091_20261011/predictor_B/predictor_s11.pt",
+    "research/runs/EXP0091_20261011/predictor_B/predictor_s12.pt"
+  ],
+  "epochs": 8,
+  "batch": 4096,
+  "d": 96,
+  "norm": 1.4586350917816162,
+  "data": "research/runs/EXP0091_20261011/data_B",
+  "samples": 1404723
+}

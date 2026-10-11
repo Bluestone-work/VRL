@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import asdict, replace
 import hashlib
 import json
+import os
 from pathlib import Path
 import numpy as np
 
@@ -39,7 +40,14 @@ def paired_environment(base, clusters, seed, *, budget='fixed_total', pool_size=
     if not 1 <= clusters <= pool_size or budget not in ('fixed_total', 'per_cluster'):
         raise ValueError('Invalid cluster count or catalytic budget')
     if reserved_seed(seed):
-        raise ValueError('This diagnostic runner rejects registered evaluation seeds')
+        # Sealed-test access is an explicit, logged opt-in (EXP0091 final evaluation only): the environment variable
+        # VRL_SEALED_TEST_LEDGER names a JSONL ledger; every accessed scene is appended to it.
+        ledger = os.environ.get('VRL_SEALED_TEST_LEDGER')
+        if not ledger:
+            raise ValueError('This diagnostic runner rejects registered evaluation seeds')
+        with open(ledger, 'a') as fh:
+            fh.write(json.dumps(dict(seed=int(seed), clusters=int(clusters), anatomy=base.anatomy,
+                                     pid=os.getpid(), study=os.environ.get('VRL_SEALED_TEST_STUDY', 'unspecified')))+'\n')
     base = replace(base, num_robots=pool_size, robot_initialization='distributed_branches',
                    action_prior='none', action_shield_horizon_s=0., command_speed='bounded',
                    target_observation='routed_assigned_own', progress_reward_scale=0.)

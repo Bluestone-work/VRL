@@ -154,6 +154,32 @@ def jobs_for(a):
                 for n in (1, 2, 3):
                     f, L, v = ALL_PANELS[panel]
                     out.append((panel+'|tune', (an, n, 2124000000+p*100000+k*1000+n, f, L, v)))
+    elif a.protocol == 'tune_v5':
+        # V5-like tuning scenes (legacy flow, latency 1): training anatomies, seeds 2125000000+ (disjoint from V5 dev)
+        train = json.load(open('configs/evaluation_splits.json'))['anatomy_holdout_v1']['train']
+        for q, s_ in enumerate([float(x) for x in a.strengths.split(',')]):
+            for k, an in enumerate(train):
+                for n in (1, 2, 3):
+                    for rep in range(2):
+                        out.append((f'v5_s{s_:g}|tune', (an, n, 2125000000+q*100000+k*1000+n*10+rep, None, 1, s_)))
+    elif a.protocol == 'test':
+        # SEALED TEST (multicluster_benchmark_v1 test pool 2700000000 + k*1e5 + offset; offset 11 excluded, see
+        # research/validation/FLOW_DELAY_AUDIT/access_ledger.json). Hard conditions: offsets 0,1; V5: offsets 2..6.
+        from scripts.evaluate_hard_baselines import ALL_PANELS
+        order = json.load(open('configs/evaluation_splits.json'))['anatomy_order']
+        held = set(json.load(open('configs/evaluation_splits.json'))['anatomy_holdout_v1']['held_out'])
+        for k, an in enumerate(order):
+            topo = 'unseen_topology' if an in held else 'seen_topology'
+            for n in (1, 2, 3):
+                if a.test_part in ('hard', 'all'):
+                    for panel in a.panels.split(','):
+                        f, L, v = ALL_PANELS[panel]
+                        for off in (0, 1):
+                            out.append((f'{panel}|{topo}', (an, n, 2700000000+k*100000+off, f, L, v)))
+                if a.test_part in ('v5', 'all'):
+                    for s_ in [float(x) for x in a.strengths.split(',')]:
+                        for off in (2, 3, 4, 5, 6):
+                            out.append((f'v5_s{s_:g}|{topo}', (an, n, 2700000000+k*100000+off, None, 1, s_)))
     else:
         from scripts.benchmark_lysis import dev_seeds
         order = json.load(open('configs/evaluation_splits.json'))['anatomy_order']
@@ -167,7 +193,8 @@ def jobs_for(a):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('--out', type=Path, required=True); ap.add_argument('--protocol', default='hard', choices=('hard', 'v5', 'tune'))
+    ap.add_argument('--out', type=Path, required=True); ap.add_argument('--protocol', default='hard', choices=('hard', 'v5', 'tune', 'tune_v5', 'test'))
+    ap.add_argument('--test-part', default='all', choices=('hard', 'v5', 'all'))
     ap.add_argument('--panels', default='low_delay,moderate_delay,high_delay,strong_flow,variable_response,ood_flow_delay')
     ap.add_argument('--strengths', default='0,1,1.5'); ap.add_argument('--count', type=int, default=10)
     ap.add_argument('--methods', required=True); ap.add_argument('--predictors'); ap.add_argument('--fallback-std', type=float)
