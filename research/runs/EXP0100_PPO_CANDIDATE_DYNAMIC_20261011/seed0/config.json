@@ -1,0 +1,47 @@
+{
+  "seed": 0,
+  "workers": 2,
+  "updates": 12,
+  "rollout": 64,
+  "device": "cpu",
+  "width": 64,
+  "proposal_bias": 0.2,
+  "lr": 0.0002,
+  "scene_seed_base": 2130000000,
+  "predictors": [
+    "research/runs/EXP0090_20261011/predictor/predictor_s0.pt",
+    "research/runs/EXP0090_20261011/predictor/predictor_s1.pt",
+    "research/runs/EXP0090_20261011/predictor/predictor_s2.pt"
+  ],
+  "dynamic_obstacles": true,
+  "dynamic_obstacle_count": 8,
+  "algorithm": "PPO categorical recurrent local navigation",
+  "global_layer": "A_TPG",
+  "gamma": 0.995,
+  "gae_lambda": 0.95,
+  "shared_safety": true,
+  "predictor_frozen": true,
+  "observations": "delayed image history, issued commands, preoperative map, frozen candidate predictions",
+  "training_anatomies": [
+    "mca_m1_lvo",
+    "pulmonary_saddle",
+    "coronary_lm_bifurcation",
+    "iliac_may_thurner",
+    "popliteal_calf_dvt",
+    "ica_siphon",
+    "ica_terminus_t",
+    "carotid_bifurcation",
+    "renal_artery"
+  ],
+  "source_sha256": {
+    "marl/predictive_nav_rl.py": "3fc27ccaf5314b6d01a2cb8854b32e2748cc19db453491bed28f288b9e42d5b2",
+    "marl/dyn_select.py": "03d364e2df5fcada512b112b7169e2070779842d464a6f33537c720e35d3cad7",
+    "scripts/train_predictive_nav_rl.py": "ebbacff43c7b823aa12f36b8a40b5a5354aff25b2d33db13ca78a03b45adf2eb",
+    "scripts/benchmark_lysis.py": "b7b62fa3c271c5af795ba39ef5c1f01d066697c4ea7f2ef9cdf3c87644959b5c"
+  },
+  "predictor_sha256": {
+    "research/runs/EXP0090_20261011/predictor/predictor_s0.pt": "319ea2737268f6f43ade1aaa61027cb09b26c40ef31dbabbc17856a37ec87a20",
+    "research/runs/EXP0090_20261011/predictor/predictor_s1.pt": "fc278b358361d21561e23d7a0701fd75e6d641e1e428709e530ec3d43350f8b9",
+    "research/runs/EXP0090_20261011/predictor/predictor_s2.pt": "d000fff5bdff4032ae461734dbebfc00a8c39dc5d977ec7774151a15cf279c10"
+  }
+}

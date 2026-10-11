@@ -46,7 +46,8 @@ class LysisEpisode:
     """allocation -> (TPG hold) -> low-level command -> spacing shield -> physics, deployable inputs only."""
 
     def __init__(self, n, anatomy, seed, horizon=300., d_min=2., sensing='image', shield=True, tpg=True,
-                 fallback=None, topo=True, sense_cfg=None, actuation=None, rng=None, variation=None, flow_inlet_mm_s=None):
+                 fallback=None, topo=True, sense_cfg=None, actuation=None, rng=None, variation=None, flow_inlet_mm_s=None,
+                 dynamic_obstacle_count=0):
         from environments.mca_physical_env import DynamicsConfig
         from marl.deployable_sensing import DeployableConfig, DeployablePursuit, DeployableSensor
         from marl.multicluster import MultiClusterConfig
@@ -56,7 +57,7 @@ class LysisEpisode:
         from scripts.safe_metrics import WallTracker
         self.bm = bm
         base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon,
-                       junction_model='union', particle_count=0)
+                       junction_model='union', particle_count=int(dynamic_obstacle_count or 0))
         self.env, self.manifest = paired_environment(base, n, seed)
         env = self.env; self.n, self.seed, self.horizon, self.d_min = n, seed, horizon, d_min
         # v6 (2026-10-08): per-anatomy flow calibration. The legacy config gives every anatomy the same inlet volume flow
@@ -103,6 +104,7 @@ class LysisEpisode:
         self.auc = 0.; self.pair = 0.; self.prev_local = np.zeros((n, 3)); self.info = None
         self.sent_world = np.zeros((n, 3))  # final command before unknown plant response
         self.coupling = 0.; self.hold_s = 0.; self.t0 = time.monotonic(); self.steps = 0
+        self.particle_near_s = 0.
         # benchmark v5: patient-specific / time-varying dynamics (marl.physio_variation); installed after every
         # controller component was built from the nominal (pre-operative) model
         self.var = None
@@ -160,6 +162,7 @@ class LysisEpisode:
             if self.ms[k] is None and removal >= k/100-1e-12:
                 self.ms[k] = float(info['elapsed_s'])
         self.info = info; self.steps += 1
+        self.particle_near_s += float(np.asarray(info.get('particle_near_s', 0.)).sum())
         if self.var is not None:
             self.var.observe_outcome(info)
         out = dict(removed=(float(mass0.sum())-float(env.masses.sum()))/self.initial,
@@ -192,7 +195,12 @@ class LysisEpisode:
                  relaxed_success=bool(cleared and m['wall_contact_s'] < 5. and free),
                  path_mm=float(np.sum(info['robot_path_mm'])), termination=m['termination_reason'],
                  walltime_s=time.monotonic()-self.t0, variation=self.var.summary() if self.var else None,
-                 flow_scale=self.flow_scale, **extra)
+                 flow_scale=self.flow_scale,
+                 dynamic_obstacle_count=int(getattr(env.config, 'particle_count', 0)),
+                 particle_contact_s=float(info.get('episode_particle_contact_s', 0.)),
+                 particle_near_s=float(self.particle_near_s),
+                 particle_collision_events=int(info.get('episode_particle_collision_events', 0)),
+                 collision_free_success=bool(info.get('collision_free_success', True)), **extra)
         return r
 
     def close(self):

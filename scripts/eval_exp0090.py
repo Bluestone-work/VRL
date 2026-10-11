@@ -33,7 +33,8 @@ def make_episode(spec):
     from scripts.benchmark_lysis import LysisEpisode
     method, cell, (anatomy, n, seed, flow, latency, variation), opts = spec
     kind = method.split('=')[0]
-    kw = dict(sense_cfg=DeployableConfig(latency_steps=latency), variation=variation if variation > 0 else None)
+    kw = dict(sense_cfg=DeployableConfig(latency_steps=latency), variation=variation if variation > 0 else None,
+              dynamic_obstacle_count=opts.get('dynamic_obstacle_count', 0))
     if flow is not None:
         kw['flow_inlet_mm_s'] = flow
     if kind == 'pac_nmpc' or opts.get('no_tpg'):
@@ -55,6 +56,9 @@ def controller(method, ep, opts):
     if kind in ('nav', 'nav_off'):
         from scripts.train_lysis_nav import NavController
         return NavController(ep, arg, zero_residual=(kind == 'nav_off'), diagnostics=True)
+    if kind in ('rl_nav', 'rl_nav_off'):
+        from marl.predictive_nav_rl import RLNavigator
+        return RLNavigator(ep, checkpoint=arg, rl_off=kind == 'rl_nav_off', uncertainty_fallback=False)
     if kind.startswith('sel_'):
         from marl.dyn_predictor import Ensemble
         from marl.dyn_select import PredictiveSelector
@@ -96,7 +100,8 @@ def child(spec, conn):
                            weights=opts.get('weights'), turbo=opts.get('turbo'))
             g, l = method.split('=')[1].split('+')
             anatomy, n, seed, flow, latency, variation = job
-            kw = dict(sense_cfg=DeployableConfig(latency_steps=latency), variation=variation if variation > 0 else None)
+            kw = dict(sense_cfg=DeployableConfig(latency_steps=latency), variation=variation if variation > 0 else None,
+                      dynamic_obstacle_count=opts.get('dynamic_obstacle_count', 0))
             if flow is not None:
                 kw['flow_inlet_mm_s'] = flow
             ep = FA.make(g, n, anatomy, seed, **kw); ctl = FA.local(l, ep); t0 = time.perf_counter(); k = 0
@@ -115,7 +120,8 @@ def child(spec, conn):
             from scripts.benchmark_lysis import METHODS
             from marl.deployable_sensing import DeployableConfig
             anatomy, n, seed, flow, latency, variation = job
-            kw = dict(sense_cfg=DeployableConfig(latency_steps=latency), variation=variation if variation > 0 else None)
+            kw = dict(sense_cfg=DeployableConfig(latency_steps=latency), variation=variation if variation > 0 else None,
+                      dynamic_obstacle_count=opts.get('dynamic_obstacle_count', 0))
             if flow is not None:
                 kw['flow_inlet_mm_s'] = flow
             row, ep = METHODS['stpg'](n, anatomy, seed, **kw); extra = {}
@@ -224,10 +230,12 @@ def main():
     ap.add_argument('--ablation', choices=('no_guard', 'no_shield', 'no_safety'))
     ap.add_argument('--turbo')
     ap.add_argument('--train-only', action='store_true'); ap.add_argument('--workers', type=int, default=20)
+    ap.add_argument('--dynamic-obstacles', action='store_true'); ap.add_argument('--dynamic-obstacle-count', type=int, default=8)
     ap.add_argument('--timeout', type=float, default=1200); ap.add_argument('--limit', type=int, default=0)
     a = ap.parse_args(); a.out.mkdir(parents=True, exist_ok=True)
     opts = dict(predictors=a.predictors, fallback_std=a.fallback_std, weights=json.loads(a.weights), no_tpg=a.no_tpg,
-                ablation=a.ablation, turbo=a.turbo)
+                ablation=a.ablation, turbo=a.turbo, dynamic_obstacles=a.dynamic_obstacles,
+                dynamic_obstacle_count=a.dynamic_obstacle_count)
     J = jobs_for(a)
     if a.limit:
         seen = {}; J = [x for x in J if seen.setdefault(x[0], 0) < a.limit and not seen.__setitem__(x[0], seen[x[0]]+1)]

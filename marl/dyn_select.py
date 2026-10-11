@@ -89,7 +89,16 @@ def candidates(ep, est, tgt, i, rule_world, zero_world):
         if 1e-6 < L < 1.5:
             dirs.append(dc/L)
     C = [rule_world, zero_world, np.zeros(3)]+[sp*d for d in dirs for sp in SPEEDS]
-    return np.asarray(C, float)
+    # Several semantic proposals can collapse to the same physical command
+    # (for example a zero settle command and the explicit zero action).  Keep
+    # the first occurrence so the rule proposal remains index 0, while
+    # preventing duplicate actions from receiving separate probability mass.
+    unique=[]
+    for cmd in C:
+        cmd=np.asarray(cmd,float)
+        if not any(np.allclose(cmd, old, rtol=0., atol=1e-8) for old in unique):
+            unique.append(cmd)
+    return np.asarray(unique, float)
 
 
 def route_arclength(ep, i, X):
@@ -190,6 +199,12 @@ class PredictiveSelector:
             margin = self.w['delta']+self.w['kappa']*self.w['prog']*float(np.sqrt(sig[anchor, -1]**2+sig[k, -1]**2))
             if cost[anchor]-cost[k] < margin:                # rule-anchored: keep the anchor unless clearly better
                 k = anchor
+            # A learned navigation policy may replace the heuristic decision.
+            # Existing experiments have no hook and retain their exact behavior.
+            if getattr(self, 'selection_hook', None) is not None:
+                k = int(self.selection_hook(ep, est, tgt, i, F[i], C, mu, var, epi, clr, prog, cost, k))
+                if not 0 <= k < K:
+                    raise ValueError('Navigation policy selected an invalid candidate')
             e = float(np.sqrt(epi[k, -1].sum()))
             self.stats['epi_std'].append(e)
             if self.fallback_std is not None and e > self.fallback_std:
