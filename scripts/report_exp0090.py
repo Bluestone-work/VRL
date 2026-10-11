@@ -109,7 +109,7 @@ def main():
     agg = {}
     for p in panels+['ALL']:
         for topo in ('all', 'seen_topology', 'unseen_topology'):
-            ks = [k for k in keys_all if (p == 'ALL' or k[0].split('|')[0] == p) and (topo == 'all' or k[0].endswith(topo))]
+            ks = [k for k in keys_all if (p == 'ALL' or k[0].split('|')[0] == p) and (topo == 'all' or k[0].split('|')[1] == topo)]
             if not ks:
                 continue
             for arm in arms:
