@@ -38,6 +38,7 @@ def scenes(pool):
 
 def work(spec):
     from marl.image_flow_sac import ControlEpisode,ImageFlowController
+    from scripts.benchmark_lysis import SettleGuard, AdaptiveSettleGuard, SwitchSettle
     from marl.predictive_nav_rl import RLNavigator,PREDICTORS,PARENT_WEIGHTS
     from marl.dyn_select import PredictiveSelector
     from marl.dyn_predictor import Ensemble
@@ -49,6 +50,9 @@ def work(spec):
                       dynamic_obstacle_count=int(config.get('dynamic_obstacle_count',0)))
     kind,_,path=method.partition('=')
     if kind=='parent':ctl=PredictiveSelector(ep,'learned',Ensemble(PREDICTORS),.0445,PARENT_WEIGHTS)
+    elif kind=='fixed_settle':ctl=SettleGuard(ep)
+    elif kind=='adaptive_settle':ctl=AdaptiveSettleGuard(ep)
+    elif kind=='switch_settle':ctl=SwitchSettle(ep,.15)
     elif kind=='old_ppo':ctl=RLNavigator(ep,checkpoint=OLD)
     elif kind=='feedback':ctl=ImageFlowController(ep,config=config)
     elif kind=='sac':ctl=ImageFlowController(ep,checkpoint=path,config=config)
@@ -143,7 +147,8 @@ def work(spec):
                 trace['policy_local'].append(np.asarray(getattr(ctl,'last_actions',local),float).copy())
                 trace['flow_factor'].append(ep.var.q(ep.env.elapsed_s) if ep.var else 1.)
             if done:break
-        row=ep.row(method,**ctl.summary(),**ep.authority)
+            extra_summary = ctl.summary() if hasattr(ctl, 'summary') else {}
+            row=ep.row(method,**extra_summary,**ep.authority)
         row.update(cell=cell,flow_inlet_mm_s=flow,latency_steps=delay,variation_s=strength,
             route_cross_track_rmse_mm=float(np.sqrt(np.mean(np.square(errors)))) if errors else None,
             near_target_mean_error_mm=float(np.mean(near)) if near else None,
