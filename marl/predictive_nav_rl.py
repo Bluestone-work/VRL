@@ -10,6 +10,7 @@ from __future__ import annotations
 import numpy as np
 import torch
 from torch import nn
+from collections import deque
 from marl.dyn_predictor import CTX_DIM,H_HIST,HIST_DIM,Ensemble
 from marl.dyn_select import PredictiveSelector,CONTACT_MM,HORIZONS
 
@@ -70,6 +71,7 @@ class RLNavigator(PredictiveSelector):
         self.selection_hook=None if rl_off else self._choose
         self.checkpoint_iterations=payload.get('iterations',0) if payload else None
         self.map_clots=ep.env.clot_positions_mm.copy()
+        self.obstacle_history=[deque(maxlen=3) for _ in range(ep.n)]
 
     def _features(self,ep,est,tgt,i,F,C,mu,var,epi,clr,prog,cost,proposal):
         hist,hmask=self.feat.history(ep,est,i,F);ctx=self.feat.context(ep,est,tgt,i,F)
@@ -90,6 +92,9 @@ class RLNavigator(PredictiveSelector):
         peer=np.full((K,len(HORIZONS)),6.,float)
         obstacle=np.full((K,len(HORIZONS)),6.,float)
         particle_rows = est.particles[i] if hasattr(est, 'particles') and i < len(est.particles) else []
+        self.obstacle_history[i].append([(np.asarray(r),np.asarray(v),0.) for r,v in particle_rows])
+        for batch in reversed(list(self.obstacle_history[i])[:-1]):
+            particle_rows = list(particle_rows)+[(r+v*float(ep.env.config.control_dt_s),v) for r,v,_ in batch]
         for rel, relv in particle_rows:
             rel=np.asarray(rel,float); relv=np.asarray(relv,float)
             t=np.asarray(HORIZONS,float)*float(ep.env.config.control_dt_s)

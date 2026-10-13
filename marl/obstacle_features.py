@@ -8,8 +8,16 @@ particle positions and collision labels are never consulted.
 import numpy as np
 
 
-def forecast_features(ep, est, i, times=(0., .2, .5, 1.)):
-    rows = est.particles[i] if hasattr(est, 'particles') and i < len(est.particles) else []
+def forecast_features(ep, est, i, times=(0., .2, .5, 1.), history=None):
+    rows = list(est.particles[i] if hasattr(est, 'particles') and i < len(est.particles) else [])
+    # Short deployable memory: retain only recent detections and inflate their
+    # uncertainty through the age-dependent radius. The caller supplies rows
+    # as (relative position, relative velocity, age_s).
+    aged=[]
+    for row in (history or []):
+        rel, vel, age = row
+        aged.append((np.asarray(rel)+np.asarray(vel)*float(age), np.asarray(vel)))
+    rows.extend(aged)
     radius = float(getattr(ep.env.config, 'robot_radius_mm', .08)) + float(getattr(ep.env.config, 'particle_radius_mm', .02))
     clear = np.full(len(times), 6., dtype=np.float32)
     rel_speed = 0.

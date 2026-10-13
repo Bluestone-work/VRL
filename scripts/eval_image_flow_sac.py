@@ -87,6 +87,7 @@ def work(spec):
         policy_rng_seed=int(hashlib.sha256(json.dumps(['SAC_policy_noise_v1',job],sort_keys=True).encode()).hexdigest()[:8],16)
         torch.manual_seed(policy_rng_seed)
     errors=[];near=[];dwell=0;eligible=0;image_error=[];pred_error=[]
+    particle_diag=dict(steps=0,detected_steps=0,detected_rows=0,min_clearance_sum=0.,min_clearance_count=0)
     command_audit=dict(steps=0,raw_l1=0.,guarded_l1=0.,executed_l1=0.,
         raw_nontrivial=0,guarded_nontrivial=0,executed_nontrivial=0,executed_max=0.)
     trace=dict(t=[0.],pos=[ep.env.positions_mm[:n].copy()],mass=[ep.env.masses.copy()],wall=[0.],removal=[0.])
@@ -99,6 +100,15 @@ def work(spec):
         while True:
             est=ep.observe();tgt=ep.plan_targets_now(est);rule=ep.ctl.act(tgt,est);hold=ep.hold(est)
             local=ctl(ep,est,tgt,rule,hold)
+            rows_detected=sum(len(x) for x in getattr(est,'particles',[])) if hasattr(est,'particles') else 0
+            particle_diag['steps']+=int(est.active.sum()); particle_diag['detected_steps']+=int(rows_detected>0)
+            particle_diag['detected_rows']+=int(rows_detected)
+            if rows_detected:
+                vals=[]
+                for plist in est.particles:
+                    vals.extend(float(np.linalg.norm(np.asarray(rel))) for rel,_ in plist)
+                if vals:
+                    particle_diag['min_clearance_sum']+=min(vals);particle_diag['min_clearance_count']+=1
             # Same-state zero-residual counterfactual, including the same hold
             # projection, WallGuard, and spacing-filter state. This is a
             # measurement only; restore all bookkeeping before the real step.
@@ -157,6 +167,10 @@ def work(spec):
             compensated_position_rmse_mm=float(np.sqrt(np.mean(np.square(pred_error)))) if pred_error else None,
             deployment_action_sampling='seeded stochastic' if policy_rng_seed is not None else 'deterministic',
             policy_rng_seed=policy_rng_seed)
+        row.update(particle_observation_steps=particle_diag['detected_steps'],
+            particle_observation_fraction=particle_diag['detected_steps']/max(particle_diag['steps'],1),
+            particle_observed_rows=particle_diag['detected_rows'],
+            observed_particle_min_distance_mm=(particle_diag['min_clearance_sum']/particle_diag['min_clearance_count'] if particle_diag['min_clearance_count'] else None))
         if attribution and kind in ('sac','sac_safe','sac_speed','sac_speed_half','sac_scalar','sac_enveloped','sac_finite','sac_finite_stochastic'):
             row['rl_command_audit']=command_audit
             for prefix in ('raw','guarded','executed'):

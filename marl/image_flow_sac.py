@@ -114,6 +114,7 @@ class ImageFlowController:
         self.previous_crops=np.zeros((ep.n,2,32,32),np.float32)
         self.previous_frame=None;self.captured={};self.last_obs=[];self.last_actions=None
         self.pulse_samples=[deque(maxlen=48) for _ in range(ep.n)];self.pulse_fit=[None]*ep.n
+        self.obstacle_history=[deque(maxlen=3) for _ in range(ep.n)]
         self.stats=dict(local_steps=0,actor_changed_steps=0,wall_guard_changes=0,barrier_changes=0,
                         hold_projection_changes=0,observed_target_error_sum=0.,near_target_steps=0)
         ep.station_keeping=bool(self.cfg['station_keeping'])
@@ -192,7 +193,12 @@ class ImageFlowController:
                 # pulse/lifecycle tail slots are replaced by a compact
                 # deployable particle forecast; this mode is trained from
                 # scratch and is never mixed with old checkpoints.
-                ctx[42:48]=forecast_features(ep, est, i)
+                current=est.particles[i] if hasattr(est,'particles') else []
+                self.obstacle_history[i].append([(np.asarray(r),np.asarray(v),0.) for r,v in current])
+                past=[]
+                for age_idx, batch in enumerate(reversed(list(self.obstacle_history[i])[:-1]), 1):
+                    for r,v,_ in batch: past.append((r,v,age_idx*float(ep.env.config.control_dt_s)))
+                ctx[42:48]=forecast_features(ep, est, i, history=past)
             im=np.clip(image_pair[i],-.3,2.) if self.cfg['use_images'] else np.zeros_like(image_pair[i])
             obs.append(dict(hist=h,hmask=mask,ctx=ctx,image=im.astype(np.float16)))
             references.append(command)

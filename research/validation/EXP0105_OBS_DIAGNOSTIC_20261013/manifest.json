@@ -1,0 +1,18 @@
+{
+  "pool": "screen",
+  "methods": "parent,sac_finite=research/runs/EXP0102_SAC_OBSFEATURE_DYNAMIC_20261011/seed4/policy.pt",
+  "config": {
+    "dynamic_obstacle_count": 16
+  },
+  "n_specs": 48,
+  "development_only": true,
+  "attribution": true,
+  "scene_seed_offset": 0,
+  "source_hashes": {
+    "marl/image_flow_sac.py": "4ee6a16ddd91ca43dd8935a6506c27c537ccbd104887c5c524672e3d976a5ef6",
+    "scripts/eval_image_flow_sac.py": "b9e10309b8ae66833ab40915a5568ff356e900a3b33b8fa12171a28d0ecd9c9a"
+  },
+  "checkpoints": {
+    "research/runs/EXP0102_SAC_OBSFEATURE_DYNAMIC_20261011/seed4/policy.pt": "f5fe28d7b1f83737d0b3084013f6ccf42ee133dccac26fbf4d8f9f24fadf0458"
+  }
+}
