@@ -34,7 +34,8 @@ from torch import nn
 # around a hand-written action.  These slots deliberately cover the strongest
 # classical behaviours (route pursuit and near-target settling) plus the small
 # set of lateral manoeuvres needed for moving-obstacle avoidance.
-CANDIDATE_COUNT = 18
+SEMANTIC_CANDIDATE_COUNT = 18
+ATOMIC_CANDIDATE_COUNT = 15
 
 
 def _unit(v, fallback=None):
@@ -45,7 +46,48 @@ def _unit(v, fallback=None):
     return np.zeros_like(v) if fallback is None else np.asarray(fallback, np.float32)
 
 
-def direct_candidates(physical):
+def atomic_candidates(physical):
+    """Strict primitive local velocity pulses.
+
+    The first local axis is the route-frame tangent.  Its sign is selected
+    from the measured route command, while the other two axes are the local
+    normal/binormal.  Each action is one pulse; obstacle avoidance therefore
+    comes from a sequence of small lateral pulses, not a macro target action.
+    """
+    est, targets, hold, frames = physical.current
+    ep = physical.ep
+    rule = np.asarray(getattr(physical, "current_rule", np.zeros((physical.clusters, 3))), np.float32)
+    n = physical.clusters
+    commands = np.zeros((n, ATOMIC_CANDIDATE_COUNT, 3), np.float32)
+    valid = np.ones((n, ATOMIC_CANDIDATE_COUNT), np.float32)
+    for i in range(n):
+        tangent_sign = 1. if float(rule[i, 0]) >= 0. else -1.
+        fwd = np.array([tangent_sign, 0., 0.], np.float32)
+        back = -fwd
+        commands[i] = np.asarray([
+            [0., 0., 0.],
+            .35*fwd, .70*fwd, fwd,
+            .35*back, .70*back, back,
+            [0., .35, 0.], [0., -.35, 0.],
+            [0., .70, 0.], [0., -.70, 0.],
+            [0., 0., .35], [0., 0., -.35],
+            [0., 0., .70], [0., 0., -.70],
+        ], np.float32)
+        if (not bool(est.active[i])) or bool(hold[i]) or int(targets[i]) < 0:
+            commands[i, 1:] = 0.
+        # No duplicate slots are retained in the primitive set; inactive
+        # clusters intentionally expose only the zero command.
+        seen = {}
+        for k, c in enumerate(commands[i]):
+            key = tuple(np.round(c, 6))
+            if key in seen:
+                valid[i, k] = 0.
+            else:
+                seen[key] = k
+    return commands, valid
+
+
+def direct_candidates(physical, action_set="semantic"):
     """Build deployable direct commands from the current measured/map state.
 
     The route and clot geometry are already part of the permitted task context;
@@ -53,12 +95,16 @@ def direct_candidates(physical):
     candidate generator never reads simulator flow, response gain, or true
     future position.
     """
+    if action_set == "atomic":
+        return atomic_candidates(physical)
+    if action_set != "semantic":
+        raise ValueError(f"unknown action_set: {action_set}")
     est, targets, hold, frames = physical.current
     ep = physical.ep
     rule = np.asarray(getattr(physical, "current_rule", np.zeros((physical.clusters, 3))), np.float32)
     n = physical.clusters
-    commands = np.zeros((n, CANDIDATE_COUNT, 3), np.float32)
-    valid = np.ones((n, CANDIDATE_COUNT), np.float32)
+    commands = np.zeros((n, SEMANTIC_CANDIDATE_COUNT, 3), np.float32)
+    valid = np.ones((n, SEMANTIC_CANDIDATE_COUNT), np.float32)
     for i in range(n):
         r = np.clip(rule[i], -1., 1.)
         nominal = np.clip(np.asarray(ep.ctl.nominal[i], np.float32), -1., 1.)
@@ -113,8 +159,13 @@ from scripts.train_sb3_curriculum import CurriculumVascularEnv
 class IPPOAgentVecEnv(VecEnv):
     """Expose the synchronized physical episode as ``clusters`` local envs."""
 
-    def __init__(self, physical_env: CurriculumVascularEnv):
+    def __init__(self, physical_env: CurriculumVascularEnv, action_set="semantic"):
         self.physical = physical_env
+        if action_set not in ("semantic", "atomic"):
+            raise ValueError("action_set must be semantic or atomic")
+        self.action_set = action_set
+        self.candidate_count = (ATOMIC_CANDIDATE_COUNT if action_set == "atomic"
+                                else SEMANTIC_CANDIDATE_COUNT)
         self.n_agents = physical_env.clusters
         n = self.n_agents
         self._pending_actions = None
@@ -131,10 +182,10 @@ class IPPOAgentVecEnv(VecEnv):
             "obstacle_valid": spaces.Box(0., 1., (8,), np.float32),
             "peers": spaces.Box(-10., 10., (n, 8), np.float32),
             "peer_valid": spaces.Box(0., 1., (n,), np.float32),
-            "candidates": spaces.Box(-1., 1., (CANDIDATE_COUNT, 3), np.float32),
-            "candidate_valid": spaces.Box(0., 1., (CANDIDATE_COUNT,), np.float32),
+            "candidates": spaces.Box(-1., 1., (self.candidate_count, 3), np.float32),
+            "candidate_valid": spaces.Box(0., 1., (self.candidate_count,), np.float32),
         })
-        action_space = spaces.Discrete(CANDIDATE_COUNT)
+        action_space = spaces.Discrete(self.candidate_count)
         super().__init__(n, observation_space, action_space)
         self.reset_infos = [{} for _ in range(n)]
 
@@ -145,7 +196,7 @@ class IPPOAgentVecEnv(VecEnv):
         return {k: np.stack([r[k] for r in rows], axis=0) for k in rows[0]}
 
     def _with_candidates(self, obs):
-        commands, valid = direct_candidates(self.physical)
+        commands, valid = direct_candidates(self.physical, self.action_set)
         self._candidate_commands = commands
         self._candidate_valid = valid
         enriched = dict(obs)
@@ -165,7 +216,7 @@ class IPPOAgentVecEnv(VecEnv):
         a = np.asarray(actions, dtype=np.int64).reshape(-1)
         if a.shape != (self.n_agents,):
             raise ValueError(f"expected {(self.n_agents,)} candidate indices, got {a.shape}")
-        self._pending_actions = np.clip(a, 0, CANDIDATE_COUNT - 1)
+        self._pending_actions = np.clip(a, 0, self.candidate_count - 1)
 
     def step_wait(self):
         if self._pending_actions is None:
@@ -251,7 +302,8 @@ class IPPOExtractor(BaseFeaturesExtractor):
         self.ctx = nn.Sequential(nn.Linear(32, 32), nn.LayerNorm(32), nn.GELU())
         self.obstacle = nn.Sequential(nn.Linear(25, 32), nn.GELU())
         self.peer = nn.Sequential(nn.Linear(8, 32), nn.GELU())
-        self.candidate = nn.Sequential(nn.Linear(CANDIDATE_COUNT * 3, 32), nn.GELU())
+        candidate_count = int(observation_space["candidates"].shape[0])
+        self.candidate = nn.Sequential(nn.Linear(candidate_count * 3, 32), nn.GELU())
         self.trunk = nn.Sequential(nn.Linear(32 + 32 + 32 + 32 + 32 + 32, 128),
                                    nn.LayerNorm(128), nn.GELU())
 
@@ -301,10 +353,10 @@ class IPPOCallback(BaseCallback):
         return True
 
 
-def evaluate(model, out, clusters, count=12):
+def evaluate(model, out, clusters, count=12, action_set="semantic"):
     env = IPPOAgentVecEnv(CurriculumVascularEnv(
         seed=1041, clusters=clusters, curriculum=False, reward_mode="navigation",
-        zero_latency=True, direct_action=True))
+        zero_latency=True, direct_action=True), action_set=action_set)
     rows = []
     obs = env.reset()
     try:
@@ -337,6 +389,7 @@ def main():
     p.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
     p.add_argument("--device", default="cuda")
     p.add_argument("--eval-count", type=int, default=12)
+    p.add_argument("--action-set", choices=("semantic", "atomic"), default="semantic")
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
@@ -345,12 +398,14 @@ def main():
         curriculum=True, prediction=True, shaping=True, reward_mode="navigation",
         zero_latency=True, direct_action=True,
         episode_log=a.out / "episodes.jsonl")
-    env = IPPOAgentVecEnv(physical)
+    env = IPPOAgentVecEnv(physical, action_set=a.action_set)
     cfg = dict(algorithm="IPPO_shared", framework="stable-baselines3 2.7.1",
                seed=a.seed, clusters=a.clusters, physical_steps=a.timesteps,
                agent_steps=a.timesteps * a.clusters, device=a.device,
                reward_mode="navigation", zero_latency=True,
-               action_semantics=f"per-cluster discrete direct local candidate index (K={CANDIDATE_COUNT}); candidates include route, settle, stop and lateral commands",
+               action_semantics=(f"per-cluster discrete atomic local velocity pulse (K={ATOMIC_CANDIDATE_COUNT})"
+                                 if a.action_set == "atomic" else
+                                 f"per-cluster discrete direct local semantic candidate index (K={SEMANTIC_CANDIDATE_COUNT})"),
                actor="parameter-shared local categorical actor; one candidate index per cluster",
                critic="local IPPO critic; no privileged state",
                architecture="GRU history + CNN image + map + masked obstacle/peer pooling",
@@ -372,7 +427,7 @@ def main():
         summary = dict(environment_steps=a.timesteps, agent_steps=model.num_timesteps,
                        training_seconds=time.monotonic() - started)
         (a.out / "TRAINING_COMPLETE.json").write_text(json.dumps(summary, indent=2))
-        result = evaluate(model, a.out, a.clusters, a.eval_count)
+        result = evaluate(model, a.out, a.clusters, a.eval_count, a.action_set)
         (a.out / "RUN_COMPLETE.json").write_text(json.dumps(result, indent=2))
     finally:
         env.close()
