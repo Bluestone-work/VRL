@@ -172,7 +172,19 @@ class IPPOAgentVecEnv(VecEnv):
             raise RuntimeError("step_async must be called before step_wait")
         if self._candidate_commands is None:
             raise RuntimeError("candidate cache is not initialized")
-        joint = self._candidate_commands[np.arange(self.n_agents), self._pending_actions].reshape(-1)
+        chosen = self._pending_actions.copy()
+        # Categorical SB3 has no built-in action-mask distribution.  When a
+        # duplicated/inactive slot is sampled, canonicalise it to the first
+        # equivalent valid command before execution; the actor still sees the
+        # validity mask as part of its observation.
+        for i in range(self.n_agents):
+            k = int(chosen[i])
+            if self._candidate_valid[i, k] < .5:
+                same = np.all(np.isclose(self._candidate_commands[i],
+                                         self._candidate_commands[i, k], atol=1e-6), axis=1)
+                valid_same = np.flatnonzero(same & (self._candidate_valid[i] > .5))
+                chosen[i] = int(valid_same[0]) if len(valid_same) else 0
+        joint = self._candidate_commands[np.arange(self.n_agents), chosen].reshape(-1)
         obs, shared_reward, terminated, truncated, info = self.physical.step(joint)
         done = bool(terminated or truncated)
         rewards = np.asarray(info.get("agent_rewards", np.full(self.n_agents, shared_reward)), dtype=np.float32).reshape(-1)
