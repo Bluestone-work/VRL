@@ -68,7 +68,7 @@ def obs_tensor(obs, device):
 
 
 class DiscreteSAC:
-    def __init__(self, env, action_count, seed, device="cuda", gamma=.995, tau=.005):
+    def __init__(self, env, action_count, seed, device="cuda", gamma=.995, tau=.005, reward_clip=10.):
         self.env = env
         self.n = int(action_count)
         self.device = torch.device(device if device != "auto" else ("cuda" if torch.cuda.is_available() else "cpu"))
@@ -83,8 +83,10 @@ class DiscreteSAC:
         self.opt_q = torch.optim.Adam(list(self.q1.parameters()) + list(self.q2.parameters()), lr=3e-4)
         self.log_alpha = torch.tensor(np.log(.1), device=self.device, requires_grad=True)
         self.opt_alpha = torch.optim.Adam([self.log_alpha], lr=3e-4)
-        self.gamma, self.tau = gamma, tau
-        self.target_entropy = -float(np.log(max(2, self.n)) * .7)
+        self.gamma, self.tau, self.reward_clip = gamma, tau, float(reward_clip)
+        # SAC target entropy is a positive entropy target.  The previous pilot
+        # used a negative target with the opposite sign and drove alpha upward.
+        self.target_entropy = float(np.log(max(2, self.n)) * .7)
 
     def logits(self, obs):
         return self.actor(obs)
@@ -106,7 +108,7 @@ class DiscreteSAC:
         o, a, r, no, d = batch
         o, no = obs_tensor(o, self.device), obs_tensor(no, self.device)
         a = torch.as_tensor(a, dtype=torch.long, device=self.device)
-        r = torch.as_tensor(r, dtype=torch.float32, device=self.device)
+        r = torch.as_tensor(np.clip(r, -self.reward_clip, self.reward_clip), dtype=torch.float32, device=self.device)
         d = torch.as_tensor(d, dtype=torch.float32, device=self.device)
         with torch.no_grad():
             p, lp = self.masked_dist(self.logits(no), no["candidate_valid"])
@@ -122,8 +124,10 @@ class DiscreteSAC:
         aloss = (p * (self.log_alpha.exp() * lp - q)).sum(-1).mean()
         self.opt_actor.zero_grad(); aloss.backward(); nn.utils.clip_grad_norm_(self.actor.parameters(), 10.); self.opt_actor.step()
         entropy = -(p * lp).sum(-1).detach()
-        alpha_loss = -(self.log_alpha * (entropy + self.target_entropy)).mean()
+        alpha_loss = -(self.log_alpha * (entropy - self.target_entropy)).mean()
         self.opt_alpha.zero_grad(); alpha_loss.backward(); self.opt_alpha.step()
+        with torch.no_grad():
+            self.log_alpha.clamp_(-5., 1.)
         with torch.no_grad():
             for t, s in zip(self.tq1.parameters(), self.q1.parameters()): t.mul_(1-self.tau).add_(self.tau*s)
             for t, s in zip(self.tq2.parameters(), self.q2.parameters()): t.mul_(1-self.tau).add_(self.tau*s)
@@ -161,7 +165,7 @@ def main():
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.set_num_threads(1); random.seed(a.seed); np.random.seed(a.seed)
     physical = CurriculumVascularEnv(seed=a.seed, clusters=a.clusters, budget=a.timesteps, curriculum=True, prediction=True, shaping=True, reward_mode="navigation", zero_latency=True, direct_action=True, episode_log=a.out/"episodes.jsonl")
     env = IPPOAgentVecEnv(physical, action_set=a.action_set); k = SEMANTIC_CANDIDATE_COUNT if a.action_set == "semantic" else ATOMIC_CANDIDATE_COUNT
-    cfg = dict(algorithm=("ISAC_discrete_shared" if a.algorithm == "isac" else "DuelingDQN_shared"), action_set=a.action_set, action_count=k, physical_steps=a.timesteps, agent_steps=a.timesteps*a.clusters, seed=a.seed, no_privileged_actor=True, source_script=str(Path(__file__).resolve()))
+    cfg = dict(algorithm=("ISAC_discrete_shared" if a.algorithm == "isac" else "DuelingDQN_shared"), action_set=a.action_set, action_count=k, physical_steps=a.timesteps, agent_steps=a.timesteps*a.clusters, seed=a.seed, no_privileged_actor=True, reward_clip=(10. if a.algorithm == "isac" else None), source_script=str(Path(__file__).resolve()))
     (a.out/"config.json").write_text(json.dumps(cfg, indent=2))
     if a.algorithm == "dqn":
         model = DQN(DuelingDQNPolicy, env, seed=a.seed, device=a.device, learning_rate=1e-4, buffer_size=100000, learning_starts=2000, batch_size=256, train_freq=4, gradient_steps=1, target_update_interval=4000, exploration_fraction=.25, exploration_final_eps=.05, gamma=.995, policy_kwargs=dict(features_extractor_class=IPPOExtractor, normalize_images=False, net_arch=[128,128]), verbose=0)
