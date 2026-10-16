@@ -161,10 +161,13 @@ class IPPOAgentVecEnv(VecEnv):
 
     def __init__(self, physical_env: CurriculumVascularEnv, action_set="semantic"):
         self.physical = physical_env
-        if action_set not in ("semantic", "atomic"):
-            raise ValueError("action_set must be semantic or atomic")
+        if action_set not in ("semantic", "atomic", "continuous"):
+            raise ValueError("action_set must be semantic, atomic, or continuous")
         self.action_set = action_set
-        self.candidate_count = (ATOMIC_CANDIDATE_COUNT if action_set == "atomic"
+        # Continuous actors still receive the compact atomic basis as context,
+        # but their output is a free 3-D local velocity rather than an index.
+        self.candidate_count = (ATOMIC_CANDIDATE_COUNT
+                                if action_set in ("atomic", "continuous")
                                 else SEMANTIC_CANDIDATE_COUNT)
         self.n_agents = physical_env.clusters
         n = self.n_agents
@@ -185,7 +188,9 @@ class IPPOAgentVecEnv(VecEnv):
             "candidates": spaces.Box(-1., 1., (self.candidate_count, 3), np.float32),
             "candidate_valid": spaces.Box(0., 1., (self.candidate_count,), np.float32),
         })
-        action_space = spaces.Discrete(self.candidate_count)
+        action_space = (spaces.Box(-1., 1., (3,), np.float32)
+                        if action_set == "continuous" else
+                        spaces.Discrete(self.candidate_count))
         super().__init__(n, observation_space, action_space)
         self.reset_infos = [{} for _ in range(n)]
 
@@ -196,7 +201,8 @@ class IPPOAgentVecEnv(VecEnv):
         return {k: np.stack([r[k] for r in rows], axis=0) for k in rows[0]}
 
     def _with_candidates(self, obs):
-        commands, valid = direct_candidates(self.physical, self.action_set)
+        feature_set = "atomic" if self.action_set == "continuous" else self.action_set
+        commands, valid = direct_candidates(self.physical, feature_set)
         self._candidate_commands = commands
         self._candidate_valid = valid
         enriched = dict(obs)
@@ -213,29 +219,44 @@ class IPPOAgentVecEnv(VecEnv):
         return self._stack(self._split(obs))
 
     def step_async(self, actions):
-        a = np.asarray(actions, dtype=np.int64).reshape(-1)
-        if a.shape != (self.n_agents,):
-            raise ValueError(f"expected {(self.n_agents,)} candidate indices, got {a.shape}")
-        self._pending_actions = np.clip(a, 0, self.candidate_count - 1)
+        if self.action_set == "continuous":
+            a = np.asarray(actions, dtype=np.float32)
+            if a.shape != (self.n_agents, 3) or not np.isfinite(a).all():
+                raise ValueError(f"expected {(self.n_agents, 3)} finite continuous actions, got {a.shape}")
+            a = np.clip(a, -1., 1.)
+            # Unit-ball projection preserves low-speed commands and bounds
+            # the physical local velocity, including diagonal actions.
+            a /= np.maximum(np.linalg.norm(a, axis=1, keepdims=True), 1.)
+            self._pending_actions = a.copy()
+        else:
+            a = np.asarray(actions, dtype=np.int64).reshape(-1)
+            if a.shape != (self.n_agents,):
+                raise ValueError(f"expected {(self.n_agents,)} candidate indices, got {a.shape}")
+            self._pending_actions = np.clip(a, 0, self.candidate_count - 1)
 
     def step_wait(self):
         if self._pending_actions is None:
             raise RuntimeError("step_async must be called before step_wait")
         if self._candidate_commands is None:
             raise RuntimeError("candidate cache is not initialized")
-        chosen = self._pending_actions.copy()
+        if self.action_set == "continuous":
+            joint = self._pending_actions.reshape(-1)
+            chosen = None
+        else:
+            chosen = self._pending_actions.copy()
         # Categorical SB3 has no built-in action-mask distribution.  When a
         # duplicated/inactive slot is sampled, canonicalise it to the first
         # equivalent valid command before execution; the actor still sees the
         # validity mask as part of its observation.
-        for i in range(self.n_agents):
-            k = int(chosen[i])
-            if self._candidate_valid[i, k] < .5:
-                same = np.all(np.isclose(self._candidate_commands[i],
-                                         self._candidate_commands[i, k], atol=1e-6), axis=1)
-                valid_same = np.flatnonzero(same & (self._candidate_valid[i] > .5))
-                chosen[i] = int(valid_same[0]) if len(valid_same) else 0
-        joint = self._candidate_commands[np.arange(self.n_agents), chosen].reshape(-1)
+        if chosen is not None:
+            for i in range(self.n_agents):
+                k = int(chosen[i])
+                if self._candidate_valid[i, k] < .5:
+                    same = np.all(np.isclose(self._candidate_commands[i],
+                                             self._candidate_commands[i, k], atol=1e-6), axis=1)
+                    valid_same = np.flatnonzero(same & (self._candidate_valid[i] > .5))
+                    chosen[i] = int(valid_same[0]) if len(valid_same) else 0
+            joint = self._candidate_commands[np.arange(self.n_agents), chosen].reshape(-1)
         obs, shared_reward, terminated, truncated, info = self.physical.step(joint)
         done = bool(terminated or truncated)
         rewards = np.asarray(info.get("agent_rewards", np.full(self.n_agents, shared_reward)), dtype=np.float32).reshape(-1)
@@ -389,7 +410,7 @@ def main():
     p.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
     p.add_argument("--device", default="cuda")
     p.add_argument("--eval-count", type=int, default=12)
-    p.add_argument("--action-set", choices=("semantic", "atomic"), default="semantic")
+    p.add_argument("--action-set", choices=("semantic", "atomic", "continuous"), default="semantic")
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
@@ -405,6 +426,8 @@ def main():
                reward_mode="navigation", zero_latency=True,
                action_semantics=(f"per-cluster discrete atomic local velocity pulse (K={ATOMIC_CANDIDATE_COUNT})"
                                  if a.action_set == "atomic" else
+                                 "per-cluster continuous direct local velocity, unit-ball bounded"
+                                 if a.action_set == "continuous" else
                                  f"per-cluster discrete direct local semantic candidate index (K={SEMANTIC_CANDIDATE_COUNT})"),
                actor="parameter-shared local categorical actor; one candidate index per cluster",
                critic="local IPPO critic; no privileged state",
