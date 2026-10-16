@@ -2,7 +2,7 @@
 
 The ``isac`` mode is a parameter-shared independent discrete SAC learner:
 each cluster contributes one local transition, while the actor and two critics
-share weights.  The ``dqn`` mode uses Double-DQN with a dueling head through
+share weights.  The ``dqn`` mode uses SB3's target-network DQN with a dueling head through
 SB3's replay/target-update implementation.  Both modes use the same deployable
 candidate observations and protection layer as IPPO.
 """
@@ -161,7 +161,7 @@ def main():
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.set_num_threads(1); random.seed(a.seed); np.random.seed(a.seed)
     physical = CurriculumVascularEnv(seed=a.seed, clusters=a.clusters, budget=a.timesteps, curriculum=True, prediction=True, shaping=True, reward_mode="navigation", zero_latency=True, direct_action=True, episode_log=a.out/"episodes.jsonl")
     env = IPPOAgentVecEnv(physical, action_set=a.action_set); k = SEMANTIC_CANDIDATE_COUNT if a.action_set == "semantic" else ATOMIC_CANDIDATE_COUNT
-    cfg = dict(algorithm=("ISAC_discrete_shared" if a.algorithm == "isac" else "DoubleDuelingDQN_shared"), action_set=a.action_set, action_count=k, physical_steps=a.timesteps, agent_steps=a.timesteps*a.clusters, seed=a.seed, no_privileged_actor=True, source_script=str(Path(__file__).resolve()))
+    cfg = dict(algorithm=("ISAC_discrete_shared" if a.algorithm == "isac" else "DuelingDQN_shared"), action_set=a.action_set, action_count=k, physical_steps=a.timesteps, agent_steps=a.timesteps*a.clusters, seed=a.seed, no_privileged_actor=True, source_script=str(Path(__file__).resolve()))
     (a.out/"config.json").write_text(json.dumps(cfg, indent=2))
     if a.algorithm == "dqn":
         model = DQN(DuelingDQNPolicy, env, seed=a.seed, device=a.device, learning_rate=1e-4, buffer_size=100000, learning_starts=2000, batch_size=256, train_freq=4, gradient_steps=1, target_update_interval=4000, exploration_fraction=.25, exploration_final_eps=.05, gamma=.995, policy_kwargs=dict(features_extractor_class=IPPOExtractor, normalize_images=False, net_arch=[128,128]), verbose=0)
