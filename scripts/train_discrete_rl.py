@@ -124,10 +124,12 @@ class DiscreteSAC:
         aloss = (p * (self.log_alpha.exp() * lp - q)).sum(-1).mean()
         self.opt_actor.zero_grad(); aloss.backward(); nn.utils.clip_grad_norm_(self.actor.parameters(), 10.); self.opt_actor.step()
         entropy = -(p * lp).sum(-1).detach()
-        alpha_loss = -(self.log_alpha * (entropy - self.target_entropy)).mean()
+        # Increase alpha when entropy is below target and decrease it when the
+        # policy is more random than target (the standard discrete-SAC sign).
+        alpha_loss = (self.log_alpha * (entropy - self.target_entropy)).mean()
         self.opt_alpha.zero_grad(); alpha_loss.backward(); self.opt_alpha.step()
         with torch.no_grad():
-            self.log_alpha.clamp_(-5., 1.)
+            self.log_alpha.clamp_(-5., 0.)
         with torch.no_grad():
             for t, s in zip(self.tq1.parameters(), self.q1.parameters()): t.mul_(1-self.tau).add_(self.tau*s)
             for t, s in zip(self.tq2.parameters(), self.q2.parameters()): t.mul_(1-self.tau).add_(self.tau*s)
