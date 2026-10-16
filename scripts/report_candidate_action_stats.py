@@ -17,11 +17,14 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.train_sb3_curriculum import CurriculumVascularEnv
-from scripts.train_sb3_ippo import IPPOAgentVecEnv, IPPOExtractor, SEMANTIC_CANDIDATE_COUNT, ATOMIC_CANDIDATE_COUNT
+from scripts.train_sb3_ippo import (IPPOAgentVecEnv, IPPOExtractor,
+    SEMANTIC_CANDIDATE_COUNT, ATOMIC_CANDIDATE_COUNT,
+    SEMANTIC_REDUCED_COUNT, SEMANTIC_REDUCED_INDICES)
 from scripts.train_discrete_rl import DiscreteSAC
 
 
 SEMANTIC_LABELS = ["zero", "rule", "route_full", "route_075", "route_050", "target_full", "target_050", "target_025", "settle", "reverse", "normal_035", "normal_-035", "binormal_035", "binormal_-035", "normal_070", "normal_-070", "binormal_070", "binormal_-070"]
+SEMANTIC_REDUCED_LABELS = [SEMANTIC_LABELS[i] for i in SEMANTIC_REDUCED_INDICES]
 ATOMIC_LABELS = ["zero", "tangent_035", "tangent_070", "tangent_100", "reverse_035", "reverse_070", "reverse_100", "normal_035", "normal_-035", "normal_070", "normal_-070", "binormal_035", "binormal_-035", "binormal_070", "binormal_-070"]
 
 
@@ -49,14 +52,16 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--model", type=Path, required=True)
     p.add_argument("--kind", choices=("ppo", "dqn", "isac"), required=True)
-    p.add_argument("--action-set", choices=("semantic", "atomic"), default="semantic")
+    p.add_argument("--action-set", choices=("semantic", "semantic_reduced", "atomic"), default="semantic")
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--episodes", type=int, default=12)
     p.add_argument("--clusters", type=int, default=3)
     p.add_argument("--device", default="cpu")
     a = p.parse_args(); a.out.parent.mkdir(parents=True, exist_ok=True); torch.set_num_threads(1)
-    k = SEMANTIC_CANDIDATE_COUNT if a.action_set == "semantic" else ATOMIC_CANDIDATE_COUNT
-    labels = SEMANTIC_LABELS if a.action_set == "semantic" else ATOMIC_LABELS
+    k = (SEMANTIC_CANDIDATE_COUNT if a.action_set == "semantic" else
+         SEMANTIC_REDUCED_COUNT if a.action_set == "semantic_reduced" else ATOMIC_CANDIDATE_COUNT)
+    labels = (SEMANTIC_LABELS if a.action_set == "semantic" else
+              SEMANTIC_REDUCED_LABELS if a.action_set == "semantic_reduced" else ATOMIC_LABELS)
     env = IPPOAgentVecEnv(CurriculumVascularEnv(seed=1041, clusters=a.clusters, curriculum=False, reward_mode="navigation", zero_latency=True, direct_action=True), action_set=a.action_set)
     if a.kind == "ppo": model = PPO.load(a.model, env=env, device=a.device)
     elif a.kind == "dqn": model = DQN.load(a.model, env=env, device=a.device)
