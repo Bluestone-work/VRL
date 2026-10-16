@@ -32,10 +32,19 @@ def main():
     env = IPPOAgentVecEnv(CurriculumVascularEnv(seed=a.seed, clusters=3, curriculum=False, reward_mode="navigation", zero_latency=True, direct_action=True), action_set=a.action_set)
     model = PPO.load(a.model, env=env, device=a.device) if a.kind == "ppo" else DQN.load(a.model, env=env, device=a.device)
     rows = []
+    # The paired runner rejects registered validation/test seeds unless a
+    # sealed-test ledger is explicitly enabled.  This transfer diagnostic
+    # therefore uses a separate, unregistered scene namespace while keeping
+    # the anatomy split fixed.  It must not be reported as a sealed test.
+    scene_base = 1400000000 + int(a.seed) * 100000
     for group, anatomies in (("seen_train_anatomy", split["train"]), ("unseen_holdout_anatomy", split["held_out"])):
+        # CurriculumVascularEnv normally accepts only training anatomies. For
+        # the zero-shot holdout diagnostic, widen that allow-list explicitly;
+        # no anatomy identifier is exposed to the policy observation.
+        env.physical.train_anatomies = list(anatomies)
         for j, anatomy in enumerate(anatomies):
             for rep in range(a.episodes_per_anatomy):
-                options = dict(anatomy=anatomy, scene_seed=950000000 + j * 1000000 + rep,
+                options = dict(anatomy=anatomy, scene_seed=scene_base + j * 10000 + rep,
                                flow=[.01, .025, .05, .1][(j + rep) % 4], latency=0, difficulty=(j + rep) % 4)
                 obs = env.reset(options=options)
                 while True:
@@ -53,7 +62,12 @@ def main():
                         break
     def agg(part):
         return dict(episodes=len(part), navigation_success=float(np.mean([r["navigation_success"] for r in part])), strict_success=float(np.mean([r["strict_success"] for r in part])), wall_contact_s=float(np.mean([r["wall_contact_s"] for r in part])), lost_rate=float(np.mean([r["lost"] > 0 for r in part])), collision_rate=float(np.mean([r["particle_collision_events"] > 0 for r in part])))
-    result = dict(model=str(a.model), action_set=a.action_set, episodes_per_anatomy=a.episodes_per_anatomy, seen=agg([r for r in rows if r["group"] == "seen_train_anatomy"]), unseen=agg([r for r in rows if r["group"] == "unseen_holdout_anatomy"]), episodes=rows)
+    result = dict(model=str(a.model), action_set=a.action_set,
+                  episodes_per_anatomy=a.episodes_per_anatomy,
+                  protocol="unregistered_development_scene_namespace",
+                  scene_seed_base=scene_base,
+                  seen=agg([r for r in rows if r["group"] == "seen_train_anatomy"]),
+                  unseen=agg([r for r in rows if r["group"] == "unseen_holdout_anatomy"]), episodes=rows)
     a.out.write_text(json.dumps(result, indent=2, ensure_ascii=False)); env.close(); print(json.dumps(result, indent=2, ensure_ascii=False))
 
 
