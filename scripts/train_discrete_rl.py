@@ -36,6 +36,7 @@ from scripts.train_sb3_ippo import (
     IPPOCallback,
     IPPOExtractor,
     SEMANTIC_CANDIDATE_COUNT,
+    SEMANTIC_REDUCED_COUNT,
 )
 
 
@@ -160,13 +161,13 @@ def evaluate_custom(agent, out, clusters, action_set, count):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--algorithm", choices=("isac", "dqn"), required=True)
-    p.add_argument("--action-set", choices=("semantic", "atomic"), default="semantic")
+    p.add_argument("--action-set", choices=("semantic", "semantic_reduced", "atomic"), default="semantic")
     p.add_argument("--out", type=Path, required=True); p.add_argument("--seed", type=int, default=41)
     p.add_argument("--timesteps", type=int, default=100000); p.add_argument("--clusters", type=int, default=3)
     p.add_argument("--device", default="cuda"); p.add_argument("--eval-count", type=int, default=12)
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.set_num_threads(1); random.seed(a.seed); np.random.seed(a.seed)
     physical = CurriculumVascularEnv(seed=a.seed, clusters=a.clusters, budget=a.timesteps, curriculum=True, prediction=True, shaping=True, reward_mode="navigation", zero_latency=True, direct_action=True, episode_log=a.out/"episodes.jsonl")
-    env = IPPOAgentVecEnv(physical, action_set=a.action_set); k = SEMANTIC_CANDIDATE_COUNT if a.action_set == "semantic" else ATOMIC_CANDIDATE_COUNT
+    env = IPPOAgentVecEnv(physical, action_set=a.action_set); k = (SEMANTIC_CANDIDATE_COUNT if a.action_set == "semantic" else SEMANTIC_REDUCED_COUNT if a.action_set == "semantic_reduced" else ATOMIC_CANDIDATE_COUNT)
     cfg = dict(algorithm=("ISAC_discrete_shared" if a.algorithm == "isac" else "DuelingDQN_shared"), action_set=a.action_set, action_count=k, physical_steps=a.timesteps, agent_steps=a.timesteps*a.clusters, seed=a.seed, no_privileged_actor=True, reward_clip=(10. if a.algorithm == "isac" else None), source_script=str(Path(__file__).resolve()))
     (a.out/"config.json").write_text(json.dumps(cfg, indent=2))
     if a.algorithm == "dqn":

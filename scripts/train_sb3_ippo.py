@@ -36,6 +36,10 @@ from torch import nn
 # set of lateral manoeuvres needed for moving-obstacle avoidance.
 SEMANTIC_CANDIDATE_COUNT = 18
 ATOMIC_CANDIDATE_COUNT = 15
+# Keep actions that were selected by at least one trained policy, plus the
+# low-amplitude lateral primitives needed for dynamic-obstacle avoidance.
+SEMANTIC_REDUCED_INDICES = (0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
+SEMANTIC_REDUCED_COUNT = len(SEMANTIC_REDUCED_INDICES)
 
 
 def _unit(v, fallback=None):
@@ -95,6 +99,10 @@ def direct_candidates(physical, action_set="semantic"):
     candidate generator never reads simulator flow, response gain, or true
     future position.
     """
+    if action_set == "semantic_reduced":
+        commands, valid = direct_candidates(physical, "semantic")
+        idx = np.asarray(SEMANTIC_REDUCED_INDICES, dtype=np.int64)
+        return commands[:, idx], valid[:, idx]
     if action_set == "atomic":
         return atomic_candidates(physical)
     if action_set != "semantic":
@@ -161,14 +169,16 @@ class IPPOAgentVecEnv(VecEnv):
 
     def __init__(self, physical_env: CurriculumVascularEnv, action_set="semantic"):
         self.physical = physical_env
-        if action_set not in ("semantic", "atomic", "continuous"):
-            raise ValueError("action_set must be semantic, atomic, or continuous")
+        if action_set not in ("semantic", "semantic_reduced", "atomic", "continuous"):
+            raise ValueError("action_set must be semantic, semantic_reduced, atomic, or continuous")
         self.action_set = action_set
         # Continuous actors still receive the compact atomic basis as context,
         # but their output is a free 3-D local velocity rather than an index.
         self.candidate_count = (ATOMIC_CANDIDATE_COUNT
                                 if action_set in ("atomic", "continuous")
                                 else SEMANTIC_CANDIDATE_COUNT)
+        if action_set == "semantic_reduced":
+            self.candidate_count = SEMANTIC_REDUCED_COUNT
         self.n_agents = physical_env.clusters
         n = self.n_agents
         self._pending_actions = None
@@ -210,8 +220,8 @@ class IPPOAgentVecEnv(VecEnv):
         enriched["candidate_valid"] = valid
         return enriched
 
-    def reset(self):
-        obs, info = self.physical.reset()
+    def reset(self, options=None):
+        obs, info = self.physical.reset(options=options)
         obs = self._with_candidates(obs)
         self._obs = obs
         self._last_reset_info = info
@@ -410,7 +420,7 @@ def main():
     p.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
     p.add_argument("--device", default="cuda")
     p.add_argument("--eval-count", type=int, default=12)
-    p.add_argument("--action-set", choices=("semantic", "atomic", "continuous"), default="semantic")
+    p.add_argument("--action-set", choices=("semantic", "semantic_reduced", "atomic", "continuous"), default="semantic")
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
@@ -428,7 +438,7 @@ def main():
                                  if a.action_set == "atomic" else
                                  "per-cluster continuous direct local velocity, unit-ball bounded"
                                  if a.action_set == "continuous" else
-                                 f"per-cluster discrete direct local semantic candidate index (K={SEMANTIC_CANDIDATE_COUNT})"),
+                                 f"per-cluster discrete direct semantic candidate index (K={SEMANTIC_REDUCED_COUNT if a.action_set == 'semantic_reduced' else SEMANTIC_CANDIDATE_COUNT})"),
                actor="parameter-shared local categorical actor; one candidate index per cluster",
                critic="local IPPO critic; no privileged state",
                architecture="GRU history + CNN image + map + masked obstacle/peer pooling",
