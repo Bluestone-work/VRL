@@ -39,3 +39,20 @@ sha256sum research/datasets/NAVIGATION_V1/manifest.jsonl
 ```
 
 The builder validates anatomy coverage, row counts, unique scenario hashes, and cross-split seed disjointness. It creates a scenario catalogue rather than pre-simulated trajectories; training and evaluation runners must preserve the row fields and append reset acceptance records plus raw per-episode metrics.
+
+Dataset-driven IPPO/ISAC/DQN training can be started with a bounded pilot before a long run:
+
+```bash
+python scripts/train_sb3_ippo.py --out research/runs/NAVIGATION_V1/IPPO_s41 \
+  --dataset-split train --dataset-limit 512 --clusters 3 --timesteps 1000000
+python scripts/train_sb3_isac.py --out research/runs/NAVIGATION_V1/ISAC_s41 \
+  --dataset-split train --dataset-limit 512 --clusters 3 --timesteps 1000000
+python scripts/train_discrete_rl.py --algorithm dqn --out research/runs/NAVIGATION_V1/DQN_s41 \
+  --dataset-split train --dataset-limit 512 --clusters 3 --timesteps 1000000
+python scripts/evaluate_navigation_dataset.py --model <checkpoint.zip> --kind ppo \
+  --split validation --clusters 3 --max-episodes 0 --out <validation.json>
+python scripts/evaluate_navigation_dataset.py --model <checkpoint.zip> --kind ppo \
+  --split holdout_test --clusters 3 --max-episodes 0 --out <holdout.json>
+```
+
+`--dataset-limit` limits the catalogue used by a pilot; it does not alter the frozen manifest. Holdout evaluation is a separate command and is never consumed by training or checkpoint selection.
