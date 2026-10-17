@@ -386,6 +386,11 @@ class IPPOCallback(BaseCallback):
 
 
 def evaluate(model, out, clusters, count=12, action_set="semantic"):
+    if count <= 0:
+        summary = dict(episodes=0, navigation_success=None,
+                       split="evaluation_skipped", deterministic=True)
+        (Path(out) / "evaluation.json").write_text(json.dumps(summary, indent=2))
+        return summary
     env = IPPOAgentVecEnv(CurriculumVascularEnv(
         seed=1041, clusters=clusters, curriculum=False, reward_mode="navigation",
         zero_latency=True, direct_action=True), action_set=action_set)
