@@ -15,7 +15,7 @@ import sys
 
 import numpy as np
 import torch
-from stable_baselines3 import DQN, PPO
+from stable_baselines3 import DQN, PPO, SAC
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -46,8 +46,8 @@ def aggregate(rows):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
-    parser.add_argument("--kind", choices=("ppo", "dqn"), required=True)
-    parser.add_argument("--action-set", choices=("semantic", "semantic_reduced", "atomic"), default="semantic")
+    parser.add_argument("--kind", choices=("ppo", "dqn", "sac"), required=True)
+    parser.add_argument("--action-set", choices=("semantic", "semantic_reduced", "atomic", "continuous"), default="semantic")
     parser.add_argument("--split", choices=("train", "validation", "holdout_test"), required=True)
     parser.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
     parser.add_argument("--max-episodes", type=int, default=36,
@@ -73,7 +73,11 @@ def main():
     # Holdout rows are permitted only because this is an explicit evaluation
     # runner. They are never used by the training environment or selector.
     env.physical.train_anatomies = anatomies
-    model_cls = PPO if args.kind == "ppo" else DQN
+    model_cls = {"ppo": PPO, "dqn": DQN, "sac": SAC}[args.kind]
+    if args.kind == "sac" and args.action_set != "continuous":
+        raise SystemExit("SAC manifest evaluation requires --action-set continuous")
+    if args.kind != "sac" and args.action_set == "continuous":
+        raise SystemExit("continuous action-set is reserved for SAC evaluation")
     model = model_cls.load(args.model, env=env, device=args.device)
     completed = []
     try:
