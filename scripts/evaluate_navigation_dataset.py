@@ -61,7 +61,10 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     rows = list(iter_rows(split=args.split, clusters=args.clusters))
     if args.max_episodes:
-        rows = rows[:args.max_episodes]
+        # Keep the pilot spread over the frozen catalogue instead of taking
+        # only the first (weak-flow) block of the JSONL file.
+        indices = np.linspace(0, len(rows) - 1, min(args.max_episodes, len(rows)), dtype=int)
+        rows = [rows[int(index)] for index in indices]
     if not rows:
         raise SystemExit("no manifest rows match the requested split and cluster count")
     manifest_path = Path(MANIFEST)
