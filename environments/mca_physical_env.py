@@ -335,6 +335,7 @@ class MCAPhysicalEnv(gym.Env):
         particle_branches = self.tree.branch_ids[self.transport.ends[self.edges[self.num_robots:], 0]]
         return dict(robot_initialization=self.config.robot_initialization,
                     clot_initialization=self.config.clot_initialization,
+                    clot_site_selection=getattr(self, 'clot_site_selection', 'unspecified'),
                     clot_stations=self.clot_stations.tolist(),clot_positions_mm=self.clot_positions_mm.tolist(),
                     clot_branch_ids=self.tree.branch_ids[self.clot_stations].tolist(),
                     robot_positions_mm=self.positions_mm[:self.num_robots].tolist(),
@@ -350,6 +351,7 @@ class MCAPhysicalEnv(gym.Env):
     def _reset_clots(self):
         if self._fixed_clot_stations is not None:
             stations = self._fixed_clot_stations.copy()
+            self.clot_site_selection = 'fixed_reset_stations'
         elif self.config.clot_initialization == 'random_branches':
             # Point targets stay in navigable branch interiors, independent of body starts.
             candidates = {}
@@ -374,12 +376,46 @@ class MCAPhysicalEnv(gym.Env):
                 if separation.min()>max(2*self.config.contact_distance_mm,1.):
                     stations=selected;break
             if stations is None:raise ValueError('Cannot sample separated clot targets')
+            self.clot_site_selection = 'random_separated_branches'
         else:
-            stations = []
-            for site in self.tree.territory.clot_sites:
+            # Historical anatomy tables do not all contain exactly the four
+            # target slots used by the fixed observation schema: a few
+            # territories declare three or five sites.  Keep the public schema
+            # fixed at ``num_clots`` while making the selection explicit and
+            # deterministic.  Extra sites are ranked by their registered
+            # prevalence weight; missing slots are filled from separated,
+            # navigable branch stations using this episode's reset RNG.  This
+            # prevents an anatomy-dependent reset failure without exposing any
+            # simulator truth to a policy.
+            historical = []
+            for index, site in enumerate(self.tree.territory.clot_sites):
                 branch = self.tree.branches[self.tree.segment_index[site.segment]]
-                stations.append(branch.start+int(round(site.position*(branch.size-1))))
-            stations = np.asarray(stations,np.int32)
+                station = branch.start + int(round(site.position * (branch.size - 1)))
+                historical.append((float(site.weight), index, int(station)))
+            historical.sort(key=lambda item: (-item[0], item[1]))
+            stations = [station for _, _, station in historical[:self.num_clots]]
+            if len(stations) < self.num_clots:
+                candidates = {}
+                for bid, branch in enumerate(self.tree.branches):
+                    ids = np.arange(branch.start + 1, branch.stop, dtype=np.int32)
+                    scale = self.units.mm_per_unit
+                    clearance = (self.tree.arclength[ids] - self.tree.arclength[branch.start]) * scale
+                    tail = (self.tree.arclength[branch.stop] - self.tree.arclength[ids]) * scale
+                    ids = ids[(clearance > 1.) & (tail > 1.)]
+                    if len(ids):
+                        candidates[bid] = ids
+                pool = np.concatenate(list(candidates.values())) if candidates else np.empty(0, np.int32)
+                pool = np.asarray([s for s in pool if s not in stations], np.int32)
+                for _ in range(self.num_clots - len(stations)):
+                    if not len(pool):
+                        raise ValueError('Cannot fill historical clot slots with navigable branches')
+                    selected = int(self.np_random.choice(pool))
+                    stations.append(selected)
+                    pool = pool[pool != selected]
+                self.clot_site_selection = 'historical_weighted_plus_seeded_branch_fill'
+            else:
+                self.clot_site_selection = 'historical_weighted_top_sites'
+            stations = np.asarray(stations, np.int32)
         self.clot_stations = np.asarray(stations,np.int32)
         if (self.clot_stations.shape != (self.num_clots,) or
                 np.any((self.clot_stations < 0) | (self.clot_stations >= self.tree.n_stations))):

@@ -297,5 +297,37 @@
    "revision": "EXP0062 accessed offset 11 for all 14 anatomies. Permanently development; no replacements. Remaining 99 offsets are provisional sealed candidates pending historical access audit and method freeze."
   },
   "rule": "Anatomy k = index in anatomy_order; seeds base + k*stride + i. Development: baselines, failure analysis, method design and selection. Test: evaluated once per final method. Scenes from scripts/multicluster_protocol.paired_environment."
+ },
+ "navigation_dataset_v1": {
+  "registered": "2026-10-17",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "config": "configs/navigation_dataset_v1.json",
+  "train_anatomies": [
+   "mca_m1_lvo",
+   "pulmonary_saddle",
+   "coronary_lm_bifurcation",
+   "iliac_may_thurner",
+   "popliteal_calf_dvt",
+   "ica_siphon",
+   "ica_terminus_t",
+   "carotid_bifurcation",
+   "renal_artery"
+  ],
+  "holdout_test_anatomies": [
+   "coronary_rca",
+   "basilar_vertebral",
+   "cerebral_venous_sinus",
+   "sma_embolism",
+   "femoropopliteal_pad"
+  ],
+  "seed_namespace": {
+   "train_base": 3400000000,
+   "validation_base": 3500000000,
+   "holdout_test_base": 3600000000,
+   "anatomy_stride": 1000000,
+   "condition_stride": 1000,
+   "replicate_stride": 1
+  },
+  "rule": "Three cluster counts, three flow modes, three clot patterns, four dynamic-obstacle densities, and two obstacle layouts are crossed. Training and validation use only the nine registered training anatomies. The five holdout anatomies reserve every condition for zero-shot challenge testing. Scene seeds are disjoint across splits; the manifest is frozen before model selection."
  }
 }

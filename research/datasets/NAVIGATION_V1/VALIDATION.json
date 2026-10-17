@@ -1,0 +1,49 @@
+{
+  "rows": 60480,
+  "unique_scenarios": 60480,
+  "unique_scene_seeds": {
+    "train": 10368,
+    "validation": 2592,
+    "holdout_test": 7200
+  },
+  "condition_count": 72,
+  "cluster_counts": [
+    1,
+    2,
+    3
+  ],
+  "flow_modes": [
+    "pulsatile",
+    "strong",
+    "weak"
+  ],
+  "obstacle_densities": [
+    "high",
+    "low",
+    "medium",
+    "stress"
+  ],
+  "clot_patterns": [
+    "historical_sites",
+    "mixed_pattern",
+    "random_branches"
+  ],
+  "train_anatomies": [
+    "mca_m1_lvo",
+    "pulmonary_saddle",
+    "coronary_lm_bifurcation",
+    "iliac_may_thurner",
+    "popliteal_calf_dvt",
+    "ica_siphon",
+    "ica_terminus_t",
+    "carotid_bifurcation",
+    "renal_artery"
+  ],
+  "holdout_test_anatomies": [
+    "coronary_rca",
+    "basilar_vertebral",
+    "cerebral_venous_sinus",
+    "sma_embolism",
+    "femoropopliteal_pad"
+  ]
+}

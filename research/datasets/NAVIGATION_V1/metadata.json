@@ -1,0 +1,77 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "config_path": "configs/navigation_dataset_v1.json",
+  "split_source": "configs/evaluation_splits.json",
+  "manifest": "manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "row_count": 60480,
+  "summary": {
+    "rows": 60480,
+    "unique_scenarios": 60480,
+    "unique_scene_seeds": {
+      "train": 10368,
+      "validation": 2592,
+      "holdout_test": 7200
+    },
+    "condition_count": 72,
+    "cluster_counts": [
+      1,
+      2,
+      3
+    ],
+    "flow_modes": [
+      "pulsatile",
+      "strong",
+      "weak"
+    ],
+    "obstacle_densities": [
+      "high",
+      "low",
+      "medium",
+      "stress"
+    ],
+    "clot_patterns": [
+      "historical_sites",
+      "mixed_pattern",
+      "random_branches"
+    ],
+    "train_anatomies": [
+      "mca_m1_lvo",
+      "pulmonary_saddle",
+      "coronary_lm_bifurcation",
+      "iliac_may_thurner",
+      "popliteal_calf_dvt",
+      "ica_siphon",
+      "ica_terminus_t",
+      "carotid_bifurcation",
+      "renal_artery"
+    ],
+    "holdout_test_anatomies": [
+      "coronary_rca",
+      "basilar_vertebral",
+      "cerebral_venous_sinus",
+      "sma_embolism",
+      "femoropopliteal_pad"
+    ]
+  },
+  "seed_namespace": {
+    "train_base": 3400000000,
+    "validation_base": 3500000000,
+    "holdout_test_base": 3600000000,
+    "anatomy_stride": 1000000,
+    "condition_stride": 1000,
+    "replicate_stride": 1,
+    "rationale": "Disjoint from registered evaluation pools and the 2600000000/2700000000 multicluster pools. Seeds are requested scene seeds; accepted reset seeds are recorded by the runner."
+  },
+  "protocol": {
+    "paired_across_cluster_counts": true,
+    "paired_across_methods": true,
+    "episode_flow_sampled_at_reset": true,
+    "within_episode_pulsation_preserved": true,
+    "actor_privileged_inputs": false,
+    "zero_latency_claim": false,
+    "out_of_distribution_pressure_test_flow_inlet_mm_s": 0.15,
+    "success_definition": "use existing evaluation definition; this manifest does not change metrics"
+  },
+  "note": "Manifest rows are reset scenarios. accepted_seed, scenario_hash from paired_environment, and per-episode metrics must be appended by the runner; this file is frozen before model selection."
+}

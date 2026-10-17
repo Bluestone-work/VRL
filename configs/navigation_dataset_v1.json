@@ -1,0 +1,87 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "registered": "2026-10-17",
+  "purpose": "Paired train/validation/holdout scenes for local navigation under flow and dynamic obstacles.",
+  "anatomy_order_source": "configs/evaluation_splits.json",
+  "train_anatomies": [
+    "mca_m1_lvo",
+    "pulmonary_saddle",
+    "coronary_lm_bifurcation",
+    "iliac_may_thurner",
+    "popliteal_calf_dvt",
+    "ica_siphon",
+    "ica_terminus_t",
+    "carotid_bifurcation",
+    "renal_artery"
+  ],
+  "holdout_test_anatomies": [
+    "coronary_rca",
+    "basilar_vertebral",
+    "cerebral_venous_sinus",
+    "sma_embolism",
+    "femoropopliteal_pad"
+  ],
+  "cluster_counts": [1, 2, 3],
+  "flow_modes": {
+    "weak": {
+      "nominal_flow_inlet_mm_s": 0.025,
+      "variation_strength": 0.0,
+      "pulsatile": false,
+      "description": "steady weak flow; healthy-inlet mean-speed simulator unit"
+    },
+    "strong": {
+      "nominal_flow_inlet_mm_s": 0.1,
+      "variation_strength": 0.0,
+      "pulsatile": false,
+      "description": "steady strong flow; held out of legacy 0.025-0.05 screening range"
+    },
+    "pulsatile": {
+      "nominal_flow_inlet_mm_s": 0.05,
+      "variation_strength": 0.75,
+      "pulsatile": true,
+      "description": "episode-level patient flow variation with preserved within-episode pulsation"
+    }
+  },
+  "clot_patterns": {
+    "historical_sites": {
+      "environment_clot_initialization": "historical_sites",
+      "description": "anatomy-specific historical stations"
+    },
+    "random_branches": {
+      "environment_clot_initialization": "random_branches",
+      "description": "seeded constrained random branch stations"
+    },
+    "mixed_pattern": {
+      "environment_clot_initialization": ["historical_sites", "random_branches"],
+      "description": "deterministic per-scene mixture; realization is recorded in each row"
+    }
+  },
+  "obstacle_density": {
+    "low": {"dynamic_obstacle_count": 4},
+    "medium": {"dynamic_obstacle_count": 8},
+    "high": {"dynamic_obstacle_count": 16},
+    "stress": {"dynamic_obstacle_count": 32}
+  },
+  "obstacle_layouts": ["uniform", "route_encounter"],
+  "scene_replicates": 20,
+  "split_replicates": {"train": 16, "validation": 4, "holdout_test": 20},
+  "seed_namespace": {
+    "train_base": 3400000000,
+    "validation_base": 3500000000,
+    "holdout_test_base": 3600000000,
+    "anatomy_stride": 1000000,
+    "condition_stride": 1000,
+    "replicate_stride": 1,
+    "rationale": "Disjoint from registered evaluation pools and the 2600000000/2700000000 multicluster pools. Seeds are requested scene seeds; accepted reset seeds are recorded by the runner."
+  },
+  "protocol": {
+    "paired_across_cluster_counts": true,
+    "paired_across_methods": true,
+    "episode_flow_sampled_at_reset": true,
+    "within_episode_pulsation_preserved": true,
+    "actor_privileged_inputs": false,
+    "zero_latency_claim": false,
+    "out_of_distribution_pressure_test_flow_inlet_mm_s": 0.15,
+    "success_definition": "use existing evaluation definition; this manifest does not change metrics"
+  }
+}
