@@ -100,13 +100,22 @@ class VascularSB3Env(gym.Env):
         flow = float(options.get("flow", self.rng.choice([.025, .05, .1])))
         latency = int(options.get("latency", self.rng.integers(1, 3)))
         scene_seed = int(options.get("scene_seed", self.scene_base + self.episode_index))
+        dynamic_obstacle_count = int(options.get("dynamic_obstacle_count", self.dynamic_obstacle_count))
+        clot_initialization = options.get("clot_initialization")
+        variation = options.get("variation")
         self.episode_index += 1
         self.ep = LysisEpisode(
             self.clusters, anatomy, scene_seed, horizon=self.horizon,
             flow_inlet_mm_s=flow, sense_cfg=DeployableConfig(latency_steps=latency),
-            dynamic_obstacle_count=self.dynamic_obstacle_count,
+            dynamic_obstacle_count=dynamic_obstacle_count,
+            clot_initialization=clot_initialization,
+            variation=variation,
         )
-        self.scene = dict(anatomy=anatomy, clusters=self.clusters, seed=scene_seed, flow=flow, latency=latency)
+        self.scene = dict(anatomy=anatomy, clusters=self.clusters, seed=scene_seed, flow=flow, latency=latency,
+                          dynamic_obstacle_count=dynamic_obstacle_count,
+                          clot_initialization=clot_initialization, variation=variation,
+                          accepted_seed=self.ep.manifest.get("accepted_seed"),
+                          scenario_hash=self.ep.manifest.get("scenario_hash"))
         self.features = DynFeatures(self.ep)
         self.sdf = VesselSDF(self.ep.sensor)
         self.previous_images = np.zeros((self.clusters, 2, 32, 32), np.float32)

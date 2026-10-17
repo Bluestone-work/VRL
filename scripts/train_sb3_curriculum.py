@@ -40,7 +40,7 @@ class CurriculumVascularEnv(VascularSB3Env):
                  curriculum=True, prediction=True, shaping=True, reward_mode="potential",
                  uniform_only=False, episode_log=None, navigation_guidance=0.,
                  navigation_slow=False, zero_latency=False,
-                 preserve_action_magnitude=False, direct_action=False):
+                 preserve_action_magnitude=False, direct_action=False, dataset_rows=None):
         super().__init__(seed=seed, clusters=clusters, horizon=horizon,
                          preserve_action_magnitude=preserve_action_magnitude,
                          direct_action=direct_action)
@@ -52,6 +52,8 @@ class CurriculumVascularEnv(VascularSB3Env):
             raise ValueError("reward_mode must be potential, drone_nav or navigation")
         self.reward_mode = reward_mode
         self.uniform_only = bool(uniform_only)
+        self.dataset_rows = list(dataset_rows) if dataset_rows is not None else None
+        self.dataset_cursor = 0
         self.navigation_guidance = float(np.clip(navigation_guidance, 0., 1.))
         # The route follower's slow mode adds an observable-map centerline
         # recovery term and reduces speed in narrow lumen sections.  It is a
@@ -117,6 +119,27 @@ class CurriculumVascularEnv(VascularSB3Env):
             self.anatomy_bag = []
         self._promote()
         options = dict(options or {})
+        dataset_row = options.pop("dataset_row", None)
+        if dataset_row is None and self.dataset_rows is not None:
+            if not self.dataset_rows:
+                raise ValueError("dataset_rows must contain at least one manifest row")
+            dataset_row = self.dataset_rows[self.dataset_cursor % len(self.dataset_rows)]
+            self.dataset_cursor += 1
+        if dataset_row is not None:
+            dataset_row = dict(dataset_row)
+            if dataset_row.get("dataset_version") != "navigation_dataset_v1":
+                raise ValueError("unsupported dataset row version")
+            if int(dataset_row.get("clusters", self.clusters)) != self.clusters:
+                raise ValueError("dataset row cluster count does not match environment")
+            options["anatomy"] = dataset_row["anatomy"]
+            options["scene_seed"] = int(dataset_row["scene_seed"])
+            options["flow"] = float(dataset_row["nominal_flow_inlet_mm_s"])
+            options["dynamic_obstacle_count"] = int(dataset_row["dynamic_obstacle_count"])
+            options["clot_initialization"] = str(dataset_row["environment_clot_initialization_realized"])
+            options["variation"] = dict(s=float(dataset_row["variation_strength"]),
+                                         pulsatile=bool(dataset_row["pulsatile"]))
+            options["scenario_family"] = str(dataset_row["obstacle_layout"])
+        self.dataset_row = dataset_row
         if "difficulty" in options:
             difficulty = int(options.pop("difficulty"))
         elif not self.curriculum:
@@ -134,6 +157,8 @@ class CurriculumVascularEnv(VascularSB3Env):
         self.scene_initialized = False
         level = DIFFICULTIES[difficulty]
         self.dynamic_obstacle_count = level["obstacles"]
+        if dataset_row is not None:
+            self.dynamic_obstacle_count = int(dataset_row["dynamic_obstacle_count"])
         if not options.get("anatomy"):
             if not self.anatomy_bag:
                 self.anatomy_bag = list(self.rng.permutation(self.train_anatomies))
@@ -165,9 +190,17 @@ class CurriculumVascularEnv(VascularSB3Env):
         if self.reward_mode == "navigation":
             self.ep.ctl.slow = self.navigation_slow
         self.scene.update(difficulty=difficulty, difficulty_name=level["name"],
-                          dynamic_obstacles=level["obstacles"], frontier=self.frontier,
+                          dynamic_obstacles=self.dynamic_obstacle_count, frontier=self.frontier,
                           scenario_family=self.scenario_family,
                           localized_obstacles=self.localized_obstacles)
+        if self.dataset_row is not None:
+            self.scene.update(dataset_version=self.dataset_row["dataset_version"],
+                              condition_id=int(self.dataset_row["condition_id"]),
+                              flow_mode=self.dataset_row["flow_mode"],
+                              clot_pattern=self.dataset_row["clot_pattern"],
+                              obstacle_density=self.dataset_row["obstacle_density"],
+                              obstacle_layout=self.dataset_row["obstacle_layout"],
+                              manifest_scenario_hash=self.dataset_row["scenario_hash"])
         self.potential = self._potential()
         if self.reward_mode == "navigation":
             # Freeze the episode assignment and remove lysis from this task:

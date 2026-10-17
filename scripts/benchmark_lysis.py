@@ -47,7 +47,7 @@ class LysisEpisode:
 
     def __init__(self, n, anatomy, seed, horizon=300., d_min=2., sensing='image', shield=True, tpg=True,
                  fallback=None, topo=True, sense_cfg=None, actuation=None, rng=None, variation=None, flow_inlet_mm_s=None,
-                 dynamic_obstacle_count=0):
+                 dynamic_obstacle_count=0, clot_initialization=None):
         from environments.mca_physical_env import DynamicsConfig
         from marl.deployable_sensing import DeployableConfig, DeployablePursuit, DeployableSensor
         from marl.multicluster import MultiClusterConfig
@@ -57,7 +57,8 @@ class LysisEpisode:
         from scripts.safe_metrics import WallTracker
         self.bm = bm
         base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon,
-                       junction_model='union', particle_count=int(dynamic_obstacle_count or 0))
+                       junction_model='union', particle_count=int(dynamic_obstacle_count or 0),
+                       **({'clot_initialization': str(clot_initialization)} if clot_initialization else {}))
         self.env, self.manifest = paired_environment(base, n, seed)
         env = self.env; self.n, self.seed, self.horizon, self.d_min = n, seed, horizon, d_min
         # v6 (2026-10-08): per-anatomy flow calibration. The legacy config gives every anatomy the same inlet volume flow

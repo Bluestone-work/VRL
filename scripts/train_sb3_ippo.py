@@ -162,6 +162,7 @@ def direct_candidates(physical, action_set="semantic"):
     return commands, valid
 
 from scripts.train_sb3_curriculum import CurriculumVascularEnv
+from scripts.navigation_dataset import MANIFEST, iter_rows
 
 
 class IPPOAgentVecEnv(VecEnv):
@@ -421,14 +422,27 @@ def main():
     p.add_argument("--device", default="cuda")
     p.add_argument("--eval-count", type=int, default=12)
     p.add_argument("--action-set", choices=("semantic", "semantic_reduced", "atomic", "continuous"), default="semantic")
+    p.add_argument("--dataset-split", choices=("train",), default=None,
+                   help="sample reset scenes sequentially from navigation_dataset_v1 train rows")
+    p.add_argument("--dataset-limit", type=int, default=0,
+                   help="limit manifest rows for a pilot; 0 uses all train rows")
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
+    dataset_rows = None
+    dataset_sha256 = None
+    if a.dataset_split:
+        dataset_rows = list(iter_rows(split=a.dataset_split, clusters=a.clusters))
+        if a.dataset_limit:
+            dataset_rows = dataset_rows[:a.dataset_limit]
+        if not dataset_rows:
+            raise ValueError("dataset split produced no rows")
+        dataset_sha256 = hashlib.sha256(Path(MANIFEST).read_bytes()).hexdigest()
     physical = CurriculumVascularEnv(
         seed=a.seed, clusters=a.clusters, budget=a.timesteps,
         curriculum=True, prediction=True, shaping=True, reward_mode="navigation",
         zero_latency=True, direct_action=True,
-        episode_log=a.out / "episodes.jsonl")
+        episode_log=a.out / "episodes.jsonl", dataset_rows=dataset_rows)
     env = IPPOAgentVecEnv(physical, action_set=a.action_set)
     cfg = dict(algorithm="IPPO_shared", framework="stable-baselines3 2.7.1",
                seed=a.seed, clusters=a.clusters, physical_steps=a.timesteps,
@@ -442,6 +456,9 @@ def main():
                actor="parameter-shared local categorical actor; one candidate index per cluster",
                critic="local IPPO critic; no privileged state",
                architecture="GRU history + CNN image + map + masked obstacle/peer pooling",
+               dataset_split=a.dataset_split, dataset_rows=len(dataset_rows or []),
+               dataset_manifest=str(MANIFEST.relative_to(ROOT)) if dataset_rows is not None else None,
+               dataset_manifest_sha256=dataset_sha256,
                source_script=str(Path(__file__).resolve()))
     (a.out / "config.json").write_text(json.dumps(cfg, indent=2, ensure_ascii=False))
     policy_kwargs = dict(features_extractor_class=IPPOExtractor, normalize_images=False,

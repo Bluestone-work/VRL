@@ -18,11 +18,13 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import torch
+import hashlib
 from stable_baselines3 import SAC
 from stable_baselines3.common.logger import configure
 
 from scripts.train_sb3_curriculum import CurriculumVascularEnv
 from scripts.train_sb3_ippo import IPPOAgentVecEnv, IPPOCallback, IPPOExtractor, evaluate
+from scripts.navigation_dataset import MANIFEST, iter_rows
 
 
 def main():
@@ -33,15 +35,26 @@ def main():
     p.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
     p.add_argument("--device", default="cuda")
     p.add_argument("--eval-count", type=int, default=12)
+    p.add_argument("--dataset-split", choices=("train",), default=None)
+    p.add_argument("--dataset-limit", type=int, default=0)
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
+    dataset_rows = None
+    dataset_sha256 = None
+    if a.dataset_split:
+        dataset_rows = list(iter_rows(split=a.dataset_split, clusters=a.clusters))
+        if a.dataset_limit:
+            dataset_rows = dataset_rows[:a.dataset_limit]
+        if not dataset_rows:
+            raise ValueError("dataset split produced no rows")
+        dataset_sha256 = hashlib.sha256(Path(MANIFEST).read_bytes()).hexdigest()
 
     physical = CurriculumVascularEnv(
         seed=a.seed, clusters=a.clusters, budget=a.timesteps,
         curriculum=True, prediction=True, shaping=True, reward_mode="navigation",
         zero_latency=True, direct_action=True,
-        episode_log=a.out / "episodes.jsonl")
+        episode_log=a.out / "episodes.jsonl", dataset_rows=dataset_rows)
     env = IPPOAgentVecEnv(physical, action_set="continuous")
     cfg = dict(
         algorithm="ISAC_shared",
@@ -57,6 +70,10 @@ def main():
         actor="parameter-shared local SAC actor; one 3-D action per cluster",
         critic="local SAC twin critics; no privileged state",
         architecture="GRU history + CNN image + map + masked obstacle/peer pooling",
+        dataset_split=a.dataset_split,
+        dataset_rows=len(dataset_rows or []),
+        dataset_manifest=str(MANIFEST.relative_to(ROOT)) if dataset_rows is not None else None,
+        dataset_manifest_sha256=dataset_sha256,
         source_script=str(Path(__file__).resolve()),
     )
     (a.out / "config.json").write_text(json.dumps(cfg, indent=2, ensure_ascii=False))

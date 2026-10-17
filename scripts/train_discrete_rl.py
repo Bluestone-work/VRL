@@ -22,6 +22,7 @@ if str(ROOT) not in sys.path:
 
 import numpy as np
 import torch
+import hashlib
 from torch import nn
 
 from stable_baselines3 import DQN
@@ -38,6 +39,7 @@ from scripts.train_sb3_ippo import (
     SEMANTIC_CANDIDATE_COUNT,
     SEMANTIC_REDUCED_COUNT,
 )
+from scripts.navigation_dataset import MANIFEST, iter_rows
 
 
 class DuelingQNetwork(QNetwork):
@@ -165,10 +167,21 @@ def main():
     p.add_argument("--out", type=Path, required=True); p.add_argument("--seed", type=int, default=41)
     p.add_argument("--timesteps", type=int, default=100000); p.add_argument("--clusters", type=int, default=3)
     p.add_argument("--device", default="cuda"); p.add_argument("--eval-count", type=int, default=12)
+    p.add_argument("--dataset-split", choices=("train",), default=None)
+    p.add_argument("--dataset-limit", type=int, default=0)
     a = p.parse_args(); a.out.mkdir(parents=True, exist_ok=False); torch.set_num_threads(1); random.seed(a.seed); np.random.seed(a.seed)
-    physical = CurriculumVascularEnv(seed=a.seed, clusters=a.clusters, budget=a.timesteps, curriculum=True, prediction=True, shaping=True, reward_mode="navigation", zero_latency=True, direct_action=True, episode_log=a.out/"episodes.jsonl")
+    dataset_rows = None
+    dataset_sha256 = None
+    if a.dataset_split:
+        dataset_rows = list(iter_rows(split=a.dataset_split, clusters=a.clusters))
+        if a.dataset_limit:
+            dataset_rows = dataset_rows[:a.dataset_limit]
+        if not dataset_rows:
+            raise ValueError("dataset split produced no rows")
+        dataset_sha256 = hashlib.sha256(Path(MANIFEST).read_bytes()).hexdigest()
+    physical = CurriculumVascularEnv(seed=a.seed, clusters=a.clusters, budget=a.timesteps, curriculum=True, prediction=True, shaping=True, reward_mode="navigation", zero_latency=True, direct_action=True, episode_log=a.out/"episodes.jsonl", dataset_rows=dataset_rows)
     env = IPPOAgentVecEnv(physical, action_set=a.action_set); k = (SEMANTIC_CANDIDATE_COUNT if a.action_set == "semantic" else SEMANTIC_REDUCED_COUNT if a.action_set == "semantic_reduced" else ATOMIC_CANDIDATE_COUNT)
-    cfg = dict(algorithm=("ISAC_discrete_shared" if a.algorithm == "isac" else "DuelingDQN_shared"), action_set=a.action_set, action_count=k, physical_steps=a.timesteps, agent_steps=a.timesteps*a.clusters, seed=a.seed, no_privileged_actor=True, reward_clip=(10. if a.algorithm == "isac" else None), source_script=str(Path(__file__).resolve()))
+    cfg = dict(algorithm=("ISAC_discrete_shared" if a.algorithm == "isac" else "DuelingDQN_shared"), action_set=a.action_set, action_count=k, physical_steps=a.timesteps, agent_steps=a.timesteps*a.clusters, seed=a.seed, no_privileged_actor=True, reward_clip=(10. if a.algorithm == "isac" else None), dataset_split=a.dataset_split, dataset_rows=len(dataset_rows or []), dataset_manifest=str(MANIFEST.relative_to(ROOT)) if dataset_rows is not None else None, dataset_manifest_sha256=dataset_sha256, source_script=str(Path(__file__).resolve()))
     (a.out/"config.json").write_text(json.dumps(cfg, indent=2))
     if a.algorithm == "dqn":
         model = DQN(DuelingDQNPolicy, env, seed=a.seed, device=a.device, learning_rate=1e-4, buffer_size=100000, learning_starts=2000, batch_size=256, train_freq=4, gradient_steps=1, target_update_interval=4000, exploration_fraction=.25, exploration_final_eps=.05, gamma=.995, policy_kwargs=dict(features_extractor_class=IPPOExtractor, normalize_images=False, net_arch=[128,128]), verbose=0)
