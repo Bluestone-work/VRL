@@ -24,15 +24,23 @@ class TD3SpeedActor(SpeedActor):
 class TD3Actor(nn.Module):
     action_mode = 'td3_residual'
 
-    def __init__(self, action_dim=3):
+    def __init__(self, action_dim=3,zero_init=True):
         super().__init__()
         self.encoder = Encoder()
         self.head = nn.Sequential(nn.Linear(160, 128), nn.Tanh(), nn.Linear(128, action_dim))
-        nn.init.zeros_(self.head[-1].weight)
-        nn.init.zeros_(self.head[-1].bias)
+        if zero_init:
+            nn.init.zeros_(self.head[-1].weight);nn.init.zeros_(self.head[-1].bias)
+        else:
+            nn.init.normal_(self.head[-1].weight,mean=0.,std=.03);nn.init.zeros_(self.head[-1].bias)
 
     def forward(self, hist, mask, ctx, image):
         return torch.tanh(self.head(self.encoder(hist, mask, ctx, image)))
+
+    def sample(self, hist, mask, ctx, image, deterministic=False):
+        action=self.forward(hist,mask,ctx,image)
+        if not deterministic:
+            action=(action+0.1*torch.randn_like(action)).clamp(-1.,1.)
+        return action,torch.zeros(action.shape[0],device=action.device)
 
 
 class TD3Critic(nn.Module):

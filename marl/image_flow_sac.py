@@ -64,17 +64,21 @@ class Encoder(nn.Module):
 
 
 class ImageActor(nn.Module):
-    def __init__(self,action_mode='residual'):
+    def __init__(self,action_mode='residual',zero_init=True):
         super().__init__();self.encoder=Encoder();self.action_mode=action_mode
         self.head=nn.Sequential(nn.Linear(160,128),nn.Tanh(),nn.Linear(128,6))
-        nn.init.zeros_(self.head[-1].weight);nn.init.zeros_(self.head[-1].bias)
-        with torch.no_grad():self.head[-1].bias[3:]=-2.5
+        if zero_init:
+            nn.init.zeros_(self.head[-1].weight);nn.init.zeros_(self.head[-1].bias)
+        else:
+            nn.init.normal_(self.head[-1].weight,mean=0.,std=.03)
+            nn.init.constant_(self.head[-1].bias,0.)
+            with torch.no_grad():self.head[-1].bias[3:]=-1.5
     def sample(self,hist,mask,ctx,image,deterministic=False):
         out=self.head(self.encoder(hist,mask,ctx,image))
-        # A warm start in command space; there is no fixed-cost score competing
-        # with the actor and no imitation loss constraining its final action.
-        prior=ctx[:,19:22].clamp(-.97,.97)
-        mean=(torch.atanh(prior) if self.action_mode=='direct' else 0.)+out[:,:3]
+        # Direct mode is genuinely independent: the Parent command remains in
+        # context only as an observed map/control feature, never as an action
+        # mean or initialization. Residual mode keeps the zero-centered head.
+        mean=out[:,:3]
         std=out[:,3:].clamp(-5.,0.).exp()
         distribution=torch.distributions.Normal(mean,std)
         z=mean if deterministic else distribution.rsample();a=torch.tanh(z)

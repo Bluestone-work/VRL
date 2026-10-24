@@ -15,14 +15,15 @@ Each frame carries:
 
   * the lumen as a translucent swept surface, tapering by Murray's law, with
     the centerline drawn faintly as the navigational reference,
-  * one legible sphere per robot, coloured blue in transit, green while lysing
-    a clot, amber on a wall hit this step,
-  * clots sized by remaining mass, so lysis is visible as shrinkage,
+  * one legible sphere per robot, coloured blue in transit, cyan while
+    releasing payload at a target, amber on a wall hit this step,
+  * delivery targets that stay visible while released payload is shown as a
+    green halo and gold particles,
   * a cyan geodesic from each robot to its assigned clot, following the vessel
     rather than cutting through walls -- a robot entering the wrong branch
     shows a line that doubles back through the junction,
-  * a HUD: per-agent geodesic distance to target (the panel that answers "is
-    it navigating?"), removal rate, and per-clot remaining mass.
+  * a HUD: per-agent geodesic distance to the delivery target, delivery
+    progress, and released payload per target.
 
 `--views` renders several cameras into one frame. The top view is the one that
 tells you which branch the swarm is in: these trees branch mostly within a
@@ -64,9 +65,9 @@ def robot_states(env, contacting: np.ndarray, wall_hits: np.ndarray) -> list[str
 
 
 def contact_mask(env) -> np.ndarray:
-    """Which robots are within lysis range of a live clot.
+    """Which robots are within delivery range of a live target.
 
-    Uses the same radius the lysis model uses, so the colour in the frame
+    Uses the same radius the contact model uses, so the colour in the frame
     cannot disagree with what the reward paid for.
     """
     n = env.num_robots
@@ -128,10 +129,10 @@ def header_text(env, step: int, info: dict, ret: float, reward: float,
         f"reward   {reward:+8.3f}  return {ret:+8.2f}",
         f"team {info.get('team_reward', 0.0):+7.3f}  agent "
         f"{np.mean(info.get('agent_rewards', 0.0)):+7.3f}",
-        f"lysis {info.get('removed_mass', 0.0):+.4f}  remaining "
-        f"{info.get('remaining_mass', 0.0):.4f}",
-        f"removal  {info.get('removal_rate', 0.0) * 100:5.1f} %"
-        f"   clots left {info.get('active_clots', 0)}",
+        f"payload delivered {info.get('removed_mass', 0.0):+.4f}  "
+        f"targets remaining {info.get('remaining_mass', 0.0):.4f}",
+        f"delivery  {info.get('removal_rate', 0.0) * 100:5.1f} %"
+        f"   targets left {info.get('active_clots', 0)}",
         f"engaged  {info.get('clots_engaged', 0)}"
         f"   contacts {info.get('active_contacts', 0)}",
         f"wall hits {info.get('wall_collisions', 0)}"
@@ -139,10 +140,10 @@ def header_text(env, step: int, info: dict, ret: float, reward: float,
         "",
         "agent target   state    speed    geo",
     ]
-    label = {"contact": "LYSING", "wall": "wall!", "transit": "transit"}
+    label = {"contact": "DELIVER", "wall": "wall!", "transit": "transit"}
     for i in range(env.num_robots):
         ci = int(assigned[i]) if i < len(assigned) else -1
-        tgt = f"clot {ci}" if ci >= 0 else "--"
+        tgt = f"target {ci}" if ci >= 0 else "--"
         speed = float(np.linalg.norm(env.robot_velocities[i]) / max(env.max_speed, 1e-8))
         distance = float(geo[i]) if i < len(geo) and np.isfinite(geo[i]) else 0.0
         lines.append(f"  {i}    {tgt:7s}  {label[states[i]]:6s} "
@@ -160,6 +161,8 @@ def main() -> None:
                     help=".gif or .mp4 (mp4 keeps full colour; GIF is 256)")
     ap.add_argument("--robots", type=int, default=3)
     ap.add_argument("--clots", type=int, default=3)
+    ap.add_argument("--task-mode", choices=["delivery", "lysis"], default="delivery",
+                    help="visual semantics; delivery keeps target sites visible and shows payload release")
     ap.add_argument("--horizon", type=int, default=300)
     ap.add_argument("--robot-radius", type=float, default=0.0045,
                     help="must match training; use 0.0011 for anatomical runs")
@@ -209,7 +212,7 @@ def main() -> None:
 
     from environments.pv_render import History, PVRenderer, PVStyle
 
-    style = PVStyle(width=args.width, height=args.height,
+    style = PVStyle(width=args.width, height=args.height, task_mode=args.task_mode,
                     wall_opacity=args.wall_opacity,
                     views=args.views,
                     hud_position=args.layout,

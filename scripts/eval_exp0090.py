@@ -58,7 +58,16 @@ def controller(method, ep, opts):
         return NavController(ep, arg, zero_residual=(kind == 'nav_off'), diagnostics=True)
     if kind in ('rl_nav', 'rl_nav_off'):
         from marl.predictive_nav_rl import RLNavigator
-        return RLNavigator(ep, checkpoint=arg, rl_off=kind == 'rl_nav_off', uncertainty_fallback=False)
+        # Older PPO checkpoints (EXP0094) use the historical navigator API,
+        # while newer source snapshots expose the explicit fallback switch.
+        # Keep evaluation compatible with both without changing controller
+        # semantics: this export always disables uncertainty fallback.
+        try:
+            return RLNavigator(ep, checkpoint=arg, rl_off=kind == 'rl_nav_off', uncertainty_fallback=False)
+        except TypeError as exc:
+            if 'uncertainty_fallback' not in str(exc):
+                raise
+            return RLNavigator(ep, checkpoint=arg, rl_off=kind == 'rl_nav_off')
     if kind.startswith('sel_'):
         from marl.dyn_predictor import Ensemble
         from marl.dyn_select import PredictiveSelector

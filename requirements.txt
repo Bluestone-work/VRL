@@ -2,8 +2,11 @@
 # torch is listed without a CUDA suffix so pip picks whatever build matches your
 # machine -- CPU-only is fine, everything runs with --device cpu.
 numpy==1.26.4
+cloudpickle==3.1.2
 torch==2.3.0
 gymnasium==1.2.3
+stable-baselines3==2.7.1
+pandas==2.3.3
 pybullet==3.2.7
 pillow==12.2.0
 pytest==8.3.4

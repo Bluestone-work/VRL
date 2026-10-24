@@ -25,6 +25,7 @@ from gymnasium import spaces
 from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.logger import configure
+from stable_baselines3.common.policies import MultiInputActorCriticPolicy
 from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 from stable_baselines3.common.vec_env import VecEnv
 from torch import nn
@@ -355,6 +356,61 @@ class IPPOExtractor(BaseFeaturesExtractor):
         return self.trunk(torch.cat([h, image, ctx, obstacle, peer, candidate], dim=-1))
 
 
+class MaskedMultiInputActorCriticPolicy(MultiInputActorCriticPolicy):
+    """Multi-input PPO policy that masks unavailable semantic candidates.
+
+    The original adapter canonicalised an invalid categorical sample after PPO
+    had already computed its log-probability.  That wastes probability mass and
+    gives the learner a different action than the one used for its update.  The
+    mask is part of the deployable observation, so applying it to the logits in
+    rollout and training keeps the categorical objective aligned with the
+    executed command.
+    """
+
+    def _latent(self, obs):
+        features = self.extract_features(obs)
+        if self.share_features_extractor:
+            return self.mlp_extractor(features)
+        pi_features, vf_features = features
+        return (self.mlp_extractor.forward_actor(pi_features),
+                self.mlp_extractor.forward_critic(vf_features))
+
+    def _masked_distribution(self, obs, latent_pi):
+        logits = self.action_net(latent_pi)
+        mask = obs.get("candidate_valid")
+        if mask is not None and logits.shape[-1] == mask.shape[-1]:
+            mask = mask.to(dtype=torch.bool)
+            # Every state has the zero candidate valid; keep a finite fallback
+            # in case a malformed external observation violates that contract.
+            mask = mask.clone()
+            mask[:, 0] = True
+            logits = logits.masked_fill(~mask, torch.finfo(logits.dtype).min)
+        return self.action_dist.proba_distribution(action_logits=logits)
+
+    def forward(self, obs, deterministic=False):
+        latent_pi, latent_vf = self._latent(obs)
+        values = self.value_net(latent_vf)
+        distribution = self._masked_distribution(obs, latent_pi)
+        actions = distribution.get_actions(deterministic=deterministic)
+        log_prob = distribution.log_prob(actions)
+        actions = actions.reshape((-1, *self.action_space.shape))
+        return actions, values, log_prob
+
+    def evaluate_actions(self, obs, actions):
+        latent_pi, latent_vf = self._latent(obs)
+        distribution = self._masked_distribution(obs, latent_pi)
+        values = self.value_net(latent_vf)
+        return values, distribution.log_prob(actions), distribution.entropy()
+
+    def _predict(self, observation, deterministic=False):
+        latent_pi, _ = self._latent(observation)
+        return self._masked_distribution(observation, latent_pi).get_actions(deterministic=deterministic)
+
+    def get_distribution(self, obs):
+        latent_pi, _ = self._latent(obs)
+        return self._masked_distribution(obs, latent_pi)
+
+
 class IPPOCallback(BaseCallback):
     def __init__(self, out, physical_steps, n_agents, save_every=8192):
         super().__init__()
@@ -385,15 +441,18 @@ class IPPOCallback(BaseCallback):
         return True
 
 
-def evaluate(model, out, clusters, count=12, action_set="semantic"):
+def evaluate(model, out, clusters, count=12, action_set="semantic", anatomy=None):
     if count <= 0:
         summary = dict(episodes=0, navigation_success=None,
                        split="evaluation_skipped", deterministic=True)
         (Path(out) / "evaluation.json").write_text(json.dumps(summary, indent=2))
         return summary
-    env = IPPOAgentVecEnv(CurriculumVascularEnv(
+    physical = CurriculumVascularEnv(
         seed=1041, clusters=clusters, curriculum=False, reward_mode="navigation",
-        zero_latency=True, direct_action=True), action_set=action_set)
+        zero_latency=True, direct_action=True)
+    if anatomy:
+        physical.train_anatomies = [anatomy]
+    env = IPPOAgentVecEnv(physical, action_set=action_set)
     rows = []
     obs = env.reset()
     try:
@@ -426,11 +485,19 @@ def main():
     p.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
     p.add_argument("--device", default="cuda")
     p.add_argument("--eval-count", type=int, default=12)
+    p.add_argument("--ent-coef", type=float, default=0.01,
+                   help="PPO entropy coefficient; higher values preserve exploration")
     p.add_argument("--action-set", choices=("semantic", "semantic_reduced", "atomic", "continuous"), default="semantic")
+    p.add_argument("--mask-invalid", action="store_true",
+                   help="mask unavailable categorical candidates in the PPO logits")
     p.add_argument("--dataset-split", choices=("train",), default=None,
                    help="sample reset scenes sequentially from navigation_dataset_v1 train rows")
     p.add_argument("--dataset-limit", type=int, default=0,
                    help="limit manifest rows for a pilot; 0 uses all train rows")
+    p.add_argument("--anatomy", default=None,
+                   help="restrict training/evaluation scenes to one registered anatomy (e.g. hcc_portal_multifocal)")
+    p.add_argument("--no-curriculum", action="store_true",
+                   help="sample all four difficulty levels directly instead of waiting for navigation mastery")
     a = p.parse_args()
     a.out.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
@@ -445,14 +512,22 @@ def main():
         dataset_sha256 = hashlib.sha256(Path(MANIFEST).read_bytes()).hexdigest()
     physical = CurriculumVascularEnv(
         seed=a.seed, clusters=a.clusters, budget=a.timesteps,
-        curriculum=True, prediction=True, shaping=True, reward_mode="navigation",
+        curriculum=not a.no_curriculum, prediction=True, shaping=True, reward_mode="navigation",
         zero_latency=True, direct_action=True,
         episode_log=a.out / "episodes.jsonl", dataset_rows=dataset_rows)
+    if a.anatomy:
+        # Keep the environment mechanics unchanged while replacing only the
+        # anatomy pool.  This is the HCC re-training protocol, rather than a
+        # zero-shot transfer evaluation.
+        if a.anatomy not in {"hcc_portal_multifocal"} and a.anatomy not in set(physical.train_anatomies):
+            raise ValueError(f"unknown training anatomy: {a.anatomy}")
+        physical.train_anatomies = [a.anatomy]
     env = IPPOAgentVecEnv(physical, action_set=a.action_set)
     cfg = dict(algorithm="IPPO_shared", framework="stable-baselines3 2.7.1",
                seed=a.seed, clusters=a.clusters, physical_steps=a.timesteps,
                agent_steps=a.timesteps * a.clusters, device=a.device,
                reward_mode="navigation", zero_latency=True,
+               curriculum=not a.no_curriculum,
                action_semantics=(f"per-cluster discrete atomic local velocity pulse (K={ATOMIC_CANDIDATE_COUNT})"
                                  if a.action_set == "atomic" else
                                  "per-cluster continuous direct local velocity, unit-ball bounded"
@@ -461,17 +536,21 @@ def main():
                actor="parameter-shared local categorical actor; one candidate index per cluster",
                critic="local IPPO critic; no privileged state",
                architecture="GRU history + CNN image + map + masked obstacle/peer pooling",
+               invalid_action_mask=bool(a.mask_invalid),
                dataset_split=a.dataset_split, dataset_rows=len(dataset_rows or []),
                dataset_manifest=str(MANIFEST.relative_to(ROOT)) if dataset_rows is not None else None,
                dataset_manifest_sha256=dataset_sha256,
+               training_anatomies=list(physical.train_anatomies),
                source_script=str(Path(__file__).resolve()))
     (a.out / "config.json").write_text(json.dumps(cfg, indent=2, ensure_ascii=False))
     policy_kwargs = dict(features_extractor_class=IPPOExtractor, normalize_images=False,
                          net_arch=dict(pi=[128, 128], vf=[128, 128]))
-    model = PPO("MultiInputPolicy", env, seed=a.seed, device=a.device, verbose=0,
+    policy_name = (MaskedMultiInputActorCriticPolicy if a.mask_invalid and a.action_set != "continuous"
+                   else "MultiInputPolicy")
+    model = PPO(policy_name, env, seed=a.seed, device=a.device, verbose=0,
                 policy_kwargs=policy_kwargs, learning_rate=1e-4, n_steps=256,
                 batch_size=128, n_epochs=4, gamma=.995, gae_lambda=.95,
-                clip_range=.2, ent_coef=.01)
+                clip_range=.2, ent_coef=a.ent_coef)
     model.set_logger(configure(str(a.out), ["csv", "json", "tensorboard"]))
     model.save(a.out / "initial_model")
     started = time.monotonic()
@@ -482,7 +561,7 @@ def main():
         summary = dict(environment_steps=a.timesteps, agent_steps=model.num_timesteps,
                        training_seconds=time.monotonic() - started)
         (a.out / "TRAINING_COMPLETE.json").write_text(json.dumps(summary, indent=2))
-        result = evaluate(model, a.out, a.clusters, a.eval_count, a.action_set)
+        result = evaluate(model, a.out, a.clusters, a.eval_count, a.action_set, a.anatomy)
         (a.out / "RUN_COMPLETE.json").write_text(json.dumps(result, indent=2))
     finally:
         env.close()

@@ -89,7 +89,8 @@ def work(spec):
     errors=[];near=[];dwell=0;eligible=0;image_error=[];pred_error=[]
     particle_diag=dict(steps=0,detected_steps=0,detected_rows=0,min_clearance_sum=0.,min_clearance_count=0)
     command_audit=dict(steps=0,raw_l1=0.,guarded_l1=0.,executed_l1=0.,
-        raw_nontrivial=0,guarded_nontrivial=0,executed_nontrivial=0,executed_max=0.)
+        raw_nontrivial=0,guarded_nontrivial=0,executed_nontrivial=0,executed_max=0.,
+        axial_abs_sum=0.,transverse_norm_sum=0.,transverse_nontrivial=0)
     trace=dict(t=[0.],pos=[ep.env.positions_mm[:n].copy()],mass=[ep.env.masses.copy()],wall=[0.],removal=[0.])
     if trace_folder:
         trace.update(sent=[ep.sent_world.copy()],hold=[np.zeros(n,bool)],
@@ -118,6 +119,11 @@ def work(spec):
                 counterfactual=ctl.execute(ep,est,ctl.references)
                 ctl.stats=saved_stats;ctl.last_actions=saved_actions
                 raw_delta=np.linalg.norm(saved_actions-ctl.references,axis=1)[est.active]
+                residual=(saved_actions-ctl.references)[est.active]
+                lateral=np.linalg.norm(residual[:,1:],axis=1)
+                command_audit['axial_abs_sum']+=float(np.abs(residual[:,0]).sum())
+                command_audit['transverse_norm_sum']+=float(lateral.sum())
+                command_audit['transverse_nontrivial']+=int((lateral>.001).sum())
                 guarded_delta=np.linalg.norm(local-counterfactual,axis=1)[est.active]
                 if not ep.station_keeping:counterfactual[hold]=0.
                 if ep.shield is not None:

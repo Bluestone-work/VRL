@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SB3 血管导航 · 训练与回放</title>
+<style>
+:root{--ink:#172d3b;--muted:#667b89;--line:#dce7ec;--bg:#f1f5f7;--ppo:#087e8b;--sac:#c58a19;--td3:#7957bd}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans CJK SC","Microsoft YaHei",sans-serif;font-size:14px}header{background:#112d3b;color:#fff;padding:27px max(24px,calc((100vw - 1360px)/2));display:flex;justify-content:space-between;align-items:center;gap:24px}h1{font-size:26px;letter-spacing:.01em;font-weight:650;margin:4px 0 9px}.eyebrow{font-size:12px;letter-spacing:2px;color:#85c6cd}header p{margin:0;color:#b6c9d1;line-height:1.7}.badge{border:1px solid #49616c;border-radius:8px;padding:10px 14px;white-space:nowrap;color:#cae7e3;font-size:12px}main{max-width:1408px;margin:auto;padding:22px 24px 38px}.topline{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;gap:12px;margin-bottom:14px;align-items:center}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,.panel{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 10px #17344004}.card{padding:19px 21px;border-top:3px solid var(--color)}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.algo{font-weight:750;letter-spacing:1px;font-size:17px;color:var(--color)}.running{font-size:11px;background:#edf6f3;padding:5px 8px;border-radius:5px;color:#337767}.step{font-size:29px;font-weight:650;margin-top:13px;font-variant-numeric:tabular-nums}.step small{font-size:13px;color:var(--muted);font-weight:400}.track{height:5px;background:#eaf0f2;border-radius:4px;margin:11px 0 14px;overflow:hidden}.track i{display:block;height:100%;background:var(--color)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;font-size:12px;color:var(--muted)}.stats b{display:block;color:var(--ink);font-size:15px;margin-top:5px;font-variant-numeric:tabular-nums}.cardfoot{margin-top:14px;color:var(--muted);font-size:11px}.charts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:17px}.panel{padding:20px}.panel h2{font-size:16px;margin:0 0 5px;font-weight:650}.sub{color:var(--muted);font-size:12px;line-height:1.6}.legend{display:flex;gap:14px;font-size:11px;flex-wrap:wrap}.legend span:before{content:"";width:8px;height:8px;display:inline-block;background:var(--color);border-radius:50%;margin-right:5px}.chart{width:100%;height:200px;display:block;margin-top:6px}.chart text{font-family:inherit}.sectionbar{margin:27px 0 13px;display:flex;justify-content:space-between;gap:16px;align-items:center}.sectionbar h2{margin:0;font-size:19px}.replaygrid{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(300px,1fr);gap:16px}.viewer{padding:0;overflow:hidden}.viewerbar{padding:16px 18px;display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line)}button,select{font-family:inherit;border:1px solid #cedce2;background:#fff;border-radius:6px;padding:7px 10px;font-size:12px;color:var(--ink);cursor:pointer}button:hover,select:hover{border-color:#739daa}button.primary{background:#087e8b;color:white;border-color:#087e8b}.mode{padding:5px 8px;background:#fff4df;color:#96641a;border-radius:5px;font-size:11px}.viewer canvas#scene{display:block;width:100%;height:480px;touch-action:none;cursor:grab;background:#fcfdfe}.viewer canvas#scene:active{cursor:grabbing}.controls{padding:15px 18px;background:#f9fbfc;border-top:1px solid var(--line)}input[type=range]{accent-color:#087e8b;cursor:pointer}#timeline{width:100%;margin:12px 0 8px}.controlrow{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.time{margin-left:auto;font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted)}.hint{font-size:11px;color:var(--muted);margin-top:8px}.side .metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.metric{background:#f4f8fa;padding:12px;border-radius:8px}.metric b{font-size:23px;font-weight:600;display:block;margin-top:5px;font-variant-numeric:tabular-nums}.metric span{font-size:11px;color:var(--muted)}.robotrow{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #edf2f4;font-size:12px}.robotdot{height:9px;width:9px;border-radius:50%;flex:none}.robotrow small{margin-left:auto;color:var(--muted);font-size:11px}.images{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.imagebox{background:#102331;border-radius:7px;overflow:hidden}.imagebox canvas{display:block;width:100%;aspect-ratio:1;image-rendering:pixelated}.imagebox span{display:block;color:#bccbd2;font-size:10px;text-align:center;padding:6px}.side h3{font-size:12px;font-weight:600;margin:18px 0 8px}.meta{font-size:11px;color:var(--muted);line-height:1.9;overflow-wrap:anywhere}.links{display:flex;gap:15px;flex-wrap:wrap;font-size:12px;margin-top:16px}a{color:#08798b;text-decoration:none}a:hover{text-decoration:underline}.replaycharts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.replaycharts .chart{height:160px}.notice{margin-top:17px;border-left:3px solid #adc7d1;background:#e9f0f4;color:#516978;font-size:12px;line-height:1.8;padding:13px 17px;border-radius:3px}footer{margin-top:25px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:20px}.empty{color:var(--muted);text-align:center;padding:70px 10px}#error{display:none;white-space:pre-wrap;color:#a62e3a;background:#fff1f0;padding:12px;border-radius:8px;margin:12px 0}#pending{padding:12px;color:#926221;font-size:12px;background:#fff7e7;line-height:1.6;border-radius:6px;margin-bottom:12px}@media(max-width:900px){.cards{grid-template-columns:1fr}.charts,.replaycharts,.replaygrid{grid-template-columns:1fr}header{padding:22px}.badge{display:none}.viewer canvas#scene{height:400px}main{padding:18px 14px}.sectionbar{align-items:flex-start;flex-direction:column}.topline{align-items:flex-start;flex-direction:column}.step{font-size:25px}} 
+</style></head><body>
+<header><div><div class="eyebrow">VASCULAR CONTROL / EXP0113</div><h1>SB3 训练与三维回放</h1><p>PPO · SAC · TD3 &nbsp; / &nbsp; 从随机参数学习连续动作</p></div><div class="badge">3 个机器人 &nbsp;·&nbsp; 16 个动态障碍 &nbsp;·&nbsp; 开发预实验</div></header>
+<main><div class="topline"><span id="freshness">正在读取记录</span><span id="connection">本地快照</span></div><div id="error"></div><div id="cards" class="cards"></div>
+<div class="charts"><section class="panel"><div class="row"><div><h2>训练进度</h2><div class="sub">环境实际推进步数 · 横轴为训练耗时（分钟）</div></div><div class="legend"><span style="--color:var(--ppo)">PPO</span><span style="--color:var(--sac)">SAC</span><span style="--color:var(--td3)">TD3</span></div></div><svg class="chart" id="progressChart" viewBox="0 0 600 200"></svg></section>
+<section class="panel"><div class="row"><div><h2>完整训练回合</h2><div class="sub" id="trainChartNote">每点代表一个完整回合</div></div><select id="metric"><option value="return_sum">累计奖励</option><option value="removal">清除率</option><option value="wall_contact_s">贴壁机器人秒</option><option value="lost">丢失机器人</option></select></div><svg class="chart" id="episodeChart" viewBox="0 0 600 200"></svg></section></div>
+<div class="sectionbar"><h2>冻结模型 · 同场景三维回放</h2><span class="sub">旋转视角、拖动时间轴，查看动作、血栓和策略看到的图像</span></div>
+<div id="pending">正在生成模型回放。训练进程继续独立运行，已完成的回放会依次出现。</div>
+<div class="replaygrid"><section class="panel viewer"><div class="viewerbar"><select id="replaySelect" aria-label="选择回放模型"></select><span class="mode" id="replayKind">等待回放</span></div><canvas id="scene" aria-label="可旋转的血管与机器人三维回放"></canvas><div class="controls"><div class="controlrow"><button class="primary" id="play">播放</button><select id="speed" aria-label="播放速度"><option value="1">1×</option><option value="10" selected>10×</option><option value="30">30×</option></select><button id="resetView">重置视角</button><button id="topView">俯视</button><button id="sideView">侧视</button><span class="time" id="timeLabel">0.0 / 300.0 s</span></div><input type="range" id="timeline" min="0" max="0" value="0" aria-label="回放时间轴"><div class="controlrow"><select id="robot"><option value="0">机器人 R1</option><option value="1">机器人 R2</option><option value="2">机器人 R3</option></select><label class="sub"><input type="checkbox" id="follow"> 跟随选中机器人</label><label class="sub"><input type="checkbox" id="particles" checked> 动态障碍</label><label class="sub"><input type="checkbox" id="trails" checked> 运动轨迹</label><label class="sub"><input type="checkbox" id="commands" checked> 执行指令</label></div><div class="hint">拖动旋转 · 滚轮缩放 · 红色为血栓，橙色小点为动态障碍。箭头为已发出的控制指令；机器人与血栓标记适当放大。</div></div></section>
+<section class="panel side"><h2 id="replayTitle">模型表现</h2><div class="sub" id="sceneTitle">等待冻结模型</div><div class="metrics"><div class="metric"><span>当前清除率</span><b id="removal">—</b></div><div class="metric"><span>累计贴壁 · 机器人秒</span><b id="wall">—</b></div><div class="metric"><span>活跃机器人</span><b id="active">—</b></div><div class="metric"><span>最终 Strict</span><b id="success">—</b></div></div><div id="robotStates"></div><h3>策略图像 · 选中机器人 · 延迟双平面</h3><div class="images"><div class="imagebox"><canvas id="imageA" width="32" height="32"></canvas><span>XY 平面</span></div><div class="imagebox"><canvas id="imageB" width="32" height="32"></canvas><span>XZ 平面</span></div></div><h3>回放来源</h3><div class="meta" id="provenance">正在导出</div><div class="links"><a id="npzLink" href="#" download>下载实际轨迹 NPZ</a><a href="training_curves.png" target="_blank">训练曲线 PNG</a></div></section></div>
+<div class="replaycharts"><section class="panel"><h2>当前冻结模型的清除过程</h2><div class="sub">横轴为仿真时间（秒），纵轴为累计清除率（%）</div><svg class="chart" id="removalChart" viewBox="0 0 600 160"></svg></section><section class="panel"><h2>当前冻结模型的贴壁累计</h2><div class="sub">横轴为仿真时间（秒），纵轴为贴壁机器人秒</div><svg class="chart" id="wallChart" viewBox="0 0 600 160"></svg></section></div>
+<div class="notice">回放来自冻结模型在同一公开开发场景的实际仿真记录，包含失败结果。三维视图显示真实物理轨迹；策略输入仅包含延迟图像、检测、命令历史和地图。保留任务分配、TPG 与几何安全约束。当前为一个训练种子的预实验，训练回合及单场景回放不足以判断最终性能。</div>
+<footer><span>实时版每 10 秒读取训练记录 · 离线版可直接双击打开</span><span id="source">EXP0113 · Stable-Baselines3 2.7.1</span></footer></main>
+<script>
+'use strict';
+const INITIAL=__EMBEDDED_DATA__;
+let snapshot=INITIAL.status,manifest=INITIAL.manifest,replayCache=INITIAL.replays;
+const COLORS={ppo:'#087e8b',sac:'#c58a19',td3:'#7957bd'},ROBOT_COLORS=['#0997ba','#e0a322','#8663d1'];
+const $=id=>document.getElementById(id),fmt=n=>Number(n).toLocaleString('zh-CN'),pct=n=>(100*n).toFixed(n>0&&n<.01?2:1)+'%';
+window.addEventListener('error',e=>{$('error').style.display='block';$('error').textContent=e.message});
+function chart(id,series,options={}){
+ const svg=$(id),W=600,H=Number(svg.getAttribute('viewBox').split(' ')[3]),L=57,R=14,T=13,B=29;
+ let points=series.flatMap(s=>s.points).filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));
+ if(!points.length){svg.innerHTML=`<text x="300" y="${H/2}" text-anchor="middle" fill="#82949f" font-size="12">等待完整回合记录</text>`;return}
+ let xmin=0,xmax=Math.max(...points.map(p=>p[0]),1),ymin=Math.min(0,...points.map(p=>p[1])),ymax=Math.max(...points.map(p=>p[1]),options.ymax||0);
+ if(ymax===ymin)ymax=ymin+1;
+ const pad=(ymax-ymin)*.06;ymax+=pad;if(ymin<0)ymin-=pad;
+ const X=x=>L+x/xmax*(W-L-R),Y=y=>H-B-(y-ymin)/(ymax-ymin)*(H-T-B);
+ let h='';
+ for(let i=0;i<=4;i++){let y=ymin+(ymax-ymin)*i/4;h+=`<line x1="${L}" x2="${W-R}" y1="${Y(y)}" y2="${Y(y)}" stroke="#e9eff2"/><text x="${L-8}" y="${Y(y)+4}" text-anchor="end" fill="#7a8e9b" font-size="10">${Math.abs(y)>1000?(y/1000).toFixed(1)+'k':Number(y.toFixed(Math.abs(y)>10?0:1))}</text>`}
+ for(let i=0;i<=4;i++){let x=xmax*i/4;h+=`<text x="${X(x)}" y="${H-7}" text-anchor="middle" fill="#7a8e9b" font-size="10">${x>1000?(x/1000).toFixed(1)+'k':Number(x.toFixed(1))}</text>`}
+ for(const s of series){let ps=s.points.filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));if(!ps.length)continue;h+=`<polyline points="${ps.map(p=>`${X(p[0])},${Y(p[1])}`).join(' ')}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" opacity=".9"/>`;if(ps.length<80)for(const p of ps)h+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="2.5" fill="${s.color}"/>`}
+ if(options.cursor!=null)h+=`<line x1="${X(options.cursor)}" x2="${X(options.cursor)}" y1="${T}" y2="${H-B}" stroke="#506e7f" stroke-dasharray="4 4"/>`;
+ svg.innerHTML=h;
+}
+function renderStatus(){
+ $('freshness').textContent='记录更新：'+snapshot.updated.replace('T',' ').replace('+08:00','')+'（北京时间）';
+ $('cards').innerHTML=snapshot.algorithms.map(a=>`<article class="card" style="--color:${COLORS[a.algorithm]}"><div class="row"><span class="algo">${a.algorithm.toUpperCase()}</span><span class="running">${a.stage}</span></div><div class="step">${fmt(a.steps)} <small>/ ${fmt(a.target)} 步</small></div><div class="track"><i style="width:${Math.min(100,a.steps/a.target*100)}%"></i></div><div class="stats"><div>进度<b>${pct(a.steps/a.target)}</b></div><div>完整训练回合<b>${a.episode_count}</b></div><div>平均清除率<b>${a.mean_removal==null?'—':pct(a.mean_removal)}</b></div></div><div class="cardfoot">Strict 成功 ${a.strict_success} / ${a.episode_count} 回合 · ${a.device.toUpperCase()} · ${a.updates==null?'梯度更新数尚未落盘':fmt(a.updates)+' 次更新（已落盘）'}</div></article>`).join('');
+ chart('progressChart',snapshot.algorithms.map(a=>({color:COLORS[a.algorithm],points:a.progress_curve})));
+ renderEpisodeChart();
+}
+function renderEpisodeChart(){let key=$('metric').value,factor=key==='removal'?100:1;chart('episodeChart',snapshot.algorithms.map(a=>({color:COLORS[a.algorithm],points:a.episodes.map(r=>[r.training_environment_step,r[key]*factor])})),{ymax:key==='removal'?100:undefined});$('trainChartNote').textContent='每点为一个完整训练回合 · 横轴为已完成回合累计环境步'}
+$('metric').addEventListener('change',renderEpisodeChart);
+let selected=null,replay=null,frame=0,playing=false,simulationTime=0,lastTick=0;
+let camera={yaw:.7,pitch:.6,zoom:1},drag=null,decodedImage=null,decodedFrame=-1;
+function replayOptions(){
+ const select=$('replaySelect'),previous=select.value;
+ const keys=['ppo','sac','td3'].filter(a=>manifest.replays[a]);
+ select.innerHTML=keys.map(a=>{let m=manifest.replays[a];return `<option value="${a}">${a.toUpperCase()} · ${fmt(m.steps)} 步 · ${m.origin.startsWith('正式')?'正式预实验':'接口验证'}</option>`}).join('');
+ if(keys.includes(previous))select.value=previous;
+ $('pending').style.display=keys.length===3?'none':'block';
+ $('pending').textContent='回放已就绪 '+keys.length+' / 3。其余模型正在导出，训练继续独立运行。';
+ if(!replay&&keys.length)loadReplay(select.value);
+}
+async function loadReplay(algo){
+ const meta=manifest.replays[algo];if(!meta)return;
+ let data=replayCache[algo];
+ if(!data||data.metadata.sha256!==meta.sha256){try{const response=await fetch(meta.json+'?v='+meta.sha256,{cache:'no-store'});if(!response.ok)throw Error('回放暂不可用');data=await response.json();replayCache[algo]=data}catch(e){$('pending').style.display='block';$('pending').textContent='回放正在更新，请稍后重试。';return}}
+ selected=algo;replay=data;frame=0;simulationTime=0;playing=false;decodedFrame=-1;
+ $('play').textContent='播放';$('timeline').max=replay.t.length-1;$('timeline').value=0;
+ $('replayKind').textContent=meta.origin.startsWith('正式')?'正式预实验模型':'接口验证模型';
+ $('replayTitle').textContent=algo.toUpperCase()+' · '+fmt(meta.steps)+' 步';
+ $('sceneTitle').textContent=replay.metadata.scene.anatomy+' · 3 机器人 · 16 动态障碍';
+ $('success').textContent=meta.metrics.strict_success?'成功':'未成功';$('success').style.color=meta.metrics.strict_success?'#087e8b':'#a47031';
+ $('provenance').textContent=meta.origin+'。冻结模型在同一开发场景独立运行；'+meta.physical_steps+' 个实际控制步，终止原因：'+({time_limit:'达到 300 秒截止',all_robots_exited:'机器人全部离开',all_clots_cleared:'血栓全部清除'}[meta.metrics.termination]||meta.metrics.termination)+'。SHA-256：'+meta.sha256.slice(0,16)+'…';
+ $('npzLink').href=meta.npz;
+ camera={yaw:.7,pitch:.6,zoom:1};
+ updateFrame();
+}
+$('replaySelect').addEventListener('change',()=>loadReplay($('replaySelect').value));
+function updateFrame(){
+ if(!replay)return;
+ $('timeline').value=frame;$('timeLabel').textContent=replay.t[frame].toFixed(1)+' / '+replay.t.at(-1).toFixed(1)+' s';
+ $('removal').textContent=pct(replay.removal[frame]);$('wall').textContent=replay.wall[frame].toFixed(1);
+ $('active').textContent=replay.active[frame].filter(Boolean).length+' / 3';
+ $('robotStates').innerHTML=replay.pos[frame].map((p,i)=>{let state=!replay.active[frame][i]?'已离开':replay.hold[frame][i]?'TPG 等待':replay.targets[frame][i]<0?'停车':'目标 C'+(replay.targets[frame][i]+1);return `<div class="robotrow"><i class="robotdot" style="background:${ROBOT_COLORS[i]}"></i>R${i+1}<small>${state}</small></div>`}).join('');
+ drawScene();drawImages();
+ chart('removalChart',[{color:COLORS[selected],points:replay.t.map((t,k)=>[t,replay.removal[k]*100])}],{ymax:100,cursor:replay.t[frame]});
+ chart('wallChart',[{color:COLORS[selected],points:replay.t.map((t,k)=>[t,replay.wall[k]])}],{cursor:replay.t[frame]});
+ document.body.dataset.replayReady='true';document.body.dataset.frame=String(frame);document.body.dataset.algorithm=selected;
+}
+function drawImages(){
+ if(!replay)return;
+ if(decodedFrame!==frame){decodedImage=atob(replay.images[frame]);decodedFrame=frame}
+ const bot=Number($('robot').value);
+ ['imageA','imageB'].forEach((id,view)=>{const context=$(id).getContext('2d'),image=context.createImageData(32,32),offset=(bot*2+view)*1024;for(let k=0;k<1024;k++){let value=decodedImage.charCodeAt(offset+k);image.data[k*4]=value;image.data[k*4+1]=value;image.data[k*4+2]=value;image.data[k*4+3]=255}context.putImageData(image,0,0)})
+}
+const canvas=$('scene'),ctx=canvas.getContext('2d');
+function drawScene(){
+ const W=canvas.clientWidth||800,H=canvas.clientHeight||480,dpr=devicePixelRatio||1;
+ if(canvas.width!==Math.round(W*dpr)||canvas.height!==Math.round(H*dpr)){canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr)}
+ ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);ctx.fillStyle='#fcfdfe';ctx.fillRect(0,0,W,H);
+ if(!replay){ctx.fillStyle='#7c929e';ctx.font='14px sans-serif';ctx.textAlign='center';ctx.fillText('模型回放正在生成',W/2,H/2);return}
+ const geo=replay.geometry,P=geo.points;
+ let min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];for(let p of P)for(let k=0;k<3;k++){min[k]=Math.min(min[k],p[k]);max[k]=Math.max(max[k],p[k])}
+ let center=min.map((v,k)=>(v+max[k])/2),ext=Math.max(1,Math.hypot(...min.map((v,k)=>max[k]-v)));
+ if($('follow').checked)center=replay.pos[frame][Number($('robot').value)];
+ const cy=Math.cos(camera.yaw),sy=Math.sin(camera.yaw),cp=Math.cos(camera.pitch),sp=Math.sin(camera.pitch);
+ function rotate(p){let q=p.map((v,k)=>v-center[k]);return [cy*q[0]-sy*q[1],sy*sp*q[0]+cy*sp*q[1]+cp*q[2],-sy*cp*q[0]-cy*cp*q[1]+sp*q[2]]}
+ let rotated=P.map(rotate),minX=Math.min(...rotated.map(p=>p[0])),maxX=Math.max(...rotated.map(p=>p[0])),minY=Math.min(...rotated.map(p=>p[1])),maxY=Math.max(...rotated.map(p=>p[1]));
+ const scale=Math.min((W-110)/Math.max(maxX-minX,1),(H-100)/Math.max(maxY-minY,1))*camera.zoom;
+ const offsetX=$('follow').checked?0:(minX+maxX)/2,offsetY=$('follow').checked?0:(minY+maxY)/2;
+ function project(p){const q=rotate(p),perspective=2.8*ext/(2.8*ext-q[2]);return [W/2+(q[0]-offsetX)*scale*perspective,H/2-(q[1]-offsetY)*scale*perspective,q[2],perspective]}
+ const tubes=geo.ends.map(e=>({e,depth:(rotate(P[e[0]])[2]+rotate(P[e[1]])[2])/2})).sort((a,b)=>a.depth-b.depth);
+ ctx.lineCap='round';
+ for(const {e} of tubes){let a=project(P[e[0]]),b=project(P[e[1]]),radius=(geo.radius[e[0]]+geo.radius[e[1]])/2,width=Math.max(2,radius*2*scale*(a[3]+b[3])/2);ctx.strokeStyle='rgba(219,144,154,.22)';ctx.lineWidth=width+1;ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();ctx.strokeStyle='rgba(193,109,127,.33)';ctx.lineWidth=.65;ctx.stroke()}
+ if($('trails').checked)for(let bot=0;bot<3;bot++){ctx.strokeStyle=ROBOT_COLORS[bot]+'b5';ctx.lineWidth=1.8;ctx.beginPath();for(let k=0;k<=frame;k++){let q=project(replay.pos[k][bot]);if(k===0)ctx.moveTo(q[0],q[1]);else ctx.lineTo(q[0],q[1])}ctx.stroke()}
+ let objects=[];
+ if($('particles').checked)for(let p of replay.particles[frame]){let q=project(p);objects.push({q,r:2.3,color:'#d29747',particle:true})}
+ if($('particles').checked&&replay.forecasts){const bot=Number($('robot').value);ctx.strokeStyle='#ef9729';ctx.lineWidth=1.6;ctx.setLineDash([4,4]);for(let k=0;k<replay.forecasts[frame][bot].length;k++){if(!replay.forecast_valid[frame][bot][k])continue;ctx.beginPath();replay.forecasts[frame][bot][k].forEach((p,j)=>{let q=project(p);if(j)ctx.lineTo(q[0],q[1]);else ctx.moveTo(q[0],q[1])});ctx.stroke()}ctx.setLineDash([])}
+ for(let i=0;i<geo.clots.length;i++){let ratio=replay.mass[frame][i]/Math.max(geo.clot_mass0[i],1e-9);if(ratio<=1e-6)continue;let q=project(geo.clots[i]);objects.push({q,r:Math.max(4,9*Math.cbrt(ratio)),color:'#bd3c55',label:'C'+(i+1)})}
+ for(let i=0;i<3;i++){let q=project(replay.pos[frame][i]);objects.push({q,r:Number($('robot').value)===i?8:6,color:replay.active[frame][i]?ROBOT_COLORS[i]:'#8f9ba2',label:'R'+(i+1),robot:true})}
+ objects.sort((a,b)=>a.q[2]-b.q[2]);ctx.textAlign='left';ctx.font='11px sans-serif';
+ for(const object of objects){let [x,y]=object.q;if(x < -30||x>W+30||y< -30||y>H+30)continue;ctx.globalAlpha=object.particle?.75:1;ctx.fillStyle=object.color;ctx.beginPath();ctx.arc(x,y,object.r,0,Math.PI*2);ctx.fill();if(!object.particle){ctx.strokeStyle='white';ctx.lineWidth=1.5;ctx.stroke()}if(object.label){ctx.fillStyle='#284657';ctx.fillText(object.label,x+object.r+3,y-5)}}ctx.globalAlpha=1;
+ if($('commands').checked)for(let i=0;i<3;i++){if(!replay.active[frame][i])continue;const p=replay.pos[frame][i],u=replay.command[frame][i];if(Math.hypot(...u)<.01)continue;const start=project(p),end=project(p.map((v,k)=>v+u[k]*1.7)),angle=Math.atan2(end[1]-start[1],end[0]-start[0]);ctx.strokeStyle=ROBOT_COLORS[i];ctx.fillStyle=ROBOT_COLORS[i];ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(start[0],start[1]);ctx.lineTo(end[0],end[1]);ctx.stroke();ctx.beginPath();ctx.moveTo(end[0],end[1]);ctx.lineTo(end[0]-6*Math.cos(angle-.45),end[1]-6*Math.sin(angle-.45));ctx.lineTo(end[0]-6*Math.cos(angle+.45),end[1]-6*Math.sin(angle+.45));ctx.fill()}
+ const origin=[40,H-37],axes=[[1,0,0,'X','#c35464'],[0,1,0,'Y','#4a9e7f'],[0,0,1,'Z','#5e84bb']];
+ for(const axis of axes){let p=center.map((v,k)=>v+axis[k]),r=rotate(p),x=origin[0]+r[0]*24,y=origin[1]-r[1]*24;ctx.strokeStyle=axis[4];ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(...origin);ctx.lineTo(x,y);ctx.stroke();ctx.fillStyle=axis[4];ctx.fillText(axis[3],x+3,y+3)}
+ ctx.fillStyle='#79909d';ctx.font='11px sans-serif';ctx.fillText('实际三维轨迹 · mm',W-142,H-22);
+}
+canvas.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{if(!drag)return;camera.yaw+=(e.clientX-drag.x)*.008;camera.pitch=Math.max(-1.55,Math.min(1.55,camera.pitch+(e.clientY-drag.y)*.008));drag={x:e.clientX,y:e.clientY};drawScene()});
+canvas.addEventListener('pointerup',()=>drag=null);canvas.addEventListener('pointercancel',()=>drag=null);
+canvas.addEventListener('wheel',e=>{e.preventDefault();camera.zoom=Math.max(.3,Math.min(12,camera.zoom*Math.exp(-e.deltaY*.001)));drawScene()},{passive:false});
+$('resetView').onclick=()=>{camera={yaw:.7,pitch:.6,zoom:1};$('follow').checked=false;drawScene()};
+$('topView').onclick=()=>{camera.yaw=0;camera.pitch=1.55;drawScene()};$('sideView').onclick=()=>{camera.yaw=0;camera.pitch=0;drawScene()};
+$('robot').onchange=()=>{drawScene();drawImages()};for(const id of ['follow','particles','trails','commands'])$(id).onchange=drawScene;
+$('play').onclick=()=>{if(!replay)return;if(frame===replay.t.length-1){frame=0;simulationTime=0;updateFrame()}playing=!playing;$('play').textContent=playing?'暂停':'播放';lastTick=performance.now()};
+$('timeline').oninput=()=>{if(!replay)return;frame=Number($('timeline').value);simulationTime=replay.t[frame];updateFrame()};
+function animate(now){if(playing&&replay){simulationTime+=Math.min(.1,(now-lastTick)/1000)*Number($('speed').value);let next=frame;while(next<replay.t.length-1&&replay.t[next+1]<=simulationTime)next++;if(next!==frame){frame=next;updateFrame()}if(frame===replay.t.length-1){playing=false;$('play').textContent='播放'}}lastTick=now;requestAnimationFrame(animate)}
+new ResizeObserver(drawScene).observe(canvas);
+async function refresh(){
+ if(location.protocol==='file:'){$('connection').textContent='离线快照 · 实时版 http://127.0.0.1:8873/';return}
+ try{const response=await fetch('/api/status',{cache:'no-store'});if(!response.ok)throw Error('离线');const data=await response.json();snapshot=data.status;manifest=data.manifest;renderStatus();replayOptions();$('connection').textContent='● 实时连接 · 每 10 秒更新';if(selected&&manifest.replays[selected]&&replay.metadata.sha256!==manifest.replays[selected].sha256)await loadReplay(selected)}catch(e){$('connection').textContent='连接暂不可用 · 显示最近快照'}
+}
+renderStatus();replayOptions();drawScene();requestAnimationFrame(animate);refresh();setInterval(refresh,10000);
+document.body.dataset.dashboardReady='true';
+</script></body></html>

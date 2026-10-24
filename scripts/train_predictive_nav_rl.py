@@ -12,8 +12,12 @@ import math
 import multiprocessing as mp
 import os
 from pathlib import Path
+import sys
 import time
 import traceback
+ROOT=Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 # The repository records unstable CPU cores 6/7. Set affinity before importing
 # NumPy/Torch, including in spawned rollout workers.
 if hasattr(os,'sched_getaffinity'):
@@ -24,8 +28,6 @@ import torch
 from torch import nn
 from marl.predictive_nav_rl import NavigationActor,RLNavigator,PREDICTORS,advantages,observation_tensors
 
-ROOT=Path(__file__).resolve().parents[1]
-
 def worker(wid,conn,cfg,out):
     try:
         torch.set_num_threads(1);torch.manual_seed(cfg['seed']*1000+wid)
@@ -33,7 +35,8 @@ def worker(wid,conn,cfg,out):
         from scripts.benchmark_lysis import LysisEpisode
         from scripts.train_lysis_local import route_remaining
         from scripts.export_vrl_v3_all_gifs import geometry
-        train=json.loads((ROOT/'configs/evaluation_splits.json').read_text())['anatomy_holdout_v1']['train']
+        train=list(cfg.get('training_anatomies') or
+                   json.loads((ROOT/'configs/evaluation_splits.json').read_text())['anatomy_holdout_v1']['train'])
         rng=np.random.default_rng([9400,cfg['seed'],wid]);net=NavigationActor(cfg['width'],cfg['proposal_bias']);episode_id=0
         def prepare(ep):
             est=ep.observe();tgt=ep.plan_targets_now(est);rule=ep.ctl.act(tgt,est);hold=ep.hold(est)
@@ -60,16 +63,26 @@ def worker(wid,conn,cfg,out):
             while True:
                 seed=cfg['scene_seed_base']+cfg['seed']*1000000+wid*10000+episode_id;episode_id+=1
                 if episode_id>=10000:raise RuntimeError('Training worker seed range exhausted')
-                an=str(rng.choice(train));n=int(rng.integers(1,4));flow=float(rng.choice([.025,.05,.1]))
+                an=str(rng.choice(train));n=int(rng.integers(1,4))
+                if cfg.get('all_difficulties'):
+                    difficulty=int((episode_id-1) % 4)
+                    flow=float((.025,.05,.10,.15)[difficulty])
+                    obstacle_count=int((4,8,16,32)[difficulty])
+                else:
+                    difficulty=None
+                    flow=float(rng.choice([.025,.05,.1]))
+                    obstacle_count=int(cfg['dynamic_obstacle_count'])
                 lat=int(rng.integers(1,4));s=0. if rng.random()<.25 else float(rng.uniform(0,1.25))
                 try:
                     sense=DeployableConfig(latency_steps=lat)
                     ep=LysisEpisode(n,an,seed,sense_cfg=sense,variation=s or None,flow_inlet_mm_s=flow,
-                                    dynamic_obstacle_count=cfg['dynamic_obstacle_count'])
+                                    dynamic_obstacle_count=obstacle_count)
                     break
                 except (ValueError,RuntimeError):continue
             ctl=RLNavigator(ep,net=net,stochastic=True,predictors=cfg['predictors'],uncertainty_fallback=False)
-            ep.metadata=dict(anatomy=an,n=n,seed=seed,flow=flow,latency=lat,s=s,training_seed=cfg['seed'],episode_id=episode_id)
+            ep.metadata=dict(anatomy=an,n=n,seed=seed,flow=flow,latency=lat,s=s,
+                             difficulty=difficulty,dynamic_obstacle_count=obstacle_count,
+                             training_seed=cfg['seed'],episode_id=episode_id)
             ep.geo=geometry(ep);ep.ret=0.;ep.previous=np.zeros((n,3));ep.prev_spacing_violation=0.;ep.policy_iterations=[]
             ep.trace=dict(t=[0.],pos=[ep.env.positions_mm[:n].copy()],mass=[ep.env.masses.copy()],wall=[0.],removal=[0.],sent=[np.zeros((n,3))])
             ep.prepared=prepare(ep)
@@ -145,13 +158,25 @@ def main():
     ap.add_argument('--predictors',default=','.join(PREDICTORS));ap.add_argument('--resume',type=Path)
     ap.add_argument('--dynamic-obstacles',action='store_true')
     ap.add_argument('--dynamic-obstacle-count',type=int,default=8)
+    ap.add_argument('--anatomy', default=None,
+                    help='restrict training scenes to one registered anatomy (e.g. hcc_portal_multifocal)')
+    ap.add_argument('--all-difficulties', action='store_true',
+                    help='cycle HCC training episodes over easy/medium/hard/stress obstacle levels')
     a=ap.parse_args();os.chdir(ROOT);torch.set_num_threads(1);torch.manual_seed(a.seed)
     a.out.mkdir(parents=True,exist_ok=a.resume is not None)
     cfg={k:v for k,v in vars(a).items() if k not in ('out','resume')};cfg['predictors']=a.predictors.split(',')
+    cfg['all_difficulties']=bool(a.all_difficulties)
     cfg['dynamic_obstacle_count']=a.dynamic_obstacle_count if a.dynamic_obstacles else 0
+    if a.anatomy:
+        if a.anatomy != 'hcc_portal_multifocal':
+            known=set(json.load(open('configs/evaluation_splits.json'))['anatomy_holdout_v1']['train'])
+            if a.anatomy not in known: raise ValueError(f'unknown training anatomy: {a.anatomy}')
+        cfg['training_anatomies']=[a.anatomy]
+    else:
+        cfg['training_anatomies']=json.load(open('configs/evaluation_splits.json'))['anatomy_holdout_v1']['train']
     cfg.update(algorithm='PPO categorical recurrent local navigation',global_layer='A_TPG',gamma=.995,gae_lambda=.95,
                shared_safety=True,predictor_frozen=True,observations='delayed image history, issued commands, preoperative map, frozen candidate predictions',
-               training_anatomies=json.load(open('configs/evaluation_splits.json'))['anatomy_holdout_v1']['train'])
+               training_anatomies=cfg['training_anatomies'])
     cfg['source_sha256']={f:hashlib.sha256((ROOT/f).read_bytes()).hexdigest() for f in
         ['marl/predictive_nav_rl.py','marl/dyn_select.py','scripts/train_predictive_nav_rl.py','scripts/benchmark_lysis.py']}
     cfg['predictor_sha256']={f:hashlib.sha256((ROOT/f).read_bytes()).hexdigest() for f in cfg['predictors']}
