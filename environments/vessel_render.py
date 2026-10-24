@@ -63,14 +63,19 @@ class VesselStyle:
     0.22 (the old value) is too faint; ~0.35 keeps both.
     """
 
+    # Presentation task; the simulator state is unchanged. Delivery mode
+    # keeps target sites visible after contact and recolours them on release.
+    task_mode: str = "delivery"
     wall_alpha: float = 0.35
     wall_color: tuple[float, float, float] = (0.80, 0.30, 0.30)
     segment_stride: int = 1          # capsule per Nth station pair; 1 = every
     robot_radius: float = 0.010
     robot_color: tuple[float, float, float, float] = (0.10, 0.45, 1.00, 1.0)
-    robot_contact_color: tuple[float, float, float, float] = (0.10, 0.95, 0.45, 1.0)
+    robot_contact_color: tuple[float, float, float, float] = (0.08, 0.88, 0.75, 1.0)
     clot_color: tuple[float, float, float] = (0.45, 0.32, 0.10)
     clot_alpha_min: float = 0.55
+    delivery_target_color: tuple[float, float, float] = (0.84, 0.18, 0.35)
+    delivery_done_color: tuple[float, float, float] = (0.08, 0.70, 0.52)
 
 
 @dataclass
@@ -152,7 +157,7 @@ class VesselRenderer:
 
     def update_robots(self, positions: np.ndarray,
                       contacting: np.ndarray | None = None) -> None:
-        """Move robot bodies; recolour the ones currently lysing a clot.
+        """Move robot bodies; recolour the ones currently delivering payload.
 
         Colour is the cheapest way to make the behaviour the reward actually
         pays for -- contact with a clot -- visible in a single still frame.
@@ -185,7 +190,7 @@ class VesselRenderer:
 
     def update_clots(self, positions: np.ndarray, mass_frac: np.ndarray,
                      base_radius: float) -> None:
-        """Draw clots with radius scaled by remaining mass.
+        """Draw targets, or legacy shrinking clots, depending on task mode.
 
         Shrinking geometry (not just fading colour) is what makes lysis
         progress readable: a clot being dissolved visibly gets smaller, and a
@@ -195,8 +200,10 @@ class VesselRenderer:
         pos = np.asarray(positions, dtype=np.float64)
         frac = np.clip(np.asarray(mass_frac, dtype=np.float64), 0.0, 1.0)
 
-        live = [i for i, f in enumerate(frac) if f > 1e-6]
-        want = [base_radius * (0.40 + 0.60 * float(frac[i])) for i in live]
+        delivery = self.style.task_mode == "delivery"
+        live = list(range(len(frac))) if delivery else [i for i, f in enumerate(frac) if f > 1e-6]
+        want = [base_radius * (0.72 + 0.12 * float(frac[i])) if delivery
+                else base_radius * (0.40 + 0.60 * float(frac[i])) for i in live]
 
         # Radius is baked into the visual shape, so a changed radius needs a new
         # body. Rebuild only when the set or a radius moved materially.
@@ -214,8 +221,14 @@ class VesselRenderer:
             self.clot_bodies, self._clot_radii = [], []
             cr, cg, cb = self.style.clot_color
             for idx, rr in zip(live, want):
-                a = self.style.clot_alpha_min
-                alpha = a + (1.0 - a) * float(frac[idx])
+                if delivery:
+                    delivered = 1.0 - float(frac[idx])
+                    cr, cg, cb = (self.style.delivery_done_color if delivered >= 0.98
+                                  else self.style.delivery_target_color)
+                    alpha = 1.0
+                else:
+                    a = self.style.clot_alpha_min
+                    alpha = a + (1.0 - a) * float(frac[idx])
                 vis = p.createVisualShape(
                     p.GEOM_SPHERE, radius=max(1e-4, rr),
                     rgbaColor=[cr, cg, cb, alpha], physicsClientId=cid,

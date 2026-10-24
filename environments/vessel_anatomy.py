@@ -144,6 +144,11 @@ class Territory:
 # Territories are registered here. Populated by the anatomy tables below.
 TERRITORIES: dict[str, Territory] = {}
 
+# Registered for a dedicated study and selected only by name.  They are left
+# out of the named scenario pools so the 14-territory pools (and their fixed
+# evaluation splits) used by earlier experiments are unchanged.
+STUDY_ONLY_TERRITORIES: frozenset[str] = frozenset({"hcc_portal_multifocal"})
+
 
 def _register(terr: Territory) -> Territory:
     """Add a territory to the registry, checking it is internally consistent."""
@@ -225,6 +230,86 @@ _register(Territory(
     ),
 ))
 
+
+# =================================================================== hepatocellular carcinoma / portal tree
+
+# Procedural nominal portal-venous construction for the HCC navigation study.
+# The supplied reference image describes multifocal lesions distributed across
+# hepatic segments; it does not contain patient-specific centerlines or radii.
+# This territory therefore encodes that construct as an explicit, reproducible
+# synthetic tree, rather than presenting the image as a measured anatomy.
+_register(Territory(
+    name="hcc_portal_multifocal",
+    description="Synthetic portal-hepatic tree with multifocal HCC target sites",
+    circulation="venous",
+    reference_diameter_mm=8.0,
+    retrograde=False,
+    segments=[
+        Segment("portal_trunk", diameter_mm=12.0, length_mm=42.0,
+                diameter_distal_mm=10.0, tortuosity=0.05, bends=1,
+                direction=(0.15, 0.0, 1.0)),
+        Segment("right_portal", diameter_mm=8.5, length_mm=42.0,
+                parent="portal_trunk", angle_deg=52.0, rotation_deg=0.0,
+                diameter_distal_mm=7.0, tortuosity=0.08, bends=1),
+        Segment("left_portal", diameter_mm=8.0, length_mm=38.0,
+                parent="portal_trunk", angle_deg=58.0, rotation_deg=180.0,
+                diameter_distal_mm=6.8, tortuosity=0.09, bends=1),
+        Segment("right_anterior", diameter_mm=5.8, length_mm=30.0,
+                parent="right_portal", angle_deg=43.0, rotation_deg=35.0,
+                diameter_distal_mm=4.7, tortuosity=0.11, bends=2),
+        Segment("right_posterior", diameter_mm=5.6, length_mm=33.0,
+                parent="right_portal", angle_deg=48.0, rotation_deg=215.0,
+                diameter_distal_mm=4.5, tortuosity=0.12, bends=2),
+        Segment("left_medial", diameter_mm=5.3, length_mm=28.0,
+                parent="left_portal", angle_deg=41.0, rotation_deg=25.0,
+                diameter_distal_mm=4.3, tortuosity=0.10, bends=2),
+        Segment("left_lateral", diameter_mm=5.1, length_mm=31.0,
+                parent="left_portal", angle_deg=47.0, rotation_deg=205.0,
+                diameter_distal_mm=4.1, tortuosity=0.12, bends=2),
+        Segment("segment_viii", diameter_mm=3.7, length_mm=22.0,
+                parent="right_anterior", angle_deg=40.0, rotation_deg=20.0,
+                origin=0.55, diameter_distal_mm=2.8, tortuosity=0.09),
+        Segment("segment_v", diameter_mm=3.5, length_mm=24.0,
+                parent="right_anterior", angle_deg=48.0, rotation_deg=200.0,
+                origin=0.80, diameter_distal_mm=2.7, tortuosity=0.10),
+        Segment("segment_vi", diameter_mm=3.4, length_mm=25.0,
+                parent="right_posterior", angle_deg=43.0, rotation_deg=150.0,
+                origin=0.55, diameter_distal_mm=2.6, tortuosity=0.10),
+        Segment("segment_iv", diameter_mm=3.3, length_mm=23.0,
+                parent="left_medial", angle_deg=44.0, rotation_deg=20.0,
+                origin=0.55, diameter_distal_mm=2.5, tortuosity=0.09),
+        Segment("segment_iii", diameter_mm=3.2, length_mm=24.0,
+                parent="left_lateral", angle_deg=42.0, rotation_deg=145.0,
+                origin=0.55, diameter_distal_mm=2.4, tortuosity=0.11),
+        Segment("segment_ii", diameter_mm=3.0, length_mm=22.0,
+                parent="left_lateral", angle_deg=50.0, rotation_deg=230.0,
+                origin=0.82, diameter_distal_mm=2.2, tortuosity=0.10),
+    ],
+    clot_sites=[
+        ClotSite("segment_viii", 0.55, "multifocal HCC target, right anterior",
+                 weight=2.2, occlusion=0.75),
+        ClotSite("segment_vi", 0.50, "multifocal HCC target, right posterior",
+                 weight=2.0, occlusion=0.75),
+        ClotSite("segment_iv", 0.55, "multifocal HCC target, left medial",
+                 weight=1.8, occlusion=0.75),
+        ClotSite("segment_ii", 0.50, "multifocal HCC target, left lateral",
+                 weight=1.6, occlusion=0.75),
+        ClotSite("portal_trunk", 0.86, "portal bifurcation target",
+                 weight=0.8, occlusion=0.70),
+    ],
+    stenoses=[
+        Stenosis("right_portal", 0.62, residual_fraction=0.65,
+                 length_mm=10.0, kind="tumour_related narrowing"),
+        Stenosis("left_portal", 0.58, residual_fraction=0.70,
+                 length_mm=9.0, kind="tumour_related narrowing"),
+    ],
+    notes=(
+        "Procedural nominal portal-hepatic tree derived from the supplied HCC "
+        "multifocal-target construct. Four segmental target sites represent "
+        "distributed lesions; stenoses are controlled difficulty features. "
+        "This is not patient-specific segmentation or a clinical claim."
+    ),
+))
 
 # =================================================================== coronary
 

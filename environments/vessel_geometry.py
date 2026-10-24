@@ -49,9 +49,9 @@ def _anatomical_names() -> tuple[str, ...]:
     Imported lazily: `vessel_anatomy` imports this module for `Branch` and
     `VesselTree`, so a module-level import here would be circular.
     """
-    from environments.vessel_anatomy import TERRITORIES
+    from environments.vessel_anatomy import STUDY_ONLY_TERRITORIES, TERRITORIES
 
-    return tuple(TERRITORIES)
+    return tuple(n for n in TERRITORIES if n not in STUDY_ONLY_TERRITORIES)
 
 
 # Anatomical territories, modelled on the sites where thrombus actually lodges.
@@ -71,11 +71,12 @@ SCENARIO_POOLS: dict[str, tuple[str, ...]] = {
 
 
 def _fill_pools() -> None:
-    from environments.vessel_anatomy import TERRITORIES
+    from environments.vessel_anatomy import STUDY_ONLY_TERRITORIES, TERRITORIES
 
     for key in ("arterial", "venous"):
         SCENARIO_POOLS[key] = tuple(
-            name for name, spec in TERRITORIES.items() if spec.circulation == key
+            name for name, spec in TERRITORIES.items()
+            if spec.circulation == key and name not in STUDY_ONLY_TERRITORIES
         )
 
 

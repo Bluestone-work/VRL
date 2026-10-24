@@ -6,7 +6,7 @@ import pytest
 
 from environments.mca_compiled import CompiledMCAPhysicalEnv
 from environments.mca_physical_env import DynamicsConfig
-from environments.vessel_anatomy import TERRITORIES
+from environments.vessel_anatomy import STUDY_ONLY_TERRITORIES, TERRITORIES
 from scripts.mca_eval_splits import load_registry, split
 from scripts.train_mca_physical import reset_with_valid_particles
 
@@ -21,7 +21,7 @@ def test_default_anatomy_is_mca_and_unknown_is_rejected():
 
 def test_every_territory_has_disjoint_fixed_splits():
     registry = load_registry()
-    assert set(registry['anatomies']) == set(TERRITORIES)
+    assert set(registry['anatomies']) == set(TERRITORIES) - STUDY_ONLY_TERRITORIES
     assert registry['anatomy_order'][0] == 'mca_m1_lvo'
     assert split('test') == (990000000, 500)  # the MCA sealed test never moves
 

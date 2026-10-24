@@ -245,6 +245,16 @@ class PhysicalTubeTransport:
         return fixed, new_edge, wall & ~blocked, blocked
 
     def _boundary_crossings(self, previous, proposed, edge, body_radius, solution):
+        # Keep invalid policy/physics states in Python where they can be
+        # diagnosed.  Without this guard a NaN or an out-of-range edge can
+        # reach the vectorised geometry below and occasionally crash a native
+        # NumPy/BLAS extension instead of producing a useful rollout error.
+        if (previous.ndim != 2 or proposed.shape != previous.shape or
+                previous.shape[1] != 3 or not np.isfinite(previous).all() or
+                not np.isfinite(proposed).all() or edge.ndim != 1 or
+                edge.shape[0] != len(previous) or
+                np.any((edge < 0) | (edge >= len(self.ends)))):
+            raise FloatingPointError('Invalid physical state before boundary crossing')
         node = np.full(len(edge), -1, np.int32)
         fraction = np.ones(len(edge))
         point = proposed.copy()
@@ -339,6 +349,9 @@ class PhysicalTubeTransport:
             smooth = (axial >= 0) & (axial <= 1) & (mid_edge == e)
             proposal = current + dt * np.where(smooth[:, None], vmid, v0)
             fixed, next_edge, wall, blocked = self._project(proposal, current, e, a, solution)
+            if (not np.isfinite(fixed).all() or
+                    np.any((next_edge < 0) | (next_edge >= len(self.ends)))):
+                raise FloatingPointError('Physical integration produced an invalid position or edge')
             # Absorb on the accepted, wall-constrained path. The raw proposal
             # can cross an outlet outside its aperture, then project back into
             # the opening; checking only the raw path misses that exit forever
@@ -356,6 +369,8 @@ class PhysicalTubeTransport:
             exit_time[ids[exited]] = elapsed + dt * alpha[exited]
             exit_node[ids[exited]] = node[exited]
             active[ids[exited]] = False
+            if not np.isfinite(pos).all():
+                raise FloatingPointError('Physical integration produced non-finite positions')
             effective_dt = np.zeros(n)
             effective_dt[ids] = dt * np.where(exited, alpha, 1)
             if after_substep is not None:

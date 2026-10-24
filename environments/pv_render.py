@@ -226,6 +226,10 @@ class PVStyle:
 
     width: int = 1280
     height: int = 720
+    # Presentation task. The physical simulator is unchanged; delivery mode
+    # reinterprets the same target/contact signal as payload release at a
+    # lesion site.
+    task_mode: str = "delivery"
     # "bottom" gives the 3D view the full frame width, which is what these flat
     # vessel trees need; "right" stacks the panels vertically instead. Set
     # either dimension to 0 to drop the HUD.
@@ -249,7 +253,7 @@ class PVStyle:
     # survives the exaggeration. The physics is untouched either way.
     robot_radius: float = 0.016
     robot_color: str = "#3ea8ff"          # transiting
-    robot_contact_color: str = "#31e07a"  # lysing a clot
+    robot_contact_color: str = "#28e0c0"  # releasing payload at target
     robot_wall_color: str = "#ffd23f"     # scraping the wall this step
     robot_specular: float = 0.45
     robot_ambient: float = 0.5
@@ -261,6 +265,9 @@ class PVStyle:
     clot_color_dying: str = "#e8c88a"
     clot_opacity: float = 1.0
     clot_ambient: float = 0.55
+    delivery_target_color: str = "#d94d68"
+    delivery_done_color: str = "#20b993"
+    delivery_particle_color: str = "#f4bd3f"
 
     route_color: str = "#7ce8ff"
     route_opacity: float = 0.75
@@ -422,10 +429,11 @@ class HudPainter:
         self._agent_colors = [cmap(0.12 + 0.76 * i / max(self.n_robots - 1, 1))
                               for i in range(self.n_robots)]
 
-        for ax, ylab in ((self.ax_dist, "geodesic → target"),
-                         (self.ax_rate, "removal rate"),
+        delivery = style.task_mode == "delivery"
+        for ax, ylab in ((self.ax_dist, "geodesic → delivery target" if delivery else "geodesic → target"),
+                         (self.ax_rate, "delivery progress" if delivery else "removal rate"),
                          (self.ax_reward, "step reward"),
-                         (self.ax_clot, "clot mass")):
+                         (self.ax_clot, "payload release" if delivery else "clot mass")):
             ax.set_facecolor(style.hud_bg)
             ax.grid(True, color=style.hud_grid, lw=0.6, alpha=0.9)
             ax.set_ylabel(ylab, color=style.hud_fg, fontsize=8.5)
@@ -545,6 +553,7 @@ class PVRenderer:
         self._robot_meshes: list = []
         self._robot_state: list = []
         self._clot_actors: list = []
+        self._delivery_actors: list = []
         self._route_actors: list = []
         self._hud: HudPainter | None = None
         self._frame = 0
@@ -879,16 +888,51 @@ class PVRenderer:
                 actor.GetProperty().SetColor(*pv.Color(color).float_rgb)
                 self._robot_state[i] = state
 
-        # Clots: radius encodes remaining mass, so lysis is visible as the clot
-        # shrinking and finally vanishing. Radius lives in the sphere source,
-        # hence the rebuild.
+        # Targets are rendered in two semantic modes. In legacy lysis mode the
+        # sphere shrinks with remaining mass. In delivery mode the target site
+        # stays visible, while its colour/halo and released payload particles
+        # show progress; the underlying dynamics and contact signal are the
+        # same in both modes.
         for actor in self._clot_actors:
             self.plotter.remove_actor(actor, render=False)
         self._clot_actors = []
+        for actor in self._delivery_actors:
+            self.plotter.remove_actor(actor, render=False)
+        self._delivery_actors = []
         cpos = np.asarray(clot_positions, dtype=np.float64)
         frac = np.clip(np.asarray(clot_frac, dtype=np.float64), 0.0, 1.0)
         for i in range(cpos.shape[0]):
             f = float(frac[i])
+            if st.task_mode == "delivery":
+                delivered = 1.0 - f
+                r = clot_base_radius * (0.72 + 0.12 * f)
+                col = st.delivery_done_color if delivered >= 0.98 else st.delivery_target_color
+                mesh = pv.Sphere(radius=r, center=tuple(cpos[i]),
+                                 theta_resolution=22, phi_resolution=22)
+                self._delivery_actors.append(self.plotter.add_mesh(
+                    mesh, color=col, opacity=1.0, smooth_shading=True,
+                    specular=0.2, ambient=0.65, diffuse=0.7, render=False))
+                if delivered > 0.03:
+                    halo = pv.Sphere(radius=r * (1.35 + 0.25 * delivered),
+                                     center=tuple(cpos[i]), theta_resolution=18,
+                                     phi_resolution=18)
+                    self._delivery_actors.append(self.plotter.add_mesh(
+                        halo, color=st.delivery_done_color,
+                        opacity=min(0.28, 0.08 + 0.20 * delivered),
+                        smooth_shading=True, ambient=0.8, diffuse=0.2,
+                        render=False))
+                    # Four deterministic payload markers make release visible
+                    # without adding simulator state or changing trajectories.
+                    for dx, dy, dz in ((1, 0, 0), (-1, 0, 0),
+                                       (0, 1, 0), (0, 0, 1)):
+                        q = cpos[i] + np.asarray((dx, dy, dz), np.float64) * r * (1.35 + 0.6 * delivered)
+                        particle = pv.Sphere(radius=max(r * 0.11, 1e-4), center=tuple(q),
+                                              theta_resolution=12, phi_resolution=12)
+                        self._delivery_actors.append(self.plotter.add_mesh(
+                            particle, color=st.delivery_particle_color,
+                            opacity=0.9, ambient=0.8, diffuse=0.3,
+                            render=False))
+                continue
             if f <= 1e-6:
                 continue
             r = clot_base_radius * (0.42 + 0.58 * f)
@@ -1048,6 +1092,7 @@ class PVRenderer:
         self._robot_meshes = []
         self._robot_actors = []
         self._clot_actors = []
+        self._delivery_actors = []
         self._route_actors = []
         self._content = None
 

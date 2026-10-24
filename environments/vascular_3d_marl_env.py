@@ -85,7 +85,11 @@ OBS_MODES = ("geometric", "geometric_v2", "geometric_dynamic", "geometric_predic
 
 
 class Vascular3DMARLEnv(gym.Env):
-    """Per-agent multi-agent thrombolysis navigation in a 3-D vessel tree."""
+    """Per-agent multi-agent vascular navigation in a 3-D vessel tree.
+
+    The physical target/contact dynamics are retained for reproducibility; the
+    renderer presents those target sites as drug-delivery locations.
+    """
 
     metadata = {"render_modes": ["rgb_array", "human"], "render_fps": 20}
 
@@ -338,6 +342,7 @@ class Vascular3DMARLEnv(gym.Env):
         self.robot_path_length = np.zeros((self.num_robots,), np.float32)
         self.robot_path_length = np.zeros((self.num_robots,), np.float32)
         self._pb = None
+        self._renderer = None
         self._route_cache: dict[int, tuple[np.ndarray, np.ndarray]] = {}
 
     # -------------------------------------------------------------- curriculum
