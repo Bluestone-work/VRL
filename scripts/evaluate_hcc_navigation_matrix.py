@@ -51,9 +51,9 @@ IPPO_MODELS = {
 }
 
 
-def _target_metric(ep, reached, reach_times, start_t):
+def _target_metric(ep, reached, reach_times, start_t, targets=None):
     est = ep.observe()
-    tgt = ep.plan_targets_now(est)
+    tgt = ep.plan_targets_now(est) if targets is None else targets
     for i, c in enumerate(np.asarray(tgt, dtype=int)):
         if reached[i] or c < 0:
             continue
@@ -115,13 +115,27 @@ def run_classic(method, difficulty, seed, horizon=300.0):
     # Do not let the legacy lysis event terminate the navigation episode.
     from dataclasses import replace
     ep.env.config = replace(ep.env.config, lysis_mass_per_s=0.)
+    # Align the navigation protocol with the IPPO training environment
+    # (train_sb3_curriculum.py:209).  preoperative_plan minimises makespan with
+    # no "every robot gets a clot" constraint, so it may leave a robot with an
+    # empty plan; PlanTargets then returns -1 forever under the 'park' fallback
+    # selected for tpg runs, and no controller can ever satisfy np.all(reached).
+    # Freeze the assignment once and fall back to the physical geodesic
+    # assignment exactly as the training environment does, so every method
+    # solves the same task.  With lysis disabled no clot ever dies, so freezing
+    # is equivalent to re-planning each step whenever the plan is non-empty.
+    frozen = np.asarray(ep.plan_targets_now(ep.observe()), np.int64).copy()
+    if np.any(frozen < 0):
+        frozen = np.asarray(ep.env._assigned_targets(), np.int64).copy()
+    if np.any(frozen < 0):
+        raise RuntimeError("navigation evaluation produced an unassigned target")
     reached = np.zeros(ep.n, dtype=bool)
     reach_times = np.full(ep.n, np.nan)
     start_t = time.monotonic()
     done = False
     try:
         while True:
-            est, tgt = _target_metric(ep, reached, reach_times, start_t)
+            est, tgt = _target_metric(ep, reached, reach_times, start_t, frozen)
             if method == "stpg" and switcher is not None:
                 switcher.update(ep.env.elapsed_s)
             rule = ep.ctl.act(tgt, est)
@@ -130,7 +144,7 @@ def run_classic(method, difficulty, seed, horizon=300.0):
             # Count a target reached by the just-executed command before a
             # finite-horizon terminal is handled.
             try:
-                _target_metric(ep, reached, reach_times, start_t)
+                _target_metric(ep, reached, reach_times, start_t, frozen)
             except Exception:
                 pass
             if np.all(reached) and not np.any(~ep.env.active[:ep.n]):
@@ -227,14 +241,26 @@ def main():
                     help="directory containing HCC_IPPO_S41/S42/S43 run folders; use retrained checkpoints")
     ap.add_argument("--ours-model", type=Path, default=None,
                     help="HCC-trained predictive selector policy.pt for method ours_hcc")
+    ap.add_argument("--ippo-model", action="append", default=[], metavar="LABEL=PATH",
+                    help="override one IPPO label with an explicit .zip, e.g. "
+                         "IPPO_S41=research/runs/HCC_MIX_S41_500K_20261028/final_model.zip; "
+                         "repeatable, applied after --ippo-root")
     args = ap.parse_args()
+    global IPPO_MODELS
     if args.ippo_root is not None:
-        global IPPO_MODELS
         IPPO_MODELS = {}
         for s in (41, 42, 43):
             v2 = args.ippo_root / f"HCC_IPPO_S{s}_500K_20261019_v2/final_model.zip"
             v1 = args.ippo_root / f"HCC_IPPO_S{s}_500K_20261019/final_model.zip"
             IPPO_MODELS[f"IPPO_S{s}"] = v2 if v2.exists() else v1
+    for spec in args.ippo_model:
+        label, _, path = spec.partition("=")
+        if not path:
+            raise ValueError(f"--ippo-model expects LABEL=PATH, got {spec!r}")
+        target = Path(path)
+        if not target.exists():
+            raise FileNotFoundError(f"IPPO override not found: {target}")
+        IPPO_MODELS[label.strip()] = target
     if args.ours_model is not None:
         global OURS_MODEL
         OURS_MODEL = args.ours_model

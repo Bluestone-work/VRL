@@ -496,6 +496,12 @@ def main():
                    help="limit manifest rows for a pilot; 0 uses all train rows")
     p.add_argument("--anatomy", default=None,
                    help="restrict training/evaluation scenes to one registered anatomy (e.g. hcc_portal_multifocal)")
+    p.add_argument("--anatomy-repeat", default=None,
+                   help="oversample one anatomy inside the mixed pool, e.g. hcc_portal_multifocal:9")
+    p.add_argument("--init-from", type=Path, default=None,
+                   help="warm-start policy weights from an existing SB3 .zip with the same action set")
+    p.add_argument("--eval-anatomy", default=None,
+                   help="anatomy for the post-training self-evaluation; defaults to the oversampled one")
     p.add_argument("--no-curriculum", action="store_true",
                    help="sample all four difficulty levels directly instead of waiting for navigation mastery")
     a = p.parse_args()
@@ -515,13 +521,29 @@ def main():
         curriculum=not a.no_curriculum, prediction=True, shaping=True, reward_mode="navigation",
         zero_latency=True, direct_action=True,
         episode_log=a.out / "episodes.jsonl", dataset_rows=dataset_rows)
+    pool_default = set(physical.train_anatomies) | {"hcc_portal_multifocal"}
     if a.anatomy:
         # Keep the environment mechanics unchanged while replacing only the
-        # anatomy pool.  This is the HCC re-training protocol, rather than a
-        # zero-shot transfer evaluation.
-        if a.anatomy not in {"hcc_portal_multifocal"} and a.anatomy not in set(physical.train_anatomies):
-            raise ValueError(f"unknown training anatomy: {a.anatomy}")
-        physical.train_anatomies = [a.anatomy]
+        # anatomy pool.  A comma-separated list trains on a mixture: the
+        # single-anatomy HCC run collapsed to 23.2% training success because the
+        # pool carried no cross-anatomy variation, so a mixture is the
+        # retraining protocol rather than a zero-shot transfer evaluation.
+        names = [x.strip() for x in str(a.anatomy).split(",") if x.strip()]
+        unknown = [n for n in names if n not in pool_default]
+        if unknown:
+            raise ValueError(f"unknown training anatomy: {', '.join(unknown)}")
+        physical.train_anatomies = names
+    if a.anatomy_repeat:
+        # anatomy_bag reshuffles train_anatomies without replacement, so a
+        # repeated entry oversamples that anatomy by exactly that factor.
+        name, _, k = str(a.anatomy_repeat).partition(":")
+        name = name.strip()
+        factor = int(k) if k else 1
+        if name not in pool_default:
+            raise ValueError(f"unknown anatomy to oversample: {name}")
+        if factor < 1:
+            raise ValueError("--anatomy-repeat factor must be >= 1")
+        physical.train_anatomies = [x for x in physical.train_anatomies if x != name] + [name] * factor
     env = IPPOAgentVecEnv(physical, action_set=a.action_set)
     cfg = dict(algorithm="IPPO_shared", framework="stable-baselines3 2.7.1",
                seed=a.seed, clusters=a.clusters, physical_steps=a.timesteps,
@@ -541,6 +563,11 @@ def main():
                dataset_manifest=str(MANIFEST.relative_to(ROOT)) if dataset_rows is not None else None,
                dataset_manifest_sha256=dataset_sha256,
                training_anatomies=list(physical.train_anatomies),
+               anatomy_pool=sorted(set(physical.train_anatomies)),
+               anatomy_repeat=a.anatomy_repeat,
+               warm_start_from=(str(a.init_from) if a.init_from else None),
+               warm_start_sha256=(hashlib.sha256(Path(a.init_from).read_bytes()).hexdigest()
+                                  if a.init_from else None),
                source_script=str(Path(__file__).resolve()))
     (a.out / "config.json").write_text(json.dumps(cfg, indent=2, ensure_ascii=False))
     policy_kwargs = dict(features_extractor_class=IPPOExtractor, normalize_images=False,
@@ -551,6 +578,10 @@ def main():
                 policy_kwargs=policy_kwargs, learning_rate=1e-4, n_steps=256,
                 batch_size=128, n_epochs=4, gamma=.995, gae_lambda=.95,
                 clip_range=.2, ent_coef=a.ent_coef)
+    if a.init_from:
+        # Warm-start from the multi-anatomy K13 policy.  The action set and
+        # observation layout must match or set_parameters raises.
+        model.set_parameters(str(a.init_from), device=a.device)
     model.set_logger(configure(str(a.out), ["csv", "json", "tensorboard"]))
     model.save(a.out / "initial_model")
     started = time.monotonic()
@@ -561,7 +592,10 @@ def main():
         summary = dict(environment_steps=a.timesteps, agent_steps=model.num_timesteps,
                        training_seconds=time.monotonic() - started)
         (a.out / "TRAINING_COMPLETE.json").write_text(json.dumps(summary, indent=2))
-        result = evaluate(model, a.out, a.clusters, a.eval_count, a.action_set, a.anatomy)
+        eval_anatomy = a.eval_anatomy or (
+            str(a.anatomy_repeat).partition(":")[0].strip() if a.anatomy_repeat
+            else (physical.train_anatomies[0] if a.anatomy else None))
+        result = evaluate(model, a.out, a.clusters, a.eval_count, a.action_set, eval_anatomy)
         (a.out / "RUN_COMPLETE.json").write_text(json.dumps(result, indent=2))
     finally:
         env.close()
