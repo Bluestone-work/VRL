@@ -39,7 +39,11 @@ DIFF = (
 )
 PREDICTORS = [str(ROOT.parent.parent / "VRL_archive_20261016/research/EXP0090_20261011/predictor" / f"predictor_s{i}.pt") for i in range(3)]
 TURBO = ROOT.parent.parent / "VRL_archive_20261016/research/EXP0093_20261011/turbo_hard_s0/policy.pt"
-OURS_MODEL = ROOT / "research/runs/HCC_OURS_S41_500K_20261019/policy.pt"
+# The v1 run stopped at iteration 258/1000 (132 k environment steps) with no
+# difficulty rotation and is not a finished policy.  v2 completed 1000
+# iterations / 512 k environment steps with the four-difficulty rotation, so it
+# is the registered HCC checkpoint for ours_hcc.
+OURS_MODEL = ROOT / "research/runs/HCC_OURS_S41_500K_20261019_v2/policy.pt"
 IPPO_MODELS = {
     "IPPO_S41": ROOT / "research/runs/EXP0141_IPPO_SEMANTIC_REDUCED_S41_20261016/final_model.zip",
     "IPPO_S42": ROOT / "research/runs/EXP0142_IPPO_SEMANTIC_REDUCED_S42_20261016/final_model.zip",
@@ -216,6 +220,8 @@ def main():
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--horizon", type=float, default=300.)
     ap.add_argument("--repeats", type=int, default=1)
+    ap.add_argument("--repeat-offset", type=int, default=0,
+                    help="shift the paired seed block so parallel shards cover disjoint repeats")
     ap.add_argument("--methods", default="ours,online,pursuit,pac,mppi,cbf,turbo,stpg,IPPO_S41,IPPO_S42,IPPO_S43")
     ap.add_argument("--ippo-root", type=Path, default=None,
                     help="directory containing HCC_IPPO_S41/S42/S43 run folders; use retrained checkpoints")
@@ -236,7 +242,7 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     methods = [m.strip() for m in args.methods.split(",") if m.strip()]
-    for repeat in range(args.repeats):
+    for repeat in range(args.repeat_offset, args.repeat_offset + args.repeats):
         for d in range(4):
             seed = 1910000000 + repeat*100 + d
             for method in methods:
@@ -262,6 +268,10 @@ def main():
                                                       for i,(n,o,f) in enumerate(DIFF)],
                   methods=methods, predictor_checkpoints=[str(p) for p in PREDICTORS],
                   turbo_checkpoint=str(TURBO), ippo_checkpoints={k:str(v) for k,v in IPPO_MODELS.items()},
+                  ours_checkpoint=str(OURS_MODEL),
+                  ours_checkpoint_sha256=(hashlib.sha256(Path(OURS_MODEL).read_bytes()).hexdigest()
+                                          if Path(OURS_MODEL).exists() else None),
+                  repeat_offset=args.repeat_offset,
                   source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), rows=rows)
     args.out.write_text(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False)+"\n")
     by = defaultdict(list)
