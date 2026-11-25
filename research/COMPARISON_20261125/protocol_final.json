@@ -1,0 +1,10 @@
+{
+  "base_sha": "ec9a097b46e4d865b2b20b079f1bb44dbb1b91",
+  "worktree_branch": "exp/vascular-comparison-20261125",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "main_protocol": {"clusters": 3, "action_set": "semantic_reduced_K13", "mask_invalid": true, "flow_feature": true, "safety_parity": true, "zero_latency": true, "train_physical_steps": 50000, "training_seeds": [41,42,43]},
+  "completed": ["pursuit_train180", "pursuit_holdout100", "ippo_train12_seed41_42_43", "mappo_train12_seed41_42_43", "csn_adaptation_train12", "fixed_three_lesion_pursuit_N1_N2_N3_count6"],
+  "incomplete": ["full_IPPO_manifest_evaluation", "full_MAPPO_manifest_evaluation", "QMIX", "SAC_vs_continuous_PPO", "CCBS", "Yang_N1_full_transfer", "Yang_N3_full_transfer"],
+  "evaluation_failure": "Concurrent and single-process full learned-policy evaluation hit exit code 139 (segmentation fault) in the simulator process. Completed JSON files were retained, and no failed run was counted as complete."
+}

@@ -22,7 +22,66 @@ if str(ROOT) not in sys.path:
 
 from marl.vessel_sdf import project_local_commands
 
-METHODS = ('pursuit', 'stpg', 'pac')
+METHODS = ('pursuit', 'stpg', 'pac', 'csn', 'yang_hier')
+
+
+class CSNAdapter:
+    """Concentric-sector local planner adapted from the cited 2-D CSN paper.
+
+    The original paper uses a planar sector scan.  VRL exposes a 3-D Frenet
+    frame, so this adapter evaluates a forward direction plus two rings of
+    lateral/binormal sectors and then lets the common WallGuard and TPG layer
+    execute the selected command.  It is explicitly a 3-D adaptation, not an
+    author-code reproduction.
+    """
+    def __init__(self, ep):
+        self.ep = ep
+
+    def __call__(self, ep, est, targets, rule, hold):
+        frames = ep.ctl.frames(est)
+        out = np.zeros((ep.n, 3), dtype=float)
+        for i, target in enumerate(targets):
+            if target < 0 or not est.active[i] or hold[i]:
+                continue
+            frame = frames[i]
+            goal = frame @ (ep.env.clot_positions_mm[int(target)] - est.pos[i])
+            goal = goal / max(float(np.linalg.norm(goal)), 1e-9)
+            tangent = np.asarray(rule[i], float)
+            tangent /= max(float(np.linalg.norm(tangent)), 1e-9)
+            candidates = [tangent, goal]
+            for radius in (.35, .70):
+                for axis in (1, 2):
+                    for sign in (-1., 1.):
+                        c = tangent.copy()
+                        c[axis] += sign * radius
+                        candidates.append(c / max(float(np.linalg.norm(c)), 1e-9))
+            scores = []
+            for c in candidates:
+                scores.append(float(1.0 - np.dot(c, goal) + .15 * np.linalg.norm(c - tangent)))
+            out[i] = candidates[int(np.argmin(scores))]
+        return out
+
+
+class YangHierarchicalAdapter:
+    """Short-range waypoint plus local route control, adapted from Yang et al."""
+    def __init__(self, ep):
+        self.ep = ep
+
+    def __call__(self, ep, est, targets, rule, hold):
+        frames = ep.ctl.frames(est)
+        out = np.zeros((ep.n, 3), dtype=float)
+        for i, target in enumerate(targets):
+            if target < 0 or not est.active[i] or hold[i]:
+                continue
+            route = ep.ctl.pts[i]
+            if route is None or len(route) == 0:
+                out[i] = rule[i]
+                continue
+            k = min(int(ep.ctl.prog[i]) + 5, len(route) - 1)
+            waypoint = route[k]
+            local = frames[i] @ (waypoint - est.pos[i])
+            out[i] = local / max(float(np.linalg.norm(local)), 1e-9)
+        return out
 
 
 def build_controller(method, ep):
@@ -38,6 +97,10 @@ def build_controller(method, ep):
     if method == 'pac':
         from marl.lysis_baselines import PacNMPC
         return PacNMPC(ep), None
+    if method == 'csn':
+        return CSNAdapter(ep), None
+    if method == 'yang_hier':
+        return YangHierarchicalAdapter(ep), None
     raise ValueError(method)
 
 
@@ -59,8 +122,9 @@ def run_row(phys, method, row):
         if switcher is not None:
             switcher.update(ep.env.elapsed_s)
             hold = ep.hold(est)
-        local = ctl(ep, est, targets, rule, hold)
-        local, _ = project_local_commands(local, est, targets, hold, ep.ctl.frames(est), phys.sdf, ep.ctl.body)
+        requested_local = np.asarray(ctl(ep, est, targets, rule, hold), float)
+        local, safety_rewrites = project_local_commands(requested_local, est, targets, hold,
+                                                        ep.ctl.frames(est), phys.sdf, ep.ctl.body)
         done, res = ep.step(est, local, hold)
         wall += float(np.sum(res['wall']))
         wall_after_reach += float(res['wall'][reached].sum())
@@ -87,6 +151,9 @@ def run_row(phys, method, row):
                 elapsed_s=float(ep.env.elapsed_s),
                 wall_contact_s=float(wall), wall_after_reach_s=wall_after_reach, lost=lost,
                 strict_success=bool(reached.all() and lost == 0 and wall < 1.),
+                requested_command_norm=float(np.linalg.norm(requested_local)),
+                executed_command_norm=float(np.linalg.norm(local)),
+                safety_rewrites=int(safety_rewrites),
                 seconds=float(time.monotonic() - started))
 
 

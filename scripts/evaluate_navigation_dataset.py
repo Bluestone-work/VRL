@@ -61,6 +61,8 @@ def main():
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--flow-feature", action="store_true",
                         help="must match the checkpoint: the flow adapter expects the flow observation")
+    parser.add_argument("--centralized-critic", action="store_true",
+                        help="load a MAPPO checkpoint whose value function uses central_state")
     parser.add_argument("--safety-parity", action=argparse.BooleanOptionalAction, default=True,
                         help="apply the HCC matrix wall recovery and near-target settling protocol")
     args = parser.parse_args()
@@ -82,7 +84,8 @@ def main():
     env = IPPOAgentVecEnv(CurriculumVascularEnv(
         seed=4101, clusters=args.clusters, curriculum=False, reward_mode="navigation",
         zero_latency=True, direct_action=True, centerline_match=args.centerline_match), action_set=args.action_set,
-        flow_feature=args.flow_feature, safety_parity=args.safety_parity, exit_mask=False)
+        flow_feature=args.flow_feature, safety_parity=args.safety_parity, exit_mask=False,
+        centralized_critic=args.centralized_critic)
     # Holdout rows are permitted only because this is an explicit evaluation
     # runner. They are never used by the training environment or selector.
     env.physical.train_anatomies = anatomies

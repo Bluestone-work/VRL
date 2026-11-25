@@ -1,0 +1,701 @@
+{
+  "episodes": 18,
+  "tau_s": 30.0,
+  "rows": [
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200000,
+      "assignment": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        52.60000000000048,
+        84.79999999999946,
+        104.99999999999831
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 52.39999999999783,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 104.99999999999831,
+      "wall_contact_s": 10.899999999999977,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 104.99999999999831,
+      "timeout": false,
+      "seconds": 5.2693395998794585
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200001,
+      "assignment": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        71.40000000000022,
+        100.19999999999858,
+        135.89999999999657
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 64.49999999999635,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 135.89999999999657,
+      "wall_contact_s": 11.099999999999977,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 135.89999999999657,
+      "timeout": false,
+      "seconds": 6.697524728951976
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200002,
+      "assignment": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        4.899999999999999,
+        70.20000000000029,
+        86.09999999999938
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 81.19999999999939,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 86.09999999999938,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 86.09999999999938,
+      "timeout": false,
+      "seconds": 4.383066015085205
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200003,
+      "assignment": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        16.09999999999996,
+        45.00000000000037,
+        102.09999999999847
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 85.99999999999852,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 102.09999999999847,
+      "wall_contact_s": 8.399999999999986,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 102.09999999999847,
+      "timeout": false,
+      "seconds": 5.290768763050437
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200004,
+      "assignment": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        66.20000000000051,
+        112.59999999999788,
+        137.2999999999965
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 71.09999999999597,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 137.2999999999965,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 137.2999999999965,
+      "timeout": false,
+      "seconds": 6.562370612984523
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200005,
+      "assignment": [
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        2.0000000000000004,
+        42.600000000000335,
+        53.30000000000049
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 51.30000000000049,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 53.30000000000049,
+      "wall_contact_s": 9.499999999999982,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 53.30000000000049,
+      "timeout": false,
+      "seconds": 2.9579893879126757
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200000,
+      "assignment": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        94.29999999999892,
+        126.49999999999709,
+        73.6000000000001
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 52.89999999999699,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 126.49999999999709,
+      "wall_contact_s": 10.899999999999977,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 126.49999999999709,
+      "timeout": false,
+      "seconds": 10.633241500006989
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200001,
+      "assignment": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        71.40000000000022,
+        100.19999999999858,
+        0.5
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 99.69999999999858,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 100.19999999999858,
+      "wall_contact_s": 11.099999999999977,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 100.19999999999858,
+      "timeout": false,
+      "seconds": 8.082494440022856
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200002,
+      "assignment": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        4.899999999999999,
+        70.20000000000029,
+        26.200000000000102
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 65.3000000000003,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 70.20000000000029,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 70.20000000000029,
+      "timeout": false,
+      "seconds": 5.87222086195834
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200003,
+      "assignment": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        0
+      ],
+      "first_arrival_s": [
+        16.09999999999996,
+        45.10000000000037,
+        null
+      ],
+      "all_three_reached": false,
+      "arrival_span_s": null,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": null,
+      "wall_contact_s": 267.9798883615869,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 1,
+      "elapsed_s": 211.89999999999225,
+      "timeout": false,
+      "seconds": 18.95222979900427
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200004,
+      "assignment": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        0,
+        1
+      ],
+      "first_arrival_s": [
+        66.10000000000052,
+        null,
+        28.500000000000135
+      ],
+      "all_three_reached": false,
+      "arrival_span_s": null,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": null,
+      "wall_contact_s": 7.308871173735709,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 299.9999999999997,
+      "timeout": false,
+      "seconds": 23.877123047830537
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200005,
+      "assignment": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        0,
+        1
+      ],
+      "first_arrival_s": [
+        2.0000000000000004,
+        null,
+        7.29999999999999
+      ],
+      "all_three_reached": false,
+      "arrival_span_s": null,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": null,
+      "wall_contact_s": 142.0441646919118,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 299.9999999999997,
+      "timeout": false,
+      "seconds": 29.54887120705098
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200000,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        94.6999999999989,
+        53.50000000000049,
+        25.900000000000098
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 68.79999999999879,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 94.6999999999989,
+      "wall_contact_s": 10.899999999999977,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 94.6999999999989,
+      "timeout": false,
+      "seconds": 10.514499854063615
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200001,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        0
+      ],
+      "first_arrival_s": [
+        171.89999999999452,
+        37.50000000000026,
+        null
+      ],
+      "all_three_reached": false,
+      "arrival_span_s": null,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": null,
+      "wall_contact_s": 85.15110711706386,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 299.9999999999997,
+      "timeout": false,
+      "seconds": 32.802970158169046
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200002,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        4.899999999999999,
+        29.800000000000153,
+        14.799999999999963
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 24.900000000000155,
+      "tau_s": 30.0,
+      "synchronized_success": true,
+      "last_arrival_s": 29.800000000000153,
+      "wall_contact_s": 0.3255939298752577,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 29.800000000000153,
+      "timeout": false,
+      "seconds": 3.784569700015709
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200003,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        0,
+        1,
+        0
+      ],
+      "first_arrival_s": [
+        null,
+        78.99999999999979,
+        null
+      ],
+      "all_three_reached": false,
+      "arrival_span_s": null,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": null,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 299.9999999999997,
+      "timeout": false,
+      "seconds": 41.80420428398065
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200004,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        67.30000000000045,
+        3.2000000000000015,
+        23.600000000000065
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 64.10000000000045,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 67.30000000000045,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 67.30000000000045,
+      "timeout": false,
+      "seconds": 7.62963371607475
+    },
+    {
+      "method": "pursuit",
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200005,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        2.0000000000000004,
+        40.3000000000003,
+        52.90000000000048
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 50.90000000000048,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 52.90000000000048,
+      "wall_contact_s": 9.399999999999983,
+      "spacing_pair_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 52.90000000000048,
+      "timeout": false,
+      "seconds": 6.294582860078663
+    }
+  ],
+  "by_clusters": {
+    "1": {
+      "episodes": 6,
+      "all_three_rate": 1.0,
+      "synchronized_rate": 0.0,
+      "last_arrival_s": 103.28333333333161,
+      "arrival_span_s": 67.74999999999808,
+      "wall_contact_s": 6.649999999999987,
+      "lost_rate": 0.0
+    },
+    "2": {
+      "episodes": 6,
+      "all_three_rate": 0.5,
+      "synchronized_rate": 0.0,
+      "last_arrival_s": 98.96666666666532,
+      "arrival_span_s": 72.63333333333196,
+      "wall_contact_s": 73.22215403787239,
+      "lost_rate": 0.16666666666666666
+    },
+    "3": {
+      "episodes": 6,
+      "all_three_rate": 0.6666666666666666,
+      "synchronized_rate": 0.16666666666666666,
+      "last_arrival_s": 61.175,
+      "arrival_span_s": 52.17499999999997,
+      "wall_contact_s": 17.629450174489843,
+      "lost_rate": 0.0
+    }
+  }
+}

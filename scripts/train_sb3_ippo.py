@@ -26,7 +26,7 @@ from stable_baselines3 import DQN, PPO
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.logger import configure
 from stable_baselines3.common.save_util import load_from_zip_file
-from stable_baselines3.common.policies import MultiInputActorCriticPolicy
+from stable_baselines3.common.policies import ActorCriticPolicy, MultiInputActorCriticPolicy
 from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 from stable_baselines3.common.vec_env import VecEnv
 from torch import nn
@@ -177,7 +177,8 @@ class IPPOAgentVecEnv(VecEnv):
 
     def __init__(self, physical_env: CurriculumVascularEnv, action_set="semantic",
                  failure_log="integration_failures.json", flow_feature=False,
-                 safety_parity=False, settle_radius=.3, exit_mask=False):
+                 safety_parity=False, settle_radius=.3, exit_mask=False,
+                 centralized_critic=False):
         self.physical = physical_env
         if action_set not in ("semantic", "semantic_reduced", "semantic_minimal", "atomic", "continuous"):
             raise ValueError("action_set must be semantic, semantic_reduced, semantic_minimal, atomic, or continuous")
@@ -201,6 +202,7 @@ class IPPOAgentVecEnv(VecEnv):
         self.safety_parity = bool(safety_parity)
         self.settle_radius = float(settle_radius)
         self.exit_mask = bool(exit_mask)
+        self.centralized_critic = bool(centralized_critic)
         self.exit_masked_total = 0
         self._wall_guard = None
         # Continuous actors still receive the compact atomic basis as context,
@@ -231,6 +233,8 @@ class IPPOAgentVecEnv(VecEnv):
             "candidates": spaces.Box(-1., 1., (self.candidate_count, 3), np.float32),
             "candidate_valid": spaces.Box(0., 1., (self.candidate_count,), np.float32),
             **({"flow": spaces.Box(-5., 5., (6,), np.float32)} if self.flow_feature else {}),
+            **({"central_state": spaces.Box(-10., 10., (self._central_state_width(),), np.float32)}
+               if getattr(self, "centralized_critic", False) else {}),
         })
         action_space = (spaces.Box(-1., 1., (3,), np.float32)
                         if action_set == "continuous" else
@@ -238,8 +242,18 @@ class IPPOAgentVecEnv(VecEnv):
         super().__init__(n, observation_space, action_space)
         self.reset_infos = [{} for _ in range(n)]
 
+    def _central_state_width(self):
+        return self.n_agents * (11 + 32 + self.candidate_count * 4 + self.n_agents * 8 + 8 * 25)
+
     def _split(self, obs):
-        return [{k: np.asarray(v[i]).copy() for k, v in obs.items()} for i in range(self.n_agents)]
+        rows = []
+        for i in range(self.n_agents):
+            row = {}
+            for k, v in obs.items():
+                array = np.asarray(v)
+                row[k] = array.copy() if k == "central_state" and array.ndim == 1 else np.asarray(array[i]).copy()
+            rows.append(row)
+        return rows
 
     def _stack(self, rows):
         return {k: np.stack([r[k] for r in rows], axis=0) for k in rows[0]}
@@ -262,6 +276,17 @@ class IPPOAgentVecEnv(VecEnv):
             self._candidate_valid = valid
         enriched["candidates"] = commands
         enriched["candidate_valid"] = valid
+        if getattr(self, "centralized_critic", False):
+            rows = []
+            for i in range(self.n_agents):
+                rows.append(np.concatenate([
+                    np.asarray(obs["hist"][i, -1], np.float32),
+                    np.asarray(obs["ctx"][i], np.float32),
+                    commands[i].reshape(-1), valid[i],
+                    np.asarray(obs["peers"][i], np.float32).reshape(-1),
+                    np.asarray(obs["obstacles"][i], np.float32).reshape(-1),
+                ]))
+            enriched["central_state"] = np.concatenate(rows).astype(np.float32)
         return enriched
 
     def _apply_guards(self, joint):
@@ -527,6 +552,80 @@ class IPPOExtractor(BaseFeaturesExtractor):
         return z
 
 
+class CentralizedValueExtractor(BaseFeaturesExtractor):
+    """Encode the training-only joint state for a MAPPO value function."""
+
+    def __init__(self, observation_space):
+        central = observation_space.spaces.get("central_state")
+        if central is None:
+            raise ValueError("MAPPO requires a central_state observation")
+        super().__init__(observation_space, features_dim=128)
+        width = int(np.prod(central.shape))
+        self.net = nn.Sequential(
+            nn.Linear(width, 128), nn.LayerNorm(128), nn.GELU(),
+            nn.Linear(128, 128), nn.GELU(),
+        )
+
+    def forward(self, observations):
+        state = observations["central_state"].float()
+        if state.ndim == 1:
+            state = state.unsqueeze(0)
+        return self.net(state.flatten(start_dim=1))
+
+
+class MAPPOMultiInputActorCriticPolicy(MultiInputActorCriticPolicy):
+    """Shared local actor with a centralized training-only value encoder."""
+
+    def __init__(self, *args, **kwargs):
+        kwargs["share_features_extractor"] = False
+        kwargs["features_extractor_class"] = IPPOExtractor
+        super().__init__(*args, **kwargs)
+        old_optimizer = self.optimizer
+        self.vf_features_extractor = CentralizedValueExtractor(self.observation_space)
+        self.optimizer = self.optimizer_class(self.parameters(),
+                                               lr=old_optimizer.param_groups[0]["lr"],
+                                               **self.optimizer_kwargs)
+
+
+class MaskedMAPPOMultiInputActorCriticPolicy(MAPPOMultiInputActorCriticPolicy):
+    """MAPPO policy using the same legal-candidate mask as the IPPO actor."""
+
+    def _latent(self, obs):
+        pi_features, vf_features = self.extract_features(obs)
+        return (self.mlp_extractor.forward_actor(pi_features),
+                self.mlp_extractor.forward_critic(vf_features))
+
+    def _masked_distribution(self, obs, latent_pi):
+        logits = self.action_net(latent_pi)
+        mask = obs.get("candidate_valid")
+        if mask is not None and logits.shape[-1] == mask.shape[-1]:
+            mask = mask.to(dtype=torch.bool).clone()
+            mask[:, 0] |= ~mask.any(dim=1)
+            logits = logits.masked_fill(~mask, torch.finfo(logits.dtype).min)
+        return self.action_dist.proba_distribution(action_logits=logits)
+
+    def forward(self, obs, deterministic=False):
+        latent_pi, latent_vf = self._latent(obs)
+        values = self.value_net(latent_vf)
+        distribution = self._masked_distribution(obs, latent_pi)
+        actions = distribution.get_actions(deterministic=deterministic)
+        log_prob = distribution.log_prob(actions)
+        return actions.reshape((-1, *self.action_space.shape)), values, log_prob
+
+    def evaluate_actions(self, obs, actions):
+        latent_pi, latent_vf = self._latent(obs)
+        distribution = self._masked_distribution(obs, latent_pi)
+        return self.value_net(latent_vf), distribution.log_prob(actions), distribution.entropy()
+
+    def _predict(self, observation, deterministic=False):
+        latent_pi, _ = self._latent(observation)
+        return self._masked_distribution(observation, latent_pi).get_actions(deterministic=deterministic)
+
+    def get_distribution(self, obs):
+        latent_pi, _ = self._latent(obs)
+        return self._masked_distribution(obs, latent_pi)
+
+
 class MaskedMultiInputActorCriticPolicy(MultiInputActorCriticPolicy):
     """Multi-input PPO policy that masks unavailable semantic candidates.
 
@@ -589,6 +688,10 @@ def load_navigation_ppo(path, *, device="cpu", env=None, algorithm=PPO):
     policy = data["policy_class"]
     if policy.__module__ == "__main__" and policy.__name__ == "MaskedMultiInputActorCriticPolicy":
         overrides["policy_class"] = MaskedMultiInputActorCriticPolicy
+    if policy.__module__ == "__main__" and policy.__name__ == "MaskedMAPPOMultiInputActorCriticPolicy":
+        overrides["policy_class"] = MaskedMAPPOMultiInputActorCriticPolicy
+    if policy.__module__ == "__main__" and policy.__name__ == "MAPPOMultiInputActorCriticPolicy":
+        overrides["policy_class"] = MAPPOMultiInputActorCriticPolicy
     kwargs = data.get("policy_kwargs", {})
     extractor = kwargs.get("features_extractor_class")
     if extractor and extractor.__module__ == "__main__" and extractor.__name__ == "IPPOExtractor":
@@ -752,8 +855,8 @@ def main():
     p.add_argument("--dueling", action="store_true",
                    help="DQN only: V(s) + advantage centred over the valid candidates "
                         "(implies --mask-invalid, since the centring needs the mask)")
-    p.add_argument("--algo", choices=("ppo", "dqn"), default="ppo",
-                   help="dqn fits the discrete candidate action space directly (Q per candidate)")
+    p.add_argument("--algo", choices=("ppo", "mappo", "dqn"), default="ppo",
+                   help="mappo uses the same local actor with a centralized training-only value function")
     p.add_argument("--extractor", choices=("mlp", "transformer"), default="mlp",
                    help="transformer keeps the six-branch topology and 128-d output, but encodes "
                         "the candidate/obstacle/peer sets with self-attention instead of "
@@ -830,8 +933,8 @@ def main():
                           failure_log=str(a.out / "integration_failures.json"),
                           flow_feature=a.flow_feature,
                           safety_parity=a.safety_parity, settle_radius=a.settle_radius,
-                          exit_mask=a.exit_mask)
-    cfg = dict(algorithm=("IDQN_shared" if a.algo == "dqn" else "IPPO_shared"),
+                          exit_mask=a.exit_mask, centralized_critic=(a.algo == "mappo"))
+    cfg = dict(algorithm=("IDQN_shared" if a.algo == "dqn" else "MAPPO_shared" if a.algo == "mappo" else "IPPO_shared"),
                optimiser=a.algo, feature_extractor=a.extractor, action_set=a.action_set,
                flow_feature=bool(a.flow_feature),
                safety_parity=bool(a.safety_parity), settle_radius=a.settle_radius,
@@ -856,7 +959,8 @@ def main():
                                  if a.action_set == "continuous" else
                                  f"per-cluster discrete direct semantic candidate index (K={SEMANTIC_MINIMAL_COUNT if a.action_set == 'semantic_minimal' else SEMANTIC_REDUCED_COUNT if a.action_set == 'semantic_reduced' else SEMANTIC_CANDIDATE_COUNT})"),
                actor="parameter-shared local categorical actor; one candidate index per cluster",
-               critic="local IPPO critic; no privileged state",
+               critic=("centralized MAPPO critic; joint deployable observation state" if a.algo == "mappo"
+                       else "local IPPO critic; no privileged state"),
                architecture="GRU history + CNN image + map + masked obstacle/peer pooling",
                invalid_action_mask=bool(a.mask_invalid),
                dataset_split=a.dataset_split, dataset_rows=len(dataset_rows or []),
@@ -904,8 +1008,12 @@ def main():
     else:
         policy_kwargs = dict(features_extractor_class=extractor, normalize_images=False,
                              net_arch=dict(pi=[128, 128], vf=[128, 128]))
-        policy_name = (MaskedMultiInputActorCriticPolicy if a.mask_invalid and a.action_set != "continuous"
-                       else "MultiInputPolicy")
+        if a.algo == "mappo":
+            policy_name = (MaskedMAPPOMultiInputActorCriticPolicy if a.mask_invalid and a.action_set != "continuous"
+                           else MAPPOMultiInputActorCriticPolicy)
+        else:
+            policy_name = (MaskedMultiInputActorCriticPolicy if a.mask_invalid and a.action_set != "continuous"
+                           else "MultiInputPolicy")
         model = PPO(policy_name, env, seed=a.seed, device=a.device, verbose=0,
                     policy_kwargs=policy_kwargs, learning_rate=1e-4, n_steps=256,
                     batch_size=128, n_epochs=4, gamma=.995, gae_lambda=.95,
