@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import numpy as np
+import torch
 
 from scripts.evaluate_navigation_dataset import aggregate, grouped_aggregates
 from scripts.multicluster_protocol import SpacingTracker
@@ -32,3 +33,29 @@ def test_spacing_tracker_counts_duration_once():
     tracker.end_step()
     assert tracker.summary()["spacing_violation_pair_s"] > 0.
     assert tracker.summary()["spacing_violation_steps"] == 1
+
+
+def test_mappo_actor_ignores_central_state_but_critic_reads_it():
+    from scripts.train_sb3_curriculum import CurriculumVascularEnv
+    from scripts.train_sb3_ippo import IPPOAgentVecEnv, load_navigation_ppo
+    root = Path(__file__).resolve().parents[1]
+    checkpoint = root / "research/COMPARISON_20261125/models/mappo_s41_final_model.zip"
+    if not checkpoint.exists():
+        return
+    physical = CurriculumVascularEnv(seed=41, clusters=3, curriculum=False,
+                                     reward_mode="navigation", zero_latency=True, direct_action=True)
+    env = IPPOAgentVecEnv(physical, action_set="semantic_reduced", flow_feature=True,
+                          centralized_critic=True)
+    try:
+        obs = env.reset()
+        tensor = {key: torch.as_tensor(value) for key, value in obs.items()}
+        policy = load_navigation_ppo(checkpoint, env=env, device="cpu").policy
+        logits_a = policy.get_distribution(tensor).distribution.logits.detach()
+        changed = dict(tensor, central_state=tensor["central_state"] + 3.0)
+        logits_b = policy.get_distribution(changed).distribution.logits.detach()
+        assert torch.allclose(logits_a, logits_b)
+        value_a = policy.predict_values(tensor)
+        value_b = policy.predict_values(changed)
+        assert not torch.allclose(value_a, value_b)
+    finally:
+        env.close()
