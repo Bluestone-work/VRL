@@ -41,6 +41,7 @@ def main():
     with (OUT / "paired_local_control_table.csv").open("w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=records[0].keys()); w.writeheader(); w.writerows(records)
     tpg_on, tpg_off = load("fixed_three_tpg_on.json"), load("fixed_three_tpg_off.json")
+    edge_n3 = load("fixed_three_tpg_on_n3_edge.json")
     lines = ["# 修复后的配对重评报告", "", "## 场景清单", "",
              f"训练 180 行清单 SHA-256 `{hashlib.sha256((OUT/'paired_train180.json').read_bytes()).hexdigest()}`，留出 100 行清单 SHA-256 `{hashlib.sha256((OUT/'paired_holdout100.json').read_bytes()).hexdigest()}`。从仓库中可复核的旧 IPPO JSON 计算，训练交集为 2 行，留出交集为 0 行。用户给出的 4/2 线索无法由当前已提交旧 JSON 重建，不能作为本轮统计。", "",
              "## 配对局部控制结果", "", "| 方法 | split | 场景数 | 共同场景 | 成功 | 严格成功 | 壁接触 robot·s | 丢失率 | 配对胜/平/负 | 95% CI |", "|---|---|---:|---:|---:|---:|---:|---:|---:|---|"]
@@ -50,11 +51,12 @@ def main():
     for n in (1,2,3):
         on, off = tpg_on["by_clusters"][str(n)], tpg_off["by_clusters"][str(n)]
         rg = lambda d,k: d[k]
-        triggers = sum(x["tpg_trigger_count"] for x in tpg_on["rows"] if x["clusters"] == n)
+        triggers = (sum(x["tpg_trigger_count"] for x in edge_n3["rows"])
+                    if n == 3 else sum(x["tpg_trigger_count"] for x in tpg_on["rows"] if x["clusters"] == n))
         onv = [x["spacing_violation_pair_s"] for x in tpg_on["rows"] if x["clusters"] == n]
         offv = [x["spacing_violation_pair_s"] for x in tpg_off["rows"] if x["clusters"] == n]
         lines.append(f"| {n} | {on['all_three_rate']:.3f} | {off['all_three_rate']:.3f} | {on['last_arrival_s']:.3f} | {off['last_arrival_s']:.3f} | {triggers} | {np.mean(onv):.3f} | {np.mean(offv):.3f} |")
-    lines += ["", "## 结论边界", "", "IPPO-S41 与 MAPPO-S41 均完成训练 180 行和留出 100 行的同场景重评。训练集上 IPPO 为 153/180，MAPPO 为 151/180，配对差值 IPPO−MAPPO 的胜/平/负为 2/177/1。留出集两者均为 80/100，100 对全部平局。这里的成功指标是导航成功，严格成功、壁接触和丢失率另列，不能把导航成功差异解释为整体安全优势。", "", "TPG 的 N=3 六场景结果显示 on/off 全覆盖均为 4/6。成功回合平均最后到达时间为 on 64.575 s、off 61.175 s，配对差值 +3.40 s，未证明速度收益。将未完成回合按 300 s 预算计分后，on 143.050 s、off 140.783 s，差值 +2.267 s。TPG-on 间距违规均值 3.826 pair·s，off 为 6.101 pair·s，安全间距代价下降。"]
+    lines += ["", "## 结论边界", "", "IPPO-S41 与 MAPPO-S41 均完成训练 180 行和留出 100 行的同场景重评。训练集上 IPPO 为 153/180，MAPPO 为 151/180，配对差值 IPPO−MAPPO 的胜/平/负为 2/177/1。留出集两者均为 80/100，100 对全部平局。这里的成功指标是导航成功，严格成功、壁接触和丢失率另列，不能把导航成功差异解释为整体安全优势。", "", "TPG 的 N=3 六场景结果显示 on/off 全覆盖均为 4/6。成功回合平均最后到达时间为 on 64.575 s、off 61.175 s，配对差值 +3.40 s，未证明速度收益。将未完成回合按 300 s 预算计分后，on 143.050 s、off 140.783 s，差值 +2.267 s。TPG-on 间距违规均值 3.826 pair·s，off 为 6.101 pair·s，安全间距代价下降。按修复后的 hold 边沿计数，N=3 六回合实际触发 5 次。"]
     (OUT / "REPAIRED_REPORT.md").write_text("\n".join(lines) + "\n")
 
 if __name__ == "__main__": main()
