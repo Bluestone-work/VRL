@@ -1,0 +1,172 @@
+{
+ "protocol": "classical controllers on navigation_dataset_v1 rows via CurriculumVascularEnv",
+ "split": "train",
+ "clusters": 1,
+ "methods": [
+  "yang_hier"
+ ],
+ "centerline_match": false,
+ "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+ "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+ "source_sha256": "1660c070e5437d01e917bed8aa899aae46f73aebb2b1ddc42cd63f469a26f0f4",
+ "overall": {
+  "yang_hier": {
+   "episodes": 2,
+   "requested": 2,
+   "errors": 0,
+   "complete": true,
+   "navigation_success": 0.0,
+   "strict_success": 0.0,
+   "wall_contact_s": 293.99762249589344,
+   "wall_after_reach_s": 0.0,
+   "lost": 0.0,
+   "particle_collision_events": 0.0,
+   "particle_contact_s": 0.0,
+   "navigation_success_rate": 0.0,
+   "strict_success_rate": 0.0,
+   "lost_rate": 0.0,
+   "collision_episode_rate": 0.0
+  }
+ },
+ "by_anatomy": {
+  "yang_hier": {
+   "mca_m1_lvo": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 0.0,
+    "strict_success": 0.0,
+    "wall_contact_s": 298.29999999999933,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 0.0,
+    "particle_contact_s": 0.0,
+    "navigation_success_rate": 0.0,
+    "strict_success_rate": 0.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 0.0
+   },
+   "renal_artery": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 0.0,
+    "strict_success": 0.0,
+    "wall_contact_s": 289.6952449917876,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 0.0,
+    "particle_contact_s": 0.0,
+    "navigation_success_rate": 0.0,
+    "strict_success_rate": 0.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 0.0
+   }
+  }
+ },
+ "by_flow_mode": {
+  "yang_hier": {
+   "pulsatile": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 0.0,
+    "strict_success": 0.0,
+    "wall_contact_s": 289.6952449917876,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 0.0,
+    "particle_contact_s": 0.0,
+    "navigation_success_rate": 0.0,
+    "strict_success_rate": 0.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 0.0
+   },
+   "weak": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 0.0,
+    "strict_success": 0.0,
+    "wall_contact_s": 298.29999999999933,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 0.0,
+    "particle_contact_s": 0.0,
+    "navigation_success_rate": 0.0,
+    "strict_success_rate": 0.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 0.0
+   }
+  }
+ },
+ "n_errors": 0,
+ "episodes": [
+  {
+   "method": "yang_hier",
+   "anatomy": "mca_m1_lvo",
+   "clusters": 1,
+   "scene_seed": 3400000000,
+   "flow_mode": "weak",
+   "obstacle_density": "low",
+   "obstacle_layout": "uniform",
+   "clot_pattern": "historical_sites",
+   "condition_id": 0,
+   "scenario_hash": "09c690519a3e619e788a7ea0e1add05987da713d270a3ca8f4817439b81e219f",
+   "realized_scenario_hash": "a8666e43c079405e0484e526cee60e8feb0d891898bd37101293ed310f2d4c27",
+   "accepted_seed": 3400000000,
+   "navigation_targets": [
+    2
+   ],
+   "particle_collision_events": 0,
+   "particle_contact_s": 0.0,
+   "navigation_success": false,
+   "navigation_reached": 0,
+   "elapsed_s": 299.9999999999997,
+   "wall_contact_s": 298.29999999999933,
+   "wall_after_reach_s": 0.0,
+   "lost": 0,
+   "strict_success": false,
+   "requested_command_norm": 1.0,
+   "executed_command_norm": 0.7936529127842008,
+   "safety_rewrites": 1,
+   "seconds": 10.315366793889552,
+   "row_index": 0
+  },
+  {
+   "method": "yang_hier",
+   "anatomy": "renal_artery",
+   "clusters": 1,
+   "scene_seed": 3413071015,
+   "flow_mode": "pulsatile",
+   "obstacle_density": "stress",
+   "obstacle_layout": "route_encounter",
+   "clot_pattern": "mixed_pattern",
+   "condition_id": 71,
+   "scenario_hash": "4e80099d9602c42e92762e844e9f65f528cce87582f72ae229efe8faad87eb45",
+   "realized_scenario_hash": "aafe39bb7cd336a0f4bed66c69773b1c7f9034f0c9f505b6b0df767285c996aa",
+   "accepted_seed": 3413071015,
+   "navigation_targets": [
+    2
+   ],
+   "particle_collision_events": 0,
+   "particle_contact_s": 0.0,
+   "navigation_success": false,
+   "navigation_reached": 0,
+   "elapsed_s": 299.9999999999997,
+   "wall_contact_s": 289.6952449917876,
+   "wall_after_reach_s": 0.0,
+   "lost": 0,
+   "strict_success": false,
+   "requested_command_norm": 0.9999999999999999,
+   "executed_command_norm": 0.17241719125204547,
+   "safety_rewrites": 1,
+   "seconds": 13.333496208069846,
+   "row_index": 1
+  }
+ ]
+}

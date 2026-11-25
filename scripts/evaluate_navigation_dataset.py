@@ -56,6 +56,8 @@ def main():
     parser.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
     parser.add_argument("--max-episodes", type=int, default=36,
                         help="0 evaluates every row in the selected split/cluster")
+    parser.add_argument("--index-list", default=None,
+                        help="comma-separated zero-based indices in the filtered manifest. This preserves exact rows for chunked evaluation.")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--centerline-match", action="store_true")
     parser.add_argument("--device", default="cpu")
@@ -70,12 +72,21 @@ def main():
         parser.error("max-episodes must be nonnegative")
     torch.set_num_threads(1)
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    rows = list(iter_rows(split=args.split, clusters=args.clusters))
-    if args.max_episodes:
+    all_rows = list(iter_rows(split=args.split, clusters=args.clusters))
+    if args.index_list is not None:
+        indices = [int(x) for x in args.index_list.split(',') if x.strip()]
+        if any(i < 0 or i >= len(all_rows) for i in indices):
+            raise SystemExit("index-list contains an out-of-range manifest index")
+        rows = [all_rows[i] for i in indices]
+        selected_indices = indices
+    elif args.max_episodes:
         # Keep the pilot spread over the frozen catalogue instead of taking
         # only the first (weak-flow) block of the JSONL file.
-        indices = np.linspace(0, len(rows) - 1, min(args.max_episodes, len(rows)), dtype=int)
-        rows = [rows[int(index)] for index in indices]
+        selected_indices = np.linspace(0, len(all_rows) - 1, min(args.max_episodes, len(all_rows)), dtype=int).tolist()
+        rows = [all_rows[int(index)] for index in selected_indices]
+    else:
+        rows = all_rows
+        selected_indices = list(range(len(rows)))
     if not rows:
         raise SystemExit("no manifest rows match the requested split and cluster count")
     manifest_path = Path(MANIFEST)
@@ -98,7 +109,7 @@ def main():
     model = loader(args.model, env=env, device=args.device)
     completed = []
     try:
-        for index, row in enumerate(rows):
+        for local_index, row in enumerate(rows):
             obs = env.reset(options=reset_options(row))
             scene = env.reset_infos[0]["scene"]
             targets = env.physical.nav_targets.tolist()
@@ -109,7 +120,7 @@ def main():
                     info = infos[0]
                     metrics = dict(info.get("episode_metrics", {}))
                     completed.append({
-                        "manifest_index": index,
+                        "manifest_index": int(selected_indices[local_index]),
                         "integration_failure": bool(info.get("integration_failure")),
                         "split": row["split"],
                         "anatomy": row["anatomy"],
