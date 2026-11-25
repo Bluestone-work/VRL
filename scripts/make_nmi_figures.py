@@ -82,7 +82,7 @@ def draw_tree(ax, env, a0=0, a1=1, lw=4.5, alpha=.88, zorder=0):
         r = .5 * (rad[a] + rad[b])
         ax.plot(pts[[a, b], a0], pts[[a, b], a1], color=C['vessel'],
                 solid_capstyle='round', lw=lw * r, alpha=alpha, zorder=zorder)
-    ax.set_aspect('equal')
+    ax.set_aspect('equal', adjustable='datalim')
     ax.set_xticks([]); ax.set_yticks([])
     for sp in ax.spines.values():
         sp.set_visible(False)
@@ -273,6 +273,41 @@ def fig2b(out):
     return 'fig2b_learning'
 
 
+# ------------------------------------------------- Fig.1a transfer provenance
+# What the method inherits from swarm RL, and what the vascular setting changes.
+SWARM = [('Open 3-D workspace', 'free motion in any direction'),
+         ('Self-propelled agents', 'commanded velocity is realised'),
+         ('Direct state feedback', 'low-latency pose per agent'),
+         ('Collision = agent-agent', 'free space is otherwise safe')]
+VASC = [('Lumen-constrained', 'motion follows vessel topology'),
+        ('Externally actuated', 'one shared magnetic field, flow-dominated'),
+        ('Delayed image feedback', 'frame age enters the observation'),
+        ('Collision = wall + peers', 'contact damages the vessel')]
+
+
+def draw_transfer(ax):
+    """Two matched columns: inherited formulation on the left, what changes on the right."""
+    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis('off')
+    ax.text(.235, .952, 'Swarm RL formulation', ha='center', va='bottom',
+            fontsize=6.8, fontweight='bold', color=C['global_'])
+    ax.text(.235, .912, 'aerial / ground multi-robot', ha='center', va='bottom',
+            fontsize=5.7, color='#6b7280')
+    ax.text(.765, .952, 'Vascular cluster setting', ha='center', va='bottom',
+            fontsize=6.8, fontweight='bold', color=C['policy'])
+    ax.text(.765, .912, 'this work', ha='center', va='bottom',
+            fontsize=5.7, color='#6b7280')
+    h, gap = .185, .025
+    for k, ((lt, ls), (rt, rs)) in enumerate(zip(SWARM, VASC)):
+        y = .905 - (k + 1) * h - k * gap
+        box(ax, (.015, y), .44, h, lt, ls, fc='#f7f8fa', ec=C['global_'], lw=.65, fs=5.9)
+        box(ax, (.545, y), .44, h, rt, rs, fc='#f4f8fc', ec=C['policy'], lw=.65, fs=5.9)
+        arrow(ax, (.462, y + h / 2), (.538, y + h / 2), color='#9aa3af', lw=.8)
+    ax.text(.5, .905, 'transfer', ha='center', va='bottom', fontsize=5.8,
+            color='#6b7280', style='italic')
+    ax.text(.5, -.045, 'Shared: parameter-shared actor, independent PPO critics, candidate-based action set',
+            ha='center', va='bottom', fontsize=5.8, color='#4a5568')
+
+
 # ---------------------------------------------------------------------- Fig.1
 # Each stage is (title, caption).  Drawn as a column per panel so the control
 # loop reads top-to-bottom and the feedback arrow closes it.
@@ -287,9 +322,9 @@ STAGES_D = [('TPG wait check', 'release or hold'),
             ('Execute \u2192\nnew observation', 'next pose · local flow field')]
 
 
-COLS = [('b', 'Global planning', 'allocation \u00b7 route \u00b7 TPG', 'global_', STAGES_B),
-        ('c', 'Learned local decision', 'observation \u00b7 prediction \u00b7 actor', 'policy', STAGES_C),
-        ('d', 'Safe execution', 'gate \u00b7 limits \u00b7 actuate', 'safety', STAGES_D)]
+COLS = [('c', 'Global planning', 'allocation \u00b7 route \u00b7 TPG', 'global_', STAGES_B),
+        ('d', 'Learned local decision', 'observation \u00b7 prediction \u00b7 actor', 'policy', STAGES_C),
+        ('e', 'Safe execution', 'gate \u00b7 limits \u00b7 actuate', 'safety', STAGES_D)]
 
 
 def draw_loop(ax):
@@ -320,8 +355,8 @@ def draw_loop(ax):
                            (cx[1] + w / 2, cx[2] - w / 2, '$u_t$')):
         ym = ys[1] + h / 2
         arrow(ax, (x0 + .004, ym), (x1 - .004, ym), color='#6b7280', lw=.95)
-        ax.text(.5 * (x0 + x1), ym + .024, text, ha='center', va='bottom',
-                fontsize=5.8, color='#6b7280')
+        ax.text(.5 * (x0 + x1), ym - .042, text, ha='center', va='top',
+                fontsize=5.6, color='#6b7280')
     # feedback: execution closes the loop at the next control step
     arrow(ax, (cx[2], ys[2] - .012), (cx[1], ys[2] - .012), color=C['feedback'],
           lw=.95, ls=(0, (4, 2)), rad=-.42)
@@ -332,10 +367,13 @@ def draw_loop(ax):
 def fig1(out):
     ep = episode()
     env = ep.env
-    fig = plt.figure(figsize=(183 * MM, 96 * MM))
-    gs = fig.add_gridspec(1, 2, width_ratios=[1, 2.08], wspace=.04,
-                          left=.012, right=.988, top=.93, bottom=.03)
-    axa = fig.add_subplot(gs[0, 0])
+    fig = plt.figure(figsize=(183 * MM, 128 * MM))
+    gs = fig.add_gridspec(2, 2, width_ratios=[1, 2.08], height_ratios=[.70, 1],
+                          wspace=.04, hspace=.14, left=.012, right=.988, top=.955, bottom=.025)
+    axt = fig.add_subplot(gs[0, :])
+    draw_transfer(axt)
+    panel_label(axt, 'a', dx=-.008, dy=1.0)
+    axa = fig.add_subplot(gs[1, 0])
     draw_tree(axa, env, a0=0, a1=2, lw=3.1)
     clots = np.asarray(env.clot_positions_mm, float)
     pos = np.asarray(env.positions_mm[:ep.n], float)
@@ -361,8 +399,8 @@ def fig1(out):
     xr = P[:, 0].max(); z0 = P[:, 2].min()
     axa.plot([xr - 20, xr], [z0 - 4, z0 - 4], '-', color='#2d3340', lw=1.4)
     axa.text(xr - 10, z0 - 6.5, '20 mm', ha='center', va='top', fontsize=6)
-    panel_label(axa, 'a', dx=-.01, dy=1.0)
-    draw_loop(fig.add_subplot(gs[0, 1]))
+    panel_label(axa, 'b', dx=-.01, dy=1.0)
+    draw_loop(fig.add_subplot(gs[1, 1]))
     (out / 'fig1_caption.txt').write_text(
         'Fig. 1 | Framework and control loop. a, The registered HCC portal-hepatic tree '
         f'({len(env.transport.ends)} centreline segments, lumen radius 1.1-6.0 mm) in the x-z '
@@ -490,6 +528,174 @@ def fig4cd(out):
     return 'fig4cd_robustness'
 
 
+# --------------------------------------------------------------------- Fig.3a
+SPLITS = ROOT / 'configs/evaluation_splits.json'
+
+
+def fig3a(out):
+    """Atlas of the registered territories, trained pool versus whole-class held out."""
+    sp = json.loads(SPLITS.read_text())['anatomy_holdout_v1']
+    train = list(sp['train'])
+    held = [a for a in sp['held_out']] if 'held_out' in sp else []
+    # The held-out list in the split file is the authority; fall back to the
+    # manifest's holdout anatomies if the key shape differs.
+    if not held:
+        g = json.loads((GEN / 's41_holdout_test.json').read_text())
+        held = sorted(g['by_anatomy'])
+    names = train + held
+    tags = [f'T{i+1}' for i in range(len(train))] + [f'U{i+1}' for i in range(len(held))]
+    cols = 5
+    rows = int(np.ceil(len(train) / cols)) + 1
+    fig, axes = plt.subplots(rows, cols, figsize=(183 * MM, 34 * rows * MM),
+                             gridspec_kw=dict(wspace=.06, hspace=.30))
+    axes = np.atleast_2d(axes)
+    from scripts.benchmark_lysis import LysisEpisode
+    from marl.deployable_sensing import DeployableConfig
+    drawn = 0
+    for k, (nm, tag) in enumerate(zip(names, tags)):
+        slot = k if k < len(train) else (rows - 1) * cols + (k - len(train))
+        ax = axes[slot // cols][slot % cols]
+        try:
+            ep = LysisEpisode(3, nm, 1910000000, tpg=True, horizon=300., sensing='image',
+                              sense_cfg=DeployableConfig(latency_steps=0),
+                              flow_inlet_mm_s=.05, dynamic_obstacle_count=8)
+        except Exception as exc:                      # a territory that will not build
+            ax.axis('off'); ax.set_title(f'{tag}\n(unavailable)', fontsize=5.6)
+            print(f'  skipped {nm}: {exc}')
+            continue
+        env = ep.env
+        accent = C['ours'] if tag.startswith('T') else C['accent']
+        draw_tree(ax, env, a0=0, a1=2, lw=1.15)
+        cl = np.asarray(env.clot_positions_mm, float)
+        ax.plot(cl[:, 0], cl[:, 2], 'o', ms=1.9, mfc=C['target'], mec='none', zorder=5)
+        ax.text(.5, 1.03, f'{tag}  {SHORT.get(nm, nm)}', transform=ax.transAxes,
+                ha='center', va='bottom', fontsize=5.9, color=accent)
+        for sd in ax.spines.values():
+            sd.set_visible(False)
+        # a thin coloured rule marks which pool the territory belongs to
+        ax.plot([.04, .96], [-.035, -.035], transform=ax.transAxes, color=accent,
+                lw=1.5, clip_on=False, solid_capstyle='butt')
+        drawn += 1
+    used = set(range(len(train))) | {(rows - 1) * cols + i for i in range(len(held))}
+    for k in range(rows * cols):
+        if k not in used:
+            axes[k // cols][k % cols].axis('off')
+    panel_label(axes[0][0], 'a', dx=-.08, dy=1.22)
+    (out / 'fig3a_caption.txt').write_text(
+        f'Fig. 3a | Registered vascular territories. {len(train)} territories form the training pool '
+        f'(T1-T{len(train)}, blue rule) and {len(held)} further territories are held out as whole '
+        f'classes (U1-U{len(held)}, orange rule); they never appear in training or tuning in any '
+        'form. Each panel shows the centreline tree in the x-z projection with its registered '
+        'target sites (orange). Scene factors are crossed within every territory: three flow '
+        'regimes, three target distributions, and four dynamic-obstacle densities by two spatial '
+        'layouts, for 72 condition combinations, at cluster counts N = 1, 2 and 3. The HCC '
+        'portal-hepatic application territory is registered separately and selected only by name, '
+        'so it does not enter these pools (Methods).\n')
+    fig.savefig(out / 'fig3a_atlas.pdf', bbox_inches='tight')
+    fig.savefig(out / 'fig3a_atlas.png', bbox_inches='tight')
+    plt.close(fig)
+    return f'fig3a_atlas ({drawn}/{len(names)} territories drawn)'
+
+
+# --------------------------------------------------------------------- Fig.3c
+ROLLOUTS = ROOT / 'research/runs/NAV_ROLLOUTS_20261029/s41_train.json'
+
+
+def pick_rollouts(eps):
+    """Direct arrival, delayed arrival and timeout, chosen by outcome not by eye.
+
+    The three cases are selected as the fastest success, the slowest success and
+    the failure that got furthest, so the panel shows the actual spread of
+    outcomes rather than a hand-picked illustration.
+    """
+    # Episodes shorter than 5 s start essentially on target and show no
+    # navigation, so they are excluded from the "direct" exemplar.
+    ok = [e for e in eps if e['success'] and e['elapsed_s'] >= 5.]
+    bad = [e for e in eps if not e['success']]
+    if not ok or not bad:
+        raise ValueError('need both successful (>=5 s) and failed rollouts')
+    fast = min(ok, key=lambda e: e['elapsed_s'])
+    slow = max(ok, key=lambda e: e['elapsed_s'])
+    fail = max(bad, key=lambda e: (e['reached'], -e['wall_contact_s']))
+    return [('Direct arrival', fast, C['cluster'][2]),
+            ('Delayed arrival', slow, C['accent']),
+            ('Timeout', fail, C['classic'])]
+
+
+def fig3c(out):
+    data = json.loads(ROLLOUTS.read_text())
+    cases = pick_rollouts(data['episodes'])
+    reach = float(data.get('reach_mm', .30))
+    fig, axes = plt.subplots(2, 3, figsize=(183 * MM, 82 * MM),
+                             gridspec_kw=dict(height_ratios=[1.25, 1], hspace=.30, wspace=.20))
+    from scripts.benchmark_lysis import LysisEpisode
+    from marl.deployable_sensing import DeployableConfig
+    env = None
+    for col, (label, ep, accent) in enumerate(cases):
+        axt, axd = axes[0][col], axes[1][col]
+        if env is None:                       # one geometry serves all three columns
+            e = LysisEpisode(ep['clusters'], ep['anatomy'], 1910000000, tpg=True,
+                             horizon=300., sensing='image',
+                             sense_cfg=DeployableConfig(latency_steps=0),
+                             flow_inlet_mm_s=.05, dynamic_obstacle_count=8)
+            env = e.env
+        draw_tree(axt, env, a0=0, a1=2, lw=2.7)
+        traj = np.asarray(ep['trajectory'], float)[:-1]   # [T, n, 3]; drop post-terminal frame
+        tgt = np.asarray(ep['targets'], float)
+        axt.plot(tgt[:, 0], tgt[:, 2], 'o', ms=3.4, mfc=C['target'], mec='white',
+                 mew=.5, zorder=5)
+        for i in range(traj.shape[1]):
+            axt.plot(traj[:, i, 0], traj[:, i, 2], '-', lw=1.0,
+                     color=C['cluster'][i], alpha=.9, zorder=6)
+            axt.plot(traj[0, i, 0], traj[0, i, 2], 's', ms=2.8, mfc=C['cluster'][i],
+                     mec='white', mew=.4, zorder=7)
+            axt.plot(traj[-1, i, 0], traj[-1, i, 2], '*' if ep['success'] else 'X',
+                     ms=5.0 if ep['success'] else 3.8, mfc=C['cluster'][i],
+                     mec='white', mew=.4, zorder=7)
+        axt.text(.5, 1.05, label, transform=axt.transAxes, ha='center', va='bottom',
+                 fontsize=7.0, fontweight='bold', color=accent)
+        axt.text(.5, .99, f"{ep['reached']}/{ep['clusters']} reached · "
+                          f"{ep['elapsed_s']:.0f} s · wall {ep['wall_contact_s']:.1f} robot·s",
+                 transform=axt.transAxes, ha='center', va='bottom', fontsize=5.7,
+                 color='#6b7280')
+        # distance-to-target traces: this is what separates the three outcomes
+        d = np.asarray(ep['target_distance'], float)[:-1]  # same post-terminal frame
+        t = np.arange(len(d)) * float(ep['dt_s'])
+        for i in range(d.shape[1]):
+            axd.plot(t, d[:, i], '-', lw=.95, color=C['cluster'][i], alpha=.95,
+                     label=f'Cluster {i + 1}' if col == 0 else None)
+        axd.axhline(reach, color='#2d3340', lw=.7, ls=(0, (3, 2)))
+        if col == 0:
+            axd.text(t[-1] * .98, reach * 1.6, 'reach tolerance', ha='right',
+                     va='bottom', fontsize=5.5, color='#2d3340')
+        axd.set_xlabel('Time (s)', labelpad=1.5)
+        if col == 0:
+            axd.set_ylabel('Distance to target (mm)')
+            axd.legend(frameon=False, fontsize=5.6, loc='upper right',
+                       handlelength=1.1, borderpad=.15, labelspacing=.2)
+        axd.set_xlim(0, max(t[-1], 1))
+        axd.set_ylim(bottom=0)
+        axd.grid(axis='y', color='#eef0f3', lw=.45); axd.set_axisbelow(True)
+    panel_label(axes[0][0], 'c', dx=-.10, dy=1.20)
+    lab = ', '.join(f"{n.lower()} ({e['elapsed_s']:.0f} s, {e['reached']}/{e['clusters']} reached)"
+                    for n, e, _ in cases)
+    (out / 'fig3c_caption.txt').write_text(
+        'Fig. 3c | Representative navigation outcomes. Top, cluster trajectories in the x-z '
+        'projection: squares mark entry stations, stars mark arrival, crosses mark the final pose '
+        'of an episode that timed out, and orange circles are the registered target sites. Bottom, '
+        'the distance from each cluster to its assigned target over time, which is what separates '
+        f'the three outcomes: {lab}. A direct arrival descends monotonically through the '
+        f'{reach:.2f} mm reach tolerance; a delayed arrival plateaus or rises before descending; a '
+        'timeout stalls at a finite distance for the remainder of the 300 s horizon. The three '
+        'episodes are the fastest success, the slowest success and the furthest-progressing failure '
+        'among recorded rollouts on frozen manifest rows, so they bound the observed spread rather '
+        'than being selected by appearance.\n')
+    fig.savefig(out / 'fig3c_outcomes.pdf', bbox_inches='tight')
+    fig.savefig(out / 'fig3c_outcomes.png', bbox_inches='tight')
+    plt.close(fig)
+    return 'fig3c_outcomes'
+
+
 REGISTRY = {}
 
 
@@ -500,7 +706,9 @@ def register(fn):
 
 register(fig1)
 register(fig2b)
+register(fig3a)
 register(fig3b)
+register(fig3c)
 register(fig4cd)
 
 

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IPPO 实时训练曲线</title>
+<style>
+:root{color-scheme:dark;font:15px Inter,"Noto Sans CJK SC",sans-serif;color:#e5edf3;background:#101820}
+*{box-sizing:border-box}body{margin:0}main{max-width:1280px;margin:auto;padding:16px 28px}
+header,section>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:24px;margin:0}h2{font-size:17px;margin:0}p,small{color:#a6b7c6}p{margin:.5em 0 1em}
+section{background:#17232e;border:1px solid #304351;border-radius:9px;padding:10px 16px 6px;margin:9px 0}
+canvas{display:block;width:100%;height:clamp(120px,17vh,210px)}output{font-variant-numeric:tabular-nums}
+select{padding:4px 8px;color:inherit;background:#182731;border:1px solid #47606d;border-radius:4px}
+footer{font-size:13px;color:#a6b7c6} @media(max-width:650px){main{padding:12px}section{padding:8px}canvas{height:160px}}
+</style>
+</head>
+<body><main>
+<header><h1>IPPO 实时训练曲线</h1><label>步数范围 <select id="range"><option value="0">全部训练</option><option value="100000">最近 10 万步</option><option value="500000">最近 50 万步</option></select></label></header>
+<p id="status">正在读取训练日志…</p>
+<section><div><h2 id="reward-title">回合累计奖励</h2><small>灰线为单回合，蓝线为最近 20 回合均值</small><output id="r"></output></div><canvas id="reward" aria-label="每回合累计奖励和滚动均值"></canvas></section>
+<section><div><h2>策略熵</h2><small>PPO 更新时的平均动作分布熵（nat）</small><output id="e"></output></div><canvas id="entropy" aria-label="策略熵"></canvas></section>
+<section><div><h2>导航成功率（secc）</h2><small>最近 100 个已结束训练回合，起始阶段按已有回合计算</small><output id="s"></output></div><canvas id="success" aria-label="导航成功率百分比"></canvas></section>
+<footer id="time"></footer>
+<script>
+const el = id => document.getElementById(id);
+const num = new Intl.NumberFormat('zh-CN');
+let state;
+function plot(id, points, traces, xmax, fixed){
+  const canvas=el(id), ctx=canvas.getContext('2d');
+  const w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;
+  canvas.width=w*dpr; canvas.height=h*dpr; ctx.scale(dpr,dpr);
+  const span=Number(el('range').value), left=52,right=w-18,top=10,bottom=h-24;
+  const xmin=span?Math.max(0,xmax-span):0;
+  const start=points.findIndex(p=>p[0]>=xmin);
+  const shown=start<0?[]:points.slice(Math.max(0,start-1));
+  let low=Infinity,high=-Infinity;
+  for(const p of shown) for(const t of traces){low=Math.min(low,p[t.col]);high=Math.max(high,p[t.col]);}
+  if(fixed){[low,high]=fixed;}else if(!shown.length){low=0;high=1;}else if(low===high){low-=1;high+=1;}
+  const x=v=>left+(right-left)*(v-xmin)/Math.max(1,xmax-xmin);
+  const y=v=>bottom-(bottom-top)*(v-low)/(high-low);
+  ctx.font='11px sans-serif'; ctx.lineWidth=1;
+  for(let j=0;j<=4;j++){
+    const v=low+(high-low)*j/4;
+    ctx.strokeStyle='#344450';ctx.beginPath();ctx.moveTo(left,y(v));ctx.lineTo(right,y(v));ctx.stroke();
+    ctx.textAlign='right';ctx.fillStyle='#b3c1cc';ctx.fillText(v.toFixed(id==='entropy'?2:0),left-7,y(v)+3);
+    const pos=xmin+(xmax-xmin)*j/4;ctx.textAlign=j===4?'right':j===0?'left':'center';
+    ctx.fillText(num.format(Math.round(pos)),x(pos),h-5);
+  }
+  ctx.save();ctx.beginPath();ctx.rect(left,top-1,right-left,bottom-top+2);ctx.clip();
+  for(const t of traces){
+    ctx.strokeStyle=t.color;ctx.lineWidth=t.width;ctx.beginPath();
+    shown.forEach((p,i)=>{if(i===0)ctx.moveTo(x(p[0]),y(p[t.col]));else ctx.lineTo(x(p[0]),y(p[t.col]));});
+    ctx.stroke();
+    if(shown.length===1){const p=shown[0];ctx.fillStyle=t.color;ctx.fillRect(x(p[0])-1,y(p[t.col])-1,3,3);}
+  }
+  ctx.restore();
+}
+function render(){
+  if(!state)return;
+  const d=state, ep=d.episodes.at(-1), ent=d.entropy.at(-1);
+  const xmax=Math.max(1,d.steps||0,ep?.[0]||0,ent?.[0]||0);
+  el('status').textContent=d.run+'　·　物理环境步 '+num.format(d.steps||0)+' / '+num.format(d.target||0)+'　·　入口流速 '+(d.flow??'—')+' mm/s';
+  el('reward-title').textContent=d.reward_kind==='agent_mean'?'每个机器人回合回报的均值':'团队导航回报（旧日志）';
+  el('r').textContent=ep?'均值 '+ep[2].toFixed(2):'等待首个回合';
+  el('s').textContent=ep?ep[3].toFixed(1)+'%':'等待首个回合';
+  el('e').textContent=ent?ent[1].toFixed(3)+' nat':'等待首次更新';
+  plot('reward',d.episodes,[{col:1,color:'#687785',width:1},{col:2,color:'#69beff',width:2}],xmax);
+  plot('entropy',d.entropy,[{col:1,color:'#f0bf62',width:1.5}],xmax);
+  plot('success',d.episodes,[{col:3,color:'#59d3a7',width:2}],xmax,[0,100]);
+  el('time').textContent='横轴为累计物理环境步　·　每 5 秒刷新　·　已完成 '+num.format(d.episodes.length)+' 个训练回合　·　日志更新时间 '+(d.logged_at?new Date(d.logged_at*1000).toLocaleTimeString('zh-CN'):'—');
+}
+async function refresh(){
+  try{const response=await fetch('/api/curves',{cache:'no-store'});if(!response.ok)throw Error(response.status);state=await response.json();render();}
+  catch(e){el('time').textContent='日志读取失败，5 秒后重试';}
+  finally{setTimeout(refresh,5000);}
+}
+el('range').onchange=render;window.addEventListener('resize',render);refresh();
+</script></main></body></html>

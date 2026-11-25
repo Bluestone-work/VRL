@@ -100,8 +100,15 @@ deterministic safe execution rule is preserved.
 ## Policy architecture
 
 The actor is a parameter-shared categorical policy: identical parameters are applied
-independently to every active cluster, so the same network serves N = 1, 2 and 3
-without retraining. A 32-unit GRU encodes the 24-step motion history. The image
+independently to every active cluster, so the number of learned parameters does not
+grow with the cluster count. The present observation encoding is not cluster-count
+invariant, however: the neighbour block is sized to the number of active clusters
+(peers of shape N x 8 with an N-length validity mask), so a checkpoint trained at one
+cluster count cannot be loaded directly at another. Every result reported here is
+therefore measured at the cluster count the policy was trained at, N = 3. Padding the
+neighbour block to a fixed maximum and relying solely on the validity mask would make
+the encoding count-invariant and is the natural fix, but it changes what the network
+sees and so requires retraining before cross-count numbers can be claimed. A 32-unit GRU encodes the 24-step motion history. The image
 branch uses two convolutional layers followed by adaptive pooling and a 32-unit
 projection. Separate 32-unit projections encode the route context, the obstacle
 tracks, the neighbour features and the flattened candidate matrix. The six

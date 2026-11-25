@@ -35,7 +35,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from marl.deployable_sensing import DeployableConfig
 from marl.dyn_predictor import DynFeatures
 from marl.obstacle_features import forecast_features
-from marl.vessel_sdf import VesselSDF, wall_safe_projection
+from marl.vessel_sdf import VesselSDF, project_local_commands
 from scripts.benchmark_lysis import LysisEpisode
 
 ALGORITHMS = {"ppo": PPO, "sac": SAC, "td3": TD3}
@@ -51,7 +51,7 @@ class VascularSB3Env(gym.Env):
     metadata = {"render_modes": []}
 
     def __init__(self, seed=0, clusters=3, dynamic_obstacle_count=16, horizon=300., episode_log=None,
-                 preserve_action_magnitude=False, direct_action=False):
+                 preserve_action_magnitude=False, direct_action=False, navigation=False, centerline_match=False):
         super().__init__()
         if clusters not in (1, 2, 3) or horizon <= 0 or dynamic_obstacle_count < 0:
             raise ValueError("clusters must be 1..3, horizon positive, obstacle count nonnegative")
@@ -66,6 +66,8 @@ class VascularSB3Env(gym.Env):
         # Direct local commands already carry their intended speed. Legacy
         # continuous SB3 runs keep their historical normalization semantics.
         self.direct_action = bool(direct_action)
+        self.navigation = bool(navigation)
+        self.centerline_match = centerline_match
         self.rng = np.random.default_rng(seed)
         self.scene_base = 2813000000 + seed * 100000
         self.train_anatomies = json.loads((ROOT / "configs/evaluation_splits.json").read_text())["anatomy_holdout_v1"]["train"]
@@ -106,16 +108,25 @@ class VascularSB3Env(gym.Env):
         self.episode_index += 1
         self.ep = LysisEpisode(
             self.clusters, anatomy, scene_seed, horizon=self.horizon,
-            flow_inlet_mm_s=flow, sense_cfg=DeployableConfig(latency_steps=latency),
+            flow_inlet_mm_s=(None if "healthy_inlet_ml_min" in options else flow),
+            healthy_inlet_ml_min=options.get("healthy_inlet_ml_min"), active_speed_mm_s=options.get("active_speed_mm_s"),
+            sense_cfg=DeployableConfig(latency_steps=latency),
             dynamic_obstacle_count=dynamic_obstacle_count,
             clot_initialization=clot_initialization,
-            variation=variation,
+            variation=variation, navigation=self.navigation, centerline_match=self.centerline_match,
         )
         self.scene = dict(anatomy=anatomy, clusters=self.clusters, seed=scene_seed, flow=flow, latency=latency,
                           dynamic_obstacle_count=dynamic_obstacle_count,
                           clot_initialization=clot_initialization, variation=variation,
                           accepted_seed=self.ep.manifest.get("accepted_seed"),
                           scenario_hash=self.ep.manifest.get("scenario_hash"))
+        if "healthy_inlet_ml_min" in options:
+            fm = self.ep.env.flow_model
+            self.scene.update(healthy_inlet_ml_min=options["healthy_inlet_ml_min"],
+                              flow=float(fm.solve()["mean_speed_mm_s"][fm.root]),
+                              inlet_ml_min=self.ep.env.solution["inlet_flow_ml_min"])
+        if "active_speed_mm_s" in options:
+            self.scene["active_speed_mm_s"] = self.ep.env.config.robot_speed_mm_s
         self.features = DynFeatures(self.ep)
         self.sdf = VesselSDF(self.ep.sensor)
         self.previous_images = np.zeros((self.clusters, 2, 32, 32), np.float32)
@@ -174,7 +185,9 @@ class VascularSB3Env(gym.Env):
         if action.shape != self.action_space.shape or not np.isfinite(action).all():
             raise ValueError("action must be finite and match the joint action space")
         ep = self.ep
-        est, targets, hold, frames = self.current
+        est, targets, hold, _ = self.current
+        # A wall-recovery replan may have changed the route frame since observation.
+        frames = ep.ctl.frames(est)
         local = np.clip(action, -1., 1.).reshape(self.clusters, 3).astype(float)
         if self.direct_action:
             # Candidate actions are deployable route-frame commands; do not
@@ -187,16 +200,8 @@ class VascularSB3Env(gym.Env):
             local /= np.sqrt(3.)
         else:
             local /= np.maximum(np.linalg.norm(local, axis=1, keepdims=True), 1.)
-        # Fixed geometric safety projection; no learned selector or recovery action.
-        for i in range(self.clusters):
-            if not est.active[i] or hold[i] or targets[i] < 0:
-                local[i] = 0.
-            else:
-                world = frames[i].T @ local[i]
-                guarded = wall_safe_projection(world, est.pos[i], self.sdf, ep.ctl.body,
-                                               margin=.2, edge=int(est.edge[i]))
-                self.safety_changed += int(np.linalg.norm(guarded - world) > 1e-6)
-                local[i] = frames[i] @ guarded
+        local, changed = project_local_commands(local, est, targets, hold, frames, self.sdf, ep.ctl.body)
+        self.safety_changed += changed
         done, out = ep.step(est, local, hold)
         active_steps = int(np.sum(out["active_before"]))
         self.total_agent_steps += active_steps

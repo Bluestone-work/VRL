@@ -1,0 +1,1014 @@
+{
+  "version": "hcc_active_speed_identifiability_v1",
+  "caveat": "Analytic bound only. It does not identify magnetic field strength, magnetic force, cluster drag, or wall lubrication from missing experiments.",
+  "rows": [
+    {
+      "flow_case": "legacy",
+      "seed": 2944100000,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        0.1262783711229022,
+        0.13710729942745437,
+        0.06705847681439947
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100000,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        0.1262783711229022,
+        0.13710729942745437,
+        0.06705847681439947
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100000,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        0.1262783711229022,
+        0.13710729942745437,
+        0.06705847681439947
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100000,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        0.1262783711229022,
+        0.13710729942745437,
+        0.06705847681439947
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100000,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        0.1262783711229022,
+        0.13710729942745437,
+        0.06705847681439947
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100000,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        0.1262783711229022,
+        0.13710729942745437,
+        0.06705847681439947
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100000,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        0.1262783711229022,
+        0.13710729942745437,
+        0.06705847681439947
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100001,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        0.062415740613442905,
+        0.12988417945521125,
+        0.1578765006770564
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100001,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        0.062415740613442905,
+        0.12988417945521125,
+        0.1578765006770564
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100001,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        0.062415740613442905,
+        0.12988417945521125,
+        0.1578765006770564
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100001,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        0.062415740613442905,
+        0.12988417945521125,
+        0.1578765006770564
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100001,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        0.062415740613442905,
+        0.12988417945521125,
+        0.1578765006770564
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100001,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        0.062415740613442905,
+        0.12988417945521125,
+        0.1578765006770564
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100001,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        0.062415740613442905,
+        0.12988417945521125,
+        0.1578765006770564
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100003,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        0.08536106381244868,
+        0.19350187596038881,
+        0.08224965987292487
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100003,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        0.08536106381244868,
+        0.19350187596038881,
+        0.08224965987292487
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100003,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        0.08536106381244868,
+        0.19350187596038881,
+        0.08224965987292487
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100003,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        0.08536106381244868,
+        0.19350187596038881,
+        0.08224965987292487
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100003,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        0.08536106381244868,
+        0.19350187596038881,
+        0.08224965987292487
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100003,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        0.08536106381244868,
+        0.19350187596038881,
+        0.08224965987292487
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100003,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        0.08536106381244868,
+        0.19350187596038881,
+        0.08224965987292487
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100011,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        0.1403870830990568,
+        0.07875040328797833,
+        0.10745486599876142
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100011,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        0.1403870830990568,
+        0.07875040328797833,
+        0.10745486599876142
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100011,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        0.1403870830990568,
+        0.07875040328797833,
+        0.10745486599876142
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100011,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        0.1403870830990568,
+        0.07875040328797833,
+        0.10745486599876142
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100011,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        0.1403870830990568,
+        0.07875040328797833,
+        0.10745486599876142
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100011,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        0.1403870830990568,
+        0.07875040328797833,
+        0.10745486599876142
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100011,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        0.1403870830990568,
+        0.07875040328797833,
+        0.10745486599876142
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100020,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        0.023412860763112775,
+        0.2534404580152454,
+        0.2836108938396189
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100020,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        0.023412860763112775,
+        0.2534404580152454,
+        0.2836108938396189
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100020,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        0.023412860763112775,
+        0.2534404580152454,
+        0.2836108938396189
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100020,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        0.023412860763112775,
+        0.2534404580152454,
+        0.2836108938396189
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100020,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        0.023412860763112775,
+        0.2534404580152454,
+        0.2836108938396189
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100020,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        0.023412860763112775,
+        0.2534404580152454,
+        0.2836108938396189
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100020,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        0.023412860763112775,
+        0.2534404580152454,
+        0.2836108938396189
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100021,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        0.4010771576818378,
+        0.022305509035795534,
+        0.25947813045317225
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100021,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        0.4010771576818378,
+        0.022305509035795534,
+        0.25947813045317225
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100021,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        0.4010771576818378,
+        0.022305509035795534,
+        0.25947813045317225
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100021,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        0.4010771576818378,
+        0.022305509035795534,
+        0.25947813045317225
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100021,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        0.4010771576818378,
+        0.022305509035795534,
+        0.25947813045317225
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100021,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        0.4010771576818378,
+        0.022305509035795534,
+        0.25947813045317225
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "legacy",
+      "seed": 2944100021,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        0.4010771576818378,
+        0.022305509035795534,
+        0.25947813045317225
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100000,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        139.58753837781927,
+        151.5577865831209,
+        74.12613595385882
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100000,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        139.58753837781927,
+        151.5577865831209,
+        74.12613595385882
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100000,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        139.58753837781927,
+        151.5577865831209,
+        74.12613595385882
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100000,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        139.58753837781927,
+        151.5577865831209,
+        74.12613595385882
+      ],
+      "optimistic_targets_reachable": 1,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100000,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        139.58753837781927,
+        151.5577865831209,
+        74.12613595385882
+      ],
+      "optimistic_targets_reachable": 2,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100000,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        139.58753837781927,
+        151.5577865831209,
+        74.12613595385882
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100000,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        139.58753837781927,
+        151.5577865831209,
+        74.12613595385882
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100001,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        51.990718673324956,
+        108.19020599296007,
+        131.50709502375116
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100001,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        51.990718673324956,
+        108.19020599296007,
+        131.50709502375116
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100001,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        51.990718673324956,
+        108.19020599296007,
+        131.50709502375116
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100001,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        51.990718673324956,
+        108.19020599296007,
+        131.50709502375116
+      ],
+      "optimistic_targets_reachable": 1,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100001,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        51.990718673324956,
+        108.19020599296007,
+        131.50709502375116
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100001,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        51.990718673324956,
+        108.19020599296007,
+        131.50709502375116
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100001,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        51.990718673324956,
+        108.19020599296007,
+        131.50709502375116
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100003,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        65.30350046365045,
+        148.03411862650256,
+        62.92319310181016
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100003,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        65.30350046365045,
+        148.03411862650256,
+        62.92319310181016
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100003,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        65.30350046365045,
+        148.03411862650256,
+        62.92319310181016
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100003,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        65.30350046365045,
+        148.03411862650256,
+        62.92319310181016
+      ],
+      "optimistic_targets_reachable": 2,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100003,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        65.30350046365045,
+        148.03411862650256,
+        62.92319310181016
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100003,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        65.30350046365045,
+        148.03411862650256,
+        62.92319310181016
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100003,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        65.30350046365045,
+        148.03411862650256,
+        62.92319310181016
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100011,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        108.05647502540111,
+        60.6144867339641,
+        82.70842151453607
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100011,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        108.05647502540111,
+        60.6144867339641,
+        82.70842151453607
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100011,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        108.05647502540111,
+        60.6144867339641,
+        82.70842151453607
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100011,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        108.05647502540111,
+        60.6144867339641,
+        82.70842151453607
+      ],
+      "optimistic_targets_reachable": 2,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100011,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        108.05647502540111,
+        60.6144867339641,
+        82.70842151453607
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100011,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        108.05647502540111,
+        60.6144867339641,
+        82.70842151453607
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100011,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        108.05647502540111,
+        60.6144867339641,
+        82.70842151453607
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100020,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        13.496175979537592,
+        146.09393770014486,
+        163.48546944779957
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100020,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        13.496175979537592,
+        146.09393770014486,
+        163.48546944779957
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100020,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        13.496175979537592,
+        146.09393770014486,
+        163.48546944779957
+      ],
+      "optimistic_targets_reachable": 1,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100020,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        13.496175979537592,
+        146.09393770014486,
+        163.48546944779957
+      ],
+      "optimistic_targets_reachable": 1,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100020,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        13.496175979537592,
+        146.09393770014486,
+        163.48546944779957
+      ],
+      "optimistic_targets_reachable": 2,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100020,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        13.496175979537592,
+        146.09393770014486,
+        163.48546944779957
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100020,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        13.496175979537592,
+        146.09393770014486,
+        163.48546944779957
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100021,
+      "active_speed_mm_s": 1.0,
+      "required_active_speed_mm_s": [
+        217.94094791348894,
+        12.12057004455605,
+        140.99758271111602
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100021,
+      "active_speed_mm_s": 10.0,
+      "required_active_speed_mm_s": [
+        217.94094791348894,
+        12.12057004455605,
+        140.99758271111602
+      ],
+      "optimistic_targets_reachable": 0,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100021,
+      "active_speed_mm_s": 50.0,
+      "required_active_speed_mm_s": [
+        217.94094791348894,
+        12.12057004455605,
+        140.99758271111602
+      ],
+      "optimistic_targets_reachable": 1,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100021,
+      "active_speed_mm_s": 100.0,
+      "required_active_speed_mm_s": [
+        217.94094791348894,
+        12.12057004455605,
+        140.99758271111602
+      ],
+      "optimistic_targets_reachable": 1,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100021,
+      "active_speed_mm_s": 150.0,
+      "required_active_speed_mm_s": [
+        217.94094791348894,
+        12.12057004455605,
+        140.99758271111602
+      ],
+      "optimistic_targets_reachable": 2,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100021,
+      "active_speed_mm_s": 200.0,
+      "required_active_speed_mm_s": [
+        217.94094791348894,
+        12.12057004455605,
+        140.99758271111602
+      ],
+      "optimistic_targets_reachable": 2,
+      "all_targets_optimistically_reachable": false
+    },
+    {
+      "flow_case": "reference_healthy_inlet",
+      "seed": 2944100021,
+      "active_speed_mm_s": 250.0,
+      "required_active_speed_mm_s": [
+        217.94094791348894,
+        12.12057004455605,
+        140.99758271111602
+      ],
+      "optimistic_targets_reachable": 3,
+      "all_targets_optimistically_reachable": true
+    }
+  ]
+}

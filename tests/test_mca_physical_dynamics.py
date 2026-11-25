@@ -42,6 +42,19 @@ def test_uniform_pipe_exact_advection_and_path_in_mm():
     assert not result.wall_contact_s.any()
 
 
+def test_terminal_flow_crossing_is_reported_without_active_command():
+    transport, solution = setup_transport(length=2., inlet=.6*np.pi)
+    position = np.array([[1.98, 0., 0.]])
+    edge = transport.nearest_edges(position)
+    flow = transport.velocity_mm_s(position, edge, solution)
+    node, fraction, point = transport._boundary_crossings(
+        position, position + flow * .05, edge, np.array([.08]), solution
+    )
+    assert node[0] >= 0
+    assert 0.0 <= fraction[0] <= 1.0
+    assert point[0, 0] == pytest.approx(2.0)
+
+
 def test_control_interval_is_world_hold_not_residual_controller():
     transport, solution = setup_transport()
     result = move(transport, solution, [[2., 0., 0.]], [[-1., 0., 0.]])

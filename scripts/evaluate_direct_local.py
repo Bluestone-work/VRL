@@ -27,6 +27,8 @@ METRICS = (
     "success", "removal_rate", "steps", "completion_steps", "first_contact_steps",
     "wall_contact_rate", "collision_rate", "mean_action_magnitude",
     "mean_flow_speed", "blood_flow_exposure", "mean_simultaneously_contacted_clots",
+    "mean_control_authority", "cannot_reverse_flow_rate", "terminal_stuck_rate",
+    "geodesic_progress",
 )
 HARD_SCENARIOS = ("femoropopliteal_pad", "coronary_rca", "carotid_bifurcation")
 
@@ -81,6 +83,7 @@ def episode(agent, env, target, trace_path: Path):
         "policy_action", "executed_action", "flow", "active_per_clot", "rewards",
         "wall_contacts", "collision_pairs", "robot_clot_distances", "clot_masses",
         "flow_local",
+        "control_authority", "cannot_reverse_flow", "terminal_stuck", "geodesic_progress",
     )}
     arrays["clot_masses"].append(env.clot_masses.copy())
     arrays["positions"] = [env.robot_positions.copy()]
@@ -111,6 +114,10 @@ def episode(agent, env, target, trace_path: Path):
         arrays["executed_action"].append(executed.copy())
         arrays["flow"].append(flow.copy())
         arrays["flow_local"].append(flow_local)
+        arrays["control_authority"].append(np.asarray(info["control_authority_ratio"]).copy())
+        arrays["cannot_reverse_flow"].append(np.asarray(info["cannot_reverse_flow"]).copy())
+        arrays["terminal_stuck"].append(float(info["terminal_stuck_steps"]))
+        arrays["geodesic_progress"].append(np.asarray(info["geodesic_progress"]).copy())
         arrays["active_per_clot"].append(contact.sum(axis=0))
         arrays["rewards"].append(reward)
         arrays["wall_contacts"].append(info["wall_collisions"])
@@ -161,6 +168,10 @@ def episode(agent, env, target, trace_path: Path):
         "mean_flow_speed": float(flow_mag.mean()),
         "blood_flow_exposure": float(flow_mag.sum(axis=0).mean()),
         "mean_simultaneously_contacted_clots": float((arrays["active_per_clot"] > 0).sum(axis=1).mean()),
+        "mean_control_authority": float(np.mean(arrays["control_authority"])),
+        "cannot_reverse_flow_rate": float(np.mean(arrays["cannot_reverse_flow"])),
+        "terminal_stuck_rate": float(np.mean(arrays["terminal_stuck"]) / max(n, 1)),
+        "geodesic_progress": float(np.mean(arrays["geodesic_progress"])),
         "labels": labels, "contact_steps_total": total_contact,
         "policy_action_flow_dot_mean": float(action_flow_dot.mean()),
         "geometry_sha256": geometry_hash(env.tree),

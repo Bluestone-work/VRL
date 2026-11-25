@@ -57,3 +57,18 @@ def wall_safe_projection(u_world, pos, sdf, body, margin=MARGIN, edge=None):
     if c > 0:
         u = u-float(np.clip(1-clear/margin, 0, 1))*c*n_out
     return u
+
+
+def project_local_commands(local, est, targets, hold, frames, sdf, body):
+    """Apply the shared activity gate and wall projection to local navigation commands."""
+    local = np.clip(np.asarray(local, float), -1., 1.)
+    changed = 0
+    for i in range(len(local)):
+        if not est.active[i] or hold[i] or targets[i] < 0:
+            local[i] = 0.
+            continue
+        world = frames[i].T @ local[i]
+        guarded = wall_safe_projection(world, est.pos[i], sdf, body, margin=.2, edge=int(est.edge[i]))
+        changed += int(np.linalg.norm(guarded - world) > 1e-6)
+        local[i] = frames[i] @ guarded
+    return local, changed

@@ -127,6 +127,10 @@ class BalancedVectorVascularEnv:
         for env in self.envs:
             env.set_difficulty(difficulty)
 
+    def set_flow_scale(self, scale: float) -> None:
+        for env in self.envs:
+            env.set_flow_scale(scale)
+
     @staticmethod
     def _concat_obs(observations: list[dict[str, np.ndarray]]):
         return {
@@ -166,11 +170,23 @@ class BalancedVectorVascularEnv:
             "agent_rewards", "team_reward", "success", "removal_rate",
             "wall_collisions", "wall_hits_total", "removed_mass", "clots_engaged", "first_contact_step",
             "contact_miss", "agent_mask", "path_length", "robot_path_length",
+            "termination_reason", "physics_failure", "infeasible_flow",
+            "local_flow_speed", "available_control_speed", "axial_flow_speed",
+            "control_authority_ratio", "cannot_reverse_flow", "distance_to_target",
+            "geodesic_progress", "wall_projection_count", "endpoint_contact_count",
+            "terminal_stuck_steps",
+            "repeated_projection_count", "unrecoverable_steps",
         ):
             if all(key in item for item in infos):
                 info[key] = np.concatenate(
                     [np.asarray(item[key]) for item in infos], axis=0
                 )
+        if infos and all("integration_substeps" in item for item in infos):
+            info["integration_substeps"] = tuple(
+                int(item["integration_substeps"]) for item in infos
+            )
+        if infos and all("flow_scale" in item for item in infos):
+            info["flow_scale"] = float(infos[0]["flow_scale"])
         # Per-env team size for the reward split: scalar when every child uses
         # the same active count, per-env array otherwise (mixed-N batching).
         sizes = np.concatenate([

@@ -127,9 +127,8 @@ def work(spec):
                 guarded_delta=np.linalg.norm(local-counterfactual,axis=1)[est.active]
                 if not ep.station_keeping:counterfactual[hold]=0.
                 if ep.shield is not None:
-                    from scripts.benchmark_deployable import packet_from
                     saved_shield=copy.deepcopy(ep.shield.__dict__)
-                    try:counterfactual=ep.shield.filtered(counterfactual,packet_from(est,ep.ctl.frames(est),ep.prev_local))
+                    try:counterfactual=ep.shield.filtered(counterfactual,ep.spacing_packet(est))
                     finally:
                         ep.shield.__dict__.clear();ep.shield.__dict__.update(saved_shield)
                 command_audit['steps']+=int(est.active.sum())

@@ -183,11 +183,15 @@ class VesselTree:
         branches: list[Branch],
         extra_links: list[tuple[int, int]] | None = None,
         scenario: str = "custom",
+        endcap_mode: str = "clamp",
     ) -> None:
+        if endcap_mode not in ("clamp", "open"):
+            raise ValueError("endcap_mode must be 'clamp' or 'open'")
         self.points = np.ascontiguousarray(points, dtype=np.float32)
         self.radii = np.ascontiguousarray(radii, dtype=np.float32)
         self.branches = branches
         self.scenario = scenario
+        self.endcap_mode = endcap_mode
         self.n_stations = int(self.points.shape[0])
 
         self.branch_ids = np.zeros((self.n_stations,), dtype=np.int32)
@@ -195,8 +199,24 @@ class VesselTree:
             self.branch_ids[br.start : br.stop + 1] = br.branch_id
 
         self._build_frames()
-        self._build_graph(extra_links or [])
+        links = extra_links or []
+        self._build_graph(links)
         self._build_arclength()
+        # A branch start is an exposed inlet only for the root branch. Child
+        # starts are junctions and must remain open so projection cannot create
+        # an artificial cap at a bifurcation. Branch stops are caps unless a
+        # child is attached there.
+        child_branches = {br.parent for br in branches if br.parent >= 0}
+        self._terminal_cap = np.zeros((self.n_stations,), dtype=bool)
+        self._cap_direction = np.zeros_like(self.points)
+        linked_endpoints = {int(x) for link in links for x in link}
+        for br in branches:
+            if br.parent < 0 and br.start not in linked_endpoints:
+                self._terminal_cap[br.start] = True
+                self._cap_direction[br.start] = -self.tangents[br.start]
+            if br.branch_id not in child_branches and br.stop not in linked_endpoints:
+                self._terminal_cap[br.stop] = True
+                self._cap_direction[br.stop] = self.tangents[br.stop]
 
     # ------------------------------------------------------------------ frames
 
@@ -385,7 +405,7 @@ class VesselTree:
     def project(
         self, positions: np.ndarray, robot_radius: float, hint: np.ndarray | None = None
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-        """Clamp positions into the lumen using segment (not point) projection.
+        """Project positions into a finite lumen using segment and end-cap rules.
 
         Point-based projection quantises the wall to the station spacing, which
         makes the lumen a chain of spheres rather than a tube. Projecting onto
@@ -393,7 +413,8 @@ class VesselTree:
 
         Returns:
             clamped: positions moved inside the lumen.
-            outside: bool mask, True where the position had left the lumen.
+            outside: bool mask, True where the position had left the lumen or
+                crossed an exposed inlet/outlet cap.
             station: nearest station index per position.
             axis_point: the closest point on the centerline polyline.
         """
@@ -401,13 +422,39 @@ class VesselTree:
         station = self.nearest_station(positions, hint=hint)
         axis_point, radius = self._axis_point(positions, station)
 
-        offset = positions - axis_point
+        # First handle axial violations at exposed finite-segment endpoints.
+        # A child branch start is not a cap, so a robot can pass through a
+        # junction. ``open`` keeps the axial coordinate for callers modelling
+        # an outlet, while still reporting the event and enforcing the radial
+        # wall. ``clamp`` and ``reflect`` use the same bounded lumen geometry.
+        cap = self._terminal_cap[station]
+        cap_dir = self._cap_direction[station]
+        axial = np.sum((positions - axis_point) * cap_dir, axis=1)
+        axial_outside = cap & (axial > 0.0)
+        axial_excess = np.maximum(axial, 0.0)
+        if self.endcap_mode == "clamp":
+            axis_point = np.where(
+                axial_outside[:, None], self.points[station], axis_point
+            ).astype(np.float32)
+            radial_position = positions - cap_dir * axial_excess[:, None]
+        else:
+            radial_position = positions
+
+        offset = radial_position - axis_point
         dist = np.linalg.norm(offset, axis=1)
         limit = np.maximum(radius - robot_radius, 1e-4)
-        outside = dist > limit
+        radial_outside = dist > limit
+        outside = radial_outside | axial_outside
         safe = np.maximum(dist, 1e-8)[:, None]
         clamped = axis_point + offset / safe * limit[:, None]
-        result = np.where(outside[:, None], clamped, positions).astype(np.float32)
+        if self.endcap_mode == "open":
+            # Keep an axial outlet trajectory while preventing radial wall
+            # escape. This mode is useful for measuring departure from a finite
+            # segment without silently declaring the robot dead.
+            result = np.where(radial_outside[:, None], clamped, positions)
+        else:
+            result = np.where(outside[:, None], clamped, positions)
+        result = result.astype(np.float32)
         return result, outside, station, axis_point
 
     def _axis_point(
@@ -556,6 +603,7 @@ def build_vessel_tree(
     rng: np.random.Generator,
     base_radius: float = 0.055,
     min_radius: float = 0.0135,
+    endcap_mode: str = "clamp",
 ) -> VesselTree:
     """Sample a randomized curved vessel tree for one of the SCENARIOS.
 
@@ -571,7 +619,9 @@ def build_vessel_tree(
     if scenario in ANATOMICAL_SCENARIOS:
         from environments.vessel_anatomy import build_territory
 
-        return build_territory(scenario, rng=rng, min_radius=min_radius)
+        tree = build_territory(scenario, rng=rng, min_radius=min_radius)
+        tree.endcap_mode = endcap_mode
+        return tree
 
     if scenario in ("multilevel", "mca_stroke"):
         from environments.vessel_tree_generator import (
@@ -600,6 +650,7 @@ def build_vessel_tree(
         )
         tree = segments_to_vessel_tree(segments, n_per_segment=20)
         tree.scenario = scenario
+        tree.endcap_mode = endcap_mode
         return tree
 
     # Legacy scenarios (bifurcation, stenotic, anastomosis, aneurysm)
@@ -696,4 +747,7 @@ def build_vessel_tree(
         radii[idx] *= 1.0 - (1.0 - severity) * bump
         radii = np.maximum(radii, min_radius)
 
-    return VesselTree(points, radii, branches, extra_links=links, scenario=scenario)
+    return VesselTree(
+        points, radii, branches, extra_links=links, scenario=scenario,
+        endcap_mode=endcap_mode,
+    )

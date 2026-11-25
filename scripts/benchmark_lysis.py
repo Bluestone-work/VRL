@@ -33,6 +33,8 @@ from pathlib import Path
 
 import numpy as np
 
+NAV_GOAL_TOLERANCE_MM = .30
+
 DEV = dict(base=2600000000, stride=100000)
 
 
@@ -42,12 +44,27 @@ def dev_seeds(anatomy, count, offset=0):
     return [DEV['base']+k*DEV['stride']+offset+i for i in range(count)]
 
 
+def navigation_outcome(success, row):
+    """Terminal labels for the frozen-target navigation task."""
+    reason = row['termination']
+    if row['lost']:
+        reason = 'robot_lost'
+    elif success:
+        reason = 'navigation_success'
+    return dict(benchmark='navigation', task_mode='navigation', task_success=bool(success),
+                navigation_success=bool(success), strict_success=bool(success and row['wall_contact_s'] < 1.),
+                relaxed_success=bool(success and row['wall_contact_s'] < 5.),
+                collision_free_success=bool(success and row['particle_collision_events'] == 0),
+                termination=reason)
+
+
 class LysisEpisode:
     """allocation -> (TPG hold) -> low-level command -> spacing shield -> physics, deployable inputs only."""
 
     def __init__(self, n, anatomy, seed, horizon=300., d_min=2., sensing='image', shield=True, tpg=True,
                  fallback=None, topo=True, sense_cfg=None, actuation=None, rng=None, variation=None, flow_inlet_mm_s=None,
-                 dynamic_obstacle_count=0, clot_initialization=None):
+                 dynamic_obstacle_count=0, clot_initialization=None, navigation=False, centerline_match=False,
+                 healthy_inlet_ml_min=None, active_speed_mm_s=None):
         from environments.mca_physical_env import DynamicsConfig
         from marl.deployable_sensing import DeployableConfig, DeployablePursuit, DeployableSensor
         from marl.multicluster import MultiClusterConfig
@@ -59,6 +76,13 @@ class LysisEpisode:
         base = replace(DynamicsConfig.from_json(TEACHER_CONFIG), anatomy=anatomy, episode_duration_s=horizon,
                        junction_model='union', particle_count=int(dynamic_obstacle_count or 0),
                        **({'clot_initialization': str(clot_initialization)} if clot_initialization else {}))
+        if healthy_inlet_ml_min is not None:
+            if flow_inlet_mm_s is not None:
+                raise ValueError("specify one inlet boundary condition")
+            if not np.isfinite(healthy_inlet_ml_min) or healthy_inlet_ml_min <= 0:
+                raise ValueError("healthy inlet flow must be finite and positive")
+        if active_speed_mm_s is not None:
+            base = replace(base, robot_speed_mm_s=float(active_speed_mm_s))
         self.env, self.manifest = paired_environment(base, n, seed)
         env = self.env; self.n, self.seed, self.horizon, self.d_min = n, seed, horizon, d_min
         # v6 (2026-10-08): per-anatomy flow calibration. The legacy config gives every anatomy the same inlet volume flow
@@ -67,15 +91,19 @@ class LysisEpisode:
         # multiplier / 2) — the scene's own U[1.5,2.5] variation is kept around v; distribution over branches, stenosis
         # acceleration and lysis feedback are unchanged (linear network).
         self.flow_scale = 1.
-        if flow_inlet_mm_s:
+        if healthy_inlet_ml_min is not None:
+            fm = env.flow_model
+            self.flow_scale = healthy_inlet_ml_min / fm.solve()["inlet_flow_ml_min"]
+        elif flow_inlet_mm_s:
             fm = env.flow_model; healthy = fm.solve(fm.healthy_radius_mm); root = fm.root
             v0 = float(healthy['station_inflow_mm3_s'][root])/(np.pi*float(fm.healthy_radius_mm[root])**2)
             self.flow_scale = float(flow_inlet_mm_s)*env.episode_flow_multiplier/2./max(v0, 1e-12)
+        if healthy_inlet_ml_min is not None or flow_inlet_mm_s:
             fm.driving_pressure *= self.flow_scale; fm.inlet_flow_ml_min *= self.flow_scale
             env.solution = fm.solve(env._radii(env.masses))
         if sensing == 'image':
             from marl.image_sensing import CameraConfig, ImageSensor
-            self.sensor = ImageSensor(env, CameraConfig(), seed=seed,
+            self.sensor = ImageSensor(env, CameraConfig(centerline_match=centerline_match), seed=seed,
                                       latency_steps=(sense_cfg.latency_steps if sense_cfg else 1))
         else:
             self.sensor = DeployableSensor(env, sense_cfg or DeployableConfig(), seed=seed)
@@ -87,11 +115,12 @@ class LysisEpisode:
         self.fallback = fallback or ('park' if (n > 1 and tpg) else 'help')
         self.plan_targets = bm.PlanTargets(self.plan)
         self.ctl = DeployablePursuit(env, self.sensor, topo=topo)
+        self.navigation = navigation
+        self.navigation_targets = None
+        self.use_tpg = tpg and n > 1
         self.coord = None
-        if tpg and n > 1:
-            from marl.tpg_coordinator import TPGCoordinator
-            _, sp = bm._station_paths(env)
-            self.coord = TPGCoordinator(env, self.plan, sp, d_min_mm=d_min)
+        if self.use_tpg and not navigation:
+            self.coord = self._build_coord(self.plan)
         # actuation randomisation (training only): per-cluster gain and execution noise
         if actuation is not None and rng is None:          # evaluation stress test: paired, seeded per scene
             rng = np.random.default_rng(seed+977)
@@ -115,6 +144,14 @@ class LysisEpisode:
             self.var = Variation(self, vs['s'], np.random.default_rng([seed, 5150, int(round(1000*vs['s']))]),
                                  pulsatile=vs.get('pulsatile', True))
 
+        if navigation:
+            self.env.config = replace(self.env.config, lysis_mass_per_s=0.)
+
+    def _build_coord(self, plan, dwell_s=None):
+        from marl.tpg_coordinator import TPGCoordinator
+        _, station_path = self.bm._station_paths(self.env)
+        return TPGCoordinator(self.env, plan, station_path, d_min_mm=self.d_min, dwell_s=dwell_s)
+
     # ---- deployable step interface
     def observe(self):
         self.bm.FALLBACK['mode'] = self.fallback
@@ -122,18 +159,44 @@ class LysisEpisode:
 
     def plan_targets_now(self, est):
         self.bm.FALLBACK['mode'] = self.fallback
-        return self.plan_targets.targets(self.env, est.pos, est.clot_alive)
+        if self.navigation_targets is not None:
+            return self.navigation_targets
+        targets = self.plan_targets.targets(self.env, est.pos, est.clot_alive)
+        if self.navigation:
+            # Every cluster needs one destination. Keep the registered whole-team
+            # geodesic assignment when the preoperative tour leaves a slot empty.
+            if np.any(targets < 0):
+                targets = self.env._assigned_targets().copy()
+            if np.any(targets < 0):
+                raise RuntimeError("navigation reset produced an unassigned target")
+            if self.use_tpg:
+                self.coord = self._build_coord([[int(t)] for t in targets], dwell_s=0.)
+            targets.setflags(write=False)
+            self.navigation_targets = targets
+        return targets
+
+    def navigation_distances(self):
+        """Simulator-side scoring distance to each cluster's frozen destination."""
+        if self.navigation_targets is None:
+            raise RuntimeError("navigation targets must be initialized before scoring")
+        distance = self.env._target_distances()[np.arange(self.n), self.navigation_targets]
+        return np.where(self.env.active[:self.n], distance, np.inf)
 
     def hold(self, est):
         return self.coord.gate(est.pos, est.active) if self.coord is not None else np.zeros(self.n, bool)
 
+    def spacing_packet(self, est):
+        from scripts.benchmark_deployable import packet_from
+        frames = self.ctl.frames(est)
+        previous = np.einsum('nij,nj->ni', frames, self.sent_world)
+        return packet_from(est, frames, previous)
+
     def step(self, est, local, hold):
         """local: [n, 3] commands in the controller's local frames. Returns (done, outcome)."""
-        from scripts.benchmark_deployable import packet_from
         env, n = self.env, self.n
         local = np.asarray(local, float).copy(); local[hold] = 0.
         if self.shield is not None:
-            local = self.shield.filtered(local, packet_from(est, self.ctl.frames(est), self.prev_local))
+            local = self.shield.filtered(local, self.spacing_packet(est))
         self.prev_local = local.copy()
         world = self.ctl.to_world(local, est)
         self.sent_world = world.copy()
@@ -219,9 +282,11 @@ class WallGuard:
 
     def __call__(self, ep, est, targets, rule, hold):
         t = ep.env.elapsed_s
-        changed = self.replan.update(t, est, targets, ep.ctl.to_world(ep.prev_local, est), hold, ep.ctl)
+        changed = self.replan.update(t, est, targets, ep.sent_world, hold, ep.ctl)
         if changed:
-            rule = ep.ctl.act(targets, est); self.exec.trigger(t, changed)
+            rule = rule.copy()
+            rule[changed] = ep.ctl.act(targets, est, robots=changed)[changed]
+            self.exec.trigger(t, changed)
         return self.exec.act(t, est, ep.ctl, rule, hold)
 
 

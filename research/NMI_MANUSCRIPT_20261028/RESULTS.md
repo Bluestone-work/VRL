@@ -8,8 +8,10 @@ schedule are computed once and are identical for every method we compare, and th
 safety layer that gates wall proximity, inter-cluster spacing and actuator limits sits
 downstream of every controller. What differs between methods is only the local command
 chosen at each 0.1 s interval. The learned controller is a parameter-shared recurrent
-actor that scores 13 semantic candidates and emits both direction and speed, so a
-single set of weights serves N = 1, 2 and 3 clusters without retraining.
+actor that scores 13 semantic candidates and emits both direction and speed; parameter
+sharing keeps the model size independent of the cluster count, although the present
+neighbour encoding is sized to that count, so all results below are measured at the
+N = 3 configuration the policy was trained at (see Methods).
 
 ## Learning proceeds against a rising difficulty curriculum
 
@@ -64,3 +66,38 @@ Second, what generalises is the local control policy, not the whole system: allo
 routing and TPG are recomputed from the geometry of each new territory, so the result
 establishes that the learned component does not need anatomy-specific retraining, not
 that the pipeline is anatomy-free.
+
+## On the hardest territory the learned policy reaches a method ceiling
+
+The HCC portal-hepatic construct is the most demanding territory we registered: four
+target sites distributed across hepatic segments, two tumour-related narrowings
+(residual lumen fractions 0.65 and 0.70) on the left and right portal branches, and
+terminal segmental branches of 3.0-3.7 mm tapering to 2.2-2.8 mm. Over twelve paired
+scene seeds at four flow-and-obstacle conditions, a deployable pursuit-and-settle rule
+reaches 68.8% task completion while the learned policy reaches 12.5%
+(paired difference +56.2 percentage points, bootstrap 95% interval
+[+41.7, +70.8], 27 wins for the rule against
+0 for the policy, exact McNemar p = 0.0000). The predictive selector reaches
+66.7%. The gap is present at every condition, not only the hardest: at the weakest
+flow with four obstacles the rule completes 100.0% of episodes and the policy
+25.0%.
+
+We treated this as a result to diagnose rather than to omit, and the diagnosis is
+unusually clean. Three training configurations - the single-anatomy run, a mixed pool
+that oversamples HCC to half of all episodes with a warm start from the converged
+multi-anatomy policy, and the same mixture with the difficulty curriculum enabled -
+leave HCC-episode training success statistically unchanged at 23.2%, 21.7% and 23.7%.
+Both mixed-pool policies score 8.3% on the same deterministic 24-episode self-evaluation.
+Re-evaluated on the identical 48-scene protocol, the mixed-pool checkpoint scores
+12.5%, matching the single-anatomy checkpoint at every difficulty level.
+
+The decisive observation is that the two checkpoints succeed on exactly the same
+6 scenes, with no scene solved by one and not the other, while their wall contact
+differs on 20 of 48 scenes. They are genuinely different policies following
+different trajectories, and they partition the scene set identically. On this geometry,
+whether an episode is solvable is decided by the scene rather than by the local policy,
+so the remaining headroom is not in the training recipe. Together with the ablations
+above this localises the limit to the representation available to the controller - the
+candidate action set and the observation - rather than to optimisation, exploration or
+data. We therefore report 12.5% as a ceiling of the present method on this
+geometry and leave the candidate-set redesign it implies as the clearest open problem.

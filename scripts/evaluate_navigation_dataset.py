@@ -23,13 +23,17 @@ if str(ROOT) not in sys.path:
 
 from scripts.navigation_dataset import MANIFEST, condition_key, iter_rows, reset_options
 from scripts.train_sb3_curriculum import CurriculumVascularEnv
-from scripts.train_sb3_ippo import IPPOAgentVecEnv
+from scripts.train_sb3_ippo import IPPOAgentVecEnv, load_navigation_ppo
 
 
 def aggregate(rows):
-    metrics = ("navigation_success", "strict_success", "wall_contact_s", "lost",
+    metrics = ("navigation_success", "strict_success", "wall_contact_s", "wall_after_reach_s", "lost",
                "particle_collision_events", "particle_contact_s")
-    out = {"episodes": len(rows)}
+    errors = sum(bool(row.get("error") or row.get("integration_failure")) for row in rows)
+    out = {"episodes": len(rows) - errors, "requested": len(rows), "errors": errors, "complete": not errors}
+    if errors:
+        return dict(out, **dict.fromkeys((*metrics, "navigation_success_rate", "strict_success_rate",
+                                         "lost_rate", "collision_episode_rate")))
     for key in metrics:
         values = [float(row[key]) for row in rows if key in row]
         if values:
@@ -47,13 +51,18 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--kind", choices=("ppo", "dqn", "sac"), required=True)
-    parser.add_argument("--action-set", choices=("semantic", "semantic_reduced", "atomic", "continuous"), default="semantic")
+    parser.add_argument("--action-set", choices=("semantic", "semantic_reduced", "semantic_minimal", "atomic", "continuous"), default="semantic")
     parser.add_argument("--split", choices=("train", "validation", "holdout_test"), required=True)
     parser.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
     parser.add_argument("--max-episodes", type=int, default=36,
                         help="0 evaluates every row in the selected split/cluster")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--centerline-match", action="store_true")
     parser.add_argument("--device", default="cpu")
+    parser.add_argument("--flow-feature", action="store_true",
+                        help="must match the checkpoint: the flow adapter expects the flow observation")
+    parser.add_argument("--safety-parity", action=argparse.BooleanOptionalAction, default=True,
+                        help="apply the HCC matrix wall recovery and near-target settling protocol")
     args = parser.parse_args()
     if args.max_episodes < 0:
         parser.error("max-episodes must be nonnegative")
@@ -72,7 +81,8 @@ def main():
     anatomies = sorted({row["anatomy"] for row in rows})
     env = IPPOAgentVecEnv(CurriculumVascularEnv(
         seed=4101, clusters=args.clusters, curriculum=False, reward_mode="navigation",
-        zero_latency=True, direct_action=True), action_set=args.action_set)
+        zero_latency=True, direct_action=True, centerline_match=args.centerline_match), action_set=args.action_set,
+        flow_feature=args.flow_feature, safety_parity=args.safety_parity, exit_mask=False)
     # Holdout rows are permitted only because this is an explicit evaluation
     # runner. They are never used by the training environment or selector.
     env.physical.train_anatomies = anatomies
@@ -81,11 +91,14 @@ def main():
         raise SystemExit("SAC manifest evaluation requires --action-set continuous")
     if args.kind != "sac" and args.action_set == "continuous":
         raise SystemExit("continuous action-set is reserved for SAC evaluation")
-    model = model_cls.load(args.model, env=env, device=args.device)
+    loader = load_navigation_ppo if args.kind == "ppo" else model_cls.load
+    model = loader(args.model, env=env, device=args.device)
     completed = []
     try:
         for index, row in enumerate(rows):
             obs = env.reset(options=reset_options(row))
+            scene = env.reset_infos[0]["scene"]
+            targets = env.physical.nav_targets.tolist()
             while True:
                 action, _ = model.predict(obs, deterministic=True)
                 obs, _, done, infos = env.step(action)
@@ -94,6 +107,7 @@ def main():
                     metrics = dict(info.get("episode_metrics", {}))
                     completed.append({
                         "manifest_index": index,
+                        "integration_failure": bool(info.get("integration_failure")),
                         "split": row["split"],
                         "anatomy": row["anatomy"],
                         "clusters": int(row["clusters"]),
@@ -104,9 +118,12 @@ def main():
                         "obstacle_density": row["obstacle_density"],
                         "obstacle_layout": row["obstacle_layout"],
                         "scenario_hash": row["scenario_hash"],
-                        "accepted_seed": info.get("scene", {}).get("accepted_seed"),
+                        "accepted_seed": scene["accepted_seed"],
+                        "realized_scenario_hash": scene["scenario_hash"],
+                        "navigation_targets": targets,
                         "navigation_success": bool(info.get("navigation_success", metrics.get("navigation_success", False))),
                         "strict_success": bool(metrics.get("strict_success", False)),
+                        "wall_after_reach_s": float(metrics["wall_after_reach_s"]),
                         "wall_contact_s": float(metrics.get("wall_contact_s", np.asarray(info.get("agent_wall_contact_s", 0.)).sum())),
                         "lost": int(metrics.get("lost", np.asarray(info.get("agent_lost", 0.)).sum())),
                         "particle_collision_events": float(metrics.get("particle_collision_events", np.asarray(info.get("agent_particle_collision_events", 0.)).sum())),
@@ -131,6 +148,9 @@ def main():
         "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
         "algorithm": args.kind,
         "action_set": args.action_set,
+        "centerline_match": args.centerline_match,
+        "safety_parity": args.safety_parity,
+        "exit_mask": False,
         "split": args.split,
         "clusters": args.clusters,
         "protocol": "frozen_manifest_evaluation; holdout rows are never used for selection",
@@ -142,6 +162,8 @@ def main():
     }
     args.out.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps(result["overall"], indent=2, ensure_ascii=False))
+    if not result["overall"]["complete"]:
+        raise SystemExit("Incomplete manifest evaluation. See integration failures in the output.")
 
 
 if __name__ == "__main__":

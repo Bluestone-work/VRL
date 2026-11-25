@@ -37,9 +37,13 @@ class GaussianActor(nn.Module):
     that matches the action actually executed by the environment.
     """
 
-    def __init__(self, feature_dim: int, action_dim: int, log_std_init: float = 0.0):
+    def __init__(self, feature_dim: int, action_dim: int, log_std_init: float = 0.0,
+                 entropy_mode: str = "squashed_mc"):
         super().__init__()
+        if entropy_mode not in ("squashed_mc", "legacy_cross_entropy"):
+            raise ValueError("entropy_mode must be 'squashed_mc' or 'legacy_cross_entropy'")
         self.action_dim = action_dim
+        self.entropy_mode = entropy_mode
 
         self.mean = nn.Linear(feature_dim, action_dim)
         # Learnable log std (independent of state)
@@ -94,9 +98,16 @@ class GaussianActor(nn.Module):
         # entropy of the CURRENT policy. Maximising it drives the new mean away
         # from old actions without bound. Estimate H[tanh(Z)] = H[Z] + E log J
         # using a reparameterized current-policy sample and a stable Jacobian.
-        entropy_sample = dist.rsample()
-        log_jacobian = 2.0 * (np.log(2.0) - entropy_sample - F.softplus(-2.0*entropy_sample))
-        entropy = (dist.entropy() + log_jacobian).sum(dim=-1)
+        if self.entropy_mode == "legacy_cross_entropy":
+            entropy = -log_prob
+        else:
+            entropy_sample = dist.rsample()
+            log_jacobian = 2.0 * (
+                np.log(2.0) - entropy_sample - F.softplus(-2.0 * entropy_sample)
+            )
+            # H[tanh(Z)] = H[Z] + E[log |det J|]. The reparameterized
+            # sample keeps the Jacobian term differentiable through the mean.
+            entropy = (dist.entropy() + log_jacobian).sum(dim=-1)
         return log_prob, entropy
 
 
@@ -307,6 +318,7 @@ class MAPPO:
         max_grad_norm: float = 0.5,
         use_gat: bool = True,
         device: str = "cpu",
+        entropy_mode: str = "squashed_mc",
     ):
         self.n_agents = n_agents
         self.obs_dim = obs_dim
@@ -329,6 +341,7 @@ class MAPPO:
             self.actor = GATActorStochastic(
                 obs_dim, action_dim, hidden_dim, num_gat_layers, num_heads
             ).to(device)
+            self.actor.policy_head.entropy_mode = entropy_mode
             self.critic = GATCritic(
                 obs_dim, action_dim, hidden_dim, num_gat_layers, num_heads, state_dim
             ).to(device)

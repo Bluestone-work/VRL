@@ -123,6 +123,11 @@ class Vascular3DMARLEnv(gym.Env):
         particle_radius_ratio: float = 1.6,
         particle_lateral_drift: float = 0.15,
         particle_seed: int | None = None,
+        endcap_mode: str = "clamp",
+        integration_mode: str = "legacy",
+        max_substep_displacement: float = 0.01,
+        flow_scale: float = 1.0,
+        infeasible_flow_patience: int = 8,
     ) -> None:
         """
         Args:
@@ -162,6 +167,14 @@ class Vascular3DMARLEnv(gym.Env):
             raise ValueError(
                 f"reward_mode must be 'baseline' or 'milestone', got {reward_mode!r}"
             )
+        if endcap_mode not in ("clamp", "open"):
+            raise ValueError("endcap_mode must be 'clamp' or 'open'")
+        if integration_mode not in ("legacy", "adaptive"):
+            raise ValueError("integration_mode must be 'legacy' or 'adaptive'")
+        if max_substep_displacement <= 0:
+            raise ValueError("max_substep_displacement must be positive")
+        if infeasible_flow_patience <= 0:
+            raise ValueError("infeasible_flow_patience must be positive")
 
         self.scenario = scenario
         self.num_robots = int(num_robots)
@@ -186,6 +199,10 @@ class Vascular3DMARLEnv(gym.Env):
         self.control_margin = control_margin
         self.obs_mode = obs_mode
         self.reward_mode = reward_mode
+        self.endcap_mode = endcap_mode
+        self.integration_mode = integration_mode
+        self.max_substep_displacement = float(max_substep_displacement)
+        self.infeasible_flow_patience = int(infeasible_flow_patience)
         self.curriculum = bool(curriculum)
         self.initialization_mode = initialization_mode
         # Separated-spawn tunables. Euclidean minimum is in robot radii
@@ -224,6 +241,7 @@ class Vascular3DMARLEnv(gym.Env):
         self.collision_distance = 2.0 * self.robot_radius
         self.max_speed = 0.018
         self.flow_speed = 0.004
+        self.flow_scale = float(np.clip(flow_scale, 0.0, 1.0))
         self.clot_contact_radius = 0.035
         self.lysis_rate = 0.018
         # Lysis saturates at this many robots per clot, so an extra robot on the
@@ -273,7 +291,9 @@ class Vascular3DMARLEnv(gym.Env):
                 lateral_drift=drift,
                 seed=pseed,
             )
-            self.particles.configure_flow(self.flow_speed, self.tube_radius)
+            self.particles.configure_flow(
+                self.flow_speed * self.flow_scale, self.tube_radius
+            )
 
         self.wall_collision_penalty = 0.1
         self.robot_collision_penalty = 0.1
@@ -312,7 +332,8 @@ class Vascular3DMARLEnv(gym.Env):
         self.observation_space = spaces.Dict(
             {
                 "nodes": spaces.Box(
-                    low=-1.0, high=1.0,
+                    low=-2.0 if obs_mode in ("geometric_v2", "geometric_dynamic", "geometric_predictive") else -1.0,
+                    high=2.0 if obs_mode in ("geometric_v2", "geometric_dynamic", "geometric_predictive") else 1.0,
                     shape=(self.num_robots, self.node_feature_dim), dtype=np.float32,
                 ),
                 "adjacency": spaces.Box(
@@ -344,6 +365,7 @@ class Vascular3DMARLEnv(gym.Env):
         self._pb = None
         self._renderer = None
         self._route_cache: dict[int, tuple[np.ndarray, np.ndarray]] = {}
+        self._reset_diagnostics()
 
     # -------------------------------------------------------------- curriculum
 
@@ -358,6 +380,69 @@ class Vascular3DMARLEnv(gym.Env):
         """
         self._difficulty = float(np.clip(difficulty, 0.0, 1.0))
 
+    def set_flow_scale(self, scale: float) -> None:
+        """Scale the configured inlet flow for curriculum experiments.
+
+        The physical field and its continuity scaling remain unchanged. This
+        only selects a reproducible curriculum stage and can be disabled by
+        leaving the scale at ``1``.
+        """
+        self.flow_scale = float(np.clip(scale, 0.0, 1.0))
+        if self.particles is not None:
+            self.particles.configure_flow(self.flow_speed * self.flow_scale, self.tube_radius)
+
+    def _reset_diagnostics(self) -> None:
+        self.episode_wall_projection_count = 0
+        self.episode_endpoint_contacts = 0
+        self.episode_terminal_stuck_steps = 0
+        self.episode_repeated_projection_steps = 0
+        self.episode_unrecoverable_steps = 0
+        self.terminal_stuck_run = np.zeros((self.num_robots,), dtype=np.int32)
+        self.infeasible_flow = False
+
+    def _motion_substeps(
+        self,
+        commanded: np.ndarray,
+        prev_positions: np.ndarray,
+        prev_stations: np.ndarray,
+        separation: np.ndarray,
+        particle_impulse: np.ndarray,
+        n_substeps: int,
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        """Integrate one action with geometry checks at every optional substep.
+
+        Flow and active displacement are divided by ``n_substeps``. Brownian
+        noise uses sigma/sqrt(n), so increasing the number of checks does not
+        change the one-step diffusion variance.
+        """
+        positions = prev_positions.copy()
+        stations = prev_stations.copy()
+        wall_any = np.zeros((self.num_robots,), dtype=bool)
+        flow_sum = np.zeros_like(positions)
+        command_sum = np.zeros_like(positions)
+        noise_sigma = self.brownian_sigma / np.sqrt(float(n_substeps))
+        for _ in range(n_substeps):
+            occluded = self._occluded_radius(stations)
+            flow = self.tree.flow(
+                positions, stations, self.flow_speed * self.flow_scale,
+                self.tube_radius, radius_override=occluded,
+            )
+            lube = self._lubrication(positions, stations)
+            active_command = commanded / float(n_substeps) * lube[:, None]
+            noise = self._rng.normal(0.0, noise_sigma, positions.shape).astype(np.float32)
+            proposed = (
+                positions + active_command + flow / float(n_substeps) + noise
+                + separation / float(n_substeps)
+                + particle_impulse / float(n_substeps)
+            )
+            positions, wall, stations, axis = self.tree.project(
+                proposed, self.robot_radius, hint=stations
+            )
+            wall_any |= wall
+            flow_sum += flow / float(n_substeps)
+            command_sum += active_command
+        return positions, wall_any, stations, axis, flow_sum, command_sum
+
     # ------------------------------------------------------------------ scene
 
     def _sample_scene(self) -> None:
@@ -371,6 +456,7 @@ class Vascular3DMARLEnv(gym.Env):
             self._rng,
             base_radius=self.tube_radius,
             min_radius=3.0 * self.robot_radius,
+            endcap_mode=self.endcap_mode,
         )
         self._route_cache = {}
         if self.particles is not None:
@@ -846,7 +932,7 @@ class Vascular3DMARLEnv(gym.Env):
 
             occluded = self._occluded_radius(station)
             flow = tree.flow(
-                self.robot_positions, station, self.flow_speed,
+                self.robot_positions, station, self.flow_speed * self.flow_scale,
                 self.tube_radius, radius_override=occluded,
             )
             lube = self._lubrication(self.robot_positions, station)
@@ -975,6 +1061,7 @@ class Vascular3DMARLEnv(gym.Env):
         self.path_length = 0.0
         self._first_contact_step = -1
         self._milestones_hit = set()
+        self._reset_diagnostics()
         self.task_assignments = None
 
         if self.use_pybullet:
@@ -1164,6 +1251,17 @@ class Vascular3DMARLEnv(gym.Env):
             "first_contact_step": self._first_contact_step,
             "milestones_hit": set(self._milestones_hit),
             "difficulty": self._difficulty,
+            "flow_scale": self.flow_scale,
+            "integration_mode": self.integration_mode,
+            "diagnostics": {
+                "wall_projection_count": self.episode_wall_projection_count,
+                "endpoint_contact_count": self.episode_endpoint_contacts,
+                "terminal_stuck_steps": self.episode_terminal_stuck_steps,
+                "repeated_projection_steps": self.episode_repeated_projection_steps,
+                "unrecoverable_steps": self.episode_unrecoverable_steps,
+                "terminal_stuck_run": self.terminal_stuck_run.copy(),
+                "infeasible_flow": self.infeasible_flow,
+            },
             "rng_state": self._rng.bit_generator.state,
         }
 
@@ -1190,6 +1288,22 @@ class Vascular3DMARLEnv(gym.Env):
         self._first_contact_step = int(state["first_contact_step"])
         self._milestones_hit = set(state["milestones_hit"])
         self._difficulty = float(state["difficulty"])
+        self.flow_scale = float(state.get("flow_scale", self.flow_scale))
+        if self.particles is not None:
+            self.particles.configure_flow(
+                self.flow_speed * self.flow_scale, self.tube_radius
+            )
+        diagnostics = state.get("diagnostics", {})
+        self.episode_wall_projection_count = int(diagnostics.get("wall_projection_count", 0))
+        self.episode_endpoint_contacts = int(diagnostics.get("endpoint_contact_count", 0))
+        self.episode_terminal_stuck_steps = int(diagnostics.get("terminal_stuck_steps", 0))
+        self.episode_repeated_projection_steps = int(diagnostics.get("repeated_projection_steps", 0))
+        self.episode_unrecoverable_steps = int(diagnostics.get("unrecoverable_steps", 0))
+        self.terminal_stuck_run = np.asarray(
+            diagnostics.get("terminal_stuck_run", np.zeros((self.num_robots,), dtype=np.int32)),
+            dtype=np.int32,
+        ).copy()
+        self.infeasible_flow = bool(diagnostics.get("infeasible_flow", False))
         self._rng.bit_generator.state = state["rng_state"]
         self._route_cache = {}
         if self.use_pybullet:
@@ -1215,17 +1329,17 @@ class Vascular3DMARLEnv(gym.Env):
         magnitude = np.clip(norm, 0.0, 1.0)
         direction = action / np.maximum(norm, 1e-8)
         commanded = direction * self.max_speed * magnitude
-        # Near-wall lubrication drag: less thrust available when pinned.
-        commanded *= self._lubrication(prev_positions, prev_stations)[:, None]
 
         occluded = self._occluded_radius(prev_stations)
         flow = self.tree.flow(
-            prev_positions, prev_stations, self.flow_speed,
+            prev_positions, prev_stations, self.flow_speed * self.flow_scale,
             self.tube_radius, radius_override=occluded,
         )
-        noise = self._rng.normal(
-            0.0, self.brownian_sigma, prev_positions.shape
-        ).astype(np.float32)
+        noise = None
+        if self.integration_mode == "legacy":
+            noise = self._rng.normal(
+                0.0, self.brownian_sigma, prev_positions.shape
+            ).astype(np.float32)
         _hits, _pairs, separation = self._robot_collisions()
         particle_impulse = np.zeros_like(separation)
         if self.particles is not None:
@@ -1236,11 +1350,29 @@ class Vascular3DMARLEnv(gym.Env):
             particle_impulse = self.particles.separation_impulse(
                 prev_positions[None, :, :]
             )[0]
-        proposed = prev_positions + commanded + flow + noise + separation + particle_impulse
-
-        self.robot_positions, wall_hits, self.robot_stations, axis_point = (
-            self.tree.project(proposed, self.robot_radius, hint=prev_stations)
-        )
+        if self.integration_mode == "adaptive":
+            displacement = np.linalg.norm(commanded + flow, axis=1)
+            n_substeps = int(max(1, np.ceil(
+                float(np.max(displacement)) / self.max_substep_displacement
+            )))
+            (
+                self.robot_positions,
+                wall_hits,
+                self.robot_stations,
+                axis_point,
+                flow,
+                commanded,
+            ) = self._motion_substeps(
+                commanded, prev_positions, prev_stations, separation,
+                particle_impulse, n_substeps,
+            )
+        else:
+            commanded *= self._lubrication(prev_positions, prev_stations)[:, None]
+            proposed = prev_positions + commanded + flow + noise + separation + particle_impulse
+            self.robot_positions, wall_hits, self.robot_stations, axis_point = (
+                self.tree.project(proposed, self.robot_radius, hint=prev_stations)
+            )
+            n_substeps = 1
         # Wall contact removes the normal velocity component instead of silently
         # teleporting the robot back into the lumen with its momentum intact.
         self.robot_velocities = (self.robot_positions - prev_positions).astype(np.float32)
@@ -1258,6 +1390,14 @@ class Vascular3DMARLEnv(gym.Env):
         step_distance = np.linalg.norm(self.robot_velocities, axis=1)
         self.robot_path_length += step_distance
         self.path_length += float(step_distance.sum())
+
+        self.episode_wall_projection_count += int(wall_hits.sum())
+        endpoint_now = self.tree._terminal_cap[self.robot_stations] & wall_hits
+        self.episode_endpoint_contacts += int(endpoint_now.sum())
+        if np.any(wall_hits & (self.robot_stations == prev_stations)):
+            self.episode_repeated_projection_steps += int(
+                np.sum(wall_hits & (self.robot_stations == prev_stations))
+            )
 
         peer_hits, collision_pairs, _ = self._robot_collisions()
 
@@ -1343,12 +1483,51 @@ class Vascular3DMARLEnv(gym.Env):
             agent_rewards -= self.progress_scale * agent_lysis + self.success_bonus / self.num_robots * success
         reward = float(team + agent_rewards.mean())
 
+        local_flow_speed = np.linalg.norm(flow, axis=1).astype(np.float32)
+        tangent = self.tree.tangents[self.robot_stations]
+        axial_flow_speed = np.sum(flow * tangent, axis=1).astype(np.float32)
+        available_control_speed = (
+            self.max_speed * self._lubrication(prev_positions, prev_stations)
+        ).astype(np.float32)
+        control_authority_ratio = available_control_speed / np.maximum(
+            np.abs(axial_flow_speed), 1e-8
+        )
+        commanded_axial = np.sum(commanded * tangent, axis=1)
+        cannot_reverse_flow = (
+            (axial_flow_speed > 0.0)
+            & (commanded_axial < 0.0)
+            & (available_control_speed < axial_flow_speed)
+        )
+        terminal_stuck = (
+            self.tree._terminal_cap[self.robot_stations]
+            & (np.linalg.norm(self.robot_velocities, axis=1) < 1e-6)
+            & (new_target >= 0)
+        )
+        self.episode_terminal_stuck_steps += int(terminal_stuck.sum())
+        self.episode_unrecoverable_steps += int(cannot_reverse_flow.sum())
+        unrecoverable_stuck = terminal_stuck & (control_authority_ratio < 1.0)
+        self.terminal_stuck_run = np.where(
+            unrecoverable_stuck, self.terminal_stuck_run + 1, 0
+        ).astype(np.int32)
+        physics_failure = bool(
+            np.any(self.terminal_stuck_run >= self.infeasible_flow_patience)
+        )
+        self.infeasible_flow = self.infeasible_flow or physics_failure
+        terminated = bool(success or physics_failure)
+        truncated = bool(self.steps >= self.horizon and not terminated)
+
         if self.use_pybullet:
             self._sync_pybullet(rebuild=False)
 
         info = {
             "scenario": self.active_scenario,
             "success": success,
+            "termination_reason": (
+                "success" if success else "infeasible_flow" if physics_failure else
+                "horizon" if truncated else "ongoing"
+            ),
+            "physics_failure": physics_failure,
+            "infeasible_flow": self.infeasible_flow,
             "agent_rewards": agent_rewards,
             "team_reward": float(team),
             "removed_mass": removed_mass,
@@ -1363,6 +1542,20 @@ class Vascular3DMARLEnv(gym.Env):
             "path_length": self.path_length,
             "first_contact_step": self._first_contact_step,
             "difficulty": self._difficulty,
+            "local_flow_speed": local_flow_speed,
+            "available_control_speed": available_control_speed,
+            "axial_flow_speed": axial_flow_speed,
+            "control_authority_ratio": control_authority_ratio.astype(np.float32),
+            "cannot_reverse_flow": cannot_reverse_flow,
+            "terminal_stuck_steps": int(self.episode_terminal_stuck_steps),
+            "wall_projection_count": int(self.episode_wall_projection_count),
+            "endpoint_contact_count": int(self.episode_endpoint_contacts),
+            "repeated_projection_count": int(self.episode_repeated_projection_steps),
+            "unrecoverable_steps": int(self.episode_unrecoverable_steps),
+            "distance_to_target": new_geo.astype(np.float32),
+            "geodesic_progress": (prev_geo - new_geo).astype(np.float32),
+            "integration_substeps": int(n_substeps),
+            "flow_scale": float(self.flow_scale),
         }
         if self.particles is not None:
             # Robot-obstacle bookkeeping for this step.

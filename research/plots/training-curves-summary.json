@@ -1,0 +1,12 @@
+{
+  "episodes": 5266,
+  "updates": 559,
+  "final_transition": 500010,
+  "final_return_100ep": 60.88142266587234,
+  "final_success_100ep": 19.0,
+  "final_entropy_raw": 0.7323052552011278,
+  "peak_return_100ep": 66.52292500749357,
+  "peak_success_100ep": 26.0,
+  "min_entropy": 0.39395832731610253,
+  "max_entropy": 1.708660091672625
+}

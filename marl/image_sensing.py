@@ -51,6 +51,7 @@ class CameraConfig:
     pair_tol_mm: float = .06         # x-agreement for pairing the two views
     fps: float = 10.                 # frame rate; below the 10 Hz control rate frames are held (zero-order hold)
     latency_steps: int = -1          # -1: use the sensor's argument
+    centerline_match: bool = False
 
 
 def scaled_camera(pixel_mm=.02, **kw):
@@ -89,6 +90,19 @@ def ultrasound_camera(rng):
 
 
 class ImageSensor(DeployableSensor):
+    def _match(self, p, prev, banned=()):
+        if not self.cam.centerline_match:
+            return super()._match(p, prev, banned)
+        # Absolute distance avoids favouring a wide neighbouring branch.
+        # Retain the previous edge when the difference is within 0.06 mm.
+        distances, _ = self._project(p)
+        if banned and len(banned) < len(distances):
+            distances[list(banned)] = np.inf
+        nearest = int(np.argmin(distances))
+        if prev is not None and distances[prev] <= distances[nearest] + .06:
+            return int(prev)
+        return nearest
+
     def __init__(self, env, cam=CameraConfig(), seed=0, latency_steps=1):
         from marl.deployable_sensing import DeployableConfig
         latency_steps = cam.latency_steps if cam.latency_steps >= 0 else latency_steps
@@ -331,11 +345,7 @@ class ImageSensor(DeployableSensor):
         self.err_log.append(np.linalg.norm(meas-truth[:n], axis=1)[env.active[:n]])
         pos = meas.copy(); active = env.active[:n].copy()
         vel = np.zeros_like(pos) if self.prev_pos is None else (pos-self.prev_pos)/(self.dt*g)
-        edge = []
-        for i in range(n):
-            self._who = i
-            edge.append(self._match(pos[i], None if self.prev_edge is None else int(self.prev_edge[i])))
-        edge = np.array(edge)
+        edge = self._match_frame(pos)
         station = np.array([int(self.ends[e][int(np.argmin(np.linalg.norm(self.points[self.ends[e]]-pos[i], axis=1)))])
                             for i, e in enumerate(edge)])
         parts = []

@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 from collections import deque
-from dataclasses import replace
 import hashlib
 import json
 from pathlib import Path
@@ -24,6 +23,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 
 from marl.sb3_curriculum import (DIFFICULTIES, OBSTACLE_DIM, OBSTACLE_SLOTS,
                                  ObstacleBelief, PredictiveTransformerExtractor)
+from scripts.benchmark_lysis import NAV_GOAL_TOLERANCE_MM, navigation_outcome
 from scripts.train_sb3_vascular import ALGORITHMS, RunCallback, VascularSB3Env, build_model
 
 GAMMA = .9995
@@ -38,12 +38,16 @@ def atomic_json(path, value):
 class CurriculumVascularEnv(VascularSB3Env):
     def __init__(self, seed=41, clusters=3, horizon=300., budget=131072,
                  curriculum=True, prediction=True, shaping=True, reward_mode="potential",
+                 time_cost=.01, success_bonus=20., lost_penalty=8.,
                  uniform_only=False, episode_log=None, navigation_guidance=0.,
                  navigation_slow=False, zero_latency=False,
-                 preserve_action_magnitude=False, direct_action=False, dataset_rows=None):
+                 preserve_action_magnitude=False, direct_action=False, dataset_rows=None,
+                 flow_curriculum=False, flow_boundaries=(.2, .45, .7),
+                 flow_values=(.025, .05, .1, .15), centerline_match=False, fixed_scenes=None):
         super().__init__(seed=seed, clusters=clusters, horizon=horizon,
                          preserve_action_magnitude=preserve_action_magnitude,
-                         direct_action=direct_action)
+                         direct_action=direct_action, navigation=(reward_mode == "navigation"),
+                         centerline_match=centerline_match)
         self.episode_log_path = Path(episode_log) if episode_log else None
         self.budget, self.curriculum = budget, curriculum
         self.curriculum_scene_base = 2840000000 + seed * 100000
@@ -51,8 +55,18 @@ class CurriculumVascularEnv(VascularSB3Env):
         if reward_mode not in ("potential", "drone_nav", "navigation"):
             raise ValueError("reward_mode must be potential, drone_nav or navigation")
         self.reward_mode = reward_mode
+        # Measured accumulated return by outcome at the original weights:
+        # success +103.0, timeout +20.4, loss -6.9. A timeout therefore pays a
+        # POSITIVE return -- the progress term alone yields ~+35..42 for a cluster
+        # that travels most of the way and stops -- so "approach without finishing"
+        # is profitable. These weights are configurable so that result stays
+        # reproducible and the new setting is a separate arm, not a silent change.
+        self.time_cost = float(time_cost)
+        self.success_bonus = float(success_bonus)
+        self.lost_penalty = float(lost_penalty)
         self.uniform_only = bool(uniform_only)
         self.dataset_rows = list(dataset_rows) if dataset_rows is not None else None
+        self.fixed_scenes = fixed_scenes
         self.dataset_cursor = 0
         self.navigation_guidance = float(np.clip(navigation_guidance, 0., 1.))
         # The route follower's slow mode adds an observable-map centerline
@@ -61,6 +75,15 @@ class CurriculumVascularEnv(VascularSB3Env):
         # residual and obstacle response above it.
         self.navigation_slow = bool(navigation_slow)
         self.zero_latency = bool(zero_latency)
+        self.flow_curriculum = bool(flow_curriculum)
+        self.flow_boundaries = tuple(float(v) for v in flow_boundaries)
+        self.flow_values = tuple(float(v) for v in flow_values)
+        if len(self.flow_values) != len(self.flow_boundaries) + 1:
+            raise ValueError("flow_values must have one more value than flow_boundaries")
+        if any(a <= 0. or a >= 1. for a in self.flow_boundaries):
+            raise ValueError("flow_boundaries must lie strictly between 0 and 1")
+        if any(a >= b for a, b in zip(self.flow_boundaries, self.flow_boundaries[1:])):
+            raise ValueError("flow_boundaries must be strictly increasing")
         self.frontier = 0
         self.recent = deque(maxlen=6)
         self.transitions = []
@@ -73,9 +96,10 @@ class CurriculumVascularEnv(VascularSB3Env):
                                      lost=0., smooth=0., time=0.)
         self.nav_targets = np.full(clusters, -1, np.int64)
         self.nav_reached = np.zeros(clusters, bool)
+        self.nav_lost = np.zeros(clusters, bool)
         self.nav_previous_distance = np.full(clusters, np.inf)
         self.nav_return = 0.
-        self.nav_goal_tolerance_mm = .30
+        self.nav_goal_tolerance_mm = NAV_GOAL_TOLERANCE_MM
         n = clusters
         self.observation_space.spaces.update({
             "obstacles": spaces.Box(-10., 10., (n, OBSTACLE_SLOTS, OBSTACLE_DIM), np.float32),
@@ -119,6 +143,18 @@ class CurriculumVascularEnv(VascularSB3Env):
             self.anatomy_bag = []
         self._promote()
         options = dict(options or {})
+        fixed = None
+        if self.fixed_scenes and not options:
+            fixed = self.fixed_scenes[self.dataset_cursor % len(self.fixed_scenes)]
+            self.dataset_cursor += 1
+            if int(fixed.get("clusters", self.clusters)) != self.clusters:
+                raise ValueError("fixed scene cluster count does not match environment")
+            options.update({k: fixed[k] for k in ("anatomy", "flow", "difficulty", "scenario_family",
+                                                   "dynamic_obstacle_count")})
+            options["scene_seed"] = fixed["seed"]
+            for key in ("clot_initialization", "variation", "healthy_inlet_ml_min", "active_speed_mm_s"):
+                if fixed.get(key) is not None:
+                    options[key] = fixed[key]
         dataset_row = options.pop("dataset_row", None)
         if dataset_row is None and self.dataset_rows is not None:
             if not self.dataset_rows:
@@ -156,14 +192,21 @@ class CurriculumVascularEnv(VascularSB3Env):
             raise ValueError("unknown scenario family")
         self.scene_initialized = False
         level = DIFFICULTIES[difficulty]
-        self.dynamic_obstacle_count = level["obstacles"]
-        if dataset_row is not None:
-            self.dynamic_obstacle_count = int(dataset_row["dynamic_obstacle_count"])
+        self.dynamic_obstacle_count = int(options.get("dynamic_obstacle_count", level["obstacles"]))
         if not options.get("anatomy"):
             if not self.anatomy_bag:
                 self.anatomy_bag = list(self.rng.permutation(self.train_anatomies))
             options["anatomy"] = str(self.anatomy_bag.pop())
-        options.setdefault("flow", float(self.rng.choice(level["flows"])))
+        if self.flow_curriculum:
+            fraction = self.total_environment_steps / max(self.budget, 1)
+            selected_flow = self.flow_values[-1]
+            for boundary, value in zip(self.flow_boundaries, self.flow_values):
+                if fraction < boundary:
+                    selected_flow = value
+                    break
+            options.setdefault("flow", float(selected_flow))
+        else:
+            options.setdefault("flow", float(self.rng.choice(level["flows"])))
         if self.reward_mode == "navigation" or self.zero_latency:
             # Navigation studies isolate flow and moving-obstacle effects.
             # Image/command latency is held at zero in every navigation
@@ -187,9 +230,7 @@ class CurriculumVascularEnv(VascularSB3Env):
             self.scene_base = self.curriculum_scene_base
         self.curriculum_scene_base = self.scene_base
         obs, info = super().reset(options=options)
-        if self.reward_mode == "navigation":
-            self.ep.ctl.slow = self.navigation_slow
-        self.scene.update(difficulty=difficulty, difficulty_name=level["name"],
+        self.scene.update(scenario_hash=self.ep.manifest["scenario_hash"], difficulty=difficulty, difficulty_name=level["name"],
                           dynamic_obstacles=self.dynamic_obstacle_count, frontier=self.frontier,
                           scenario_family=self.scenario_family,
                           localized_obstacles=self.localized_obstacles)
@@ -201,36 +242,36 @@ class CurriculumVascularEnv(VascularSB3Env):
                               obstacle_density=self.dataset_row["obstacle_density"],
                               obstacle_layout=self.dataset_row["obstacle_layout"],
                               manifest_scenario_hash=self.dataset_row["scenario_hash"])
+        if fixed and fixed.get("scenario_hash") and self.scene["scenario_hash"] != fixed["scenario_hash"]:
+            raise ValueError(f"fixed scene layout mismatch for seed {fixed['seed']}")
         self.potential = self._potential()
         if self.reward_mode == "navigation":
-            # Freeze the episode assignment and remove lysis from this task:
-            # success means reaching the assigned target points.
-            self.nav_targets = np.asarray(self.current[1], np.int64).copy()
-            if np.any(self.nav_targets < 0):
-                # The deployable schedule can intentionally leave a slot
-                # unassigned when a previous task has no live clot. A fresh
-                # navigation episode still has all targets alive; fall back
-                # to the physical geodesic assignment rather than failing
-                # the reset contract.
-                self.nav_targets = np.asarray(self.ep.env._assigned_targets(), np.int64).copy()
-            if np.any(self.nav_targets < 0):
-                raise RuntimeError("navigation reset produced an unassigned target")
-            self.ep.env.config = replace(self.ep.env.config, lysis_mass_per_s=0.)
+            self.nav_targets = self.ep.navigation_targets
             self.nav_reached[:] = False
+            self.nav_lost[:] = False
             self.nav_previous_distance = self._navigation_distances()
             self.nav_return = 0.
+            self.agent_returns = np.zeros(self.clusters, float)
+            self.wall_after_reach = np.zeros(self.clusters, float)
         info["scene"] = dict(self.scene)
         return obs, info
 
+    def _record_navigation_episode(self, row):
+        row.update(accepted_seed=self.scene["accepted_seed"], scenario_hash=self.scene["scenario_hash"],
+                   centerline_match=self.centerline_match)
+        if self.difficulty == self.frontier:
+            self.recent.append(row)
+        if self.episode_log_path:
+            with self.episode_log_path.open("a", encoding="utf-8") as log:
+                log.write(json.dumps(row, ensure_ascii=False) + "\n")
+
     def _navigation_distances(self):
-        matrix = self.ep.env._target_distances()
-        ids = np.clip(self.nav_targets, 0, max(matrix.shape[1] - 1, 0))
-        distance = matrix[np.arange(self.clusters), ids].astype(float)
-        distance[~self.ep.env.active[:self.clusters]] = np.inf
-        return distance
+        return self.ep.navigation_distances()
 
     def _observe(self):
         if not self.scene_initialized:
+            if self.navigation:
+                self.ep.ctl.slow = self.navigation_slow
             self._initialize_encounters()
             self.scene_initialized = True
         obs = super()._observe()
@@ -325,7 +366,7 @@ class CurriculumVascularEnv(VascularSB3Env):
                 # PPO learns a residual around it. This keeps the navigation
                 # task identifiable while retaining learned collision-aware
                 # corrections.
-                rule = self.ep.ctl.act(self.nav_targets, self.current[0])
+                rule = self.current_rule
                 action = ((1.-self.navigation_guidance) * action.reshape(self.clusters, 3)
                           + self.navigation_guidance * np.asarray(rule, np.float32)).reshape(-1)
             obs, task_reward, done, truncated, info = super().step(action)
@@ -335,9 +376,12 @@ class CurriculumVascularEnv(VascularSB3Env):
             delta[finite] = before_distance[finite] - after_distance[finite]
             progress = np.clip(delta, -0.5, 0.5)
             newly_reached = (~self.nav_reached) & (after_distance <= self.nav_goal_tolerance_mm)
-            self.nav_reached |= newly_reached
             lost = active_before & ~self.ep.env.active[:self.clusters]
+            self.nav_lost |= lost
             wall_vec = np.asarray(self.ep.info.get("wall_contact_s", np.zeros(self.clusters)), dtype=float).reshape(-1)
+            # Attribute the arrival interval to approach. Waiting starts on the next step.
+            self.wall_after_reach += wall_vec * self.nav_reached
+            self.nav_reached |= newly_reached
             particle_contact = np.asarray(self.ep.info.get("particle_contact_s", np.zeros(self.clusters)), dtype=float).reshape(-1)
             particle_events = np.asarray(self.ep.info.get("particle_collision_events", np.zeros(self.clusters)), dtype=float).reshape(-1)
             particle_near = np.asarray(self.ep.info.get("particle_near_s", np.zeros(self.clusters)), dtype=float).reshape(-1)
@@ -346,20 +390,29 @@ class CurriculumVascularEnv(VascularSB3Env):
             # legacy scalar navigation reward below unchanged so existing
             # SB3 records remain comparable; IPPO consumes this decomposition.
             agent_reward = (1.5 * progress + 8. * newly_reached.astype(float)
-                            - 2. * wall_vec - 8. * lost.astype(float)
+                            - 2. * wall_vec - self.lost_penalty * lost.astype(float)
                             - 2. * particle_contact - 5. * particle_events
-                            - .5 * particle_near - .02 * smooth_vec - .01)
+                            - .5 * particle_near - .02 * smooth_vec - self.time_cost)
             wall = float(wall_vec.sum())
             smooth = float(np.mean((action - self.last_action) ** 2))
-            nav_success = bool(np.all(self.nav_reached) and not np.any(lost))
+            nav_success = bool(np.all(self.nav_reached) and not np.any(self.nav_lost))
+            if np.any(self.nav_lost) and not nav_success and not done:
+                # A lost robot is irrecoverable in the physical simulator. Do
+                # not spend the remaining horizon generating transitions that
+                # cannot satisfy the joint navigation objective.
+                done, truncated = True, False
+                self.ended = True
+                info["termination_reason"] = "robot_lost"
             if nav_success:
                 # Shared terminal credit is visible to every local IPPO
                 # learner; without it, reaching the final target has no
                 # reward beyond the clipped progress increments.
-                agent_reward += 20.
+                agent_reward += self.success_bonus
             reward = (1.5 * float(progress.sum()) + 8. * float(newly_reached.sum())
-                      + (20. if nav_success else 0.) - 2. * wall - 8. * float(lost.sum())
-                      - .02 * smooth - .01)
+                      + (self.success_bonus if nav_success else 0.) - 2. * wall
+                      - self.lost_penalty * float(lost.sum())
+                      - .02 * smooth - self.time_cost)
+            self.agent_returns += agent_reward.astype(np.float32)
             self.nav_return += reward
             self.return_sum += reward - task_reward
             self.nav_previous_distance = after_distance
@@ -380,7 +433,8 @@ class CurriculumVascularEnv(VascularSB3Env):
                         agent_particle_contact_s=particle_contact.astype(np.float32),
                         agent_particle_collision_events=particle_events.astype(np.float32),
                         agent_particle_near_s=particle_near.astype(np.float32),
-                        agent_lost=lost.astype(np.float32))
+                        agent_lost=self.nav_lost.astype(np.float32),
+                        step_lost=lost.astype(np.float32))
             if done:
                 row = info.get("episode_metrics") or self.ep.row(
                     "sb3_curriculum_navigation", return_sum=self.return_sum,
@@ -394,26 +448,19 @@ class CurriculumVascularEnv(VascularSB3Env):
                            prediction=self.prediction, shaping=False,
                            scenario_family=self.scenario_family,
                            localized_obstacles=self.localized_obstacles,
-                           navigation_success=nav_success,
                            navigation_reached=int(self.nav_reached.sum()),
                            navigation_targets=self.nav_targets.tolist(),
                            navigation_goal_tolerance_mm=self.nav_goal_tolerance_mm,
                            navigation_return=float(self.nav_return), reward_mode="navigation",
-                           task_success=nav_success,
-                           strict_success=bool(nav_success and row.get("wall_contact_s", 0.) < 1.),
-                           relaxed_success=bool(nav_success and row.get("wall_contact_s", 0.) < 5.),
+                           wall_after_reach_s=float(self.wall_after_reach.sum()),
+                           agent_returns=self.agent_returns.tolist(),
+                           mean_agent_return=float(self.agent_returns.mean()),
                            return_sum=float(self.return_sum))
+                row.update(navigation_outcome(nav_success, row))
+                info["termination_reason"] = row["termination"]
                 info["episode_metrics"] = row
                 info["is_success"] = nav_success
-                # Keep navigation episodes in the same rolling curriculum
-                # buffer as the original lysis task.  Without this append,
-                # navigation could never satisfy a task-specific mastery
-                # rule and would always fall back to budget-based promotion.
-                if self.difficulty == self.frontier:
-                    self.recent.append(row)
-                if self.episode_log_path:
-                    with self.episode_log_path.open("a", encoding="utf-8") as f:
-                        f.write(json.dumps(row, ensure_ascii=False) + "\n")
+                self._record_navigation_episode(row)
             self.last_action = action.copy()
             return obs, float(reward), bool(done), bool(truncated), info
         before = self.potential

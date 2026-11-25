@@ -76,7 +76,9 @@ def parse_args():
     parser.add_argument("--tree-resample-interval", type=int, default=900)
     parser.add_argument("--robot-radius", type=float, default=0.0011)
     parser.add_argument("--obs-mode", choices=("geometric", "geometric_v2", "geometric_dynamic", "geometric_predictive", "legacy"),
-                        default="geometric")
+                        default="geometric_v2",
+                        help="geometric_v2 preserves unsaturated flow features. "
+                             "Use geometric for the legacy 36-D ablation.")
     parser.add_argument("--reward-mode", choices=("milestone", "baseline"), default="milestone")
     parser.add_argument("--contact-mode", choices=("geodesic", "euclidean"), default="geodesic")
     parser.add_argument("--critic-value-mode", choices=("v", "q"), default="v")
@@ -94,6 +96,9 @@ def parse_args():
     parser.add_argument("--gae-lambda", type=float, default=0.95)
     parser.add_argument("--clip-epsilon", type=float, default=0.2)
     parser.add_argument("--entropy-coef", type=float, default=0.01)
+    parser.add_argument("--entropy-mode", choices=("squashed_mc", "legacy_cross_entropy"),
+                        default="squashed_mc",
+                        help="differentiable tanh-Gaussian entropy or legacy ablation")
     parser.add_argument("--value-clip", type=float, default=10.0)
     parser.add_argument("--value-loss-coef", type=float, default=0.5)
     parser.add_argument("--max-grad-norm", type=float, default=0.5)
@@ -129,6 +134,17 @@ def parse_args():
     parser.add_argument("--curriculum-difficulties", type=float, nargs="+",
                         default=(0.2, 0.6, 1.0), metavar="DIFFICULTY",
                         help="difficulty values at the curriculum boundaries")
+    parser.add_argument("--flow-curriculum", action="store_true",
+                        help="anneal inlet flow scale during training; final evaluation uses 1.0")
+    parser.add_argument("--flow-boundaries", type=float, nargs="+",
+                        default=(0.2, 0.45, 0.7), metavar="FRACTION")
+    parser.add_argument("--flow-scales", type=float, nargs="+",
+                        default=(0.2, 0.5, 0.75, 1.0), metavar="SCALE")
+    parser.add_argument("--integration-mode", choices=("legacy", "adaptive"), default="legacy")
+    parser.add_argument("--endcap-mode", choices=("clamp", "open"), default="clamp")
+    parser.add_argument("--max-substep-displacement", type=float, default=0.01)
+    parser.add_argument("--infeasible-flow-patience", type=int, default=8,
+                        help="consecutive terminal-cap stuck steps before marking an infeasible-flow failure")
     parser.add_argument("--task-allocator", default="none",
                         choices=("none", "nearest", "flow_spread",
                                  "connectivity_aware", "risk_aware_connectivity",
@@ -165,6 +181,28 @@ def curriculum_difficulty(transitions, total_transitions, boundaries, difficulti
         if fraction < boundary:
             return difficulty
     return difficulties[-1]
+
+
+def flow_curriculum_scale(transitions, total_transitions, boundaries, scales):
+    fraction = transitions / max(total_transitions, 1)
+    for boundary, scale in zip(boundaries, scales):
+        if fraction < boundary:
+            return scale
+    return scales[-1]
+
+
+def validate_flow_curriculum(args):
+    boundaries = tuple(float(value) for value in args.flow_boundaries)
+    scales = tuple(float(value) for value in args.flow_scales)
+    if len(scales) != len(boundaries) + 1:
+        raise ValueError("flow scales must have one more value than boundaries")
+    if any(value <= 0.0 or value >= 1.0 for value in boundaries):
+        raise ValueError("flow boundaries must be strictly between 0 and 1")
+    if any(left >= right for left, right in zip(boundaries, boundaries[1:])):
+        raise ValueError("flow boundaries must be strictly increasing")
+    if any(value < 0.0 or value > 1.0 for value in scales):
+        raise ValueError("flow scales must be in [0, 1]")
+    return boundaries, scales
 
 
 def build_context(env, obs):
@@ -309,6 +347,7 @@ def capture_training_state(
 def main():
     args = parse_args()
     curriculum_boundaries, curriculum_difficulties = validate_curriculum(args)
+    flow_boundaries, flow_scales = validate_flow_curriculum(args)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
 
@@ -352,6 +391,12 @@ def main():
         particle_radius_ratio=args.particle_radius_ratio,
         particle_lateral_drift=args.particle_lateral_drift,
         particle_seed=args.particle_seed,
+        endcap_mode=args.endcap_mode,
+        integration_mode=args.integration_mode,
+        max_substep_displacement=args.max_substep_displacement,
+        infeasible_flow_patience=args.infeasible_flow_patience,
+        flow_scale=(flow_curriculum_scale(0, args.timesteps, flow_boundaries, flow_scales)
+                    if args.flow_curriculum else 1.0),
     )
     if args.curriculum:
         env.set_difficulty(curriculum_difficulty(
@@ -386,14 +431,22 @@ def main():
         value_loss_coef=args.value_loss_coef,
         max_grad_norm=args.max_grad_norm,
         log_std_init=args.log_std_init,
+        entropy_mode=args.entropy_mode,
     )
     agent.meta.update({key: getattr(args, key) for key in
                        ("obs_mode", "contact_mode", "reward_double_count", "coverage_bonus",
-                        "step_cost", "approach_scale", "no_control_margin")})
+                        "step_cost", "approach_scale", "no_control_margin",
+                        "entropy_mode")})
     agent.meta.update({
         "initialization_mode": args.initialization_mode,
         "active_robots": args.active_robots,
         "task_allocator": args.task_allocator,
+        "flow_curriculum": args.flow_curriculum,
+        "flow_boundaries": flow_boundaries,
+        "flow_scales": flow_scales,
+        "integration_mode": args.integration_mode,
+        "endcap_mode": args.endcap_mode,
+        "infeasible_flow_patience": args.infeasible_flow_patience,
     })
     agent.buffer = ContextRolloutBuffer()
 
@@ -427,7 +480,8 @@ def main():
                                "coverage_bonus": 0.2, "step_cost": 0.0, "approach_scale": 0.1,
                                "no_control_margin": False}
             for key in ("obs_mode", "reward_mode", "robots", "clots", "horizon", "n_envs",
-                        "scenario_pool", "robot_radius", *legacy_defaults):
+                        "scenario_pool", "robot_radius", "flow_curriculum",
+                        "integration_mode", "endcap_mode", "entropy_mode", *legacy_defaults):
                 if previous.get(key, legacy_defaults.get(key)) != getattr(args, key):
                     raise ValueError(f"resume configuration mismatch for {key}")
     resume_state = agent.load(args.resume) if args.resume else {}
@@ -480,6 +534,10 @@ def main():
                 f"checkpoint difficulty {difficulty} does not match the requested "
                 f"curriculum stage {scheduled_difficulty} at {transitions} transitions"
             )
+    if args.flow_curriculum:
+        env.set_flow_scale(flow_curriculum_scale(
+            transitions, args.timesteps, flow_boundaries, flow_scales
+        ))
 
     recent_success = deque(maxlen=500)
     recent_removal = deque(maxlen=500)
@@ -491,7 +549,8 @@ def main():
     print(f"run_dir={run_dir}")
     print(f"architecture={args.architecture} real_transitions={args.timesteps}")
     print(f"territories={len(env.scenarios)} groups={env.group_sizes}")
-    print(f"curriculum={args.curriculum} difficulty={difficulty:.3f}")
+    print(f"curriculum={args.curriculum} difficulty={difficulty:.3f} "
+          f"flow_curriculum={args.flow_curriculum} flow_scale={env.envs[0].flow_scale:.3f}")
     if resume_state:
         print(f"resumed={args.resume} transitions={transitions}")
 
@@ -511,6 +570,10 @@ def main():
             agent.save(run_dir / "initial_policy.pt")
             print(f"initial eval macro success={best_score[0]:.3f} removal={best_score[1]:.3f}")
         while transitions < args.timesteps:
+            if args.flow_curriculum:
+                env.set_flow_scale(flow_curriculum_scale(
+                    transitions, args.timesteps, flow_boundaries, flow_scales
+                ))
             remaining_steps = int(np.ceil((args.timesteps - transitions) / args.n_envs))
             rollout_steps = min(args.n_steps, remaining_steps)
             for _ in range(rollout_steps):
@@ -646,6 +709,11 @@ def main():
                         ).tolist(),
                         "terminated": bool(terminated[index]),
                         "truncated": bool(truncated[index]),
+                        "termination_reason": str(info.get("termination_reason", np.full(args.n_envs, "unknown"))[index]),
+                        "physics_failure": bool(info.get("physics_failure", np.zeros(args.n_envs, dtype=bool))[index]),
+                        "infeasible_flow": bool(info.get("infeasible_flow", np.zeros(args.n_envs, dtype=bool))[index]),
+                        "terminal_stuck_steps": int(info.get("terminal_stuck_steps", np.zeros(args.n_envs))[index]),
+                        "unrecoverable_steps": int(info.get("unrecoverable_steps", np.zeros(args.n_envs))[index]),
                         "wall_collisions": int(info["wall_collisions"][index]),
                         "wall_hits_total": int(info["wall_hits_total"][index]),
                         "difficulty": difficulty,

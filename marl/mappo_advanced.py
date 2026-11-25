@@ -325,6 +325,7 @@ class MAPPOAdvanced(MAPPO):
         critic_value_mode: str = "v",
         dropout: float = 0.0,
         log_std_init: float = 0.0,
+        entropy_mode: str = "squashed_mc",
         max_agents: int = 0,
         **kwargs,
     ):
@@ -343,6 +344,8 @@ class MAPPOAdvanced(MAPPO):
             raise ValueError("residual scale must be finite and nonnegative")
         if not np.isfinite(guidance_speed) or not 0 < guidance_speed <= 1:
             raise ValueError("guidance speed must be in (0, 1]")
+        if entropy_mode not in ("squashed_mc", "legacy_cross_entropy"):
+            raise ValueError("entropy_mode must be 'squashed_mc' or 'legacy_cross_entropy'")
         # max_agents declares the padding capacity of the interaction models.
         # 0 disables variable-N machinery entirely (legacy behaviour); a value
         # >= n_agents enables running the same parameter-shared checkpoint
@@ -356,7 +359,7 @@ class MAPPOAdvanced(MAPPO):
             n_agents=n_agents, obs_dim=obs_dim, action_dim=action_dim,
             state_dim=state_dim, hidden_dim=hidden_dim,
             num_gat_layers=num_layers, num_heads=num_heads,
-            use_gat=True, **kwargs,
+            use_gat=True, entropy_mode=entropy_mode, **kwargs,
         )
 
         self.architecture = architecture
@@ -371,6 +374,7 @@ class MAPPOAdvanced(MAPPO):
             num_layers, num_heads, state_dim, sparse_k, critic_value_mode, dropout,
         )
         nn.init.constant_(self.actor.policy_head.log_std, log_std_init)
+        self.actor.policy_head.entropy_mode = entropy_mode
         self.actor = self.actor.to(self.device)
         self.critic = self.critic.to(self.device)
         if control_mode in ("guided", "flow_guided", "flow_spread"):
@@ -387,6 +391,7 @@ class MAPPOAdvanced(MAPPO):
             "algo": "mappo_advanced",
             "critic_value_mode": critic_value_mode,
             "dropout": dropout,
+            "entropy_mode": entropy_mode,
             "architecture": architecture,
             "n_agents": n_agents,
             "obs_dim": obs_dim,

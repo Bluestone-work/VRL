@@ -1,0 +1,80 @@
+[
+  {
+    "anatomy": "hcc_portal_multifocal",
+    "clusters": 3,
+    "seed": 2944100000,
+    "scene_seed": 2944100000,
+    "flow": 0.1,
+    "difficulty": 3,
+    "dynamic_obstacles": 32,
+    "dynamic_obstacle_count": 32,
+    "scenario_family": "route_encounter",
+    "obstacle_layout": "route_encounter",
+    "clot_initialization": null
+  },
+  {
+    "anatomy": "hcc_portal_multifocal",
+    "clusters": 3,
+    "seed": 2944100001,
+    "scene_seed": 2944100001,
+    "flow": 0.1,
+    "difficulty": 3,
+    "dynamic_obstacles": 32,
+    "dynamic_obstacle_count": 32,
+    "scenario_family": "uniform",
+    "obstacle_layout": "uniform",
+    "clot_initialization": null
+  },
+  {
+    "anatomy": "hcc_portal_multifocal",
+    "clusters": 3,
+    "seed": 2944100003,
+    "scene_seed": 2944100003,
+    "flow": 0.1,
+    "difficulty": 2,
+    "dynamic_obstacles": 16,
+    "dynamic_obstacle_count": 16,
+    "scenario_family": "uniform",
+    "obstacle_layout": "uniform",
+    "clot_initialization": null
+  },
+  {
+    "anatomy": "hcc_portal_multifocal",
+    "clusters": 3,
+    "seed": 2944100011,
+    "scene_seed": 2944100011,
+    "flow": 0.1,
+    "difficulty": 2,
+    "dynamic_obstacles": 16,
+    "dynamic_obstacle_count": 16,
+    "scenario_family": "uniform",
+    "obstacle_layout": "uniform",
+    "clot_initialization": null
+  },
+  {
+    "anatomy": "hcc_portal_multifocal",
+    "clusters": 3,
+    "seed": 2944100020,
+    "scene_seed": 2944100020,
+    "flow": 0.15,
+    "difficulty": 3,
+    "dynamic_obstacles": 32,
+    "dynamic_obstacle_count": 32,
+    "scenario_family": "uniform",
+    "obstacle_layout": "uniform",
+    "clot_initialization": null
+  },
+  {
+    "anatomy": "hcc_portal_multifocal",
+    "clusters": 3,
+    "seed": 2944100021,
+    "scene_seed": 2944100021,
+    "flow": 0.15,
+    "difficulty": 3,
+    "dynamic_obstacles": 32,
+    "dynamic_obstacle_count": 32,
+    "scenario_family": "uniform",
+    "obstacle_layout": "uniform",
+    "clot_initialization": null
+  }
+]

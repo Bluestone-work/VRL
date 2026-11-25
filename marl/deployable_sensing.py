@@ -58,6 +58,8 @@ class DeployableSensor:
         self.ends, self.groups, self.points = t.ends, t.groups, t.points.astype(np.float64)
         self.healthy = np.asarray(env.flow_model.healthy_radius_mm, np.float64)   # pre-operative lumen
         n = env.num_robots
+        self._banned = {}
+        self._ban_age = {}
         self.buffer = []
         self.prev_pos = None; self.prev_edge = None
         self.prev_particles = [np.zeros((0, 3)) for _ in range(n)]
@@ -69,7 +71,19 @@ class DeployableSensor:
         axis = self.a+t[:, None]*self.ab
         return np.linalg.norm(p-axis, axis=1), t
 
-    def _match(self, p, prev):
+    def _match_frame(self, positions):
+        edges = []
+        for i, pos in enumerate(positions):
+            previous = None if self.prev_edge is None else int(self.prev_edge[i])
+            banned = self._banned.get(i, ())
+            edges.append(self._match(pos, previous, banned))
+            if banned:
+                self._ban_age[i] += 1
+                if self._ban_age[i] >= 30:
+                    del self._banned[i], self._ban_age[i]
+        return np.asarray(edges, dtype=int)
+
+    def _match(self, p, prev, banned=()):
         """Map matching with a topology prior and lumen-normalised distance.
 
         Candidates are the previous edge and the edges sharing one of its junctions (vessels connect only
@@ -81,6 +95,8 @@ class DeployableSensor:
         d, t = self._project(p)
         rad = (1-t)*self.healthy[self.ends[:, 0]]+t*self.healthy[self.ends[:, 1]]
         ratio = d/np.maximum(rad, 1e-6)
+        if banned and len(banned) < len(ratio):
+            ratio[list(banned)] = np.inf
         if prev is None:
             return int(np.argmin(ratio))
         g = set(self.groups[self.ends[prev]].tolist())
@@ -88,9 +104,6 @@ class DeployableSensor:
         best = min(cand, key=lambda e: ratio[e])
         if ratio[best] > 1.5:
             return int(np.argmin(ratio))
-        banned = getattr(self, '_banned', {}).get(self._who, set())
-        cand = [e for e in cand if e not in banned] or cand
-        best = min(cand, key=lambda e: ratio[e])
         if prev not in banned and ratio[prev] < 1. and ratio[prev] <= ratio[best]+.15:
             return prev
         return int(best)
@@ -99,9 +112,8 @@ class DeployableSensor:
         """Imaging shows cluster i not moving although commanded: the matched edge is probably wrong
         (near a take-off the cluster can sit inside the parent lumen while confined to the daughter).
         Ban that hypothesis for a while so the matcher switches to the next candidate."""
-        self._banned = getattr(self, '_banned', {})
         self._banned.setdefault(i, set()).add(int(edge))
-        self._ban_age = getattr(self, '_ban_age', {}); self._ban_age[i] = 0
+        self._ban_age[i] = 0
 
     def observe(self):
         env, c = self.env, self.cfg
@@ -118,16 +130,7 @@ class DeployableSensor:
             pos[drop] = self.prev_pos[drop]
         active = env.active[:n].copy()       # a cluster that left the imaged field is reported lost
         vel = np.zeros_like(pos) if self.prev_pos is None else (pos-self.prev_pos)/self.dt
-        edge = []
-        for i in range(n):
-            self._who = i
-            age = getattr(self, '_ban_age', {})
-            if i in age:
-                age[i] += 1
-                if age[i] > 30:                      # bans expire after 3 s
-                    self._banned.pop(i, None); age.pop(i)
-            edge.append(self._match(pos[i], None if self.prev_edge is None else int(self.prev_edge[i])))
-        edge = np.array(edge)
+        edge = self._match_frame(pos)
         station = np.array([int(self.ends[e][int(np.argmin(np.linalg.norm(self.points[self.ends[e]]-pos[i], axis=1)))])
                             for i, e in enumerate(edge)])
         # particles inside the detection radius; velocity by nearest-neighbour association
@@ -230,10 +233,10 @@ class DeployablePursuit:
         tr = self.env.tree; s = self.station
         return np.stack((tr.tangents[s], tr.normals[s], tr.binormals[s]), axis=1).astype(np.float64)
 
-    def act(self, targets, est):
+    def act(self, targets, est, *, robots=None):
         from marl.edge_follower import _safety
         n = self.env.num_robots; out = np.zeros((n, 3))
-        for i in range(n):
+        for i in (range(n) if robots is None else robots):
             t = int(targets[i]); pos = est.pos[i]
             if t < 0 or not est.active[i]:
                 self.station[i] = int(np.argmin(np.linalg.norm(self.pts-pos, axis=1)))

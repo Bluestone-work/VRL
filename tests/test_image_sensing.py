@@ -48,3 +48,36 @@ def test_frame_timestamp_tracks_delayed_acquisition_and_held_frame():
         assert sensor.observe().frame_time_s == stamps[-1]
     finally:
         env.close()
+
+
+def test_closest_centerline_recovers_from_wrong_branch_and_holds_on_small_differences():
+    from marl.image_sensing import CameraConfig
+
+    sensor = ImageSensor.__new__(ImageSensor)
+    sensor.cam = CameraConfig(centerline_match=True)
+    # Two close, parallel branches. Only their surveyed geometry is available.
+    sensor.a = np.array([[0., 0., 0.], [0., .4, 0.]])
+    sensor.ab = np.array([[1., 0., 0.], [1., 0., 0.]])
+    sensor.length = np.ones(2)
+    assert sensor._match(np.array([.5, .36, 0.]), 0) == 1
+    assert sensor._match(np.array([.5, .21, 0.]), 0) == 0
+    assert sensor._match(np.array([.5, .21, 0.]), None) == 1
+
+
+def test_stalled_edge_excluded_for_thirty_acquired_frames():
+    from marl.image_sensing import CameraConfig
+
+    env = _env()
+    try:
+        for centerline in (False, True):
+            sensor = ImageSensor(env, CameraConfig(centerline_match=centerline), latency_steps=0)
+            first = sensor.observe()
+            edge = int(first.edge[0])
+            sensor.report_stall(0, edge)
+            for _ in range(30):
+                assert sensor.observe().edge[0] != edge
+            assert not sensor._banned
+            # Without a previous hypothesis the original best edge is eligible again.
+            assert sensor._match(first.pos[0], None) == edge
+    finally:
+        env.close()

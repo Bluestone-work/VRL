@@ -74,6 +74,11 @@ class VectorVascularEnv:
         particle_radius_ratio: float = 1.6,
         particle_lateral_drift: float = 0.15,
         particle_seed: int | None = None,
+        endcap_mode: str = "clamp",
+        integration_mode: str = "legacy",
+        max_substep_displacement: float = 0.01,
+        flow_scale: float = 1.0,
+        infeasible_flow_patience: int = 8,
     ) -> None:
         from environments.vascular_3d_marl_env import (
             LOOKAHEAD_OFFSETS,
@@ -112,6 +117,18 @@ class VectorVascularEnv:
                 f"reward_mode must be 'baseline' or 'milestone', got {reward_mode!r}"
             )
         self.reward_mode = reward_mode
+        if endcap_mode not in ("clamp", "open"):
+            raise ValueError("endcap_mode must be 'clamp' or 'open'")
+        if integration_mode not in ("legacy", "adaptive"):
+            raise ValueError("integration_mode must be 'legacy' or 'adaptive'")
+        if max_substep_displacement <= 0:
+            raise ValueError("max_substep_displacement must be positive")
+        if infeasible_flow_patience <= 0:
+            raise ValueError("infeasible_flow_patience must be positive")
+        self.endcap_mode = endcap_mode
+        self.integration_mode = integration_mode
+        self.max_substep_displacement = float(max_substep_displacement)
+        self.infeasible_flow_patience = int(infeasible_flow_patience)
         # Steps between resampling the shared tree. 0 keeps the historical
         # behaviour (sample once at construction). A few multiples of the
         # horizon is the useful range: long enough that most episodes finish
@@ -157,6 +174,7 @@ class VectorVascularEnv:
         self.collision_distance = 2.0 * self.robot_radius
         self.max_speed = 0.018
         self.flow_speed = 0.004
+        self.flow_scale = float(np.clip(flow_scale, 0.0, 1.0))
         self.clot_contact_radius = 0.035
         self.lysis_rate = 0.018
         self.lysis_saturation = 4.0
@@ -191,6 +209,13 @@ class VectorVascularEnv:
         self.task_assignments: np.ndarray | None = None
         self.tree = None
         self._geometry_generation = 0
+        self.episode_wall_projection_count = np.zeros(self.n_envs, np.int64)
+        self.episode_endpoint_contacts = np.zeros(self.n_envs, np.int64)
+        self.episode_terminal_stuck_steps = np.zeros(self.n_envs, np.int64)
+        self.episode_repeated_projection_steps = np.zeros(self.n_envs, np.int64)
+        self.episode_unrecoverable_steps = np.zeros(self.n_envs, np.int64)
+        self.terminal_stuck_run = np.zeros((self.n_envs, self.num_robots), np.int32)
+        self.infeasible_flow = np.zeros(self.n_envs, dtype=bool)
 
         # --- blood-cell-inspired dynamic obstacles (off by default) --------
         # First-version model: advected by the same local flow the robots see
@@ -213,7 +238,9 @@ class VectorVascularEnv:
                 lateral_drift=drift,
                 seed=pseed,
             )
-            self.particles.configure_flow(self.flow_speed, self.tube_radius)
+            self.particles.configure_flow(
+                self.flow_speed * self.flow_scale, self.tube_radius
+            )
 
         self.reset_all()
 
@@ -221,6 +248,11 @@ class VectorVascularEnv:
 
     def set_difficulty(self, difficulty: float) -> None:
         self._difficulty = float(np.clip(difficulty, 0.0, 1.0))
+
+    def set_flow_scale(self, scale: float) -> None:
+        self.flow_scale = float(np.clip(scale, 0.0, 1.0))
+        if self.particles is not None:
+            self.particles.configure_flow(self.flow_speed * self.flow_scale, self.tube_radius)
 
     def _sample_tree(self) -> None:
         scenario = (
@@ -233,6 +265,7 @@ class VectorVascularEnv:
         self.tree = build_vessel_tree(
             scenario, self._rng,
             base_radius=self.tube_radius, min_radius=3.0 * self.robot_radius,
+            endcap_mode=self.endcap_mode,
         )
         # Route fields are per clot-station; cache keyed by station so envs that
         # happen to share a station share the Dijkstra result.
@@ -390,6 +423,13 @@ class VectorVascularEnv:
         self.robot_path_length = np.zeros((n, r), np.float32)
         self.first_contact = np.full((n,), -1, np.int32)
         self.episode_wall_hits = np.zeros(n, np.int64)
+        self.episode_wall_projection_count = np.zeros(n, np.int64)
+        self.episode_endpoint_contacts = np.zeros(n, np.int64)
+        self.episode_terminal_stuck_steps = np.zeros(n, np.int64)
+        self.episode_repeated_projection_steps = np.zeros(n, np.int64)
+        self.episode_unrecoverable_steps = np.zeros(n, np.int64)
+        self.terminal_stuck_run = np.zeros((n, self.num_robots), np.int32)
+        self.infeasible_flow = np.zeros(n, dtype=bool)
         self._milestone_hit = np.zeros((n, len(self._milestones)), bool)
         # A fresh scene invalidates any planner assignment.
         self.task_assignments = None
@@ -504,6 +544,13 @@ class VectorVascularEnv:
         self.robot_path_length[idx] = 0.0
         self.first_contact[idx] = -1
         self.episode_wall_hits[idx] = 0
+        self.episode_wall_projection_count[idx] = 0
+        self.episode_endpoint_contacts[idx] = 0
+        self.episode_terminal_stuck_steps[idx] = 0
+        self.episode_repeated_projection_steps[idx] = 0
+        self.episode_unrecoverable_steps[idx] = 0
+        self.terminal_stuck_run[idx] = 0
+        self.infeasible_flow[idx] = False
         self._milestone_hit[idx] = False
         if self.task_assignments is not None:
             # Auto-reset rows get a new scene; their planner assignment is
@@ -664,7 +711,7 @@ class VectorVascularEnv:
         flat_st = station.reshape(-1)
         axis_point, lumen = tree._axis_point(flat_pos, flat_st)
         flow = tree.flow(
-            flat_pos, flat_st, self.flow_speed, self.tube_radius,
+            flat_pos, flat_st, self.flow_speed * self.flow_scale, self.tube_radius,
             radius_override=occluded.reshape(-1),
         )
         return (
@@ -702,6 +749,44 @@ class VectorVascularEnv:
         impulse = 0.5 * (direction * depth[:, :, :, None]).sum(axis=2)
         return d, overlap.sum(axis=2).astype(np.float32), impulse.astype(np.float32)
 
+    def _motion_substeps(
+        self, commanded, prev_pos, prev_st, separation, particle_impulse, n_substeps
+    ):
+        """Batched adaptive integration with variance-preserving noise."""
+        positions = prev_pos.copy()
+        stations = prev_st.copy()
+        wall_any = np.zeros((self.n_envs, self.num_robots), dtype=bool)
+        flow_sum = np.zeros_like(positions)
+        command_sum = np.zeros_like(positions)
+        sigma = self.brownian_sigma / np.sqrt(float(n_substeps))
+        axis = np.zeros_like(positions)
+        for _ in range(n_substeps):
+            occluded = self._occluded_radius(stations)
+            flow, axis, lumen = self._flow_and_axis(positions, stations, occluded)
+            lube = self._lubrication(positions, axis, lumen)
+            active_command = commanded / float(n_substeps) * lube[:, :, None]
+            noise = self._rng.normal(0.0, sigma, positions.shape).astype(np.float32)
+            noise *= self.agent_mask[:, :, None]
+            proposed = (
+                positions + active_command + flow / float(n_substeps) + noise
+                + separation / float(n_substeps)
+                + particle_impulse / float(n_substeps)
+            )
+            clamped, wall, st, axis_flat = self.tree.project(
+                proposed.reshape(-1, 3), self.robot_radius,
+                hint=stations.reshape(-1),
+            )
+            positions = clamped.reshape(self.n_envs, self.num_robots, 3)
+            wall = wall.reshape(self.n_envs, self.num_robots)
+            stations = np.where(
+                self.agent_mask, st.reshape(self.n_envs, self.num_robots), stations
+            )
+            wall_any |= wall
+            axis = axis_flat.reshape(self.n_envs, self.num_robots, 3)
+            flow_sum += flow / float(n_substeps)
+            command_sum += active_command
+        return positions, wall_any, stations, axis, flow_sum, command_sum
+
     # ---------------------------------------------------------------- gym-ish
 
     def step(self, action: np.ndarray):
@@ -732,16 +817,15 @@ class VectorVascularEnv:
 
         occluded = self._occluded_radius(prev_st)
         flow, axis_point, lumen = self._flow_and_axis(prev_pos, prev_st, occluded)
-        commanded = commanded * self._lubrication(prev_pos, axis_point, lumen)[:, :, None]
 
         # Brownian noise is drawn for the ACTIVE slots only. Drawing for the
         # full padded tensor would consume more RNG values per step than the
         # unpadded environment and desynchronise every shared downstream draw.
         noise = np.zeros(prev_pos.shape, np.float32)
-        active_cols = self.agent_mask[0] if self.agent_mask.shape[1] else None
-        noise[:, : self.active_robots] = self._rng.normal(
-            0.0, self.brownian_sigma, (e, self.active_robots, 3)
-        ).astype(np.float32)
+        if self.integration_mode == "legacy":
+            noise[:, : self.active_robots] = self._rng.normal(
+                0.0, self.brownian_sigma, (e, self.active_robots, 3)
+            ).astype(np.float32)
         _d, _hits, separation = self._pair_terms()
         particle_impulse = np.zeros_like(separation)
         if self.particles is not None:
@@ -752,19 +836,32 @@ class VectorVascularEnv:
             self.particles.step(tree, self._occluded_station_array())
             particle_impulse = self.particles.separation_impulse(prev_pos)
             particle_impulse = particle_impulse * self.agent_mask[:, :, None]
-        proposed = prev_pos + commanded + flow + noise + separation + particle_impulse
-
-        clamped, outside, st, ax = tree.project(
-            proposed.reshape(-1, 3), self.robot_radius, hint=prev_st.reshape(-1)
-        )
-        clamped = clamped.reshape(e, r, 3) * self.agent_mask[:, :, None]
-        outside = outside.reshape(e, r) * self.agent_mask
-        st = np.where(self.agent_mask, st.reshape(e, r), prev_st)
-        ax = ax.reshape(e, r, 3) * self.agent_mask[:, :, None]
+        if self.integration_mode == "adaptive":
+            n_substeps = int(max(1, np.ceil(
+                float(np.max(np.linalg.norm(commanded + flow, axis=2)))
+                / self.max_substep_displacement
+            )))
+            clamped, outside, st, ax, flow, commanded = self._motion_substeps(
+                commanded, prev_pos, prev_st, separation, particle_impulse, n_substeps
+            )
+        else:
+            commanded = commanded * self._lubrication(prev_pos, axis_point, lumen)[:, :, None]
+            proposed = prev_pos + commanded + flow + noise + separation + particle_impulse
+            clamped, outside, st, ax = tree.project(
+                proposed.reshape(-1, 3), self.robot_radius, hint=prev_st.reshape(-1)
+            )
+            clamped = clamped.reshape(e, r, 3) * self.agent_mask[:, :, None]
+            outside = outside.reshape(e, r) * self.agent_mask
+            st = np.where(self.agent_mask, st.reshape(e, r), prev_st)
+            ax = ax.reshape(e, r, 3) * self.agent_mask[:, :, None]
+            n_substeps = 1
         self.robot_positions = clamped
         self.robot_stations = st
         wall_hits = outside.astype(np.float32)
         self.episode_wall_hits += wall_hits.sum(axis=1).astype(np.int64)
+        self.episode_wall_projection_count += wall_hits.sum(axis=1).astype(np.int64)
+        endpoint_now = self.tree._terminal_cap[self.robot_stations] & outside
+        self.episode_endpoint_contacts += endpoint_now.sum(axis=1).astype(np.int64)
         self.robot_velocities = (self.robot_positions - prev_pos).astype(np.float32)
         step_distance = np.linalg.norm(self.robot_velocities, axis=2)
         self.robot_path_length += step_distance
@@ -782,7 +879,13 @@ class VectorVascularEnv:
             self.robot_velocities - np.maximum(vn, 0.0) * outward,
             self.robot_velocities,
         ).astype(np.float32)
-
+        terminal_stuck = (
+            self.tree._terminal_cap[self.robot_stations]
+            & (np.linalg.norm(self.robot_velocities, axis=2) < 1e-6)
+            & (prev_target >= 0)
+            & self.agent_mask
+        )
+        self.episode_terminal_stuck_steps += terminal_stuck.sum(axis=1).astype(np.int64)
         _d2, peer_hits, _imp = self._pair_terms()
 
         # --- lysis ---
@@ -876,6 +979,10 @@ class VectorVascularEnv:
             "agent_rewards": agent_rewards,
             "team_reward": team,
             "success": success,
+            "termination_reason": np.where(
+                terminated, "success", np.where(truncated, "horizon", "ongoing")
+            ),
+            "physics_failure": np.zeros((e,), dtype=bool),
             "removal_rate": removal_rate.astype(np.float32),
             "removed_mass": removed_mass.astype(np.float32),
             "wall_collisions": wall_hits.sum(axis=1).astype(np.int32),
@@ -894,7 +1001,51 @@ class VectorVascularEnv:
             # Separated-spawn relaxation level per env (0 = constraints held);
             # -1 when the mode is not "separated".
             "separated_relaxation_level": self.separated_relaxation_levels.copy(),
+            "local_flow_speed": np.linalg.norm(flow, axis=2).astype(np.float32),
+            "available_control_speed": (
+                self.max_speed * self._lubrication(prev_pos, axis_point, lumen)
+            ).astype(np.float32),
+            "axial_flow_speed": np.sum(
+                flow * tree.tangents[self.robot_stations], axis=2
+            ).astype(np.float32),
+            "distance_to_target": new_geo.astype(np.float32),
+            "geodesic_progress": (prev_geo - new_geo).astype(np.float32),
+            "wall_projection_count": self.episode_wall_projection_count.copy(),
+            "endpoint_contact_count": self.episode_endpoint_contacts.copy(),
+            "terminal_stuck_steps": self.episode_terminal_stuck_steps.copy(),
+            "integration_substeps": int(n_substeps),
+            "flow_scale": float(self.flow_scale),
         }
+        info["control_authority_ratio"] = info["available_control_speed"] / np.maximum(
+            np.abs(info["axial_flow_speed"]), 1e-8
+        )
+        info["cannot_reverse_flow"] = (
+            (info["axial_flow_speed"] > 0.0)
+            & (np.sum(commanded * tree.tangents[self.robot_stations], axis=2) < 0.0)
+            & (info["available_control_speed"] < info["axial_flow_speed"])
+        ) & self.agent_mask
+        self.episode_unrecoverable_steps += info["cannot_reverse_flow"].sum(axis=1).astype(np.int64)
+        authority = info["control_authority_ratio"]
+        unrecoverable_stuck = terminal_stuck & (authority < 1.0)
+        self.terminal_stuck_run = np.where(
+            unrecoverable_stuck, self.terminal_stuck_run + 1, 0
+        ).astype(np.int32)
+        physics_failure = np.any(
+            self.terminal_stuck_run >= self.infeasible_flow_patience, axis=1
+        )
+        self.infeasible_flow |= physics_failure
+        terminated = success | physics_failure
+        truncated = (self.steps >= self.horizon) & ~terminated
+        info["termination_reason"] = np.where(
+            success, "success", np.where(physics_failure, "infeasible_flow",
+                                            np.where(truncated, "horizon", "ongoing"))
+        )
+        info["physics_failure"] = physics_failure
+        info["infeasible_flow"] = self.infeasible_flow.copy()
+        repeated = outside & (self.robot_stations == prev_st)
+        self.episode_repeated_projection_steps += repeated.sum(axis=1).astype(np.int64)
+        info["repeated_projection_count"] = self.episode_repeated_projection_steps.copy()
+        info["unrecoverable_steps"] = self.episode_unrecoverable_steps.copy()
         if self.particles is not None:
             # Robot-obstacle bookkeeping, real agents only.
             overlap, clearance, _nearest = self.particles.nearest_stats(
@@ -968,6 +1119,15 @@ class VectorVascularEnv:
             "episode_wall_hits": self.episode_wall_hits.copy(),
             "milestone_hit": self._milestone_hit.copy(),
             "difficulty": self._difficulty,
+            "flow_scale": self.flow_scale,
+            "integration_mode": self.integration_mode,
+            "episode_wall_projection_count": self.episode_wall_projection_count.copy(),
+            "episode_endpoint_contacts": self.episode_endpoint_contacts.copy(),
+            "episode_terminal_stuck_steps": self.episode_terminal_stuck_steps.copy(),
+            "episode_repeated_projection_steps": self.episode_repeated_projection_steps.copy(),
+            "episode_unrecoverable_steps": self.episode_unrecoverable_steps.copy(),
+            "terminal_stuck_run": self.terminal_stuck_run.copy(),
+            "infeasible_flow": self.infeasible_flow.copy(),
             "rng_state": self._rng.bit_generator.state,
             # Obstacle state (present only when enabled) for exact resume.
             "particle_positions": (
@@ -1004,6 +1164,32 @@ class VectorVascularEnv:
             setattr(self, name, state[name].copy())
         self._milestone_hit = state["milestone_hit"].copy()
         self._difficulty = float(state["difficulty"])
+        self.flow_scale = float(state.get("flow_scale", self.flow_scale))
+        if self.particles is not None:
+            self.particles.configure_flow(
+                self.flow_speed * self.flow_scale, self.tube_radius
+            )
+        self.episode_wall_projection_count = state.get(
+            "episode_wall_projection_count", np.zeros(self.n_envs, np.int64)
+        ).copy()
+        self.episode_endpoint_contacts = state.get(
+            "episode_endpoint_contacts", np.zeros(self.n_envs, np.int64)
+        ).copy()
+        self.episode_terminal_stuck_steps = state.get(
+            "episode_terminal_stuck_steps", np.zeros(self.n_envs, np.int64)
+        ).copy()
+        self.episode_repeated_projection_steps = state.get(
+            "episode_repeated_projection_steps", np.zeros(self.n_envs, np.int64)
+        ).copy()
+        self.episode_unrecoverable_steps = state.get(
+            "episode_unrecoverable_steps", np.zeros(self.n_envs, np.int64)
+        ).copy()
+        self.terminal_stuck_run = state.get(
+            "terminal_stuck_run", np.zeros((self.n_envs, self.num_robots), np.int32)
+        ).copy()
+        self.infeasible_flow = state.get(
+            "infeasible_flow", np.zeros(self.n_envs, dtype=bool)
+        ).copy()
         self._rng.bit_generator.state = state["rng_state"]
         self.episode_wall_hits = state.get("episode_wall_hits", np.zeros(self.n_envs, np.int64)).copy()
         self.path_length = state.get("path_length", np.zeros(self.n_envs, np.float32)).copy()

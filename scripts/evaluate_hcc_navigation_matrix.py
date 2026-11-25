@@ -30,6 +30,9 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from marl.vessel_sdf import VesselSDF, project_local_commands
+from scripts.benchmark_lysis import NAV_GOAL_TOLERANCE_MM, navigation_outcome
+
 ANATOMY = "hcc_portal_multifocal"
 DIFF = (
     ("easy", 4, .025),
@@ -51,20 +54,8 @@ IPPO_MODELS = {
 }
 
 
-def _target_metric(ep, reached, reach_times, start_t, targets=None):
-    est = ep.observe()
-    tgt = ep.plan_targets_now(est) if targets is None else targets
-    for i, c in enumerate(np.asarray(tgt, dtype=int)):
-        if reached[i] or c < 0:
-            continue
-        if np.linalg.norm(ep.env.clot_positions_mm[c] - est.pos[i]) <= .30:
-            reached[i] = True
-            reach_times[i] = float(ep.env.elapsed_s)
-    return est, tgt
-
-
-def run_classic(method, difficulty, seed, horizon=300.0):
-    from scripts.benchmark_lysis import LysisEpisode, SettleGuard, WallGuard
+def run_classic(method, difficulty, seed, horizon=300.0, centerline_match=False):
+    from scripts.benchmark_lysis import LysisEpisode, SettleGuard
     from marl import factorial as FA
     from marl.deployable_sensing import DeployableConfig
 
@@ -72,7 +63,7 @@ def run_classic(method, difficulty, seed, horizon=300.0):
     # Keep sensing and all controller logic at their registered defaults.  The
     # navigation study fixes latency at zero so difficulty isolates flow and
     # obstacle density, matching the IPPO protocol.
-    kw = dict(horizon=horizon, sensing="image",
+    kw = dict(horizon=horizon, sensing="image", navigation=True, centerline_match=centerline_match,
               sense_cfg=DeployableConfig(latency_steps=0),
               flow_inlet_mm_s=flow, dynamic_obstacle_count=obstacles)
     if method == "ours_hcc":
@@ -102,7 +93,6 @@ def run_classic(method, difficulty, seed, horizon=300.0):
         from marl.lysis_baselines import SwitchableTPG
         ep = LysisEpisode(3, ANATOMY, seed, tpg=True, **kw)
         controller = SettleGuard(ep)
-        switcher = SwitchableTPG(ep.coord) if ep.coord is not None else None
         tag = method
     elif method == "pac":
         from marl.lysis_baselines import PacNMPC
@@ -112,46 +102,31 @@ def run_classic(method, difficulty, seed, horizon=300.0):
     else:
         raise ValueError(method)
 
-    # Do not let the legacy lysis event terminate the navigation episode.
-    from dataclasses import replace
-    ep.env.config = replace(ep.env.config, lysis_mass_per_s=0.)
-    # Align the navigation protocol with the IPPO training environment
-    # (train_sb3_curriculum.py:209).  preoperative_plan minimises makespan with
-    # no "every robot gets a clot" constraint, so it may leave a robot with an
-    # empty plan; PlanTargets then returns -1 forever under the 'park' fallback
-    # selected for tpg runs, and no controller can ever satisfy np.all(reached).
-    # Freeze the assignment once and fall back to the physical geodesic
-    # assignment exactly as the training environment does, so every method
-    # solves the same task.  With lysis disabled no clot ever dies, so freezing
-    # is equivalent to re-planning each step whenever the plan is non-empty.
-    frozen = np.asarray(ep.plan_targets_now(ep.observe()), np.int64).copy()
-    if np.any(frozen < 0):
-        frozen = np.asarray(ep.env._assigned_targets(), np.int64).copy()
-    if np.any(frozen < 0):
-        raise RuntimeError("navigation evaluation produced an unassigned target")
     reached = np.zeros(ep.n, dtype=bool)
     reach_times = np.full(ep.n, np.nan)
+    wall_after_reach = 0.
     start_t = time.monotonic()
-    done = False
     try:
+        sdf = VesselSDF(ep.sensor)
+        est = ep.observe()
+        targets = ep.plan_targets_now(est)
+        switcher = SwitchableTPG(ep.coord) if method == "stpg" and ep.coord is not None else None
         while True:
-            est, tgt = _target_metric(ep, reached, reach_times, start_t, frozen)
-            if method == "stpg" and switcher is not None:
+            if switcher is not None:
                 switcher.update(ep.env.elapsed_s)
-            rule = ep.ctl.act(tgt, est)
+            rule = ep.ctl.act(targets, est)
             hold = ep.hold(est)
-            done, _ = ep.step(est, controller(ep, est, tgt, rule, hold), hold)
-            # Count a target reached by the just-executed command before a
-            # finite-horizon terminal is handled.
-            try:
-                _target_metric(ep, reached, reach_times, start_t, frozen)
-            except Exception:
-                pass
-            if np.all(reached) and not np.any(~ep.env.active[:ep.n]):
+            local = controller(ep, est, targets, rule, hold)
+            local, _ = project_local_commands(local, est, targets, hold, ep.ctl.frames(est), sdf, ep.ctl.body)
+            done, outcome = ep.step(est, local, hold)
+            wall_after_reach += float(outcome["wall"][reached].sum())
+            newly = ~reached & (ep.navigation_distances() <= NAV_GOAL_TOLERANCE_MM)
+            reach_times[newly] = ep.env.elapsed_s
+            reached |= newly
+            if done or reached.all() or not ep.env.active[:ep.n].all():
                 break
-            if done:
-                break
-        row = ep.row(tag)
+            est = ep.observe()
+        row = ep.row(tag, wall_after_reach_s=wall_after_reach)
         if method == "pac":
             row["pac_bound_fail_rate"] = controller.bound_fail / max(controller.calls, 1)
         if method == "stpg" and switcher is not None:
@@ -162,50 +137,45 @@ def run_classic(method, difficulty, seed, horizon=300.0):
         ep.close()
 
 
-def _finish_row(row, ep, method, difficulty, seed, reached=None, reach_times=None, start_t=0.):
-    if reached is None:
-        # For the STPG/PAC wrappers, derive reached status from the last
-        # recorded target estimate by replaying one observation.
-        reached = np.zeros(ep.n, dtype=bool)
-        reach_times = np.full(ep.n, np.nan)
-        try:
-            est = ep.observe(); tgt = ep.plan_targets_now(est)
-            for i, c in enumerate(np.asarray(tgt, dtype=int)):
-                if c >= 0 and np.linalg.norm(ep.env.clot_positions_mm[c] - est.pos[i]) <= .30:
-                    reached[i] = True
-                    reach_times[i] = float(ep.env.elapsed_s)
-        except Exception:
-            pass
+def _finish_row(row, ep, method, difficulty, seed, reached, reach_times, start_t):
     row = dict(row)
-    row.update(anatomy=ANATOMY, difficulty=int(difficulty),
+    success = bool(np.all(reached) and row["lost"] == 0)
+    row.update(navigation_outcome(success, row))
+    row.update(accepted_seed=ep.manifest["accepted_seed"], navigation_targets=ep.navigation_targets.tolist(),
+               centerline_match=ep.sensor.cam.centerline_match, anatomy=ANATOMY, difficulty=int(difficulty),
                difficulty_name=DIFF[difficulty][0], dynamic_obstacle_count=DIFF[difficulty][1],
                nominal_flow_inlet_mm_s=DIFF[difficulty][2], navigation_reached=int(reached.sum()),
-               navigation_success=bool(np.all(reached) and int(row.get("lost", 0)) == 0),
-               navigation_time_s=(float(np.nanmax(reach_times)) if np.all(reached) else None),
-               strict_navigation_success=bool(np.all(reached) and int(row.get("lost", 0)) == 0
-                                              and float(row.get("wall_contact_s", 0.)) < 1.),
-               collision_free_navigation=bool(np.all(reached) and int(row.get("lost", 0)) == 0
-                                              and int(row.get("particle_collision_events", 0)) == 0),
+               navigation_time_s=(float(np.nanmax(reach_times)) if success else None),
+               strict_navigation_success=row["strict_success"],
+               collision_free_navigation=row["collision_free_success"],
                elapsed_wall_s=float(time.monotonic()-start_t) if start_t else None)
     return row
 
 
-def run_ippo(label, difficulty, seed, horizon=300.0):
+def run_ippo(label, difficulty, seed, horizon=300.0, centerline_match=False):
     from scripts.train_sb3_curriculum import CurriculumVascularEnv
     from scripts.train_sb3_ippo import IPPOAgentVecEnv
-    from stable_baselines3 import PPO
+    from scripts.train_sb3_ippo import load_navigation_ppo
     _, obstacles, flow = DIFF[difficulty]
     physical = CurriculumVascularEnv(seed=seed, clusters=3, horizon=horizon,
                                      curriculum=False, reward_mode="navigation",
-                                     zero_latency=True, direct_action=True)
+                                     zero_latency=True, direct_action=True, centerline_match=centerline_match)
     physical.train_anatomies = [ANATOMY]
-    env = IPPOAgentVecEnv(physical, action_set="semantic_reduced")
-    model = PPO.load(str(IPPO_MODELS[label]), env=env, device="cpu")
+    # Match the classical SettleGuard safety layer.  Without this, IPPO is
+    # executed with a different wall/near-target intervention and the result
+    # mixes policy quality with wrapper semantics.
+    model = load_navigation_ppo(str(IPPO_MODELS[label]), device="cpu")
+    env = IPPOAgentVecEnv(physical, action_set="semantic_reduced", safety_parity=True,
+                          flow_feature="flow" in model.observation_space.spaces, exit_mask=False)
     start = time.monotonic()
     try:
+        model.set_env(env)
         obs = env.reset(options=dict(anatomy=ANATOMY, difficulty=int(difficulty),
                                      scene_seed=int(seed), flow=float(flow), latency=0,
                                      dynamic_obstacle_count=int(obstacles), scenario_family="uniform"))
+        # SB3 auto-resets on done. Capture identities from the evaluated episode.
+        evaluated_scene = physical.scene.copy()
+        targets = physical.nav_targets.tolist()
         while True:
             action, _ = model.predict(obs, deterministic=True)
             obs, _, done, infos = env.step(action)
@@ -213,17 +183,24 @@ def run_ippo(label, difficulty, seed, horizon=300.0):
                 info = infos[0]
                 metrics = dict(info.get("episode_metrics", {}))
                 return dict(method=label, anatomy=ANATOMY, seed=int(seed), difficulty=int(difficulty),
+                            centerline_match=centerline_match, accepted_seed=evaluated_scene["accepted_seed"],
+                            scenario_hash=evaluated_scene["scenario_hash"], navigation_targets=targets,
+                            task_success=metrics["task_success"], strict_success=metrics["strict_success"],
+                            termination=metrics.get("termination", metrics.get("termination_reason")),
+                            integration_failure=bool(info.get("integration_failure")),
                             difficulty_name=DIFF[difficulty][0], dynamic_obstacle_count=int(obstacles),
                             nominal_flow_inlet_mm_s=float(flow), navigation_success=bool(info.get("navigation_success", False)),
                             strict_navigation_success=bool(metrics.get("strict_success", False)),
                             navigation_reached=int(info.get("navigation_reached", metrics.get("navigation_reached", 0))),
+                            wall_after_reach_s=metrics.get("wall_after_reach_s"),
                             navigation_time_s=(float(metrics.get("elapsed_s", 0.))
                                                if info.get("navigation_success") else None),
                             wall_contact_s=float(metrics.get("wall_contact_s", np.asarray(info.get("agent_wall_contact_s", 0.)).sum())),
                             lost=int(metrics.get("lost", np.asarray(info.get("agent_lost", 0.)).sum())),
                             particle_collision_events=float(metrics.get("particle_collision_events", np.asarray(info.get("agent_particle_collision_events", 0.)).sum())),
                             particle_contact_s=float(metrics.get("particle_contact_s", np.asarray(info.get("agent_particle_contact_s", 0.)).sum())),
-                            collision_free_navigation=bool(info.get("navigation_success", False) and float(metrics.get("particle_collision_events", 0.)) == 0),
+                            collision_free_success=metrics["collision_free_success"],
+                            collision_free_navigation=metrics["collision_free_success"],
                             elapsed_wall_s=float(time.monotonic()-start))
     finally:
         env.close()
@@ -232,6 +209,7 @@ def run_ippo(label, difficulty, seed, horizon=300.0):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--centerline-match", action="store_true", help="use the same closest-centerline matcher for every method")
     ap.add_argument("--horizon", type=float, default=300.)
     ap.add_argument("--repeats", type=int, default=1)
     ap.add_argument("--repeat-offset", type=int, default=0,
@@ -247,6 +225,8 @@ def main():
                          "repeatable, applied after --ippo-root")
     args = ap.parse_args()
     global IPPO_MODELS
+    if args.repeats < 1 or args.repeat_offset < 0 or args.horizon <= 0:
+        ap.error("repeats and horizon must be positive and repeat-offset nonnegative")
     if args.ippo_root is not None:
         IPPO_MODELS = {}
         for s in (41, 42, 43):
@@ -268,14 +248,16 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     methods = [m.strip() for m in args.methods.split(",") if m.strip()]
+    if not methods or len(set(methods)) != len(methods):
+        ap.error("specify one or more distinct methods")
     for repeat in range(args.repeat_offset, args.repeat_offset + args.repeats):
         for d in range(4):
             seed = 1910000000 + repeat*100 + d
             for method in methods:
                 started = time.monotonic()
                 try:
-                    row = (run_ippo(method, d, seed, args.horizon) if method.startswith("IPPO_")
-                           else run_classic(method, d, seed, args.horizon))
+                    row = (run_ippo(method, d, seed, args.horizon, args.centerline_match) if method in IPPO_MODELS or method.startswith("IPPO_")
+                           else run_classic(method, d, seed, args.horizon, args.centerline_match))
                     row["repeat"] = repeat
                     rows.append(row)
                     print(json.dumps({"method": method, "difficulty": d,
@@ -288,7 +270,8 @@ def main():
                     rows.append(dict(method=method, anatomy=ANATOMY, difficulty=d, repeat=repeat,
                                      seed=seed, error=repr(exc), trace=traceback.format_exc()))
                     print(json.dumps({"method": method, "difficulty": d, "error": repr(exc)}), flush=True)
-    result = dict(protocol="hcc_portal_multifocal navigation; algorithms unchanged; zero-latency paired evaluation",
+    result = dict(protocol="HCC navigation with frozen goals and post-step geodesic arrival scoring",
+                  navigation_goal_tolerance_mm=NAV_GOAL_TOLERANCE_MM, ippo_exit_mask=False, centerline_match=args.centerline_match,
                   anatomy=ANATOMY, source_image="/home/wj/桌面/新的构造.jpg", horizon_s=args.horizon,
                   repeats=args.repeats, difficulties=[dict(index=i, name=n, dynamic_obstacles=o, flow=f)
                                                       for i,(n,o,f) in enumerate(DIFF)],
@@ -302,17 +285,24 @@ def main():
     args.out.write_text(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False)+"\n")
     by = defaultdict(list)
     for r in rows:
-        if "error" not in r: by[(r["method"], r["difficulty"])].append(r)
-    summary = {f"{m}|{d}": {"episodes":len(v),
-                              "navigation_success_rate":float(np.mean([x["navigation_success"] for x in v])),
-                              "strict_navigation_success_rate":float(np.mean([x["strict_navigation_success"] for x in v])),
-                              "wall_contact_s":float(np.mean([x.get("wall_contact_s",0.) for x in v])),
-                              "lost_rate":float(np.mean([x.get("lost",0)>0 for x in v])),
-                              "collision_episode_rate":float(np.mean([x.get("particle_collision_events",0)>0 for x in v])),
-                              "mean_navigation_time_s":float(np.mean([x["navigation_time_s"] for x in v if x.get("navigation_time_s") is not None])) if any(x.get("navigation_time_s") is not None for x in v) else None}
-               for (m,d),v in sorted(by.items())}
+        by[(r["method"], r["difficulty"])].append(r)
+    summary = {}
+    for (method, level), group in sorted(by.items()):
+        valid = [r for r in group if "error" not in r and not r.get("integration_failure")]
+        complete = len(valid) == len(group)
+        summary[f"{method}|{level}"] = dict(
+            episodes=len(valid), requested=len(group), errors=len(group)-len(valid), complete=complete,
+            navigation_success_rate=float(np.mean([r["navigation_success"] for r in valid])) if complete else None,
+            strict_navigation_success_rate=float(np.mean([r["strict_navigation_success"] for r in valid])) if complete else None,
+            wall_contact_s=float(np.mean([r["wall_contact_s"] for r in valid])) if complete else None,
+            lost_rate=float(np.mean([r["lost"] > 0 for r in valid])) if complete else None,
+            collision_episode_rate=float(np.mean([r["particle_collision_events"] > 0 for r in valid])) if complete else None,
+            mean_navigation_time_s=(float(np.mean([r["navigation_time_s"] for r in valid if r["navigation_success"]]))
+                                    if complete and any(r["navigation_success"] for r in valid) else None))
     (args.out.with_suffix(".summary.json")).write_text(json.dumps(summary, ensure_ascii=False, indent=2)+"\n")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
+    if any(not group["complete"] for group in summary.values()):
+        raise SystemExit("Incomplete HCC evaluation. See error rows in the output.")
 
 
 if __name__ == "__main__":

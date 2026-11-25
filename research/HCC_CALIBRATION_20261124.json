@@ -1,0 +1,944 @@
+{
+  "reference": "Pazahr et al. PMID 24169068, ten healthy fasting volunteers, mean portal flow 638.6 +/- 202.3 mL/min",
+  "assumptions": "Synthetic geometry, steady pressure after occlusion, model terminal resistances. Wall margin assumes full active speed at smallest geometrically accessible gap.",
+  "legacy": [
+    {
+      "seed": 2944100000,
+      "layout_hash": "ddb0345b2f25401082150d2262a3220edf798111cc9446aeede1bcd90eeea97f",
+      "targets": [
+        1,
+        2,
+        3
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 0.5777117981750968,
+      "inlet_q_ml_min": 0.38320427092793224,
+      "inlet_mean_mm_s": 0.05647116104824658,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 7,
+          "radius_mm": 5.788530133031235,
+          "radial_mm": 1.1069119567018684,
+          "q_ml_min": 0.38320427092793224,
+          "mean_mm_s": 0.060672602057108484,
+          "center_mm_s": 0.12134520411421697,
+          "local_mm_s": 0.11690797169854435,
+          "optimistic_wall_margin_mm_s": 0.996669090642678
+        },
+        {
+          "edge": 109,
+          "radius_mm": 1.8367069276242571,
+          "radial_mm": 1.124222723926308,
+          "q_ml_min": 0.033658551692191195,
+          "mean_mm_s": 0.052931545338653345,
+          "center_mm_s": 0.10586309067730669,
+          "local_mm_s": 0.06620155189648928,
+          "optimistic_wall_margin_mm_s": 0.9909788466387515
+        },
+        {
+          "edge": 49,
+          "radius_mm": 4.121114147553641,
+          "radial_mm": 1.8116099393796812,
+          "q_ml_min": 0.24012904690226022,
+          "mean_mm_s": 0.07500915728665736,
+          "center_mm_s": 0.15001831457331471,
+          "local_mm_s": 0.12102857034107563,
+          "optimistic_wall_margin_mm_s": 0.9942321531692123
+        }
+      ],
+      "goals": [
+        {
+          "edge": 248,
+          "radius_mm": 0.8273275807742323,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.044262369719900926,
+          "mean_mm_s": 0.3430666746738331,
+          "center_mm_s": 0.6861333493476662,
+          "local_mm_s": 0.6861333493476662,
+          "optimistic_wall_margin_mm_s": 0.8737216288770978
+        },
+        {
+          "edge": 100,
+          "radius_mm": 1.1963583625087524,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.14307522402567194,
+          "mean_mm_s": 0.5303233290199364,
+          "center_mm_s": 1.0606466580398728,
+          "local_mm_s": 1.0606466580398728,
+          "optimistic_wall_margin_mm_s": 0.8628927005725456
+        },
+        {
+          "edge": 279,
+          "radius_mm": 0.5480263203961188,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.007013330162997195,
+          "mean_mm_s": 0.12388545697199957,
+          "center_mm_s": 0.24777091394399914,
+          "local_mm_s": 0.2477709139439991,
+          "optimistic_wall_margin_mm_s": 0.9329415231856005
+        }
+      ]
+    },
+    {
+      "seed": 2944100001,
+      "layout_hash": "29bc5dac8e83b9193b72b34b6b47bf51b005b8b86086039af11e7d230539fb4f",
+      "targets": [
+        2,
+        3,
+        0
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 0.7666501439649268,
+      "inlet_q_ml_min": 0.5292696481633697,
+      "inlet_mean_mm_s": 0.07799618586454499,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 335,
+          "radius_mm": 1.1104854550758096,
+          "radial_mm": 0.5979421894763907,
+          "q_ml_min": 0.003373833214046177,
+          "mean_mm_s": 0.014514321444933352,
+          "center_mm_s": 0.029028642889866705,
+          "local_mm_s": 0.020612378341343107,
+          "optimistic_wall_margin_mm_s": 0.9959681744103027
+        },
+        {
+          "edge": 41,
+          "radius_mm": 4.201499320155042,
+          "radial_mm": 2.0655024853101356,
+          "q_ml_min": 0.23745552432742517,
+          "mean_mm_s": 0.0713629113643632,
+          "center_mm_s": 0.1427258227287264,
+          "local_mm_s": 0.10823167621684669,
+          "optimistic_wall_margin_mm_s": 0.9946165117363862
+        },
+        {
+          "edge": 198,
+          "radius_mm": 1.6851065830024614,
+          "radial_mm": 0.3459209813716868,
+          "q_ml_min": 0.014213017834332521,
+          "mean_mm_s": 0.026554029139330197,
+          "center_mm_s": 0.05310805827866039,
+          "local_mm_s": 0.05087006137427778,
+          "optimistic_wall_margin_mm_s": 0.9950771149434982
+        }
+      ],
+      "goals": [
+        {
+          "edge": 261,
+          "radius_mm": 0.47333331999599876,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.0042588417060119375,
+          "mean_mm_s": 0.10084542961059048,
+          "center_mm_s": 0.20169085922118096,
+          "local_mm_s": 0.20169085922118096,
+          "optimistic_wall_margin_mm_s": 0.9375842593865571
+        },
+        {
+          "edge": 21,
+          "radius_mm": 1.8918918275482643,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.5292696481633697,
+          "mean_mm_s": 0.784482507268621,
+          "center_mm_s": 1.568965014537242,
+          "local_mm_s": 1.5689650145372418,
+          "optimistic_wall_margin_mm_s": 0.8701158205447888
+        },
+        {
+          "edge": 168,
+          "radius_mm": 0.91875,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.07540370867054676,
+          "mean_mm_s": 0.47391109851897417,
+          "center_mm_s": 0.9478221970379483,
+          "local_mm_s": 0.9478221970379482,
+          "optimistic_wall_margin_mm_s": 0.8421234993229436
+        }
+      ]
+    },
+    {
+      "seed": 2944100003,
+      "layout_hash": "b0c3c0e89119ef6c8ad9acf61804c58c54d5e0e2b9470f8ca2ea84df2cbda9b4",
+      "targets": [
+        2,
+        0,
+        1
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 0.8347420117390525,
+      "inlet_q_ml_min": 0.5967793524401835,
+      "inlet_mean_mm_s": 0.08794479988521811,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 160,
+          "radius_mm": 2.2847869390419593,
+          "radial_mm": 1.360191782122936,
+          "q_ml_min": 0.15787511245956842,
+          "mean_mm_s": 0.16044313336443902,
+          "center_mm_s": 0.32088626672887804,
+          "local_mm_s": 0.20716020266735952,
+          "optimistic_wall_margin_mm_s": 0.9779222492945959
+        },
+        {
+          "edge": 321,
+          "radius_mm": 1.37517711268751,
+          "radial_mm": 0.5196172041319066,
+          "q_ml_min": 0.008497434768862236,
+          "mean_mm_s": 0.023837979661385445,
+          "center_mm_s": 0.04767595932277089,
+          "local_mm_s": 0.04086906179416172,
+          "optimistic_wall_margin_mm_s": 0.9946143139789636
+        },
+        {
+          "edge": 61,
+          "radius_mm": 3.992289286865109,
+          "radial_mm": 1.5061505056815854,
+          "q_ml_min": 0.21776695308403313,
+          "mean_mm_s": 0.07248478330554431,
+          "center_mm_s": 0.14496956661108862,
+          "local_mm_s": 0.12433622456030133,
+          "optimistic_wall_margin_mm_s": 0.994248229597072
+        }
+      ],
+      "goals": [
+        {
+          "edge": 298,
+          "radius_mm": 0.43999999499849957,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.0047115267793791755,
+          "mean_mm_s": 0.12910860769550345,
+          "center_mm_s": 0.2582172153910069,
+          "local_mm_s": 0.2582172153910069,
+          "optimistic_wall_margin_mm_s": 0.9146389361875513
+        },
+        {
+          "edge": 140,
+          "radius_mm": 0.9335344453336,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.09688274021472151,
+          "mean_mm_s": 0.5897726062623699,
+          "center_mm_s": 1.1795452125247399,
+          "local_mm_s": 1.1795452125247399,
+          "optimistic_wall_margin_mm_s": 0.8064981240396112
+        },
+        {
+          "edge": 192,
+          "radius_mm": 0.5355,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.008040434109609826,
+          "mean_mm_s": 0.14875083897310107,
+          "center_mm_s": 0.29750167794620214,
+          "local_mm_s": 0.29750167794620214,
+          "optimistic_wall_margin_mm_s": 0.9177503401270751
+        }
+      ]
+    },
+    {
+      "seed": 2944100011,
+      "layout_hash": "365034f542f147fded867441582d1dff5da1ffc237671fbe57c2b7f83c90bb11",
+      "targets": [
+        3,
+        1,
+        2
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 0.8296697744950791,
+      "inlet_q_ml_min": 0.6539030760078938,
+      "inlet_mean_mm_s": 0.09636287671264042,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 48,
+          "radius_mm": 1.6722530317468691,
+          "radial_mm": 0.7328314006391986,
+          "q_ml_min": 0.22119803686128148,
+          "mean_mm_s": 0.41963930706094243,
+          "center_mm_s": 0.8392786141218849,
+          "local_mm_s": 0.6780989254197344,
+          "optimistic_wall_margin_mm_s": 0.9216192094444073
+        },
+        {
+          "edge": 127,
+          "radius_mm": 2.8179076959284663,
+          "radial_mm": 0.5595842191752732,
+          "q_ml_min": 0.24402413020162278,
+          "mean_mm_s": 0.1630339775066254,
+          "center_mm_s": 0.3260679550132508,
+          "local_mm_s": 0.31320959709560764,
+          "optimistic_wall_margin_mm_s": 0.9817487595370605
+        },
+        {
+          "edge": 326,
+          "radius_mm": 1.4886922573786796,
+          "radial_mm": 0.5538605266273697,
+          "q_ml_min": 0.008939592390590693,
+          "mean_mm_s": 0.021399653177637187,
+          "center_mm_s": 0.042799306355274375,
+          "local_mm_s": 0.036875133800640336,
+          "optimistic_wall_margin_mm_s": 0.9955236607524127
+        }
+      ],
+      "goals": [
+        {
+          "edge": 44,
+          "radius_mm": 1.3745453686105833,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.22119803686128145,
+          "mean_mm_s": 0.6211006553457249,
+          "center_mm_s": 1.2422013106914498,
+          "local_mm_s": 1.2422013106914496,
+          "optimistic_wall_margin_mm_s": 0.8596129169009432
+        },
+        {
+          "edge": 266,
+          "radius_mm": 0.5349999974992498,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.007677394451825581,
+          "mean_mm_s": 0.14230008891575305,
+          "center_mm_s": 0.2846001778315061,
+          "local_mm_s": 0.2846001778315061,
+          "optimistic_wall_margin_mm_s": 0.9212495967120217
+        },
+        {
+          "edge": 316,
+          "radius_mm": 0.498289489346804,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.008514599807528575,
+          "mean_mm_s": 0.181928050005258,
+          "center_mm_s": 0.363856100010516,
+          "local_mm_s": 0.363856100010516,
+          "optimistic_wall_margin_mm_s": 0.8925451340012386
+        }
+      ]
+    },
+    {
+      "seed": 2944100020,
+      "layout_hash": "67b8fbe5b113c7c21a30fabf5a5b67735aa073e96e9c54259a1b4d1c03117823",
+      "targets": [
+        1,
+        0,
+        3
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 1.1078288328481074,
+      "inlet_q_ml_min": 0.6539624790920461,
+      "inlet_mean_mm_s": 0.09637163068900871,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 308,
+          "radius_mm": 0.9901027034855744,
+          "radial_mm": 0.5664699130434412,
+          "q_ml_min": 0.001598401240514376,
+          "mean_mm_s": 0.00865016102692039,
+          "center_mm_s": 0.01730032205384078,
+          "local_mm_s": 0.01163731123547074,
+          "optimistic_wall_margin_mm_s": 0.9973172251174678
+        },
+        {
+          "edge": 320,
+          "radius_mm": 1.4174691883796466,
+          "radial_mm": 0.45733650436856904,
+          "q_ml_min": 0.034364446742476025,
+          "mean_mm_s": 0.09073628174059496,
+          "center_mm_s": 0.18147256348118992,
+          "local_mm_s": 0.1625815414192583,
+          "optimistic_wall_margin_mm_s": 0.9800939268703153
+        },
+        {
+          "edge": 224,
+          "radius_mm": 1.451025082623519,
+          "radial_mm": 0.7920696673969144,
+          "q_ml_min": 0.009834710610516587,
+          "mean_mm_s": 0.024780531816273287,
+          "center_mm_s": 0.04956106363254657,
+          "local_mm_s": 0.03479320443595734,
+          "optimistic_wall_margin_mm_s": 0.9946857070004257
+        }
+      ],
+      "goals": [
+        {
+          "edge": 283,
+          "radius_mm": 0.4734210213063919,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.001598401240514376,
+          "mean_mm_s": 0.03783464025279233,
+          "center_mm_s": 0.07566928050558466,
+          "local_mm_s": 0.07566928050558465,
+          "optimistic_wall_margin_mm_s": 0.9765871392368872
+        },
+        {
+          "edge": 180,
+          "radius_mm": 0.9039423427028107,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.11537328293058459,
+          "mean_mm_s": 0.7490704536820436,
+          "center_mm_s": 1.4981409073640872,
+          "local_mm_s": 1.4981409073640874,
+          "optimistic_wall_margin_mm_s": 0.7465595419847546
+        },
+        {
+          "edge": 121,
+          "radius_mm": 0.8837500350105031,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.12077527236357259,
+          "mean_mm_s": 0.8203855730592796,
+          "center_mm_s": 1.6407711461185592,
+          "local_mm_s": 1.6407711461185595,
+          "optimistic_wall_margin_mm_s": 0.7163891061603811
+        }
+      ]
+    },
+    {
+      "seed": 2944100021,
+      "layout_hash": "6fea8e074d409a3bedd65bd0391d1f25af9773cbe4df0c95a07f9cff6316f2ee",
+      "targets": [
+        0,
+        3,
+        1
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 1.1752168435887091,
+      "inlet_q_ml_min": 0.5998955040214304,
+      "inlet_mean_mm_s": 0.08840401370705057,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 99,
+          "radius_mm": 3.5789082848406166,
+          "radial_mm": 2.2215234966288584,
+          "q_ml_min": 0.17026895081723994,
+          "mean_mm_s": 0.07052339299924312,
+          "center_mm_s": 0.14104678599848625,
+          "local_mm_s": 0.0867012497542952,
+          "optimistic_wall_margin_mm_s": 0.9937647862452899
+        },
+        {
+          "edge": 196,
+          "radius_mm": 1.8213594597047136,
+          "radial_mm": 1.0457334300075702,
+          "q_ml_min": 0.003403975298488493,
+          "mean_mm_s": 0.005443697016718597,
+          "center_mm_s": 0.010887394033437194,
+          "local_mm_s": 0.007298384655026823,
+          "optimistic_wall_margin_mm_s": 0.9990645853729027
+        },
+        {
+          "edge": 313,
+          "radius_mm": 1.2641187431157326,
+          "radial_mm": 0.39310453930071154,
+          "q_ml_min": 0.0030539600074009302,
+          "mean_mm_s": 0.0101387982480314,
+          "center_mm_s": 0.0202775964960628,
+          "local_mm_s": 0.018316690145580298,
+          "optimistic_wall_margin_mm_s": 0.9975146688346335
+        }
+      ],
+      "goals": [
+        {
+          "edge": 83,
+          "radius_mm": 0.8828217665299589,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.17026895081723992,
+          "mean_mm_s": 1.1590129060372951,
+          "center_mm_s": 2.3180258120745902,
+          "local_mm_s": 2.3180258120745902,
+          "optimistic_wall_margin_mm_s": 0.5989228423181622
+        },
+        {
+          "edge": 334,
+          "radius_mm": 0.49916665999799936,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.0017765409359784055,
+          "mean_mm_s": 0.03782534997895238,
+          "center_mm_s": 0.07565069995790476,
+          "local_mm_s": 0.07565069995790476,
+          "optimistic_wall_margin_mm_s": 0.9776944909642045
+        },
+        {
+          "edge": 209,
+          "radius_mm": 0.7499074372311694,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.06808960612065315,
+          "mean_mm_s": 0.6423391272974602,
+          "center_mm_s": 1.2846782545949205,
+          "local_mm_s": 1.2846782545949205,
+          "optimistic_wall_margin_mm_s": 0.7405218695468277
+        }
+      ]
+    }
+  ],
+  "reference_healthy_inlet": [
+    {
+      "seed": 2944100000,
+      "layout_hash": "ddb0345b2f25401082150d2262a3220edf798111cc9446aeede1bcd90eeea97f",
+      "targets": [
+        1,
+        2,
+        3
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 638.6000000000001,
+      "inlet_q_ml_min": 423.5922620718366,
+      "inlet_mean_mm_s": 62.42296515204665,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 7,
+          "radius_mm": 5.788530133031235,
+          "radial_mm": 1.1069119567018684,
+          "q_ml_min": 423.5922620718364,
+          "mean_mm_s": 67.06721897676428,
+          "center_mm_s": 134.13443795352856,
+          "local_mm_s": 129.22954137776276,
+          "optimistic_wall_margin_mm_s": -2.6819720876483486
+        },
+        {
+          "edge": 109,
+          "radius_mm": 1.8367069276242571,
+          "radial_mm": 1.124222723926308,
+          "q_ml_min": 37.206010295324866,
+          "mean_mm_s": 58.510290009723946,
+          "center_mm_s": 117.02058001944789,
+          "local_mm_s": 73.17889503839535,
+          "optimistic_wall_margin_mm_s": -8.971941986802362
+        },
+        {
+          "edge": 49,
+          "radius_mm": 4.121114147553641,
+          "radial_mm": 1.8116099393796812,
+          "q_ml_min": 265.4375587207691,
+          "mean_mm_s": 82.91478206706326,
+          "center_mm_s": 165.8295641341265,
+          "local_mm_s": 133.78443241760775,
+          "optimistic_wall_margin_mm_s": -5.375751711798453
+        }
+      ],
+      "goals": [
+        {
+          "edge": 248,
+          "radius_mm": 0.8273275807742323,
+          "radial_mm": 0.0,
+          "q_ml_min": 48.92742262217343,
+          "mean_mm_s": 379.2243453202055,
+          "center_mm_s": 758.448690640411,
+          "local_mm_s": 758.448690640411,
+          "optimistic_wall_margin_mm_s": -138.58753837781927
+        },
+        {
+          "edge": 100,
+          "radius_mm": 1.1963583625087524,
+          "radial_mm": 0.0,
+          "q_ml_min": 158.15470335106727,
+          "mean_mm_s": 586.2170012485822,
+          "center_mm_s": 1172.4340024971643,
+          "local_mm_s": 1172.4340024971643,
+          "optimistic_wall_margin_mm_s": -150.5577865831209
+        },
+        {
+          "edge": 279,
+          "radius_mm": 0.5480263203961188,
+          "radial_mm": 0.0,
+          "q_ml_min": 7.752503335118959,
+          "mean_mm_s": 136.94242193464908,
+          "center_mm_s": 273.88484386929815,
+          "local_mm_s": 273.88484386929815,
+          "optimistic_wall_margin_mm_s": -73.12613595385882
+        }
+      ]
+    },
+    {
+      "seed": 2944100001,
+      "layout_hash": "29bc5dac8e83b9193b72b34b6b47bf51b005b8b86086039af11e7d230539fb4f",
+      "targets": [
+        2,
+        3,
+        0
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 638.5999999999999,
+      "inlet_q_ml_min": 440.8681064991629,
+      "inlet_mean_mm_s": 64.96883185269067,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 335,
+          "radius_mm": 1.1104854550758096,
+          "radial_mm": 0.5979421894763907,
+          "q_ml_min": 2.8103169450242143,
+          "mean_mm_s": 12.090059263275204,
+          "center_mm_s": 24.18011852655041,
+          "local_mm_s": 17.169584995713365,
+          "optimistic_wall_margin_mm_s": -2.358407797675252
+        },
+        {
+          "edge": 41,
+          "radius_mm": 4.201499320155042,
+          "radial_mm": 2.0655024853101356,
+          "q_ml_min": 197.79439034766685,
+          "mean_mm_s": 59.44348351856203,
+          "center_mm_s": 118.88696703712407,
+          "local_mm_s": 90.15422350881381,
+          "optimistic_wall_margin_mm_s": -3.4843083017813106
+        },
+        {
+          "edge": 198,
+          "radius_mm": 1.6851065830024614,
+          "radial_mm": 0.3459209813716868,
+          "q_ml_min": 11.839081046882297,
+          "mean_mm_s": 22.118828440671425,
+          "center_mm_s": 44.23765688134285,
+          "local_mm_s": 42.37346258830151,
+          "optimistic_wall_margin_mm_s": -3.100637587861611
+        }
+      ],
+      "goals": [
+        {
+          "edge": 261,
+          "radius_mm": 0.47333331999599876,
+          "radial_mm": 0.0,
+          "q_ml_min": 3.547506427630233,
+          "mean_mm_s": 84.00166863109497,
+          "center_mm_s": 168.00333726218994,
+          "local_mm_s": 168.00333726218994,
+          "optimistic_wall_margin_mm_s": -50.990718673324956
+        },
+        {
+          "edge": 21,
+          "radius_mm": 1.8918918275482643,
+          "radial_mm": 0.0,
+          "q_ml_min": 440.8681064991629,
+          "mean_mm_s": 653.4539034335068,
+          "center_mm_s": 1306.9078068670135,
+          "local_mm_s": 1306.9078068670133,
+          "optimistic_wall_margin_mm_s": -107.19020599296007
+        },
+        {
+          "edge": 168,
+          "radius_mm": 0.91875,
+          "radial_mm": 0.0,
+          "q_ml_min": 62.80936452705352,
+          "mean_mm_s": 394.75584775741225,
+          "center_mm_s": 789.5116955148245,
+          "local_mm_s": 789.5116955148244,
+          "optimistic_wall_margin_mm_s": -130.50709502375116
+        }
+      ]
+    },
+    {
+      "seed": 2944100003,
+      "layout_hash": "b0c3c0e89119ef6c8ad9acf61804c58c54d5e0e2b9470f8ca2ea84df2cbda9b4",
+      "targets": [
+        2,
+        0,
+        1
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 638.6,
+      "inlet_q_ml_min": 456.5521911067264,
+      "inlet_mean_mm_s": 67.28012777228813,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 160,
+          "radius_mm": 2.2847869390419593,
+          "radial_mm": 1.360191782122936,
+          "q_ml_min": 120.77869018074216,
+          "mean_mm_s": 122.74329496496023,
+          "center_mm_s": 245.48658992992046,
+          "local_mm_s": 158.483104435783,
+          "optimistic_wall_margin_mm_s": -15.890070707113853
+        },
+        {
+          "edge": 321,
+          "radius_mm": 1.37517711268751,
+          "radial_mm": 0.5196172041319066,
+          "q_ml_min": 6.500765226959463,
+          "mean_mm_s": 18.236693011348702,
+          "center_mm_s": 36.473386022697404,
+          "local_mm_s": 31.265927070543114,
+          "optimistic_wall_margin_mm_s": -3.1201940775313366
+        },
+        {
+          "edge": 61,
+          "radius_mm": 3.992289286865109,
+          "radial_mm": 1.5061505056815854,
+          "q_ml_min": 166.59755263754093,
+          "mean_mm_s": 55.452800946828205,
+          "center_mm_s": 110.90560189365641,
+          "local_mm_s": 95.12054250005801,
+          "optimistic_wall_margin_mm_s": -3.4002584363251636
+        }
+      ],
+      "goals": [
+        {
+          "edge": 298,
+          "radius_mm": 0.43999999499849957,
+          "radial_mm": 0.0,
+          "q_ml_min": 3.6044441983256887,
+          "mean_mm_s": 98.77154344080466,
+          "center_mm_s": 197.54308688160933,
+          "local_mm_s": 197.54308688160933,
+          "optimistic_wall_margin_mm_s": -64.30350046365045
+        },
+        {
+          "edge": 140,
+          "radius_mm": 0.9335344453336,
+          "radial_mm": 0.0,
+          "q_ml_min": 74.11789155337496,
+          "mean_mm_s": 451.19184258439685,
+          "center_mm_s": 902.3836851687937,
+          "local_mm_s": 902.3836851687938,
+          "optimistic_wall_margin_mm_s": -147.03411862650256
+        },
+        {
+          "edge": 192,
+          "radius_mm": 0.5355,
+          "radial_mm": 0.0,
+          "q_ml_min": 6.151147480524759,
+          "mean_mm_s": 113.79837654309635,
+          "center_mm_s": 227.5967530861927,
+          "local_mm_s": 227.59675308619273,
+          "optimistic_wall_margin_mm_s": -61.92319310181016
+        }
+      ]
+    },
+    {
+      "seed": 2944100011,
+      "layout_hash": "365034f542f147fded867441582d1dff5da1ffc237671fbe57c2b7f83c90bb11",
+      "targets": [
+        3,
+        1,
+        2
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 638.6000000000001,
+      "inlet_q_ml_min": 503.31169963709203,
+      "inlet_mean_mm_s": 74.17087491965417,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 48,
+          "radius_mm": 1.6722530317468691,
+          "radial_mm": 0.7328314006391986,
+          "q_ml_min": 170.25697534369098,
+          "mean_mm_s": 322.9979803135606,
+          "center_mm_s": 645.9959606271212,
+          "local_mm_s": 521.9353375101297,
+          "optimistic_wall_margin_mm_s": -59.32999439959511
+        },
+        {
+          "edge": 127,
+          "radius_mm": 2.8179076959284663,
+          "radial_mm": 0.5595842191752732,
+          "q_ml_min": 187.8263067273889,
+          "mean_mm_s": 125.48787630487372,
+          "center_mm_s": 250.97575260974745,
+          "local_mm_s": 241.07862532051456,
+          "optimistic_wall_margin_mm_s": -13.048049619170841
+        },
+        {
+          "edge": 326,
+          "radius_mm": 1.4886922573786796,
+          "radial_mm": 0.5538605266273697,
+          "q_ml_min": 6.880838468661218,
+          "mean_mm_s": 16.47139493246679,
+          "center_mm_s": 32.94278986493358,
+          "local_mm_s": 28.382931581929768,
+          "optimistic_wall_margin_mm_s": -2.4454554467154197
+        }
+      ],
+      "goals": [
+        {
+          "edge": 44,
+          "radius_mm": 1.3745453686105833,
+          "radial_mm": 0.0,
+          "q_ml_min": 170.25697534369098,
+          "mean_mm_s": 478.0635509412938,
+          "center_mm_s": 956.1271018825876,
+          "local_mm_s": 956.1271018825875,
+          "optimistic_wall_margin_mm_s": -107.05647502540111
+        },
+        {
+          "edge": 266,
+          "radius_mm": 0.5349999974992498,
+          "radial_mm": 0.0,
+          "q_ml_min": 5.909319885637096,
+          "mean_mm_s": 109.52892292225945,
+          "center_mm_s": 219.0578458445189,
+          "local_mm_s": 219.0578458445189,
+          "optimistic_wall_margin_mm_s": -59.6144867339641
+        },
+        {
+          "edge": 316,
+          "radius_mm": 0.498289489346804,
+          "radial_mm": 0.0,
+          "q_ml_min": 6.553720051326276,
+          "mean_mm_s": 140.03071620159025,
+          "center_mm_s": 280.0614324031805,
+          "local_mm_s": 280.06143240318045,
+          "optimistic_wall_margin_mm_s": -81.70842151453607
+        }
+      ]
+    },
+    {
+      "seed": 2944100020,
+      "layout_hash": "67b8fbe5b113c7c21a30fabf5a5b67735aa073e96e9c54259a1b4d1c03117823",
+      "targets": [
+        1,
+        0,
+        3
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 638.6,
+      "inlet_q_ml_min": 376.9719895035807,
+      "inlet_mean_mm_s": 55.55273660803791,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 308,
+          "radius_mm": 0.9901027034855744,
+          "radial_mm": 0.5664699130434412,
+          "q_ml_min": 0.921386952502645,
+          "mean_mm_s": 4.986323399427845,
+          "center_mm_s": 9.97264679885569,
+          "local_mm_s": 6.708244752816016,
+          "optimistic_wall_margin_mm_s": -0.5464663756589396
+        },
+        {
+          "edge": 320,
+          "radius_mm": 1.4174691883796466,
+          "radial_mm": 0.45733650436856904,
+          "q_ml_min": 19.80913931742201,
+          "mean_mm_s": 52.30428004890946,
+          "center_mm_s": 104.60856009781892,
+          "local_mm_s": 93.71896566675974,
+          "optimistic_wall_margin_mm_s": -10.47471335254515
+        },
+        {
+          "edge": 224,
+          "radius_mm": 1.451025082623519,
+          "radial_mm": 0.7920696673969144,
+          "q_ml_min": 5.669148526970136,
+          "mean_mm_s": 14.284560167285195,
+          "center_mm_s": 28.56912033457039,
+          "local_mm_s": 20.056293620450266,
+          "optimistic_wall_margin_mm_s": -2.063386155786657
+        }
+      ],
+      "goals": [
+        {
+          "edge": 283,
+          "radius_mm": 0.4734210213063919,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.9213869525026452,
+          "mean_mm_s": 21.809507524115755,
+          "center_mm_s": 43.61901504823151,
+          "local_mm_s": 43.61901504823151,
+          "optimistic_wall_margin_mm_s": -12.496175979537592
+        },
+        {
+          "edge": 180,
+          "radius_mm": 0.9039423427028107,
+          "radial_mm": 0.0,
+          "q_ml_min": 66.50610301417662,
+          "mean_mm_s": 431.7963005995706,
+          "center_mm_s": 863.5926011991412,
+          "local_mm_s": 863.5926011991411,
+          "optimistic_wall_margin_mm_s": -145.09393770014486
+        },
+        {
+          "edge": 121,
+          "radius_mm": 0.8837500350105031,
+          "radial_mm": 0.0,
+          "q_ml_min": 69.62004115120575,
+          "mean_mm_s": 472.9053906358176,
+          "center_mm_s": 945.8107812716352,
+          "local_mm_s": 945.8107812716352,
+          "optimistic_wall_margin_mm_s": -162.48546944779957
+        }
+      ]
+    },
+    {
+      "seed": 2944100021,
+      "layout_hash": "6fea8e074d409a3bedd65bd0391d1f25af9773cbe4df0c95a07f9cff6316f2ee",
+      "targets": [
+        0,
+        3,
+        1
+      ],
+      "inlet_diameter_mm": 12.0,
+      "healthy_q_ml_min": 638.5999999999999,
+      "inlet_q_ml_min": 325.97666631312893,
+      "inlet_mean_mm_s": 48.03777571884426,
+      "active_speed_mm_s": 1.0,
+      "starts": [
+        {
+          "edge": 99,
+          "radius_mm": 3.5789082848406166,
+          "radial_mm": 2.2215234966288584,
+          "q_ml_min": 92.52228861854455,
+          "mean_mm_s": 38.32164167405179,
+          "center_mm_s": 76.64328334810358,
+          "local_mm_s": 47.11251238028536,
+          "optimistic_wall_margin_mm_s": -2.3881470687560977
+        },
+        {
+          "edge": 196,
+          "radius_mm": 1.8213594597047136,
+          "radial_mm": 1.0457334300075702,
+          "q_ml_min": 1.8496830074157025,
+          "mean_mm_s": 2.9580455163158934,
+          "center_mm_s": 5.916091032631787,
+          "local_mm_s": 3.9658625266702305,
+          "optimistic_wall_margin_mm_s": 0.4917059059158322
+        },
+        {
+          "edge": 313,
+          "radius_mm": 1.2641187431157326,
+          "radial_mm": 0.39310453930071154,
+          "q_ml_min": 1.6594885202383671,
+          "mean_mm_s": 5.50931225715037,
+          "center_mm_s": 11.01862451430074,
+          "local_mm_s": 9.953089415608458,
+          "optimistic_wall_margin_mm_s": -0.3505018166319709
+        }
+      ],
+      "goals": [
+        {
+          "edge": 83,
+          "radius_mm": 0.8828217665299589,
+          "radial_mm": 0.0,
+          "q_ml_min": 92.52228861854454,
+          "mean_mm_s": 629.7949572738135,
+          "center_mm_s": 1259.589914547627,
+          "local_mm_s": 1259.589914547627,
+          "optimistic_wall_margin_mm_s": -216.94094791348894
+        },
+        {
+          "edge": 334,
+          "radius_mm": 0.49916665999799936,
+          "radial_mm": 0.0,
+          "q_ml_min": 0.9653529456329433,
+          "mean_mm_s": 20.553882143823856,
+          "center_mm_s": 41.10776428764771,
+          "local_mm_s": 41.10776428764772,
+          "optimistic_wall_margin_mm_s": -11.12057004455605
+        },
+        {
+          "edge": 209,
+          "radius_mm": 0.7499074372311694,
+          "radial_mm": 0.0,
+          "q_ml_min": 36.99914846001518,
+          "mean_mm_s": 349.0400677372481,
+          "center_mm_s": 698.0801354744962,
+          "local_mm_s": 698.0801354744962,
+          "optimistic_wall_margin_mm_s": -139.99758271111602
+        }
+      ]
+    }
+  ]
+}

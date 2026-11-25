@@ -1,134 +1,97 @@
-"""Compare architectures from their independent eval logs.
+"""Compare training arms on the frozen manifest: success and loss rate side by side.
 
-Reads `experiments/eval_ms_<arch>_<seed>.log` (written by eval_checkpoint.py),
-which are all run on the SAME unseen seed set, so the arms are directly
-comparable. Training-end numbers in summary.json are not used: those come from
-20 episodes on the training env's own RNG stream and are far too noisy to rank
-architectures.
-
-    python scripts/compare_arms.py
-    python scripts/compare_arms.py --baseline gat
+The N=3 collapse coincides with the loss rate jumping from 4.4% to 16.7%, so an
+arm that only improves success while still losing clusters has not addressed the
+mechanism. Both are reported, with the per-seed values, and differences against a
+named reference arm are paired over manifest rows.
 """
 from __future__ import annotations
-
-import argparse
-import re
+import argparse, json, math
+from collections import defaultdict
 from pathlib import Path
-
 import numpy as np
-from scipy import stats
-
-EVAL_DIR = Path("experiments")
-SEEDS = (43, 44, 45)
-EPISODES = 50  # per seed, as launched
-
-PATTERNS = {
-    "success": r"success rate\s+([\d.]+)%",
-    "removal": r"removal rate\s+([\d.]+)%",
-    "contact_miss": r"contact miss\s+([\d.]+)%",
-    "wall_hits": r"wall hits\s+([\d.]+)",
-    "steps": r"episode length\s+([\d.]+)",
-}
+ROOT = Path(__file__).resolve().parents[1]
+SEEDS = (41, 42, 43)
 
 
-def read_log(path: Path) -> dict | None:
-    if not path.exists():
+def arm_runs(spec):
+    """spec = 'label=dir/pattern' where pattern contains {s}."""
+    label, _, pat = spec.partition('=')
+    files = [ROOT / pat.format(s=s) for s in SEEDS]
+    found = [f for f in files if f.exists()]
+    if not found:
+        return label, None, []
+    runs = [json.loads(f.read_text()) for f in found]
+    return label, runs, [f.name for f in found]
+
+
+def summarize(runs):
+    o = [r['overall'] for r in runs]
+    g = lambda k: (float(np.mean([x[k] for x in o])), float(np.std([x[k] for x in o])),
+                   [round(float(x[k]) * 100, 1) for x in o])
+    return dict(success=g('navigation_success_rate'), strict=g('strict_success_rate'),
+                lost=g('lost_rate'), collision=g('collision_episode_rate'),
+                wall=(float(np.mean([x['wall_contact_s'] for x in o])),
+                      float(np.std([x['wall_contact_s'] for x in o])), []),
+                episodes=sum(x['episodes'] for x in o))
+
+
+def paired(ref_runs, arm_runs_, key='navigation_success'):
+    """Paired difference over scenario hashes present in both arms."""
+    def table(runs):
+        d = defaultdict(list)
+        for r in runs:
+            for e in r['episodes']:
+                d[e.get('scenario_hash')].append(bool(e[key]))
+        return {h: float(np.mean(v)) for h, v in d.items()}
+    a, b = table(ref_runs), table(arm_runs_)
+    keys = sorted(set(a) & set(b))
+    if len(keys) < 10:
         return None
-    text = path.read_text()
-    out = {}
-    for key, pat in PATTERNS.items():
-        m = re.search(pat, text)
-        if m is None:
-            return None  # incomplete run
-        out[key] = float(m.group(1))
-    return out
+    da = np.array([b[k] - a[k] for k in keys])
+    rng = np.random.default_rng(20261030)
+    boot = da[rng.integers(0, len(da), size=(10000, len(da)))].mean(1)
+    wins = int(sum(1 for k in keys if b[k] > a[k]))
+    losses = int(sum(1 for k in keys if b[k] < a[k]))
+    n = wins + losses
+    kk = min(wins, losses)
+    pv = min(1., 2 * sum(math.comb(n, i) for i in range(kk + 1)) / 2 ** n) if n else 1.
+    return dict(n=len(keys), mean=float(da.mean()) * 100,
+                lo=float(np.percentile(boot, 2.5)) * 100,
+                hi=float(np.percentile(boot, 97.5)) * 100,
+                wins=wins, losses=losses, p=pv)
 
 
-def collect(arch: str) -> dict[str, np.ndarray]:
-    rows = []
-    for s in SEEDS:
-        r = read_log(EVAL_DIR / f"eval_ms_{arch}_{s}.log")
-        if r is None:
-            print(f"  ⚠️  {arch} seed {s}: missing or incomplete")
-            continue
-        rows.append(r)
-    if not rows:
-        return {}
-    return {k: np.array([r[k] for r in rows]) for k in PATTERNS}
-
-
-def main() -> None:
+def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--baseline", default="gat",
-                    help="arm every other arm is compared against")
-    ap.add_argument("--arms", nargs="*",
-                    default=["gat", "edge_gat", "edge_bias_gat", "mlp"])
-    args = ap.parse_args()
-
-    print("Loading independent-eval logs (same unseen seed set, 50 ep/seed)...")
-    data = {a: collect(a) for a in args.arms}
-    data = {a: d for a, d in data.items() if d}
-
-    if args.baseline not in data:
-        raise SystemExit(f"baseline {args.baseline!r} has no complete logs")
-
-    n_seeds = {a: len(d["success"]) for a, d in data.items()}
-
-    print(f"\n{'='*94}")
-    print("ARCHITECTURE COMPARISON  (5 robots, 3 clots, 300k steps)")
-    print(f"{'='*94}")
-    print(f"{'arch':<16}{'seeds':<7}{'success %':<20}{'removal %':<14}"
-          f"{'wall/ep':<14}{'steps':<12}")
-    print("-" * 94)
-
-    for a, d in data.items():
-        su, re_, wh, st = d["success"], d["removal"], d["wall_hits"], d["steps"]
-        sd = lambda v: v.std(ddof=1) if len(v) > 1 else 0.0
-        print(f"{a:<16}{n_seeds[a]:<7}"
-              f"{su.mean():5.1f} ± {sd(su):4.1f}       "
-              f"{re_.mean():5.1f} ± {sd(re_):4.1f} "
-              f"{wh.mean():6.2f} ± {sd(wh):4.2f} "
-              f"{st.mean():6.0f} ± {sd(st):3.0f}")
-    print("-" * 94)
-
-    # Per-seed values matter more than the summary stats at n=3: non-overlapping
-    # ranges are stronger evidence than a p-value from three points.
-    print("\nper-seed success % (overlap check):")
-    for a, d in data.items():
-        print(f"  {a:<16}{sorted(d['success'].tolist())}")
-
-    base = data[args.baseline]["success"]
-    print(f"\nvs baseline '{args.baseline}':")
-    print(f"  {'arch':<16}{'Δ success':<12}{'seed-level Welch':<26}{'pooled episodes':<30}")
-    for a, d in data.items():
-        if a == args.baseline:
+    ap.add_argument('--arm', action='append', required=True,
+                    help="label=path/with/{s}.json, repeatable; first is the reference")
+    a = ap.parse_args()
+    arms = []
+    for spec in a.arm:
+        label, runs, names = arm_runs(spec)
+        if runs is None:
+            print(f'{label:<22} 缺(无评估结果)')
             continue
-        arm = d["success"]
-        delta = arm.mean() - base.mean()
-
-        if len(arm) > 1 and len(base) > 1:
-            t, p = stats.ttest_ind(arm, base, equal_var=False)
-            welch = f"t={t:+.2f}, p={p:.3f}"
-        else:
-            welch = "n/a (need >=2 seeds)"
-
-        # Pooled over episodes: tighter, but ignores seed clustering, so the
-        # p-value is optimistic. Reported alongside, never instead of, Welch.
-        na, nb = len(arm) * EPISODES, len(base) * EPISODES
-        ka = int(round(arm.mean() / 100 * na))
-        kb = int(round(base.mean() / 100 * nb))
-        _, pf = stats.fisher_exact([[ka, na - ka], [kb, nb - kb]])
-        pooled = f"{ka}/{na} vs {kb}/{nb}, Fisher p={pf:.4f}"
-
-        print(f"  {a:<16}{delta:+7.1f}%    {welch:<26}{pooled:<30}")
-
-    print(f"\n{'='*94}")
-    print("Note: seed-level Welch respects between-seed variance but has almost no")
-    print("power at n=3; pooled-episode Fisher is tighter but ignores seed clustering.")
-    print("True evidence strength lies between them. Non-overlapping per-seed ranges")
-    print("are the most trustworthy signal at this sample size.")
-    print(f"{'='*94}\n")
+        arms.append((label, runs, summarize(runs)))
+    if not arms:
+        raise SystemExit('no arm had results')
+    print(f'{"arm":<22}{"success":>22}{"lost":>20}{"wall":>12}{"n":>7}')
+    print('-' * 83)
+    for label, _, s in arms:
+        su, lo = s['success'], s['lost']
+        print(f'{label:<22}{su[0]*100:>7.1f}±{su[1]*100:<4.1f} {str(su[2]):<9}'
+              f'{lo[0]*100:>7.1f}±{lo[1]*100:<4.1f}{s["wall"][0]:>11.2f}{s["episodes"]:>7}')
+    ref_label, ref_runs, _ = arms[0]
+    print(f'\n相对 {ref_label} 的配对差值(同 scenario_hash):')
+    for label, runs, _ in arms[1:]:
+        r = paired(ref_runs, runs)
+        if r is None:
+            print(f'  {label:<20} 配对场景不足')
+            continue
+        print(f'  {label:<20}{r["mean"]:+6.1f} pp  CI [{r["lo"]:+.1f}, {r["hi"]:+.1f}]  '
+              f'胜/负 {r["wins"]}/{r["losses"]}  p={r["p"]:.4f}  n={r["n"]}')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

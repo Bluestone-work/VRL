@@ -1,0 +1,37 @@
+<div id="reverse-flow-calibration" role="img" aria-label="血流与磁驱动逆流条件示意图">
+  <style>
+    #reverse-flow-calibration { color: var(--foreground); font-family: var(--font-family, system-ui, sans-serif); max-width: 760px; }
+    #reverse-flow-calibration svg { display: block; width: 100%; height: auto; }
+    #reverse-flow-calibration .pipe { fill: var(--muted); stroke: var(--border); stroke-width: 2; }
+    #reverse-flow-calibration .flow { stroke: var(--viz-series-1); stroke-width: 3; stroke-linecap: round; }
+    #reverse-flow-calibration .mag { stroke: var(--viz-series-2); stroke-width: 3; stroke-linecap: round; }
+    #reverse-flow-calibration .guide { stroke: var(--border); stroke-width: 1.5; stroke-dasharray: 5 5; }
+    #reverse-flow-calibration text { fill: var(--foreground); font-size: 14px; }
+    #reverse-flow-calibration .small { fill: var(--muted-foreground); font-size: 12px; }
+    #reverse-flow-calibration .particle { fill: var(--viz-series-3); stroke: var(--foreground); stroke-width: 1.2; }
+  </style>
+  <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" aria-describedby="reverse-flow-desc">
+    <title>血流与磁驱动逆流条件</title>
+    <desc id="reverse-flow-desc">管腔中心血流速度最大，近壁速度较低。磁驱动方向与血流相反时，主动速度超过局部血流速度即可逆流。</desc>
+    <defs>
+      <marker id="arrow-flow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--viz-series-1)"/></marker>
+      <marker id="arrow-mag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--viz-series-2)"/></marker>
+    </defs>
+    <rect class="pipe" x="70" y="72" width="620" height="174" rx="87"/>
+    <line class="guide" x1="70" y1="159" x2="690" y2="159"/>
+    <line class="flow" x1="125" y1="119" x2="230" y2="119" marker-end="url(#arrow-flow)"/>
+    <line class="flow" x1="125" y1="159" x2="295" y2="159" marker-end="url(#arrow-flow)"/>
+    <line class="flow" x1="125" y1="199" x2="230" y2="199" marker-end="url(#arrow-flow)"/>
+    <text x="305" y="154">血流方向</text>
+    <text class="small" x="90" y="94">近壁：u_flow 低</text>
+    <text class="small" x="300" y="94">中心线：u_flow 最大</text>
+    <circle class="particle" cx="410" cy="159" r="13"/>
+    <line class="mag" x1="395" y1="159" x2="320" y2="159" marker-end="url(#arrow-mag)"/>
+    <text x="330" y="139">磁驱动</text>
+    <text class="small" x="385" y="190">若 |u_mag| &gt; u_flow(局部)，可逆流</text>
+    <line class="flow" x1="545" y1="119" x2="610" y2="119" marker-end="url(#arrow-flow)"/>
+    <line class="flow" x1="545" y1="199" x2="610" y2="199" marker-end="url(#arrow-flow)"/>
+    <text class="small" x="83" y="286">仿真当前近似：v_total = v_flow + v_command，v_command 上限固定为 1 mm/s</text>
+    <text class="small" x="83" y="307">物理校准应改为：v_active = f(B, ∇B, 粒径, 姿态, 壁面间隙)，再与实测血流叠加</text>
+  </svg>
+</div>

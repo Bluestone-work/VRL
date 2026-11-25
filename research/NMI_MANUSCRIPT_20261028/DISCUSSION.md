@@ -26,10 +26,10 @@ with 32 dynamic obstacles. Numbers obtained on smaller development sets of easie
 conditions are not comparable, and we do not present them as such.
 
 **Classical rules remain stronger on the hardest territory we tested.** On the HCC
-portal-hepatic construct, a deployable pursuit-and-settle rule reaches 68.8% safe
-success over twelve paired scene seeds while the learned policy reaches 12.5%
-(difference −54.2 percentage points, bootstrap 95% interval [−68.8, −39.6], 0 wins
-against 26 losses, exact McNemar p < 0.001). We investigated this gap rather than
+portal-hepatic construct, a deployable pursuit-and-settle rule reaches 68.8% task
+completion over twelve paired scene seeds while the learned policy reaches 12.5%
+(difference −56.2 percentage points, bootstrap 95% interval [−70.8, −41.7], 0 wins
+against 27 losses, exact McNemar p < 0.0001). We investigated this gap rather than
 setting it aside. It does not come from the training distribution (a mixed pool that
 oversamples the territory to half of all episodes), the initialisation (warm start from
 the converged multi-anatomy policy), the difficulty schedule (with and without
@@ -56,8 +56,10 @@ is untested.
 synthetic trees with registered segment geometry, not patient-specific segmentations,
 and the HCC territory encodes the distribution of lesions from a reference construct
 rather than measured centrelines. No claim here is patient-specific or clinical.
-In vitro validation on the magnetically actuated platform is reported separately and is
-the necessary next step before any physical claim.
+In vitro validation on the magnetically actuated platform has not been carried out and
+is the necessary next step: until it is, nothing here constrains how the policy behaves
+under real magnetic actuation, real flow or real imaging, and the sim-to-real gap for
+this system is unmeasured.
 
 ## Outlook
 

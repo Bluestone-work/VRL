@@ -1,0 +1,2727 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Training Curves</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+
+</head>
+<body>
+<iframe id="codex-visualization" sandbox="allow-scripts" referrerpolicy="no-referrer" title="Training Curves" data-srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Training Curves&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 16px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans:
+    -apple-system-body, ui-sans-serif, -apple-system, system-ui, &quot;Segoe UI&quot;,
+    Helvetica, &quot;Apple Color Emoji&quot;, Arial, sans-serif, &quot;Segoe UI Emoji&quot;,
+    &quot;Segoe UI Symbol&quot;;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 8px);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  -webkit-font-smoothing: antialiased;
+  font-size: var(--font-size-base);
+  line-height: calc(var(--font-size-base) * 1.625);
+  font-weight: var(--font-weight-normal);
+}
+
+.cursor-interaction {
+  cursor: var(--cursor-interaction, pointer);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+  text-underline-offset: 2px;
+  font-weight: inherit;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+.table {
+  font-family: var(--font-sans);
+}
+
+h1 {
+  font-size: calc(var(--font-size-base) * 1.5);
+  line-height: 1.3333333333;
+}
+
+h2 {
+  font-size: calc(var(--font-size-base) * 1.25);
+  line-height: 1.4;
+}
+h3 {
+  font-size: calc(var(--font-size-base) * 1.125);
+  line-height: 1.5555555556;
+}
+h4 {
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+}
+h5,
+h6 {
+  font-size: var(--font-size-base);
+  line-height: calc(var(--font-size-base) * 1.625);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b,
+strong,
+th {
+  font-weight: 600;
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+pre,
+pre code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: calc(var(--font-size-base) * 0.875);
+  line-height: calc(var(--font-size-base) * 1.625);
+  font-family: var(--font-sans);
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 5%, transparent);
+}
+.table :is(th, td):not(:last-child) {
+  padding-inline-end: calc(var(--font-size-base) * 1.5);
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead :is(th, td) {
+  border-bottom-color: var(--border-strong, var(--input));
+  padding-block: calc(var(--font-size-base) / 2);
+  line-height: var(--font-size-base);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+.table tbody :is(th, td) {
+  padding-block: calc(var(--font-size-base) * 0.625);
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 8px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+.widget {
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  box-shadow: 0 0 0 0.5px var(--border-strong, var(--border));
+  color: var(--foreground);
+  background: var(--background);
+}
+
+#widget &gt; :not(.card, .widget, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  border: 1px solid var(--border);
+  corner-shape: var(--corner-shape);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-sans);
+  padding: 5px 12px;
+  border-color: color-mix(
+    in oklab,
+    light-dark(var(--primary-foreground), var(--foreground)) 5%,
+    transparent
+  );
+  border-radius: var(--radius-2xl);
+  color: light-dark(var(--primary-foreground), var(--foreground));
+  background: light-dark(var(--foreground), var(--popover));
+  box-shadow: 0 8px 18px rgb(15 23 42 / 20%);
+  letter-spacing: -0.15px;
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  color: color-mix(in srgb, var(--foreground) 40%, var(--muted-foreground));
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  font-family: var(--font-sans);
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: var(--font-weight-normal);
+  line-height: 1;
+}
+
+small,
+.text-small {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+/* Match inline alignment without overriding a containing flex or grid layout. */
+.btn,
+.nav-link,
+.form-control,
+.form-select,
+.form-range,
+.form-check {
+  vertical-align: middle;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  corner-shape: var(--corner-shape);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: inherit;
+  font-family: var(--font-sans);
+  height: fit-content;
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  padding-inline: var(--control-spacing, 12px);
+  border-color: transparent;
+  border-radius: var(--radius-full);
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+}
+
+.btn {
+  border-color: var(--border);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: var(--cursor-interaction, pointer);
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: light-dark(
+    color-mix(in srgb, var(--foreground) 5.5%, transparent),
+    color-mix(in srgb, var(--foreground) 8%, transparent)
+  );
+}
+
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+.btn-primary {
+  border-color: var(--border);
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: border-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: border-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--muted-foreground);
+  background: light-dark(
+    color-mix(in srgb, var(--foreground) 5.5%, transparent),
+    color-mix(in srgb, var(--foreground) 8%, transparent)
+  );
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+/* Shared preview chrome; product styles stay inside each variant. */
+.viz-dotted-background {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 0.8px,
+    transparent 0.8px
+  );
+  background-position: center;
+  background-size: 16px 16px;
+}
+
+.viz-carousel {
+  position: relative;
+  min-width: 0;
+}
+
+.viz-carousel:has(&gt; .viz-carousel-controls) {
+  min-height: calc(60px + var(--viz-carousel-picker-height, 0px));
+  padding-bottom: 60px;
+}
+
+.viz-carousel &gt; [data-variant][hidden] {
+  display: none !important;
+}
+
+.viz-carousel &gt; [data-variant] {
+  isolation: isolate;
+}
+
+.viz-carousel-controls {
+  --viz-carousel-hover: light-dark(
+    color-mix(in srgb, var(--foreground) 5.4%, transparent),
+    color-mix(in srgb, var(--foreground) 7.8%, transparent)
+  );
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 50%;
+  display: flex;
+  width: max-content;
+  /* Leave room for the host&#x27;s design-controls launcher at the trailing edge. */
+  max-width: calc(100% - 96px);
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  /* Match the settings dropdown chrome independently of the content font size. */
+  font-size: 13px;
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+  transform: translateX(-50%);
+  user-select: none;
+}
+
+/* Keep authored mockup button styles out of the shared carousel chrome. */
+.viz-carousel-controls button,
+.viz-carousel-picker &gt; summary {
+  display: flex !important;
+  height: auto !important;
+  min-height: 30px;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px;
+  padding: 0 6px !important;
+  -webkit-app-region: no-drag;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: inherit !important;
+  background: transparent !important;
+  font: inherit !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.viz-carousel-controls &gt; button,
+.viz-carousel-picker &gt; summary {
+  position: relative;
+  isolation: isolate;
+}
+
+.viz-carousel-controls &gt; button {
+  --icon-size: 16px;
+  width: 30px !important;
+  padding: 0 !important;
+}
+
+.viz-carousel-picker &gt; summary {
+  padding-inline: 12px !important;
+}
+
+.viz-carousel-controls .viz-carousel-caret {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin: 0;
+  color: inherit;
+  transform: rotate(180deg);
+}
+
+.viz-carousel-controls &gt; button &gt; svg,
+.viz-carousel-controls .viz-carousel-caret,
+.viz-carousel-count {
+  opacity: 0.5;
+}
+
+.viz-carousel-controls &gt; button::before,
+.viz-carousel-picker &gt; summary::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border-radius: 12px;
+  content: &quot;&quot;;
+  pointer-events: none;
+}
+
+.viz-carousel-controls &gt; button:hover::before,
+.viz-carousel-picker &gt; summary:hover::before {
+  background: var(--viz-carousel-hover);
+}
+
+.viz-carousel-controls &gt; button,
+.viz-carousel-controls [data-lucide],
+.viz-carousel-controls .lucide {
+  flex-shrink: 0;
+}
+
+.viz-carousel-picker {
+  min-width: 0;
+}
+
+.viz-carousel-picker &gt; summary {
+  min-width: 0;
+  list-style: none;
+}
+
+.viz-carousel-picker &gt; summary::-webkit-details-marker {
+  display: none;
+}
+
+.viz-carousel-count {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.viz-carousel-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viz-carousel-options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 4px);
+  left: 0;
+  display: flex;
+  max-height: 240px;
+  flex-direction: column;
+  gap: 2px;
+  overflow: auto;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--background);
+  box-shadow: 0 4px 12px light-dark(rgb(0 0 0 / 6%), rgb(0 0 0 / 25%));
+}
+
+.viz-carousel-options &gt; button {
+  border-radius: max(0px, calc(var(--radius-lg) - 5px)) !important;
+  width: 100% !important;
+  min-height: 28px;
+  justify-content: flex-start !important;
+  padding: 4px 8px !important;
+  font-size: var(--font-size-small) !important;
+  text-align: start;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.viz-carousel-options &gt; [aria-current=&quot;true&quot;],
+.viz-carousel-options &gt; button:hover {
+  background: var(--viz-carousel-hover) !important;
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  height: calc(12px + 2 * var(--control-spacing, 12px));
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  padding-inline: calc(4px + var(--control-spacing, 12px) / 2);
+  border-color: var(--input);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--popover) 96%, transparent);
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.4285714286;
+}
+.form-control:is(
+  [type=&quot;file&quot;],
+  [type=&quot;date&quot;],
+  [type=&quot;datetime-local&quot;],
+  [type=&quot;month&quot;],
+  [type=&quot;week&quot;],
+  [type=&quot;color&quot;]
+) {
+  height: calc(12px + 2 * var(--control-spacing, 12px));
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  line-height: 18px;
+}
+.form-control:is(
+  [type=&quot;date&quot;],
+  [type=&quot;datetime-local&quot;],
+  [type=&quot;month&quot;],
+  [type=&quot;week&quot;]
+) {
+  padding-inline: var(--control-spacing, 12px);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+  padding: 0;
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+  min-height: calc(10px + 2 * var(--control-spacing, 12px));
+  padding-inline: var(--control-spacing, 12px);
+  margin-inline-end: var(--control-spacing, 12px);
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: calc(12px + 2 * var(--control-spacing, 12px));
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  resize: vertical;
+  min-height: 96px;
+  padding: 8px 10px;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: none;
+}
+.form-control:disabled {
+  color: var(--muted-foreground);
+  background: color-mix(in srgb, var(--foreground) 5%, transparent);
+  opacity: 1;
+}
+.form-control[aria-invalid=&quot;true&quot;] {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--red) 20%, transparent);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: fit-content;
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  margin: 0;
+  /* The secondary icon role is 14px at compact density and 16px at web density. */
+  --icon-size: calc(10px + var(--control-spacing, 12px) / 2);
+  /* Settings dropdowns retain a 12px inset and a 4px text-to-chevron gap. */
+  padding: 0 calc(16px + var(--icon-size)) 0 12px;
+  outline: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent calc(50% - 0.6px),
+      var(--muted-foreground) calc(50% - 0.6px) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      135deg,
+      transparent calc(50% - 0.6px),
+      var(--muted-foreground) calc(50% - 0.6px) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    );
+  background-position:
+    calc(100% - 12px - var(--icon-size) / 2) 50%,
+    calc(100% - 12px - var(--icon-size) * 0.18) 50%;
+  background-repeat: no-repeat;
+  background-size: calc(var(--icon-size) * 0.32) calc(var(--icon-size) * 0.32);
+  cursor: var(--cursor-interaction, default);
+  font-size: calc(var(--font-size-base) * 14 / 16);
+  font-size: round(nearest, calc(var(--font-size-base) * 14 / 16), 1px);
+  font-weight: var(--font-weight-normal);
+  line-height: 18px;
+}
+
+.form-select :is(option, optgroup) {
+  color: var(--popover-foreground);
+  background-color: var(--popover);
+}
+
+.form-select :is(option, optgroup):disabled {
+  color: var(--muted-foreground);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: light-dark(
+    color-mix(in srgb, var(--foreground) 5.5%, transparent),
+    color-mix(in srgb, var(--foreground) 8%, transparent)
+  );
+}
+
+.form-select:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+.form-select:disabled {
+  opacity: 0.4;
+}
+
+.form-check {
+  display: flex;
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  corner-shape: round;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  width: calc(10px + var(--control-spacing, 12px) / 2);
+  height: calc(10px + var(--control-spacing, 12px) / 2);
+  border-color: var(--border-strong, var(--input));
+  border-radius: calc(var(--radius-sm) / 2);
+  background-color: transparent;
+  color: var(--foreground);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:is(:checked, :indeterminate) {
+  border-color: var(--border-strong, var(--input));
+  background-color: color-mix(in srgb, var(--popover) 96%, transparent);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+  background-color: var(--foreground);
+}
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:indeterminate::before {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 65%;
+  height: 6.65%;
+  margin: auto;
+  border-radius: var(--radius-full);
+  background: var(--foreground);
+  mask: none;
+  content: &quot;&quot;;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  border-radius: var(--radius-full);
+  width: 16px;
+  height: 16px;
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--input);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 0;
+  background: radial-gradient(
+    circle,
+    var(--primary-foreground) 0 3px,
+    var(--foreground) 3px
+  );
+  box-shadow: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:focus-visible {
+  border-color: var(--ring);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+.form-check:not(.form-switch) .form-check-input[type=&quot;radio&quot;]:disabled,
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;radio&quot;]:disabled
+  + .form-check-label {
+  opacity: 0.5;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+  border-color: #fff;
+  background: #fff;
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--blue);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+  outline: none;
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  accent-color: var(--primary);
+  height: calc(12px + 2 * var(--control-spacing, 12px));
+  min-height: calc(12px + 2 * var(--control-spacing, 12px));
+  outline: none;
+  border-radius: var(--radius-full);
+  color: var(--foreground);
+  background: transparent;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  background: var(--form-range-track, var(--border));
+  height: 2px;
+  border-radius: var(--radius-full);
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  margin-top: -9px;
+  border-color: transparent;
+  background: currentColor;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Outline the native track and thumb, preserving the larger input hit area. */
+.form-range:focus-visible::-webkit-slider-runnable-track {
+  outline: 2px auto Highlight;
+  outline-color: -webkit-focus-ring-color;
+}
+
+.form-range::-moz-range-track {
+  background: var(--form-range-track, var(--border));
+  height: 2px;
+  border-radius: var(--radius-full);
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  border-color: transparent;
+  background: currentColor;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+.form-range:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--blue);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline-offset: 2px;
+  outline: none;
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.viz-carousel-controls :is(button, summary):focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+
+/* Web recipes are the default, including on renderers without inline style queries. */
+@supports (border-radius: if(style(--corner-shape: round): 1px; else: 2px)) {
+  /* Match the host&#x27;s proportional text-sm scale at every text preference. */
+  .tooltip,
+  .viz-badge,
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    font-size: if(
+      style(--corner-shape: round): round(
+          nearest,
+          calc(var(--font-size-base) * 14 / 16),
+          1px
+        );
+        else: round(nearest, calc(var(--font-size-base) * 13 / 14), 1px)
+    );
+  }
+
+  .btn,
+  .nav-link,
+  .form-select {
+    border-radius: if(
+      style(--corner-shape: round): var(--radius-full); else: var(--radius-lg)
+    );
+  }
+
+  .form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+    border-radius: if(
+      style(--corner-shape: round): calc(var(--radius-sm) / 2);
+        else: calc(var(--radius-lg) * 0.4)
+    );
+  }
+
+  .tooltip {
+    font-weight: if(
+      style(--corner-shape: round): 600; else: var(--font-weight-normal)
+    );
+  }
+}
+
+@media (pointer: coarse) {
+  .viz-carousel:has(&gt; .viz-carousel-controls) {
+    min-height: calc(76px + var(--viz-carousel-picker-height, 0px));
+    padding-bottom: 76px;
+  }
+
+  .btn,
+  .nav-link,
+  .viz-carousel-controls button,
+  .viz-carousel-picker &gt; summary,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, calc(var(--font-size-base) * 14 / 16));
+    font-size: max(
+      16px,
+      round(nearest, calc(var(--font-size-base) * 14 / 16), 1px)
+    );
+  }
+  .form-control:is(
+    [type=&quot;file&quot;],
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;week&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;color&quot;]
+  ) {
+    height: 44px;
+    min-height: 44px;
+    font-size: max(16px, calc(var(--font-size-base) * 14 / 16));
+    font-size: max(
+      16px,
+      round(nearest, calc(var(--font-size-base) * 14 / 16), 1px)
+    );
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;codex-visualization-widget-state&quot;&gt;__CODEX_VISUALIZATION_WIDGET_STATE__&lt;/script&gt;
+&lt;script&gt;(() =&gt; {
+  const root = document.documentElement;
+  const mediaQuery = globalThis.matchMedia(&quot;(prefers-color-scheme: dark)&quot;);
+  const apply = Reflect.apply;
+  const isArray = Array.isArray;
+  const hasOwn = Object.hasOwn;
+  const parentWindow = globalThis.parent;
+  const stringify = JSON.stringify;
+  const parse = JSON.parse;
+  const encode = TextEncoder.prototype.encode.bind(new TextEncoder());
+  const initialStateElement = document.getElementById(
+    &quot;codex-visualization-widget-state&quot;,
+  );
+  const initialGlobals = parse(initialStateElement?.textContent ?? &quot;{}&quot;);
+  initialStateElement?.remove();
+  /** @type {Record&lt;string, unknown&gt; | null} */
+  let state = initialGlobals.widgetState ?? null;
+  const statePersistence = initialGlobals.statePersistence ?? &quot;none&quot;;
+  let nextStateRequestId = 0;
+  /** @type {Map&lt;number, { resolve: () =&gt; void; reject: (error: Error) =&gt; void; timeout: ReturnType&lt;typeof globalThis.setTimeout&gt;; serializedState: string }&gt;} */
+  const pendingStateWrites = new Map();
+  const persistenceError = () =&gt;
+    Object.assign(
+      new Error(&quot;The host could not persist the widget state update&quot;),
+      {
+        code: -32000,
+        data: { code: &quot;widget_state_persistence_failed&quot;, retryable: false },
+      },
+    );
+  /**
+   * @param {object} prototype
+   * @param {string} property
+   */
+  const getPrototypeGetter = (prototype, property) =&gt; {
+    // oxlint-disable-next-line typescript/unbound-method -- invoked through captured Reflect.apply
+    const getter = Object.getOwnPropertyDescriptor(prototype, property)?.get;
+    if (getter == null) {
+      throw new Error(`Missing ${property} getter`);
+    }
+    return getter;
+  };
+  const getMessageData = getPrototypeGetter(MessageEvent.prototype, &quot;data&quot;);
+  const getMessagePorts = getPrototypeGetter(MessageEvent.prototype, &quot;ports&quot;);
+  const getMessageSource = getPrototypeGetter(MessageEvent.prototype, &quot;source&quot;);
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const addHostMessageListener = MessagePort.prototype.addEventListener;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const postHostMessage = MessagePort.prototype.postMessage;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const startHostPort = MessagePort.prototype.start;
+  // oxlint-disable-next-line typescript/unbound-method -- captured before the untrusted fragment runs
+  const stopMessagePropagation = Event.prototype.stopImmediatePropagation;
+  /** @type {MessagePort | null} */
+  let hostPort = null;
+  const postToHost = (type, payload) =&gt; {
+    if (hostPort != null) {
+      apply(postHostMessage, hostPort, [{ type, ...payload }]);
+    }
+  };
+  const openExternal = ({ href }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;open-external&quot;, { href });
+    }
+  };
+  const sendFollowUpMessage = ({ context, prompt, title }) =&gt; {
+    if (globalThis.navigator.userActivation?.isActive === true) {
+      postToHost(&quot;follow-up&quot;, { context, prompt, title });
+    }
+    return Promise.resolve();
+  };
+  /**
+   * @param {Record&lt;string, unknown&gt; | ((previous: Record&lt;string, unknown&gt; | null) =&gt; Record&lt;string, unknown&gt;)} next
+   * @returns {Promise&lt;void&gt;}
+   */
+  const setWidgetState = async (next) =&gt; {
+    const nextState = typeof next === &quot;function&quot; ? next(state) : next;
+    if (
+      nextState == null ||
+      typeof nextState !== &quot;object&quot; ||
+      isArray(nextState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const inputState = stringify(
+      nextState,
+      (_key, /** @type {unknown} */ value) =&gt; {
+        if (
+          typeof value === &quot;undefined&quot; ||
+          typeof value === &quot;function&quot; ||
+          typeof value === &quot;symbol&quot; ||
+          (typeof value === &quot;number&quot; &amp;&amp; !Number.isFinite(value))
+        ) {
+          throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+        }
+        return value;
+      },
+    );
+    const parsedState = parse(inputState);
+    if (
+      parsedState == null ||
+      typeof parsedState !== &quot;object&quot; ||
+      isArray(parsedState)
+    ) {
+      throw new TypeError(&quot;Widget state must be a JSON object&quot;);
+    }
+    const storedState = {
+      modelContent: null,
+      privateContent: null,
+      ...parsedState,
+    };
+    const serializedState = stringify(storedState);
+    if (encode(serializedState).length &gt; 16 * 1024) {
+      throw new TypeError(
+        &quot;Widget state must be a JSON object of at most 16 KiB&quot;,
+      );
+    }
+    if (
+      hasOwn(storedState, &quot;imageIds&quot;) &amp;&amp;
+      (!isArray(storedState.imageIds) ||
+        storedState.imageIds.some(
+          (/** @type {unknown} */ id) =&gt; typeof id !== &quot;string&quot;,
+        ))
+    ) {
+      throw new TypeError(&quot;Widget state imageIds must be an array of strings&quot;);
+    }
+    if (storedState.imageIds?.length &gt; 0) {
+      throw Object.assign(
+        new TypeError(&quot;Visualization state does not support image attachments&quot;),
+        { code: -32602, data: { code: &quot;images_unsupported&quot; } },
+      );
+    }
+    state = storedState;
+    globalThis.openai.widgetState = state;
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: { widgetState: state } },
+      }),
+    );
+    if (statePersistence === &quot;none&quot;) {
+      throw persistenceError();
+    }
+    const id = ++nextStateRequestId;
+    return new Promise((resolve, reject) =&gt; {
+      const timeout = globalThis.setTimeout(() =&gt; {
+        pendingStateWrites.delete(id);
+        reject(persistenceError());
+      }, 30_000);
+      pendingStateWrites.set(id, { resolve, reject, timeout, serializedState });
+      postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+    });
+  };
+  const syncTheme = () =&gt; {
+    const theme = mediaQuery.matches ? &quot;dark&quot; : &quot;light&quot;;
+    root.dataset.theme = theme;
+    globalThis.openai = {
+      ...globalThis.openai,
+      openExternal,
+      sendFollowUpMessage,
+      setWidgetState,
+      theme,
+      visualizationStyleVariables: {},
+      visualizationTheme: theme,
+      widgetState: state,
+      statePersistence,
+      stateModelContext: &quot;none&quot;,
+    };
+    globalThis.dispatchEvent(
+      new CustomEvent(&quot;openai:set_globals&quot;, {
+        detail: { globals: globalThis.openai },
+      }),
+    );
+  };
+  const sendHeight = () =&gt; {
+    postToHost(&quot;height&quot;, {
+      height: Math.ceil(
+        Math.max(
+          document.body.scrollHeight,
+          document.body.getBoundingClientRect().height,
+        ),
+      ),
+    });
+  };
+
+  globalThis.addEventListener(
+    &quot;message&quot;,
+    (event) =&gt; {
+      const data = apply(getMessageData, event, []);
+      const ports = apply(getMessagePorts, event, []);
+      const source = apply(getMessageSource, event, []);
+      if (
+        hostPort != null ||
+        source !== parentWindow ||
+        typeof data !== &quot;object&quot; ||
+        data?.type !== &quot;codex-visualization-initialize&quot; ||
+        !isArray(ports) ||
+        ports.length !== 1
+      ) {
+        return;
+      }
+      apply(stopMessagePropagation, event, []);
+      const nextHostPort = ports[0];
+      try {
+        apply(addHostMessageListener, nextHostPort, [
+          &quot;message&quot;,
+          (event) =&gt; {
+            const data = apply(getMessageData, event, []);
+            if (typeof data === &quot;object&quot; &amp;&amp; data?.type === &quot;measure&quot;) {
+              sendHeight();
+            } else if (
+              typeof data === &quot;object&quot; &amp;&amp;
+              data?.type === &quot;widget-state-result&quot;
+            ) {
+              /** @type {unknown} */
+              const id = data.id;
+              if (typeof id !== &quot;number&quot;) {
+                return;
+              }
+              const pending = pendingStateWrites.get(id);
+              if (pending != null) {
+                pendingStateWrites.delete(id);
+                globalThis.clearTimeout(pending.timeout);
+                if (data.ok === true) {
+                  pending.resolve();
+                } else {
+                  pending.reject(persistenceError());
+                }
+              }
+            }
+          },
+        ]);
+        apply(startHostPort, nextHostPort, []);
+      } catch {
+        return;
+      }
+      hostPort = nextHostPort;
+      for (const [id, { serializedState }] of pendingStateWrites) {
+        postToHost(&quot;widget-state-write&quot;, { id, state: serializedState });
+      }
+      sendHeight();
+    },
+    { capture: true },
+  );
+  document.currentScript?.remove();
+  mediaQuery.addEventListener(&quot;change&quot;, syncTheme);
+  globalThis.addEventListener(&quot;click&quot;, (event) =&gt; {
+    if (event.defaultPrevented) {
+      return;
+    }
+    let element = null;
+    if (event.target instanceof globalThis.Element) {
+      element = event.target;
+    } else if (event.target instanceof globalThis.Node) {
+      element = event.target.parentElement;
+    }
+    const link = element?.closest(&quot;a[href]&quot;);
+    const href = link?.getAttribute(&quot;href&quot;);
+    if (href == null) {
+      return;
+    }
+    if (href.startsWith(&quot;#&quot;)) {
+      let id;
+      try {
+        id = decodeURIComponent(href.slice(1));
+      } catch {
+        return;
+      }
+      const target = id.length === 0 ? root : document.getElementById(id);
+      if (
+        target == null ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      event.preventDefault();
+      postToHost(&quot;scroll-to&quot;, {
+        top: target.getBoundingClientRect().top + globalThis.scrollY,
+      });
+      return;
+    }
+    event.preventDefault();
+    openExternal({ href });
+  });
+  new ResizeObserver(sendHeight).observe(document.body);
+  syncTheme();
+})();
+&lt;/script&gt;
+&lt;div id=&quot;training-curves&quot; role=&quot;img&quot; aria-label=&quot;500k transitions training curves showing episode return, success rate, and policy entropy&quot;&gt;
+  &lt;style&gt;
+    #training-curves { color: var(--foreground); font-family: var(--font-family, sans-serif); width: 100%; }
+    #training-curves h2 { font-size: 16px; font-weight: 500; margin: 0 0 8px; }
+    #training-curves svg { display: block; width: 100%; height: auto; overflow: visible; }
+    #training-curves .grid { stroke: var(--border); stroke-width: 1; opacity: .45; }
+    #training-curves .axis { stroke: var(--foreground); stroke-width: 1; opacity: .65; }
+    #training-curves .tick, #training-curves .label { fill: var(--muted-foreground); font-size: 11px; }
+    #training-curves .title { fill: var(--foreground); font-size: 13px; font-weight: 500; }
+    #training-curves .line-return { fill: none; stroke: var(--viz-series-1); stroke-width: 2.2; }
+    #training-curves .line-success { fill: none; stroke: var(--viz-series-2); stroke-width: 2.2; }
+    #training-curves .line-entropy { fill: none; stroke: var(--viz-series-3); stroke-width: 1.4; opacity: .35; }
+    #training-curves .line-entropy-smooth { fill: none; stroke: var(--viz-series-3); stroke-width: 2.2; }
+    #training-curves .legend { fill: var(--muted-foreground); font-size: 11px; }
+  &lt;/style&gt;
+  &lt;h2&gt;Long training curves · local PPO / MLP · 500k transitions&lt;/h2&gt;
+  &lt;svg viewBox=&quot;0 0 760 650&quot; preserveAspectRatio=&quot;xMidYMid meet&quot;&gt;
+    &lt;g id=&quot;return-chart&quot;&gt;&lt;/g&gt;
+    &lt;g id=&quot;success-chart&quot;&gt;&lt;/g&gt;
+    &lt;g id=&quot;entropy-chart&quot;&gt;&lt;/g&gt;
+  &lt;/svg&gt;
+  &lt;script&gt;
+  (() =&gt; {
+    const data = {&quot;ep&quot;:[[1400,-7.368471073868932,0.0],[1400,6.2326735495466385,0.0],[2800,7.450661236360348,0.0],[2800,7.310746704369564,0.0],[4200,7.7481846142160675,0.0],[5600,8.915539224039177,0.0],[5600,9.147299295086444,0.0],[7000,10.027874472858054,0.0],[8400,11.247492750655004,0.0],[8400,11.632709068870378,0.0],[9800,12.556150807548333,0.0],[9800,12.821965673846615,0.0],[11200,13.659392447964878,0.0],[12600,14.467718518347452,0.0],[12600,15.409672233905134,0.0],[14000,16.408594031248672,0.0],[15400,17.501885341171096,0.0],[15400,17.934923787400518,0.0],[16800,18.750578382192018,0.0],[16800,19.855754685284356,0.0],[18200,19.943293396457683,1.0],[19600,20.827328879944325,1.0],[19600,21.32989947716521,1.0],[21000,22.340496588621146,1.0],[22078,23.671440905393474,1.0],[22400,23.86648037469794,1.0],[23800,24.51998427513071,1.0],[23800,25.177349850647943,1.0],[25200,25.400907877568052,1.0],[26600,25.59606234985632,1.0],[26600,24.613590599211555,1.0],[28000,24.336820270267445,0.0],[29386,25.562205120157213,1.0],[29400,24.858554325814143,1.0],[30800,25.454361432021436,2.0],[30800,24.59573372346331,2.0],[32200,25.317090422299103,2.0],[33600,25.19842708827528,2.0],[33600,24.449024671919037,2.0],[35000,24.260300257180266,2.0],[36176,24.683703734944487,2.0],[36400,24.16082911457887,2.0],[37800,25.85028566209085,3.0],[37800,25.837061425848756,3.0],[39200,26.265768313229685,3.0],[40502,27.501013643093987,2.0],[40600,28.086279760162125,2.0],[42000,29.409751478180862,2.0],[42000,29.518183137270555,2.0],[43400,31.046597790652967,2.0],[44800,31.22594649885712,2.0],[44800,32.979640676374146,2.0],[46200,34.411290751217905,2.0],[47502,35.27368720862972,2.0],[47600,35.209776902349134,1.0],[49000,35.94707493220685,2.0],[49000,35.772845402754285,2.0],[50400,35.639020321969774,2.0],[51800,33.77351868940768,2.0],[51800,34.07226421412404,2.0],[53200,33.68870233480679,2.0],[53200,32.95703826109005,2.0],[54600,34.65801001863946,3.0],[56000,34.90579804006042,3.0],[56000,33.32730882111342,3.0],[57400,32.83848752702529,3.0],[58702,32.07960192143366,2.0],[58800,32.11686695909949,2.0],[60200,33.46542523951787,3.0],[60200,33.79116412046956,3.0],[61600,35.1150717239627,4.0],[62902,34.22103439542982,4.0],[63000,33.354572872914375,4.0],[64400,31.84773158853704,3.0],[64400,29.537896100902703,3.0],[65800,29.74603666466622,3.0],[67200,30.038915278032764,3.0],[67200,29.80997219297318,3.0],[68600,28.947318552251655,2.0],[68600,27.119093601336917,1.0],[70000,27.16202691035549,1.0],[71344,28.01006359363868,3.0],[71400,28.859764403428827,3.0],[72800,31.33746305884567,5.0],[73934,31.730204749199174,5.0],[74200,32.88388852650162,6.0],[75572,32.84922700356364,6.0],[75600,31.366766968263402,6.0],[77000,30.95653061261251,6.0],[77000,31.07477548784177,6.0],[78400,31.58193032246454,6.0],[79800,32.29694363531085,7.000000000000001],[79800,33.439512215432,7.000000000000001],[81200,31.81359068489438,4.0],[82278,30.775771045767844,3.0],[82600,32.72344958368171,4.0],[83986,32.73381363154337,4.0],[84000,33.904593435834094,4.0],[85400,35.49034171420723,5.0],[86478,38.32515873588994,6.0],[86800,38.259304986369315,6.0],[88200,39.44958946433229,7.000000000000001],[88200,38.514925800198064,7.000000000000001],[89600,37.87923544353657,6.0],[89600,37.78218001797345,6.0],[91000,37.30999704281933,6.0],[92400,36.35329754502447,4.0],[92400,35.37400593218943,3.0],[93800,36.47921240344974,3.0],[95200,37.01089307294225,3.0],[95200,37.98941044238169,3.0],[96600,37.33518367962441,2.0],[96600,36.30702638504141,1.0],[98000,36.96927455940506,1.0],[99400,37.40859272852955,1.0],[99400,37.1766731418161,1.0],[100800,38.4705813270542,1.0],[101906,39.053085963181836,2.0],[102200,38.74923107847876,2.0],[103600,39.13494042535235,2.0],[103600,37.420726307248316,2.0],[105000,35.6736541381042,1.0],[106400,35.963142793314525,1.0],[106400,36.31033145487132,1.0],[107800,36.88357046759618,2.0],[108906,36.94953308230044,2.0],[109200,36.62717108405042,3.0],[110544,38.72161980152677,5.0],[110600,39.43459688582231,6.0],[112000,40.59115569840867,7.000000000000001],[113106,40.95808605090793,8.0],[113400,41.841952446976556,9.0],[113400,41.10524935049743,9.0],[114800,41.299809218046065,10.0],[116032,42.761595888311085,12.0],[116200,41.503574795452636,11.0],[117600,42.76780364248705,11.0],[118468,41.482466863020946,10.0],[119000,43.16287524632413,11.0],[120232,42.38276501495572,9.0],[120400,41.88501479640341,9.0],[121800,42.72701822317733,8.0],[122948,41.32966001796929,6.0],[123200,43.81711638121578,7.000000000000001],[124446,45.29587206241915,6.0],[125300,46.46713355531723,7.000000000000001],[126000,46.368516852085634,7.000000000000001],[126000,44.51411059320381,7.000000000000001],[127400,45.253063147815844,8.0],[128436,45.05158589444629,7.000000000000001],[128800,44.6051437405478,8.0],[130172,46.373983907403236,10.0],[130200,46.09140721655009,10.0],[131600,46.62146337661952,10.0],[132706,46.89986058766464,10.0],[133000,46.3900128839406,10.0],[134400,48.14445948565884,12.0],[134764,46.377843318837655,9.0],[135800,48.215234141928285,10.0],[137032,49.056484892517474,9.0],[137200,49.05659534265254,9.0],[138600,48.25195590504843,8.0],[138600,45.98008493137643,7.000000000000001],[140000,43.8178944573589,5.0],[141190,43.985487703314554,6.0],[141400,43.777982325983096,6.0],[142800,45.379819943078544,8.0],[142800,43.86066423283662,6.0],[144200,46.36029307955661,9.0],[145250,46.00625782707293,9.0],[145600,47.673228931102805,11.0],[146874,48.99317121347898,12.0],[147602,48.40298336047539,12.0],[148400,49.9530788443448,12.0],[149478,51.487081593577656,14.000000000000002],[149800,52.64323844631113,14.000000000000002],[151144,52.61543239946455,15.0],[151200,50.13154579481849,14.000000000000002],[152600,48.33908758892714,14.000000000000002],[152600,45.07622782393199,11.0],[154000,44.60904750251068,12.0],[154812,42.339195630393824,9.0],[155400,42.585316053477925,11.0],[156800,41.854412956724026,11.0],[156800,40.762648743234074,10.0],[158200,38.96394600848244,9.0],[159278,39.26007338196649,9.0],[159600,38.45544065368864,9.0],[161000,41.07173941523122,10.0],[161630,44.32175452529674,12.0],[162400,44.4287405133831,11.0],[163408,45.07508851767537,11.0],[163800,45.22241859560839,11.0],[165200,43.175453002989094,9.0],[165200,43.20014312605174,8.0],[166600,44.23398305705628,9.0],[167902,44.29879244247747,8.0],[168000,45.973686969800426,8.0],[169400,45.13604087408101,7.000000000000001],[169400,43.82125761407231,5.0],[170800,44.517050525519764,5.0],[172200,43.93413099434751,4.0],[172200,42.82996180119455,3.0],[173600,43.855144939488255,4.0],[174636,45.48575730729963,5.0],[175000,45.669204420179085,6.0],[176176,46.36156381079107,7.000000000000001],[176400,45.43151921091792,8.0],[177800,44.297842047833576,8.0],[177800,43.51935251005557,8.0],[179200,42.216556176249135,8.0],[180600,41.358889074480615,8.0],[180600,40.21004634730259,8.0],[182000,39.8739827202493,7.000000000000001],[182000,38.38192252964898,6.0],[183400,39.070536754581575,7.000000000000001],[184576,38.30187146815719,6.0],[184800,36.73747967473322,5.0],[186200,35.33392005790669,3.0],[186984,37.688802750918484,4.0],[187600,38.43291092302821,5.0],[189000,38.892630821056876,6.0],[189000,39.42112008914526,6.0],[190400,39.79744929952355,6.0],[190400,38.68451695373265,5.0],[191800,39.81688440965511,5.0],[193200,39.437634409285266,5.0],[193200,40.79982154498949,5.0],[194600,42.32614691580523,4.0],[195552,42.13872686210941,5.0],[196000,43.50782190431346,6.0],[197400,42.103526789769745,5.0],[197400,41.567647506630856,4.0],[198800,42.28269725312408,5.0],[200074,45.18484023508181,5.0],[200200,45.96397940433232,5.0],[201600,46.31764743948084,6.0],[201600,44.24684507771414,6.0],[203000,42.469068720593434,5.0],[203000,40.42411224685882,5.0],[204400,41.32017492044999,5.0],[205800,41.55303339662484,5.0],[205800,41.796530594467434,5.0],[207200,42.300649956941754,4.0],[208180,42.335122442631956,3.0],[208600,42.24053870526008,3.0],[210000,42.260157576191105,4.0],[210000,41.85209232367307,3.0],[211400,44.84447238697228,4.0],[212422,47.20593922640686,5.0],[212800,48.44157831847072,6.0],[214200,49.59513746661546,6.0],[214200,48.52076974498794,6.0],[215600,47.25391373075591,4.0],[215600,47.00281586999384,4.0],[217000,47.36310610936202,7.000000000000001],[218176,49.14932169008764,10.0],[218400,49.29734486049033,11.0],[219800,48.91080653126784,11.0],[220500,47.08577394187926,11.0],[221200,49.42161475524422,13.0],[222334,48.85140898082737,12.0],[222600,48.182923699716966,13.0],[223930,50.746969961653896,15.0],[224938,50.10047158650189,15.0],[225400,51.350655725592794,15.0],[226576,49.95122738538596,12.0],[226800,48.2629668967958,12.0],[228200,44.72094127587076,8.0],[228200,44.860787547398104,7.000000000000001],[229600,46.51726772005306,8.0],[229600,44.7607281387721,5.0],[231000,45.078089753445894,6.0],[232330,46.17136964320143,6.0],[232400,45.286318348853,4.0],[233800,45.38446425878863,5.0],[234752,45.483675675914,5.0],[235200,46.85896330110472,7.000000000000001],[236516,48.42824699689232,9.0],[236754,50.85567793515338,10.0],[238000,51.954827655952926,10.0],[239008,52.02195598080317,10.0],[239400,51.558504207885065,11.0],[240212,50.79625593911224,11.0],[240800,49.30453937102766,11.0],[242200,48.14831467689706,10.0],[242200,46.12864638627834,9.0],[243600,46.38155791174817,10.0],[244594,45.24407384089671,9.0],[245000,44.75817551665368,9.0],[246400,43.67767280083132,7.000000000000001],[247128,42.829969021433534,7.000000000000001],[247800,42.69919700911756,7.000000000000001],[249200,41.51078175367924,6.0],[249200,43.017530008521916,6.0],[250600,43.553851379527444,6.0],[251412,44.15159942542512,7.000000000000001],[252000,45.33773564041801,9.0],[253218,45.03124574141204,9.0],[253400,45.88123496232713,9.0],[254800,45.28202837566738,8.0],[254800,45.66750963198983,8.0],[256200,46.521798559699036,9.0],[257418,46.07806315331787,9.0],[257600,46.21382595419245,8.0],[259000,48.68347070071932,9.0],[260008,46.42004599595692,7.000000000000001],[260400,46.105308094547894,7.000000000000001],[261618,46.184485505395934,5.0],[261800,47.08547007955223,5.0],[263200,47.61928759660006,5.0],[264390,47.64383827904128,5.0],[264600,47.02415111627501,5.0],[265678,46.469774596460674,6.0],[266000,46.46082212438667,7.000000000000001],[267400,46.820273747962325,8.0],[267400,44.64548314843276,7.000000000000001],[268800,45.04918312572692,7.000000000000001],[269906,46.238835809026206,7.000000000000001],[270200,46.78310340825301,7.000000000000001],[271600,48.191527653609626,9.0],[272370,47.82497305121203,9.0],[273000,48.73602044263473,11.0],[274330,48.702237872197266,12.0],[274400,50.29166268279002,12.0],[275758,53.22226674144651,13.0],[276640,53.834940346076706,12.0],[277200,53.22766306146073,11.0],[277200,51.47118197952736,11.0],[278600,51.33061618615513,13.0],[279832,51.53425659208351,14.000000000000002],[280000,48.547927240784595,12.0],[281400,47.977033129068765,11.0],[281400,46.50541035307743,8.0],[282800,48.8752536137074,10.0],[284032,50.14019710485311,11.0],[284200,47.31874759668517,8.0],[285600,46.616524919442,7.000000000000001],[286776,45.49586631350669,7.000000000000001],[287000,46.34403831748103,7.000000000000001],[288232,48.039249302698884,7.000000000000001],[288778,48.223065108281155,7.000000000000001],[289800,47.66275085208235,7.000000000000001],[289800,46.2220805403773,7.000000000000001],[291200,47.729896784869254,8.0],[292124,46.685796574481394,6.0],[292600,45.62892078801794,5.0],[294000,44.275005444274875,4.0],[294000,45.107558157535976,4.0],[295400,47.23027939160992,7.000000000000001],[296800,48.29783975963362,7.000000000000001],[296800,46.848301114647754,5.0],[298200,48.61071582225573,7.000000000000001],[298578,47.874052375322854,6.0],[299600,50.7402966922495,8.0],[300958,51.74205022071994,8.0],[301000,51.54499345729957,8.0],[302400,52.95118830900345,9.0],[302400,51.38237890699704,9.0],[303800,52.32720558358687,12.0],[304864,51.646490666046255,11.0],[305200,53.6619080127267,13.0],[306446,57.56552695346799,17.0],[306600,55.87624063852274,15.0],[308000,57.437036274676444,17.0],[309064,57.59683505614705,16.0],[309400,57.69395941066728,17.0],[310576,59.90026982881178,19.0],[311318,61.67729279244972,23.0],[312186,64.90088898463522,25.0],[313194,65.42740052461336,24.0],[313600,65.91640937604835,25.0],[314720,65.1454807098738,24.0],[315000,62.17241277302316,23.0],[316358,61.410334739720525,23.0],[316400,60.79165760852633,22.0],[317786,63.56159680970592,26.0],[317800,61.67346935571622,24.0],[319200,61.17449303436554,24.0],[320306,59.4136149834638,22.0],[320600,57.88998720207957,20.0],[322000,58.61808157642371,21.0],[322602,57.27498597057681,19.0],[323400,57.5944632778827,18.0],[324590,58.3887301175223,19.0],[324800,59.949197052907905,19.0],[326074,61.06886764858295,20.0],[326788,59.65074957348133,19.0],[327600,57.67386792669403,18.0],[327600,54.52871507306128,16.0],[329000,55.8539485691017,17.0],[330162,54.12055985514733,15.0],[330400,53.90487305478979,16.0],[331800,53.19433803180749,15.0],[331800,51.02405709530766,13.0],[333200,53.04761031240113,15.0],[334334,52.335423758198665,15.0],[334600,50.08317187200195,12.0],[335972,49.749766703459315,11.0],[336938,49.529796521657914,10.0],[337400,52.85498423414639,12.0],[338436,54.67513936710617,13.0],[338800,54.517455566299525,13.0],[340116,57.688534863253246,16.0],[340200,54.640850601827104,15.0],[341250,54.47374472198647,17.0],[341600,53.95361504679479,16.0],[343000,55.01826354929881,16.0],[343630,53.93961449839242,14.000000000000002],[344400,55.46403023045992,17.0],[345506,58.57279451784272,20.0],[345800,57.22259010368442,19.0],[347130,56.206996065031916,18.0],[347984,56.53451278486225,18.0],[348600,54.729031820822804,17.0],[349804,54.16366023550645,14.000000000000002],[350000,56.5758774702899,14.000000000000002],[351386,55.25233522581149,11.0],[352506,52.99371944662695,10.0],[352800,52.548609968466536,10.0],[352800,48.0050258945679,7.000000000000001],[354200,47.635216889808014,8.0],[355348,45.08208778168472,5.0],[355600,45.22001637017785,6.0],[356860,44.926017239396096,6.0],[357000,42.97414270620669,5.0],[358400,43.467454980465334,6.0],[359548,43.90345304563198,6.0],[359800,43.50730534376686,7.000000000000001],[361200,46.46710808999669,8.0],[362096,45.28553106391639,8.0],[362600,47.836298681534466,9.0],[363748,49.331628215276794,9.0],[364000,49.946125378709915,9.0],[365400,48.0674532724094,7.000000000000001],[365400,45.95121483644991,6.0],[366800,49.013240174690544,10.0],[367738,48.62717740866337,9.0],[368200,48.98774339560543,9.0],[369502,48.65023519247574,10.0],[369600,47.65594769712195,9.0],[371000,49.210472462711806,11.0],[371868,48.21358187806156,10.0],[372400,48.519403647740184,9.0],[373324,49.23310949770283,11.0],[374150,50.24671366262955,11.0],[375200,52.8870745820587,11.0],[376068,52.299941546957704,9.0],[376600,51.3040812706908,8.0],[377888,51.87916578506516,9.0],[378000,50.24688247565824,8.0],[379400,49.36426656075364,9.0],[379400,48.22059498849427,7.000000000000001],[380800,47.93798975232141,7.000000000000001],[381920,48.85203590519733,7.000000000000001],[382200,48.87960695792877,7.000000000000001],[383600,47.741506414877804,6.0],[383600,46.34170321467199,6.0],[385000,48.06233067469683,7.000000000000001],[386148,48.786510861274266,8.0],[386400,48.091585011876674,7.000000000000001],[387800,51.568862008854275,11.0],[387800,52.49139873168265,11.0],[389200,52.5344311175534,11.0],[390222,53.589210363239516,12.0],[390600,52.708862396074466,12.0],[391804,51.91125042594997,13.0],[392000,53.055928526996276,15.0],[393400,53.400417232294785,15.0],[394002,52.03720186005019,14.000000000000002],[394800,53.34145668615751,16.0],[396046,53.315101301299656,15.0],[396200,51.29183596932831,12.0],[397600,51.44822643859356,13.0],[398342,50.254316378345976,12.0],[399000,50.05358077125393,11.0],[400400,51.415907765047415,12.0],[400820,51.334563271763,13.0],[401800,49.73660927640598,11.0],[402780,50.75429092480314,12.0],[403200,50.29269113640434,13.0],[404012,48.343985560693646,12.0],[404600,47.41127774400189,11.0],[406000,48.74850888557573,14.000000000000002],[406000,47.23233179545569,12.0],[407400,49.12103313928798,14.000000000000002],[408688,49.1337018281793,15.0],[408800,49.15910564526271,15.0],[410200,49.61781372901543,14.000000000000002],[411278,48.69759559711758,12.0],[411600,49.60481827861769,12.0],[412916,46.86650166396643,9.0],[413000,46.96535878366487,9.0],[414400,48.97382516244198,11.0],[415478,48.15362120946185,9.0],[415800,48.02668491365774,9.0],[416752,46.49330588838129,8.0],[417200,48.55916647580219,11.0],[418474,49.31856223970779,12.0],[418600,50.12953537364443,14.000000000000002],[419944,52.58525371097796,17.0],[420770,52.72447449185098,18.0],[421400,53.68993514513515,19.0],[422632,56.466605194092025,22.0],[422800,54.67197294021278,20.0],[424200,56.65505643513699,22.0],[424886,57.552664040556465,23.0],[425600,58.83826220785175,23.0],[426944,57.03538152329902,19.0],[427462,57.26206855599217,20.0],[428400,55.452597505309114,18.0],[428400,53.114657010213435,15.0],[429800,54.982017473378804,18.0],[430724,53.29057406194239,16.0],[431200,52.38788879860665,15.0],[432474,53.0169525566449,16.0],[432600,51.52893474308199,14.000000000000002],[434000,53.920852858795406,18.0],[435022,52.956831937369046,18.0],[435358,55.279731093375595,22.0],[436632,55.730001561508686,23.0],[436800,52.98441592512565,20.0],[438116,55.66936443421102,22.0],[438648,54.13087914830787,20.0],[439600,56.644286875695286,23.0],[440804,56.49910605725865,23.0],[441000,54.97407508966691,22.0],[441000,51.728738064133395,20.0],[442400,49.02401979224789,17.0],[443800,50.69182129030785,17.0],[443800,49.89360224809236,14.000000000000002],[445200,49.53088027756036,13.0],[446208,49.97798530270913,13.0],[446600,48.52798491859743,11.0],[447846,50.76667404969245,13.0],[448000,48.10952546122215,9.0],[449400,48.08226255928945,9.0],[450478,48.47511044261708,9.0],[450800,51.69519289380689,10.0],[452060,54.17947997416813,13.0],[453026,54.7210735377964,13.0],[453600,54.060908616743475,14.000000000000002],[453600,51.13323854776107,12.0],[455000,51.31718281913316,13.0],[455000,52.17228771016613,12.0],[456400,54.964937615642604,14.000000000000002],[457548,55.18398654258174,14.000000000000002],[457800,55.392191516185456,14.000000000000002],[458962,59.506096649979305,20.0],[460082,59.23356675776508,20.0],[460600,59.73752459456645,19.0],[461678,60.83506820033096,20.0],[462000,60.010724614312814,20.0],[463176,62.932420864811164,20.0],[463876,65.09091155719031,22.0],[464786,65.61820624268029,23.0],[465878,63.611215246155886,22.0],[466200,63.7418739952788,23.0],[466200,58.543988829645166,20.0],[467600,55.63766778830024,17.0],[468678,55.44451647490914,15.0],[469000,53.870874643071836,13.0],[470190,53.72336656640038,13.0],[470400,51.9672709200813,11.0],[471800,52.80215839305433,12.0],[472724,52.123883345905455,11.0],[473200,50.67873228611748,10.0],[474348,50.97152434081061,11.0],[475356,48.91675269060689,9.0],[476000,52.209138020492325,9.0],[477078,54.33381087882241,9.0],[477400,54.83027915477368,11.0],[478702,55.58209952549246,12.0],[478800,54.27495298705465,11.0],[479962,53.07412535212142,13.0],[480200,52.0046698914683,11.0],[481600,54.02600979613618,13.0],[482440,53.79082921642247,12.0],[483000,55.31890583736536,14.000000000000002],[484162,55.4735722604116,14.000000000000002],[484400,56.33742041085978,15.0],[485632,57.94273639837433,18.0],[486640,57.60637888984537,17.0],[487200,60.76358458537008,21.0],[488278,61.77153294324587,22.0],[488964,64.22677997306567,22.0],[489720,65.06084413936941,22.0],[490476,65.17560005698178,24.0],[491400,64.65723451355849,23.0],[491400,60.084825064494495,21.0],[492800,61.457874538998865,25.0],[492800,61.4713852434256,23.0],[494200,62.19898480757168,24.0],[495166,62.272132024636946,24.0],[495600,59.7346432491124,19.0],[496762,58.809013835244215,18.0],[497882,59.767579071411774,20.0],[498400,60.64837503682501,20.0],[499366,59.424723731452794,18.0],[499800,60.88142266587234,19.0]],&quot;u&quot;:[[896,1.708660091672625,1.708660091672625],[1792,1.6198675235112507,1.6642638075919378],[2688,1.543751020516668,1.6240928785668478],[3584,1.6391735956782387,1.6278630578446955],[4480,1.5778949161370595,1.6178694295031684],[5376,1.5528177675746737,1.607027485848419],[6272,1.598997658207303,1.605880367613974],[7168,1.6045974450451987,1.5910142752386276],[8064,1.509330914134071,1.5752233310418877],[8960,1.505683687471208,1.5697851406068217],[9856,1.5329462062744867,1.5546097992634285],[10752,1.534788551784697,1.5484517472130912],[11648,1.6410737605321974,1.5610597462070233],[12544,1.4821828291529702,1.5443719134849758],[13440,1.5242405306725275,1.5328923542888797],[14336,1.4415615257762728,1.5232110130949084],[15232,1.4476991437730335,1.514927506852312],[16128,1.5086951454480488,1.5114630695913924],[17024,1.436749014116469,1.497457421353074],[17920,1.3633867629936762,1.4577878502761425],[18816,1.4421224026452928,1.4520649322036172],[19712,1.445377304440453,1.4407987570276066],[20608,1.4194067205701555,1.437633784855304],[21504,1.3403508790901728,1.4222983184720381],[22400,1.263857045343944,1.3873214470285944],[23296,1.2348873842330206,1.3584840713309594],[24192,1.203405581769489,1.3356296168703614],[25088,1.3399941665785653,1.3210398688608287],[25984,1.3906985152335394,1.3132286132598412],[26880,1.537054833911714,1.3300354865943493],[27776,1.1927988699504308,1.308956628145815],[28672,1.2495981653531392,1.3069196452899854],[29568,1.3979090792792184,1.3302084588680139],[30464,1.263199542249952,1.3387504532223655],[31360,1.0766114592552185,1.301124352176173],[32256,1.4883125225702922,1.3150692103671378],[33152,1.3121332668122792,1.2829375579243616],[34048,1.454130700656346,1.3202706765966352],[34944,1.3517152241298132,1.3348588278504459],[35840,1.4080407789775304,1.336306213521633],[36736,1.1965685430027189,1.326787499343457],[37632,1.2029933347588493,1.3448420529868328],[38528,0.960850278625176,1.2694903038518162],[39424,1.2598806591261,1.2620256456109333],[40320,1.0696225038596563,1.2070959032114064],[41216,1.2574927366915203,1.1936355478630787],[42112,1.4335936251140775,1.197285954454014],[43008,1.2073649238972437,1.1988282945818032],[43904,1.1799167394638062,1.1955316381110828],[44800,1.214673874899745,1.2317921518645927],[45696,1.2741526989709764,1.233831014699575],[46592,1.3048850297927856,1.2674399469757363],[47488,1.3683724176316034,1.283279901395748],[48384,1.2250349521636963,1.2534858052599795],[49280,1.339421550432841,1.2723510376222076],[50176,1.4136004447937012,1.3057344240979067],[51072,1.1944090511117662,1.3028394492710529],[51968,1.3310718848591758,1.3109707615407957],[52864,1.1068805718705768,1.2826844104090516],[53760,1.2359933179049265,1.2637731104480978],[54656,1.1926212112108867,1.2591425760262678],[55552,1.2898113472121102,1.252055404137592],[56448,1.3667568223817008,1.2453634580787347],[57344,1.4719684748422532,1.285014804325947],[58240,1.2977166119075956,1.2802497653328644],[59136,1.3842379535947527,1.3198722484363177],[60032,1.364517526967185,1.3382328497309264],[60928,1.211728987239656,1.3409625320207506],[61824,1.4096795661108834,1.3580865632920036],[62720,1.4203330363546098,1.3657403081452766],[63616,1.2871793111165364,1.33934185618446],[64512,1.448809129851205,1.3609265016049754],[65408,1.3775236407915752,1.3599673140616644],[66304,1.3356379369894664,1.3558416583505615],[67200,1.395168199425652,1.3820472600914182],[68096,1.280809964452471,1.3636373169973595],[68992,1.275468450926599,1.3429423762219292],[69888,1.1555993450539452,1.3241452382129875],[70784,1.2664746329897927,1.2980974529470717],[71680,1.1963476027761186,1.2722151618020063],[72576,1.2802707297461373,1.264305560767245],[73472,1.4806115002859206,1.2765117466044262],[74368,1.3553591455732072,1.2871616296216744],[75264,1.2801539926301866,1.287830992722187],[76160,1.0678074381181173,1.2752892917313545],[77056,1.3350852387292045,1.2850908068369846],[77952,1.105859881355649,1.2721639894912031],[78848,1.0778464317720915,1.243246232637768],[79744,1.2446099718411763,1.2095317285742333],[80640,1.1612749014581953,1.1818054079863742],[81536,1.1702118785608382,1.1660993916907532],[82432,1.2609472955976213,1.193690799902111],[83328,1.383144741966611,1.2005564432217404],[84224,1.2898650935717992,1.226842902109762],[85120,1.182554351431983,1.2418011763468892],[86016,1.0501001129547756,1.2140140536488317],[86912,1.1538897192194348,1.2129590276147233],[87808,1.1828862258366175,1.2147696486541204],[88704,0.9528984739666894,1.1707626741354158],[89600,1.2954705187252589,1.158237785100937],[90496,1.143121226912453,1.1372743755781731],[91392,0.8995978633562723,1.0968520201387861],[92288,1.2090925659452165,1.119565227708849],[93184,1.2186537016005743,1.128817225191869],[94080,1.1600632227602459,1.1255567961809587],[94976,1.259435012227013,1.1693477302181476],[95872,1.2073257217804592,1.1567556163688906],[96768,1.1629923780759175,1.1595943522493857],[97664,1.3639033067794073,1.2259237013098334],[98560,1.1433862749309767,1.216537088307799],[99456,1.3690638939539592,1.238024258643997],[100002,1.2430558105309804,1.2498803426112448],[100898,1.1797382103063032,1.2384950851940004],[101794,1.186463094892956,1.2355147099243573],[102690,1.194401931195032,1.2400017889413735],[103586,1.1355637056486947,1.2073818459227004],[104482,1.017310931569054,1.1893710825852828],[105378,1.1894966874803816,1.1637186245176288],[106274,1.1894299614997137,1.1560577889417336],[107170,1.0947005095936002,1.1439095459827762],[108066,1.1201672110529173,1.1344387054341993],[108962,1.128027944337754,1.1249567073117308],[109858,1.1180381519453866,1.122453056782687],[110754,0.9457526618526095,1.1122304468231947],[111650,0.9464851021766663,1.0775145060655211],[112546,0.8404819213208699,1.027664786039972],[113442,1.0595016876856487,1.0226363829102647],[114338,1.17698501263346,1.030753211707485],[115234,1.1743706606683277,1.0373735997547098],[116130,1.1811827577295757,1.0463942577238796],[117026,1.0534992094728208,1.0617866216696241],[117922,1.264400391351609,1.1072030915517588],[118818,1.0001280854145687,1.1300096864222873],[119714,1.2084996682547389,1.1512951122178716],[120610,1.1671407173077266,1.1498887843141952],[121506,1.0326523156393141,1.129643306452908],[122402,1.0492457988716306,1.1107951694732012],[123298,1.1547176923070634,1.125254952735236],[124194,1.020557348217283,1.090420232287475],[125090,1.0905331600280035,1.103335242946537],[125986,0.9394601704109282,1.0649010289688499],[126882,0.9974817761353084,1.0406640373727902],[127778,1.1207794348398845,1.0532536258300147],[128674,1.0334009059837885,1.05099006970318],[129570,0.8792745541958582,1.011641049973008],[130466,1.1250930414313363,1.0265747204321582],[131362,1.1111305602604435,1.0295172061796496],[132258,0.9031526144771349,1.0243304124748218],[133154,1.1729610363642375,1.049398878221812],[134050,1.14523427543186,1.0528924268778084],[134946,1.1509578086081005,1.069686270109853],[135842,1.0524145733742487,1.0944205585639089],[136738,1.0932347859655107,1.0898693792116478],[137634,1.1298639745939345,1.0925455812592895],[138530,1.1493557634807767,1.1277174596883814],[139426,1.0441375545092992,1.1093141051376756],[140322,1.0057483578012103,1.0893875454761546],[141218,1.0038208762804668,1.068367983715064],[142114,1.0379542311032612,1.0663022205334942],[143010,1.0599528068587893,1.061547652089677],[143906,1.0633637990270342,1.0520476270086914],[144802,0.943160035780498,1.02259109448008],[145698,0.9121556693599338,1.003736539458742],[146594,0.9889090884299505,1.0013309295485622],[147490,0.9690756400426229,0.9963673243717271],[148386,1.0805237491925557,1.0024486840987692],[149282,1.017645422901426,0.9964047721048601],[150178,1.035215865998041,0.992383638815004],[151074,0.9231820958001273,0.9895296473892368],[151970,0.9414321028050923,0.9937119950242594],[152866,1.1007580899056935,1.0096904238065085],[153762,0.9950675183818454,1.0134035492835403],[154658,0.9521643363294148,0.9950664903030916],[155554,0.9921014138630458,0.9914173461547514],[156450,0.9741485714912415,0.9826934469394945],[157346,0.9809868144137519,0.990951263884298],[158242,0.8558866757722128,0.9787304885938867],[159138,0.8324061511527925,0.940394497343472],[160034,0.9457087360677265,0.9333432427271695],[160930,0.8655778467655182,0.9209737442180413],[161826,0.8738795845281511,0.9040849114559134],[162722,1.0154566041060857,0.9099860589723197],[163618,0.9321592904272533,0.90301069840282],[164514,0.8444875819342477,0.9013822564259677],[165410,1.0653149741036552,0.9346549454189482],[166306,1.1457762604668027,0.963236020333102],[167202,0.9875060962956577,0.9806543416945505],[168098,0.9639471371968588,0.9935211349329371],[168994,0.9051263076918465,0.9777596640166173],[169890,1.14476120755786,1.0081313664638467],[170786,0.9838447230202811,1.0280395294761373],[171682,1.0898426203500657,1.0315434789399103],[172578,0.9893829829636074,1.0092015821537397],[173474,1.0903296115852537,1.023890655766539],[174370,1.1649257569085985,1.0526018871539302],[175266,1.023562496616727,1.0695213427146275],[176162,1.2176123233068556,1.079928644964484],[177058,1.0588441746575492,1.0906428523412368],[177954,1.0747623528753008,1.0884885284162704],[178850,1.1320418346495855,1.1088683643714101],[179746,1.1442477041411967,1.1165709490222593],[180642,0.9972105693249476,1.092611636510309],[181538,1.1096828409603663,1.1049145428451146],[182434,1.1118046329134987,1.0897991585032065],[183330,1.1132542178744362,1.0975720218199045],[184226,1.0645295119001752,1.0961101873948864],[185122,0.8613659533716383,1.0574422043551799],[186018,0.9484689537258375,1.0294738114387],[186914,1.08357268288022,1.0418112562323105],[187810,1.0258154633144538,1.0298302022828942],[188706,1.031828054359981,1.018404976775249],[189602,0.965572680745806,0.9973076143283018],[190498,1.1013382247516088,1.0025660018785065],[191394,1.0064940878323145,1.0232985925157458],[192290,1.0459941767510914,1.0372307672336394],[193186,0.879983799798148,1.0081466410790576],[194082,0.9085734154851663,0.9913977771034451],[194978,0.9484837935084388,0.9794914541246535],[195874,0.9176765431960424,0.9726491487604015],[196770,1.0352172936711992,0.9632033014632001],[197666,1.187028998420352,0.988994002975777],[198562,0.8274111364568982,0.9577678543623207],[199458,0.9813424944877625,0.9722476678894084],[200354,0.82704625527064,0.9606009307159048],[201250,0.9284404033706302,0.9577375892676464],[202146,0.9858555538313729,0.9674774479298366],[203042,0.8810985741161165,0.9454604879933959],[203938,0.9340419343539647,0.9093194788410549],[204834,0.8416698965288344,0.9113564445656172],[205730,0.8906648386092413,0.8984024937258288],[206626,0.8813081383705139,0.9061541913115249],[207522,0.9368136212939308,0.9073503653005677],[208418,0.9540598903383527,0.9028081276587077],[209314,0.7949488617125011,0.8905010258867626],[210210,0.705890803819611,0.8579080072389978],[211106,0.8908677356583732,0.8649362699717892],[212002,0.7549357726460412,0.8455464034056178],[212898,0.7190878079051063,0.822372070481988],[213794,0.884562882639113,0.8149076792455855],[214690,0.8328748648720128,0.7975955327503941],[215586,0.7670516769091288,0.7936102206356266],[216482,0.9147961395127433,0.8234538400203598],[217378,0.9100443350949458,0.8261933542255843],[218274,1.0341221888860066,0.8660771279741508],[219170,0.8484764524868557,0.884561220057258],[220066,0.7131951720941634,0.8600801185508367],[220962,0.6837500451753536,0.8387765728798854],[221858,0.7427398477281842,0.8353034544254647],[222754,0.6990501043342409,0.8044825922571072],[223650,0.6761689394091567,0.7710718214448515],[224546,0.8179743932116599,0.7401935649199449],[225442,0.8457534206765038,0.739804560375609],[226338,0.8913010784557888,0.7652482612844126],[227234,0.8918821655568623,0.7949814213389138],[228130,0.7219880322615305,0.792016876272249],[229026,1.0022353388014293,0.8353290526247045],[229922,0.8014504739216396,0.8532264146979164],[230818,0.6538779072995696,0.8297840595676177],[231714,0.7993052498925299,0.8231486065984785],[232610,0.8476750708761669,0.8169163198013898],[233506,0.7793081175713312,0.800834312946314],[234402,1.0097209101631528,0.8419390097894027],[235298,1.0458447961580186,0.8481689322689155],[236194,1.0263112159002394,0.8802918954087156],[237090,0.9555193895385379,0.9233835357285681],[237986,1.0727626496837253,0.9624488785558818],[238882,0.9824090756121135,0.98169659351816],[239778,1.0147385579489527,1.0153295135721057],[240674,0.9653634589741982,1.0089927348308267],[241570,0.9445894559224447,0.9945276862257444],[242466,1.0107027349017916,0.9922979032259663],[243362,0.9766853742656254,0.995321615329836],[244258,0.9327233359217644,0.9753159990781272],[245154,1.0147365719700854,0.9799342128435518],[246050,0.8741723299026489,0.9598533231226513],[246946,0.9891837121297916,0.9632562164305931],[247842,1.0206104758239927,0.9741163621308141],[248738,1.0264452270099096,0.976365289574831],[249634,1.0071910123030345,0.9807232378658897],[250530,1.0911007495153517,1.0033485826649735],[251426,1.0832074610959916,1.0131301382543887],[252322,0.9914301293236869,1.0298812524573941],[253218,1.0498541054271517,1.0385484514998742],[254114,1.1964416333607264,1.0636671882908362],[255010,1.1389595312731606,1.0797406603284434],[255906,1.1079080871173315,1.094128813873343],[256802,1.049957119283222,1.08825115241161],[257698,1.1484505463214147,1.0975715931580992],[258594,1.0907956665115697,1.1117666698992252],[259490,1.039596011241277,1.1103012278726718],[260386,1.0074357830342793,1.0833003921117506],[261282,1.1229056205068315,1.0810069762879895],[262178,1.2311690194266183,1.0986156809036018],[263074,1.058831776891436,1.0998834891333467],[263970,1.099207239491599,1.0928487310148014],[264866,0.9930480775378999,1.0788847897328486],[265762,1.1610070864359539,1.096229229046374],[266658,1.1191895008087158,1.1121940458712936],[267554,0.9908345114617121,1.0933267445791335],[268450,1.124371520110539,1.0780699589625509],[269346,0.9865508647192092,1.0677441143665185],[270242,1.0435271149589902,1.0597898108618602],[271138,1.0034865105435962,1.0612810155769596],[272034,0.9409651681780815,1.029846455825835],[272930,0.9347621787871633,1.0034996955370417],[273826,0.9596956819295883,0.9990512913181667],[274722,1.059423117410569,0.9897729480753139],[275618,1.024116684993108,0.9951394938287281],[276514,0.8106329079185214,0.9618688928229469],[277410,0.9486091193698701,0.9540292655124146],[278306,0.7696435416028613,0.9295547474302402],[279202,0.9311957373505547,0.9290452557964389],[280098,0.8736596357609544,0.9167543920580626],[280994,0.9719584186871847,0.9042594350975791],[281890,0.9343996416954767,0.8914427146264889],[282786,1.0386528571446736,0.9240169930873678],[283682,1.0751063710167295,0.9420880290369192],[284578,0.9627216969217572,0.9696706226539044],[285474,0.9038907076631274,0.9657699041271289],[286370,1.0468078440143949,0.9905053624490491],[287266,1.0559983508927482,1.0025110670498438],[288162,0.8981436540683111,0.9973316402459631],[289058,0.9061475651604789,0.9784023128196495],[289954,0.8098967103731065,0.9405152184419892],[290850,0.928549044188999,0.935633410908738],[291746,0.9697589665828716,0.9450431621829871],[292642,0.8630727586292085,0.918795292842246],[293538,0.9102759474799746,0.8979778066404214],[294434,0.9004117974213192,0.8983018271194226],[295330,0.9460945022957665,0.9040085324244637],[296226,0.9421951884315127,0.922908315004236],[297122,1.0978416970797948,0.9470929797029212],[298018,1.0354817850249154,0.9564819537660701],[298914,1.0083633973484947,0.9772377592973969],[299810,0.9491695818446931,0.9827939927780708],[300706,0.9469722793215797,0.9894454901923938],[301602,0.9606527742885408,0.9915252433342187],[302498,0.9615173822357541,0.9942855567348247],[303394,0.8096751024325689,0.9531189003566495],[304290,0.868972251812617,0.929331824183464],[305186,0.8571711948939732,0.9077329381185324],[306082,0.9822093617348444,0.9124529066742684],[306978,0.9779185879798162,0.9168738079111594],[307874,0.8577562315123421,0.9021743018002736],[308770,0.7679737029331071,0.8745252047570383],[309666,0.7645288244599387,0.8680757364752341],[310562,0.8653348570778256,0.8675561086559781],[311458,0.8527992105200177,0.8669315394596987],[312354,0.8593130168460664,0.8493749187613019],[313250,0.81426298334485,0.8259955466705925],[314146,0.8042648647512708,0.8183539228475822],[315042,0.8544613942503929,0.8307093073214802],[315938,0.8806193343230656,0.8472936658733555],[316834,0.9099008433875584,0.8536602353461744],[317730,0.9179784641379402,0.8629715572915921],[318626,0.9460090313638959,0.8753567022227104],[319522,0.7016854825473967,0.8592742021087886],[320418,1.1204565649940854,0.9044444450006193],[321314,0.9421991715207696,0.9169784131821016],[322210,0.7765889934131077,0.9021169359092506],[323106,0.9394682589031401,0.9063408524114765],[324002,1.0459382931391399,0.9246208279830765],[324898,0.8819010598318917,0.9154625463356474],[325794,0.7024479781587919,0.9155714742801322],[326690,0.9614718755086263,0.8928593757822094],[327586,0.8421821083341327,0.8785712238984044],[328482,0.9995840135074797,0.9104276553404577],[329378,1.0341122491019112,0.9239482253688535],[330274,0.8999402437891278,0.9030913611759944],[331170,0.9648478485289074,0.9149409024184252],[332066,0.8972805454617455,0.9427741263188472],[332962,0.971516451133149,0.944209065693779],[333858,0.9240461133775257,0.955903923557121],[334754,0.8671669676190331,0.9369872027159143],[335650,0.8912403909933,0.9165769372718268],[336546,1.0155891151655287,0.9330982046113128],[337442,0.8335294808660235,0.9143384378023294],[338338,0.9851068087986538,0.9268850468504591],[339234,0.8262557160286677,0.9061335132641047],[340130,1.0598679468745278,0.925536632335105],[341026,0.8451134335427057,0.9223861274670581],[341922,0.8822943681762332,0.9211081242074772],[342818,0.9138186659131732,0.9065694885999979],[343714,0.8782655809606824,0.912960360042092],[344610,0.8038300424814224,0.8870636791396304],[345506,0.8185255215281532,0.8859593656395568],[346402,0.7910091834408897,0.847550970863323],[347298,0.786586751540502,0.8391900162915794],[348194,0.9607563558078948,0.8503988716675311],[349090,0.8649362048932484,0.8434156629503989],[349986,0.8421022239185515,0.8382494690872375],[350882,0.7630922865299952,0.832429789665605],[351778,0.8849028916586013,0.8419122711128119],[352674,0.8037191381057104,0.8437279789220719],[353570,0.850272828624362,0.852825989934052],[354466,0.813301316329411,0.8317609842942685],[355362,0.9265435735384623,0.8405620369578706],[356258,0.9250747306006295,0.8524152521981673],[357154,0.8467819946152824,0.8643709247817799],[358050,0.919388595081511,0.8692974538421955],[358946,0.9103512394995916,0.8845306111841786],[359842,0.7364743004242579,0.8682736785841637],[360738,0.8788641634441557,0.8776397996005558],[361634,0.8800561761572248,0.8709987428318076],[362530,0.8430864016215006,0.8592861244062178],[363426,0.8361682451906658,0.8577698744884154],[364322,0.798823112533206,0.8405462341243719],[365218,0.8331696171136129,0.829520288069232],[366114,0.7929746650514149,0.8375917687302544],[367010,0.7748813240655831,0.8227370773904583],[367906,0.7754691101255871,0.8077960679573672],[368802,0.8151924624329522,0.8038112195018602],[369698,0.80125002350126,0.7988229021176594],[370594,0.9680267373720804,0.8229948485232129],[371490,0.744012543133327,0.8102581236688865],[372386,0.8598306803476243,0.8198089829969163],[373282,0.7329718115783873,0.8138219097844598],[374178,0.7320568788619268,0.8076201624610798],[375074,0.685761646145866,0.7891300458486389],[375970,0.8413256101665043,0.7948551296579593],[376866,0.6856406607798168,0.7545142615733503],[377762,0.8285610619045439,0.7665926213978099],[378658,0.9228355487187704,0.7755933168794023],[379554,0.8603663260028476,0.7937925332257537],[380450,0.8210089547293526,0.806499972635386],[381346,0.8521221641983304,0.8302657609285952],[382242,0.8533389710244679,0.8319819553368756],[383138,0.9141263536044529,0.864622768597538],[384034,0.8191178611346653,0.8632737399161267],[384930,0.8114916199729556,0.8473674643810104],[385826,0.9312261882282439,0.8574903018417813],[386722,0.909562056972867,0.8701407450194261],[387618,0.8600024474518639,0.8712664997699309],[388514,0.8451358817872547,0.8700946298789004],[389410,0.9538194065292677,0.8757650660110168],[390306,1.0150453803085147,0.903754711607281],[391202,0.9228084541502453,0.9196571164897509],[392098,0.8027053553433645,0.9012969975061969],[392994,0.8537884404261907,0.8933293379995287],[393890,0.899897765545618,0.8990286691557794],[394786,0.6922243450369153,0.8771841639057308],[395682,0.7382778206041881,0.8463925087735766],[396578,0.769631051946254,0.8113333190075395],[397474,0.901330848534902,0.8082650896339191],[398370,0.8545016461894626,0.8156645597547901],[399266,0.750293839545477,0.800879616771831],[400162,0.6345225932697455,0.7629688778752779],[401058,0.7723112659794944,0.7744098665813606],[401954,0.6008831957976023,0.7547820630375625],[402850,0.8138819677489144,0.7611036224379425],[403746,0.7030602409726098,0.7327792499290436],[404642,0.760943340403693,0.7194137776739338],[405538,0.9378404588926406,0.7462061518663857],[406434,0.9457792639732361,0.790671390538313],[407330,0.9065557477020082,0.8098491736415292],[408226,0.9168465421313331,0.8549867945463479],[409122,0.9240355846427736,0.8707230255311849],[410018,0.8486770953805673,0.8915254333037501],[410914,0.960878219865706,0.9200875589411808],[411810,0.8730808450352578,0.9108361855329832],[412706,1.027527908484141,0.9225145633202553],[413602,0.9938048436528161,0.9349787198846565],[414498,0.9141310244089081,0.9345907887814529],[415394,0.7902615742669219,0.9154802158706169],[416290,0.7881401841129575,0.9068320856895298],[417186,0.8451859269823346,0.8903046152776195],[418082,0.9661395379475185,0.9035987142650853],[418978,0.8623527103946322,0.8800022573951557],[419874,0.7435740133126577,0.8442549959179901],[420770,1.0002254020600092,0.8565541927252901],[421666,0.8492909641492934,0.8649869627084862],[422562,0.8661720142478034,0.8761343670134643],[423458,0.9618413618632725,0.8927994291393124],[424354,0.813147402945019,0.870943409853241],[425250,0.8785191774368286,0.8732529051449835],[426146,0.9038026446387881,0.896142709620145],[427042,0.8156696023153407,0.8697775953709065],[427938,0.920860230922699,0.8800017763385358],[428834,0.8782871053332374,0.881732503636455],[429730,0.88450097824846,0.8706838774057675],[430626,0.8267945625952312,0.8726334716415122],[431522,0.935828223114922,0.8808204781669541],[432418,0.945161691733769,0.886728913466237],[433314,0.943476949419294,0.9049871059096589],[434210,0.8487961263883681,0.894692233833326],[435106,0.9772246118102755,0.9088261633300458],[436002,0.9501113817095757,0.9181990781102052],[436898,0.8512052396933237,0.921686317695647],[437794,0.8839130307148609,0.9142698616384953],[438690,1.0165276442255293,0.9244649977087468],[439586,1.0414671003818512,0.9384635907033978],[440482,1.1627560343061174,0.983315006120219],[441378,1.0814499202228727,0.9982043358934474],[442274,0.9628359022594634,1.0000221245434313],[443170,1.063520224321456,1.0303528366331647],[444066,0.9654696739855266,1.0420037856718312],[444962,0.9217779480275654,1.0284681147864077],[445858,1.074192810626257,1.0331432162498941],[446754,1.0448460316374188,1.0162989301543657],[447650,1.0569950952416374,1.012805383728475],[448546,1.055968321505047,1.0261100150492726],[449442,0.9730945343062991,1.0131920593328216],[450338,0.9181064395677476,1.0064258829874246],[451234,1.0487519176233382,1.0245650215011064],[452130,0.8977209443137759,0.9993547548850377],[453026,1.0066475598585038,0.9938978303451927],[453922,1.026043483189174,0.989476171480555],[454818,0.971793836603562,0.9774512450660573],[455714,0.9381241486186073,0.9724554756821014],[456610,0.9502554393949962,0.9770481899431368],[457506,0.8233852319064594,0.9448529491264398],[458402,0.8530819160597665,0.9384759450901526],[459298,0.9342215941065833,0.9281293785541641],[460194,0.7656963283107394,0.890936927857245],[461090,0.9286253613286785,0.8847700028179758],[461986,0.7201248847302937,0.853627250833931],[462882,0.8400284945964813,0.8378805444341432],[463778,0.9407797881535122,0.8546511953265793],[464674,0.9309487314451308,0.8657750260959169],[465570,0.9759552762621925,0.8717369806895755],[466466,0.6249522424879528,0.8516306827148917],[467362,0.9421741054171607,0.8535662175846749],[468258,0.8591104802631196,0.8734213026607929],[469154,0.6935408739816575,0.8524944997158179],[470050,0.7803699856712705,0.8295788136469263],[470946,0.6238455736920947,0.7857069339679212],[471842,0.7596077195235661,0.7548001401481175],[472738,0.9079144029390245,0.795223305926842],[473634,0.8803650878724598,0.786393446277599],[474530,0.7149546249281793,0.7657997526583217],[475426,0.8531116218793959,0.7885955737865701],[476322,0.7011811554077125,0.777282883748919],[477218,0.9506781271525792,0.8239732485289882],[478114,0.8477450133789153,0.8365642905083238],[479010,0.7069489054736637,0.807854933727558],[479906,0.7838332415336654,0.7940646699648731],[480802,0.7250561430340722,0.7955077439800007],[481698,0.7195242884613219,0.7764238392059901],[482594,0.9025665720303854,0.8051931844378004],[483490,0.8553248956089928,0.791571294217288],[484386,0.8628425058864412,0.7937280788612203],[485282,0.6948017435414451,0.7919927700137606],[486178,0.6924394206809146,0.778936509891939],[487074,0.8939198468412671,0.8030598961501096],[487970,0.6978762135619209,0.7999673140216238],[488866,0.7661330785070147,0.7804768149468566],[489762,0.8928297956784567,0.7858346578139228],[490658,0.809576343922388,0.7782252061047724],[491554,0.7445080081621805,0.7853261010505918],[492450,0.6466569162550426,0.7787857432754672],[493346,0.524206353617566,0.7259695299577956],[494242,0.39395832731610253,0.6825526890655359],[495138,0.5588628649711609,0.6529426585604138],[496034,0.7575527855328151,0.6336173713967508],[496930,0.6337673898254123,0.6085018065257543],[497826,0.5079998586859021,0.5747149280291431],[498722,0.7074944632393974,0.5834060061697652],[499618,0.6186895507077376,0.5969036057540754],[500010,0.7323052552011278,0.6452388811662219]]};
+    const root = document.getElementById(&#x27;training-curves&#x27;);
+    const svg = root.querySelector(&#x27;svg&#x27;);
+    const NS = &#x27;http://www.w3.org/2000/svg&#x27;;
+    const W = 760, left = 66, right = 18, plotW = W-left-right, chartH = 150;
+    const charts = [
+      {id:&#x27;return-chart&#x27;, top:18, title:&#x27;Episode return · 100-episode rolling mean&#x27;, series:data.ep.map(d=&gt;[d[0],d[1]]), color:&#x27;line-return&#x27;, yLabel:&#x27;return&#x27;},
+      {id:&#x27;success-chart&#x27;, top:220, title:&#x27;Success · 100-episode rolling mean&#x27;, series:data.ep.map(d=&gt;[d[0],d[2]]), color:&#x27;line-success&#x27;, yLabel:&#x27;success (%)&#x27;},
+      {id:&#x27;entropy-chart&#x27;, top:422, title:&#x27;Policy entropy&#x27;, series:data.u.map(d=&gt;[d[0],d[1]]), smooth:data.u.map(d=&gt;[d[0],d[2]]), color:&#x27;line-entropy&#x27;, smoothColor:&#x27;line-entropy-smooth&#x27;, yLabel:&#x27;entropy&#x27;}
+    ];
+    const xMax = 500010;
+    const el=(tag,attrs={})=&gt;{const e=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,v);return e;};
+    const pathFor=(series, sx, sy)=&gt;series.map((d,i)=&gt;(i?&#x27;L&#x27;:&#x27;M&#x27;)+sx(d[0]).toFixed(2)+&#x27;,&#x27;+sy(d[1]).toFixed(2)).join(&#x27; &#x27;);
+    for(const c of charts){
+      const g=document.getElementById(c.id), ys=[];
+      for(const d of c.series) ys.push(d[1]);
+      if(c.smooth) for(const d of c.smooth) ys.push(d[1]);
+      let yMin=Math.min(...ys), yMax=Math.max(...ys);
+      if(c.id===&#x27;success-chart&#x27;){yMin=0;yMax=100;} else {const pad=Math.max((yMax-yMin)*.12,.1); yMin-=pad;yMax+=pad;}
+      const sx=x=&gt;left+(x/xMax)*plotW, sy=y=&gt;c.top+chartH-(y-yMin)/(yMax-yMin)*chartH;
+      g.appendChild(el(&#x27;text&#x27;,{x:left,y:c.top-4,class:&#x27;title&#x27;})).textContent=c.title;
+      for(let j=0;j&lt;=4;j++){
+        const y=c.top+chartH-j*chartH/4, val=yMin+(yMax-yMin)*j/4;
+        g.appendChild(el(&#x27;line&#x27;,{x1:left,y1:y,x2:W-right,y2:y,class:&#x27;grid&#x27;}));
+        const t=el(&#x27;text&#x27;,{x:left-8,y:y+4,&#x27;text-anchor&#x27;:&#x27;end&#x27;,class:&#x27;tick&#x27;});t.textContent=(Math.abs(val)&gt;=10?val.toFixed(0):val.toFixed(2));g.appendChild(t);
+      }
+      [0,100000,200000,300000,400000,500000].forEach((x)=&gt;{
+        const px=sx(x);g.appendChild(el(&#x27;line&#x27;,{x1:px,y1:c.top,x2:px,y2:c.top+chartH,class:&#x27;grid&#x27;}));
+        const t=el(&#x27;text&#x27;,{x:px,y:c.top+chartH+16,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,class:&#x27;tick&#x27;});t.textContent=(x/1000)+&#x27;k&#x27;;g.appendChild(t);
+      });
+      g.appendChild(el(&#x27;line&#x27;,{x1:left,y1:c.top+chartH,x2:W-right,y2:c.top+chartH,class:&#x27;axis&#x27;}));
+      g.appendChild(el(&#x27;line&#x27;,{x1:left,y1:c.top,x2:left,y2:c.top+chartH,class:&#x27;axis&#x27;}));
+      const yl=el(&#x27;text&#x27;,{x:15,y:c.top+chartH/2,transform:`rotate(-90 15 ${c.top+chartH/2})`,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,class:&#x27;label&#x27;});yl.textContent=c.yLabel;g.appendChild(yl);
+      g.appendChild(el(&#x27;path&#x27;,{d:pathFor(c.series,sx,sy),class:c.color}));
+      if(c.smooth) {
+        g.appendChild(el(&#x27;path&#x27;,{d:pathFor(c.smooth,sx,sy),class:c.smoothColor}));
+        const l=el(&#x27;text&#x27;,{x:W-right-2,y:c.top+14,&#x27;text-anchor&#x27;:&#x27;end&#x27;,class:&#x27;legend&#x27;});l.textContent=&#x27;raw · 7-update mean&#x27;;g.appendChild(l);
+      }
+    }
+  })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (event) =&gt; {
+    for (const target of event.composedPath()) {
+      if (target?.nodeType === Node.ELEMENT_NODE) {
+        const trigger = target.closest(&quot;[data-tooltip]&quot;);
+        if (trigger) return trigger;
+      }
+    }
+    return null;
+  };
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handlers = {
+    pointerover: handlePointerOpen,
+    pointerdown: handlePointer,
+    pointercancel: handlePointer,
+    click: handleTouchClick,
+    pointerout: handleLeave,
+    focusin: handleFocusIn,
+    focusout: handleLeave,
+    keydown: handleKeyDown,
+    contextmenu: handleContextMenu,
+  };
+  const roots = new Map();
+  const handledEvents = new WeakSet();
+  const handleEvent = (event) =&gt; {
+    if (handledEvents.has(event)) return;
+    handledEvents.add(event);
+    handlers[event.type](event);
+  };
+  const discoverRoots = (node) =&gt; {
+    if (node.shadowRoot) listen(node.shadowRoot);
+    for (const element of node.querySelectorAll(&quot;*&quot;)) {
+      if (element.shadowRoot) listen(element.shadowRoot);
+    }
+  };
+  const listen = (root) =&gt; {
+    if (roots.has(root)) return;
+    for (const type of Object.keys(handlers)) root.addEventListener(type, handleEvent);
+    const observer = new window.MutationObserver((records) =&gt; {
+      for (const { addedNodes } of records) {
+        for (const node of addedNodes) {
+          if (node.nodeType === Node.ELEMENT_NODE) discoverRoots(node);
+        }
+      }
+      for (const [root, cleanup] of roots) {
+        if (root.host &amp;&amp; !root.host.isConnected) {
+          cleanup();
+          roots.delete(root);
+        }
+      }
+      if (activeTrigger &amp;&amp; !activeTrigger.isConnected) closeTooltip(false);
+    });
+    observer.observe(root, { childList: true, subtree: true });
+    roots.set(root, () =&gt; {
+      observer.disconnect();
+      for (const type of Object.keys(handlers)) root.removeEventListener(type, handleEvent);
+    });
+    discoverRoots(root);
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    for (const cleanup of roots.values()) cleanup();
+    roots.clear();
+    tooltip = null;
+  };
+
+  // Events between children of one shadow root never reach the document.
+  listen(document);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-carousel&quot;&gt;
+  (() =&gt; {
+    for (const root of document.querySelectorAll(&quot;.viz-carousel&quot;)) {
+      const panels = Array.from(
+        root.querySelectorAll(&quot;:scope &gt; [data-variant]&quot;),
+      );
+      if (panels.length === 0) {
+        continue;
+      }
+      root.setAttribute(&quot;role&quot;, &quot;group&quot;);
+      panels.forEach((panel, index) =&gt; {
+        panel.hidden = index !== 0;
+        panel.setAttribute(&quot;role&quot;, &quot;group&quot;);
+        if (!panel.hasAttribute(&quot;aria-label&quot;)) {
+          panel.setAttribute(&quot;aria-label&quot;, panel.dataset.variant);
+        }
+      });
+      root.dataset.activeVariant = panels[0].dataset.variant;
+      if (panels.length === 1) {
+        continue;
+      }
+
+      const controls = document.createElement(&quot;div&quot;);
+      controls.className = &quot;viz-carousel-controls&quot;;
+      // Portable copy of the settings dropdown&#x27;s legacy glyph; no 14px icon-package preset matches it.
+      // https://github.com/openai/openai/blob/master/codex/codex-apps/webview/src/icons/chevron.svg
+      controls.innerHTML = `
+      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-previous cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+      &lt;details class=&quot;viz-carousel-picker&quot;&gt;
+        &lt;summary class=&quot;cursor-interaction&quot;&gt;
+          &lt;span class=&quot;viz-carousel-count tabular-nums&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;viz-carousel-name&quot;&gt;&lt;/span&gt;
+          &lt;svg class=&quot;viz-carousel-caret&quot; width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 20 21&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
+            &lt;path d=&quot;M15.2793 7.71101C15.539 7.45131 15.961 7.45131 16.2207 7.71101C16.4804 7.97071 16.4804 8.39272 16.2207 8.65242L10.4707 14.4024C10.211 14.6621 9.78902 14.6621 9.52932 14.4024L3.77932 8.65242L3.69436 8.54792C3.52385 8.28979 3.55205 7.93828 3.77932 7.71101C4.00659 7.48374 4.3581 7.45554 4.61623 7.62605L4.72073 7.71101L10 12.9903L15.2793 7.71101Z&quot; fill=&quot;currentColor&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;0.6&quot; /&gt;
+          &lt;/svg&gt;
+        &lt;/summary&gt;
+        &lt;div class=&quot;viz-carousel-options&quot;&gt;&lt;/div&gt;
+      &lt;/details&gt;
+      &lt;button type=&quot;button&quot; class=&quot;viz-carousel-next cursor-interaction&quot;&gt;&lt;i data-lucide=&quot;chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;`;
+      const previous = controls.querySelector(&quot;.viz-carousel-previous&quot;);
+      const next = controls.querySelector(&quot;.viz-carousel-next&quot;);
+      const picker = controls.querySelector(&quot;.viz-carousel-picker&quot;);
+      const summary = picker.querySelector(&quot;summary&quot;);
+      const count = controls.querySelector(&quot;.viz-carousel-count&quot;);
+      const name = controls.querySelector(&quot;.viz-carousel-name&quot;);
+      const options = controls.querySelector(&quot;.viz-carousel-options&quot;);
+      const status = document.createElement(&quot;span&quot;);
+      status.className = &quot;sr-only&quot;;
+      status.setAttribute(&quot;role&quot;, &quot;status&quot;);
+      status.setAttribute(&quot;aria-live&quot;, &quot;polite&quot;);
+      status.setAttribute(&quot;aria-atomic&quot;, &quot;true&quot;);
+      previous.setAttribute(
+        &quot;aria-label&quot;,
+        root.dataset.previousLabel ?? &quot;Previous variant&quot;,
+      );
+      next.setAttribute(&quot;aria-label&quot;, root.dataset.nextLabel ?? &quot;Next variant&quot;);
+
+      let active = 0;
+      let mousePointerId = null;
+      let summaryPointerHandled = false;
+      summary.addEventListener(&quot;pointerdown&quot;, (event) =&gt; {
+        summaryPointerHandled =
+          event.pointerType === &quot;mouse&quot; &amp;&amp; event.button === 0 &amp;&amp; !event.ctrlKey;
+        if (!summaryPointerHandled) {
+          return;
+        }
+        event.preventDefault();
+        summary.focus({ preventScroll: true });
+        picker.open = !picker.open;
+        mousePointerId = picker.open ? event.pointerId : null;
+      });
+      summary.addEventListener(&quot;click&quot;, (event) =&gt; {
+        if (summaryPointerHandled &amp;&amp; event.detail &gt; 0) {
+          event.preventDefault();
+        }
+      });
+      const choices = panels.map((panel, index) =&gt; {
+        const choice = document.createElement(&quot;button&quot;);
+        choice.type = &quot;button&quot;;
+        choice.className = &quot;cursor-interaction&quot;;
+        choice.textContent = panel.dataset.variant;
+        choice.addEventListener(&quot;click&quot;, () =&gt; {
+          select(index);
+          summary.focus();
+        });
+        choice.addEventListener(&quot;pointerup&quot;, (event) =&gt; {
+          if (
+            picker.open &amp;&amp;
+            event.pointerType === &quot;mouse&quot; &amp;&amp;
+            event.button === 0 &amp;&amp;
+            event.pointerId === mousePointerId
+          ) {
+            choice.click();
+          }
+        });
+        options.appendChild(choice);
+        return choice;
+      });
+      const select = (index) =&gt; {
+        const changed = active !== index;
+        active = index;
+        panels.forEach((panel, position) =&gt; {
+          panel.hidden = position !== active;
+          choices[position].setAttribute(
+            &quot;aria-current&quot;,
+            String(position === active),
+          );
+        });
+        root.dataset.activeVariant = panels[active].dataset.variant;
+        count.textContent = `${active + 1} / ${panels.length}`;
+        name.textContent = panels[active].dataset.variant;
+        picker.open = false;
+        mousePointerId = null;
+        if (changed) {
+          status.textContent = `${count.textContent}: ${name.textContent}`;
+        }
+      };
+      previous.addEventListener(&quot;click&quot;, () =&gt;
+        select((active + panels.length - 1) % panels.length),
+      );
+      next.addEventListener(&quot;click&quot;, () =&gt;
+        select((active + 1) % panels.length),
+      );
+      picker.addEventListener(&quot;keydown&quot;, (event) =&gt; {
+        if (event.key === &quot;Escape&quot; &amp;&amp; picker.open) {
+          event.preventDefault();
+          picker.open = false;
+          mousePointerId = null;
+          summary.focus();
+          return;
+        }
+        if (event.altKey || event.ctrlKey || event.metaKey) {
+          return;
+        }
+        const index = choices.indexOf(document.activeElement);
+        let nextIndex;
+        if (event.key === &quot;ArrowDown&quot;) {
+          nextIndex = index &lt; 0 ? active : (index + 1) % choices.length;
+        } else if (event.key === &quot;ArrowUp&quot;) {
+          nextIndex = index &lt; 0 ? active : (index + choices.length - 1) % choices.length;
+        } else if (picker.open &amp;&amp; event.key === &quot;Home&quot;) {
+          nextIndex = 0;
+        } else if (picker.open &amp;&amp; event.key === &quot;End&quot;) {
+          nextIndex = choices.length - 1;
+        } else {
+          return;
+        }
+        event.preventDefault();
+        picker.open = true;
+        choices[nextIndex].focus();
+      });
+      picker.addEventListener(&quot;focusout&quot;, (event) =&gt; {
+        if (!picker.contains(event.relatedTarget)) {
+          picker.open = false;
+          mousePointerId = null;
+        }
+      });
+      const dismiss = (event) =&gt; {
+        if (!summary.contains(event.target)) {
+          mousePointerId = null;
+        }
+        if (!picker.contains(event.target)) {
+          picker.open = false;
+        }
+      };
+      const endPointerSelection = () =&gt; {
+        mousePointerId = null;
+      };
+      const sizePicker = () =&gt; {
+        root.style.setProperty(
+          &quot;--viz-carousel-picker-height&quot;,
+          `${picker.open ? options.offsetHeight : 0}px`,
+        );
+      };
+      picker.addEventListener(&quot;toggle&quot;, sizePicker);
+      window.addEventListener(&quot;resize&quot;, sizePicker);
+      document.addEventListener(&quot;pointerdown&quot;, dismiss);
+      document.addEventListener(&quot;pointerup&quot;, endPointerSelection);
+      document.addEventListener(&quot;pointercancel&quot;, endPointerSelection);
+      window.addEventListener(&quot;blur&quot;, endPointerSelection);
+      window.addEventListener(
+        &quot;pagehide&quot;,
+        () =&gt; {
+          document.removeEventListener(&quot;pointerdown&quot;, dismiss);
+          document.removeEventListener(&quot;pointerup&quot;, endPointerSelection);
+          document.removeEventListener(&quot;pointercancel&quot;, endPointerSelection);
+          window.removeEventListener(&quot;blur&quot;, endPointerSelection);
+          window.removeEventListener(&quot;resize&quot;, sizePicker);
+        },
+        { once: true },
+      );
+      root.append(controls, status);
+      select(0);
+    }
+  })();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+
+<script>(() => {
+  const frame = document.getElementById("codex-visualization");
+  if (!(frame instanceof HTMLIFrameElement)) {
+    return;
+  }
+  const isShare = document.documentElement.classList.contains(
+    "visualization-share-root",
+  );
+  let viewportHeight = globalThis.innerHeight;
+  let sizeFingerprint = null;
+  let sizeWriteTimeout;
+  let lastSize = null;
+  let pendingSize = null;
+  const storageKey = `codex:visualization-widget-state-v2:${JSON.stringify([
+    globalThis.location.pathname,
+    globalThis.location.search,
+  ])}`;
+  const sizeStorageKey = `${storageKey}:share-size-v1`;
+  const parseState = (serializedState) => {
+    if (
+      typeof serializedState !== "string" ||
+      new TextEncoder().encode(serializedState).length > 16 * 1024
+    ) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    /** @type {unknown} */
+    const state = JSON.parse(serializedState);
+    if (
+      state == null ||
+      typeof state !== "object" ||
+      Array.isArray(state) ||
+      ("imageIds" in state &&
+        (!Array.isArray(state.imageIds) || state.imageIds.length > 0))
+    ) {
+      throw new TypeError("Widget state must be a JSON object");
+    }
+    const storedState = { modelContent: null, privateContent: null, ...state };
+    const canonicalState = JSON.stringify(
+      storedState,
+      (_key, /** @type {unknown} */ value) => {
+        if (typeof value === "number" && !Number.isFinite(value)) {
+          throw new TypeError("Widget state must contain finite numbers");
+        }
+        return value;
+      },
+    );
+    if (new TextEncoder().encode(canonicalState).length > 16 * 1024) {
+      throw new TypeError(
+        "Widget state must be a JSON object of at most 16 KiB",
+      );
+    }
+    return storedState;
+  };
+  let storage = null;
+  let state = null;
+  try {
+    const localStorage = globalThis.localStorage;
+    const probeKey = `${storageKey}:probe`;
+    localStorage.setItem(probeKey, "1");
+    localStorage.removeItem(probeKey);
+    storage = localStorage;
+    const savedState = storage.getItem(storageKey);
+    if (savedState != null) {
+      try {
+        state = parseState(savedState);
+      } catch {
+        // Invalid saved state does not disable future writes.
+      }
+    }
+  } catch {
+    storage = null;
+  }
+  const persistSize = () => {
+    globalThis.clearTimeout(sizeWriteTimeout);
+    if (pendingSize == null) {
+      return;
+    }
+    try {
+      storage?.setItem(sizeStorageKey, pendingSize);
+    } catch {
+      // A denied or full cache must not affect the visualization.
+    }
+    pendingSize = null;
+  };
+  if (isShare) {
+    globalThis.addEventListener("pagehide", persistSize);
+  }
+  const initialGlobals = {
+    widgetState: state,
+    statePersistence: storage == null ? "none" : "local",
+  };
+
+  const channel = new MessageChannel();
+  channel.port1.addEventListener("message", (event) => {
+    const data = event.data;
+    if (typeof data !== "object" || data == null) {
+      return;
+    }
+    if (data.type === "widget-state-write") {
+      if (!Number.isSafeInteger(data.id) || data.id <= 0) {
+        return;
+      }
+      let ok = false;
+      try {
+        if (storage != null) {
+          const state = parseState(data.state);
+          storage.setItem(storageKey, JSON.stringify(state));
+          ok = true;
+        }
+      } catch {
+        // Storage denial, quota limits, and invalid state return a failed receipt.
+      }
+      channel.port1.postMessage({
+        type: "widget-state-result",
+        id: data.id,
+        ok,
+      });
+      return;
+    }
+    if (data.type === "height") {
+      const height = data.height;
+      if (
+        typeof height !== "number" ||
+        !Number.isFinite(height) ||
+        height < 0
+      ) {
+        return;
+      }
+      if (height <= 10_000) {
+        const width = isShare && storage != null ? frame.clientWidth : null;
+        frame.style.height = Math.ceil(height) + "px";
+        if (isShare && storage != null) {
+          const size = JSON.stringify({
+            fingerprint: sizeFingerprint,
+            width,
+            viewportHeight: globalThis.innerHeight,
+            dark: globalThis.matchMedia("(prefers-color-scheme: dark)").matches,
+            scale: globalThis.devicePixelRatio,
+            height: Math.ceil(height),
+          });
+          if (size !== lastSize) {
+            lastSize = size;
+            pendingSize = size;
+            globalThis.clearTimeout(sizeWriteTimeout);
+            sizeWriteTimeout = globalThis.setTimeout(persistSize, 100);
+          }
+        }
+      }
+      if (isShare) {
+        // Keep unusually tall content accessible without accepting an unbounded height.
+        if (height > 10_000 && Number.parseFloat(frame.style.height) === 0) {
+          frame.style.removeProperty("height");
+        }
+        frame.scrolling = height > 10_000 ? "auto" : "no";
+        document.documentElement.classList.add("visualization-share-ready");
+      }
+      return;
+    }
+    if (data.type === "scroll-to") {
+      const top = data.top;
+      if (
+        typeof top === "number" &&
+        Number.isFinite(top) &&
+        top >= 0 &&
+        globalThis.navigator.userActivation?.isActive === true
+      ) {
+        globalThis.scrollTo({
+          top: Math.ceil(
+            globalThis.scrollY + frame.getBoundingClientRect().top + top,
+          ),
+        });
+      }
+      return;
+    }
+    if (data.type === "open-external") {
+      const rawHref = data.href;
+      if (typeof rawHref !== "string") {
+        return;
+      }
+      let href;
+      try {
+        const url = new URL(rawHref, document.baseURI);
+        if (url.protocol !== "https:") {
+          return;
+        }
+        href = url.href;
+      } catch {
+        return;
+      }
+      if (globalThis.navigator.userActivation?.isActive === true) {
+        const anchor = document.createElement("a");
+        anchor.href = href;
+        anchor.rel = "noopener noreferrer";
+        anchor.target = "_blank";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      }
+      return;
+    }
+    if (data.type === "follow-up") {
+      const prompt = data.prompt;
+      if (
+        typeof prompt !== "string" ||
+        globalThis.navigator.userActivation?.isActive !== true
+      ) {
+        return;
+      }
+      const title = data.title;
+      globalThis.prompt(typeof title === "string" ? title : prompt, prompt);
+    }
+  });
+  channel.port1.start();
+  const srcdoc = frame.dataset.srcdoc;
+  if (srcdoc == null) {
+    return;
+  }
+  globalThis.addEventListener("resize", () => {
+    const height = Number.parseFloat(frame.style.height);
+    if (!isShare && (!Number.isFinite(height) || height <= viewportHeight)) {
+      frame.style.removeProperty("height");
+    }
+    viewportHeight = globalThis.innerHeight;
+    channel.port1.postMessage({ type: "measure" });
+  });
+  frame.addEventListener(
+    "load",
+    () => {
+      frame.contentWindow?.postMessage(
+        { type: "codex-visualization-initialize" },
+        "*",
+        [channel.port2],
+      );
+    },
+    { once: true },
+  );
+  // Match the trusted bootstrap element, not the same text in an authored title.
+  const frameHtml = srcdoc.replace(
+    '<script type="application/json" id="codex-visualization-widget-state">__CODEX_VISUALIZATION_WIDGET_STATE__<\/script>',
+    () =>
+      '<script type="application/json" id="codex-visualization-widget-state">' +
+      JSON.stringify(initialGlobals).replaceAll("<", "\\u003c") +
+      "<\/script>",
+  );
+  if (isShare && storage != null) {
+    // Fingerprint the rendered document, including restored widget state, without
+    // storing its content. This is a layout cache, not a security identity.
+    let hash = 5381;
+    for (let index = 0; index < frameHtml.length; index += 1) {
+      hash = (hash * 33 + frameHtml.charCodeAt(index)) % 4_294_967_296;
+    }
+    sizeFingerprint = hash.toString(36);
+    try {
+      const size = JSON.parse(storage.getItem(sizeStorageKey) ?? "null");
+      if (
+        size?.fingerprint === sizeFingerprint &&
+        size.width === frame.clientWidth &&
+        size.viewportHeight === globalThis.innerHeight &&
+        size.dark ===
+          globalThis.matchMedia("(prefers-color-scheme: dark)").matches &&
+        size.scale === globalThis.devicePixelRatio &&
+        typeof size.height === "number" &&
+        Number.isFinite(size.height) &&
+        size.height >= 0 &&
+        size.height <= 10_000
+      ) {
+        frame.style.height = size.height + "px";
+      }
+    } catch {
+      // Ignore missing or invalid cache entries and measure the live frame.
+    }
+  }
+  frame.srcdoc = frameHtml;
+  delete frame.dataset.srcdoc;
+})();
+</script>
+</body>
+</html>
