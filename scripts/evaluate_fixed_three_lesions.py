@@ -31,10 +31,22 @@ ASSIGNMENTS = {
 }
 
 
-def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: float):
+def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: float, tpg: bool = True):
     assignment = ASSIGNMENTS[clusters]
     ep = LysisEpisode(clusters, anatomy, seed, horizon=horizon, sensing="image",
-                      shield=True, tpg=True, navigation=True)
+                      shield=True, tpg=False, navigation=True)
+    # Navigation mode deliberately disables the pre-operative coordinator while
+    # it is constructing its frozen target assignment. Re-enable it here with
+    # the fixed lesion visit order so TPG-on and TPG-off remain paired.
+    if tpg and clusters > 1:
+        ep.use_tpg = True
+        ep.coord = ep._build_coord(assignment, dwell_s=0.)
+        original_gate = ep.coord.gate
+        ep.coord.gate_calls = 0
+        def counted_gate(*args, **kwargs):
+            ep.coord.gate_calls += 1
+            return original_gate(*args, **kwargs)
+        ep.coord.gate = counted_gate
     guard = SettleGuard(ep)
     sdf = VesselSDF(ep.sensor)
     est = ep.observe()
@@ -44,20 +56,22 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
     first_time = np.full(3, np.nan, dtype=float)
     wall = 0.0
     pair = 0.0
-    collisions = 0
+    tpg_hold_steps = 0
+    previous_hold = np.zeros(clusters, dtype=bool)
     started = time.monotonic()
     while True:
         targets = current.copy()
         ep.navigation_targets = targets.copy()
         rule = ep.ctl.act(targets, est)
-        hold = np.zeros(clusters, dtype=bool)
+        hold = ep.hold(est) if tpg and clusters > 1 else np.zeros(clusters, dtype=bool)
+        tpg_hold_steps += int(np.count_nonzero(hold & ~previous_hold))
+        previous_hold = hold.copy()
         local = guard(ep, est, targets, rule, hold)
         local, _ = project_local_commands(local, est, targets, hold, ep.ctl.frames(est),
                                           sdf, ep.ctl.body)
         done, outcome = ep.step(est, local, hold)
         wall += float(np.asarray(outcome["wall"], dtype=float).sum())
         pair += float(getattr(ep, "pair", 0.0))
-        collisions += int(ep.info.get("episode_particle_collision_events", 0))
         distances = ep.env._target_distances()[np.arange(clusters), current]
         for i, sequence in enumerate(assignment):
             if next_index[i] >= len(sequence):
@@ -74,10 +88,13 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
             break
         est = ep.observe()
     lost = int(np.count_nonzero(~ep.env.active[:clusters]))
+    spacing = ep.spacing.summary()
+    collisions = int(ep.info.get("episode_particle_collision_events", 0))
     finite = first_time[np.isfinite(first_time)]
     span = float(np.max(finite) - np.min(finite)) if len(finite) == 3 else None
     result = {
         "method": "pursuit",
+        "tpg": bool(tpg),
         "anatomy": anatomy,
         "clusters": clusters,
         "seed": int(seed),
@@ -91,6 +108,10 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
         "last_arrival_s": None if len(finite) != 3 else float(np.max(finite)),
         "wall_contact_s": wall,
         "spacing_pair_s": pair,
+        "spacing_violation_pair_s": float(spacing["spacing_violation_pair_s"]),
+        "spacing_violation_steps": int(spacing["spacing_violation_steps"]),
+        "entity_pair_contact_s": float(pair),
+        "tpg_trigger_count": int(tpg_hold_steps),
         "particle_collision_events": collisions,
         "lost": lost,
         "elapsed_s": float(ep.env.elapsed_s),
@@ -110,11 +131,12 @@ def main():
     p.add_argument("--horizon", type=float, default=300.)
     p.add_argument("--tau", type=float, default=30.)
     p.add_argument("--out", type=Path, required=True)
+    p.add_argument("--tpg", action=argparse.BooleanOptionalAction, default=True)
     a = p.parse_args()
     rows = []
     for n in [int(x) for x in a.clusters.split(",")]:
         for offset in range(a.count):
-            row = run_episode(n, a.seed + offset, a.anatomy, a.horizon, a.tau)
+            row = run_episode(n, a.seed + offset, a.anatomy, a.horizon, a.tau, tpg=a.tpg)
             rows.append(row)
             print(json.dumps(row, ensure_ascii=False), flush=True)
     summary = {"episodes": len(rows), "tau_s": a.tau, "rows": rows, "by_clusters": {}}

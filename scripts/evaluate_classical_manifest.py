@@ -57,7 +57,18 @@ class CSNAdapter:
                         candidates.append(c / max(float(np.linalg.norm(c)), 1e-9))
             scores = []
             for c in candidates:
-                scores.append(float(1.0 - np.dot(c, goal) + .15 * np.linalg.norm(c - tangent)))
+                # CSN sectors are scored by route alignment plus predicted local
+                # obstacle clearance. Particle detections are the only dynamic
+                # obstacle signal available to the controller.
+                clearance_penalty = 0.0
+                for rel, vel in est.particles[i]:
+                    rel = frame @ np.asarray(rel, float)
+                    vel = frame @ np.asarray(vel, float)
+                    horizon = np.linspace(0., .6, 4)
+                    nearest = min(float(np.linalg.norm(rel + h * vel - .35 * h * c)) for h in horizon)
+                    clearance_penalty += max(0., .45 - nearest) ** 2 / .45
+                scores.append(float(1.0 - np.dot(c, goal) + .15 * np.linalg.norm(c - tangent)
+                                   + 1.5 * clearance_penalty))
             out[i] = candidates[int(np.argmin(scores))]
         return out
 
