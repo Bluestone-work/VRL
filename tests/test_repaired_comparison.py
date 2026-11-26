@@ -147,3 +147,58 @@ def test_mappo_actor_ignores_central_state_but_critic_reads_it():
         assert not torch.allclose(value_a, value_b)
     finally:
         env.close()
+
+
+def test_frozen_policies_predict_locally_after_checkpoint_reload():
+    import pytest
+    from stable_baselines3.common.utils import check_for_correct_spaces
+    from scripts.train_sb3_curriculum import CurriculumVascularEnv
+    from scripts.train_sb3_ippo import IPPOAgentVecEnv, critic_options, load_navigation_ppo
+
+    research = Path(__file__).resolve().parents[1] / "research"
+    models = research / "COMPARISON_20261125/models"
+    cases = [(models / "ippo_s41_final_model.zip", False, False),
+             (models / "mappo_s41_final_model.zip", True, False),
+             (research / "smoke_mappo_v2_20261126_c/final_model.zip", True, True)]
+    for path, central, identity in cases:
+        if not path.exists():
+            pytest.skip(f"requires checkpoint {path}")
+        model = load_navigation_ppo(path)
+        assert critic_options(model) == dict(centralized_critic=central, critic_identity=identity)
+        physical = CurriculumVascularEnv(seed=41, clusters=3, curriculum=False, reward_mode="navigation",
+                                         zero_latency=True, direct_action=True)
+        env = IPPOAgentVecEnv(physical, action_set="semantic_reduced",
+                              flow_feature="flow" in model.observation_space.spaces, **critic_options(model))
+        try:
+            check_for_correct_spaces(env, model.observation_space, model.action_space)
+            obs = env.reset()
+            full, _ = model.predict(obs, deterministic=True)
+            local = {k: v for k, v in obs.items() if k != "central_state"}
+            actions, _ = model.predict(local, deterministic=True)
+            np.testing.assert_array_equal(full, actions)
+        finally:
+            env.close()
+
+
+def test_trace_restarts_after_automatic_reset():
+    from scripts.train_sb3_curriculum import CurriculumVascularEnv
+    from scripts.train_sb3_ippo import IPPOAgentVecEnv
+
+    physical = CurriculumVascularEnv(seed=41, clusters=3, curriculum=False, reward_mode="navigation",
+                                     horizon=.2, zero_latency=True, direct_action=True)
+    env = IPPOAgentVecEnv(physical, action_set="semantic_reduced", record_trace=True)
+    try:
+        env.reset()
+        for _ in range(2):
+            for steps in range(1, 11):
+                _, _, done, infos = env.step(np.zeros(3, dtype=int))
+                if done[0]:
+                    trace = infos[0]["execution_trace"]
+                    assert len(trace) == steps and env.trace == []
+                    total = sum(sum(s["wall_contact_s_step"]) for s in trace)
+                    assert np.isclose(total, infos[0]["episode_metrics"]["wall_contact_s"])
+                    break
+            else:
+                raise AssertionError("short episode did not terminate")
+    finally:
+        env.close()

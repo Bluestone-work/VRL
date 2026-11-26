@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.three_target_allocation import geodesic_allocation, linear_sum_allocation
 from scripts.benchmark_lysis import LysisEpisode, SettleGuard
 from marl.vessel_sdf import VesselSDF, project_local_commands
 
@@ -36,10 +37,19 @@ def entity_pair_contact_seconds(ep):
     return float(getattr(ep, "pair", 0.0))
 
 
-def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: float, tpg: bool = True):
-    assignment = ASSIGNMENTS[clusters]
+def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: float, tpg: bool = True,
+                allocation: str = "fixed"):
     ep = LysisEpisode(clusters, anatomy, seed, horizon=horizon, sensing="image",
                       shield=True, tpg=False, navigation=True)
+    if allocation in ("geodesic", "linear_sum"):
+        from scripts.benchmark_multicluster import station_geodesic
+        planner = geodesic_allocation if allocation == "geodesic" else linear_sum_allocation
+        assignment = planner(station_geodesic(ep.env), ep.env.robot_stations[:clusters],
+                             ep.env.clot_stations[:3])
+    elif allocation == "fixed":
+        assignment = ASSIGNMENTS[clusters]
+    else:
+        raise ValueError(f"unknown allocation: {allocation}")
     # Navigation mode deliberately disables the pre-operative coordinator while
     # it is constructing its frozen target assignment. Re-enable it here with
     # the fixed lesion visit order so TPG-on and TPG-off remain paired.
@@ -109,6 +119,11 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
         "clusters": clusters,
         "seed": int(seed),
         "assignment": assignment,
+        "allocation": allocation,
+        "scenario_hash": ep.manifest["scenario_hash"],
+        "accepted_seed": ep.manifest["accepted_seed"],
+        "selected_start_indices": ep.manifest["selected_start_indices"],
+        "deadline_scored_last_arrival_s": float(np.max(finite)) if reached.all() else float(horizon),
         "lesion_reached": reached.astype(int).tolist(),
         "first_arrival_s": [None if not np.isfinite(x) else float(x) for x in first_time],
         "all_three_reached": bool(reached.all()),
@@ -137,6 +152,7 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
 
 def main():
     p = argparse.ArgumentParser()
+    p.add_argument("--allocation", choices=("fixed", "geodesic", "linear_sum"), default="fixed")
     p.add_argument("--clusters", default="1,2,3")
     p.add_argument("--count", type=int, default=6)
     p.add_argument("--seed", type=int, default=2944200000)
@@ -149,7 +165,7 @@ def main():
     rows = []
     for n in [int(x) for x in a.clusters.split(",")]:
         for offset in range(a.count):
-            row = run_episode(n, a.seed + offset, a.anatomy, a.horizon, a.tau, tpg=a.tpg)
+            row = run_episode(n, a.seed + offset, a.anatomy, a.horizon, a.tau, tpg=a.tpg, allocation=a.allocation)
             rows.append(row)
             print(json.dumps(row, ensure_ascii=False), flush=True)
     summary = {"episodes": len(rows), "tau_s": a.tau, "rows": rows, "by_clusters": {}}
@@ -157,6 +173,7 @@ def main():
         group = [r for r in rows if r["clusters"] == n]
         summary["by_clusters"][str(n)] = {
             "episodes": len(group),
+            "deadline_scored_last_arrival_s": float(np.mean([r["deadline_scored_last_arrival_s"] for r in group])),
             "all_three_rate": float(np.mean([r["all_three_reached"] for r in group])),
             "synchronized_rate": float(np.mean([r["synchronized_success"] for r in group])),
             "last_arrival_s": float(np.nanmean([r["last_arrival_s"] if r["last_arrival_s"] is not None else np.nan for r in group])),

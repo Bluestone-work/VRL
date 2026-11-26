@@ -35,6 +35,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from marl.deployable_sensing import DeployableConfig
 from marl.dyn_predictor import DynFeatures
 from marl.obstacle_features import forecast_features
+from scripts.navigation_execution_trace import executed_step
 from marl.vessel_sdf import VesselSDF, project_local_commands
 from scripts.benchmark_lysis import LysisEpisode
 
@@ -200,6 +201,8 @@ class VascularSB3Env(gym.Env):
             local /= np.sqrt(3.)
         else:
             local /= np.maximum(np.linalg.norm(local, axis=1, keepdims=True), 1.)
+        if getattr(self, "record_execution", False):
+            guarded = local.copy()
         local, changed = project_local_commands(local, est, targets, hold, frames, self.sdf, ep.ctl.body)
         self.safety_changed += changed
         done, out = ep.step(est, local, hold)
@@ -216,6 +219,8 @@ class VascularSB3Env(gym.Env):
         self.return_sum += reward
         info = dict(environment_steps=self.total_environment_steps, agent_steps=self.total_agent_steps,
                     action_saturation=float(np.mean(np.abs(action) > .95)))
+        if getattr(self, "record_execution", False):
+            info["executed_step"] = executed_step(ep, est, self.sdf, hold, guarded, guarded, local, targets)
         if done:
             row = ep.row("sb3_joint_direct", return_sum=self.return_sum, flow=self.scene["flow"],
                          latency=self.scene["latency"], environment_steps=ep.steps,

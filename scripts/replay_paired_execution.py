@@ -15,30 +15,34 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.navigation_dataset import iter_rows, reset_options
+from scripts.navigation_dataset import iter_rows
+from scripts.evaluate_classical_manifest import run_row
+from stable_baselines3.common.utils import check_for_correct_spaces
 from scripts.train_sb3_curriculum import CurriculumVascularEnv
-from scripts.train_sb3_ippo import IPPOAgentVecEnv, load_navigation_ppo
+from scripts.train_sb3_ippo import IPPOAgentVecEnv, load_navigation_ppo, critic_options
 
 
 def rows_by_seed(split):
     return {int(row["scene_seed"]): row for row in iter_rows(split=split, clusters=3)}
 
 
-def fixed_row(row):
-    return dict(row, seed=int(row["scene_seed"]), flow=float(row.get("nominal_flow_inlet_mm_s", .025)), latency=0., difficulty=0,
-                scenario_family="uniform", dynamic_obstacle_count=int(row.get("dynamic_obstacle_count", 0)))
-
-
-def replay_learned(model_path, row, out):
+def replay_learned(model_path, row, out, horizon=300.):
     physical = CurriculumVascularEnv(seed=int(row["scene_seed"]), clusters=3,
                                      curriculum=False, reward_mode="navigation", zero_latency=True,
-                                     direct_action=True, dataset_rows=[row])
+                                     direct_action=True, dataset_rows=[row], horizon=horizon)
     physical.train_anatomies = [row["anatomy"]]
-    env = IPPOAgentVecEnv(physical, action_set="semantic_reduced", flow_feature=True,
-                          safety_parity=True, centralized_critic=model_path.name.startswith("mappo_"))
+    model = load_navigation_ppo(model_path, device="cpu")
+    critic = critic_options(model)
+    if critic["centralized_critic"] != (out == "MAPPO"):
+        raise ValueError(f"{out} checkpoint has the wrong critic type")
+    env = IPPOAgentVecEnv(physical, action_set="semantic_reduced",
+                          flow_feature="flow" in model.observation_space.spaces,
+                          safety_parity=True, record_trace=True, **critic)
     try:
-        model = load_navigation_ppo(model_path, env=env, device="cpu")
+        check_for_correct_spaces(env, model.observation_space, model.action_space)
         obs = env.reset(options={"dataset_row": row})
+        scene = env.reset_infos[0]["scene"]
+        targets = physical.nav_targets.tolist()
         while True:
             action, _ = model.predict(obs, deterministic=True)
             obs, _, done, infos = env.step(action)
@@ -46,6 +50,8 @@ def replay_learned(model_path, row, out):
                 info = infos[0]
                 return {"method": out, "scene_seed": int(row["scene_seed"]),
                         "scenario_hash": row["scenario_hash"],
+                        "accepted_seed": scene["accepted_seed"],
+                        "realized_scenario_hash": scene["scenario_hash"], "navigation_targets": targets,
                         "model_sha256": hashlib.sha256(model_path.read_bytes()).hexdigest(),
                         "episode_metrics": info.get("episode_metrics", {}),
                         "trace": info.get("execution_trace", [])}
@@ -53,37 +59,18 @@ def replay_learned(model_path, row, out):
         env.close()
 
 
-def replay_pursuit(row):
+def replay_pursuit(row, horizon=300.):
     physical = CurriculumVascularEnv(seed=int(row["scene_seed"]), clusters=3,
                                      curriculum=False, reward_mode="navigation", zero_latency=True,
-                                     direct_action=True, dataset_rows=[row])
+                                     direct_action=True, dataset_rows=[row], horizon=horizon)
     physical.train_anatomies = [row["anatomy"]]
     try:
-        obs, _ = physical.reset(options={"dataset_row": row})
         trace = []
-        while True:
-            rule = np.asarray(physical.current_rule, dtype=float).reshape(3, 3)
-            before = np.asarray(physical.ep.env.positions_mm[:3]).copy()
-            physical.step(rule.reshape(-1))
-            info = physical.ep.info or {}
-            trace.append({"elapsed_s": float(physical.ep.env.elapsed_s), "action_indices": None,
-                          "candidate_commands_local": None, "requested_local_velocity": rule.tolist(),
-                          "wallguard_settle_local_velocity": rule.tolist(), "sdf_projected_local_velocity": rule.tolist(),
-                          "tpg_hold": [False, False, False],
-                          "final_sent_command_world": np.asarray(physical.ep.sent_world).tolist(),
-                          "position_mm_world": np.asarray(physical.ep.env.positions_mm[:3]).tolist(),
-                          "distance_to_wall_mm": np.asarray(getattr(physical.current[0], "radial", [np.nan] * 3)).tolist(),
-                          "distance_to_target_mm": np.asarray(physical._navigation_distances()).tolist(),
-                          "wall_contact_s_step": np.asarray(info.get("wall_contact_s", [0., 0., 0.])).tolist(),
-                          "navigation_reached": int(physical.nav_reached.sum()),
-                          "navigation_success": bool(np.all(physical.nav_reached)),
-                          "step_wall_contact": bool(np.asarray(info.get("wall_contact_s", 0.)).sum() > 0.),
-                          "position_delta_mm": (np.asarray(physical.ep.env.positions_mm[:3]) - before).tolist()})
-            if physical.ended:
-                break
-        return {"method": "pursuit", "scene_seed": int(row["scene_seed"]),
+        metrics = run_row(physical, "pursuit", row, trace=trace)
+        return {"method": "pursuit", "scene_seed": row["scene_seed"],
                 "scenario_hash": row["scenario_hash"], "model_sha256": None,
-                "episode_metrics": physical.ep.info, "trace": trace}
+                **{k: metrics[k] for k in ("accepted_seed", "realized_scenario_hash", "navigation_targets")},
+                "episode_metrics": metrics, "trace": trace}
     finally:
         physical.close()
 
@@ -116,19 +103,27 @@ def main():
     missing = [seed for seed in seeds if seed not in catalogue]
     if missing:
         raise SystemExit(json.dumps({"missing_scene_seeds": missing}))
-    all_records = []
+    summary_rows = []
     for seed in seeds:
         row = catalogue[seed]
-        records = [replay_pursuit(row), replay_learned(a.ippo_model, row, "IPPO-S41"), replay_learned(a.mappo_model, row, "MAPPO-S41")]
-        all_records.extend(records)
+        records = [replay_pursuit(row, a.horizon),
+                   replay_learned(a.ippo_model, row, "IPPO", a.horizon),
+                   replay_learned(a.mappo_model, row, "MAPPO", a.horizon)]
+        for rec in records:
+            for key in ("accepted_seed", "realized_scenario_hash", "navigation_targets"):
+                if rec[key] != records[0][key]:
+                    raise RuntimeError(f"replay identity mismatch for {seed}, {key}")
+            trace_wall = sum(sum(step["wall_contact_s_step"]) for step in rec["trace"])
+            metrics = rec["episode_metrics"]
+            if metrics.get("integration_failure") or not np.isclose(trace_wall, metrics["wall_contact_s"]):
+                raise RuntimeError(f"incomplete or inconsistent replay for {seed}, {rec['method']}")
+            summary_rows.append({**{k: rec[k] for k in ("method", "scene_seed", "scenario_hash", "model_sha256")},
+                                 "steps": len(rec["trace"]), "wall_contact_s": trace_wall,
+                                 "navigation_success": metrics["navigation_success"]})
         (a.out / f"scene_{seed}.json").write_text(json.dumps({"row": row, "records": records}, ensure_ascii=False, indent=2, default=lambda x: x.tolist() if hasattr(x, "tolist") else x) + "\n")
         plot_trace(records, a.out / f"scene_{seed}.png")
-    summary = {"split": a.split, "scene_seeds": seeds, "records": [{
-        "method": x["method"], "scene_seed": x["scene_seed"], "scenario_hash": x["scenario_hash"],
-        "steps": len(x["trace"]),
-        "navigation_success": x["episode_metrics"].get("navigation_success", x["episode_metrics"].get("is_success", x["trace"][-1].get("navigation_success") if x["trace"] else None)),
-        "wall_contact_s": float(np.asarray(x["episode_metrics"].get("wall_contact_s", sum(sum(t.get("wall_contact_s_step", [])) for t in x["trace"])), dtype=float).sum())
-    } for x in all_records], "models": {"ippo": str(a.ippo_model), "mappo": str(a.mappo_model)}}
+    summary = {"split": a.split, "scene_seeds": seeds, "horizon_s": a.horizon, "records": summary_rows,
+               "models": {"ippo": str(a.ippo_model), "mappo": str(a.mappo_model)}}
     (a.out / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2, default=lambda x: x.tolist() if hasattr(x, "tolist") else x) + "\n")
 
 

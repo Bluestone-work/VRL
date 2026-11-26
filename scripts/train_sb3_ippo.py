@@ -178,7 +178,7 @@ class IPPOAgentVecEnv(VecEnv):
     def __init__(self, physical_env: CurriculumVascularEnv, action_set="semantic",
                  failure_log="integration_failures.json", flow_feature=False,
                  safety_parity=False, settle_radius=.3, exit_mask=False,
-                 centralized_critic=False, critic_identity=False):
+                 centralized_critic=False, critic_identity=False, record_trace=False):
         self.physical = physical_env
         if action_set not in ("semantic", "semantic_reduced", "semantic_minimal", "atomic", "continuous"):
             raise ValueError("action_set must be semantic, semantic_reduced, semantic_minimal, atomic, or continuous")
@@ -223,6 +223,8 @@ class IPPOAgentVecEnv(VecEnv):
         self._candidate_valid = None
         self._last_reset_info = None
         self.trace = []
+        self.record_trace = record_trace
+        physical_env.record_execution = record_trace
         observation_space = spaces.Dict({
             "hist": spaces.Box(-np.inf, np.inf, (24, 11), np.float32),
             "hmask": spaces.Box(0., 1., (24,), np.float32),
@@ -391,8 +393,6 @@ class IPPOAgentVecEnv(VecEnv):
             raise RuntimeError("step_async must be called before step_wait")
         if self._candidate_commands is None:
             raise RuntimeError("candidate cache is not initialized")
-        requested_local = None
-        action_indices = None
         if self.action_set == "continuous":
             joint = self._pending_actions.reshape(-1)
             chosen = None
@@ -414,11 +414,10 @@ class IPPOAgentVecEnv(VecEnv):
                     else:
                         chosen[i] = np.flatnonzero(self._candidate_valid[i] > .5)[0]
             joint = self._candidate_commands[np.arange(self.n_agents), chosen].reshape(-1)
-            action_indices = chosen.copy()
-        requested_local = np.asarray(joint, dtype=float).reshape(self.n_agents, 3).copy()
+        if self.record_trace:
+            requested_local = joint.reshape(self.n_agents, 3).copy()
         if self.safety_parity:
             joint = self._apply_guards(joint)
-        guarded_local = np.asarray(joint, dtype=float).reshape(self.n_agents, 3).copy()
         if self.exit_mask and self.action_set == "continuous":
             from marl.exit_mask import compensate_exit_command
             est = self.physical.current[0]
@@ -461,23 +460,15 @@ class IPPOAgentVecEnv(VecEnv):
             physical._record_navigation_episode(metrics)
             info = dict(integration_failure=True, navigation_success=False, is_success=False,
                         navigation_reached=metrics["navigation_reached"], episode_metrics=metrics)
-        est = self.physical.current[0]
-        distances = self.physical._navigation_distances() if hasattr(self.physical, "_navigation_distances") else np.full(self.n_agents, np.nan)
-        self.trace.append({"elapsed_s": float(self.physical.ep.env.elapsed_s),
-                           "action_indices": None if action_indices is None else action_indices.tolist(),
-                           "candidate_commands_local": self._candidate_commands.tolist(),
-                           "requested_local_velocity": requested_local.tolist(),
-                           "wallguard_settle_local_velocity": guarded_local.tolist(),
-                           "sdf_projected_local_velocity": guarded_local.tolist(),
-                           "tpg_hold": np.asarray(self.physical.current[2]).astype(bool).tolist(),
-                           "final_sent_command_world": np.asarray(self.physical.ep.sent_world).tolist(),
-                           "position_mm_world": np.asarray(est.pos[:self.n_agents]).tolist(),
-                           "distance_to_wall_mm": np.asarray(getattr(est, "radial", np.full(self.n_agents, np.nan))).tolist(),
-                           "distance_to_target_mm": np.asarray(distances).tolist(),
-                           "wall_contact_s_step": np.asarray(info.get("agent_wall_contact_s", np.zeros(self.n_agents))).tolist(),
-                           "navigation_reached": int(info.get("navigation_reached", 0)),
-                           "navigation_success": bool(info.get("navigation_success", False)),
-                           "step_wall_contact": bool(np.asarray(info.get("agent_wall_contact_s", 0.)).sum() > 0.)})
+        if self.record_trace and not info.get("integration_failure"):
+            step = info.pop("executed_step")
+            step.update(requested_local_velocity=requested_local.tolist(),
+                        action_indices=None if chosen is None else self._pending_actions.tolist(),
+                        executed_candidate_indices=None if chosen is None else chosen.tolist(),
+                        candidate_commands_local=self._candidate_commands.tolist(),
+                        navigation_reached=int(info["navigation_reached"]),
+                        navigation_success=bool(info["navigation_success"]))
+            self.trace.append(step)
         done = bool(terminated or truncated)
         rewards = np.asarray(info.get("agent_rewards", np.full(self.n_agents, shared_reward)), dtype=np.float32).reshape(-1)
         if rewards.size == 1:
@@ -497,8 +488,10 @@ class IPPOAgentVecEnv(VecEnv):
                 infos[i]["TimeLimit.truncated"] = bool(truncated)
             if self.exit_mask:
                 infos[0]["exit_masked_total"] = self.exit_masked_total
-            for i in range(self.n_agents):
-                infos[i]["execution_trace"] = list(self.trace)
+            if self.record_trace:
+                for agent_info in infos:
+                    agent_info["execution_trace"] = self.trace
+                self.trace = []
             self._om = None          # one estimator per episode; excitation history must not carry over
             self._wall_guard = None  # WallGuard carries per-episode replanner state
             reset_obs, reset_info = self.physical.reset()
@@ -620,6 +613,10 @@ class MAPPOMultiInputActorCriticPolicy(MultiInputActorCriticPolicy):
                                                lr=old_optimizer.param_groups[0]["lr"],
                                                **self.optimizer_kwargs)
 
+    def get_distribution(self, obs):
+        actor = self.mlp_extractor.forward_actor(self.pi_features_extractor(obs))
+        return self._get_action_dist_from_latent(actor)
+
     def extract_features(self, obs):
         """Route actor and critic through their distinct observation paths."""
         pi_features = self.pi_features_extractor(obs)
@@ -658,11 +655,10 @@ class MaskedMAPPOMultiInputActorCriticPolicy(MAPPOMultiInputActorCriticPolicy):
         return self.value_net(latent_vf), distribution.log_prob(actions), distribution.entropy()
 
     def _predict(self, observation, deterministic=False):
-        latent_pi, _ = self._latent(observation)
-        return self._masked_distribution(observation, latent_pi).get_actions(deterministic=deterministic)
+        return self.get_distribution(observation).get_actions(deterministic=deterministic)
 
     def get_distribution(self, obs):
-        latent_pi, _ = self._latent(obs)
+        latent_pi = self.mlp_extractor.forward_actor(self.pi_features_extractor(obs))
         return self._masked_distribution(obs, latent_pi)
 
 
@@ -729,17 +725,27 @@ class MaskedMultiInputActorCriticPolicy(MultiInputActorCriticPolicy):
         return self._masked_distribution(obs, latent_pi)
 
 
+def critic_options(model):
+    """Reconstruct the critic observation contract saved with the policy."""
+    centralized = "central_state" in model.observation_space.spaces
+    identity = isinstance(model.policy, (MAPPOMultiInputActorCriticPolicyV2,
+                                         MaskedMAPPOMultiInputActorCriticPolicyV2))
+    return dict(centralized_critic=centralized, critic_identity=identity)
+
+
 def load_navigation_ppo(path, *, device="cpu", env=None, algorithm=PPO):
     """Use current implementations for legacy classes embedded by script-mode training."""
     data, _, _ = load_from_zip_file(path, device="cpu")
     overrides = {}
     policy = data["policy_class"]
-    if policy.__module__ == "__main__" and policy.__name__ == "MaskedMultiInputActorCriticPolicy":
-        overrides["policy_class"] = MaskedMultiInputActorCriticPolicy
-    if policy.__module__ == "__main__" and policy.__name__ == "MaskedMAPPOMultiInputActorCriticPolicy":
-        overrides["policy_class"] = MaskedMAPPOMultiInputActorCriticPolicy
-    if policy.__module__ == "__main__" and policy.__name__ == "MAPPOMultiInputActorCriticPolicy":
-        overrides["policy_class"] = MAPPOMultiInputActorCriticPolicy
+    known = (MaskedMultiInputActorCriticPolicy, MAPPOMultiInputActorCriticPolicy,
+             MaskedMAPPOMultiInputActorCriticPolicy, MAPPOMultiInputActorCriticPolicyV2,
+             MaskedMAPPOMultiInputActorCriticPolicyV2)
+    if policy.__module__ == "__main__":
+        for cls in known:
+            if cls.__name__ == policy.__name__:
+                overrides["policy_class"] = cls
+                break
     kwargs = data.get("policy_kwargs", {})
     extractor = kwargs.get("features_extractor_class")
     if extractor and extractor.__module__ == "__main__" and extractor.__name__ == "IPPOExtractor":
@@ -828,8 +834,7 @@ def evaluate(model, out, clusters, count=12, action_set="semantic", anatomy=None
     env = IPPOAgentVecEnv(physical, action_set=action_set, flow_feature=flow_feature,
                           safety_parity=safety_parity, settle_radius=settle_radius,
                           exit_mask=exit_mask,
-                          centralized_critic=hasattr(model.policy, "vf_features_extractor"),
-                          critic_identity=model.policy.__class__.__name__.endswith("PolicyV2"))
+                          **critic_options(model))
     rows = []
     obs = env.reset()
     try:
@@ -986,7 +991,7 @@ def main():
                           exit_mask=a.exit_mask, centralized_critic=(a.algo == "mappo"),
                           critic_identity=(a.algo == "mappo"))
     cfg = dict(algorithm=("IDQN_shared" if a.algo == "dqn" else "MAPPO_shared" if a.algo == "mappo" else "IPPO_shared"),
-               optimiser=a.algo, feature_extractor=a.extractor, action_set=a.action_set,
+               critic_identity=(a.algo == "mappo"), optimiser=a.algo, feature_extractor=a.extractor, action_set=a.action_set,
                flow_feature=bool(a.flow_feature),
                safety_parity=bool(a.safety_parity), settle_radius=a.settle_radius,
                exit_mask=bool(a.exit_mask),

@@ -11,9 +11,6 @@ own navigation tolerance, not a separate criterion.
 from __future__ import annotations
 import argparse, hashlib, json, os, sys, time
 from pathlib import Path
-if hasattr(os, 'sched_getaffinity'):
-    _a = os.sched_getaffinity(0) - {6, 7}
-    if _a: os.sched_setaffinity(0, _a)
 import numpy as np
 import torch
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +18,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from marl.vessel_sdf import project_local_commands
+from scripts.navigation_execution_trace import executed_step
 
 METHODS = ('pursuit', 'stpg', 'pac', 'csn', 'yang_hier')
 
@@ -46,7 +44,7 @@ class CSNAdapter:
             frame = frames[i]
             goal = frame @ (ep.env.clot_positions_mm[int(target)] - est.pos[i])
             goal = goal / max(float(np.linalg.norm(goal)), 1e-9)
-            tangent = np.asarray(rule[i], float)
+            tangent = np.array(rule[i], dtype=float, copy=True)
             tangent /= max(float(np.linalg.norm(tangent)), 1e-9)
             candidates = [tangent, goal]
             for radius in (.35, .70):
@@ -115,7 +113,7 @@ def build_controller(method, ep):
     raise ValueError(method)
 
 
-def run_row(phys, method, row):
+def run_row(phys, method, row, trace=None):
     _, info = phys.reset(options=dict(dataset_row=row))
     scene = info["scene"]
     ep = phys.ep
@@ -123,6 +121,9 @@ def run_row(phys, method, row):
     tol = float(phys.nav_goal_tolerance_mm)
     targets = np.asarray(phys.nav_targets, int)
     ctl, switcher = build_controller(method, ep)
+    from scripts.benchmark_lysis import SettleGuard
+    # pursuit and stpg already return guarded commands.
+    guard = SettleGuard(ep) if method in ("csn", "yang_hier") else None
     reached = np.zeros(n, bool)
     wall = 0.
     wall_after_reach = 0.
@@ -133,13 +134,23 @@ def run_row(phys, method, row):
         if switcher is not None:
             switcher.update(ep.env.elapsed_s)
             hold = ep.hold(est)
-        requested_local = np.asarray(ctl(ep, est, targets, rule, hold), float)
-        local, safety_rewrites = project_local_commands(requested_local, est, targets, hold,
+        if trace is not None:
+            raw_rule = rule.copy()
+        command = np.asarray(ctl(ep, est, targets, rule, hold), float)
+        requested_local = raw_rule if trace is not None and method in ("pursuit", "stpg") else command
+        guarded = guard(ep, est, targets, command.copy(), hold) if guard is not None else command
+        local, safety_rewrites = project_local_commands(guarded, est, targets, hold,
                                                         ep.ctl.frames(est), phys.sdf, ep.ctl.body)
         done, res = ep.step(est, local, hold)
         wall += float(np.sum(res['wall']))
         wall_after_reach += float(res['wall'][reached].sum())
         reached |= phys._navigation_distances() <= tol
+        if trace is not None:
+            sample = executed_step(ep, est, phys.sdf, hold, requested_local, guarded, local, targets)
+            sample.update(action_indices=None, candidate_commands_local=None,
+                          navigation_reached=int(reached.sum()),
+                          navigation_success=bool(reached.all() and ep.env.active[:n].all()))
+            trace.append(sample)
         if done or reached.all() or not ep.env.active[:n].all():
             break
         est = ep.observe()
@@ -163,12 +174,15 @@ def run_row(phys, method, row):
                 wall_contact_s=float(wall), wall_after_reach_s=wall_after_reach, lost=lost,
                 strict_success=bool(reached.all() and lost == 0 and wall < 1.),
                 requested_command_norm=float(np.linalg.norm(requested_local)),
-                executed_command_norm=float(np.linalg.norm(local)),
+                executed_command_norm=float(np.linalg.norm(ep.sent_world)),
                 safety_rewrites=int(safety_rewrites),
                 seconds=float(time.monotonic() - started))
 
 
 def main():
+    if hasattr(os, 'sched_getaffinity'):
+        _a = os.sched_getaffinity(0) - {6, 7}
+        if _a: os.sched_setaffinity(0, _a)
     ap = argparse.ArgumentParser()
     ap.add_argument('--methods', default=','.join(METHODS))
     ap.add_argument('--split', choices=('train', 'validation', 'holdout_test'), required=True)

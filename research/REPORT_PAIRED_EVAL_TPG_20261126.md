@@ -42,10 +42,15 @@
 
 当前固定三靶点实验使用仓库已有 `mca_m1_lvo` 血管几何和历史病灶标注。仓库没有可直接验证的肝动脉 HCC 三靶点几何输入，因此尚未把 MCA 结果写成 HCC 解剖结论。迁移还需要肝动脉中心线和半径、三靶点坐标及访问顺序、起点池、流场边界、障碍分布和固定仿真时限。
 
-尚未完成 S42/S43 修正版 MAPPO 重训、完整 2×2×2 图分配/TPG/IPPO 消融、N=1/2/3 资源预算矩阵和三个成败差异场景的三方法轨迹回放。恢复命令如下。
+尚未完成 S42/S43 修正版 MAPPO 重训、完整 2×2×2 图分配/TPG/IPPO 消融、N=1/2/3 资源预算矩阵和三个成败差异场景的三方法轨迹回放。上列回放属于旧版产物。正式 pursuit 回放与 MAPPO V2 的重跑入口如下；输出至新目录。
 
 ```bash
 python scripts/summarize_repaired_comparison.py
-python scripts/replay_paired_execution.py --split train --scene-seeds 3404062011,3405052004,3413006012,3400000000 --ippo-model research/COMPARISON_20261125/models/ippo_s41_final_model.zip --mappo-model research/COMPARISON_20261125/models/mappo_s41_final_model.zip --out research/replay_remaining_20261126
-python scripts/train_sb3_ippo.py --algo mappo --seed 42 --timesteps 500000 --out research/mappo_v2_s42
+python scripts/replay_paired_execution.py --split train --scene-seeds 3404062011,3405052004,3413006012,3400000000 --ippo-model research/COMPARISON_20261125/models/ippo_s41_final_model.zip --mappo-model research/COMPARISON_20261125/models/mappo_s41_final_model.zip --out research/replay_remaining_corrected
+bash scripts/rerun_paired_navigation.sh 42
 ```
+
+
+对三个训练种子分别执行重跑脚本，默认匹配 S41 的 50,000 个物理步、13 动作、合法动作掩码、流动特征及统一安全保护。已查看的留出场景用于旧结果回归。最终确认性评价应另行冻结独立场景。
+
+三靶点分配可选择 fixed（旧手写路线）、linear_sum（按轮次最小化总血管距离）或 geodesic（穷举三个靶点，最小化最长路线，再最小化总距离）。同一 N 下固定种子、TPG 和执行器比较分配器。比较并行与顺序时，三组统一使用 geodesic，单集群也优化访问顺序。记录截止时间计入失败的全场景完成时间、覆盖率和同步率。

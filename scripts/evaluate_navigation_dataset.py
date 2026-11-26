@@ -23,7 +23,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.navigation_dataset import MANIFEST, condition_key, iter_rows, reset_options
 from scripts.train_sb3_curriculum import CurriculumVascularEnv
-from scripts.train_sb3_ippo import IPPOAgentVecEnv, load_navigation_ppo
+from scripts.train_sb3_ippo import IPPOAgentVecEnv, load_navigation_ppo, critic_options
 
 
 def aggregate(rows):
@@ -121,24 +121,34 @@ def main():
         raise SystemExit("no manifest rows match the requested split and cluster count")
     manifest_path = Path(MANIFEST)
     manifest_sha = hashlib.sha256(manifest_path.read_bytes()).hexdigest()
+    if paired_entries is not None and payload.get("manifest_sha256") != manifest_sha:
+        raise ValueError("paired scene list refers to a different manifest")
     anatomies = sorted({row["anatomy"] for row in rows})
-    env = IPPOAgentVecEnv(CurriculumVascularEnv(
-        seed=4101, clusters=args.clusters, curriculum=False, reward_mode="navigation",
-        zero_latency=True, direct_action=True, centerline_match=args.centerline_match), action_set=args.action_set,
-        flow_feature=args.flow_feature, safety_parity=args.safety_parity, exit_mask=False,
-        centralized_critic=args.centralized_critic)
-    # Holdout rows are permitted only because this is an explicit evaluation
-    # runner. They are never used by the training environment or selector.
-    env.physical.train_anatomies = anatomies
     model_cls = {"ppo": PPO, "dqn": DQN, "sac": SAC}[args.kind]
     if args.kind == "sac" and args.action_set != "continuous":
         raise SystemExit("SAC manifest evaluation requires --action-set continuous")
     if args.kind != "sac" and args.action_set == "continuous":
         raise SystemExit("continuous action-set is reserved for SAC evaluation")
     loader = load_navigation_ppo if args.kind == "ppo" else model_cls.load
-    model = loader(args.model, env=env, device=args.device)
+    model = loader(args.model, device=args.device)
+    critic = critic_options(model)
+    if args.centralized_critic and not critic["centralized_critic"]:
+        parser.error("checkpoint does not contain a centralized critic")
+    flow = "flow" in model.observation_space.spaces
+    if args.flow_feature and not flow:
+        parser.error("checkpoint does not contain flow observations")
+    env = IPPOAgentVecEnv(CurriculumVascularEnv(
+        seed=4101, clusters=args.clusters, curriculum=False, reward_mode="navigation",
+        zero_latency=True, direct_action=True, centerline_match=args.centerline_match), action_set=args.action_set,
+        flow_feature=flow, safety_parity=args.safety_parity, exit_mask=False,
+        **critic)
+    # Holdout rows are permitted only because this is an explicit evaluation
+    # runner. They are never used by the training environment or selector.
+    env.physical.train_anatomies = anatomies
+    from stable_baselines3.common.utils import check_for_correct_spaces
     completed = []
     try:
+        check_for_correct_spaces(env, model.observation_space, model.action_space)
         for local_index, row in enumerate(rows):
             obs = env.reset(options=reset_options(row))
             scene = env.reset_infos[0]["scene"]
@@ -195,6 +205,8 @@ def main():
         "model": str(args.model),
         "model_sha256": hashlib.sha256(args.model.read_bytes()).hexdigest(),
         "algorithm": args.kind,
+        "flow_feature": flow,
+        **critic,
         "action_set": args.action_set,
         "centerline_match": args.centerline_match,
         "safety_parity": args.safety_parity,
