@@ -64,7 +64,7 @@ def main():
     p.add_argument('--out', type=Path, required=True)
     p.add_argument('--workers', type=int, default=16)
     p.add_argument('--timeout', type=float, default=900)
-    p.add_argument('--methods', default='settle,adaptive_settle,no_settle,stpg,pac_nmpc')
+    p.add_argument('--methods', default='settle,adaptive_settle,no_settle,stpg,ccbs,pac_nmpc')
     p.add_argument('--policy', type=Path)
     p.add_argument('--lateral-scale', type=float)
     p.add_argument('--lateral-near-radius', type=float)

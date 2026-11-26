@@ -7,5 +7,4 @@ if [[ ! -d "$upstream" ]]; then
   echo "Clone https://github.com/yinghansun/mr-nav there, record its commit and license, then add the adapter." >&2
   exit 2
 fi
-echo "SKIP: upstream checkout exists but the VRL observation/action adapter is not implemented" >&2
-exit 2
+python scripts/mr_nav_adapter.py --upstream "$upstream" --out research/mr_nav_adapter_manifest.json

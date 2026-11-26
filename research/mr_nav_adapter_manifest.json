@@ -1,0 +1,17 @@
+{
+  "upstream": "https://github.com/yinghansun/mr-nav",
+  "commit": "c129da1447d9854e31b1d7b970b7f48b8a553ea7",
+  "license": "/home/wj/mr-nav-upstream/LICENSE",
+  "license_sha256": "f7f968fb894ea964a2a2b0af5730b19c001bd4d1e8bd241df73fb010975d61ad",
+  "raw_observation": "72 virtual-LiDAR values + 2-D target + 2-D position + previous scalar action",
+  "raw_action": "one scalar heading angle, radian or degree according to VesselEnvCfg",
+  "raw_control": "2-D point-mass velocity with Gaussian disturbance",
+  "vrl_mapping": {
+    "observation": "common 2-D subtask only, LiDAR projected into the vessel cross-section",
+    "action": "heading angle mapped to a unit 2-D direction, then VRL safety protection",
+    "frequency": "VRL control_dt_s",
+    "deadline": "VRL horizon"
+  },
+  "status": "interface-audited_pending_dataset_and_policy_export",
+  "fairness_scope": "Does not claim a 3-D vascular result until the upstream 2-D dataset and policy are mapped and evaluated."
+}
