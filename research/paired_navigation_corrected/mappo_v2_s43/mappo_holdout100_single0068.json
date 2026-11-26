@@ -1,0 +1,123 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "model": "/home/wj/桌面/vascular_marl_local.tar./research/paired_navigation_corrected/mappo_v2_s43/final_model.zip",
+  "model_sha256": "0363efe14345b952b423a38a2546a521b3c2607fba22164b41b24546aac06401",
+  "algorithm": "ppo",
+  "flow_feature": true,
+  "centralized_critic": true,
+  "critic_identity": true,
+  "action_set": "semantic_reduced",
+  "centerline_match": false,
+  "safety_parity": true,
+  "exit_mask": false,
+  "split": "holdout_test",
+  "clusters": 3,
+  "scene_list": "/home/wj/桌面/vascular_marl_local.tar./research/paired_navigation_corrected/mappo_v2_s43/mappo_holdout100_single_scene0068.json",
+  "protocol": "frozen_manifest_evaluation; holdout rows are never used for selection",
+  "overall": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 0.0,
+    "strict_success": 0.0,
+    "wall_contact_s": 0.0,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 2.0,
+    "particle_contact_s": 0.40827517792259743,
+    "navigation_success_rate": 0.0,
+    "strict_success_rate": 0.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 1.0
+  },
+  "by_anatomy": {
+    "sma_embolism": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 0.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 2.0,
+      "particle_contact_s": 0.40827517792259743,
+      "navigation_success_rate": 0.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "by_flow_mode": {
+    "strong": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 0.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 2.0,
+      "particle_contact_s": 0.40827517792259743,
+      "navigation_success_rate": 0.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "by_condition": {
+    "sma_embolism|3|strong|historical_sites|stress|route_encounter": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 0.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 2.0,
+      "particle_contact_s": 0.40827517792259743,
+      "navigation_success_rate": 0.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "episodes": [
+    {
+      "manifest_index": 53714,
+      "integration_failure": false,
+      "split": "holdout_test",
+      "anatomy": "sma_embolism",
+      "clusters": 3,
+      "scene_seed": 3611031004,
+      "condition_id": 31,
+      "flow_mode": "strong",
+      "clot_pattern": "historical_sites",
+      "obstacle_density": "stress",
+      "obstacle_layout": "route_encounter",
+      "scenario_hash": "0fd2c88dda84280de11742e5a22e5f0a06c050a422960b36f45efb807a278de0",
+      "accepted_seed": 3611031004,
+      "realized_scenario_hash": "d13097498e179495646f0bb8eb030ef5571ec84a3c4e72caa6f5547dbb1f667c",
+      "navigation_targets": [
+        0,
+        3,
+        1
+      ],
+      "navigation_success": false,
+      "strict_success": false,
+      "wall_after_reach_s": 0.0,
+      "wall_contact_s": 0.0,
+      "lost": 0,
+      "particle_collision_events": 2.0,
+      "particle_contact_s": 0.40827517792259743
+    }
+  ]
+}

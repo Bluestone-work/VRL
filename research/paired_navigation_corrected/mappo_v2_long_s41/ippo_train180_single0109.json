@@ -1,0 +1,123 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "model": "research/COMPARISON_20261125/models/ippo_s41_final_model.zip",
+  "model_sha256": "6074687f6a7e9ca1a3ea1bb0e93e68fdc06aa3a96bedb9ab81da58d9f0c0c1f1",
+  "algorithm": "ppo",
+  "flow_feature": true,
+  "centralized_critic": false,
+  "critic_identity": false,
+  "action_set": "semantic_reduced",
+  "centerline_match": false,
+  "safety_parity": true,
+  "exit_mask": false,
+  "split": "train",
+  "clusters": 3,
+  "scene_list": "research/paired_navigation_corrected/mappo_v2_long_s41/ippo_train180_single_scene0109.json",
+  "protocol": "frozen_manifest_evaluation; holdout rows are never used for selection",
+  "overall": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 0.0,
+    "strict_success": 0.0,
+    "wall_contact_s": 0.0,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 0.0,
+    "particle_contact_s": 0.0,
+    "navigation_success_rate": 0.0,
+    "strict_success_rate": 0.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 0.0
+  },
+  "by_anatomy": {
+    "ica_siphon": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 0.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 0.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "by_flow_mode": {
+    "strong": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 0.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 0.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "by_condition": {
+    "ica_siphon|3|strong|random_branches|medium|uniform": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 0.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 0.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "episodes": [
+    {
+      "manifest_index": 18938,
+      "integration_failure": false,
+      "split": "train",
+      "anatomy": "ica_siphon",
+      "clusters": 3,
+      "scene_seed": 3406034008,
+      "condition_id": 34,
+      "flow_mode": "strong",
+      "clot_pattern": "random_branches",
+      "obstacle_density": "medium",
+      "obstacle_layout": "uniform",
+      "scenario_hash": "ca14bda17681d307b410d410eb65750bbdaae91781d5d7099af7a759fbbdfad4",
+      "accepted_seed": 3406034008,
+      "realized_scenario_hash": "1c8f7f6a957879c9805fe468898dd355dfe930cf14e164b73aa7f7d136900788",
+      "navigation_targets": [
+        0,
+        3,
+        1
+      ],
+      "navigation_success": false,
+      "strict_success": false,
+      "wall_after_reach_s": 0.0,
+      "wall_contact_s": 0.0,
+      "lost": 0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0
+    }
+  ]
+}

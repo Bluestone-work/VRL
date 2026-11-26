@@ -1,0 +1,49 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_holdout100.json",
+  "manifest": "/home/wj/\u684c\u9762/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "641a9e2afa8b67e2dc2c648a0d2e0b2b110ff77709cc63c208c4d4d9597c588b",
+  "episodes": 100,
+  "selected": 100,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 21,
+      "manifest_index": 43463,
+      "row": {
+        "anatomy": "basilar_vertebral",
+        "anatomy_index": 9,
+        "clot_pattern": "historical_sites",
+        "clusters": 3,
+        "condition_id": 4,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": "historical_sites",
+        "environment_clot_initialization_realized": "historical_sites",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "high",
+        "obstacle_layout": "uniform",
+        "pulsatile": false,
+        "replicate": 7,
+        "scenario_hash": "4dbad1ff43c2e39fb76a753442c1a542954649c46b57a21306c7acc807c9f396",
+        "scene_seed": 3609004007,
+        "split": "holdout_test",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3609004007,
+        "scenario_hash": "4dbad1ff43c2e39fb76a753442c1a542954649c46b57a21306c7acc807c9f396"
+      },
+      "pursuit_accepted_seed": 3609004007,
+      "pursuit_realized_scenario_hash": "141a6e9423bc9a78f557ee66d7338b91e96a4a6d0e6fff730567e10d79c3e9fc",
+      "pursuit_navigation_targets": [
+        1,
+        2,
+        0
+      ]
+    }
+  ]
+}

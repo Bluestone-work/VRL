@@ -1,0 +1,123 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "model": "research/COMPARISON_20261125/models/ippo_s43_final_model.zip",
+  "model_sha256": "b2a912d8bdceb85cb780e317b52149294f810145fa6394f91bcb920cc04863d4",
+  "algorithm": "ppo",
+  "flow_feature": true,
+  "centralized_critic": false,
+  "critic_identity": false,
+  "action_set": "semantic_reduced",
+  "centerline_match": false,
+  "safety_parity": true,
+  "exit_mask": false,
+  "split": "holdout_test",
+  "clusters": 3,
+  "scene_list": "research/paired_navigation_corrected/mappo_v2_s43/ippo_holdout100_single_scene0057.json",
+  "protocol": "frozen_manifest_evaluation; holdout rows are never used for selection",
+  "overall": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 1.0,
+    "strict_success": 1.0,
+    "wall_contact_s": 0.0,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 1.0,
+    "particle_contact_s": 2.1000000000000005,
+    "navigation_success_rate": 1.0,
+    "strict_success_rate": 1.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 1.0
+  },
+  "by_anatomy": {
+    "cerebral_venous_sinus": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 2.1000000000000005,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "by_flow_mode": {
+    "pulsatile": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 2.1000000000000005,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "by_condition": {
+    "cerebral_venous_sinus|3|pulsatile|random_branches|stress|route_encounter": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 2.1000000000000005,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "episodes": [
+    {
+      "manifest_index": 51314,
+      "integration_failure": false,
+      "split": "holdout_test",
+      "anatomy": "cerebral_venous_sinus",
+      "clusters": 3,
+      "scene_seed": 3610063004,
+      "condition_id": 63,
+      "flow_mode": "pulsatile",
+      "clot_pattern": "random_branches",
+      "obstacle_density": "stress",
+      "obstacle_layout": "route_encounter",
+      "scenario_hash": "d6c476cba95c9e20db1bc37c7b94e1fc061400311fe266e6614dae0b1511fa34",
+      "accepted_seed": 3610063004,
+      "realized_scenario_hash": "e097883f1ffb1c2828f11a0a2611c0ed773594cec0e1243d20271ac7695373e4",
+      "navigation_targets": [
+        3,
+        0,
+        2
+      ],
+      "navigation_success": true,
+      "strict_success": true,
+      "wall_after_reach_s": 0.0,
+      "wall_contact_s": 0.0,
+      "lost": 0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 2.1000000000000005
+    }
+  ]
+}

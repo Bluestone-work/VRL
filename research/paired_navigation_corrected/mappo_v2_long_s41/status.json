@@ -1,0 +1,26 @@
+{
+  "agent_steps": 300288,
+  "environment_steps": 100096,
+  "target_environment_steps": 100000,
+  "minutes": 22.51342317844586,
+  "frontier": 3,
+  "difficulty": 3,
+  "scene": {
+    "anatomy": "ica_terminus_t",
+    "clusters": 3,
+    "seed": 2844100089,
+    "flow": 0.15,
+    "latency": 0,
+    "dynamic_obstacle_count": 32,
+    "clot_initialization": null,
+    "variation": null,
+    "accepted_seed": 2844100089,
+    "scenario_hash": "849935a917b16fbbc14a64cd0558359fd692705b4c9e7f2faa87a336a9d9e662",
+    "difficulty": 3,
+    "difficulty_name": "stress",
+    "dynamic_obstacles": 32,
+    "frontier": 3,
+    "scenario_family": "route_encounter",
+    "localized_obstacles": 6
+  }
+}
