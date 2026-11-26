@@ -1,0 +1,7 @@
+method_a,method_b,split,training_seed,paired_scene_count,wins,ties,losses,difference_mean_a_minus_b,difference_direction,observed_zero_difference,equivalence_proven,ci95_a_minus_b
+IPPO-S41,pursuit,train,41,180,2,177,1,0.005555555555555556,a_gt_b,False,False,"[-0.011111111111111112, 0.022222222222222223]"
+MAPPO-S41,pursuit,train,41,180,0,179,1,-0.005555555555555556,b_gt_a,False,False,"[-0.016666666666666666, 0.0]"
+IPPO-S41,MAPPO-S41,train,41,180,2,178,0,0.011111111111111112,a_gt_b,False,False,"[0.0, 0.027777777777777776]"
+IPPO-S41,pursuit,holdout,41,100,0,100,0,0.0,observed_zero_difference,True,False,"[0.0, 0.0]"
+MAPPO-S41,pursuit,holdout,41,100,0,100,0,0.0,observed_zero_difference,True,False,"[0.0, 0.0]"
+IPPO-S41,MAPPO-S41,holdout,41,100,0,100,0,0.0,observed_zero_difference,True,False,"[0.0, 0.0]"

@@ -31,6 +31,11 @@ ASSIGNMENTS = {
 }
 
 
+def entity_pair_contact_seconds(ep):
+    """Read the episode-level contact accumulator once at termination."""
+    return float(getattr(ep, "pair", 0.0))
+
+
 def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: float, tpg: bool = True):
     assignment = ASSIGNMENTS[clusters]
     ep = LysisEpisode(clusters, anatomy, seed, horizon=horizon, sensing="image",
@@ -56,6 +61,9 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
     first_time = np.full(3, np.nan, dtype=float)
     wall = 0.0
     pair = 0.0
+    gate_calls = 0
+    waiting_transitions = 0
+    waiting_robot_s = 0.0
     tpg_hold_steps = 0
     previous_hold = np.zeros(clusters, dtype=bool)
     started = time.monotonic()
@@ -64,14 +72,16 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
         ep.navigation_targets = targets.copy()
         rule = ep.ctl.act(targets, est)
         hold = ep.hold(est) if tpg and clusters > 1 else np.zeros(clusters, dtype=bool)
+        gate_calls += 1 if (tpg and clusters > 1) else 0
         tpg_hold_steps += int(np.count_nonzero(hold & ~previous_hold))
+        waiting_transitions += int(np.count_nonzero(hold & ~previous_hold))
         previous_hold = hold.copy()
         local = guard(ep, est, targets, rule, hold)
         local, _ = project_local_commands(local, est, targets, hold, ep.ctl.frames(est),
                                           sdf, ep.ctl.body)
         done, outcome = ep.step(est, local, hold)
+        waiting_robot_s += float(np.count_nonzero(hold & outcome["active_before"])) * float(ep.info["step_duration_s"])
         wall += float(np.asarray(outcome["wall"], dtype=float).sum())
-        pair += float(getattr(ep, "pair", 0.0))
         distances = ep.env._target_distances()[np.arange(clusters), current]
         for i, sequence in enumerate(assignment):
             if next_index[i] >= len(sequence):
@@ -107,11 +117,14 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
         "synchronized_success": bool(reached.all() and span is not None and span <= tau and lost == 0),
         "last_arrival_s": None if len(finite) != 3 else float(np.max(finite)),
         "wall_contact_s": wall,
-        "spacing_pair_s": pair,
+        "spacing_pair_s": entity_pair_contact_seconds(ep),
         "spacing_violation_pair_s": float(spacing["spacing_violation_pair_s"]),
         "spacing_violation_steps": int(spacing["spacing_violation_steps"]),
-        "entity_pair_contact_s": float(pair),
+        "entity_pair_contact_s": entity_pair_contact_seconds(ep),
+        "tpg_gate_calls": int(gate_calls),
         "tpg_trigger_count": int(tpg_hold_steps),
+        "waiting_transitions": int(waiting_transitions),
+        "waiting_robot_s": float(waiting_robot_s),
         "particle_collision_events": collisions,
         "lost": lost,
         "elapsed_s": float(ep.env.elapsed_s),

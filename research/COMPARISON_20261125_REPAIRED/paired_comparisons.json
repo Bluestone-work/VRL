@@ -1,0 +1,164 @@
+{
+  "identity_key": [
+    "split",
+    "scene_seed",
+    "scenario_hash",
+    "realized_scenario_hash",
+    "accepted_seed",
+    "navigation_targets"
+  ],
+  "comparisons": [
+    {
+      "method_a": "IPPO-S41",
+      "method_b": "pursuit",
+      "split": "train",
+      "training_seed": 41,
+      "paired_scene_count": 180,
+      "wins": 2,
+      "ties": 177,
+      "losses": 1,
+      "difference_mean_a_minus_b": 0.005555555555555556,
+      "difference_direction": "a_gt_b",
+      "observed_zero_difference": false,
+      "equivalence_proven": false,
+      "ci95_a_minus_b": [
+        -0.011111111111111112,
+        0.022222222222222223
+      ]
+    },
+    {
+      "method_a": "MAPPO-S41",
+      "method_b": "pursuit",
+      "split": "train",
+      "training_seed": 41,
+      "paired_scene_count": 180,
+      "wins": 0,
+      "ties": 179,
+      "losses": 1,
+      "difference_mean_a_minus_b": -0.005555555555555556,
+      "difference_direction": "b_gt_a",
+      "observed_zero_difference": false,
+      "equivalence_proven": false,
+      "ci95_a_minus_b": [
+        -0.016666666666666666,
+        0.0
+      ]
+    },
+    {
+      "method_a": "IPPO-S41",
+      "method_b": "MAPPO-S41",
+      "split": "train",
+      "training_seed": 41,
+      "paired_scene_count": 180,
+      "wins": 2,
+      "ties": 178,
+      "losses": 0,
+      "difference_mean_a_minus_b": 0.011111111111111112,
+      "difference_direction": "a_gt_b",
+      "observed_zero_difference": false,
+      "equivalence_proven": false,
+      "ci95_a_minus_b": [
+        0.0,
+        0.027777777777777776
+      ]
+    },
+    {
+      "method_a": "IPPO-S41",
+      "method_b": "pursuit",
+      "split": "holdout",
+      "training_seed": 41,
+      "paired_scene_count": 100,
+      "wins": 0,
+      "ties": 100,
+      "losses": 0,
+      "difference_mean_a_minus_b": 0.0,
+      "difference_direction": "observed_zero_difference",
+      "observed_zero_difference": true,
+      "equivalence_proven": false,
+      "ci95_a_minus_b": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "method_a": "MAPPO-S41",
+      "method_b": "pursuit",
+      "split": "holdout",
+      "training_seed": 41,
+      "paired_scene_count": 100,
+      "wins": 0,
+      "ties": 100,
+      "losses": 0,
+      "difference_mean_a_minus_b": 0.0,
+      "difference_direction": "observed_zero_difference",
+      "observed_zero_difference": true,
+      "equivalence_proven": false,
+      "ci95_a_minus_b": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "method_a": "IPPO-S41",
+      "method_b": "MAPPO-S41",
+      "split": "holdout",
+      "training_seed": 41,
+      "paired_scene_count": 100,
+      "wins": 0,
+      "ties": 100,
+      "losses": 0,
+      "difference_mean_a_minus_b": 0.0,
+      "difference_direction": "observed_zero_difference",
+      "observed_zero_difference": true,
+      "equivalence_proven": false,
+      "ci95_a_minus_b": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "legacy_overlap": {
+    "train180": {
+      "split": "train180",
+      "pursuit_file": "/home/wj/桌面/vascular_marl_local.tar./research/COMPARISON_20261125/pursuit_train180.json",
+      "ippo_file": "/home/wj/桌面/vascular_marl_local.tar./research/COMPARISON_20261125/ippo_s41_train180_chunked.json",
+      "identity_key": [
+        "split",
+        "scene_seed",
+        "scenario_hash",
+        "realized_scenario_hash",
+        "accepted_seed",
+        "navigation_targets"
+      ],
+      "pursuit_scenes": 180,
+      "ippo_scenes": 180,
+      "strict_identity_intersection": 4,
+      "scenario_hashes": [
+        "3ae25ddc26605726b11766e4aa65799570cc52087fa267133a04c8d30980f00b",
+        "48a89f44d4a104c86ff37896aec518ea3b523a1939a31bb69591747dff960913",
+        "8c43507e6c92a08c412c00b39c0bde2fd6c95e45a1f5ff79b4a3674703d4e6f9",
+        "98dc9080995a97127970bdfce904aa04d470495a883bf251bab9dd5447d68d43"
+      ]
+    },
+    "holdout100": {
+      "split": "holdout100",
+      "pursuit_file": "/home/wj/桌面/vascular_marl_local.tar./research/COMPARISON_20261125/pursuit_holdout100.json",
+      "ippo_file": "/home/wj/桌面/vascular_marl_local.tar./research/COMPARISON_20261125/ippo_s41_holdout100_chunked.json",
+      "identity_key": [
+        "split",
+        "scene_seed",
+        "scenario_hash",
+        "realized_scenario_hash",
+        "accepted_seed",
+        "navigation_targets"
+      ],
+      "pursuit_scenes": 100,
+      "ippo_scenes": 100,
+      "strict_identity_intersection": 2,
+      "scenario_hashes": [
+        "13aaaef1f8dd6bf828d38d722aae51721eeb12ef499717606c9123c03e28309f",
+        "667b4f1049b0744be77e799995ea63dc506439f23180e181d1737fef2106d56e"
+      ]
+    }
+  }
+}

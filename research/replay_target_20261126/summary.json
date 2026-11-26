@@ -1,0 +1,36 @@
+{
+  "split": "holdout_test",
+  "scene_seeds": [
+    3612010002
+  ],
+  "records": [
+    {
+      "method": "pursuit",
+      "scene_seed": 3612010002,
+      "scenario_hash": "219ffa8456025353b7efceb851de452b29916e3bf000fd8652f505103c351568",
+      "steps": 3000,
+      "navigation_success": false,
+      "wall_contact_s": 0.2
+    },
+    {
+      "method": "IPPO-S41",
+      "scene_seed": 3612010002,
+      "scenario_hash": "219ffa8456025353b7efceb851de452b29916e3bf000fd8652f505103c351568",
+      "steps": 3000,
+      "navigation_success": false,
+      "wall_contact_s": 364.7959081877046
+    },
+    {
+      "method": "MAPPO-S41",
+      "scene_seed": 3612010002,
+      "scenario_hash": "219ffa8456025353b7efceb851de452b29916e3bf000fd8652f505103c351568",
+      "steps": 3000,
+      "navigation_success": false,
+      "wall_contact_s": 24.999999999999943
+    }
+  ],
+  "models": {
+    "ippo": "research/COMPARISON_20261125/models/ippo_s41_final_model.zip",
+    "mappo": "research/COMPARISON_20261125/models/mappo_s41_final_model.zip"
+  }
+}
