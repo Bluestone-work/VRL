@@ -1,0 +1,123 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "model": "/home/wj/桌面/vascular_marl_local.tar./research/paired_navigation_corrected/mappo_v2_s42/final_model.zip",
+  "model_sha256": "18aea265ce662cb240acb0d4ee52f59fb9a46a03f7ca22865b6284d80aafea1b",
+  "algorithm": "ppo",
+  "flow_feature": true,
+  "centralized_critic": true,
+  "critic_identity": true,
+  "action_set": "semantic_reduced",
+  "centerline_match": false,
+  "safety_parity": true,
+  "exit_mask": false,
+  "split": "holdout_test",
+  "clusters": 3,
+  "scene_list": "/home/wj/桌面/vascular_marl_local.tar./research/paired_navigation_corrected/mappo_v2_s42/mappo_holdout100_single_scene0000.json",
+  "protocol": "frozen_manifest_evaluation; holdout rows are never used for selection",
+  "overall": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 1.0,
+    "strict_success": 1.0,
+    "wall_contact_s": 0.0,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 0.0,
+    "particle_contact_s": 0.0,
+    "navigation_success_rate": 1.0,
+    "strict_success_rate": 1.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 0.0
+  },
+  "by_anatomy": {
+    "coronary_rca": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "by_flow_mode": {
+    "weak": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "by_condition": {
+    "coronary_rca|3|weak|historical_sites|low|uniform": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "episodes": [
+    {
+      "manifest_index": 38882,
+      "integration_failure": false,
+      "split": "holdout_test",
+      "anatomy": "coronary_rca",
+      "clusters": 3,
+      "scene_seed": 3603000000,
+      "condition_id": 0,
+      "flow_mode": "weak",
+      "clot_pattern": "historical_sites",
+      "obstacle_density": "low",
+      "obstacle_layout": "uniform",
+      "scenario_hash": "13aaaef1f8dd6bf828d38d722aae51721eeb12ef499717606c9123c03e28309f",
+      "accepted_seed": 3603000000,
+      "realized_scenario_hash": "8abb264463739f8d601757e3e40fbeec5536b92de0349dfe6c69803681f27d52",
+      "navigation_targets": [
+        2,
+        0,
+        1
+      ],
+      "navigation_success": true,
+      "strict_success": true,
+      "wall_after_reach_s": 0.0,
+      "wall_contact_s": 0.0,
+      "lost": 0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "agent_steps": 150528,
+  "environment_steps": 50176,
+  "target_environment_steps": 50000,
+  "minutes": 10.514361137027542,
+  "frontier": 3,
+  "difficulty": 3,
+  "scene": {
+    "anatomy": "ica_siphon",
+    "clusters": 3,
+    "seed": 2844300034,
+    "flow": 0.1,
+    "latency": 0,
+    "dynamic_obstacle_count": 32,
+    "clot_initialization": null,
+    "variation": null,
+    "accepted_seed": 2844300034,
+    "scenario_hash": "c84806db3ccd34575543f41b6fb2f67a5f51ab861989141d2031cb318792f1fc",
+    "difficulty": 3,
+    "difficulty_name": "stress",
+    "dynamic_obstacles": 32,
+    "frontier": 3,
+    "scenario_family": "uniform",
+    "localized_obstacles": 0
+  }
+}

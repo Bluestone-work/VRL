@@ -1,0 +1,49 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_holdout100.json",
+  "manifest": "/home/wj/\u684c\u9762/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "641a9e2afa8b67e2dc2c648a0d2e0b2b110ff77709cc63c208c4d4d9597c588b",
+  "episodes": 100,
+  "selected": 100,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 42,
+      "manifest_index": 48044,
+      "row": {
+        "anatomy": "cerebral_venous_sinus",
+        "anatomy_index": 10,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 8,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 4,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "low",
+        "obstacle_layout": "uniform",
+        "pulsatile": false,
+        "replicate": 14,
+        "scenario_hash": "878f8e34d71e6af1ec57e8e5c80855df3d546b9e73e9ffc2120af4be7aaac0df",
+        "scene_seed": 3610008014,
+        "split": "holdout_test",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3610008014,
+        "scenario_hash": "878f8e34d71e6af1ec57e8e5c80855df3d546b9e73e9ffc2120af4be7aaac0df"
+      },
+      "pursuit_accepted_seed": 3610008014,
+      "pursuit_realized_scenario_hash": "9c3f5a7be645cff9101c7bb090b3392e6881abcddeb754a754c4dd43a8026f68",
+      "pursuit_navigation_targets": [
+        2,
+        1,
+        0
+      ]
+    }
+  ]
+}

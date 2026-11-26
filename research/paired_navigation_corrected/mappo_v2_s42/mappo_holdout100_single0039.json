@@ -1,0 +1,123 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "model": "/home/wj/桌面/vascular_marl_local.tar./research/paired_navigation_corrected/mappo_v2_s42/final_model.zip",
+  "model_sha256": "18aea265ce662cb240acb0d4ee52f59fb9a46a03f7ca22865b6284d80aafea1b",
+  "algorithm": "ppo",
+  "flow_feature": true,
+  "centralized_critic": true,
+  "critic_identity": true,
+  "action_set": "semantic_reduced",
+  "centerline_match": false,
+  "safety_parity": true,
+  "exit_mask": false,
+  "split": "holdout_test",
+  "clusters": 3,
+  "scene_list": "/home/wj/桌面/vascular_marl_local.tar./research/paired_navigation_corrected/mappo_v2_s42/mappo_holdout100_single_scene0039.json",
+  "protocol": "frozen_manifest_evaluation; holdout rows are never used for selection",
+  "overall": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 1.0,
+    "strict_success": 1.0,
+    "wall_contact_s": 0.0,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 1.0,
+    "particle_contact_s": 1.0667651165012675,
+    "navigation_success_rate": 1.0,
+    "strict_success_rate": 1.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 1.0
+  },
+  "by_anatomy": {
+    "basilar_vertebral": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 1.0667651165012675,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "by_flow_mode": {
+    "pulsatile": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 1.0667651165012675,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "by_condition": {
+    "basilar_vertebral|3|pulsatile|mixed_pattern|high|route_encounter": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 1.0667651165012675,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "episodes": [
+    {
+      "manifest_index": 47387,
+      "integration_failure": false,
+      "split": "holdout_test",
+      "anatomy": "basilar_vertebral",
+      "clusters": 3,
+      "scene_seed": 3609069015,
+      "condition_id": 69,
+      "flow_mode": "pulsatile",
+      "clot_pattern": "mixed_pattern",
+      "obstacle_density": "high",
+      "obstacle_layout": "route_encounter",
+      "scenario_hash": "a39f3b3d2a65a738184b293d5931eb905ff6062fbe697e1c5db61d7e41d3b747",
+      "accepted_seed": 3609069015,
+      "realized_scenario_hash": "63bf0c4b8554c9d8ff87b3554798712ab87ef0bf729c95268be8cf941840f797",
+      "navigation_targets": [
+        3,
+        2,
+        1
+      ],
+      "navigation_success": true,
+      "strict_success": true,
+      "wall_after_reach_s": 0.0,
+      "wall_contact_s": 0.0,
+      "lost": 0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 1.0667651165012675
+    }
+  ]
+}
