@@ -37,6 +37,26 @@ def entity_pair_contact_seconds(ep):
     return float(getattr(ep, "pair", 0.0))
 
 
+def classify_episode(reached, lost, *, terminated=False, truncated=False, elapsed_s=None, horizon=None):
+    """Classify the terminal boundary using the simulator's signal first.
+
+    ``elapsed_s`` is retained only for old environments which did not expose
+    ``truncated``.  ``isclose`` prevents a floating point value such as
+    299.9999999999997 from being treated as an unfinished episode.
+    """
+    reached = bool(reached)
+    lost = bool(lost)
+    at_deadline = bool(truncated)
+    if not terminated and not truncated and elapsed_s is not None and horizon is not None:
+        at_deadline = bool(np.isclose(float(elapsed_s), float(horizon), rtol=0., atol=1e-9) or
+                           float(elapsed_s) > float(horizon))
+    if reached:
+        return "last_step_success" if at_deadline else "success"
+    if lost:
+        return "lost_before_deadline" if not at_deadline else "lost_at_deadline"
+    return "timeout" if at_deadline else "incomplete"
+
+
 def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: float, tpg: bool = True,
                 allocation: str = "fixed"):
     ep = LysisEpisode(clusters, anatomy, seed, horizon=horizon, sensing="image",
@@ -76,6 +96,7 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
     waiting_robot_s = 0.0
     tpg_hold_steps = 0
     previous_hold = np.zeros(clusters, dtype=bool)
+    terminated = truncated = False
     started = time.monotonic()
     while True:
         targets = current.copy()
@@ -90,6 +111,8 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
         local, _ = project_local_commands(local, est, targets, hold, ep.ctl.frames(est),
                                           sdf, ep.ctl.body)
         done, outcome = ep.step(est, local, hold)
+        terminated = bool(outcome.get("terminated", False))
+        truncated = bool(outcome.get("truncated", False))
         waiting_robot_s += float(np.count_nonzero(hold & outcome["active_before"])) * float(ep.info["step_duration_s"])
         wall += float(np.asarray(outcome["wall"], dtype=float).sum())
         distances = ep.env._target_distances()[np.arange(clusters), current]
@@ -108,6 +131,9 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
             break
         est = ep.observe()
     lost = int(np.count_nonzero(~ep.env.active[:clusters]))
+    termination_class = classify_episode(
+        reached.all(), lost > 0, terminated=terminated, truncated=truncated,
+        elapsed_s=ep.env.elapsed_s, horizon=horizon)
     spacing = ep.spacing.summary()
     collisions = int(ep.info.get("episode_particle_collision_events", 0))
     finite = first_time[np.isfinite(first_time)]
@@ -143,7 +169,10 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
         "particle_collision_events": collisions,
         "lost": lost,
         "elapsed_s": float(ep.env.elapsed_s),
-        "timeout": bool(not reached.all() and ep.env.elapsed_s >= horizon),
+        "termination_class": termination_class,
+        "reached_at_deadline": bool(reached.all() and termination_class == "last_step_success"),
+        "last_step_success": bool(termination_class == "last_step_success"),
+        "timeout": bool(termination_class == "timeout"),
         "seconds": float(time.monotonic() - started),
     }
     ep.close()

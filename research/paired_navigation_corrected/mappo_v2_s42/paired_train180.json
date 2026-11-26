@@ -15,7 +15,7 @@
   "split": "train",
   "clusters": 3,
   "scene_list": "research/COMPARISON_20261125_REPAIRED/paired_train180.json",
-  "protocol": "frozen_manifest_evaluation; isolated simulator chunks",
+  "protocol": "strict_manifest_resume_merge",
   "overall": {
     "episodes": 180,
     "requested": 180,
@@ -8345,17 +8345,7 @@
       "particle_contact_s": 0.0
     }
   ],
-  "evaluation_settings": {
-    "source_sha256": "feb4f6e98364ad46856ba7bebbbb009065bdb15e00bd74f7ab042c7c7b88e9ea",
-    "kind": "ppo",
-    "split": "train",
-    "action_set": "semantic_reduced",
-    "flow_feature": true,
-    "centralized_critic": true,
-    "clusters": 3,
-    "device": "cpu"
-  },
-  "chunks": [
+  "merge_inputs": [
     "research/paired_navigation_corrected/mappo_v2_s42/paired_train180_chunk0000.json",
     "research/paired_navigation_corrected/mappo_v2_s42/paired_train180_chunk0012.json",
     "research/paired_navigation_corrected/mappo_v2_s42/paired_train180_chunk0024.json",
@@ -8371,5 +8361,11 @@
     "research/paired_navigation_corrected/mappo_v2_s42/paired_train180_chunk0144.json",
     "research/paired_navigation_corrected/mappo_v2_s42/paired_train180_chunk0156.json",
     "research/paired_navigation_corrected/mappo_v2_s42/paired_train180_chunk0168.json"
+  ],
+  "merge_identity_key": [
+    "scenario_hash",
+    "accepted_seed",
+    "realized_scenario_hash",
+    "navigation_targets"
   ]
 }

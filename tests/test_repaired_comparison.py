@@ -47,6 +47,16 @@ def test_repaired_regression_counts_and_legacy_intersections():
         assert len(set(p) & set(i)) == expected_intersection
 
 
+def test_s42_v2_completed_train_and_holdout_regression_counts():
+    root = Path(__file__).resolve().parents[1] / "research/paired_navigation_corrected/mappo_v2_s42"
+    train = json.loads((root / "paired_train180.json").read_text())
+    holdout = json.loads((root / "paired_holdout100.json").read_text())
+    assert train["overall"]["navigation_success"] == 152 / 180
+    assert holdout["overall"]["navigation_success"] == 80 / 100
+    assert len({row["scenario_hash"] for row in train["episodes"]}) == 180
+    assert len({row["scenario_hash"] for row in holdout["episodes"]}) == 100
+
+
 def test_mappo_v2_critic_can_fit_identity_conditioned_targets():
     from scripts.train_sb3_curriculum import CurriculumVascularEnv
     from scripts.train_sb3_ippo import CentralizedValueExtractor, IPPOAgentVecEnv
@@ -94,6 +104,19 @@ def test_fixed_three_entity_contact_is_read_once_at_episode_end():
     class Episode:
         pair = 1.25
     assert entity_pair_contact_seconds(Episode()) == 1.25
+
+
+def test_fixed_three_timeout_boundary_prioritizes_last_step_success():
+    from scripts.evaluate_fixed_three_lesions import classify_episode
+    assert classify_episode(True, False, truncated=True, elapsed_s=299.9999999999997,
+                            horizon=300.) == "last_step_success"
+    assert classify_episode(False, False, truncated=True, elapsed_s=300., horizon=300.) == "timeout"
+    assert classify_episode(False, True, truncated=False, elapsed_s=299., horizon=300.) == "lost_before_deadline"
+
+
+def test_fixed_three_timeout_fallback_handles_float_boundary():
+    from scripts.evaluate_fixed_three_lesions import classify_episode
+    assert classify_episode(False, False, elapsed_s=299.9999999999997, horizon=300.) == "timeout"
 
 
 def _row(anatomy, flow, success=True):
