@@ -1,0 +1,123 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "model": "/home/wj/桌面/vascular_marl_local.tar./research/COMPARISON_20261125/models/ippo_s42_final_model.zip",
+  "model_sha256": "2c480938c32212b040266431f1e5af2ebe3bef799f657133035d65cff8404ef7",
+  "algorithm": "ppo",
+  "flow_feature": true,
+  "centralized_critic": false,
+  "critic_identity": false,
+  "action_set": "semantic_reduced",
+  "centerline_match": false,
+  "safety_parity": true,
+  "exit_mask": false,
+  "split": "train",
+  "clusters": 3,
+  "scene_list": "/home/wj/桌面/vascular_marl_local.tar./research/paired_navigation_corrected/mappo_v2_s42/ippo_train180_single_scene0098.json",
+  "protocol": "frozen_manifest_evaluation; holdout rows are never used for selection",
+  "overall": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 1.0,
+    "strict_success": 1.0,
+    "wall_contact_s": 0.0,
+    "wall_after_reach_s": 0.0,
+    "lost": 0.0,
+    "particle_collision_events": 0.0,
+    "particle_contact_s": 0.0,
+    "navigation_success_rate": 1.0,
+    "strict_success_rate": 1.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 0.0
+  },
+  "by_anatomy": {
+    "popliteal_calf_dvt": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "by_flow_mode": {
+    "pulsatile": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "by_condition": {
+    "popliteal_calf_dvt|3|pulsatile|mixed_pattern|medium|uniform": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 1.0,
+      "wall_contact_s": 0.0,
+      "wall_after_reach_s": 0.0,
+      "lost": 0.0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 1.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 0.0
+    }
+  },
+  "episodes": [
+    {
+      "manifest_index": 17027,
+      "integration_failure": false,
+      "split": "train",
+      "anatomy": "popliteal_calf_dvt",
+      "clusters": 3,
+      "scene_seed": 3405066011,
+      "condition_id": 66,
+      "flow_mode": "pulsatile",
+      "clot_pattern": "mixed_pattern",
+      "obstacle_density": "medium",
+      "obstacle_layout": "uniform",
+      "scenario_hash": "4f846ffb397d5ad7e38a4eb3166f17b08df4c8629841a2e1d4dfa58280517394",
+      "accepted_seed": 3405066011,
+      "realized_scenario_hash": "c01870a98c20131b72922028f3153d76d157dea0300e28ad7d02e91c2f447a43",
+      "navigation_targets": [
+        0,
+        3,
+        2
+      ],
+      "navigation_success": true,
+      "strict_success": true,
+      "wall_after_reach_s": 0.0,
+      "wall_contact_s": 0.0,
+      "lost": 0,
+      "particle_collision_events": 0.0,
+      "particle_contact_s": 0.0
+    }
+  ]
+}

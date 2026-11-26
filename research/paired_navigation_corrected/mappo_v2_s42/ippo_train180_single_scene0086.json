@@ -1,0 +1,52 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_train180.json",
+  "manifest": "/home/wj/\u684c\u9762/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "b3b08f0c893462dd5616ef4267376f066f5299ea5410edf7645351c2c0dd3850",
+  "episodes": 180,
+  "selected": 180,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 86,
+      "manifest_index": 14942,
+      "row": {
+        "anatomy": "popliteal_calf_dvt",
+        "anatomy_index": 5,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 23,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 32,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "historical_sites",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "stress",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": false,
+        "replicate": 4,
+        "scenario_hash": "7262e0707180f45623a20b5a4fc053882dd6f4d71ccaab0110cdbea1e194f71a",
+        "scene_seed": 3405023004,
+        "split": "train",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "train",
+        "clusters": 3,
+        "scene_seed": 3405023004,
+        "scenario_hash": "7262e0707180f45623a20b5a4fc053882dd6f4d71ccaab0110cdbea1e194f71a"
+      },
+      "pursuit_accepted_seed": 3405023004,
+      "pursuit_realized_scenario_hash": "458ffa7dfecac2c0fbd4ad194b6c21d4d4526064a68592eeeb3e173d91dbeb90",
+      "pursuit_navigation_targets": [
+        2,
+        3,
+        1
+      ]
+    }
+  ]
+}

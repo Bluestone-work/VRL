@@ -1,0 +1,123 @@
+{
+  "dataset_version": "navigation_dataset_v1",
+  "manifest": "research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "model": "/home/wj/桌面/vascular_marl_local.tar./research/COMPARISON_20261125/models/ippo_s42_final_model.zip",
+  "model_sha256": "2c480938c32212b040266431f1e5af2ebe3bef799f657133035d65cff8404ef7",
+  "algorithm": "ppo",
+  "flow_feature": true,
+  "centralized_critic": false,
+  "critic_identity": false,
+  "action_set": "semantic_reduced",
+  "centerline_match": false,
+  "safety_parity": true,
+  "exit_mask": false,
+  "split": "train",
+  "clusters": 3,
+  "scene_list": "/home/wj/桌面/vascular_marl_local.tar./research/paired_navigation_corrected/mappo_v2_s42/ippo_train180_single_scene0174.json",
+  "protocol": "frozen_manifest_evaluation; holdout rows are never used for selection",
+  "overall": {
+    "episodes": 1,
+    "requested": 1,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 1.0,
+    "strict_success": 0.0,
+    "wall_contact_s": 3.2000000000000015,
+    "wall_after_reach_s": 3.2000000000000015,
+    "lost": 0.0,
+    "particle_collision_events": 1.0,
+    "particle_contact_s": 0.2,
+    "navigation_success_rate": 1.0,
+    "strict_success_rate": 0.0,
+    "lost_rate": 0.0,
+    "collision_episode_rate": 1.0
+  },
+  "by_anatomy": {
+    "renal_artery": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 3.2000000000000015,
+      "wall_after_reach_s": 3.2000000000000015,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 0.2,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "by_flow_mode": {
+    "pulsatile": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 3.2000000000000015,
+      "wall_after_reach_s": 3.2000000000000015,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 0.2,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "by_condition": {
+    "renal_artery|3|pulsatile|historical_sites|high|route_encounter": {
+      "episodes": 1,
+      "requested": 1,
+      "errors": 0,
+      "complete": true,
+      "navigation_success": 1.0,
+      "strict_success": 0.0,
+      "wall_contact_s": 3.2000000000000015,
+      "wall_after_reach_s": 3.2000000000000015,
+      "lost": 0.0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 0.2,
+      "navigation_success_rate": 1.0,
+      "strict_success_rate": 0.0,
+      "lost_rate": 0.0,
+      "collision_episode_rate": 1.0
+    }
+  },
+  "episodes": [
+    {
+      "manifest_index": 30233,
+      "integration_failure": false,
+      "split": "train",
+      "anatomy": "renal_artery",
+      "clusters": 3,
+      "scene_seed": 3413053013,
+      "condition_id": 53,
+      "flow_mode": "pulsatile",
+      "clot_pattern": "historical_sites",
+      "obstacle_density": "high",
+      "obstacle_layout": "route_encounter",
+      "scenario_hash": "fc1a45e64761654bf59a86e398bd7484a1188ce21d5dc20ad31f098949f7dce0",
+      "accepted_seed": 3413053013,
+      "realized_scenario_hash": "9ba523a8cdf43c767d8baff8b9a2b4e35823a1008f2d5933cd39985306d41270",
+      "navigation_targets": [
+        2,
+        3,
+        1
+      ],
+      "navigation_success": true,
+      "strict_success": false,
+      "wall_after_reach_s": 3.2000000000000015,
+      "wall_contact_s": 3.2000000000000015,
+      "lost": 0,
+      "particle_collision_events": 1.0,
+      "particle_contact_s": 0.2
+    }
+  ]
+}

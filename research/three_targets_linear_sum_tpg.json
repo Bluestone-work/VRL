@@ -1,0 +1,992 @@
+{
+  "episodes": 18,
+  "tau_s": 30.0,
+  "rows": [
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200000,
+      "assignment": [
+        [
+          1,
+          2,
+          0
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "0e5029244bcb2366923593dd85e86edcdd4f71326f4db94c5cba13a206c6a5a2",
+      "accepted_seed": 2944200000,
+      "selected_start_indices": [
+        0
+      ],
+      "deadline_scored_last_arrival_s": 118.59999999999754,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        118.59999999999754,
+        14.299999999999965,
+        34.40000000000022
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 104.29999999999757,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 118.59999999999754,
+      "wall_contact_s": 10.799999999999978,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 0,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 118.59999999999754,
+      "timeout": false,
+      "seconds": 4.22901482693851
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200001,
+      "assignment": [
+        [
+          1,
+          0,
+          2
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "7c60a18be16e8ecd9f4abb55f2c8406dd9381d830bb14463e850c5c2f9107ddd",
+      "accepted_seed": 2944200001,
+      "selected_start_indices": [
+        1
+      ],
+      "deadline_scored_last_arrival_s": 135.89999999999657,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        71.40000000000022,
+        6.099999999999994,
+        135.89999999999657
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 129.79999999999657,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 135.89999999999657,
+      "wall_contact_s": 11.099999999999977,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 0,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 135.89999999999657,
+      "timeout": false,
+      "seconds": 4.8772836229763925
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200002,
+      "assignment": [
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "d4dcfcdf6682932b61b2ecaa14efe331fdf5547ab7bcbb46386553fc6fae470f",
+      "accepted_seed": 2944200002,
+      "selected_start_indices": [
+        2
+      ],
+      "deadline_scored_last_arrival_s": 82.09999999999961,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        4.899999999999999,
+        82.09999999999961,
+        67.40000000000045
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 77.19999999999962,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 82.09999999999961,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 0,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 82.09999999999961,
+      "timeout": false,
+      "seconds": 2.990686846897006
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200003,
+      "assignment": [
+        [
+          2,
+          0,
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "cb6bd878166332c33857d3ad72d358f3feb0137e64f20c917ee102c828b9ad4a",
+      "accepted_seed": 2944200003,
+      "selected_start_indices": [
+        0
+      ],
+      "deadline_scored_last_arrival_s": 45.00000000000037,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        16.09999999999996,
+        45.00000000000037,
+        5.999999999999995
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 39.00000000000038,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 45.00000000000037,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 0,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 45.00000000000037,
+      "timeout": false,
+      "seconds": 1.7619179766625166
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200004,
+      "assignment": [
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "b2c3bf9effc24cde98bd5b49822795af73f0c3b02b2c4adeb0e061a300fce2f5",
+      "accepted_seed": 2944200004,
+      "selected_start_indices": [
+        1
+      ],
+      "deadline_scored_last_arrival_s": 112.59999999999788,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        66.20000000000051,
+        112.59999999999788,
+        89.09999999999921
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 46.39999999999736,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 112.59999999999788,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 0,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 112.59999999999788,
+      "timeout": false,
+      "seconds": 3.8723981957882643
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 1,
+      "seed": 2944200005,
+      "assignment": [
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "462b46db6ef786d811b82daa42b8ea6438de78b52e79e0bdea76f06ed9bca40e",
+      "accepted_seed": 2944200005,
+      "selected_start_indices": [
+        2
+      ],
+      "deadline_scored_last_arrival_s": 42.600000000000335,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        2.0000000000000004,
+        42.600000000000335,
+        9.199999999999983
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 40.600000000000335,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 42.600000000000335,
+      "wall_contact_s": 9.499999999999982,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 0,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 42.600000000000335,
+      "timeout": false,
+      "seconds": 1.6383922030217946
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200000,
+      "assignment": [
+        [
+          1,
+          2
+        ],
+        [
+          0
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "0e5029244bcb2366923593dd85e86edcdd4f71326f4db94c5cba13a206c6a5a2",
+      "accepted_seed": 2944200000,
+      "selected_start_indices": [
+        0,
+        1
+      ],
+      "deadline_scored_last_arrival_s": 49.700000000000436,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        49.700000000000436,
+        14.299999999999965,
+        34.40000000000022
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 35.400000000000475,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 49.700000000000436,
+      "wall_contact_s": 10.899999999999977,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 497,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 49.700000000000436,
+      "timeout": false,
+      "seconds": 2.944415577221662
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200001,
+      "assignment": [
+        [
+          1,
+          0
+        ],
+        [
+          2
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "7c60a18be16e8ecd9f4abb55f2c8406dd9381d830bb14463e850c5c2f9107ddd",
+      "accepted_seed": 2944200001,
+      "selected_start_indices": [
+        1,
+        2
+      ],
+      "deadline_scored_last_arrival_s": 71.40000000000022,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        71.40000000000022,
+        6.099999999999994,
+        0.5
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 70.90000000000022,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 71.40000000000022,
+      "wall_contact_s": 11.099999999999977,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 714,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 71.40000000000022,
+      "timeout": false,
+      "seconds": 3.9266415531747043
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200002,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "d4dcfcdf6682932b61b2ecaa14efe331fdf5547ab7bcbb46386553fc6fae470f",
+      "accepted_seed": 2944200002,
+      "selected_start_indices": [
+        2,
+        0
+      ],
+      "deadline_scored_last_arrival_s": 40.90000000000031,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        4.899999999999999,
+        40.90000000000031,
+        26.200000000000102
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 36.00000000000031,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 40.90000000000031,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 409,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 40.90000000000031,
+      "timeout": false,
+      "seconds": 2.4362779930233955
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200003,
+      "assignment": [
+        [
+          2
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "cb6bd878166332c33857d3ad72d358f3feb0137e64f20c917ee102c828b9ad4a",
+      "accepted_seed": 2944200003,
+      "selected_start_indices": [
+        0,
+        1
+      ],
+      "deadline_scored_last_arrival_s": 85.6999999999994,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        57.20000000000054,
+        85.6999999999994,
+        5.999999999999995
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 79.6999999999994,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 85.6999999999994,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 857,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 85.6999999999994,
+      "timeout": false,
+      "seconds": 4.756889925803989
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200004,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "b2c3bf9effc24cde98bd5b49822795af73f0c3b02b2c4adeb0e061a300fce2f5",
+      "accepted_seed": 2944200004,
+      "selected_start_indices": [
+        1,
+        2
+      ],
+      "deadline_scored_last_arrival_s": 66.10000000000052,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        66.10000000000052,
+        3.2000000000000015,
+        28.500000000000135
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 62.90000000000052,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 66.10000000000052,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 661,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 66.10000000000052,
+      "timeout": false,
+      "seconds": 3.6120757199823856
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 2,
+      "seed": 2944200005,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "462b46db6ef786d811b82daa42b8ea6438de78b52e79e0bdea76f06ed9bca40e",
+      "accepted_seed": 2944200005,
+      "selected_start_indices": [
+        2,
+        0
+      ],
+      "deadline_scored_last_arrival_s": 40.400000000000304,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        2.0000000000000004,
+        40.400000000000304,
+        7.099999999999991
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 38.400000000000304,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 40.400000000000304,
+      "wall_contact_s": 9.499999999999982,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 404,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 40.400000000000304,
+      "timeout": false,
+      "seconds": 2.3986798832193017
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200000,
+      "assignment": [
+        [
+          1
+        ],
+        [
+          0
+        ],
+        [
+          2
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "0e5029244bcb2366923593dd85e86edcdd4f71326f4db94c5cba13a206c6a5a2",
+      "accepted_seed": 2944200000,
+      "selected_start_indices": [
+        0,
+        1,
+        2
+      ],
+      "deadline_scored_last_arrival_s": 49.50000000000043,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        49.50000000000043,
+        17.59999999999998,
+        25.900000000000098
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 31.900000000000453,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 49.50000000000043,
+      "wall_contact_s": 10.899999999999977,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 495,
+      "tpg_trigger_count": 1,
+      "waiting_transitions": 1,
+      "waiting_robot_s": 3.3000000000000016,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 49.50000000000043,
+      "timeout": false,
+      "seconds": 3.8896575020626187
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200001,
+      "assignment": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          0
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "7c60a18be16e8ecd9f4abb55f2c8406dd9381d830bb14463e850c5c2f9107ddd",
+      "accepted_seed": 2944200001,
+      "selected_start_indices": [
+        1,
+        2,
+        0
+      ],
+      "deadline_scored_last_arrival_s": 6.099999999999994,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        4.799999999999999,
+        6.099999999999994,
+        0.5
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 5.599999999999994,
+      "tau_s": 30.0,
+      "synchronized_success": true,
+      "last_arrival_s": 6.099999999999994,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 61,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 6.099999999999994,
+      "timeout": false,
+      "seconds": 0.5653873179107904
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200002,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "d4dcfcdf6682932b61b2ecaa14efe331fdf5547ab7bcbb46386553fc6fae470f",
+      "accepted_seed": 2944200002,
+      "selected_start_indices": [
+        2,
+        0,
+        1
+      ],
+      "deadline_scored_last_arrival_s": 26.200000000000102,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        4.899999999999999,
+        1.4000000000000001,
+        26.200000000000102
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 24.800000000000104,
+      "tau_s": 30.0,
+      "synchronized_success": true,
+      "last_arrival_s": 26.200000000000102,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 262,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 26.200000000000102,
+      "timeout": false,
+      "seconds": 2.065886882133782
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200003,
+      "assignment": [
+        [
+          2
+        ],
+        [
+          1
+        ],
+        [
+          0
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "cb6bd878166332c33857d3ad72d358f3feb0137e64f20c917ee102c828b9ad4a",
+      "accepted_seed": 2944200003,
+      "selected_start_indices": [
+        0,
+        1,
+        2
+      ],
+      "deadline_scored_last_arrival_s": 78.99999999999979,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        13.299999999999969,
+        78.99999999999979,
+        5.999999999999995
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 72.99999999999979,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 78.99999999999979,
+      "wall_contact_s": 0.2715236906142796,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 790,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 78.99999999999979,
+      "timeout": false,
+      "seconds": 5.835040416102856
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200004,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "b2c3bf9effc24cde98bd5b49822795af73f0c3b02b2c4adeb0e061a300fce2f5",
+      "accepted_seed": 2944200004,
+      "selected_start_indices": [
+        1,
+        2,
+        0
+      ],
+      "deadline_scored_last_arrival_s": 73.90000000000008,
+      "lesion_reached": [
+        1,
+        1,
+        1
+      ],
+      "first_arrival_s": [
+        73.90000000000008,
+        3.2000000000000015,
+        23.600000000000065
+      ],
+      "all_three_reached": true,
+      "arrival_span_s": 70.70000000000007,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": 73.90000000000008,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 739,
+      "tpg_trigger_count": 1,
+      "waiting_transitions": 1,
+      "waiting_robot_s": 8.199999999999987,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 73.90000000000008,
+      "timeout": false,
+      "seconds": 5.389357791747898
+    },
+    {
+      "method": "pursuit",
+      "tpg": true,
+      "anatomy": "mca_m1_lvo",
+      "clusters": 3,
+      "seed": 2944200005,
+      "assignment": [
+        [
+          0
+        ],
+        [
+          2
+        ],
+        [
+          1
+        ]
+      ],
+      "allocation": "linear_sum",
+      "scenario_hash": "462b46db6ef786d811b82daa42b8ea6438de78b52e79e0bdea76f06ed9bca40e",
+      "accepted_seed": 2944200005,
+      "selected_start_indices": [
+        2,
+        0,
+        1
+      ],
+      "deadline_scored_last_arrival_s": 300.0,
+      "lesion_reached": [
+        1,
+        0,
+        1
+      ],
+      "first_arrival_s": [
+        2.0000000000000004,
+        null,
+        7.099999999999991
+      ],
+      "all_three_reached": false,
+      "arrival_span_s": null,
+      "tau_s": 30.0,
+      "synchronized_success": false,
+      "last_arrival_s": null,
+      "wall_contact_s": 0.0,
+      "spacing_pair_s": 0.0,
+      "spacing_violation_pair_s": 0.0,
+      "spacing_violation_steps": 0,
+      "entity_pair_contact_s": 0.0,
+      "tpg_gate_calls": 3000,
+      "tpg_trigger_count": 0,
+      "waiting_transitions": 0,
+      "waiting_robot_s": 0.0,
+      "particle_collision_events": 0,
+      "lost": 0,
+      "elapsed_s": 299.9999999999997,
+      "timeout": false,
+      "seconds": 24.771573956124485
+    }
+  ],
+  "by_clusters": {
+    "1": {
+      "episodes": 6,
+      "deadline_scored_last_arrival_s": 89.46666666666539,
+      "all_three_rate": 1.0,
+      "synchronized_rate": 0.0,
+      "last_arrival_s": 89.46666666666539,
+      "arrival_span_s": 72.88333333333198,
+      "wall_contact_s": 5.233333333333323,
+      "lost_rate": 0.0
+    },
+    "2": {
+      "episodes": 6,
+      "deadline_scored_last_arrival_s": 59.03333333333354,
+      "all_three_rate": 1.0,
+      "synchronized_rate": 0.0,
+      "last_arrival_s": 59.03333333333354,
+      "arrival_span_s": 53.88333333333353,
+      "wall_contact_s": 5.249999999999989,
+      "lost_rate": 0.0
+    },
+    "3": {
+      "episodes": 6,
+      "deadline_scored_last_arrival_s": 89.11666666666673,
+      "all_three_rate": 0.8333333333333334,
+      "synchronized_rate": 0.3333333333333333,
+      "last_arrival_s": 46.940000000000076,
+      "arrival_span_s": 41.20000000000009,
+      "wall_contact_s": 1.861920615102376,
+      "lost_rate": 0.0
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_train180.json",
+  "manifest": "/home/wj/桌面/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "b3b08f0c893462dd5616ef4267376f066f5299ea5410edf7645351c2c0dd3850",
+  "episodes": 180,
+  "selected": 180,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 144,
+      "manifest_index": 25019,
+      "row": {
+        "anatomy": "carotid_bifurcation",
+        "anatomy_index": 8,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 17,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 4,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "low",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": false,
+        "replicate": 3,
+        "scenario_hash": "88666d7c8601fec2e58cb537f9650c539714903d1ef10478043470dbd526493a",
+        "scene_seed": 3408017003,
+        "split": "train",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "train",
+        "clusters": 3,
+        "scene_seed": 3408017003,
+        "scenario_hash": "88666d7c8601fec2e58cb537f9650c539714903d1ef10478043470dbd526493a"
+      },
+      "pursuit_accepted_seed": 3408017003,
+      "pursuit_realized_scenario_hash": "d224f2c9084c0280b22a189d8c3b8bab8e020ff4e79f511525eaea12d1dbcfa6",
+      "pursuit_navigation_targets": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "episode_index": 145,
+      "manifest_index": 25193,
+      "row": {
+        "anatomy": "carotid_bifurcation",
+        "anatomy_index": 8,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 20,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "high",
+        "obstacle_layout": "uniform",
+        "pulsatile": false,
+        "replicate": 13,
+        "scenario_hash": "d367af53c2e17bee15dd9290e6c639f7089c32b02725600e89cfa9d7029b2a2f",
+        "scene_seed": 3408020013,
+        "split": "train",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "train",
+        "clusters": 3,
+        "scene_seed": 3408020013,
+        "scenario_hash": "d367af53c2e17bee15dd9290e6c639f7089c32b02725600e89cfa9d7029b2a2f"
+      },
+      "pursuit_accepted_seed": 3408020013,
+      "pursuit_realized_scenario_hash": "497892010a7d7aa5f0d3eef8e3789ffa3f0dc0f529d15ffc9a30f7faf3b2bef6",
+      "pursuit_navigation_targets": [
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "episode_index": 146,
+      "manifest_index": 25367,
+      "row": {
+        "anatomy": "carotid_bifurcation",
+        "anatomy_index": 8,
+        "clot_pattern": "historical_sites",
+        "clusters": 3,
+        "condition_id": 24,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 4,
+        "environment_clot_initialization": "historical_sites",
+        "environment_clot_initialization_realized": "historical_sites",
+        "flow_mode": "strong",
+        "nominal_flow_inlet_mm_s": 0.1,
+        "obstacle_density": "low",
+        "obstacle_layout": "uniform",
+        "pulsatile": false,
+        "replicate": 7,
+        "scenario_hash": "07752314b8f1f8b4c74dcc795a61bc675a2032fccdbd54a80f396187988bd066",
+        "scene_seed": 3408024007,
+        "split": "train",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "train",
+        "clusters": 3,
+        "scene_seed": 3408024007,
+        "scenario_hash": "07752314b8f1f8b4c74dcc795a61bc675a2032fccdbd54a80f396187988bd066"
+      },
+      "pursuit_accepted_seed": 3408024007,
+      "pursuit_realized_scenario_hash": "81ec350f0f8b67d86b59b8957cb0786b0e9f9f4b931671f78c8b1dd26c339373",
+      "pursuit_navigation_targets": [
+        0,
+        2,
+        3
+      ]
+    }
+  ]
+}

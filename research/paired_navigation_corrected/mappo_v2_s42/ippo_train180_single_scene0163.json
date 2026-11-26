@@ -1,0 +1,49 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_train180.json",
+  "manifest": "/home/wj/\u684c\u9762/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "b3b08f0c893462dd5616ef4267376f066f5299ea5410edf7645351c2c0dd3850",
+  "episodes": 180,
+  "selected": 180,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 163,
+      "manifest_index": 28322,
+      "row": {
+        "anatomy": "renal_artery",
+        "anatomy_index": 13,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 14,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 32,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "stress",
+        "obstacle_layout": "uniform",
+        "pulsatile": false,
+        "replicate": 0,
+        "scenario_hash": "93ad9855182d6a22cd1866403912f80d1d5989d2fc0f0e8604e4a39c353ce22d",
+        "scene_seed": 3413014000,
+        "split": "train",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "train",
+        "clusters": 3,
+        "scene_seed": 3413014000,
+        "scenario_hash": "93ad9855182d6a22cd1866403912f80d1d5989d2fc0f0e8604e4a39c353ce22d"
+      },
+      "pursuit_accepted_seed": 3413014000,
+      "pursuit_realized_scenario_hash": "363ba7a16b93574804e0e55c7bba0fe7216d05bdb77dbd246177832d24027d53",
+      "pursuit_navigation_targets": [
+        2,
+        3,
+        0
+      ]
+    }
+  ]
+}

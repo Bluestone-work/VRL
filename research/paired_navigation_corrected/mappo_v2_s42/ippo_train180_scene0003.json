@@ -1,0 +1,128 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_train180.json",
+  "manifest": "/home/wj/桌面/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "b3b08f0c893462dd5616ef4267376f066f5299ea5410edf7645351c2c0dd3850",
+  "episodes": 180,
+  "selected": 180,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 3,
+      "manifest_index": 521,
+      "row": {
+        "anatomy": "mca_m1_lvo",
+        "anatomy_index": 0,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 10,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 8,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "medium",
+        "obstacle_layout": "uniform",
+        "pulsatile": false,
+        "replicate": 13,
+        "scenario_hash": "3ae25ddc26605726b11766e4aa65799570cc52087fa267133a04c8d30980f00b",
+        "scene_seed": 3400010013,
+        "split": "train",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "train",
+        "clusters": 3,
+        "scene_seed": 3400010013,
+        "scenario_hash": "3ae25ddc26605726b11766e4aa65799570cc52087fa267133a04c8d30980f00b"
+      },
+      "pursuit_accepted_seed": 3400010013,
+      "pursuit_realized_scenario_hash": "38242e6918ca09421e5223e5f80e35e92122baeef58302652b1949a402fbc3b1",
+      "pursuit_navigation_targets": [
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "episode_index": 4,
+      "manifest_index": 695,
+      "row": {
+        "anatomy": "mca_m1_lvo",
+        "anatomy_index": 0,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 14,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 32,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "stress",
+        "obstacle_layout": "uniform",
+        "pulsatile": false,
+        "replicate": 7,
+        "scenario_hash": "6fca0a465c808362587a21f309b2c87cb13deeaa168f8c3f29171a4f6542f170",
+        "scene_seed": 3400014007,
+        "split": "train",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "train",
+        "clusters": 3,
+        "scene_seed": 3400014007,
+        "scenario_hash": "6fca0a465c808362587a21f309b2c87cb13deeaa168f8c3f29171a4f6542f170"
+      },
+      "pursuit_accepted_seed": 3400014007,
+      "pursuit_realized_scenario_hash": "e7ec5a63ec83af35aa55cf385dbe6e78d585980b13814cde1476120437302dc6",
+      "pursuit_navigation_targets": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "episode_index": 5,
+      "manifest_index": 869,
+      "row": {
+        "anatomy": "mca_m1_lvo",
+        "anatomy_index": 0,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 18,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 8,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "medium",
+        "obstacle_layout": "uniform",
+        "pulsatile": false,
+        "replicate": 1,
+        "scenario_hash": "e0c7c7f943cd035a3b615a9cb7d36b71dcbd71e8658ad1b9689dc7f3daa2414b",
+        "scene_seed": 3400018001,
+        "split": "train",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "train",
+        "clusters": 3,
+        "scene_seed": 3400018001,
+        "scenario_hash": "e0c7c7f943cd035a3b615a9cb7d36b71dcbd71e8658ad1b9689dc7f3daa2414b"
+      },
+      "pursuit_accepted_seed": 3400018001,
+      "pursuit_realized_scenario_hash": "ace52d25b6cd635dc9aa72faab000f5345ee235260f4efc0bfb50a4e8ad405eb",
+      "pursuit_navigation_targets": [
+        3,
+        2,
+        1
+      ]
+    }
+  ]
+}

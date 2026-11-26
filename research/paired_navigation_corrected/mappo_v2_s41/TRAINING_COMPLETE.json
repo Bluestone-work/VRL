@@ -1,0 +1,6 @@
+{
+  "environment_steps": 50176,
+  "target_environment_steps": 50000,
+  "agent_steps": 150528,
+  "training_seconds": 570.269256808795
+}
