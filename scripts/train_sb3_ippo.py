@@ -22,7 +22,7 @@ if str(ROOT) not in sys.path:
 import numpy as np
 import torch
 from gymnasium import spaces
-from stable_baselines3 import DQN, PPO
+from stable_baselines3 import A2C, DQN, PPO
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.logger import configure
 from stable_baselines3.common.save_util import load_from_zip_file
@@ -796,16 +796,16 @@ class IPPOCallback(BaseCallback):
             ltmp = self.out / "live_trace.tmp"
             ltmp.write_text(json.dumps(live, ensure_ascii=False))
             ltmp.replace(self.out / "live_trace.json")
-        if not isinstance(self.model, PPO):
+        if not isinstance(self.model, (PPO, A2C)):
             self._save_if_due()
         return True
 
     def _on_rollout_start(self):
-        if isinstance(self.model, PPO):
+        if isinstance(self.model, (PPO, A2C)):
             self._save_if_due()
 
     def _on_training_end(self):
-        if isinstance(self.model, PPO):
+        if isinstance(self.model, (PPO, A2C)):
             self._save_if_due()
 
     def _save_if_due(self):
@@ -910,7 +910,7 @@ def main():
     p.add_argument("--dueling", action="store_true",
                    help="DQN only: V(s) + advantage centred over the valid candidates "
                         "(implies --mask-invalid, since the centring needs the mask)")
-    p.add_argument("--algo", choices=("ppo", "mappo", "dqn"), default="ppo",
+    p.add_argument("--algo", choices=("ppo", "mappo", "a2c", "dqn"), default="ppo",
                    help="mappo uses the same local actor with a centralized training-only value function")
     p.add_argument("--extractor", choices=("mlp", "transformer"), default="mlp",
                    help="transformer keeps the six-branch topology and 128-d output, but encodes "
@@ -990,7 +990,8 @@ def main():
                           safety_parity=a.safety_parity, settle_radius=a.settle_radius,
                           exit_mask=a.exit_mask, centralized_critic=(a.algo == "mappo"),
                           critic_identity=(a.algo == "mappo"))
-    cfg = dict(algorithm=("IDQN_shared" if a.algo == "dqn" else "MAPPO_shared" if a.algo == "mappo" else "IPPO_shared"),
+    names = {"ppo": "IPPO_shared", "mappo": "MAPPO_shared", "a2c": "IA2C_shared", "dqn": "IDQN_shared"}
+    cfg = dict(algorithm=names[a.algo],
                critic_identity=(a.algo == "mappo"), optimiser=a.algo, feature_extractor=a.extractor, action_set=a.action_set,
                flow_feature=bool(a.flow_feature),
                safety_parity=bool(a.safety_parity), settle_radius=a.settle_radius,
@@ -1016,7 +1017,7 @@ def main():
                                  f"per-cluster discrete direct semantic candidate index (K={SEMANTIC_MINIMAL_COUNT if a.action_set == 'semantic_minimal' else SEMANTIC_REDUCED_COUNT if a.action_set == 'semantic_reduced' else SEMANTIC_CANDIDATE_COUNT})"),
                actor="parameter-shared local categorical actor; one candidate index per cluster",
                critic=("centralized MAPPO critic; joint deployable observation state" if a.algo == "mappo"
-                       else "local IPPO critic; no privileged state"),
+                       else "local critic; no privileged state"),
                architecture="GRU history + CNN image + map + masked obstacle/peer pooling",
                invalid_action_mask=bool(a.mask_invalid),
                dataset_split=a.dataset_split, dataset_rows=len(dataset_rows or []),
@@ -1070,10 +1071,15 @@ def main():
         else:
             policy_name = (MaskedMultiInputActorCriticPolicy if a.mask_invalid and a.action_set != "continuous"
                            else "MultiInputPolicy")
-        model = PPO(policy_name, env, seed=a.seed, device=a.device, verbose=0,
-                    policy_kwargs=policy_kwargs, learning_rate=1e-4, n_steps=256,
-                    batch_size=128, n_epochs=4, gamma=.995, gae_lambda=.95,
-                    clip_range=.2, ent_coef=a.ent_coef)
+        if a.algo == "a2c":
+            model = A2C(policy_name, env, seed=a.seed, device=a.device, verbose=0,
+                        policy_kwargs=policy_kwargs, learning_rate=1e-4, n_steps=32,
+                        gamma=.995, gae_lambda=.95, ent_coef=a.ent_coef)
+        else:
+            model = PPO(policy_name, env, seed=a.seed, device=a.device, verbose=0,
+                        policy_kwargs=policy_kwargs, learning_rate=1e-4, n_steps=256,
+                        batch_size=128, n_epochs=4, gamma=.995, gae_lambda=.95,
+                        clip_range=.2, ent_coef=a.ent_coef)
     if a.init_from:
         # Transfer policy weights while keeping the new run's optimiser fresh.
         _, parameters, _ = load_from_zip_file(a.init_from, device=model.device, load_data=False)

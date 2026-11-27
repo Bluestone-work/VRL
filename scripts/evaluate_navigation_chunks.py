@@ -17,7 +17,7 @@ from pathlib import Path
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--model", type=Path, required=True)
-    p.add_argument("--kind", choices=("ppo", "dqn", "sac"), required=True)
+    p.add_argument("--kind", choices=("ppo", "a2c", "dqn", "sac"), required=True)
     p.add_argument("--action-set", default="semantic_reduced")
     p.add_argument("--split", required=True)
     p.add_argument("--clusters", type=int, required=True)

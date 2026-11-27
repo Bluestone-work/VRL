@@ -15,7 +15,7 @@ import sys
 
 import numpy as np
 import torch
-from stable_baselines3 import DQN, PPO, SAC
+from stable_baselines3 import A2C, DQN, PPO, SAC
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -66,7 +66,7 @@ def grouped_aggregates(rows):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", type=Path, required=True)
-    parser.add_argument("--kind", choices=("ppo", "dqn", "sac"), required=True)
+    parser.add_argument("--kind", choices=("ppo", "a2c", "dqn", "sac"), required=True)
     parser.add_argument("--action-set", choices=("semantic", "semantic_reduced", "semantic_minimal", "atomic", "continuous"), default="semantic")
     parser.add_argument("--split", choices=("train", "validation", "holdout_test"), required=True)
     parser.add_argument("--clusters", type=int, choices=(1, 2, 3), default=3)
@@ -124,7 +124,7 @@ def main():
     if paired_entries is not None and payload.get("manifest_sha256") != manifest_sha:
         raise ValueError("paired scene list refers to a different manifest")
     anatomies = sorted({row["anatomy"] for row in rows})
-    model_cls = {"ppo": PPO, "dqn": DQN, "sac": SAC}[args.kind]
+    model_cls = {"a2c": A2C, "ppo": PPO, "dqn": DQN, "sac": SAC}[args.kind]
     if args.kind == "sac" and args.action_set != "continuous":
         raise SystemExit("SAC manifest evaluation requires --action-set continuous")
     if args.kind != "sac" and args.action_set == "continuous":
