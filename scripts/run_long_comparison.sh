@@ -10,6 +10,6 @@ for seed in "${seed_list[@]}"; do
   # the default was 500k.  A target-specific directory makes each run
   # resumable without confusing an older result for the requested budget.
   out="research/paired_navigation_corrected/mappo_v2_long_${timesteps}_s${seed}"
-  echo "Starting or resuming MAPPO-V2 seed=${seed} timesteps=${timesteps} output=${out}"
+  echo "Starting MAPPO-V2 seed=${seed} timesteps=${timesteps} output=${out}"
   PATH=/home/wj/miniconda3/envs/navrl/bin:$PATH bash scripts/rerun_paired_navigation.sh "$seed" "$out" "$timesteps"
 done
