@@ -1,0 +1,26 @@
+{
+  "agent_steps": 370176,
+  "environment_steps": 123392,
+  "target_environment_steps": 500000,
+  "minutes": 33.644258582615294,
+  "frontier": 3,
+  "difficulty": 3,
+  "scene": {
+    "anatomy": "coronary_lm_bifurcation",
+    "clusters": 3,
+    "seed": 2844100116,
+    "flow": 0.15,
+    "latency": 0,
+    "dynamic_obstacle_count": 32,
+    "clot_initialization": null,
+    "variation": null,
+    "accepted_seed": 2844100116,
+    "scenario_hash": "25d88bef6f975a4854597ffe0eef7404496a661b93abd095b61ed1158b26713b",
+    "difficulty": 3,
+    "difficulty_name": "stress",
+    "dynamic_obstacles": 32,
+    "frontier": 3,
+    "scenario_family": "route_encounter",
+    "localized_obstacles": 6
+  }
+}

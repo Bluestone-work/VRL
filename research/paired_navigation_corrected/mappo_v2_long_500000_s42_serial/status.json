@@ -1,0 +1,26 @@
+{
+  "agent_steps": 517632,
+  "environment_steps": 172544,
+  "target_environment_steps": 180512,
+  "minutes": 54.42680146737645,
+  "frontier": 3,
+  "difficulty": 3,
+  "scene": {
+    "anatomy": "renal_artery",
+    "clusters": 3,
+    "seed": 2844200157,
+    "flow": 0.15,
+    "latency": 0,
+    "dynamic_obstacle_count": 32,
+    "clot_initialization": null,
+    "variation": null,
+    "accepted_seed": 2844200157,
+    "scenario_hash": "12958d40e9db6b656c9ac15320adbb89b9719bfc9af5afc459b133c28371e81b",
+    "difficulty": 3,
+    "difficulty_name": "stress",
+    "dynamic_obstacles": 32,
+    "frontier": 3,
+    "scenario_family": "uniform",
+    "localized_obstacles": 0
+  }
+}

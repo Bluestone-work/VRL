@@ -1,0 +1,26 @@
+{
+  "agent_steps": 1536,
+  "environment_steps": 512,
+  "target_environment_steps": 336160,
+  "minutes": 0.09929897114634514,
+  "frontier": 0,
+  "difficulty": 0,
+  "scene": {
+    "anatomy": "carotid_bifurcation",
+    "clusters": 3,
+    "seed": 2844100000,
+    "flow": 0.025,
+    "latency": 0,
+    "dynamic_obstacle_count": 4,
+    "clot_initialization": null,
+    "variation": null,
+    "accepted_seed": 2844100000,
+    "scenario_hash": "c114194b77bc33db71f0c9f88c6d04dd03ef45644cd953d0eedf83d41cccc5f5",
+    "difficulty": 0,
+    "difficulty_name": "easy",
+    "dynamic_obstacles": 4,
+    "frontier": 0,
+    "scenario_family": "route_encounter",
+    "localized_obstacles": 2
+  }
+}

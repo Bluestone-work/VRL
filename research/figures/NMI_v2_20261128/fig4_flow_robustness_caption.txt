@@ -1,0 +1,11 @@
+Fig. 4 | Blood-flow disturbance and dynamic avoidance. a, The three flow regimes paired on identical scenes:
+weak steady (0.025 mm/s), strong steady (0.10 mm/s) and pulsatile (0.05 mm/s nominal; two-harmonic arterial
+waveform, heart rate 50-120 bpm). Every regime also randomises patient-level mean flow, actuation gain, direction
+bias and response lag (Methods), none of which is observable from the preoperative image. b, Scene 3405052004
+(pulsatile flow), cluster 2, frozen seed-41 policies: keyframes when IPPO first deviates from pursuit by slowing (t0), the first
+pursuit wall contact (t1) and IPPO arrival (t2), and the measured wall clearance and executed command speed on the same time axis
+(dotted lines mark t0-t2). In this scene pure pursuit accumulates 248.3 robot·s of wall contact on this
+cluster. c, Task completion by flow regime and obstacle density, pooled over 180 training-anatomy and 100
+held-out-anatomy scenes; markers, mean (learned methods: mean of three seeds per scene); bars, 95% bootstrap
+interval over scenes. d, Percentage of scenes with any wall contact and with a lost cluster under the same
+conditions. Values: Weak IPPO 89.4% (n=94); Weak MAPPO-V2 89.7% (n=94); Weak Pursuit 89.4% (n=94); Weak STPG 89.4% (n=94); Weak PAC-NMPC 92.6% (n=94); Strong IPPO 72.0% (n=93); Strong MAPPO-V2 72.0% (n=93); Strong Pursuit 72.0% (n=93); Strong STPG 72.0% (n=93); Strong PAC-NMPC 67.7% (n=93); Pulsatile IPPO 87.8% (n=93); Pulsatile MAPPO-V2 87.1% (n=93); Pulsatile Pursuit 87.1% (n=93); Pulsatile STPG 87.1% (n=93); Pulsatile PAC-NMPC 91.4% (n=93); Low IPPO 84.6% (n=65); Low MAPPO-V2 84.6% (n=65); Low Pursuit 84.6% (n=65); Low STPG 84.6% (n=65); Low PAC-NMPC 83.1% (n=65); Medium IPPO 77.5% (n=71); Medium MAPPO-V2 77.5% (n=71); Medium Pursuit 77.5% (n=71); Medium STPG 77.5% (n=71); Medium PAC-NMPC 83.1% (n=71); High IPPO 85.8% (n=73); High MAPPO-V2 85.4% (n=73); High Pursuit 84.9% (n=73); High STPG 84.9% (n=73); High PAC-NMPC 83.6% (n=73); Stress IPPO 84.5% (n=71); Stress MAPPO-V2 84.5% (n=71); Stress Pursuit 84.5% (n=71); Stress STPG 84.5% (n=71); Stress PAC-NMPC 85.9% (n=71).

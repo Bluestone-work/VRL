@@ -21,7 +21,7 @@ def child(spec, connection, policy=None, lateral_scale=None, lateral_near_radius
         _, _, split, suite, anatomy, n, seed, flow, latency, variation = job
         kw = dict(flow_inlet_mm_s=flow, sense_cfg=DeployableConfig(latency_steps=latency),
                   variation=variation if variation > 0 else None)
-        if method in ('pac_nmpc', 'stpg', 'oracle_flow'):
+        if method in ('pac_nmpc', 'stpg', 'ccbs', 'oracle_flow'):
             row, ep = METHODS[method](n, anatomy, seed, **kw)
         else:
             ep = LysisEpisode(n, anatomy, seed, **kw)
@@ -86,7 +86,7 @@ def main():
         lateral_near_radius_intervention=a.lateral_near_radius,
         source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
         source_hashes={f:hashlib.sha256(Path(f).read_bytes()).hexdigest() for f in
-        ['scripts/evaluate_hard_baselines.py','scripts/benchmark_lysis.py','marl/lysis_baselines.py','marl/sched_settle.py','scripts/train_sched_settle.py']},
+        ['scripts/evaluate_hard_baselines.py','scripts/benchmark_lysis.py','marl/lysis_baselines.py','marl/ccbs_adapter.py','marl/sched_settle.py','scripts/train_sched_settle.py']},
         scope='development screening; original repository defaults, no tuning; paper methods are adaptations'), indent=2))
     ctx = mp.get_context('fork'); running = {}; cursor = completed = 0
     with (a.out/'episodes.jsonl').open('w') as out, (a.out/'failures.jsonl').open('w') as failures:

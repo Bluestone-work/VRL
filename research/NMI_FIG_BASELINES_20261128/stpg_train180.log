@@ -1,0 +1,199 @@
+{"row": 0, "method": "stpg", "succ": true, "reached": 3, "t": 13.9, "wall": 0.0}
+{"row": 1, "method": "stpg", "succ": true, "reached": 3, "t": 45.8, "wall": 0.0}
+{"row": 2, "method": "stpg", "succ": true, "reached": 3, "t": 25.9, "wall": 0.0}
+{"row": 3, "method": "stpg", "succ": true, "reached": 3, "t": 35.1, "wall": 0.0}
+{"row": 4, "method": "stpg", "succ": true, "reached": 3, "t": 83.6, "wall": 11.01}
+{"row": 5, "method": "stpg", "succ": true, "reached": 3, "t": 17.0, "wall": 0.0}
+{"row": 6, "method": "stpg", "succ": true, "reached": 3, "t": 104.1, "wall": 11.1}
+{"row": 7, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 8, "method": "stpg", "succ": true, "reached": 3, "t": 19.5, "wall": 0.0}
+{"row": 9, "method": "stpg", "succ": true, "reached": 3, "t": 44.2, "wall": 9.97}
+{"row": 10, "method": "stpg", "succ": true, "reached": 3, "t": 20.0, "wall": 0.12}
+{"row": 11, "method": "stpg", "succ": true, "reached": 3, "t": 27.4, "wall": 0.49}
+{"row": 12, "method": "stpg", "succ": true, "reached": 3, "t": 49.0, "wall": 0.0}
+{"row": 13, "method": "stpg", "succ": true, "reached": 3, "t": 7.2, "wall": 0.0}
+{"row": 14, "method": "stpg", "succ": true, "reached": 3, "t": 26.2, "wall": 0.0}
+{"row": 15, "method": "stpg", "succ": true, "reached": 3, "t": 22.5, "wall": 0.0}
+{"row": 16, "method": "stpg", "succ": true, "reached": 3, "t": 16.7, "wall": 0.0}
+{"row": 17, "method": "stpg", "succ": true, "reached": 3, "t": 34.0, "wall": 0.0}
+{"row": 18, "method": "stpg", "succ": true, "reached": 3, "t": 52.2, "wall": 0.0}
+{"row": 19, "method": "stpg", "succ": true, "reached": 3, "t": 42.9, "wall": 0.0}
+{"row": 20, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 21, "method": "stpg", "succ": true, "reached": 3, "t": 139.3, "wall": 0.0}
+{"row": 22, "method": "stpg", "succ": true, "reached": 3, "t": 29.8, "wall": 0.0}
+{"row": 23, "method": "stpg", "succ": true, "reached": 3, "t": 23.7, "wall": 0.0}
+{"row": 24, "method": "stpg", "succ": true, "reached": 3, "t": 41.0, "wall": 0.0}
+{"row": 25, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 26, "method": "stpg", "succ": true, "reached": 3, "t": 84.5, "wall": 0.0}
+{"row": 27, "method": "stpg", "succ": true, "reached": 3, "t": 34.4, "wall": 0.0}
+{"row": 28, "method": "stpg", "succ": true, "reached": 3, "t": 89.0, "wall": 0.0}
+{"row": 29, "method": "stpg", "succ": true, "reached": 3, "t": 65.6, "wall": 0.0}
+{"row": 30, "method": "stpg", "succ": true, "reached": 3, "t": 153.7, "wall": 0.0}
+{"row": 31, "method": "stpg", "succ": true, "reached": 3, "t": 20.4, "wall": 0.0}
+{"row": 32, "method": "stpg", "succ": true, "reached": 3, "t": 39.8, "wall": 0.0}
+{"row": 33, "method": "stpg", "succ": false, "reached": 2, "t": 26.0, "wall": 0.0}
+{"row": 34, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 35, "method": "stpg", "succ": true, "reached": 3, "t": 112.8, "wall": 0.0}
+{"row": 36, "method": "stpg", "succ": true, "reached": 3, "t": 288.3, "wall": 0.0}
+{"row": 37, "method": "stpg", "succ": true, "reached": 3, "t": 49.7, "wall": 0.0}
+{"row": 38, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 39, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 40, "method": "stpg", "succ": true, "reached": 3, "t": 9.4, "wall": 0.0}
+{"row": 41, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 42, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 43, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 44, "method": "stpg", "succ": true, "reached": 3, "t": 26.7, "wall": 0.0}
+{"row": 45, "method": "stpg", "succ": true, "reached": 3, "t": 25.6, "wall": 0.0}
+{"row": 46, "method": "stpg", "succ": true, "reached": 3, "t": 40.1, "wall": 11.76}
+{"row": 47, "method": "stpg", "succ": true, "reached": 3, "t": 24.7, "wall": 0.0}
+{"row": 48, "method": "stpg", "succ": true, "reached": 3, "t": 102.3, "wall": 0.0}
+{"row": 49, "method": "stpg", "succ": true, "reached": 3, "t": 19.6, "wall": 0.0}
+{"row": 50, "method": "stpg", "succ": true, "reached": 3, "t": 17.7, "wall": 0.0}
+{"row": 51, "method": "stpg", "succ": true, "reached": 3, "t": 19.1, "wall": 0.0}
+{"row": 52, "method": "stpg", "succ": true, "reached": 3, "t": 11.8, "wall": 0.0}
+{"row": 53, "method": "stpg", "succ": true, "reached": 3, "t": 15.4, "wall": 0.0}
+{"row": 54, "method": "stpg", "succ": true, "reached": 3, "t": 40.2, "wall": 0.0}
+{"row": 55, "method": "stpg", "succ": true, "reached": 3, "t": 35.4, "wall": 0.0}
+{"row": 56, "method": "stpg", "succ": true, "reached": 3, "t": 11.7, "wall": 0.0}
+{"row": 57, "method": "stpg", "succ": true, "reached": 3, "t": 40.3, "wall": 0.0}
+{"row": 58, "method": "stpg", "succ": true, "reached": 3, "t": 106.8, "wall": 5.44}
+{"row": 59, "method": "stpg", "succ": true, "reached": 3, "t": 67.3, "wall": 0.0}
+{"row": 60, "method": "stpg", "succ": true, "reached": 3, "t": 116.9, "wall": 0.0}
+{"row": 61, "method": "stpg", "succ": true, "reached": 3, "t": 73.3, "wall": 0.0}
+{"row": 62, "method": "stpg", "succ": true, "reached": 3, "t": 58.8, "wall": 0.0}
+{"row": 63, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 64, "method": "stpg", "succ": true, "reached": 3, "t": 110.8, "wall": 0.0}
+{"row": 65, "method": "stpg", "succ": true, "reached": 3, "t": 180.7, "wall": 0.0}
+{"row": 66, "method": "stpg", "succ": true, "reached": 3, "t": 133.1, "wall": 0.0}
+{"row": 67, "method": "stpg", "succ": true, "reached": 3, "t": 40.7, "wall": 0.0}
+{"row": 68, "method": "stpg", "succ": true, "reached": 3, "t": 42.6, "wall": 0.0}
+{"row": 69, "method": "stpg", "succ": true, "reached": 3, "t": 54.8, "wall": 0.0}
+{"row": 70, "method": "stpg", "succ": true, "reached": 3, "t": 29.6, "wall": 0.0}
+{"row": 71, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 72, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 73, "method": "stpg", "succ": true, "reached": 3, "t": 67.0, "wall": 0.0}
+{"row": 74, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 75, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 76, "method": "stpg", "succ": true, "reached": 3, "t": 198.4, "wall": 0.0}
+{"row": 77, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 78, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 79, "method": "stpg", "succ": true, "reached": 3, "t": 115.1, "wall": 0.0}
+{"row": 80, "method": "stpg", "succ": true, "reached": 3, "t": 98.9, "wall": 0.0}
+{"row": 81, "method": "stpg", "succ": true, "reached": 3, "t": 33.9, "wall": 0.0}
+{"row": 82, "method": "stpg", "succ": true, "reached": 3, "t": 37.4, "wall": 0.0}
+{"row": 83, "method": "stpg", "succ": true, "reached": 3, "t": 107.3, "wall": 0.0}
+{"row": 84, "method": "stpg", "succ": true, "reached": 3, "t": 23.3, "wall": 0.0}
+{"row": 85, "method": "stpg", "succ": true, "reached": 3, "t": 15.3, "wall": 0.0}
+{"row": 86, "method": "stpg", "succ": true, "reached": 3, "t": 78.3, "wall": 0.0}
+{"row": 87, "method": "stpg", "succ": true, "reached": 3, "t": 50.3, "wall": 0.0}
+{"row": 88, "method": "stpg", "succ": true, "reached": 3, "t": 70.4, "wall": 0.0}
+{"row": 89, "method": "stpg", "succ": true, "reached": 3, "t": 100.9, "wall": 0.0}
+{"row": 90, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 91, "method": "stpg", "succ": true, "reached": 3, "t": 76.1, "wall": 0.0}
+{"row": 92, "method": "stpg", "succ": true, "reached": 3, "t": 11.5, "wall": 0.0}
+{"row": 93, "method": "stpg", "succ": true, "reached": 3, "t": 65.9, "wall": 0.0}
+{"row": 94, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 441.3}
+{"row": 95, "method": "stpg", "succ": true, "reached": 3, "t": 65.7, "wall": 0.0}
+{"row": 96, "method": "stpg", "succ": true, "reached": 3, "t": 182.2, "wall": 0.0}
+{"row": 97, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 98, "method": "stpg", "succ": true, "reached": 3, "t": 139.2, "wall": 0.0}
+{"row": 99, "method": "stpg", "succ": true, "reached": 3, "t": 222.7, "wall": 0.0}
+{"row": 100, "method": "stpg", "succ": true, "reached": 3, "t": 68.4, "wall": 0.0}
+{"row": 101, "method": "stpg", "succ": true, "reached": 3, "t": 91.7, "wall": 0.8}
+{"row": 102, "method": "stpg", "succ": true, "reached": 3, "t": 50.6, "wall": 0.0}
+{"row": 103, "method": "stpg", "succ": true, "reached": 3, "t": 75.8, "wall": 0.0}
+{"row": 104, "method": "stpg", "succ": true, "reached": 3, "t": 32.8, "wall": 0.0}
+{"row": 105, "method": "stpg", "succ": true, "reached": 3, "t": 25.1, "wall": 0.0}
+{"row": 106, "method": "stpg", "succ": true, "reached": 3, "t": 43.1, "wall": 0.0}
+{"row": 107, "method": "stpg", "succ": true, "reached": 3, "t": 71.6, "wall": 0.0}
+{"row": 108, "method": "stpg", "succ": true, "reached": 3, "t": 13.9, "wall": 0.0}
+{"row": 109, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 110, "method": "stpg", "succ": true, "reached": 3, "t": 65.1, "wall": 0.0}
+{"row": 111, "method": "stpg", "succ": true, "reached": 3, "t": 29.3, "wall": 0.0}
+{"row": 112, "method": "stpg", "succ": true, "reached": 3, "t": 31.3, "wall": 0.0}
+{"row": 113, "method": "stpg", "succ": true, "reached": 3, "t": 32.3, "wall": 0.0}
+{"row": 114, "method": "stpg", "succ": true, "reached": 3, "t": 24.4, "wall": 0.0}
+{"row": 115, "method": "stpg", "succ": true, "reached": 3, "t": 124.1, "wall": 10.61}
+{"row": 116, "method": "stpg", "succ": true, "reached": 3, "t": 21.9, "wall": 0.0}
+{"row": 117, "method": "stpg", "succ": true, "reached": 3, "t": 25.9, "wall": 0.0}
+{"row": 118, "method": "stpg", "succ": true, "reached": 3, "t": 66.1, "wall": 0.0}
+{"row": 119, "method": "stpg", "succ": true, "reached": 3, "t": 7.6, "wall": 0.0}
+{"row": 120, "method": "stpg", "succ": true, "reached": 3, "t": 23.3, "wall": 0.0}
+{"row": 121, "method": "stpg", "succ": true, "reached": 3, "t": 25.0, "wall": 0.0}
+{"row": 122, "method": "stpg", "succ": true, "reached": 3, "t": 77.8, "wall": 1.65}
+{"row": 123, "method": "stpg", "succ": true, "reached": 3, "t": 29.8, "wall": 0.0}
+{"row": 124, "method": "stpg", "succ": true, "reached": 3, "t": 30.1, "wall": 0.0}
+{"row": 125, "method": "stpg", "succ": true, "reached": 3, "t": 28.6, "wall": 0.0}
+{"row": 126, "method": "stpg", "succ": true, "reached": 3, "t": 9.9, "wall": 0.0}
+{"row": 127, "method": "stpg", "succ": true, "reached": 3, "t": 22.0, "wall": 0.0}
+{"row": 128, "method": "stpg", "succ": true, "reached": 3, "t": 45.7, "wall": 0.0}
+{"row": 129, "method": "stpg", "succ": true, "reached": 3, "t": 29.1, "wall": 0.0}
+{"row": 130, "method": "stpg", "succ": true, "reached": 3, "t": 51.7, "wall": 0.0}
+{"row": 131, "method": "stpg", "succ": true, "reached": 3, "t": 4.4, "wall": 0.0}
+{"row": 132, "method": "stpg", "succ": true, "reached": 3, "t": 18.1, "wall": 0.0}
+{"row": 133, "method": "stpg", "succ": true, "reached": 3, "t": 25.0, "wall": 0.0}
+{"row": 134, "method": "stpg", "succ": true, "reached": 3, "t": 27.9, "wall": 0.0}
+{"row": 135, "method": "stpg", "succ": true, "reached": 3, "t": 25.1, "wall": 0.0}
+{"row": 136, "method": "stpg", "succ": true, "reached": 3, "t": 53.1, "wall": 0.0}
+{"row": 137, "method": "stpg", "succ": true, "reached": 3, "t": 43.8, "wall": 0.0}
+{"row": 138, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 139, "method": "stpg", "succ": true, "reached": 3, "t": 38.4, "wall": 0.0}
+{"row": 140, "method": "stpg", "succ": true, "reached": 3, "t": 45.4, "wall": 0.0}
+{"row": 141, "method": "stpg", "succ": true, "reached": 3, "t": 40.7, "wall": 0.0}
+{"row": 142, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 143, "method": "stpg", "succ": true, "reached": 3, "t": 58.1, "wall": 0.0}
+{"row": 144, "method": "stpg", "succ": true, "reached": 3, "t": 173.5, "wall": 0.0}
+{"row": 145, "method": "stpg", "succ": true, "reached": 3, "t": 43.9, "wall": 0.0}
+{"row": 146, "method": "stpg", "succ": false, "reached": 1, "t": 300.0, "wall": 0.0}
+{"row": 147, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 148, "method": "stpg", "succ": false, "reached": 1, "t": 201.3, "wall": 0.0}
+{"row": 149, "method": "stpg", "succ": true, "reached": 3, "t": 20.5, "wall": 0.0}
+{"row": 150, "method": "stpg", "succ": true, "reached": 3, "t": 63.5, "wall": 0.0}
+{"row": 151, "method": "stpg", "succ": true, "reached": 3, "t": 253.2, "wall": 12.64}
+{"row": 152, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 10.37}
+{"row": 153, "method": "stpg", "succ": true, "reached": 3, "t": 71.6, "wall": 3.84}
+{"row": 154, "method": "stpg", "succ": true, "reached": 3, "t": 33.9, "wall": 0.0}
+{"row": 155, "method": "stpg", "succ": true, "reached": 3, "t": 52.7, "wall": 0.0}
+{"row": 156, "method": "stpg", "succ": true, "reached": 3, "t": 37.6, "wall": 0.0}
+{"row": 157, "method": "stpg", "succ": true, "reached": 3, "t": 32.5, "wall": 0.0}
+{"row": 158, "method": "stpg", "succ": true, "reached": 3, "t": 29.4, "wall": 0.0}
+{"row": 159, "method": "stpg", "succ": true, "reached": 3, "t": 39.2, "wall": 0.0}
+{"row": 160, "method": "stpg", "succ": true, "reached": 3, "t": 63.5, "wall": 0.0}
+{"row": 161, "method": "stpg", "succ": true, "reached": 3, "t": 68.2, "wall": 7.06}
+{"row": 162, "method": "stpg", "succ": true, "reached": 3, "t": 17.1, "wall": 0.0}
+{"row": 163, "method": "stpg", "succ": true, "reached": 3, "t": 9.5, "wall": 0.0}
+{"row": 164, "method": "stpg", "succ": true, "reached": 3, "t": 52.1, "wall": 0.7}
+{"row": 165, "method": "stpg", "succ": true, "reached": 3, "t": 32.4, "wall": 0.0}
+{"row": 166, "method": "stpg", "succ": true, "reached": 3, "t": 77.1, "wall": 6.94}
+{"row": 167, "method": "stpg", "succ": true, "reached": 3, "t": 75.2, "wall": 0.0}
+{"row": 168, "method": "stpg", "succ": true, "reached": 3, "t": 44.5, "wall": 0.0}
+{"row": 169, "method": "stpg", "succ": true, "reached": 3, "t": 51.7, "wall": 0.0}
+{"row": 170, "method": "stpg", "succ": true, "reached": 3, "t": 24.5, "wall": 0.0}
+{"row": 171, "method": "stpg", "succ": true, "reached": 3, "t": 29.4, "wall": 0.0}
+{"row": 172, "method": "stpg", "succ": true, "reached": 3, "t": 41.2, "wall": 0.0}
+{"row": 173, "method": "stpg", "succ": false, "reached": 2, "t": 300.0, "wall": 0.0}
+{"row": 174, "method": "stpg", "succ": true, "reached": 3, "t": 69.9, "wall": 1.9}
+{"row": 175, "method": "stpg", "succ": true, "reached": 3, "t": 49.5, "wall": 0.0}
+{"row": 176, "method": "stpg", "succ": true, "reached": 3, "t": 49.1, "wall": 0.0}
+{"row": 177, "method": "stpg", "succ": true, "reached": 3, "t": 51.6, "wall": 0.0}
+{"row": 178, "method": "stpg", "succ": true, "reached": 3, "t": 37.1, "wall": 0.0}
+{"row": 179, "method": "stpg", "succ": true, "reached": 3, "t": 40.5, "wall": 0.0}
+{
+  "stpg": {
+    "episodes": 180,
+    "requested": 180,
+    "errors": 0,
+    "complete": true,
+    "navigation_success": 0.8444444444444444,
+    "strict_success": 0.7777777777777778,
+    "wall_contact_s": 3.0427407517104283,
+    "wall_after_reach_s": 1.2875774505762503,
+    "lost": 0.011111111111111112,
+    "particle_collision_events": 0.34444444444444444,
+    "particle_contact_s": 0.4786147826369045,
+    "navigation_success_rate": 0.8444444444444444,
+    "strict_success_rate": 0.7777777777777778,
+    "lost_rate": 0.011111111111111112,
+    "collision_episode_rate": 0.2
+  }
+}

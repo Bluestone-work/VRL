@@ -1,0 +1,124 @@
+{
+  "split": "train",
+  "scene_seeds": [
+    3404062011,
+    3405052004,
+    3413006012,
+    3400000000
+  ],
+  "horizon_s": 300.0,
+  "records": [
+    {
+      "method": "pursuit",
+      "scene_seed": 3404062011,
+      "scenario_hash": "d0647831a53aba4cb4471f3cfcf1606ed5868066fc9f95169547c587174cd56e",
+      "model_sha256": null,
+      "steps": 3000,
+      "wall_contact_s": 0.0,
+      "navigation_success": false
+    },
+    {
+      "method": "IPPO",
+      "scene_seed": 3404062011,
+      "scenario_hash": "d0647831a53aba4cb4471f3cfcf1606ed5868066fc9f95169547c587174cd56e",
+      "model_sha256": "6074687f6a7e9ca1a3ea1bb0e93e68fdc06aa3a96bedb9ab81da58d9f0c0c1f1",
+      "steps": 2349,
+      "wall_contact_s": 0.0,
+      "navigation_success": true
+    },
+    {
+      "method": "MAPPO",
+      "scene_seed": 3404062011,
+      "scenario_hash": "d0647831a53aba4cb4471f3cfcf1606ed5868066fc9f95169547c587174cd56e",
+      "model_sha256": "6b25072214daa7f8d238a3653e7dfc8cbbb47bb7a2bf374e93174de39ed0d0fc",
+      "steps": 3000,
+      "wall_contact_s": 0.0,
+      "navigation_success": false
+    },
+    {
+      "method": "pursuit",
+      "scene_seed": 3405052004,
+      "scenario_hash": "b6cba0584946eb1c247b2ffd680f8c45fbaf29fd4cf412d824a25440393e2cc7",
+      "model_sha256": null,
+      "steps": 3000,
+      "wall_contact_s": 441.2999999999901,
+      "navigation_success": false
+    },
+    {
+      "method": "IPPO",
+      "scene_seed": 3405052004,
+      "scenario_hash": "b6cba0584946eb1c247b2ffd680f8c45fbaf29fd4cf412d824a25440393e2cc7",
+      "model_sha256": "6074687f6a7e9ca1a3ea1bb0e93e68fdc06aa3a96bedb9ab81da58d9f0c0c1f1",
+      "steps": 817,
+      "wall_contact_s": 0.0,
+      "navigation_success": true
+    },
+    {
+      "method": "MAPPO",
+      "scene_seed": 3405052004,
+      "scenario_hash": "b6cba0584946eb1c247b2ffd680f8c45fbaf29fd4cf412d824a25440393e2cc7",
+      "model_sha256": "6b25072214daa7f8d238a3653e7dfc8cbbb47bb7a2bf374e93174de39ed0d0fc",
+      "steps": 3000,
+      "wall_contact_s": 441.2999999999901,
+      "navigation_success": false
+    },
+    {
+      "method": "pursuit",
+      "scene_seed": 3413006012,
+      "scenario_hash": "29fe656166c62486f484873b49d07b3815263b0514e3db7a6b3db3621030856a",
+      "model_sha256": null,
+      "steps": 682,
+      "wall_contact_s": 7.055523631261415,
+      "navigation_success": true
+    },
+    {
+      "method": "IPPO",
+      "scene_seed": 3413006012,
+      "scenario_hash": "29fe656166c62486f484873b49d07b3815263b0514e3db7a6b3db3621030856a",
+      "model_sha256": "6074687f6a7e9ca1a3ea1bb0e93e68fdc06aa3a96bedb9ab81da58d9f0c0c1f1",
+      "steps": 3000,
+      "wall_contact_s": 65.42383858151493,
+      "navigation_success": false
+    },
+    {
+      "method": "MAPPO",
+      "scene_seed": 3413006012,
+      "scenario_hash": "29fe656166c62486f484873b49d07b3815263b0514e3db7a6b3db3621030856a",
+      "model_sha256": "6b25072214daa7f8d238a3653e7dfc8cbbb47bb7a2bf374e93174de39ed0d0fc",
+      "steps": 781,
+      "wall_contact_s": 5.399999999999997,
+      "navigation_success": true
+    },
+    {
+      "method": "pursuit",
+      "scene_seed": 3400000000,
+      "scenario_hash": "8c43507e6c92a08c412c00b39c0bde2fd6c95e45a1f5ff79b4a3674703d4e6f9",
+      "model_sha256": null,
+      "steps": 139,
+      "wall_contact_s": 0.0,
+      "navigation_success": true
+    },
+    {
+      "method": "IPPO",
+      "scene_seed": 3400000000,
+      "scenario_hash": "8c43507e6c92a08c412c00b39c0bde2fd6c95e45a1f5ff79b4a3674703d4e6f9",
+      "model_sha256": "6074687f6a7e9ca1a3ea1bb0e93e68fdc06aa3a96bedb9ab81da58d9f0c0c1f1",
+      "steps": 139,
+      "wall_contact_s": 0.0,
+      "navigation_success": true
+    },
+    {
+      "method": "MAPPO",
+      "scene_seed": 3400000000,
+      "scenario_hash": "8c43507e6c92a08c412c00b39c0bde2fd6c95e45a1f5ff79b4a3674703d4e6f9",
+      "model_sha256": "6b25072214daa7f8d238a3653e7dfc8cbbb47bb7a2bf374e93174de39ed0d0fc",
+      "steps": 139,
+      "wall_contact_s": 0.0,
+      "navigation_success": true
+    }
+  ],
+  "models": {
+    "ippo": "research/COMPARISON_20261125/models/ippo_s41_final_model.zip",
+    "mappo": "research/paired_navigation_corrected/mappo_v2_s41/final_model.zip"
+  }
+}

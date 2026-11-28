@@ -1,0 +1,245 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_holdout100.json",
+  "manifest": "/home/wj/桌面/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "641a9e2afa8b67e2dc2c648a0d2e0b2b110ff77709cc63c208c4d4d9597c588b",
+  "episodes": 100,
+  "selected": 100,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 36,
+      "manifest_index": 46733,
+      "row": {
+        "anatomy": "basilar_vertebral",
+        "anatomy_index": 9,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 58,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 8,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "medium",
+        "obstacle_layout": "uniform",
+        "pulsatile": true,
+        "replicate": 17,
+        "scenario_hash": "9dfb001ed6fef4bb1f28092ac9b78827a8810a94631cc6311c08fcfa119914e5",
+        "scene_seed": 3609058017,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3609058017,
+        "scenario_hash": "9dfb001ed6fef4bb1f28092ac9b78827a8810a94631cc6311c08fcfa119914e5"
+      },
+      "pursuit_accepted_seed": 3609058017,
+      "pursuit_realized_scenario_hash": "f91341708b449532977d37005ef16df85a74603869e24df0eb2b5cef0c697fb3",
+      "pursuit_navigation_targets": [
+        2,
+        1,
+        3
+      ]
+    },
+    {
+      "episode_index": 37,
+      "manifest_index": 46952,
+      "row": {
+        "anatomy": "basilar_vertebral",
+        "anatomy_index": 9,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 62,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 32,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "stress",
+        "obstacle_layout": "uniform",
+        "pulsatile": true,
+        "replicate": 10,
+        "scenario_hash": "e99c7709542b210c505c801cfc56b6fef0de2d93d85c91114e80f67c20202a58",
+        "scene_seed": 3609062010,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3609062010,
+        "scenario_hash": "e99c7709542b210c505c801cfc56b6fef0de2d93d85c91114e80f67c20202a58"
+      },
+      "pursuit_accepted_seed": 3609062010,
+      "pursuit_realized_scenario_hash": "03c25dfa53dcbadf3af52e573341b7993ae5a3f4410cd60a752539d70608a46f",
+      "pursuit_navigation_targets": [
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "episode_index": 38,
+      "manifest_index": 47171,
+      "row": {
+        "anatomy": "basilar_vertebral",
+        "anatomy_index": 9,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 66,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 8,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "medium",
+        "obstacle_layout": "uniform",
+        "pulsatile": true,
+        "replicate": 3,
+        "scenario_hash": "83a986ec3ecc98fa3b06b882bbb636986ea69135b397515a032cfeedc1b07696",
+        "scene_seed": 3609066003,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3609066003,
+        "scenario_hash": "83a986ec3ecc98fa3b06b882bbb636986ea69135b397515a032cfeedc1b07696"
+      },
+      "pursuit_accepted_seed": 3609066003,
+      "pursuit_realized_scenario_hash": "609dd8de893a1a7df55d38a54d7fcc4bc5c9a324f0956fd5c3e66fc240bd1704",
+      "pursuit_navigation_targets": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "episode_index": 39,
+      "manifest_index": 47387,
+      "row": {
+        "anatomy": "basilar_vertebral",
+        "anatomy_index": 9,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 69,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "high",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": true,
+        "replicate": 15,
+        "scenario_hash": "a39f3b3d2a65a738184b293d5931eb905ff6062fbe697e1c5db61d7e41d3b747",
+        "scene_seed": 3609069015,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3609069015,
+        "scenario_hash": "a39f3b3d2a65a738184b293d5931eb905ff6062fbe697e1c5db61d7e41d3b747"
+      },
+      "pursuit_accepted_seed": 3609069015,
+      "pursuit_realized_scenario_hash": "63bf0c4b8554c9d8ff87b3554798712ab87ef0bf729c95268be8cf941840f797",
+      "pursuit_navigation_targets": [
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "episode_index": 40,
+      "manifest_index": 47606,
+      "row": {
+        "anatomy": "cerebral_venous_sinus",
+        "anatomy_index": 10,
+        "clot_pattern": "historical_sites",
+        "clusters": 3,
+        "condition_id": 1,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 4,
+        "environment_clot_initialization": "historical_sites",
+        "environment_clot_initialization_realized": "historical_sites",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "low",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": false,
+        "replicate": 8,
+        "scenario_hash": "27f1b5486881ade1d0d9cd3610d066276dd9b5d2a41395031c2ae9abc27e5443",
+        "scene_seed": 3610001008,
+        "split": "holdout_test",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3610001008,
+        "scenario_hash": "27f1b5486881ade1d0d9cd3610d066276dd9b5d2a41395031c2ae9abc27e5443"
+      },
+      "pursuit_accepted_seed": 3610001008,
+      "pursuit_realized_scenario_hash": "1046253908532814f2e3479dea43ee90d2123b6cbcc5587c6f1470443b30d782",
+      "pursuit_navigation_targets": [
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "episode_index": 41,
+      "manifest_index": 47825,
+      "row": {
+        "anatomy": "cerebral_venous_sinus",
+        "anatomy_index": 10,
+        "clot_pattern": "historical_sites",
+        "clusters": 3,
+        "condition_id": 5,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": "historical_sites",
+        "environment_clot_initialization_realized": "historical_sites",
+        "flow_mode": "weak",
+        "nominal_flow_inlet_mm_s": 0.025,
+        "obstacle_density": "high",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": false,
+        "replicate": 1,
+        "scenario_hash": "2d565b94ed41c456319a318c2814b4272d0ef47f2f43b87d9b2061c15edcbbcc",
+        "scene_seed": 3610005001,
+        "split": "holdout_test",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3610005001,
+        "scenario_hash": "2d565b94ed41c456319a318c2814b4272d0ef47f2f43b87d9b2061c15edcbbcc"
+      },
+      "pursuit_accepted_seed": 3610005001,
+      "pursuit_realized_scenario_hash": "e0ad0cf408563a9868e2bc08927160e1a85cda4b438301589a340539bb8b2c36",
+      "pursuit_navigation_targets": [
+        2,
+        3,
+        0
+      ]
+    }
+  ]
+}

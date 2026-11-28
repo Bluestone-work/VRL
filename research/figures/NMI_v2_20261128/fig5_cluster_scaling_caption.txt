@@ -1,0 +1,11 @@
+Fig. 5 | Cluster number and spatio-temporal coordination. a, One MCA scene (seed 2944200004) with the same three
+lesions, start pool and 300 s deadline, served by N = 1, 2 or 3 clusters (min-max geodesic allocation, temporal
+plan graph, pure-pursuit local control so that only the global layer changes). b, Release/hold state of each cluster
+in the N = 3 run: coloured, moving; grey, held by the TPG at a shared segment; star, arrival; orange ticks, steps
+with wall contact. c, Left: deadline-scored last-arrival time in six paired scenes (grey, per scene; blue, mean;
+numbers, scenes in which all three lesions were reached: N=1 6/6, N=2 5/6, N=3 6/6; all three within
+30 s: 0/6, 0/6, 2/6). Mean last arrival 86.4, 94.8 and 44.3 s. Right: the same
+scenes with the min-max geodesic allocation versus a sequential Hungarian (minimum-sum) assignment. d, N = 3 with no
+temporal coordination, the fixed TPG, and continuous-time conflict-based search (CCBS, adapted to fixed routes);
+circles, geodesic allocation; triangles (*), fixed assignment, for which spacing violations occur. No TPG Last arrival (s) mean 43.20; TPG Last arrival (s) mean 44.30; CCBS Last arrival (s) mean 44.30; No TPG TPG wait (robot·s) mean 0.00; TPG TPG wait (robot·s) mean 1.92; CCBS TPG wait (robot·s) mean 1.92; No TPG Spacing violation (pair·s) mean 0.00; TPG Spacing violation (pair·s) mean 0.00; CCBS Spacing violation (pair·s) mean 0.00; fixed assignment No TPG spacing mean 6.10; fixed assignment TPG spacing mean 3.83.
+Six scenes from one anatomy: intervals describe layout-to-layout variation only.

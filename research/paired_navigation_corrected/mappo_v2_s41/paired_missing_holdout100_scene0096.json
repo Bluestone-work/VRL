@@ -1,0 +1,172 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_holdout100.json",
+  "manifest": "/home/wj/桌面/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "641a9e2afa8b67e2dc2c648a0d2e0b2b110ff77709cc63c208c4d4d9597c588b",
+  "episodes": 100,
+  "selected": 100,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 96,
+      "manifest_index": 59822,
+      "row": {
+        "anatomy": "femoropopliteal_pad",
+        "anatomy_index": 12,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 61,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "high",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": true,
+        "replicate": 0,
+        "scenario_hash": "eed64d02585b59a99a2ae0b3db61f59ad5ec26ed6bb26a5fea1368550dd225f2",
+        "scene_seed": 3612061000,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3612061000,
+        "scenario_hash": "eed64d02585b59a99a2ae0b3db61f59ad5ec26ed6bb26a5fea1368550dd225f2"
+      },
+      "pursuit_accepted_seed": 3612061000,
+      "pursuit_realized_scenario_hash": "40dea3d1fd6afa290a6927d5cf90e52d1c013ef435d8f00ffdf1caa01fba5c6d",
+      "pursuit_navigation_targets": [
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "episode_index": 97,
+      "manifest_index": 60041,
+      "row": {
+        "anatomy": "femoropopliteal_pad",
+        "anatomy_index": 12,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 64,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 4,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "low",
+        "obstacle_layout": "uniform",
+        "pulsatile": true,
+        "replicate": 13,
+        "scenario_hash": "d192f89e57208d35e168d23756fa178e22b4e4d496bd18547861ce1063ce198e",
+        "scene_seed": 3612064013,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3612064013,
+        "scenario_hash": "d192f89e57208d35e168d23756fa178e22b4e4d496bd18547861ce1063ce198e"
+      },
+      "pursuit_accepted_seed": 3612064013,
+      "pursuit_realized_scenario_hash": "d80324e17b25c02b8a3fb5c46ce2f7ed393a700d7e3f6abdbe520c63fc9b4604",
+      "pursuit_navigation_targets": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "episode_index": 98,
+      "manifest_index": 60260,
+      "row": {
+        "anatomy": "femoropopliteal_pad",
+        "anatomy_index": 12,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 68,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "historical_sites",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "high",
+        "obstacle_layout": "uniform",
+        "pulsatile": true,
+        "replicate": 6,
+        "scenario_hash": "ca0c6848506f055dd2c6d6624e6d8b8cc700e91032549911b46a5b432597ae12",
+        "scene_seed": 3612068006,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3612068006,
+        "scenario_hash": "ca0c6848506f055dd2c6d6624e6d8b8cc700e91032549911b46a5b432597ae12"
+      },
+      "pursuit_accepted_seed": 3612068006,
+      "pursuit_realized_scenario_hash": "f0247d10d6c1f727f0d5dba773ca83e1aea6320de849e9027d080120101327a5",
+      "pursuit_navigation_targets": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "episode_index": 99,
+      "manifest_index": 60479,
+      "row": {
+        "anatomy": "femoropopliteal_pad",
+        "anatomy_index": 12,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 71,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 32,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "stress",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": true,
+        "replicate": 19,
+        "scenario_hash": "bc3c3cbd8d71054381a88d3aa84d3958c8862904333c7bde04ecd9f319954471",
+        "scene_seed": 3612071019,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3612071019,
+        "scenario_hash": "bc3c3cbd8d71054381a88d3aa84d3958c8862904333c7bde04ecd9f319954471"
+      },
+      "pursuit_accepted_seed": 3612071019,
+      "pursuit_realized_scenario_hash": "58a4604b311ca0b576e9e7c59c4b6b466dacbc7939aaf2469a0c61e7c76dc12b",
+      "pursuit_navigation_targets": [
+        3,
+        0,
+        1
+      ]
+    }
+  ]
+}

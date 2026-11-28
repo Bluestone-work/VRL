@@ -1,0 +1,26 @@
+{
+  "agent_steps": 979968,
+  "environment_steps": 326656,
+  "target_environment_steps": 500000,
+  "minutes": 86.76106073070163,
+  "frontier": 3,
+  "difficulty": 3,
+  "scene": {
+    "anatomy": "popliteal_calf_dvt",
+    "clusters": 3,
+    "seed": 2844200282,
+    "flow": 0.1,
+    "latency": 0,
+    "dynamic_obstacle_count": 32,
+    "clot_initialization": null,
+    "variation": null,
+    "accepted_seed": 2844200282,
+    "scenario_hash": "138ed39d692edee86043fd11270a587acb98294a6f809201929039685adc60ff",
+    "difficulty": 3,
+    "difficulty_name": "stress",
+    "dynamic_obstacles": 32,
+    "frontier": 3,
+    "scenario_family": "uniform",
+    "localized_obstacles": 0
+  }
+}

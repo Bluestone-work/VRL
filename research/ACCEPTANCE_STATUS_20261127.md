@@ -2,6 +2,8 @@
 
 ## Completed real runs
 
+- 2026-11-27 completion records are in `research/NAVIGATION_COMPLETION_20261127.md`. This file supersedes the earlier pending list.
+
 - Corrected timeout accounting was rerun for the six-scene, 18-episode-per-file fixed-three-target matrix. The boundary case `linear_sum`, `N=3`, seed `2944200005` now records `termination_class=timeout` at `elapsed_s=299.9999999999997`.
 - S43 MAPPO-V2 and IPPO paired evaluation is complete for train 180 and holdout 100. MAPPO-V2 is 153/180 and 80/100 for navigation success. IPPO is 153/180 and 80/100. Every holdout comparison is a per-scene tie on navigation success.
 - A separate 100,000-physical-step MAPPO-V2 seed-41 run is complete. Its train result is 152/180 and holdout result is 80/100. The paired long-run summary is in `research/paired_navigation_corrected/mappo_v2_long_s41/paired_results.json`.
@@ -10,6 +12,5 @@
 
 ## Still pending
 
-- 500,000-step MAPPO-V2 runs for seeds 42 and 43 were not started because the available time was used to complete S43 and the seed-41 long run. Existing 50,000-step S42/S43 runs remain intact.
-- The mr-nav upstream interface and license were audited at commit `c129da1447d9854e31b1d7b970b7f48b8a553ea7`, but its dataset and exported policy are not present. No external mr-nav score is reported.
-- Full CCBS and long-run all-seed baseline matrices are implemented and resumable, but not counted as completed results.
+- The S42 and S43 500,000-physical-step MAPPO-V2 jobs are still running in separate directories. Their latest progress is recorded in each `status.json`. The S41 attempt stopped at 249,088 physical steps without a completion record. No final 500k performance claim is made yet.
+- The requested patient-specific HCC liver-artery centerline/radius/three-target export is unavailable. The completed HCC transfer uses the procedural portal-hepatic model and is labeled synthetic.

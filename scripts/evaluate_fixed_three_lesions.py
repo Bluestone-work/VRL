@@ -58,13 +58,16 @@ def classify_episode(reached, lost, *, terminated=False, truncated=False, elapse
 
 
 def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: float, tpg: bool = True,
-                allocation: str = "fixed"):
+                allocation: str = "fixed", ccbs: bool = False, trace=None):
     ep = LysisEpisode(clusters, anatomy, seed, horizon=horizon, sensing="image",
                       shield=True, tpg=False, navigation=True)
+    if ccbs and not tpg:
+        raise ValueError("CCBS requires the common coordination gate")
+    from scripts.benchmark_multicluster import station_geodesic
+    distance = station_geodesic(ep.env)
     if allocation in ("geodesic", "linear_sum"):
-        from scripts.benchmark_multicluster import station_geodesic
         planner = geodesic_allocation if allocation == "geodesic" else linear_sum_allocation
-        assignment = planner(station_geodesic(ep.env), ep.env.robot_stations[:clusters],
+        assignment = planner(distance, ep.env.robot_stations[:clusters],
                              ep.env.clot_stations[:3])
     elif allocation == "fixed":
         assignment = ASSIGNMENTS[clusters]
@@ -82,6 +85,16 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
             ep.coord.gate_calls += 1
             return original_gate(*args, **kwargs)
         ep.coord.gate = counted_gate
+    ccbs_plan = None
+    if ccbs and clusters > 1:
+        from marl.ccbs_adapter import CCBSPlanner
+        ccbs_plan = CCBSPlanner(ep.coord, deadline_s=horizon).plan()
+        if not ccbs_plan.has_plan:
+            ep.coord.gate = lambda positions, active: np.ones(clusters, dtype=bool)
+    route_lengths = []
+    for i, tour in enumerate(assignment):
+        stations = [ep.env.robot_stations[i], *[ep.env.clot_stations[j] for j in tour]]
+        route_lengths.append(float(sum(distance[a, b] for a, b in zip(stations, stations[1:]))))
     guard = SettleGuard(ep)
     sdf = VesselSDF(ep.sensor)
     est = ep.observe()
@@ -90,7 +103,7 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
     reached = np.zeros(3, dtype=bool)
     first_time = np.full(3, np.nan, dtype=float)
     wall = 0.0
-    pair = 0.0
+    active_cluster_s = 0.0
     gate_calls = 0
     waiting_transitions = 0
     waiting_robot_s = 0.0
@@ -115,6 +128,11 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
         truncated = bool(outcome.get("truncated", False))
         waiting_robot_s += float(np.count_nonzero(hold & outcome["active_before"])) * float(ep.info["step_duration_s"])
         wall += float(np.asarray(outcome["wall"], dtype=float).sum())
+        active_cluster_s += float(np.count_nonzero(outcome["active_before"])) * float(ep.info["step_duration_s"])
+        if trace is not None:
+            trace.append(dict(time_s=float(ep.env.elapsed_s), positions_mm=ep.env.positions_mm[:clusters].tolist(),
+                              targets=targets.tolist(), active=ep.env.active[:clusters].tolist(),
+                              wall_s=np.asarray(outcome["wall"]).tolist(), hold=hold.tolist()))
         distances = ep.env._target_distances()[np.arange(clusters), current]
         for i, sequence in enumerate(assignment):
             if next_index[i] >= len(sequence):
@@ -140,7 +158,19 @@ def run_episode(clusters: int, seed: int, anatomy: str, horizon: float, tau: flo
     span = float(np.max(finite) - np.min(finite)) if len(finite) == 3 else None
     result = {
         "method": "pursuit",
-        "tpg": bool(tpg),
+        "tpg": bool(tpg and not ccbs),
+        "coordinator": "ccbs" if ccbs else ("tpg" if tpg else "off"),
+        "planning": ccbs_plan.metadata() if ccbs_plan is not None else None,
+        "conflict_zones": len(ep.coord.zones) if ep.coord is not None else None,
+        "route_lengths_mm": route_lengths,
+        "resource_budget": {
+            "horizon_s": horizon, "control_dt_s": ep.env.config.control_dt_s,
+            "per_cluster_speed_mm_s": ep.env.config.robot_speed_mm_s,
+            "available_cluster_s": clusters * horizon, "used_cluster_s": active_cluster_s,
+            "deployment": "nested predeployed starts", "release_modeled": False,
+            "active_lysis_mass_per_s": ep.env.config.lysis_mass_per_s,
+            "payload_mass": None, "magnetic_power": None,
+        },
         "anatomy": anatomy,
         "clusters": clusters,
         "seed": int(seed),
@@ -190,11 +220,20 @@ def main():
     p.add_argument("--tau", type=float, default=30.)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--tpg", action=argparse.BooleanOptionalAction, default=True)
+    p.add_argument("--ccbs", action="store_true", help="fixed-route conflict search with the common gate")
+    p.add_argument("--trace-seeds", type=int, nargs="*", default=[])
     a = p.parse_args()
     rows = []
     for n in [int(x) for x in a.clusters.split(",")]:
         for offset in range(a.count):
-            row = run_episode(n, a.seed + offset, a.anatomy, a.horizon, a.tau, tpg=a.tpg, allocation=a.allocation)
+            seed = a.seed + offset
+            trace = [] if seed in a.trace_seeds else None
+            row = run_episode(n, seed, a.anatomy, a.horizon, a.tau, tpg=a.tpg,
+                              allocation=a.allocation, ccbs=a.ccbs, trace=trace)
+            if trace is not None:
+                path = a.out.with_name(f"{a.out.stem}_n{n}_s{seed}_trace.json")
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(json.dumps({"episode": row, "trace": trace}) + "\n")
             rows.append(row)
             print(json.dumps(row, ensure_ascii=False), flush=True)
     summary = {"episodes": len(rows), "tau_s": a.tau, "rows": rows, "by_clusters": {}}

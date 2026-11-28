@@ -1,0 +1,3 @@
+time/time_elapsed,time/total_timesteps,time/iterations,time/fps,train/learning_rate,train/policy_gradient_loss,train/entropy_loss,train/clip_fraction,train/loss,train/clip_range,train/value_loss,train/explained_variance,train/n_updates,train/approx_kl
+2,768,1,256,,,,,,,,,,
+5,1536,2,257,0.0001,-0.00011671935984243949,-0.13555582519620657,0.0,0.3894155025482178,0.2,1.2844774425029755,0.9209384471178055,4,4.2154996e-05

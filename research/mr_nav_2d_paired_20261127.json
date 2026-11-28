@@ -1,0 +1,2080 @@
+{
+  "upstream_commit": "c129da1447d9854e31b1d7b970b7f48b8a553ea7",
+  "license_sha256": "f7f968fb894ea964a2a2b0af5730b19c001bd4d1e8bd241df73fb010975d61ad",
+  "checkpoint_sha256": "140b77876198235d3176f0b1809ca72d924cd5301972f6c27e027865c0f1b409",
+  "dataset_doi": "10.5281/zenodo.21719761",
+  "seed": 20261127,
+  "maps": 48,
+  "map_sha256": {
+    "0b286bb2be6554f22267e9d36eb5668e": "3fdfbfed1d355c4a3190b2fe52b1c6b83cd6a384a209ee9e51f1824668e4095f",
+    "a837ed0976b75eabbaff042860367ac0": "f8f96289700e13fb81c756c3a836f189eb619bd3ce4ddccc334259d5e4e90309",
+    "4b1b2eee47f10f41f4b146e9d02a81cb": "0747586425868d99401fcdb3aeee4d3149cbd5e04961e57bb2b573e2498e686c",
+    "56371f9beb0749770534c7925048388a": "d6079cd35d31aa212a0d101c763d25d2769c1ffaa6f540b8d1dcd32d1c302903",
+    "99ade92ef8d991a720b5c22897a5b4d8": "ba5396e975c4a5b91b21f36de5e0de994b07f896968ed16eff8c1ec001bfc810",
+    "29c15261de8de6b11d2f92c535a56a2e": "4a5b2279077e3752701da2f1e1da41bf21bee60bd5d1fb12c4e339bb33dbe5c4",
+    "2f828d7a6734f96a8697372d73d56e0b": "b5342c5030cb6f72f7342dd0c62b130f93ff41ae8428f5861f42f08b534e6d46",
+    "512a9ab15bc8942aa1d024b1b0acef47": "e2a7842c38539fa9b1ce9fc52b9d352834681a4a4166fd042455fdfe68fead11",
+    "6ee48f8e286716738b36e1377c597bbe": "84c944c93510dbfa6c791cce6bbd4f3f75da50b9178d63554e0a76cae6c9653e",
+    "4444b6dd8fefa50757d852ec06c45fe2": "1429e909bd98e946a8bcd1f6529e739aaf17e711435d9095948e6ae2eba978a0",
+    "4cc2704cd76387e34b9c15479e9d9af0": "b003fc742357c2868c0fc537a6fc629410a3b379c17acb774397119787e94904",
+    "18c4e6e5692adc959ded6d9042f2b7c5": "16d9d298b5383c5a61c922fd2edcee2cb32155c446556f8e048a84c9ed6569b7",
+    "e4a8fff0e00e9d6a6d5d1708d40b4941": "562026b0b5e955359d15c884d9b2abafe3f03b9458d576d246c8c734347e7250",
+    "2e3c0ca4b48dd1ec1e93d2cb323adc2b": "c945acf1052bacc15f3ec3c760a9efa151a7ec9de945aa25b7bcb365c14d29a5",
+    "83bce274781b002bdccd715e2a544946": "61534ffcd042e3a6d4c0e770b887e6250222bc4fc96afbe879a915e6ba71e7dd",
+    "0a7929eab2859110a028900b4a6d5983": "49d20d81337c99bc9926cd223d1875892a0cd1c0c0c55f8ea9f0e52eac350310",
+    "2eb120329a6a3eb340bd6d44dbaa22e6": "33a384b4aad9834ccb0d174c4a3c8cf42c8d5e7ddaabf9dfc045904486f521d2",
+    "d34aa8b54eed56b0db88d11217554c66": "d05fcebb521829f3e583b0369bd3e5d7667c8cd9eff56de07841c12956db52a5",
+    "3a86444443ba653d5c4a777434eb1fbb": "e15e5d47136ea1c80d7339189a372cd51093ba18d1f4779d154ecd0f5dfa7d02",
+    "0c61afcd2c1d7cafefd9e61b5f80c34b": "10b11392e630b2485181bb9a8542ba1562609e3a121676f112e0e607e54451ec",
+    "a641d64e5f7c76a4a269034f158ebebf": "e19b7dd9d87bcdafad74a641a5245caa00b52adf6cdac70d64ca7520f9c60f09",
+    "d26586040a3f7f0b63d16cdc9fbfdfac": "e97ee963cbf8c2e6dadbc73d5b6614be4f94ddf96088ffd45664359628e3c28a",
+    "b7deefd54ba2515b71c8541338b53ca1": "e5ece638eb6fa24ec3aa35cbbaf75eee4d85325735e0a2f3c28f0e3e861f5ebd",
+    "8aef7953810274af2604a816b257fc5b": "18030e3e0b4b0e73f07f055834c46b68a80c01405065a4c58140c74516bbebb5",
+    "2ac8031a1dccf46fc73f5a51576955d8": "6c5f131f34e2d6b3ce7d8a6575cfd548840a5fc9732f7011d82886734ffe608f",
+    "cb38fea0db52d1d5483cee459e93d743": "81bc2f8fbbe8ae7b61a5a2d581ac1f4df54966b5a53c559933b0a5d5ebf1cac9",
+    "ca2b8c1b89e007416c68bd28d420fcc2": "e4e4fbb4bac78a4ae814068d2e1efd6fb0550f8e7522735582a3939802e0548a",
+    "e6e62a8565a7f61323158c85f503f373": "dfe4c010664df3cc1b7230f1c82d77a4fed2b26f1e9cfcf4c13352fdbe144ef1",
+    "087d9e638d6fdc2b142ef82e15318474": "7a0aec59d38b01699bdf7bba7692f282efba41461effd23b6dec9ec829799342",
+    "1047bab4c32e353c5788fcf31c9cff65": "a2dbde0c0f06551751420d924871ce7483316429b4b75bb9d99f4c5715e37011",
+    "7e3c20e5584eafbab10ebead47b36748": "f68459e4594ac85c610dc1203a5ea33f720491ae41a5f5221033379cf0242b27",
+    "9260e8139243a483825bed5e8e3b0a73": "b15098539ab5f6fb66d3da827861bffd5390b431f70ea80c454cd23a813d0ee2",
+    "a3fc1e9a5269ca6c8616b7af8ea8fbe7": "bd774fad9be89aaa1ba9b444e65d8780fda3a52bc73ac72ed4a3711a6ed28e3d",
+    "d072a6d62718bbbeabed7d0618913a34": "cb2579d9ef72c760db77354e36fa199f26c5a3ab39ce0f8cf5ce09e3b0670472",
+    "b6f6f5a3734fd01e03c6ee53f214f357": "5d9b5c9510bf88e43f957a3b2d6e41b9d3d0542b95432ebf8f630a5559a2d947",
+    "bfa7888b8563c8902ef5520976d8e2fd": "91a3e91480d5edac33e1a44ff828f5fc806bba9c8f9cf218289e9c0e7c6f715e",
+    "9added0a647d01be01877256a9b5dfe5": "64e66a1b7dedbea5491a5a8e0e9910f2c3a6da3f11a3f09f9bdbb8b0d2346aa6",
+    "d40f0b61fd35aff66952b8cd57749e06": "77299a357163d24d35f2c32e9f6f9876939c8d89052b8c4ae7b98f59bd17fccf",
+    "4e829ecf6a4872ca4187b602a12c606f": "be74a62c6e23ba4304ca7a7c7678d41eb3e017e5bc3686c14b470b0863feccad",
+    "86611827f389def800cca857e773b906": "aba96f04a73bd4b780ad5221a50b0adf822694d636447c4bded8a2dfcb56c7d3",
+    "c5293b0a0ff994f45da001acad1caae9": "54142fb6c0d2c0315b4e4aa973a6d6f28128d08caa00dbec3d4bec8a864d3070",
+    "0a86acfa36d0c491fee993709120a52c": "9e99a868edd980f93ee89085341277bc03a19a2c47de63d9522f4f1ee7cea3c3",
+    "95363a7f362406f85f823de3aeb598dd": "c3d85edf248f22e5f6432e5717cbb81e82846c7cca95cd2357accbb595700f11",
+    "09c913618b3adef132c32859c73c1032": "33d9f469dceb64c82f08f97d270ebeeabf0ed79d7ac6bc78ee2d150a846d6340",
+    "86be126e311663afbefafed71f59560b": "4ee74a3f6e8dc120a50b61e30ff982c6ef85afb0fef3d631d888a99d7be2b2c8",
+    "de94c3c91474873ff8eb7f0b3528244d": "702e415662c3211ce3ee5b56924d9dd119047820cfe543c4c499d7ff66c896e9",
+    "458caa855ab9ed4ce3f769878bd42429": "d20ae5214fe65f5048a9f229a2c40a988556fe5455db55b1f28e5c44f25b30e6",
+    "de9df7f54dee7c9d770e985398a297d3": "b51a0ba8a86e1ebae1d334a97e6953ea97a08b8ca02fd8a181a818f4828409fb"
+  },
+  "dt_s": 0.1,
+  "deadline_steps": 1501,
+  "noise_level": 0.2,
+  "scope": "Shared 2-D vessel task. Frozen author actor and normalizer vs direct target heading.",
+  "episodes": [
+    {
+      "method": "mr_nav",
+      "map": "e4a8fff0e00e9d6a6d5d1708d40b4941",
+      "lane": 6,
+      "start": [
+        0.0,
+        120.0
+      ],
+      "target": [
+        52.0,
+        77.0
+      ],
+      "steps": 1,
+      "elapsed_s": 0.1,
+      "reached": false,
+      "success": false,
+      "collision": false,
+      "out_of_bounds": true,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "56371f9beb0749770534c7925048388a",
+      "lane": 21,
+      "start": [
+        26.0,
+        55.0
+      ],
+      "target": [
+        22.0,
+        43.0
+      ],
+      "steps": 57,
+      "elapsed_s": 5.7,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "c5293b0a0ff994f45da001acad1caae9",
+      "lane": 40,
+      "start": [
+        30.0,
+        54.0
+      ],
+      "target": [
+        43.0,
+        46.0
+      ],
+      "steps": 67,
+      "elapsed_s": 6.7,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "2ac8031a1dccf46fc73f5a51576955d8",
+      "lane": 5,
+      "start": [
+        49.0,
+        98.0
+      ],
+      "target": [
+        62.0,
+        111.0
+      ],
+      "steps": 82,
+      "elapsed_s": 8.200000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "3a86444443ba653d5c4a777434eb1fbb",
+      "lane": 9,
+      "start": [
+        79.0,
+        46.0
+      ],
+      "target": [
+        59.0,
+        56.0
+      ],
+      "steps": 101,
+      "elapsed_s": 10.100000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "0b286bb2be6554f22267e9d36eb5668e",
+      "lane": 19,
+      "start": [
+        58.0,
+        3.0
+      ],
+      "target": [
+        67.0,
+        22.0
+      ],
+      "steps": 103,
+      "elapsed_s": 10.3,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "4e829ecf6a4872ca4187b602a12c606f",
+      "lane": 0,
+      "start": [
+        15.0,
+        23.0
+      ],
+      "target": [
+        36.0,
+        37.0
+      ],
+      "steps": 117,
+      "elapsed_s": 11.700000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "de94c3c91474873ff8eb7f0b3528244d",
+      "lane": 10,
+      "start": [
+        126.0,
+        1.0
+      ],
+      "target": [
+        106.0,
+        15.0
+      ],
+      "steps": 119,
+      "elapsed_s": 11.9,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "2f828d7a6734f96a8697372d73d56e0b",
+      "lane": 36,
+      "start": [
+        33.0,
+        2.0
+      ],
+      "target": [
+        47.0,
+        25.0
+      ],
+      "steps": 127,
+      "elapsed_s": 12.700000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "b6f6f5a3734fd01e03c6ee53f214f357",
+      "lane": 33,
+      "start": [
+        110.0,
+        46.0
+      ],
+      "target": [
+        107.0,
+        73.0
+      ],
+      "steps": 131,
+      "elapsed_s": 13.100000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "09c913618b3adef132c32859c73c1032",
+      "lane": 45,
+      "start": [
+        54.0,
+        77.0
+      ],
+      "target": [
+        55.0,
+        105.0
+      ],
+      "steps": 133,
+      "elapsed_s": 13.3,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "83bce274781b002bdccd715e2a544946",
+      "lane": 42,
+      "start": [
+        62.0,
+        70.0
+      ],
+      "target": [
+        87.0,
+        87.0
+      ],
+      "steps": 140,
+      "elapsed_s": 14.0,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "d072a6d62718bbbeabed7d0618913a34",
+      "lane": 41,
+      "start": [
+        120.0,
+        55.0
+      ],
+      "target": [
+        98.0,
+        76.0
+      ],
+      "steps": 146,
+      "elapsed_s": 14.600000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "cb38fea0db52d1d5483cee459e93d743",
+      "lane": 28,
+      "start": [
+        22.0,
+        76.0
+      ],
+      "target": [
+        54.0,
+        78.0
+      ],
+      "steps": 148,
+      "elapsed_s": 14.8,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "a3fc1e9a5269ca6c8616b7af8ea8fbe7",
+      "lane": 38,
+      "start": [
+        15.0,
+        71.0
+      ],
+      "target": [
+        46.0,
+        83.0
+      ],
+      "steps": 155,
+      "elapsed_s": 15.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "a641d64e5f7c76a4a269034f158ebebf",
+      "lane": 7,
+      "start": [
+        37.0,
+        34.0
+      ],
+      "target": [
+        13.0,
+        56.0
+      ],
+      "steps": 160,
+      "elapsed_s": 16.0,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "18c4e6e5692adc959ded6d9042f2b7c5",
+      "lane": 20,
+      "start": [
+        29.0,
+        40.0
+      ],
+      "target": [
+        23.0,
+        74.0
+      ],
+      "steps": 162,
+      "elapsed_s": 16.2,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "99ade92ef8d991a720b5c22897a5b4d8",
+      "lane": 39,
+      "start": [
+        74.0,
+        104.0
+      ],
+      "target": [
+        69.0,
+        121.0
+      ],
+      "steps": 167,
+      "elapsed_s": 16.7,
+      "reached": false,
+      "success": false,
+      "collision": true,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 13
+    },
+    {
+      "method": "mr_nav",
+      "map": "86611827f389def800cca857e773b906",
+      "lane": 44,
+      "start": [
+        101.0,
+        8.0
+      ],
+      "target": [
+        107.0,
+        42.0
+      ],
+      "steps": 169,
+      "elapsed_s": 16.900000000000002,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 1
+    },
+    {
+      "method": "mr_nav",
+      "map": "95363a7f362406f85f823de3aeb598dd",
+      "lane": 23,
+      "start": [
+        49.0,
+        52.0
+      ],
+      "target": [
+        53.0,
+        87.0
+      ],
+      "steps": 174,
+      "elapsed_s": 17.400000000000002,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "4b1b2eee47f10f41f4b146e9d02a81cb",
+      "lane": 26,
+      "start": [
+        55.0,
+        72.0
+      ],
+      "target": [
+        61.0,
+        108.0
+      ],
+      "steps": 174,
+      "elapsed_s": 17.400000000000002,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "ca2b8c1b89e007416c68bd28d420fcc2",
+      "lane": 3,
+      "start": [
+        125.0,
+        125.0
+      ],
+      "target": [
+        90.0,
+        116.0
+      ],
+      "steps": 177,
+      "elapsed_s": 17.7,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "b7deefd54ba2515b71c8541338b53ca1",
+      "lane": 22,
+      "start": [
+        0.0,
+        54.0
+      ],
+      "target": [
+        36.0,
+        66.0
+      ],
+      "steps": 181,
+      "elapsed_s": 18.1,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "86be126e311663afbefafed71f59560b",
+      "lane": 30,
+      "start": [
+        84.0,
+        29.0
+      ],
+      "target": [
+        118.0,
+        13.0
+      ],
+      "steps": 182,
+      "elapsed_s": 18.2,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "7e3c20e5584eafbab10ebead47b36748",
+      "lane": 17,
+      "start": [
+        74.0,
+        12.0
+      ],
+      "target": [
+        77.0,
+        51.0
+      ],
+      "steps": 184,
+      "elapsed_s": 18.400000000000002,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "4444b6dd8fefa50757d852ec06c45fe2",
+      "lane": 13,
+      "start": [
+        118.0,
+        105.0
+      ],
+      "target": [
+        81.0,
+        85.0
+      ],
+      "steps": 206,
+      "elapsed_s": 20.6,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "458caa855ab9ed4ce3f769878bd42429",
+      "lane": 25,
+      "start": [
+        120.0,
+        85.0
+      ],
+      "target": [
+        71.0,
+        56.0
+      ],
+      "steps": 277,
+      "elapsed_s": 27.700000000000003,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "0c61afcd2c1d7cafefd9e61b5f80c34b",
+      "lane": 35,
+      "start": [
+        97.0,
+        57.0
+      ],
+      "target": [
+        41.0,
+        43.0
+      ],
+      "steps": 285,
+      "elapsed_s": 28.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "512a9ab15bc8942aa1d024b1b0acef47",
+      "lane": 29,
+      "start": [
+        73.0,
+        31.0
+      ],
+      "target": [
+        86.0,
+        90.0
+      ],
+      "steps": 294,
+      "elapsed_s": 29.400000000000002,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "e6e62a8565a7f61323158c85f503f373",
+      "lane": 18,
+      "start": [
+        56.0,
+        33.0
+      ],
+      "target": [
+        76.0,
+        92.0
+      ],
+      "steps": 304,
+      "elapsed_s": 30.400000000000002,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "1047bab4c32e353c5788fcf31c9cff65",
+      "lane": 12,
+      "start": [
+        59.0,
+        118.0
+      ],
+      "target": [
+        82.0,
+        54.0
+      ],
+      "steps": 345,
+      "elapsed_s": 34.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "de9df7f54dee7c9d770e985398a297d3",
+      "lane": 46,
+      "start": [
+        72.0,
+        35.0
+      ],
+      "target": [
+        12.0,
+        75.0
+      ],
+      "steps": 355,
+      "elapsed_s": 35.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "9added0a647d01be01877256a9b5dfe5",
+      "lane": 16,
+      "start": [
+        26.0,
+        108.0
+      ],
+      "target": [
+        93.0,
+        76.0
+      ],
+      "steps": 362,
+      "elapsed_s": 36.2,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "d34aa8b54eed56b0db88d11217554c66",
+      "lane": 8,
+      "start": [
+        30.0,
+        63.0
+      ],
+      "target": [
+        7.0,
+        119.0
+      ],
+      "steps": 364,
+      "elapsed_s": 36.4,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "6ee48f8e286716738b36e1377c597bbe",
+      "lane": 2,
+      "start": [
+        46.0,
+        39.0
+      ],
+      "target": [
+        52.0,
+        111.0
+      ],
+      "steps": 417,
+      "elapsed_s": 41.7,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "2e3c0ca4b48dd1ec1e93d2cb323adc2b",
+      "lane": 11,
+      "start": [
+        5.0,
+        94.0
+      ],
+      "target": [
+        80.0,
+        46.0
+      ],
+      "steps": 435,
+      "elapsed_s": 43.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "087d9e638d6fdc2b142ef82e15318474",
+      "lane": 1,
+      "start": [
+        75.0,
+        2.0
+      ],
+      "target": [
+        73.0,
+        76.0
+      ],
+      "steps": 439,
+      "elapsed_s": 43.900000000000006,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "8aef7953810274af2604a816b257fc5b",
+      "lane": 27,
+      "start": [
+        64.0,
+        119.0
+      ],
+      "target": [
+        63.0,
+        31.0
+      ],
+      "steps": 455,
+      "elapsed_s": 45.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "d40f0b61fd35aff66952b8cd57749e06",
+      "lane": 31,
+      "start": [
+        89.0,
+        127.0
+      ],
+      "target": [
+        119.0,
+        41.0
+      ],
+      "steps": 461,
+      "elapsed_s": 46.1,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 1
+    },
+    {
+      "method": "mr_nav",
+      "map": "d26586040a3f7f0b63d16cdc9fbfdfac",
+      "lane": 24,
+      "start": [
+        22.0,
+        107.0
+      ],
+      "target": [
+        119.0,
+        105.0
+      ],
+      "steps": 479,
+      "elapsed_s": 47.900000000000006,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "29c15261de8de6b11d2f92c535a56a2e",
+      "lane": 32,
+      "start": [
+        62.0,
+        6.0
+      ],
+      "target": [
+        75.0,
+        112.0
+      ],
+      "steps": 521,
+      "elapsed_s": 52.1,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "0a86acfa36d0c491fee993709120a52c",
+      "lane": 34,
+      "start": [
+        10.0,
+        8.0
+      ],
+      "target": [
+        120.0,
+        41.0
+      ],
+      "steps": 569,
+      "elapsed_s": 56.900000000000006,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "bfa7888b8563c8902ef5520976d8e2fd",
+      "lane": 43,
+      "start": [
+        75.0,
+        1.0
+      ],
+      "target": [
+        76.0,
+        99.0
+      ],
+      "steps": 579,
+      "elapsed_s": 57.900000000000006,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "9260e8139243a483825bed5e8e3b0a73",
+      "lane": 37,
+      "start": [
+        66.0,
+        111.0
+      ],
+      "target": [
+        116.0,
+        6.0
+      ],
+      "steps": 583,
+      "elapsed_s": 58.300000000000004,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 14
+    },
+    {
+      "method": "mr_nav",
+      "map": "a837ed0976b75eabbaff042860367ac0",
+      "lane": 4,
+      "start": [
+        54.0,
+        7.0
+      ],
+      "target": [
+        44.0,
+        117.0
+      ],
+      "steps": 589,
+      "elapsed_s": 58.900000000000006,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "2eb120329a6a3eb340bd6d44dbaa22e6",
+      "lane": 15,
+      "start": [
+        2.0,
+        123.0
+      ],
+      "target": [
+        121.0,
+        63.0
+      ],
+      "steps": 650,
+      "elapsed_s": 65.0,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "mr_nav",
+      "map": "4cc2704cd76387e34b9c15479e9d9af0",
+      "lane": 47,
+      "start": [
+        88.0,
+        126.0
+      ],
+      "target": [
+        98.0,
+        89.0
+      ],
+      "steps": 989,
+      "elapsed_s": 98.9,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 3
+    },
+    {
+      "method": "mr_nav",
+      "map": "0a7929eab2859110a028900b4a6d5983",
+      "lane": 14,
+      "start": [
+        80.0,
+        83.0
+      ],
+      "target": [
+        108.0,
+        75.0
+      ],
+      "steps": 1501,
+      "elapsed_s": 150.1,
+      "reached": false,
+      "success": false,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": true,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "7e3c20e5584eafbab10ebead47b36748",
+      "lane": 17,
+      "start": [
+        74.0,
+        12.0
+      ],
+      "target": [
+        77.0,
+        51.0
+      ],
+      "steps": 1,
+      "elapsed_s": 0.1,
+      "reached": false,
+      "success": false,
+      "collision": true,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "56371f9beb0749770534c7925048388a",
+      "lane": 21,
+      "start": [
+        26.0,
+        55.0
+      ],
+      "target": [
+        22.0,
+        43.0
+      ],
+      "steps": 54,
+      "elapsed_s": 5.4,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "c5293b0a0ff994f45da001acad1caae9",
+      "lane": 40,
+      "start": [
+        30.0,
+        54.0
+      ],
+      "target": [
+        43.0,
+        46.0
+      ],
+      "steps": 67,
+      "elapsed_s": 6.7,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "99ade92ef8d991a720b5c22897a5b4d8",
+      "lane": 39,
+      "start": [
+        74.0,
+        104.0
+      ],
+      "target": [
+        69.0,
+        121.0
+      ],
+      "steps": 79,
+      "elapsed_s": 7.9,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "2ac8031a1dccf46fc73f5a51576955d8",
+      "lane": 5,
+      "start": [
+        49.0,
+        98.0
+      ],
+      "target": [
+        62.0,
+        111.0
+      ],
+      "steps": 82,
+      "elapsed_s": 8.200000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "e4a8fff0e00e9d6a6d5d1708d40b4941",
+      "lane": 6,
+      "start": [
+        0.0,
+        120.0
+      ],
+      "target": [
+        52.0,
+        77.0
+      ],
+      "steps": 90,
+      "elapsed_s": 9.0,
+      "reached": false,
+      "success": false,
+      "collision": true,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 61
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "087d9e638d6fdc2b142ef82e15318474",
+      "lane": 1,
+      "start": [
+        75.0,
+        2.0
+      ],
+      "target": [
+        73.0,
+        76.0
+      ],
+      "steps": 94,
+      "elapsed_s": 9.4,
+      "reached": false,
+      "success": false,
+      "collision": true,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 77
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "0b286bb2be6554f22267e9d36eb5668e",
+      "lane": 19,
+      "start": [
+        58.0,
+        3.0
+      ],
+      "target": [
+        67.0,
+        22.0
+      ],
+      "steps": 99,
+      "elapsed_s": 9.9,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "3a86444443ba653d5c4a777434eb1fbb",
+      "lane": 9,
+      "start": [
+        79.0,
+        46.0
+      ],
+      "target": [
+        59.0,
+        56.0
+      ],
+      "steps": 100,
+      "elapsed_s": 10.0,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "de94c3c91474873ff8eb7f0b3528244d",
+      "lane": 10,
+      "start": [
+        126.0,
+        1.0
+      ],
+      "target": [
+        106.0,
+        15.0
+      ],
+      "steps": 111,
+      "elapsed_s": 11.100000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "4e829ecf6a4872ca4187b602a12c606f",
+      "lane": 0,
+      "start": [
+        15.0,
+        23.0
+      ],
+      "target": [
+        36.0,
+        37.0
+      ],
+      "steps": 117,
+      "elapsed_s": 11.700000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "2f828d7a6734f96a8697372d73d56e0b",
+      "lane": 36,
+      "start": [
+        33.0,
+        2.0
+      ],
+      "target": [
+        47.0,
+        25.0
+      ],
+      "steps": 123,
+      "elapsed_s": 12.3,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "b6f6f5a3734fd01e03c6ee53f214f357",
+      "lane": 33,
+      "start": [
+        110.0,
+        46.0
+      ],
+      "target": [
+        107.0,
+        73.0
+      ],
+      "steps": 130,
+      "elapsed_s": 13.0,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "09c913618b3adef132c32859c73c1032",
+      "lane": 45,
+      "start": [
+        54.0,
+        77.0
+      ],
+      "target": [
+        55.0,
+        105.0
+      ],
+      "steps": 131,
+      "elapsed_s": 13.100000000000001,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "0a7929eab2859110a028900b4a6d5983",
+      "lane": 14,
+      "start": [
+        80.0,
+        83.0
+      ],
+      "target": [
+        108.0,
+        75.0
+      ],
+      "steps": 135,
+      "elapsed_s": 13.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "83bce274781b002bdccd715e2a544946",
+      "lane": 42,
+      "start": [
+        62.0,
+        70.0
+      ],
+      "target": [
+        87.0,
+        87.0
+      ],
+      "steps": 140,
+      "elapsed_s": 14.0,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "d072a6d62718bbbeabed7d0618913a34",
+      "lane": 41,
+      "start": [
+        120.0,
+        55.0
+      ],
+      "target": [
+        98.0,
+        76.0
+      ],
+      "steps": 145,
+      "elapsed_s": 14.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "cb38fea0db52d1d5483cee459e93d743",
+      "lane": 28,
+      "start": [
+        22.0,
+        76.0
+      ],
+      "target": [
+        54.0,
+        78.0
+      ],
+      "steps": 148,
+      "elapsed_s": 14.8,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "6ee48f8e286716738b36e1377c597bbe",
+      "lane": 2,
+      "start": [
+        46.0,
+        39.0
+      ],
+      "target": [
+        52.0,
+        111.0
+      ],
+      "steps": 151,
+      "elapsed_s": 15.100000000000001,
+      "reached": false,
+      "success": false,
+      "collision": true,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 37
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "a641d64e5f7c76a4a269034f158ebebf",
+      "lane": 7,
+      "start": [
+        37.0,
+        34.0
+      ],
+      "target": [
+        13.0,
+        56.0
+      ],
+      "steps": 155,
+      "elapsed_s": 15.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "a3fc1e9a5269ca6c8616b7af8ea8fbe7",
+      "lane": 38,
+      "start": [
+        15.0,
+        71.0
+      ],
+      "target": [
+        46.0,
+        83.0
+      ],
+      "steps": 155,
+      "elapsed_s": 15.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "18c4e6e5692adc959ded6d9042f2b7c5",
+      "lane": 20,
+      "start": [
+        29.0,
+        40.0
+      ],
+      "target": [
+        23.0,
+        74.0
+      ],
+      "steps": 161,
+      "elapsed_s": 16.1,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "86611827f389def800cca857e773b906",
+      "lane": 44,
+      "start": [
+        101.0,
+        8.0
+      ],
+      "target": [
+        107.0,
+        42.0
+      ],
+      "steps": 164,
+      "elapsed_s": 16.400000000000002,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "95363a7f362406f85f823de3aeb598dd",
+      "lane": 23,
+      "start": [
+        49.0,
+        52.0
+      ],
+      "target": [
+        53.0,
+        87.0
+      ],
+      "steps": 167,
+      "elapsed_s": 16.7,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "ca2b8c1b89e007416c68bd28d420fcc2",
+      "lane": 3,
+      "start": [
+        125.0,
+        125.0
+      ],
+      "target": [
+        90.0,
+        116.0
+      ],
+      "steps": 172,
+      "elapsed_s": 17.2,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "4b1b2eee47f10f41f4b146e9d02a81cb",
+      "lane": 26,
+      "start": [
+        55.0,
+        72.0
+      ],
+      "target": [
+        61.0,
+        108.0
+      ],
+      "steps": 172,
+      "elapsed_s": 17.2,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "a837ed0976b75eabbaff042860367ac0",
+      "lane": 4,
+      "start": [
+        54.0,
+        7.0
+      ],
+      "target": [
+        44.0,
+        117.0
+      ],
+      "steps": 178,
+      "elapsed_s": 17.8,
+      "reached": false,
+      "success": false,
+      "collision": true,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 69
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "86be126e311663afbefafed71f59560b",
+      "lane": 30,
+      "start": [
+        84.0,
+        29.0
+      ],
+      "target": [
+        118.0,
+        13.0
+      ],
+      "steps": 178,
+      "elapsed_s": 17.8,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "b7deefd54ba2515b71c8541338b53ca1",
+      "lane": 22,
+      "start": [
+        0.0,
+        54.0
+      ],
+      "target": [
+        36.0,
+        66.0
+      ],
+      "steps": 180,
+      "elapsed_s": 18.0,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "4cc2704cd76387e34b9c15479e9d9af0",
+      "lane": 47,
+      "start": [
+        88.0,
+        126.0
+      ],
+      "target": [
+        98.0,
+        89.0
+      ],
+      "steps": 182,
+      "elapsed_s": 18.2,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "bfa7888b8563c8902ef5520976d8e2fd",
+      "lane": 43,
+      "start": [
+        75.0,
+        1.0
+      ],
+      "target": [
+        76.0,
+        99.0
+      ],
+      "steps": 195,
+      "elapsed_s": 19.5,
+      "reached": false,
+      "success": false,
+      "collision": true,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 44
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "4444b6dd8fefa50757d852ec06c45fe2",
+      "lane": 13,
+      "start": [
+        118.0,
+        105.0
+      ],
+      "target": [
+        81.0,
+        85.0
+      ],
+      "steps": 202,
+      "elapsed_s": 20.200000000000003,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "458caa855ab9ed4ce3f769878bd42429",
+      "lane": 25,
+      "start": [
+        120.0,
+        85.0
+      ],
+      "target": [
+        71.0,
+        56.0
+      ],
+      "steps": 276,
+      "elapsed_s": 27.6,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "0c61afcd2c1d7cafefd9e61b5f80c34b",
+      "lane": 35,
+      "start": [
+        97.0,
+        57.0
+      ],
+      "target": [
+        41.0,
+        43.0
+      ],
+      "steps": 283,
+      "elapsed_s": 28.3,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "512a9ab15bc8942aa1d024b1b0acef47",
+      "lane": 29,
+      "start": [
+        73.0,
+        31.0
+      ],
+      "target": [
+        86.0,
+        90.0
+      ],
+      "steps": 293,
+      "elapsed_s": 29.3,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "d34aa8b54eed56b0db88d11217554c66",
+      "lane": 8,
+      "start": [
+        30.0,
+        63.0
+      ],
+      "target": [
+        7.0,
+        119.0
+      ],
+      "steps": 298,
+      "elapsed_s": 29.8,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "e6e62a8565a7f61323158c85f503f373",
+      "lane": 18,
+      "start": [
+        56.0,
+        33.0
+      ],
+      "target": [
+        76.0,
+        92.0
+      ],
+      "steps": 303,
+      "elapsed_s": 30.3,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "1047bab4c32e353c5788fcf31c9cff65",
+      "lane": 12,
+      "start": [
+        59.0,
+        118.0
+      ],
+      "target": [
+        82.0,
+        54.0
+      ],
+      "steps": 337,
+      "elapsed_s": 33.7,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "de9df7f54dee7c9d770e985398a297d3",
+      "lane": 46,
+      "start": [
+        72.0,
+        35.0
+      ],
+      "target": [
+        12.0,
+        75.0
+      ],
+      "steps": 347,
+      "elapsed_s": 34.7,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "9added0a647d01be01877256a9b5dfe5",
+      "lane": 16,
+      "start": [
+        26.0,
+        108.0
+      ],
+      "target": [
+        93.0,
+        76.0
+      ],
+      "steps": 361,
+      "elapsed_s": 36.1,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "8aef7953810274af2604a816b257fc5b",
+      "lane": 27,
+      "start": [
+        64.0,
+        119.0
+      ],
+      "target": [
+        63.0,
+        31.0
+      ],
+      "steps": 429,
+      "elapsed_s": 42.900000000000006,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "2e3c0ca4b48dd1ec1e93d2cb323adc2b",
+      "lane": 11,
+      "start": [
+        5.0,
+        94.0
+      ],
+      "target": [
+        80.0,
+        46.0
+      ],
+      "steps": 433,
+      "elapsed_s": 43.300000000000004,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "d40f0b61fd35aff66952b8cd57749e06",
+      "lane": 31,
+      "start": [
+        89.0,
+        127.0
+      ],
+      "target": [
+        119.0,
+        41.0
+      ],
+      "steps": 445,
+      "elapsed_s": 44.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "d26586040a3f7f0b63d16cdc9fbfdfac",
+      "lane": 24,
+      "start": [
+        22.0,
+        107.0
+      ],
+      "target": [
+        119.0,
+        105.0
+      ],
+      "steps": 476,
+      "elapsed_s": 47.6,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "29c15261de8de6b11d2f92c535a56a2e",
+      "lane": 32,
+      "start": [
+        62.0,
+        6.0
+      ],
+      "target": [
+        75.0,
+        112.0
+      ],
+      "steps": 518,
+      "elapsed_s": 51.800000000000004,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "9260e8139243a483825bed5e8e3b0a73",
+      "lane": 37,
+      "start": [
+        66.0,
+        111.0
+      ],
+      "target": [
+        116.0,
+        6.0
+      ],
+      "steps": 559,
+      "elapsed_s": 55.900000000000006,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "0a86acfa36d0c491fee993709120a52c",
+      "lane": 34,
+      "start": [
+        10.0,
+        8.0
+      ],
+      "target": [
+        120.0,
+        41.0
+      ],
+      "steps": 565,
+      "elapsed_s": 56.5,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    },
+    {
+      "method": "direct_pursuit",
+      "map": "2eb120329a6a3eb340bd6d44dbaa22e6",
+      "lane": 15,
+      "start": [
+        2.0,
+        123.0
+      ],
+      "target": [
+        121.0,
+        63.0
+      ],
+      "steps": 648,
+      "elapsed_s": 64.8,
+      "reached": true,
+      "success": true,
+      "collision": false,
+      "out_of_bounds": false,
+      "timeout": false,
+      "guard_steps": 0
+    }
+  ]
+}

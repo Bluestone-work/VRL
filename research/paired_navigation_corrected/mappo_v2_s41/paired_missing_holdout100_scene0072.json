@@ -1,0 +1,242 @@
+{
+  "source": "research/COMPARISON_20261125/pursuit_holdout100.json",
+  "manifest": "/home/wj/桌面/VRL_exp_20261125/research/datasets/NAVIGATION_V1/manifest.jsonl",
+  "manifest_sha256": "3ad4e7a3053fbd333c3dc543ff7703e6e1a1da3709a5a06812a05776d306142e",
+  "source_sha256": "641a9e2afa8b67e2dc2c648a0d2e0b2b110ff77709cc63c208c4d4d9597c588b",
+  "episodes": 100,
+  "selected": 100,
+  "errors": [],
+  "rows": [
+    {
+      "episode_index": 72,
+      "manifest_index": 54587,
+      "row": {
+        "anatomy": "sma_embolism",
+        "anatomy_index": 11,
+        "clot_pattern": "mixed_pattern",
+        "clusters": 3,
+        "condition_id": 45,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": [
+          "historical_sites",
+          "random_branches"
+        ],
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "strong",
+        "nominal_flow_inlet_mm_s": 0.1,
+        "obstacle_density": "high",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": false,
+        "replicate": 15,
+        "scenario_hash": "0d963c6651bd9264f88cb215fbd839bc074130838b59747a2a8f302a715e0d6a",
+        "scene_seed": 3611045015,
+        "split": "holdout_test",
+        "variation_strength": 0.0
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3611045015,
+        "scenario_hash": "0d963c6651bd9264f88cb215fbd839bc074130838b59747a2a8f302a715e0d6a"
+      },
+      "pursuit_accepted_seed": 3611045015,
+      "pursuit_realized_scenario_hash": "afc2f564dc92359540b615263c085cbdbb0ceb7cf4b85823f034282cdd513779",
+      "pursuit_navigation_targets": [
+        3,
+        1,
+        0
+      ]
+    },
+    {
+      "episode_index": 73,
+      "manifest_index": 54806,
+      "row": {
+        "anatomy": "sma_embolism",
+        "anatomy_index": 11,
+        "clot_pattern": "historical_sites",
+        "clusters": 3,
+        "condition_id": 49,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 4,
+        "environment_clot_initialization": "historical_sites",
+        "environment_clot_initialization_realized": "historical_sites",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "low",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": true,
+        "replicate": 8,
+        "scenario_hash": "a86535b6a2d9a03d3e780c24dc3a8eda222b69c580d01e594a2a6d11352d4add",
+        "scene_seed": 3611049008,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3611049008,
+        "scenario_hash": "a86535b6a2d9a03d3e780c24dc3a8eda222b69c580d01e594a2a6d11352d4add"
+      },
+      "pursuit_accepted_seed": 3611049008,
+      "pursuit_realized_scenario_hash": "0bf3be995ed2383b295bed070560d50612ac564d0cc94e179f3b346da3dded70",
+      "pursuit_navigation_targets": [
+        2,
+        1,
+        3
+      ]
+    },
+    {
+      "episode_index": 74,
+      "manifest_index": 55025,
+      "row": {
+        "anatomy": "sma_embolism",
+        "anatomy_index": 11,
+        "clot_pattern": "historical_sites",
+        "clusters": 3,
+        "condition_id": 53,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": "historical_sites",
+        "environment_clot_initialization_realized": "historical_sites",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "high",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": true,
+        "replicate": 1,
+        "scenario_hash": "1f0905554d676cf57f1ff17ff20454c48e0db4972cd6d9ab76b176cdfcf74c30",
+        "scene_seed": 3611053001,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3611053001,
+        "scenario_hash": "1f0905554d676cf57f1ff17ff20454c48e0db4972cd6d9ab76b176cdfcf74c30"
+      },
+      "pursuit_accepted_seed": 3611053001,
+      "pursuit_realized_scenario_hash": "66542f69fab3ff2d4e27c6fd41533ca0d3b504a068e294e8f86c0ec076a37f0a",
+      "pursuit_navigation_targets": [
+        0,
+        2,
+        3
+      ]
+    },
+    {
+      "episode_index": 75,
+      "manifest_index": 55241,
+      "row": {
+        "anatomy": "sma_embolism",
+        "anatomy_index": 11,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 56,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 4,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "low",
+        "obstacle_layout": "uniform",
+        "pulsatile": true,
+        "replicate": 13,
+        "scenario_hash": "b5e3245848f167309a9f2fc31eb3ed7ddfad6036aaf77386f88128c4dccabac3",
+        "scene_seed": 3611056013,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3611056013,
+        "scenario_hash": "b5e3245848f167309a9f2fc31eb3ed7ddfad6036aaf77386f88128c4dccabac3"
+      },
+      "pursuit_accepted_seed": 3611056013,
+      "pursuit_realized_scenario_hash": "ff7f4ab97783d3c0fe76180e91e1d314e75b06805d5aa0c95b3cb7d5c425ada6",
+      "pursuit_navigation_targets": [
+        3,
+        0,
+        2
+      ]
+    },
+    {
+      "episode_index": 76,
+      "manifest_index": 55460,
+      "row": {
+        "anatomy": "sma_embolism",
+        "anatomy_index": 11,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 60,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 16,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "high",
+        "obstacle_layout": "uniform",
+        "pulsatile": true,
+        "replicate": 6,
+        "scenario_hash": "daf60693c538d03d9e50b04fd82070d124887f7b74edbda0e4f1fd2e3d87c93f",
+        "scene_seed": 3611060006,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3611060006,
+        "scenario_hash": "daf60693c538d03d9e50b04fd82070d124887f7b74edbda0e4f1fd2e3d87c93f"
+      },
+      "pursuit_accepted_seed": 3611060006,
+      "pursuit_realized_scenario_hash": "ade88dbd671999d353c04c28c8be0b3c9264569b185596e9ed9675978208a454",
+      "pursuit_navigation_targets": [
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "episode_index": 77,
+      "manifest_index": 55679,
+      "row": {
+        "anatomy": "sma_embolism",
+        "anatomy_index": 11,
+        "clot_pattern": "random_branches",
+        "clusters": 3,
+        "condition_id": 63,
+        "dataset_version": "navigation_dataset_v1",
+        "dynamic_obstacle_count": 32,
+        "environment_clot_initialization": "random_branches",
+        "environment_clot_initialization_realized": "random_branches",
+        "flow_mode": "pulsatile",
+        "nominal_flow_inlet_mm_s": 0.05,
+        "obstacle_density": "stress",
+        "obstacle_layout": "route_encounter",
+        "pulsatile": true,
+        "replicate": 19,
+        "scenario_hash": "bc9720dd0e0136a27ab97eef1338951cb2ba5a0d3978d73a1e612fc1f66da6a5",
+        "scene_seed": 3611063019,
+        "split": "holdout_test",
+        "variation_strength": 0.75
+      },
+      "pursuit_identity": {
+        "split": "holdout_test",
+        "clusters": 3,
+        "scene_seed": 3611063019,
+        "scenario_hash": "bc9720dd0e0136a27ab97eef1338951cb2ba5a0d3978d73a1e612fc1f66da6a5"
+      },
+      "pursuit_accepted_seed": 3611063019,
+      "pursuit_realized_scenario_hash": "568253ac91e0f37cf2d8b880d2ff1dab52ac2b2056306d03fd233b0013a63b86",
+      "pursuit_navigation_targets": [
+        0,
+        1,
+        2
+      ]
+    }
+  ]
+}

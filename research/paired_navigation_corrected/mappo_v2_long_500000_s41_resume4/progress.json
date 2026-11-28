@@ -1,0 +1,2 @@
+{"time/iterations": 1, "time/fps": 256, "time/time_elapsed": 2, "time/total_timesteps": 768}
+{"train/learning_rate": 0.0001, "train/entropy_loss": -0.13555582519620657, "train/policy_gradient_loss": -0.00011671935984243949, "train/value_loss": 1.2844774425029755, "train/approx_kl": 4.215499575366266e-05, "train/clip_fraction": 0.0, "train/loss": 0.3894155025482178, "train/explained_variance": 0.9209384471178055, "train/n_updates": 4, "train/clip_range": 0.2, "time/iterations": 2, "time/fps": 257, "time/time_elapsed": 5, "time/total_timesteps": 1536}

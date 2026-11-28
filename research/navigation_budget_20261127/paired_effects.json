@@ -1,0 +1,18 @@
+{
+  "mca_n3_minus_n1_time_mean_and_paired_ci95_s": [
+    -42.15,
+    -79.5,
+    -7.8833
+  ],
+  "mr_nav_wins_ties_losses": [
+    5,
+    41,
+    2
+  ],
+  "mr_nav_success_delta_and_paired_ci95": [
+    0.0625,
+    -0.0417,
+    0.1667
+  ],
+  "note": "Percentile bootstrap over paired layouts, without resampling training seeds."
+}

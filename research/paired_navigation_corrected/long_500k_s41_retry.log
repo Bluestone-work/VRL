@@ -1,0 +1,1 @@
+scripts/rerun_paired_navigation.sh: line 18: 1035557 Segmentation fault      (core dumped) python scripts/train_sb3_ippo.py --algo mappo --clusters 3 --seed "$seed" --timesteps "$timesteps" --action-set semantic_reduced --mask-invalid --flow-feature --safety-parity --out "$out"

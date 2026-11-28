@@ -1,0 +1,12 @@
+Fig. 3 | Navigation across vascular territories. a, The 14 registered territories (centreline trees,
+width scaled by lumen radius, orange dots registered target sites; projection onto the two widest axes).
+The global and local layers are trained and tuned on T1-T9 only; U1-U5 are held out as whole classes. Within
+each territory three flow regimes, three target distributions, four dynamic-obstacle densities and two
+layouts are crossed (72 conditions). b, Per-territory task completion (all assigned targets reached),
+safe success (completion without lost clusters or contact after arrival) and percentage of scenes with any wall
+contact, N = 3, 20 frozen-manifest scenes per territory, identical scenes for every method; learned methods are
+averaged over three training seeds. Shaded columns: held-out territories. c, Three replayed scenes with the frozen
+seed-41 policies. Left, executed IPPO paths (squares, start; orange, targets). Right, the distance of the
+farthest unfinished cluster to its target for IPPO, MAPPO and pure pursuit (star, success; cross, failure at the
+deadline or loss). The scenes were selected from early diagnostic replays and illustrate the three outcome types;
+the matrix in b, not these examples, measures how often each occurs. scene 3400000000 Pursuit: success=True, wall contact 0.0 robot·s; scene 3400000000 MAPPO-V2: success=True, wall contact 0.0 robot·s; scene 3400000000 IPPO: success=True, wall contact 0.0 robot·s; scene 3405052004 Pursuit: success=False, wall contact 441.3 robot·s; scene 3405052004 MAPPO-V2: success=False, wall contact 441.3 robot·s; scene 3405052004 IPPO: success=True, wall contact 0.0 robot·s; scene 3413006012 Pursuit: success=True, wall contact 7.1 robot·s; scene 3413006012 MAPPO-V2: success=True, wall contact 5.4 robot·s; scene 3413006012 IPPO: success=False, wall contact 65.4 robot·s.

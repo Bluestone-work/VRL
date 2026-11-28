@@ -1,0 +1,26 @@
+{
+  "agent_steps": 1536,
+  "environment_steps": 512,
+  "target_environment_steps": 180512,
+  "minutes": 0.09906135629862547,
+  "frontier": 0,
+  "difficulty": 0,
+  "scene": {
+    "anatomy": "pulmonary_saddle",
+    "clusters": 3,
+    "seed": 2844200000,
+    "flow": 0.025,
+    "latency": 0,
+    "dynamic_obstacle_count": 4,
+    "clot_initialization": null,
+    "variation": null,
+    "accepted_seed": 2844200000,
+    "scenario_hash": "a21d508807db507dddc1298361edf4d59b04a977760a1397f809b6268b26c14b",
+    "difficulty": 0,
+    "difficulty_name": "easy",
+    "dynamic_obstacles": 4,
+    "frontier": 0,
+    "scenario_family": "route_encounter",
+    "localized_obstacles": 1
+  }
+}

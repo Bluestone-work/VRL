@@ -1,0 +1,16 @@
+{
+  "algorithm": "IPPO_shared",
+  "framework": "stable-baselines3 2.7.1",
+  "seed": 41,
+  "clusters": 3,
+  "physical_steps": 100000,
+  "agent_steps": 300000,
+  "device": "cuda",
+  "reward_mode": "navigation",
+  "zero_latency": true,
+  "action_semantics": "per-cluster discrete direct semantic candidate index (K=13)",
+  "actor": "parameter-shared local categorical actor; one candidate index per cluster",
+  "critic": "local IPPO critic; no privileged state",
+  "architecture": "GRU history + CNN image + map + masked obstacle/peer pooling",
+  "source_script": "/home/wj/桌面/vascular_marl_local.tar./scripts/train_sb3_ippo.py"
+}

@@ -1,0 +1,2 @@
+Starting MAPPO-V2 seed=42 timesteps=500000 output=research/paired_navigation_corrected/mappo_v2_long_500000_s42
+scripts/rerun_paired_navigation.sh: line 18: 938125 Segmentation fault      (core dumped) python scripts/train_sb3_ippo.py --algo mappo --clusters 3 --seed "$seed" --timesteps "$timesteps" --action-set semantic_reduced --mask-invalid --flow-feature --safety-parity --out "$out"

@@ -1,92 +1,104 @@
-"""A fixed-route continuous-time conflict-search adapter.
-
-This implements the CCBS comparison under the same route, speed, clearance,
-and dwell assumptions as ``TPGCoordinator``. Search changes precedence in
-conflict zones only, so it isolates temporal coordination from route planning.
-For the three-cluster benchmark exhaustive branching is small and deterministic.
-"""
-from __future__ import annotations
-
+"""Bounded search over continuous-time precedence on fixed sampled vessel routes."""
 import itertools
 import math
+import time
+from collections import deque
+
 import numpy as np
 
 
 class CCBSPlanner:
-    def __init__(self, coordinator, max_nodes=4096):
+    def __init__(self, coordinator, max_nodes=4096, deadline_s=math.inf):
         self.c = coordinator
         self.max_nodes = int(max_nodes)
+        self.deadline_s = deadline_s
         self.nodes_expanded = 0
-        self.planning_time_s = 0.0
+        self.planning_time_s = 0.
         self.infeasible = False
+        self.search_exhausted = False
         self.order = {}
         self.cost = math.inf
 
-    def _timeline(self, i, waits):
+    def _schedule_cost(self, order, nominal):
+        # A release event is the first grid point strictly outside a zone.
+        # A cluster parked at its final point never releases its terminal zone.
         c = self.c
-        n = len(c.paths[i])
-        dwell_at = {int(round(x / c.step)): c.dwell for x in c.clot_s[i]}
-        t = np.zeros(n)
-        for k in range(1, n):
-            t[k] = t[k - 1] + c.step / c.speed + dwell_at.get(k - 1, 0.) + waits.get(k - 1, 0.)
-        return t
+        events = [{0, len(p) - 1} for p in c.paths]
+        precedences = []
+        for z, first in zip(c.zones, order):
+            i, j = z['i'], z['j']
+            exit_index, entry_index = z['s1'] + 1, z['u0']
+            if first == j:
+                i, j = j, i
+                exit_index, entry_index = z['u1'] + 1, z['s0']
+            if exit_index >= len(c.paths[i]) or entry_index == 0:
+                return math.inf
+            # The follower can wait before the zone. A wait must not move its
+            # initial state, including when the first zone starts at index 1.
+            events[i].add(exit_index)
+            events[j].add(entry_index)
+            precedences.append(((i, exit_index), (j, entry_index), 0.))
+        edges = list(precedences)
+        for i, indices in enumerate(events):
+            seq = sorted(indices)
+            for a, b in zip(seq, seq[1:]):
+                edges.append(((i, a), (i, b), nominal[i][b] - nominal[i][a]))
 
-    def _simulate(self, order):
-        c = self.c
-        waits = {i: {} for i in range(c.n)}
-        timelines = {}
-        total_wait = 0.
-        for i in sorted(range(c.n), key=lambda x: -len(c.paths[x])):
-            for _ in range(32):
-                t = self._timeline(i, waits[i]); changed = False
-                for zi, z in enumerate(c.zones):
-                    if i not in (z['i'], z['j']) or order.get(zi) == i:
-                        continue
-                    other = z['j'] if z['i'] == i else z['i']
-                    if other not in timelines:
-                        continue
-                    a0, a1 = (z['s0'], z['s1']) if z['i'] == i else (z['u0'], z['u1'])
-                    b0, b1 = (z['u0'], z['u1']) if z['i'] == i else (z['s0'], z['s1'])
-                    me, mx = t[a0], t[min(a1, len(t) - 1)]
-                    ot = timelines[other]
-                    oe, ox = ot[b0], ot[min(b1, len(ot) - 1)]
-                    if me < ox and mx > oe:
-                        k = max(a0 - int(round(c.stop_margin / c.step)) - 1, 0)
-                        delay = max(0., ox - me)
-                        waits[i][k] = waits[i].get(k, 0.) + delay
-                        total_wait += delay; changed = True; break
-                if not changed:
-                    break
-            timelines[i] = self._timeline(i, waits[i])
-        finish = sum(float(t[-1]) for t in timelines.values())
-        return finish + total_wait, waits
+        # Earliest feasible event times are longest paths. Even a zero-time
+        # precedence cycle cannot be dispatched by the strict release gate.
+        incoming = {(i, k): 0 for i, points in enumerate(events) for k in points}
+        outgoing = {k: [] for k in incoming}
+        times = dict.fromkeys(incoming, 0.)
+        for a, b, dt in edges:
+            outgoing[a].append((b, dt))
+            incoming[b] += 1
+        queue = deque(k for k, count in incoming.items() if count == 0)
+        visited = 0
+        while queue:
+            a = queue.popleft()
+            visited += 1
+            for b, dt in outgoing[a]:
+                times[b] = max(times[b], times[a] + dt)
+                incoming[b] -= 1
+                if incoming[b] == 0:
+                    queue.append(b)
+        if visited != len(times):
+            return math.inf
+        ends = [times[i, len(p) - 1] for i, p in enumerate(c.paths)]
+        return sum(ends) if max(ends) <= self.deadline_s else math.inf
 
     def plan(self):
-        import time
         started = time.monotonic()
-        if not self.c.zones:
-            self.order = {}; self.cost = float(sum(len(p) * self.c.step / self.c.speed for p in self.c.paths))
-        else:
-            zones = list(range(len(self.c.zones)))
-            for bits in itertools.product((0, 1), repeat=len(zones)):
-                if self.nodes_expanded >= self.max_nodes:
-                    self.infeasible = True; break
-                order = {}
-                for zi, bit in zip(zones, bits):
-                    z = self.c.zones[zi]; order[zi] = z['i'] if bit == 0 else z['j']
-                cost, _ = self._simulate(order); self.nodes_expanded += 1
-                if cost < self.cost:
-                    self.cost, self.order = cost, order
-            if not self.order:
-                self.infeasible = True
+        c = self.c
+        nominal = []
+        for i, path in enumerate(c.paths):
+            durations = np.full(len(path) - 1, c.step / c.speed, dtype=float)
+            for position in c.clot_s[i]:
+                index = int(round(position / c.step))
+                if index < len(durations):
+                    durations[index] += c.dwell
+            nominal.append(np.r_[0., np.cumsum(durations)])
+        for order in itertools.product(*[(z['i'], z['j']) for z in c.zones]):
+            if self.nodes_expanded >= self.max_nodes:
+                self.search_exhausted = True
+                break
+            self.nodes_expanded += 1
+            cost = self._schedule_cost(order, nominal)
+            if cost < self.cost:
+                self.cost, self.order = cost, dict(enumerate(order))
+        self.infeasible = not self.search_exhausted and not math.isfinite(self.cost)
         self.planning_time_s = time.monotonic() - started
-        self.c.order = dict(self.order)
+        c.order = dict(self.order)
         return self
+
+    @property
+    def has_plan(self):
+        return math.isfinite(self.cost)
 
     def metadata(self):
         return {"algorithm": "CCBS-fixed-route-adapter", "route_policy": "fixed",
                 "speed_mm_s": float(self.c.speed), "clearance_mm": float(getattr(self.c, "D", 0.)),
-                "nodes_expanded": int(self.nodes_expanded),
-                "planning_time_s": float(self.planning_time_s),
-                "infeasible": bool(self.infeasible), "conflict_zones": len(self.c.zones),
+                "nodes_expanded": self.nodes_expanded, "planning_time_s": self.planning_time_s,
+                "infeasible": self.infeasible, "node_limit_reached": self.search_exhausted,
+                "has_plan": self.has_plan, "conflict_zones": len(self.c.zones),
                 "order": {str(k): int(v) for k, v in self.order.items()}}

@@ -6,6 +6,7 @@ only complete JSON outputs, and preserves the original filtered-manifest index.
 """
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 import argparse
 import hashlib
 import json
@@ -22,6 +23,7 @@ def main():
     p.add_argument("--split", required=True)
     p.add_argument("--clusters", type=int, required=True)
     p.add_argument("--total", type=int, required=True)
+    p.add_argument("--workers", type=int, default=1)
     p.add_argument("--chunk-size", type=int, default=12)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--flow-feature", action="store_true")
@@ -29,8 +31,8 @@ def main():
     p.add_argument("--scene-list", type=Path, required=True)
     p.add_argument("--device", default="cpu")
     args = p.parse_args()
-    if args.total <= 0 or args.chunk_size <= 0:
-        p.error("total and chunk-size must be positive")
+    if args.total <= 0 or args.chunk_size <= 0 or args.workers <= 0:
+        p.error("total, workers and chunk-size must be positive")
     root = Path(__file__).resolve().parents[1]
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
@@ -54,13 +56,12 @@ def main():
     protocol = dict(source_sha256=source.hexdigest(), kind=args.kind, split=args.split,
                     action_set=args.action_set, flow_feature=args.flow_feature,
                     centralized_critic=args.centralized_critic, clusters=args.clusters, device=args.device)
-    chunks = []
-    for start in range(0, args.total, args.chunk_size):
-        indices = list(range(start, min(args.total, start + args.chunk_size)))
-        chunk_scene = args.out.with_name(args.out.stem + f"_scene{start:04d}.json")
+    def run_chunk(start, stop, part=""):
+        indices = list(range(start, stop))
+        chunk_scene = args.out.with_name(args.out.stem + f"_scene{start:04d}{part}.json")
         chunk_scene.write_text(json.dumps({**scene_payload, "rows": [entries[i] for i in indices]},
                                            ensure_ascii=False, indent=2) + "\n")
-        chunk_out = args.out.with_name(args.out.stem + f"_chunk{start:04d}.json")
+        chunk_out = args.out.with_name(args.out.stem + f"_chunk{start:04d}{part}.json")
         cache_key = dict(protocol, scene_sha256=hashlib.sha256(chunk_scene.read_bytes()).hexdigest())
         if chunk_out.exists():
             cached = json.loads(chunk_out.read_text())
@@ -70,9 +71,8 @@ def main():
                     cached.get("model_sha256") == model_sha and
                     [x.get("scenario_hash") for x in cached.get("episodes", [])] ==
                     [x["row"].get("scenario_hash") for x in entries[start:start + len(indices)]]):
-                chunks.append(cached)
                 print("reusing", chunk_out, flush=True)
-                continue
+                return [(chunk_out, cached)]
         cmd = [sys.executable, str(Path(__file__).with_name("evaluate_navigation_dataset.py")),
                "--model", str(args.model), "--kind", args.kind, "--action-set", args.action_set,
                "--split", args.split, "--clusters", str(args.clusters), "--scene-list", str(chunk_scene),
@@ -82,7 +82,19 @@ def main():
         if args.centralized_critic:
             cmd.append("--centralized-critic")
         print("running", " ".join(cmd), flush=True)
-        subprocess.run(cmd, cwd=root, check=True)
+        result = subprocess.run(cmd, cwd=root)
+        if result.returncode < 0:
+            # Native integrator failures can follow sequential resets. Isolate
+            # the failed slice and keep the original attempt as provenance.
+            with chunk_out.with_suffix(".failures.jsonl").open("a") as log:
+                log.write(json.dumps(dict(code=result.returncode, start=start, stop=stop)) + "\n")
+            if stop - start > 1:
+                middle = (start + stop) // 2
+                return (run_chunk(start, middle, part + "a")
+                        + run_chunk(middle, stop, part + "b"))
+            subprocess.run(cmd, cwd=root, check=True)
+        else:
+            result.check_returncode()
         data = json.loads(chunk_out.read_text())
         if not data["overall"].get("complete", False) or len(data.get("episodes", [])) != len(indices):
             raise RuntimeError(f"incomplete chunk {start}: {chunk_out}")
@@ -90,7 +102,14 @@ def main():
         temp = chunk_out.with_suffix(".tmp")
         temp.write_text(json.dumps(data, indent=2) + "\n")
         temp.replace(chunk_out)
-        chunks.append(data)
+        return [(chunk_out, data)]
+
+    starts = range(0, args.total, args.chunk_size)
+    with ThreadPoolExecutor(args.workers) as pool:
+        futures = [pool.submit(run_chunk, start, min(start + args.chunk_size, args.total))
+                   for start in starts]
+        outputs = [item for future in futures for item in future.result()]
+    chunks = [data for _, data in outputs]
     episodes = [episode for chunk in chunks for episode in chunk["episodes"]]
     from scripts.evaluate_navigation_dataset import aggregate, grouped_aggregates
     merged = dict(chunks[0])
@@ -104,8 +123,7 @@ def main():
     merged["overall"] = aggregate(episodes)
     merged.update(grouped_aggregates(episodes))
     merged["episodes"] = episodes
-    merged["chunks"] = [str(args.out.with_name(args.out.stem + f"_chunk{start:04d}.json"))
-                        for start in range(0, args.total, args.chunk_size)]
+    merged["chunks"] = [str(path) for path, _ in outputs]
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(merged, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps(merged["overall"], indent=2, ensure_ascii=False))

@@ -1,0 +1,7 @@
+panel,episodes,lysis_success,infeasible,node_limit,mean_hold_s,mean_spacing_pair_s
+high_delay,42,30,0,0,2.3023809523809593,0.0
+low_delay,42,20,0,0,3.407142857142835,0.0
+moderate_delay,42,21,0,0,0.46190476190476104,0.0
+ood_flow_delay,42,17,0,0,0.3880952380952373,0.0
+strong_flow,42,6,0,0,6.954761904761752,0.0336546935534925
+variable_response,42,18,0,0,7.395238095237873,0.031042120527996105

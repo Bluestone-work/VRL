@@ -36,11 +36,11 @@ for split in train holdout_test; do
     if [[ "$split" == train ]]; then label=train180; count=180; else label=holdout100; count=100; fi
     python scripts/evaluate_navigation_chunks.py --model "$out/final_model.zip" \
         --kind ppo --action-set semantic_reduced --flow-feature --centralized-critic \
-        --split "$split" --clusters 3 --total "$count" --scene-list "$scenes/paired_${label}.json" \
+        --split "$split" --clusters 3 --total "$count" --workers "${EVAL_WORKERS:-2}" --scene-list "$scenes/paired_${label}.json" \
         --out "$out/paired_${label}.json"
     python scripts/evaluate_navigation_chunks.py --model "$ippo" \
         --kind ppo --action-set semantic_reduced --flow-feature \
-        --split "$split" --clusters 3 --total "$count" --scene-list "$scenes/paired_${label}.json" \
+        --split "$split" --clusters 3 --total "$count" --workers "${EVAL_WORKERS:-2}" --scene-list "$scenes/paired_${label}.json" \
         --out "$out/ippo_${label}.json"
 done
 python scripts/summarize_repaired_comparison.py --rerun-dir "$out"

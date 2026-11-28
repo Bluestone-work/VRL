@@ -1,0 +1,12 @@
+Fig. 2 | Local policy and its evaluation. a, Network executed by every cluster on its own observation.
+Six branch encoders (32-d each) feed a 128-d LayerNorm-GELU trunk; an online flow estimate (least-squares
+identification of commanded gain and drift from the command and image history) enters through a
+zero-initialised adapter. The actor scores 13 candidate velocity commands and masks invalid ones; the value
+head and the PPO update are used only during training. b, Rolling training-time navigation success (15-episode
+window) for three IPPO seeds (thin lines, mean thick) under the difficulty curriculum, and the ongoing 500,000-step
+MAPPO runs (centralized critic). Training-time values are not comparable with frozen evaluation. c, Frozen
+evaluation on the navigation_dataset_v1 manifest, N = 3: every method runs the identical 180 training-anatomy and
+100 held-out-anatomy scenes (matched scenario hashes) with the same global layer and safety layer. Filled markers,
+navigation success; open markers, strict (safe) success; bars, 95% bootstrap interval over scenes. Learned
+methods are the mean of three training seeds per scene. Paired win/tie/loss of IPPO against each method
+(navigation success): train IPPO vs MAPPO: 2/177/1; train IPPO vs Pure pursuit: 3/176/1; train IPPO vs Switchable TPG: 3/176/1; train IPPO vs PAC-NMPC: 12/157/11; holdout IPPO vs MAPPO: 0/100/0; holdout IPPO vs Pure pursuit: 0/100/0; holdout IPPO vs Switchable TPG: 0/100/0; holdout IPPO vs PAC-NMPC: 4/88/8. d, Placeholder: the flow-branch ablation has not been run.

@@ -1,0 +1,15 @@
+Fig. 1 | Hierarchical control of magnetic microrobot clusters for multifocal targeted delivery.
+a, Task: three clusters (squares) deliver to lesion sites L1-L4 (orange) in a portal-hepatic vessel tree
+(simulator geometry; width scaled by lumen radius). The vessel graph and lesion sites are known from
+preoperative CTA; flow, actuation response and moving obstacles are not. Each cluster is observed only
+through a local imaging window (dashed). b, The control stack follows the hierarchy used for aerial and
+ground swarms (allocation, multi-agent path finding, decentralized learned control, collision avoidance)
+and replaces each tier with its vascular counterpart. c, Global layer, computed once before navigation:
+geodesic distances on the vessel graph, a min-max (makespan) allocation of lesions to clusters, and a
+temporal plan graph (TPG) that fixes the order in which clusters pass shared segments. Traces are the
+executed paths of the three clusters in an MCA scene (seed 2944200004); the dashed circle marks where
+the TPG held one cluster (8.2 robot·s in total). d, Local layer: one actor with shared parameters
+is run independently by every cluster on its own deployable observation and selects one of 13 candidate
+velocity commands; the critic is local and used only during training (IPPO). e, The TPG gate and a
+safety layer (wall signed-distance projection, inter-cluster spacing shield, command limit) act on every
+command before actuation; the next image closes the loop.

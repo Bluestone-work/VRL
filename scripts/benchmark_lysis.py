@@ -409,12 +409,15 @@ def m_ccbs(n, anatomy, seed, **kw):
     """CCBS-style exhaustive temporal coordination with fixed routes."""
     from marl.ccbs_adapter import CCBSPlanner
     ep = LysisEpisode(n, anatomy, seed, **kw)
-    planner = CCBSPlanner(ep.coord).plan() if ep.coord is not None else None
+    planner = CCBSPlanner(ep.coord, deadline_s=ep.horizon).plan() if ep.coord is not None else None
+    if planner is not None and not planner.has_plan:
+        ep.coord.gate = lambda positions, active: np.ones(n, dtype=bool)
     guard = SettleGuard(ep)
     row = rollout(ep, lambda e, est: e.plan_targets_now(est), guard, 'ccbs')
     row.update(planner.metadata() if planner is not None else
                {"algorithm": "CCBS-fixed-route-adapter", "conflict_zones": 0,
-                "nodes_expanded": 0, "planning_time_s": 0., "infeasible": False})
+                "nodes_expanded": 0, "planning_time_s": 0., "infeasible": False,
+                "has_plan": True, "node_limit_reached": False})
     return row, ep
 
 

@@ -1,0 +1,4 @@
+Fig. 6 (layout only) | In-vitro validation. All panels are placeholders: these data must come from the
+magnetic actuation platform and cannot be substituted with simulation. a, Platform and phantom. b, Keyframes
+of one continuous navigation in real flow. c, N = 1, 2, 3 clusters on the same phantom and targets. d, One
+cluster under three flow regimes. e, Paired comparison of simulation and in-vitro outcome with n and intervals.
