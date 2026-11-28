@@ -558,6 +558,9 @@ class MCAPhysicalEnv(gym.Env):
         if np.any(distance + self.body_radius > radius + 1e-7):
             raise ValueError('Initial body does not fit the obstructed lumen')
         self.active = np.ones(len(self.positions_mm), bool)
+        # V3 deployment: a parked cluster is still inside the catheter. It is not
+        # advanced, sensed, or counted as lost until release(); default none.
+        self.parked = np.zeros(self.num_robots, bool)
         self.path_mm = np.zeros(len(self.positions_mm))
         self.exit_time_s = np.full(len(self.positions_mm), np.nan)
         self.exit_node = np.full(len(self.positions_mm), -1, np.int32)
@@ -568,6 +571,28 @@ class MCAPhysicalEnv(gym.Env):
         self._reset_targets()
         self._sync_public_state()
         return self._observation(), self._info()
+
+    def park(self, ids):
+        """Hold clusters inside the catheter: inactive for physics and sensing, not lost."""
+        ids = np.atleast_1d(np.asarray(ids, np.int64))
+        if np.any((ids < 0) | (ids >= self.num_robots)):
+            raise ValueError('park expects robot indices')
+        self.parked[ids] = True
+        self.active[ids] = False
+        self.velocity_mm_s[ids] = 0.
+        self._sync_public_state()
+
+    def release(self, i, position_mm=None):
+        """Release parked cluster i at the catheter tip (its current position unless given)."""
+        i = int(i)
+        if not self.parked[i]:
+            raise ValueError(f'cluster {i} is not parked')
+        if position_mm is not None:
+            self.positions_mm[i] = np.asarray(position_mm, np.float64)
+            self.edges[i] = self.transport.nearest_edges(self.positions_mm[i:i+1])[0]
+        self.parked[i] = False
+        self.active[i] = True
+        self._sync_public_state()
 
     def _target_distances(self):
         if not self.num_clots:
@@ -809,7 +834,8 @@ class MCAPhysicalEnv(gym.Env):
                     inlet_flow_ml_min=self.solution['inlet_flow_ml_min'],
                     conservation_residual_mm3_s=self.solution['maximum_conservation_residual_mm3_s'],
                     active_robots=int(self.active[:self.num_robots].sum()),
-                    lost_robots=int((~self.active[:self.num_robots]).sum()),
+                    lost_robots=int((~self.active[:self.num_robots] & ~self.parked).sum()),
+                    parked_robots=int(self.parked.sum()),
                     active_particles=int(self.active[self.num_robots:].sum()),
                     robot_path_mm=self.path_mm[:self.num_robots].copy(),
                     robot_exit_time_s=self.exit_time_s[:self.num_robots].copy(),
@@ -1069,7 +1095,7 @@ class MCAPhysicalEnv(gym.Env):
         self._sync_public_state()
         particle_penalty = self._avoidance_outcome(particle_contact_s,particle_near_s,particle_overlaps,particle_events)
         info = self._info()
-        terminated = info['success'] or info['active_robots'] == 0
+        terminated = info['success'] or (info['active_robots'] == 0 and not self.parked.any())
         truncated = not terminated and self.elapsed_s >= self.config.episode_duration_s - 1e-12
         self._done = terminated or truncated
         agent_reward = 10*agent_removed - result.wall_contact_s[:n] - .01*duration

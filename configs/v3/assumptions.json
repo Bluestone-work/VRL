@@ -1,0 +1,46 @@
+{
+  "version": "v3_assumptions_2026-11-28",
+  "status": "Registered before any V3 result. Every value without a cited measurement is a simulation assumption, not a platform specification.",
+  "resources": {
+    "n_max": 4,
+    "n_max_basis": "assumed number of clusters the actuation system can steer independently; not measured on a platform",
+    "targets_per_cluster_max": null,
+    "targets_per_cluster_basis": "payload and dose are not modelled, so no capacity limit is imposed"
+  },
+  "deployment": {
+    "entry": "single catheter entry at the tree root (inlet station)",
+    "catheter_speed_mm_s": 2.0,
+    "catheter_min_lumen_radius_mm": 0.6,
+    "release_interval_s": 3.0,
+    "release_clearance_mm": 2.5,
+    "release_candidates": "root plus every bifurcation station whose whole root path has lumen radius >= catheter_min_lumen_radius_mm",
+    "release_candidates_per_cluster": "catheter-accessible candidates on the root path of the cluster's first target (the catheter is advanced along the route)",
+    "catheter_cluster_interaction": "not modelled"
+  },
+  "motion_model_for_planning": {
+    "robot_speed_mm_s": 1.0,
+    "speed_efficiency": 0.9,
+    "min_effective_speed_mm_s": 0.1,
+    "flow_for_planning": "healthy-radius solution at the nominal 0.05 mm/s inlet speed; the realised flow regime is unknown to the planner",
+    "timeline_dt_s": 0.5
+  },
+  "safety": {
+    "d_safe_mm": 2.0,
+    "d_safe_definition": "centre-to-centre Euclidean distance; surface distance = d - 2 x 0.08 mm body radius",
+    "d_safe_basis": "existing simulator threshold (d_min = 2 mm); not calibrated against magnetic interaction measurements",
+    "arrival_tolerance_mm": 0.30
+  },
+  "mission": {
+    "deadline_s": 300.0,
+    "time_origin": "catheter insertion at t = 0; deployment and release are inside the deadline",
+    "sync_window_s": 30.0
+  },
+  "objective": {
+    "form": "lexicographic: (1) feasibility [coverage, passable routes, n <= n_max, deadlock-free schedule]; (2) J = T_pred + w_wait * W_pred + w_risk * R_pred; (3) smallest N whose J is within epsilon of the best J over N; (4) total cluster-time",
+    "w_wait": 1.0,
+    "w_risk": 0.5,
+    "epsilon_relative": 0.10,
+    "risk_definition": "seconds of predicted travel in segments with lumen clearance below 3 body radii or against flow faster than 0.3 mm/s",
+    "selection_rule": "weights and epsilon are fixed here before the validation run and are not tuned on the test set"
+  }
+}

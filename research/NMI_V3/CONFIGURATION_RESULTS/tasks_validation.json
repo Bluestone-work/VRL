@@ -1,0 +1,998 @@
+{
+ "split": "validation",
+ "n_tasks": 45,
+ "excluded": [],
+ "tasks": [
+  {
+   "task": {
+    "anatomy": "mca_m1_lvo",
+    "seed": 3700000000,
+    "n_targets": 3,
+    "pattern": "clustered",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "64e315299819241dd8b537e6b5298bd00079d01b2497ff112abc16cdcd67b266",
+   "targets": [
+    111,
+    108,
+    114
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "mca_m1_lvo",
+    "seed": 3700000001,
+    "n_targets": 4,
+    "pattern": "dispersed",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "db4df6aa9c212a4917d955c34137e1f1a56229419331c5b8a8fcaa38d1611af0",
+   "targets": [
+    108,
+    86,
+    7,
+    54
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "mca_m1_lvo",
+    "seed": 3700000002,
+    "n_targets": 5,
+    "pattern": "clustered",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "8b6b4916fef9d0c637dc1e3283929a6d7c847503ddf2a0b9cde89291c5c1e4aa",
+   "targets": [
+    97,
+    105,
+    109,
+    21,
+    39
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "pulmonary_saddle",
+    "seed": 3700000003,
+    "n_targets": 3,
+    "pattern": "dispersed",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "342a176863e9db1fbc4b8c08e45e95e7d7469cc8ba7bc5c7001bbc385e5c667a",
+   "targets": [
+    139,
+    203,
+    98
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "pulmonary_saddle",
+    "seed": 3700000004,
+    "n_targets": 4,
+    "pattern": "clustered",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "dcf1e1f02f27b532773a09cbede7ad7411218b05e82fbd1ddf641323be3850c5",
+   "targets": [
+    100,
+    123,
+    109,
+    118
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "pulmonary_saddle",
+    "seed": 3700000005,
+    "n_targets": 5,
+    "pattern": "dispersed",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "1f623e42826e0ff1c1cbcec9a7c87a5b0dc8399655cea4fbd7a3872df29f4ec8",
+   "targets": [
+    167,
+    20,
+    117,
+    141,
+    194
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "coronary_lm_bifurcation",
+    "seed": 3700000006,
+    "n_targets": 3,
+    "pattern": "clustered",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "d61bf4ba6341d6269979e2064a7a55c0c997ba89b87bf438fad4cc9b0f9fbeef",
+   "targets": [
+    61,
+    18,
+    22
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "coronary_lm_bifurcation",
+    "seed": 3700000007,
+    "n_targets": 4,
+    "pattern": "dispersed",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "0a5ded875ac491f1e17d74b36e1f78dad2af52c65bae74ef44fef298ba234db0",
+   "targets": [
+    46,
+    128,
+    19,
+    4
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "coronary_lm_bifurcation",
+    "seed": 3700000008,
+    "n_targets": 5,
+    "pattern": "clustered",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "b2e3ee88edef6d021a00ccacd10e7be1eb9951f6984545ce4980496efb43e737",
+   "targets": [
+    137,
+    75,
+    142,
+    133,
+    129
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "iliac_may_thurner",
+    "seed": 3700000009,
+    "n_targets": 3,
+    "pattern": "dispersed",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "de3a01e4d5cce194e79bb9aac9f2b8cd1cfb2d8fd844fa758e3be11caa4a0ed0",
+   "targets": [
+    65,
+    159,
+    51
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "iliac_may_thurner",
+    "seed": 3700000010,
+    "n_targets": 4,
+    "pattern": "clustered",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "8abbbca6a0d0d8a6da438158d5e5df74237057c80531718b400eb9d3293659e0",
+   "targets": [
+    232,
+    157,
+    218,
+    201
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "iliac_may_thurner",
+    "seed": 3700000011,
+    "n_targets": 5,
+    "pattern": "dispersed",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "383abb6cd6590248da44bc8fa4a6af80991a57f132b8b423637bcc0b2853e447",
+   "targets": [
+    29,
+    64,
+    265,
+    125,
+    199
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "popliteal_calf_dvt",
+    "seed": 3700000012,
+    "n_targets": 3,
+    "pattern": "clustered",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "cdcdd388dfe42e20364bb50e3c6dfc41f35fba48ceef17cad75194513e60aa15",
+   "targets": [
+    129,
+    171,
+    137
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "popliteal_calf_dvt",
+    "seed": 3700000013,
+    "n_targets": 4,
+    "pattern": "dispersed",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "bdf5f578db446f5a2b75bc9c62c3b1a2a0b0c30a2de8cc8c960f70b315e5bbaa",
+   "targets": [
+    281,
+    24,
+    203,
+    241
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "popliteal_calf_dvt",
+    "seed": 3700000014,
+    "n_targets": 5,
+    "pattern": "clustered",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "ee28ef0d2e6eb29aa5e20a2345a1e8c514d313559e0a3595cda847f9cfa61993",
+   "targets": [
+    240,
+    250,
+    257,
+    246,
+    237
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "ica_siphon",
+    "seed": 3700000015,
+    "n_targets": 3,
+    "pattern": "dispersed",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "ce6624eb0a092bddd270377ef59e982af99777dcf6a2e23554a534e605ecacb6",
+   "targets": [
+    65,
+    94,
+    126
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "ica_siphon",
+    "seed": 3700000016,
+    "n_targets": 4,
+    "pattern": "clustered",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "a9e3c861dab1afef1353c9d3782af5ec63c9edcfe6a91fee7810dbcb2e169585",
+   "targets": [
+    118,
+    125,
+    122,
+    115
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "ica_siphon",
+    "seed": 3700000017,
+    "n_targets": 5,
+    "pattern": "dispersed",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "d5a936d18b5c3d4992c5cfc035a2dd81ffab3eb6508098875bcdb12cbed4fdeb",
+   "targets": [
+    62,
+    91,
+    127,
+    101,
+    43
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "ica_terminus_t",
+    "seed": 3700000018,
+    "n_targets": 3,
+    "pattern": "clustered",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "0ba9479a2e4e52603af92057a3cf17cd000602ba04a89f2abc3e78af00dbe38f",
+   "targets": [
+    96,
+    32,
+    91
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "ica_terminus_t",
+    "seed": 3700000019,
+    "n_targets": 4,
+    "pattern": "dispersed",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "1c7995193562af70b5fc580a88818cec3b826dcf43206abd71a433d881b1af36",
+   "targets": [
+    38,
+    53,
+    12,
+    86
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "ica_terminus_t",
+    "seed": 3700000020,
+    "n_targets": 5,
+    "pattern": "clustered",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "12150e8da8c0ee5eb8a43310ef6d6d07e07c5726f6dd8e747dc8cb786d8a0c35",
+   "targets": [
+    81,
+    77,
+    84,
+    71,
+    68
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "carotid_bifurcation",
+    "seed": 3700000021,
+    "n_targets": 3,
+    "pattern": "dispersed",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "4f4002b54e5fb2bf2a916a931e2b0414f0b719767c6fe76d19a377dd96e051b5",
+   "targets": [
+    191,
+    26,
+    61
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "carotid_bifurcation",
+    "seed": 3700000022,
+    "n_targets": 4,
+    "pattern": "clustered",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "11380b0b1681e03adf81c87fc209499aff6a4878361cbb99cd3106477a0e21b5",
+   "targets": [
+    182,
+    143,
+    136,
+    175
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "carotid_bifurcation",
+    "seed": 3700000023,
+    "n_targets": 5,
+    "pattern": "dispersed",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "0b45c2eb1d4e17667ce1352c23cb11701f6c08fa2b8f7a1b46e25e24888f4df9",
+   "targets": [
+    149,
+    208,
+    56,
+    182,
+    15
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "renal_artery",
+    "seed": 3700000024,
+    "n_targets": 3,
+    "pattern": "clustered",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "4b2e2be3cb1fca6ac8dad693fe4c637faf2e7c2186e3bc59825db3a61ac21a72",
+   "targets": [
+    150,
+    141,
+    147
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "renal_artery",
+    "seed": 3700000025,
+    "n_targets": 4,
+    "pattern": "dispersed",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "b5255c13803660a2581ac8c5fbb3fea3dcfd720cf4afeae7ca47f06fcabce6ff",
+   "targets": [
+    128,
+    46,
+    146,
+    107
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "renal_artery",
+    "seed": 3700000026,
+    "n_targets": 5,
+    "pattern": "clustered",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "6442a01bb51c2944998691d3c3f36a1ff9eef3560c6d208efa990e2275dbb5d4",
+   "targets": [
+    94,
+    108,
+    101,
+    104,
+    90
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_train_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "coronary_rca",
+    "seed": 3700000027,
+    "n_targets": 3,
+    "pattern": "dispersed",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "119ffdeac88e976940ac5298ff0b973c764ddd7342126e637ee616d69eca88d7",
+   "targets": [
+    103,
+    128,
+    30
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "coronary_rca",
+    "seed": 3700000028,
+    "n_targets": 4,
+    "pattern": "clustered",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "54a5eeff6d8fd1aca258e1f5b5bdca53afeb14dad27774c6f6bdcf20990384e1",
+   "targets": [
+    140,
+    137,
+    147,
+    134
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "coronary_rca",
+    "seed": 3700000029,
+    "n_targets": 5,
+    "pattern": "dispersed",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "455a8afafd34a2796fe3847b0fdce5f8f7530bddadb94c97894f8585a69da148",
+   "targets": [
+    61,
+    121,
+    139,
+    26,
+    92
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "basilar_vertebral",
+    "seed": 3700000030,
+    "n_targets": 3,
+    "pattern": "clustered",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "c5685c38658c6e2222ecdf40d6621912dc81aeccde1de4557443b4ac36bd02ed",
+   "targets": [
+    135,
+    101,
+    123
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "basilar_vertebral",
+    "seed": 3700000031,
+    "n_targets": 4,
+    "pattern": "dispersed",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "cd716aac3a141fc9c9f578b8735b89db055a1a731265ec98d02ba69651b334e7",
+   "targets": [
+    32,
+    58,
+    101,
+    107
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "basilar_vertebral",
+    "seed": 3700000032,
+    "n_targets": 5,
+    "pattern": "clustered",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "3bdcf85b72252c5b2674569d86195022ef89ce330af45ffaae799116552244b2",
+   "targets": [
+    75,
+    86,
+    72,
+    68,
+    79
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "cerebral_venous_sinus",
+    "seed": 3700000033,
+    "n_targets": 3,
+    "pattern": "dispersed",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "7cbb650df6a7ea57aca3a156ac9ea3ae38fbcf05760b3768793df951bfe001a0",
+   "targets": [
+    15,
+    104,
+    160
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "cerebral_venous_sinus",
+    "seed": 3700000034,
+    "n_targets": 4,
+    "pattern": "clustered",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "ded81345c0e73a0fa1cc372f3935063229c2923d1e98755acdccb42856dbeb1b",
+   "targets": [
+    261,
+    104,
+    143,
+    212
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "cerebral_venous_sinus",
+    "seed": 3700000035,
+    "n_targets": 5,
+    "pattern": "dispersed",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "00cdb6d528604f291f58fffa5ad376583ebf1981db7fe4f63228443d20d6c825",
+   "targets": [
+    104,
+    208,
+    89,
+    260,
+    169
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "sma_embolism",
+    "seed": 3700000036,
+    "n_targets": 3,
+    "pattern": "clustered",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "d0f2eb425f6586c99c17e071b1f6a22d1fe5e8d065d526514b4348a0cb4abaa1",
+   "targets": [
+    28,
+    96,
+    188
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "sma_embolism",
+    "seed": 3700000037,
+    "n_targets": 4,
+    "pattern": "dispersed",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "f75bc4c4dce9f57eea405f8e0d70d1245cc7a1578079a29357e98c3516d9ce7b",
+   "targets": [
+    195,
+    122,
+    65,
+    26
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "sma_embolism",
+    "seed": 3700000038,
+    "n_targets": 5,
+    "pattern": "clustered",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "b49b307c1628ee8d182b933b3a42d21fa7bf199add892e0a7f0ca138e4232632",
+   "targets": [
+    214,
+    218,
+    184,
+    200,
+    211
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "femoropopliteal_pad",
+    "seed": 3700000039,
+    "n_targets": 3,
+    "pattern": "dispersed",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "08aec29563cb3440dc77462b8d70bf188995803bef70043a2d90ba38920ca569",
+   "targets": [
+    64,
+    201,
+    9
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "femoropopliteal_pad",
+    "seed": 3700000040,
+    "n_targets": 4,
+    "pattern": "clustered",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "f4d4b804b009930820ea61bf21d4f3742a4a4a7557c237ae4fdf708aa8686055",
+   "targets": [
+    299,
+    310,
+    321,
+    304
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "femoropopliteal_pad",
+    "seed": 3700000041,
+    "n_targets": 5,
+    "pattern": "dispersed",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "70d9234772cc8f9dfc75ff9678ce2d822f6bd5cd27b06f543da32a311609b235",
+   "targets": [
+    175,
+    207,
+    300,
+    306,
+    220
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "rl_holdout_anatomy"
+  },
+  {
+   "task": {
+    "anatomy": "hcc_portal_multifocal",
+    "seed": 3700000042,
+    "n_targets": 3,
+    "pattern": "clustered",
+    "flow_mode": "weak",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "2e3f72ab8b9fd179bb1ca8eb951b6d98bc8a48e2892253ecc1ba39a26caf0f1c",
+   "targets": [
+    269,
+    278,
+    275
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "hcc"
+  },
+  {
+   "task": {
+    "anatomy": "hcc_portal_multifocal",
+    "seed": 3700000043,
+    "n_targets": 4,
+    "pattern": "dispersed",
+    "flow_mode": "strong",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "4f28932252b98e61733971b5abac6bb707f0d291d47bf3e7101311f29c8bbe08",
+   "targets": [
+    132,
+    306,
+    274,
+    19
+   ],
+   "pattern_realised": "dispersed",
+   "root_station": 1,
+   "anatomy_group": "hcc"
+  },
+  {
+   "task": {
+    "anatomy": "hcc_portal_multifocal",
+    "seed": 3700000044,
+    "n_targets": 5,
+    "pattern": "clustered",
+    "flow_mode": "pulsatile",
+    "obstacles": 8,
+    "variation": 0.75,
+    "split": "validation"
+   },
+   "base_task_hash": "a864e030e579786b67f8839495f920004041aeb658b0917395eae6e8b7dac0ff",
+   "targets": [
+    331,
+    338,
+    342,
+    328,
+    345
+   ],
+   "pattern_realised": "clustered",
+   "root_station": 1,
+   "anatomy_group": "hcc"
+  }
+ ],
+ "set_hash": "9f4ca9bb87da00acc0f69b5d4e4347bd6cb5eec1009b66ddbd8ca88441676776"
+}
