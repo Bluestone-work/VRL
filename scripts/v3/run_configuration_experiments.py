@@ -84,6 +84,7 @@ def main():
     ap.add_argument('--fixed-n-opt', type=int)
     ap.add_argument('--workers', type=int, default=16)
     ap.add_argument('--limit', type=int)
+    ap.add_argument('--timeout', type=float, default=1800.)
     a = ap.parse_args()
     doc = json.loads(a.tasks.read_text())
     arms = [x for x in a.arms.split(',') if x]
@@ -106,14 +107,50 @@ def main():
     a.out.parent.mkdir(parents=True, exist_ok=True)
     print(f'{len(jobs)} tasks to run, {sum(len(j[1]) for j in jobs)} arm-episodes, commit {commit}', flush=True)
     ctx = mp.get_context('spawn')
-    with ctx.Pool(a.workers, maxtasksperchild=4) as pool, open(a.out, 'a') as fh:
-        for k, rows in enumerate(pool.imap_unordered(run_task, jobs)):
+    running, pending, k = {}, list(jobs), 0
+
+    def finish(rows):
+        nonlocal k
+        k += 1
+        with open(a.out, 'a') as fh:
             for r in rows:
                 fh.write(json.dumps(r, default=jsonable) + '\n')
-            fh.flush()
-            err = sum('error' in r for r in rows)
-            print(f'[{k+1}/{len(jobs)}] {rows[0].get("task", {}).get("anatomy")} rows={len(rows)} errors={err}', flush=True)
+        err = sum('error' in r for r in rows)
+        print(f'[{k}/{len(jobs)}] {rows[0].get("task", {}).get("anatomy")} rows={len(rows)} errors={err}', flush=True)
 
+    while pending or running:
+        while pending and len(running) < a.workers:
+            job = pending.pop(0)
+            recv, send = ctx.Pipe(duplex=False)
+            proc = ctx.Process(target=_child, args=(job, send), daemon=True)
+            proc.start(); send.close()
+            running[proc] = (job, recv, time.monotonic())
+        time.sleep(0.5)
+        for proc in list(running):
+            job, recv, t0 = running[proc]
+            rows = None
+            if recv.poll():
+                try:
+                    rows = recv.recv()
+                except EOFError:
+                    rows = None
+                proc.join(5)
+            elif not proc.is_alive():
+                rows = [dict(base_task_hash=job[0]['base_task_hash'], task=job[0]['task'], arm=arm,
+                             error=f'worker exited with code {proc.exitcode} before returning') for arm in job[1]]
+            elif time.monotonic() - t0 > a.timeout:
+                proc.kill(); proc.join(5)
+                rows = [dict(base_task_hash=job[0]['base_task_hash'], task=job[0]['task'], arm=arm,
+                             error=f'task timeout after {a.timeout:.0f} s') for arm in job[1]]
+            if rows is not None:
+                running.pop(proc); recv.close(); finish(rows)
+
+
+def _child(job, conn):
+    try:
+        conn.send(run_task(job))
+    finally:
+        conn.close()
 
 if __name__ == '__main__':
     main()
