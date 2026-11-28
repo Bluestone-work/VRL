@@ -1,0 +1,21 @@
+{
+ "selected_on": "validation (45 tasks)",
+ "fixed_n_root": 3,
+ "fixed_n_opt": 3,
+ "detail": {
+  "root": {
+   "n": 3,
+   "success": 0.6222222222222222,
+   "T_last": 183.68888888888745,
+   "rule": "max success, then min mean deadline-scored T_last"
+  },
+  "opt": {
+   "n": 3,
+   "success": 0.7333333333333333,
+   "T_last": 150.7755555555544,
+   "rule": "max success, then min mean deadline-scored T_last"
+  }
+ },
+ "test_set_hash": "3882f0f2bba18e2db9573e0907ed9add0fa74df053637c6d97047cd872f14e09",
+ "frozen_before_test_run": true
+}

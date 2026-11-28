@@ -1,0 +1,24 @@
+# Code audit (Phase A, base commit 664668de)
+
+Each item of brief §12 was checked against the code. "Fixed in V3" means the V3 evaluator
+(`marl/v3/`) does not have the problem; legacy scripts are left unchanged so that earlier results
+stay reproducible.
+
+| # | Item | Finding (file:line at 664668de) | Status |
+|---|---|---|---|
+| 1 | Duplicate / missing scenes handled silently | `scripts/merge_navigation_evaluation.py:39-75` and `scripts/evaluate_navigation_dataset.py:105` raise on missing, extra or duplicate scenario hashes. `scripts/make_nmi_figures_v2.py` checks scene-set equality on load. No silent handling found. | OK (legacy) · V3 runner writes an error row per failed job and never drops it |
+| 2 | Safety rewrite count only from the last step | `scripts/evaluate_classical_manifest.py:142,178`: `safety_rewrites` is overwritten every loop iteration and the row stores the last value. | **Confirmed bug (legacy).** Fixed in V3: `wall_projection_rewrite_steps`, `shield_intervention_steps`, `tpg_hold_robot_s` accumulated every step (`marl/v3/metrics.py`). |
+| 3 | Navigation mode forces latency = 0 | `scripts/train_sb3_curriculum.py:210-215`: `options["latency"] = 0` whenever `reward_mode == "navigation"` or `zero_latency`; all IPPO/MAPPO training and the frozen manifest evaluation (`evaluate_navigation_dataset.py:142`) run with zero image latency, while the classical `LysisEpisode` path uses a 1-step latency by default. | **Confirmed.** Earlier RL-vs-classical comparisons mixed latency conditions. V3 Phase B uses 1-step latency for every arm; Phase D/E must train and evaluate RL with latency > 0. |
+| 4 | Environment steps vs agent steps | `scripts/train_sb3_ippo.py:1005,1085`: `--timesteps` are physical steps, `model.learn(total_timesteps=timesteps*clusters)` counts agent steps; checkpoints are named by agent steps. | Confirmed, documented; V3 curves must label the axis explicitly. |
+| 5 | Learning-curve statistics differ | v2 Fig. 2b: IPPO = 15-episode trailing mean of `episodes.jsonl` against cumulative per-episode agent steps; MAPPO = SB3 `rollout/success_rate` (100-episode buffer) against `time/total_timesteps`. | **Confirmed (v2 figure).** V3 learning curves must use one fixed validation set evaluated at checkpoints. |
+| 6 | Strict vs safe success | `scripts/benchmark_lysis.py:55` (navigation): `strict_success = success and wall_contact_s < 1`; `scripts/evaluate_classical_manifest.py:175`: `reached.all() and lost == 0 and wall < 1`. Neither checks obstacle collisions; both allow up to 1 s of wall contact. v2 Fig. 2c labelled this "safe (strict)". | **Confirmed mislabel.** V3 `safe_success` is contact-free (wall = 0, obstacle contact = 0, no lost cluster); the legacy quantity is kept as `low_contact_success`. |
+| 7 | Sent command vs actual velocity | `research/replay_remaining_corrected/*.json` stores `final_sent_command_world`; v2 Fig. 4b plotted it as "command speed". | Confirmed; the label was correct but the actual velocity was never shown. V3 records both (`mean_command_speed_mm_s`, `mean_actual_speed_mm_s`, per-step in traces). |
+| 8 | Estimated vs true clearance | replay traces store `estimated_body_clearance_mm_before` (sensor estimate); v2 Fig. 4b plotted it as wall clearance. Wall contact (true) and estimated clearance disagree in that figure (contact flagged at 2.6 mm estimated clearance). | **Confirmed.** V3 uses true clearance = lumen − radial offset − body from `transport.coordinates`. |
+| 9 | Model weights / data provenance | Frozen evaluations store `model_sha256` and `manifest_sha256`. The training logs of the 50k-step IPPO S41–S43 models (`research/COMPARISON_20261125/models/*.zip`) are not in the repository; v2 Fig. 2b used older EXP0141–0143 runs instead. | Partially confirmed. V3 rows store commit, assumptions version, base_task_hash and configuration_hash; RL phases must store training logs with each checkpoint. |
+| 10 | Deployment not modelled | `scripts/multicluster_protocol.paired_environment` places clusters at branch-stratified random positions ("nested pre-deployed starts"); the three-lesion study (v2 Fig. 5) therefore had no release or deployment time. | **Confirmed.** V3 adds catheter release (`MCAPhysicalEnv.park/release`, `marl/v3/scene.py`). |
+| 11 | Patient variation depends on N | `marl/physio_variation.Variation` draws per-cluster parameters with size `ep.n`, so lag, adhesion and shape parameters change with N for the same scene. | **Confirmed.** V3 `attach_variation` draws for n_max and slices. |
+| 12 | Hold is not station keeping | `LysisEpisode.step` sets `local[hold] = 0`; a held cluster drifts with the flow. | Confirmed; reported as a Phase C item. |
+
+Regression check after the V3 hooks (park/release, env_factory): `pytest tests` → 810 passed, 1 skipped;
+2 failures in `tests/test_mca_eval_splits.py` are a CUDA-in-forked-subprocess ordering effect that also
+occurs without the V3 changes (both pass when run alone).
