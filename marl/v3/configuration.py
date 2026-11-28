@@ -66,7 +66,8 @@ class Configuration:
     def hash(self, base_task_hash):
         from scripts.multicluster_protocol import digest
         return digest(dict(base=base_task_hash, n=self.n, tours=self.tours, release_stations=self.release_stations,
-                           release_order=self.release_order, release_times=[round(float(t), 6) for t in self.release_times]))
+                           release_order=self.release_order,
+                           release_times=[None if t is None else round(float(t), 6) for t in self.release_times]))
 
     def to_dict(self):
         return json.loads(json.dumps(asdict(self), default=jsonable))
@@ -264,6 +265,8 @@ class Planner:
                         in_viol[a, b] = v
             if len(arrivals) == self.m:
                 break
+            if next_rel < n and t < ready - 1e-9:
+                last_progress = t                       # catheter in transit is progress, not a deadlock
             if t - last_progress > 60. and (next_rel < n or not done.all()):
                 break
         complete = len(arrivals) == self.m
@@ -516,6 +519,12 @@ class Planner:
             k_sel = ok[0]
         J, tours, nodes, order = per_k[k_sel]
         pred, routes = self.predicted(tours, nodes, order)
+        cath = self.release_times([nodes[c] for c in order])
+        planned = list(pred['release_times_pred'])
+        for pos, c in enumerate(order):
+            if planned[c] is None:
+                planned[c] = cath[pos]
+        pred['release_times_pred'] = planned
         cfg = Configuration(method=method, n=int(k_sel), tours=[list(map(int, t)) for t in tours],
                             release_stations=[int(x) for x in nodes], release_order=[int(x) for x in order],
                             release_times=[float(x) if x is not None else None for x in pred['release_times_pred']],

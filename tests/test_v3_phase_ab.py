@@ -112,3 +112,13 @@ def test_local_search_never_beats_exact(scene):
         pe = Planner(g, scene.targets, scene.root_station); pl = Planner(g, scene.targets, scene.root_station)
         e, _ = pe.exact(k); l, _ = pl.local(k)
         assert l[0] >= e[0] - 1e-9
+
+
+def test_long_catheter_transit_is_not_a_deadlock(scene):
+    g = VesselGraph(scene.probe)
+    pl = Planner(g, scene.targets, scene.root_station)
+    pl.v_c = 0.05                                     # catheter so slow that transit exceeds 60 s
+    deep = max(pl.candidates_for(0), key=lambda s: g.depth[s])
+    tours = [tuple(range(pl.m))]
+    sim = pl.simulate(tours, [deep], [0], [0])
+    assert sim['release_times'][0] is not None and not sim['deadlock']
