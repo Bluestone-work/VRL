@@ -163,10 +163,13 @@ class Planner:
         self._tour[key] = out
         return out
 
+    def catheter_time(self, a, b):
+        return float(self.g.dist[a, b]) / self.v_c
+
     def release_times(self, nodes_in_order):
         t, prev, out = 0., self.root_station, []
         for k, nd in enumerate(nodes_in_order):
-            travel = self.g.catheter_time(prev, nd)
+            travel = self.catheter_time(prev, nd)
             t = travel if k == 0 else t + max(self.tau_rel, travel)
             out.append(t); prev = nd
         return out
@@ -207,9 +210,9 @@ class Planner:
         wait = 0.; viol = 0.; dmin = np.inf; events = 0
         in_viol = np.zeros((n, n), bool)
         next_rel = 0
-        gaps = [self.g.catheter_time(self.root_station, nodes[order[0]])]
+        gaps = [self.catheter_time(self.root_station, nodes[order[0]])]
         for a, b in zip(order, order[1:]):
-            gaps.append(max(self.tau_rel, self.g.catheter_time(nodes[a], nodes[b])))
+            gaps.append(max(self.tau_rel, self.catheter_time(nodes[a], nodes[b])))
         ready = gaps[0]
         t = 0.; last_progress = 0.
         steps = int(np.ceil(self.deadline / self.dt))
@@ -391,7 +394,7 @@ class Planner:
             # the node must be an ancestor of the first visited target, re-check after ordering
             if deployment != 'root' and nd not in set(self.g.ancestors(self.targets[tour[0]])):
                 continue
-            cost = self.g.catheter_time(self.root_station, nd) + self.tour(nd, tour)['plan_time']
+            cost = self.catheter_time(self.root_station, nd) + self.tour(nd, tour)['plan_time']
             if best is None or cost < best[0]:
                 best = (cost, nd, tour)
         if best is None:
