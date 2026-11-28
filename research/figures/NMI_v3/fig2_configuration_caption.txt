@@ -1,0 +1,17 @@
+Fig. 2 | Graph-based autonomous swarm configuration and planning. a, Weighted vessel graph of the portal-hepatic
+(HCC) territory built from preoperative information only: station edges coloured by the nominal flow speed used
+for planning (healthy tree, 0.05 mm/s inlet), bifurcations, catheter-accessible release candidates and five target
+lesions. b, Configurations selected by the planner for HCC test tasks with 2-5 lesions: number of clusters N*,
+release points on the catheter path, and routes (one colour per cluster). c, Executed timeline of the configuration
+in a: time in the catheter, motion, holds imposed by the release-aware temporal plan graph, steps where the spacing
+shield rewrote the command, executed arrivals and planned arrivals. d, Left: predicted objective J(N) relative to the
+best N for every test task (exact search); the ε = 10% rule selects the smallest N within the band. Middle: N*
+chosen by the proposed planner by number of lesions. Right: executed navigation success of fixed N on the validation
+set with root and optimised release, against the adaptive planner (band). e, Four core metrics on the frozen test set
+(120 base tasks, 15 territories): navigation success, contact-free safe success, deadline-scored last target
+arrival measured from catheter insertion, and the fraction of tasks with an inter-cluster spacing violation
+(d < 2 mm). Every arm uses the same pure-pursuit local controller, safety layer, flow, obstacles, patient-level
+variation and deadline; fixed N = 3 was chosen on the validation set. Markers, mean; bars, 95% two-level bootstrap
+interval (territories, then tasks). f, Paired differences of each ablation to the proposed configuration on the same
+tasks. Notes: a: 26 key nodes, 25 segments, 10 release candidates, 347 stations; c: releases at 48.0, 0.0, 39.5, 51.0 s; executed success True, last arrival 83.3 s, TPG hold 0.0 robot-s, shield rewrites 432 cluster-steps. d_safe = 2 mm and all deployment parameters are simulation assumptions
+(configs/v3/assumptions.json); no magnetic interaction model is used.

@@ -1,0 +1,5 @@
+base_task_hash,m,pattern,N_star,release_stations,tours,success,T_last_s
+e36ed44263874d50feecf147fce9985c75dbceac5b9d8e5614c1e1583ce0c768,2,dispersed,2,"[124, 75]","[[0], [1]]",True,63.600000000000634
+91a2b22a9c5d08c4884341ed482992b79f48cbfb50ed31d7007f76936b4cff81,3,clustered,1,[152],"[[2, 0, 1]]",True,106.29999999999824
+01b33b973551f2af51cd0e16867a65d450abeab012a6d3fdff8178c692192a27,4,dispersed,3,"[1, 37, 37]","[[3, 2], [0], [1]]",False,300.0
+f87e258df04c148323c8333e7647aae675baf6f87480e5ce02ea131ac71f5f57,5,clustered,4,"[206, 1, 109, 206]","[[0], [3, 2], [1], [4]]",True,83.29999999999954

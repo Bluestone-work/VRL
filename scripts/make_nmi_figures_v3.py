@@ -163,7 +163,7 @@ def fig2(out, runs, val_runs, tasks):
     focus = next((h for h in hcc if tdoc[h]['task']['n_targets'] == 5), hcc[-1])
     sb, g = scene_for(tdoc[focus]['task'])
     a0, a1 = plane(g)
-    flabel(fig, 'a', 0, .997); ftitle(fig, 'Weighted vessel graph from the preoperative map (HCC portal tree)', .025, .997)
+    flabel(fig, 'a', 0, .997); ftitle(fig, 'Weighted vessel graph (HCC portal tree)', .025, .997)
     ax = fig.add_axes([0, .745, .34, .23])
     from matplotlib.colors import Normalize
     cmap = plt.get_cmap('Blues'); norm = Normalize(0, float(np.percentile(g.flow, 99)))
@@ -242,8 +242,13 @@ def fig2(out, runs, val_runs, tasks):
             return out
         for s0, s1 in spans(park[:, c]):
             axc.barh(y, s1 - s0, left=s0, height=.5, color='#eceef2', lw=0)
-        for s0, s1 in spans(act[:, c] & ~hold[:, c]):
+        mine = [tt for tt, cc in owner.items() if cc == c]
+        last = max([arr[tt] for tt in mine if arr[tt] is not None], default=None)
+        done = (t >= last) if (last is not None and all(arr[tt] is not None for tt in mine)) else np.zeros(len(t), bool)
+        for s0, s1 in spans(act[:, c] & ~hold[:, c] & ~done):
             axc.barh(y, s1 - s0, left=s0, height=.5, color=CL[c], lw=0)
+        for s0, s1 in spans(act[:, c] & done):
+            axc.barh(y, s1 - s0, left=s0, height=.5, color=CL[c], alpha=.25, lw=0)
         for s0, s1 in spans(act[:, c] & hold[:, c]):
             axc.barh(y, s1 - s0, left=s0, height=.5, color='#6b7280', lw=0)
         sh = np.flatnonzero(shield[:, c] & act[:, c])
@@ -253,7 +258,7 @@ def fig2(out, runs, val_runs, tasks):
             if cc != c:
                 continue
             if arr[tt] is not None:
-                axc.plot(arr[tt], y, '*', ms=6, color=TARGET, mec='white', mew=.3, zorder=5)
+                axc.plot(arr[tt], y, '*', ms=7, mfc=TARGET, mec=INK, mew=.5, zorder=5)
             if pred_by_target.get(tt) is not None:
                 axc.plot(pred_by_target[tt], y - .38, 'v', ms=3.2, mfc='none', mec=INK, mew=.5)
             rows_c.append([c, tt, pred_by_target.get(tt), arr[tt]])
@@ -264,10 +269,11 @@ def fig2(out, runs, val_runs, tasks):
     axc.legend(handles=[plt.Rectangle((0, 0), 1, 1, color='#eceef2', label='in catheter'),
                         plt.Rectangle((0, 0), 1, 1, color=CL[0], label='moving'),
                         plt.Rectangle((0, 0), 1, 1, color='#6b7280', label='TPG hold'),
+                        plt.Rectangle((0, 0), 1, 1, color=CL[0], alpha=.25, label='delivered'),
                         Line2D([], [], marker='|', ls='none', color='#c25e00', ms=4, label='shield rewrite'),
-                        Line2D([], [], marker='*', ls='none', color=TARGET, ms=6, label='arrival'),
+                        Line2D([], [], marker='*', ls='none', mfc=TARGET, mec=INK, ms=7, label='arrival'),
                         Line2D([], [], marker='v', ls='none', mfc='none', mec=INK, ms=4, label='planned arrival')],
-               loc='upper center', bbox_to_anchor=(.5, -.2), ncol=6, fontsize=5.2, handlelength=1.1, columnspacing=.8)
+               loc='upper center', bbox_to_anchor=(.5, -.2), ncol=7, fontsize=5.2, handlelength=1.1, columnspacing=.7)
     write_csv(out, 'fig2c_arrivals', ['cluster', 'target', 'planned_arrival_s', 'executed_arrival_s'], rows_c)
     notes.append(f"c: releases at {', '.join(f'{x:.1f}' for x in rel_t if x is not None)} s; executed success {summ['success']}, "
                  f"last arrival {summ['T_last_deadline_scored_s']:.1f} s, TPG hold {summ['tpg_hold_robot_s']:.1f} robot-s, "
@@ -276,7 +282,7 @@ def fig2(out, runs, val_runs, tasks):
     # ---------------------------------------------------------------- d: optimisation relation
     flabel(fig, 'd', .53, .70); ftitle(fig, 'Choosing the number of clusters', .555, .70)
     ex = arms.get('exact', {})
-    axd = fig.add_axes([.575, .45, .12, .22])
+    axd = fig.add_axes([.575, .45, .115, .22])
     ratios = defaultdict(list); rows_d = []
     for h, r in ex.items():
         J = {int(k): v for k, v in r['configuration']['search']['J_by_n'].items()}
@@ -289,11 +295,11 @@ def fig2(out, runs, val_runs, tasks):
         ks = sorted(ratios)
         axd.plot(ks, [np.median(ratios[k]) for k in ks], color=PROPOSED, lw=1.4, marker='o', ms=3, mec='white')
         axd.axhline(1.1, color=INK3, lw=.5, ls=(0, (2, 1.5)))
-        axd.text(4.05, 1.1, 'ε = 10%', fontsize=5, color=INK3, va='center')
+        axd.text(2.6, 1.16, 'ε = 10% band', fontsize=5, color=INK3, va='bottom')
     axd.set_xticks([1, 2, 3, 4]); axd.set_xlabel('N'); axd.set_ylabel('Predicted J(N) / min J'); axd.set_yscale('log')
     axd.set_yticks([1, 1.5, 2, 3]); axd.set_yticklabels(['1', '1.5', '2', '3']); clean(axd, 'y')
     write_csv(out, 'fig2d_J_by_N_exact', ['base_task_hash', 'N', 'J', 'J_over_min', 'N_star'], rows_d)
-    axd2 = fig.add_axes([.735, .45, .10, .22])
+    axd2 = fig.add_axes([.725, .45, .095, .22])
     prop = arms.get('proposed', {})
     counts = np.zeros((4, 4))
     for h, r in prop.items():
@@ -306,7 +312,7 @@ def fig2(out, runs, val_runs, tasks):
     axd2.set_ylim(0, max(1, bottom.max()) * 1.45)
     axd2.legend(fontsize=5, loc='upper left', ncol=2, handlelength=.8, columnspacing=.6, borderaxespad=.1)
     write_csv(out, 'fig2d_N_star_by_m', ['m', 'N1', 'N2', 'N3', 'N4'], [[m + 2, *counts[m]] for m in range(4)])
-    axd3 = fig.add_axes([.875, .45, .12, .22])
+    axd3 = fig.add_axes([.885, .45, .105, .22])
     rows_d3 = []
     for dep, mk, col in (('root', 'v', BASE), ('opt', 'o', PROPOSED)):
         xs, ys, lo, hi = [], [], [], []
@@ -330,7 +336,7 @@ def fig2(out, runs, val_runs, tasks):
         m_, l_, h_ = two_level(gr)
         axd3.axhspan(100 * l_, 100 * h_, color=PROPOSED, alpha=.12, lw=0); axd3.axhline(100 * m_, color=PROPOSED, lw=.8)
         rows_d3.append(['proposed_adaptive', None, m_, l_, h_])
-    axd3.set_xticks([1, 2, 3, 4]); axd3.set_xlabel('Fixed N (validation set)'); axd3.set_ylabel('Navigation success (%)')
+    axd3.set_xticks([1, 2, 3, 4]); axd3.set_xlabel('Fixed N (validation)'); axd3.set_ylabel('Navigation success (%)')
     axd3.legend(fontsize=5, loc='lower center', handletextpad=.2); clean(axd3, 'y')
     write_csv(out, 'fig2d_validation_fixed_N', ['deployment', 'N', 'success', 'lo', 'hi'], rows_d3)
     # ---------------------------------------------------------------- e: arms x four metrics
